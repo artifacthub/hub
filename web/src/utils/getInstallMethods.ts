@@ -3,7 +3,7 @@ import { isNull, isUndefined } from 'lodash';
 import {
   Channel,
   ContainerImage,
-  GatekeeperSamples,
+  GatekeeperExample,
   HelmChartType,
   Package,
   Repository,
@@ -29,7 +29,7 @@ export interface InstallMethod {
     isPrivate?: boolean;
     images?: ContainerImage[] | null;
     relativePath?: string;
-    samples?: GatekeeperSamples;
+    examples?: GatekeeperExample[];
   };
 }
 
@@ -288,7 +288,7 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
               kind: InstallMethodKind.KubectlGatekeeperInstall,
               props: {
                 repository: pkg.repository,
-                samples: pkg.data!.samples,
+                examples: pkg.data!.examples,
                 relativePath: pkg.relativePath!,
               },
             }

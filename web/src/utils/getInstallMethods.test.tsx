@@ -1674,24 +1674,54 @@ const tests: Tests[] = [
           },
         ],
         data: {
-          samples: {
-            'storageclass/constraint.yaml':
-              'apiVersion: constraints.gatekeeper.sh/v1beta1\nkind: K8sStorageClass\nmetadata:\n  name: storageclass\nspec:\n  match:\n    kinds:\n      - apiGroups: [""]\n        kinds: ["PersistentVolumeClaim"]\n      - apiGroups: ["apps"]\n        kinds: ["StatefulSet"]\n  parameters:\n    includeStorageClassesInMessage: true\n',
-            'storageclass/example_allowed_ss.yaml':
-              'apiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: volumeclaimstorageclass\nspec:\n  selector:\n    matchLabels:\n      app: volumeclaimstorageclass\n  serviceName: volumeclaimstorageclass\n  replicas: 1\n  template:\n    metadata:\n      labels:\n        app: volumeclaimstorageclass\n    spec:\n      containers:\n      - name: main\n        image: k8s.gcr.io/nginx-slim:0.8\n        volumeMounts:\n        - name: data\n          mountPath: /usr/share/nginx/html\n  volumeClaimTemplates:\n  - metadata:\n      name: data\n    spec:\n      accessModes: ["ReadWriteOnce"]\n      storageClassName: "somestorageclass"\n      resources:\n        requests:\n          storage: 1Gi\n',
-            'storageclass/example_allowed_pvc.yaml':
-              'apiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: ok\nspec:\n  accessModes:\n    - ReadWriteOnce\n  volumeMode: Filesystem\n  resources:\n    requests:\n      storage: 8Gi\n  storageClassName: somestorageclass\n',
-            'storageclass/example_disallowed_pvc_badname.yaml':
-              'apiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: badstorageclass\nspec:\n  accessModes:\n    - ReadWriteOnce\n  volumeMode: Filesystem\n  resources:\n    requests:\n      storage: 8Gi\n  storageClassName: badstorageclass\n',
-            'storageclass/example_disallowed_pvc_nonamename.yaml':
-              '---\napiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: nostorageclass\nspec:\n  accessModes:\n    - ReadWriteOnce\n  volumeMode: Filesystem\n  resources:\n    requests:\n      storage: 8Gi\n',
-            'storageclass/example_disallowed_ssvct_nonamename.yaml':
-              'apiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: novolumeclaimstorageclass\nspec:\n  selector:\n    matchLabels:\n      app: novolumeclaimstorageclass\n  serviceName: novolumeclaimstorageclass\n  replicas: 1\n  template:\n    metadata:\n      labels:\n        app: novolumeclaimstorageclass\n    spec:\n      containers:\n      - name: main\n        image: k8s.gcr.io/nginx-slim:0.8\n        volumeMounts:\n        - name: data\n          mountPath: /usr/share/nginx/html\n  volumeClaimTemplates:\n  - metadata:\n      name: data\n    spec:\n      accessModes: ["ReadWriteOnce"]\n      resources:\n        requests:\n          storage: 1Gi\n',
-            'storageclass/example_disallowed_ssvct_badnamename.yaml':
-              'apiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: badvolumeclaimstorageclass\nspec:\n  selector:\n    matchLabels:\n      app: badvolumeclaimstorageclass\n  serviceName: badvolumeclaimstorageclass\n  replicas: 1\n  template:\n    metadata:\n      labels:\n        app: badvolumeclaimstorageclass\n    spec:\n      containers:\n      - name: main\n        image: k8s.gcr.io/nginx-slim:0.8\n        volumeMounts:\n        - name: data\n          mountPath: /usr/share/nginx/html\n  volumeClaimTemplates:\n  - metadata:\n      name: data\n    spec:\n      accessModes: ["ReadWriteOnce"]\n      storageClassName: "badstorageclass"\n      resources:\n        requests:\n          storage: 1Gi\n',
-            'storageclass/example_inventory_allowed_storageclass.yaml':
-              'apiVersion: storage.k8s.io/v1\nkind: StorageClass\nmetadata:\n  name: somestorageclass\nprovisioner: foo\nparameters:\nallowVolumeExpansion: true\n',
-          },
+          examples: [
+            {
+              name: 'memory-ratio-only',
+              cases: [
+                {
+                  name: 'constraint',
+                  path: 'samples/container-must-meet-ratio/constraint.yaml',
+                  content:
+                    'apiVersion: constraints.gatekeeper.sh/v1beta1\nkind: K8sContainerRatios\nmetadata:\n  name: container-must-meet-ratio\nspec:\n  match:\n    kinds:\n      - apiGroups: [""]\n        kinds: ["Pod"]\n  parameters:\n    ratio: "2"\n',
+                },
+                {
+                  name: 'example-allowed',
+                  path: 'samples/container-must-meet-ratio/example_allowed.yaml',
+                  content:
+                    'apiVersion: v1\nkind: Pod\nmetadata:\n  name: opa-disallowed\n  labels:\n    owner: me.agilebank.demo\nspec:\n  containers:\n    - name: opa\n      image: openpolicyagent/opa:0.9.2\n      args:\n        - "run"\n        - "--server"\n        - "--addr=localhost:8080"\n      resources:\n        limits:\n          cpu: "200m"\n          memory: "200Mi"\n        requests:\n          cpu: "100m"\n          memory: "100Mi"\n',
+                },
+                {
+                  name: 'example-disallowed',
+                  path: 'samples/container-must-meet-ratio/example_disallowed.yaml',
+                  content:
+                    'apiVersion: v1\nkind: Pod\nmetadata:\n  name: opa-disallowed\n  labels:\n    owner: me.agilebank.demo\nspec:\n  containers:\n    - name: opa\n      image: openpolicyagent/opa:0.9.2\n      args:\n        - "run"\n        - "--server"\n        - "--addr=localhost:8080"\n      resources:\n        limits:\n          cpu: "800m"\n          memory: "2Gi"\n        requests:\n          cpu: "100m"\n          memory: "100Mi"\n',
+                },
+              ],
+            },
+            {
+              name: 'memory-and-cpu-ratios',
+              cases: [
+                {
+                  name: 'constraint',
+                  path: 'samples/container-must-meet-memory-and-cpu-ratio/constraint.yaml',
+                  content:
+                    'apiVersion: constraints.gatekeeper.sh/v1beta1\nkind: K8sContainerRatios\nmetadata:\n  name: container-must-meet-memory-and-cpu-ratio\nspec:\n  match:\n    kinds:\n      - apiGroups: [""]\n        kinds: ["Pod"]\n  parameters:\n    ratio: "1"\n    cpuRatio: "10"\n',
+                },
+                {
+                  name: 'example-allowed',
+                  path: 'samples/container-must-meet-memory-and-cpu-ratio/example_allowed.yaml',
+                  content:
+                    'apiVersion: v1\nkind: Pod\nmetadata:\n  name: opa-allowed\n  labels:\n    owner: me.agilebank.demo\nspec:\n  containers:\n    - name: opa\n      image: openpolicyagent/opa:0.9.2\n      args:\n        - "run"\n        - "--server"\n        - "--addr=localhost:8080"\n      resources:\n        limits:\n          cpu: "4"\n          memory: "2Gi"\n        requests:\n          cpu: "1"\n          memory: "2Gi"\n',
+                },
+                {
+                  name: 'example-disallowed',
+                  path: 'samples/container-must-meet-memory-and-cpu-ratio/example_disallowed.yaml',
+                  content:
+                    'apiVersion: v1\nkind: Pod\nmetadata:\n  name: opa-disallowed\n  labels:\n    owner: me.agilebank.demo\nspec:\n  containers:\n    - name: opa\n      image: openpolicyagent/opa:0.9.2\n      args:\n        - "run"\n        - "--server"\n        - "--addr=localhost:8080"\n      resources:\n        limits:\n          cpu: "4"\n          memory: "2Gi"\n        requests:\n          cpu: "100m"\n          memory: "2Gi"\n',
+                },
+              ],
+            },
+          ],
           template:
             'apiVersion: templates.gatekeeper.sh/v1\nkind: ConstraintTemplate\nmetadata:\n  name: k8sstorageclass\n  annotations:\n    metadata.gatekeeper.sh/title: "Storage Class"\n    description: >-\n      Requires storage classes to be specified when used. Only Gatekeeper 3.9+ is supported.\nspec:\n  crd:\n    spec:\n      names:\n        kind: K8sStorageClass\n      validation:\n        openAPIV3Schema:\n          type: object\n          description: >-\n            Requires storage classes to be specified when used.\n          properties:\n            includeStorageClassesInMessage:\n              type: boolean\n              default: true\n  targets:\n    - target: admission.k8s.gatekeeper.sh\n      rego: |\n        package k8sstorageclass\n\n        is_pvc(obj) {\n          obj.apiVersion == "v1"\n          obj.kind == "PersistentVolumeClaim"\n        }\n\n        is_statefulset(obj) {\n          obj.apiVersion == "apps/v1"\n          obj.kind == "StatefulSet"\n        }\n\n        violation[{"msg": msg}] {\n          not data.inventory.cluster["storage.k8s.io/v1"]["StorageClass"]\n          msg := sprintf("StorageClasses not synced. Gatekeeper may be misconfigured. Please have a cluster-admin consult the documentation.", [])\n        }\n\n        storageclass_found(name) {\n          data.inventory.cluster["storage.k8s.io/v1"]["StorageClass"][name]\n        }\n\n        violation[{"msg": pvc_storageclass_badname_msg}] {\n          is_pvc(input.review.object)\n          not storageclass_found(input.review.object.spec.storageClassName)\n        }\n        pvc_storageclass_badname_msg := sprintf("pvc did not specify a valid storage class name <%v>. Must be one of [%v]", args) {\n          input.parameters.includeStorageClassesInMessage\n          args := [\n            input.review.object.spec.storageClassName,\n            concat(", ", [n | data.inventory.cluster["storage.k8s.io/v1"]["StorageClass"][n]])\n          ]\n        } else := sprintf(\n          "pvc did not specify a valid storage class name <%v>.",\n          [input.review.object.spec.storageClassName]\n        )\n\n        violation[{"msg": pvc_storageclass_noname_msg}] {\n          is_pvc(input.review.object)\n          not input.review.object.spec.storageClassName\n        }\n        pvc_storageclass_noname_msg := sprintf("pvc did not specify a storage class name. Must be one of [%v]", args) {\n          input.parameters.includeStorageClassesInMessage\n          args := [\n            concat(", ", [n | data.inventory.cluster["storage.k8s.io/v1"]["StorageClass"][n]])\n          ]\n        } else := sprintf(\n          "pvc did not specify a storage class name.",\n          []\n        )\n\n        violation[{"msg": statefulset_vct_badname_msg(vct)}] {\n          is_statefulset(input.review.object)\n          vct := input.review.object.spec.volumeClaimTemplates[_]\n          not storageclass_found(vct.spec.storageClassName)\n        }\n        statefulset_vct_badname_msg(vct) := msg {\n          input.parameters.includeStorageClassesInMessage\n          msg := sprintf(\n              "statefulset did not specify a valid storage class name <%v>. Must be one of [%v]", [\n              vct.spec.storageClassName,\n              concat(", ", [n | data.inventory.cluster["storage.k8s.io/v1"]["StorageClass"][n]])\n          ])\n        }\n        statefulset_vct_badname_msg(vct) := msg {\n          not input.parameters.includeStorageClassesInMessage\n          msg := sprintf(\n            "statefulset did not specify a valid storage class name <%v>.", [\n              vct.spec.storageClassName\n          ])\n        }\n\n        violation[{"msg": statefulset_vct_noname_msg}] {\n          is_statefulset(input.review.object)\n          vct := input.review.object.spec.volumeClaimTemplates[_]\n          not vct.spec.storageClassName\n        }\n        statefulset_vct_noname_msg := sprintf("statefulset did not specify a storage class name. Must be one of [%v]", args) {\n          input.parameters.includeStorageClassesInMessage\n          args := [\n            concat(", ", [n | data.inventory.cluster["storage.k8s.io/v1"]["StorageClass"][n]])\n          ]\n        } else := sprintf(\n          "statefulset did not specify a storage class name.",\n          []\n        )\n\n        #FIXME pod generic ephemeral might be good to validate some day too.\n',
         },
@@ -1760,24 +1790,54 @@ const tests: Tests[] = [
               userAlias: 'cynthia-sg',
               verifiedPublisher: false,
             },
-            samples: {
-              'storageclass/constraint.yaml':
-                'apiVersion: constraints.gatekeeper.sh/v1beta1\nkind: K8sStorageClass\nmetadata:\n  name: storageclass\nspec:\n  match:\n    kinds:\n      - apiGroups: [""]\n        kinds: ["PersistentVolumeClaim"]\n      - apiGroups: ["apps"]\n        kinds: ["StatefulSet"]\n  parameters:\n    includeStorageClassesInMessage: true\n',
-              'storageclass/example_allowed_ss.yaml':
-                'apiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: volumeclaimstorageclass\nspec:\n  selector:\n    matchLabels:\n      app: volumeclaimstorageclass\n  serviceName: volumeclaimstorageclass\n  replicas: 1\n  template:\n    metadata:\n      labels:\n        app: volumeclaimstorageclass\n    spec:\n      containers:\n      - name: main\n        image: k8s.gcr.io/nginx-slim:0.8\n        volumeMounts:\n        - name: data\n          mountPath: /usr/share/nginx/html\n  volumeClaimTemplates:\n  - metadata:\n      name: data\n    spec:\n      accessModes: ["ReadWriteOnce"]\n      storageClassName: "somestorageclass"\n      resources:\n        requests:\n          storage: 1Gi\n',
-              'storageclass/example_allowed_pvc.yaml':
-                'apiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: ok\nspec:\n  accessModes:\n    - ReadWriteOnce\n  volumeMode: Filesystem\n  resources:\n    requests:\n      storage: 8Gi\n  storageClassName: somestorageclass\n',
-              'storageclass/example_disallowed_pvc_badname.yaml':
-                'apiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: badstorageclass\nspec:\n  accessModes:\n    - ReadWriteOnce\n  volumeMode: Filesystem\n  resources:\n    requests:\n      storage: 8Gi\n  storageClassName: badstorageclass\n',
-              'storageclass/example_disallowed_pvc_nonamename.yaml':
-                '---\napiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: nostorageclass\nspec:\n  accessModes:\n    - ReadWriteOnce\n  volumeMode: Filesystem\n  resources:\n    requests:\n      storage: 8Gi\n',
-              'storageclass/example_disallowed_ssvct_nonamename.yaml':
-                'apiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: novolumeclaimstorageclass\nspec:\n  selector:\n    matchLabels:\n      app: novolumeclaimstorageclass\n  serviceName: novolumeclaimstorageclass\n  replicas: 1\n  template:\n    metadata:\n      labels:\n        app: novolumeclaimstorageclass\n    spec:\n      containers:\n      - name: main\n        image: k8s.gcr.io/nginx-slim:0.8\n        volumeMounts:\n        - name: data\n          mountPath: /usr/share/nginx/html\n  volumeClaimTemplates:\n  - metadata:\n      name: data\n    spec:\n      accessModes: ["ReadWriteOnce"]\n      resources:\n        requests:\n          storage: 1Gi\n',
-              'storageclass/example_disallowed_ssvct_badnamename.yaml':
-                'apiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: badvolumeclaimstorageclass\nspec:\n  selector:\n    matchLabels:\n      app: badvolumeclaimstorageclass\n  serviceName: badvolumeclaimstorageclass\n  replicas: 1\n  template:\n    metadata:\n      labels:\n        app: badvolumeclaimstorageclass\n    spec:\n      containers:\n      - name: main\n        image: k8s.gcr.io/nginx-slim:0.8\n        volumeMounts:\n        - name: data\n          mountPath: /usr/share/nginx/html\n  volumeClaimTemplates:\n  - metadata:\n      name: data\n    spec:\n      accessModes: ["ReadWriteOnce"]\n      storageClassName: "badstorageclass"\n      resources:\n        requests:\n          storage: 1Gi\n',
-              'storageclass/example_inventory_allowed_storageclass.yaml':
-                'apiVersion: storage.k8s.io/v1\nkind: StorageClass\nmetadata:\n  name: somestorageclass\nprovisioner: foo\nparameters:\nallowVolumeExpansion: true\n',
-            },
+            examples: [
+              {
+                name: 'memory-ratio-only',
+                cases: [
+                  {
+                    name: 'constraint',
+                    path: 'samples/container-must-meet-ratio/constraint.yaml',
+                    content:
+                      'apiVersion: constraints.gatekeeper.sh/v1beta1\nkind: K8sContainerRatios\nmetadata:\n  name: container-must-meet-ratio\nspec:\n  match:\n    kinds:\n      - apiGroups: [""]\n        kinds: ["Pod"]\n  parameters:\n    ratio: "2"\n',
+                  },
+                  {
+                    name: 'example-allowed',
+                    path: 'samples/container-must-meet-ratio/example_allowed.yaml',
+                    content:
+                      'apiVersion: v1\nkind: Pod\nmetadata:\n  name: opa-disallowed\n  labels:\n    owner: me.agilebank.demo\nspec:\n  containers:\n    - name: opa\n      image: openpolicyagent/opa:0.9.2\n      args:\n        - "run"\n        - "--server"\n        - "--addr=localhost:8080"\n      resources:\n        limits:\n          cpu: "200m"\n          memory: "200Mi"\n        requests:\n          cpu: "100m"\n          memory: "100Mi"\n',
+                  },
+                  {
+                    name: 'example-disallowed',
+                    path: 'samples/container-must-meet-ratio/example_disallowed.yaml',
+                    content:
+                      'apiVersion: v1\nkind: Pod\nmetadata:\n  name: opa-disallowed\n  labels:\n    owner: me.agilebank.demo\nspec:\n  containers:\n    - name: opa\n      image: openpolicyagent/opa:0.9.2\n      args:\n        - "run"\n        - "--server"\n        - "--addr=localhost:8080"\n      resources:\n        limits:\n          cpu: "800m"\n          memory: "2Gi"\n        requests:\n          cpu: "100m"\n          memory: "100Mi"\n',
+                  },
+                ],
+              },
+              {
+                name: 'memory-and-cpu-ratios',
+                cases: [
+                  {
+                    name: 'constraint',
+                    path: 'samples/container-must-meet-memory-and-cpu-ratio/constraint.yaml',
+                    content:
+                      'apiVersion: constraints.gatekeeper.sh/v1beta1\nkind: K8sContainerRatios\nmetadata:\n  name: container-must-meet-memory-and-cpu-ratio\nspec:\n  match:\n    kinds:\n      - apiGroups: [""]\n        kinds: ["Pod"]\n  parameters:\n    ratio: "1"\n    cpuRatio: "10"\n',
+                  },
+                  {
+                    name: 'example-allowed',
+                    path: 'samples/container-must-meet-memory-and-cpu-ratio/example_allowed.yaml',
+                    content:
+                      'apiVersion: v1\nkind: Pod\nmetadata:\n  name: opa-allowed\n  labels:\n    owner: me.agilebank.demo\nspec:\n  containers:\n    - name: opa\n      image: openpolicyagent/opa:0.9.2\n      args:\n        - "run"\n        - "--server"\n        - "--addr=localhost:8080"\n      resources:\n        limits:\n          cpu: "4"\n          memory: "2Gi"\n        requests:\n          cpu: "1"\n          memory: "2Gi"\n',
+                  },
+                  {
+                    name: 'example-disallowed',
+                    path: 'samples/container-must-meet-memory-and-cpu-ratio/example_disallowed.yaml',
+                    content:
+                      'apiVersion: v1\nkind: Pod\nmetadata:\n  name: opa-disallowed\n  labels:\n    owner: me.agilebank.demo\nspec:\n  containers:\n    - name: opa\n      image: openpolicyagent/opa:0.9.2\n      args:\n        - "run"\n        - "--server"\n        - "--addr=localhost:8080"\n      resources:\n        limits:\n          cpu: "4"\n          memory: "2Gi"\n        requests:\n          cpu: "100m"\n          memory: "2Gi"\n',
+                  },
+                ],
+              },
+            ],
           },
           title: 'Kubectl',
         },
@@ -1809,24 +1869,54 @@ const tests: Tests[] = [
           },
         ],
         data: {
-          samples: {
-            'storageclass/constraint.yaml':
-              'apiVersion: constraints.gatekeeper.sh/v1beta1\nkind: K8sStorageClass\nmetadata:\n  name: storageclass\nspec:\n  match:\n    kinds:\n      - apiGroups: [""]\n        kinds: ["PersistentVolumeClaim"]\n      - apiGroups: ["apps"]\n        kinds: ["StatefulSet"]\n  parameters:\n    includeStorageClassesInMessage: true\n',
-            'storageclass/example_allowed_ss.yaml':
-              'apiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: volumeclaimstorageclass\nspec:\n  selector:\n    matchLabels:\n      app: volumeclaimstorageclass\n  serviceName: volumeclaimstorageclass\n  replicas: 1\n  template:\n    metadata:\n      labels:\n        app: volumeclaimstorageclass\n    spec:\n      containers:\n      - name: main\n        image: k8s.gcr.io/nginx-slim:0.8\n        volumeMounts:\n        - name: data\n          mountPath: /usr/share/nginx/html\n  volumeClaimTemplates:\n  - metadata:\n      name: data\n    spec:\n      accessModes: ["ReadWriteOnce"]\n      storageClassName: "somestorageclass"\n      resources:\n        requests:\n          storage: 1Gi\n',
-            'storageclass/example_allowed_pvc.yaml':
-              'apiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: ok\nspec:\n  accessModes:\n    - ReadWriteOnce\n  volumeMode: Filesystem\n  resources:\n    requests:\n      storage: 8Gi\n  storageClassName: somestorageclass\n',
-            'storageclass/example_disallowed_pvc_badname.yaml':
-              'apiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: badstorageclass\nspec:\n  accessModes:\n    - ReadWriteOnce\n  volumeMode: Filesystem\n  resources:\n    requests:\n      storage: 8Gi\n  storageClassName: badstorageclass\n',
-            'storageclass/example_disallowed_pvc_nonamename.yaml':
-              '---\napiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: nostorageclass\nspec:\n  accessModes:\n    - ReadWriteOnce\n  volumeMode: Filesystem\n  resources:\n    requests:\n      storage: 8Gi\n',
-            'storageclass/example_disallowed_ssvct_nonamename.yaml':
-              'apiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: novolumeclaimstorageclass\nspec:\n  selector:\n    matchLabels:\n      app: novolumeclaimstorageclass\n  serviceName: novolumeclaimstorageclass\n  replicas: 1\n  template:\n    metadata:\n      labels:\n        app: novolumeclaimstorageclass\n    spec:\n      containers:\n      - name: main\n        image: k8s.gcr.io/nginx-slim:0.8\n        volumeMounts:\n        - name: data\n          mountPath: /usr/share/nginx/html\n  volumeClaimTemplates:\n  - metadata:\n      name: data\n    spec:\n      accessModes: ["ReadWriteOnce"]\n      resources:\n        requests:\n          storage: 1Gi\n',
-            'storageclass/example_disallowed_ssvct_badnamename.yaml':
-              'apiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: badvolumeclaimstorageclass\nspec:\n  selector:\n    matchLabels:\n      app: badvolumeclaimstorageclass\n  serviceName: badvolumeclaimstorageclass\n  replicas: 1\n  template:\n    metadata:\n      labels:\n        app: badvolumeclaimstorageclass\n    spec:\n      containers:\n      - name: main\n        image: k8s.gcr.io/nginx-slim:0.8\n        volumeMounts:\n        - name: data\n          mountPath: /usr/share/nginx/html\n  volumeClaimTemplates:\n  - metadata:\n      name: data\n    spec:\n      accessModes: ["ReadWriteOnce"]\n      storageClassName: "badstorageclass"\n      resources:\n        requests:\n          storage: 1Gi\n',
-            'storageclass/example_inventory_allowed_storageclass.yaml':
-              'apiVersion: storage.k8s.io/v1\nkind: StorageClass\nmetadata:\n  name: somestorageclass\nprovisioner: foo\nparameters:\nallowVolumeExpansion: true\n',
-          },
+          examples: [
+            {
+              name: 'memory-ratio-only',
+              cases: [
+                {
+                  name: 'constraint',
+                  path: 'samples/container-must-meet-ratio/constraint.yaml',
+                  content:
+                    'apiVersion: constraints.gatekeeper.sh/v1beta1\nkind: K8sContainerRatios\nmetadata:\n  name: container-must-meet-ratio\nspec:\n  match:\n    kinds:\n      - apiGroups: [""]\n        kinds: ["Pod"]\n  parameters:\n    ratio: "2"\n',
+                },
+                {
+                  name: 'example-allowed',
+                  path: 'samples/container-must-meet-ratio/example_allowed.yaml',
+                  content:
+                    'apiVersion: v1\nkind: Pod\nmetadata:\n  name: opa-disallowed\n  labels:\n    owner: me.agilebank.demo\nspec:\n  containers:\n    - name: opa\n      image: openpolicyagent/opa:0.9.2\n      args:\n        - "run"\n        - "--server"\n        - "--addr=localhost:8080"\n      resources:\n        limits:\n          cpu: "200m"\n          memory: "200Mi"\n        requests:\n          cpu: "100m"\n          memory: "100Mi"\n',
+                },
+                {
+                  name: 'example-disallowed',
+                  path: 'samples/container-must-meet-ratio/example_disallowed.yaml',
+                  content:
+                    'apiVersion: v1\nkind: Pod\nmetadata:\n  name: opa-disallowed\n  labels:\n    owner: me.agilebank.demo\nspec:\n  containers:\n    - name: opa\n      image: openpolicyagent/opa:0.9.2\n      args:\n        - "run"\n        - "--server"\n        - "--addr=localhost:8080"\n      resources:\n        limits:\n          cpu: "800m"\n          memory: "2Gi"\n        requests:\n          cpu: "100m"\n          memory: "100Mi"\n',
+                },
+              ],
+            },
+            {
+              name: 'memory-and-cpu-ratios',
+              cases: [
+                {
+                  name: 'constraint',
+                  path: 'samples/container-must-meet-memory-and-cpu-ratio/constraint.yaml',
+                  content:
+                    'apiVersion: constraints.gatekeeper.sh/v1beta1\nkind: K8sContainerRatios\nmetadata:\n  name: container-must-meet-memory-and-cpu-ratio\nspec:\n  match:\n    kinds:\n      - apiGroups: [""]\n        kinds: ["Pod"]\n  parameters:\n    ratio: "1"\n    cpuRatio: "10"\n',
+                },
+                {
+                  name: 'example-allowed',
+                  path: 'samples/container-must-meet-memory-and-cpu-ratio/example_allowed.yaml',
+                  content:
+                    'apiVersion: v1\nkind: Pod\nmetadata:\n  name: opa-allowed\n  labels:\n    owner: me.agilebank.demo\nspec:\n  containers:\n    - name: opa\n      image: openpolicyagent/opa:0.9.2\n      args:\n        - "run"\n        - "--server"\n        - "--addr=localhost:8080"\n      resources:\n        limits:\n          cpu: "4"\n          memory: "2Gi"\n        requests:\n          cpu: "1"\n          memory: "2Gi"\n',
+                },
+                {
+                  name: 'example-disallowed',
+                  path: 'samples/container-must-meet-memory-and-cpu-ratio/example_disallowed.yaml',
+                  content:
+                    'apiVersion: v1\nkind: Pod\nmetadata:\n  name: opa-disallowed\n  labels:\n    owner: me.agilebank.demo\nspec:\n  containers:\n    - name: opa\n      image: openpolicyagent/opa:0.9.2\n      args:\n        - "run"\n        - "--server"\n        - "--addr=localhost:8080"\n      resources:\n        limits:\n          cpu: "4"\n          memory: "2Gi"\n        requests:\n          cpu: "100m"\n          memory: "2Gi"\n',
+                },
+              ],
+            },
+          ],
           template:
             'apiVersion: templates.gatekeeper.sh/v1\nkind: ConstraintTemplate\nmetadata:\n  name: k8sstorageclass\n  annotations:\n    metadata.gatekeeper.sh/title: "Storage Class"\n    description: >-\n      Requires storage classes to be specified when used. Only Gatekeeper 3.9+ is supported.\nspec:\n  crd:\n    spec:\n      names:\n        kind: K8sStorageClass\n      validation:\n        openAPIV3Schema:\n          type: object\n          description: >-\n            Requires storage classes to be specified when used.\n          properties:\n            includeStorageClassesInMessage:\n              type: boolean\n              default: true\n  targets:\n    - target: admission.k8s.gatekeeper.sh\n      rego: |\n        package k8sstorageclass\n\n        is_pvc(obj) {\n          obj.apiVersion == "v1"\n          obj.kind == "PersistentVolumeClaim"\n        }\n\n        is_statefulset(obj) {\n          obj.apiVersion == "apps/v1"\n          obj.kind == "StatefulSet"\n        }\n\n        violation[{"msg": msg}] {\n          not data.inventory.cluster["storage.k8s.io/v1"]["StorageClass"]\n          msg := sprintf("StorageClasses not synced. Gatekeeper may be misconfigured. Please have a cluster-admin consult the documentation.", [])\n        }\n\n        storageclass_found(name) {\n          data.inventory.cluster["storage.k8s.io/v1"]["StorageClass"][name]\n        }\n\n        violation[{"msg": pvc_storageclass_badname_msg}] {\n          is_pvc(input.review.object)\n          not storageclass_found(input.review.object.spec.storageClassName)\n        }\n        pvc_storageclass_badname_msg := sprintf("pvc did not specify a valid storage class name <%v>. Must be one of [%v]", args) {\n          input.parameters.includeStorageClassesInMessage\n          args := [\n            input.review.object.spec.storageClassName,\n            concat(", ", [n | data.inventory.cluster["storage.k8s.io/v1"]["StorageClass"][n]])\n          ]\n        } else := sprintf(\n          "pvc did not specify a valid storage class name <%v>.",\n          [input.review.object.spec.storageClassName]\n        )\n\n        violation[{"msg": pvc_storageclass_noname_msg}] {\n          is_pvc(input.review.object)\n          not input.review.object.spec.storageClassName\n        }\n        pvc_storageclass_noname_msg := sprintf("pvc did not specify a storage class name. Must be one of [%v]", args) {\n          input.parameters.includeStorageClassesInMessage\n          args := [\n            concat(", ", [n | data.inventory.cluster["storage.k8s.io/v1"]["StorageClass"][n]])\n          ]\n        } else := sprintf(\n          "pvc did not specify a storage class name.",\n          []\n        )\n\n        violation[{"msg": statefulset_vct_badname_msg(vct)}] {\n          is_statefulset(input.review.object)\n          vct := input.review.object.spec.volumeClaimTemplates[_]\n          not storageclass_found(vct.spec.storageClassName)\n        }\n        statefulset_vct_badname_msg(vct) := msg {\n          input.parameters.includeStorageClassesInMessage\n          msg := sprintf(\n              "statefulset did not specify a valid storage class name <%v>. Must be one of [%v]", [\n              vct.spec.storageClassName,\n              concat(", ", [n | data.inventory.cluster["storage.k8s.io/v1"]["StorageClass"][n]])\n          ])\n        }\n        statefulset_vct_badname_msg(vct) := msg {\n          not input.parameters.includeStorageClassesInMessage\n          msg := sprintf(\n            "statefulset did not specify a valid storage class name <%v>.", [\n              vct.spec.storageClassName\n          ])\n        }\n\n        violation[{"msg": statefulset_vct_noname_msg}] {\n          is_statefulset(input.review.object)\n          vct := input.review.object.spec.volumeClaimTemplates[_]\n          not vct.spec.storageClassName\n        }\n        statefulset_vct_noname_msg := sprintf("statefulset did not specify a storage class name. Must be one of [%v]", args) {\n          input.parameters.includeStorageClassesInMessage\n          args := [\n            concat(", ", [n | data.inventory.cluster["storage.k8s.io/v1"]["StorageClass"][n]])\n          ]\n        } else := sprintf(\n          "statefulset did not specify a storage class name.",\n          []\n        )\n\n        #FIXME pod generic ephemeral might be good to validate some day too.\n',
         },

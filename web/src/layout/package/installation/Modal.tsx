@@ -213,7 +213,7 @@ const InstallationModal = (props: Props) => {
                             return (
                               <KubectlGatekeeperInstall
                                 repository={method.props.repository!}
-                                samples={method.props.samples}
+                                examples={method.props.examples}
                                 relativePath={method.props.relativePath!}
                               />
                             );

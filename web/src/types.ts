@@ -195,7 +195,7 @@ export interface RecommendedPackage {
 
 export interface PackageData {
   policies?: OPAPolicies;
-  samples?: GatekeeperSamples;
+  examples?: GatekeeperExample[];
   rules?: { Raw: string; Name: string }[] | FalcoRules;
   dependencies?: Dependency[];
   customResourcesDefinitionsExamples?: string;
@@ -222,10 +222,16 @@ export interface TektonTaskInPipeline {
   artifacthubRepositoryName?: string;
 }
 
-export interface GatekeeperSamples {
-  [key: string]: string;
+export interface GatekeeperExample {
+  name: string;
+  cases: GatekeeperCase[];
 }
 
+export interface GatekeeperCase {
+  name: string;
+  path: string;
+  content: string;
+}
 export interface OPAPolicies {
   [key: string]: string;
 }
@@ -750,7 +756,6 @@ export enum ContentDefaultModalKind {
   CustomResourcesDefinition,
   Policy,
   Rules,
-  Samples,
 }
 
 export interface ContainerTag {
