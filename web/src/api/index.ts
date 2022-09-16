@@ -92,7 +92,7 @@ class API_CLASS {
     'crds',
     'crdsExamples',
     'crds_examples',
-    'samples',
+    'examples',
     'template',
   ];
   private HEADERS = {

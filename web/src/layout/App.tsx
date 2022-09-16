@@ -136,6 +136,7 @@ export default function App() {
                         visibleTemplate={getQueryParam(location.search, 'template') || undefined}
                         visibleLine={getQueryParam(location.search, 'line') || undefined}
                         compareVersionTo={getQueryParam(location.search, 'compare-to') || undefined}
+                        visibleExample={getQueryParam(location.search, 'example') || undefined}
                         visibleFile={getQueryParam(location.search, 'file') || undefined}
                         visibleVersion={getQueryParam(location.search, 'version') || undefined}
                         visibleValuesPath={getQueryParam(location.search, 'path') || undefined}

@@ -12,6 +12,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
+	gk "github.com/open-policy-agent/gatekeeper/pkg/gator"
 	ignore "github.com/sabhiram/go-gitignore"
 )
 
@@ -20,13 +21,13 @@ const (
 	// contains the raw rules.
 	FalcoRulesKey = "rules"
 
+	// GatekeeperExamplesKey represents the key used in the package's data
+	// field that contains the examples.
+	GatekeeperExamplesKey = "examples"
+
 	// GatekeeperTemplateKey represents the key used in the package's data field
 	// that contains the template.
 	GatekeeperTemplateKey = "template"
-
-	// GatekeeperSamplesKey represents the key used in the package's data field
-	// that contains the samples.
-	GatekeeperSamplesKey = "samples"
 
 	// OPAPoliciesKey represents the key used in the package's data field that
 	// contains the raw policies.
@@ -35,10 +36,6 @@ const (
 	// falcoRulesSuffix is the suffix that each of the rules files in the
 	// package must use.
 	falcoRulesSuffix = "-rules.yaml"
-
-	// gatekeeperSamplesSuffix is the suffix that each of the samples files in
-	// the package must use.
-	gatekeeperSamplesSuffix = ".yaml"
 
 	// opaPoliciesSuffix is the suffix that each of the policies files in the
 	// package must use.
@@ -193,7 +190,7 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 	case hub.Falco:
 		kindData, err = prepareFalcoData(pkgPath, ignorer)
 	case hub.Gatekeeper:
-		kindData, err = prepareGatekeeperData(pkgPath, ignorer)
+		kindData, err = prepareGatekeeperData(pkgPath)
 	case hub.OPA:
 		kindData, err = prepareOPAData(pkgPath, ignorer)
 	}
@@ -230,7 +227,7 @@ func prepareFalcoData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]i
 
 // prepareGatekeeperData reads and formats Gatekeeper specific data available
 // in the path provided, returning the resulting data structure.
-func prepareGatekeeperData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]interface{}, error) {
+func prepareGatekeeperData(pkgPath string) (map[string]interface{}, error) {
 	// Read template file
 	templatePath := path.Join(pkgPath, "template.yaml")
 	template, err := os.ReadFile(templatePath)
@@ -238,17 +235,48 @@ func prepareGatekeeperData(pkgPath string, ignorer ignore.IgnoreParser) (map[str
 		return nil, fmt.Errorf("error reading gatekeeper template file: %w", err)
 	}
 
-	// Read samples files
-	samplesPath := path.Join(pkgPath, "samples")
-	samples, err := getFilesWithSuffix(gatekeeperSamplesSuffix, samplesPath, ignorer)
+	// Read examples
+	suites, err := gk.ReadSuites(os.DirFS(pkgPath), ".", false)
 	if err != nil {
-		return nil, fmt.Errorf("error getting gatekeeper samples files: %w", err)
+		return nil, fmt.Errorf("error reading gatekeeper suite: %w", err)
+	}
+	var examples []*GKExample
+	if len(suites) == 1 {
+		for _, t := range suites[0].Tests {
+			var cases []*GKExampleCase
+			if t.Constraint != "" {
+				content, err := os.ReadFile(path.Join(pkgPath, t.Constraint))
+				if err != nil {
+					return nil, fmt.Errorf("error reading constraint file (%s): %w", t.Constraint, err)
+				}
+				cases = append(cases, &GKExampleCase{
+					Name:    "constraint",
+					Path:    t.Constraint,
+					Content: string(content),
+				})
+			}
+			for _, c := range t.Cases {
+				content, err := os.ReadFile(path.Join(pkgPath, c.Object))
+				if err != nil {
+					return nil, fmt.Errorf("error reading example file (%s): %w", c.Object, err)
+				}
+				cases = append(cases, &GKExampleCase{
+					Name:    c.Name,
+					Path:    c.Object,
+					Content: string(content),
+				})
+			}
+			examples = append(examples, &GKExample{
+				Name:  t.Name,
+				Cases: cases,
+			})
+		}
 	}
 
 	// Return package data field
 	return map[string]interface{}{
 		GatekeeperTemplateKey: string(template),
-		GatekeeperSamplesKey:  samples,
+		GatekeeperExamplesKey: examples,
 	}, nil
 }
 

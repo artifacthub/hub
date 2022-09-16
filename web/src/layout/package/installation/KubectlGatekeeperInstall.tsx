@@ -1,21 +1,21 @@
-import { isNull, isUndefined } from 'lodash';
+import { compact, isNull, isUndefined } from 'lodash';
 import { memo } from 'react';
 
-import { GatekeeperSamples, Repository } from '../../../types';
+import { GatekeeperCase, GatekeeperExample, Repository } from '../../../types';
 import CommandBlock from './CommandBlock';
 import styles from './ContentInstall.module.css';
 import PrivateRepoWarning from './PrivateRepoWarning';
 
 interface Props {
   repository: Repository;
-  samples?: GatekeeperSamples;
-  relativePath: string;
+  examples?: GatekeeperExample[];
+  relativePath?: string;
 }
 
 const KubectlGatekeeperInstall = (props: Props) => {
-  const firstSample: string | null = !isUndefined(props.samples) ? Object.keys(props.samples)[0] : null;
+  const firstSample: GatekeeperCase | null = !isUndefined(props.examples) ? props.examples[0].cases[0] : null;
   const repoUrl: URL = new URL(props.repository.url);
-  const splittedPath: string[] = repoUrl.pathname.split('/');
+  const splittedPath: string[] = compact(repoUrl.pathname.split('/'));
 
   return (
     <div className={`mt-3 ${styles.gatekeeperInstallContent}`}>
@@ -26,9 +26,9 @@ const KubectlGatekeeperInstall = (props: Props) => {
       </p>
 
       <CommandBlock
-        command={`git clone ${repoUrl.origin}${splittedPath.slice(0, -1).join('/')}
+        command={`git clone ${repoUrl.origin}${splittedPath.slice(0, splittedPath.length - 1).join('/')}
 cd ${splittedPath[splittedPath.length - 1]}${props.relativePath}
-kubectl apply -f template.yaml ${!isNull(firstSample) ? `\nkubectl apply -f samples/${firstSample}` : ''}
+kubectl apply -f template.yaml ${!isNull(firstSample) ? `\nkubectl apply -f ${firstSample.path}` : ''}
 `}
       />
 

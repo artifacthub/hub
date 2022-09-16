@@ -50,7 +50,7 @@ exports[`KubectlGatekeeperInstall creates snapshot 1`] = `
               clone
             </span>
             <span>
-               https://github.com/tegioz/gatekeeper-library
+               https://github.comtegioz/gatekeeper-library
 
             </span>
             <span />
@@ -64,7 +64,7 @@ exports[`KubectlGatekeeperInstall creates snapshot 1`] = `
 
             </span>
             kubectl apply -f template.yaml 
-kubectl apply -f samples/storageclass/constraint.yaml
+kubectl apply -f samples/container-must-meet-ratio/constraint.yaml
 
           </code>
         </pre>

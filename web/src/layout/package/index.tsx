@@ -21,6 +21,7 @@ import {
   CustomResourcesDefinitionExample,
   ErrorKind,
   FalcoRules,
+  GatekeeperExample,
   Package,
   PackageLink,
   PackageViewsStats,
@@ -53,6 +54,7 @@ import SubNavbar from '../navigation/SubNavbar';
 import ChangelogModal from './changelog/Modal';
 import ChartTemplatesModal from './chartTemplates';
 import Details from './Details';
+import GatekeeperExamplesModal from './GatekeeperExamplesModal';
 import InProductionButton from './InProductionButton';
 import InstallationModal from './installation/Modal';
 import ModalHeader from './ModalHeader';
@@ -88,6 +90,7 @@ interface Props {
   visibleTemplate?: string;
   compareVersionTo?: string;
   visibleFile?: string;
+  visibleExample?: string;
   visibleLine?: string;
   visibleVersion?: string;
 }
@@ -362,23 +365,18 @@ const PackageView = (props: Props) => {
     return policies;
   };
 
-  const getGatekeeperSamples = (): ContentDefaultModalItem[] | undefined => {
-    let samples: ContentDefaultModalItem[] | undefined;
+  const getGatekeeperExamples = (): GatekeeperExample[] | undefined => {
+    let examples: GatekeeperExample[] | undefined;
     if (
       !isUndefined(detail) &&
       !isNull(detail) &&
       !isNull(detail.data) &&
       !isUndefined(detail.data) &&
-      !isUndefined(detail.data.samples)
+      !isUndefined(detail.data.examples)
     ) {
-      samples = Object.keys(detail.data.samples).map((sampleName: string) => {
-        return {
-          name: sampleName,
-          file: detail.data!.samples![sampleName],
-        };
-      });
+      examples = detail.data.examples;
     }
-    return samples;
+    return examples;
   };
 
   const getManifestRaw = (): string | undefined => {
@@ -988,26 +986,21 @@ const PackageView = (props: Props) => {
                           </div>
 
                           <div className="d-none d-lg-block">
-                            <ContentDefaultModal
-                              kind={ContentDefaultModalKind.Samples}
+                            <GatekeeperExamplesModal
                               packageId={detail.packageId}
-                              modalName="samples"
-                              language="yaml"
-                              visibleModal={!isUndefined(props.visibleModal) && props.visibleModal === 'samples'}
+                              visibleModal={!isUndefined(props.visibleModal) && props.visibleModal === 'examples'}
+                              visibleExample={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
+                                  ? props.visibleExample
+                                  : undefined
+                              }
                               visibleFile={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'samples'
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
                                   ? props.visibleFile
                                   : undefined
                               }
-                              btnModalContent={
-                                <div className="d-flex flex-row align-items-center justify-content-center">
-                                  <FiCode />
-                                  <span className="ms-2 fw-bold text-uppercase">Samples</span>
-                                </div>
-                              }
                               normalizedName={detail.normalizedName}
-                              title="Samples"
-                              files={getGatekeeperSamples() as any}
+                              examples={getGatekeeperExamples()}
                               searchUrlReferer={props.searchUrlReferer}
                               fromStarredPage={props.fromStarredPage}
                             />

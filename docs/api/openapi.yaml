@@ -3408,10 +3408,39 @@ components:
                         metadata.gatekeeper.sh/title: "Kubernetes Allowed Repositories"
                         description: >-
                           Requires container images to begin with a string from the specified list.
-                samples:
-                  type: object
+                examples:
+                  type: array
                   nullable: false
-                  additionalProperties: true
+                  items:
+                    type: object
+                    nullable: false
+                    properties:
+                      name:
+                        type: string
+                        nullable: false
+                      cases:
+                        type: array
+                        nullable: false
+                        items:
+                          type: object
+                          nullable: false
+                          properties:
+                            name:
+                              type: string
+                              nullable: false
+                            path:
+                              type: string
+                              nullable: false
+                            content:
+                              type: string
+                              nullable: false
+                  example:
+                    - name: memory-ratio-only
+                      cases:
+                        - name: constraint
+                          path: samples/container-must-meet-ratio/constraint.yaml
+                          content: >-
+                            apiVersion: constraints.gatekeeper.sh/v1beta1
     HelmPackage:
       allOf:
         - $ref: "#/components/schemas/Package"

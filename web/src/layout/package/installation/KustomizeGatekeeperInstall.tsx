@@ -1,5 +1,6 @@
 import { Repository } from '../../../types';
 import removeProtocol from '../../../utils/removeUrlProtocol';
+import trimPrefix from '../../../utils/trimPrefix';
 import ExternalLink from '../../common/ExternalLink';
 import CommandBlock from './CommandBlock';
 import styles from './ContentInstall.module.css';
@@ -23,7 +24,7 @@ const KustomizeGatekeeperInstall = (props: Props) => {
         command={`apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ${url}${props.relativePath}
+  - ${url}${url.endsWith('/') ? trimPrefix('/', props.relativePath) : props.relativePath}
   - constraints.yaml`}
         language="yaml"
       />
