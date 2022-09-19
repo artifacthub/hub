@@ -95,7 +95,7 @@ image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag
 imagePullPolicy: {{ .Values.pullPolicy }}
 {{- with .Values.hub.deploy.initContainers.checkDbIsReady.resources }}
 resources:
-  {{ toYaml . | indent 2 | trim }}
+  {{-  toYaml . | nindent 2 }}
 {{- end }}
 env:
   - name: PGHOST

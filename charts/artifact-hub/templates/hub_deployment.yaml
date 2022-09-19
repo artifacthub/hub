@@ -40,7 +40,7 @@ spec:
           imagePullPolicy: IfNotPresent
           {{- with .Values.hub.deploy.initContainers.checkDbMigrator.resources }}
           resources:
-            {{ toYaml . | indent 12 | trim }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           command: ['kubectl', 'wait', '--namespace={{ .Release.Namespace }}', '--for=condition=complete', 'job/{{ include "chart.resourceNamePrefix" . }}db-migrator-install', '--timeout=60s']
         {{- end }}
@@ -70,7 +70,7 @@ spec:
               protocol: TCP
           {{- with .Values.hub.deploy.resources }}
           resources:
-            {{ toYaml . | indent 12 | trim }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- if .Values.hub.deploy.livenessProbe }}
           livenessProbe:
