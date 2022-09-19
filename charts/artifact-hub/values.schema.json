@@ -281,7 +281,7 @@
                                 },
                                 "checkDbIsReady": {
                                     "title": "Check DB readiness",
-                                    "type": "object",
+                                    "type": ["object","null"],
                                     "properties": {
                                         "resources": {
                                             "title": "Check DB readiness pod resource requirements",
