@@ -34,8 +34,10 @@ spec:
             - name: http
               containerPort: 8081
               protocol: TCP
+          {{- with .Values.trivy.deploy.resources }}
           resources:
-            {{- toYaml .Values.trivy.deploy.resources | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       volumes:
         - name: trivy
         {{- if .Values.trivy.persistence.enabled }}

@@ -326,8 +326,7 @@
                     },
                     "required": [
                         "image",
-                        "replicaCount",
-                        "resources"
+                        "replicaCount"
                     ]
                 },
                 "ingress": {
@@ -929,8 +928,7 @@
                         }
                     },
                     "required": [
-                        "image",
-                        "resources"
+                        "image"
                     ]
                 },
                 "enabled": {
@@ -1020,8 +1018,7 @@
                         }
                     },
                     "required": [
-                        "image",
-                        "resources"
+                        "image"
                     ]
                 },
                 "repositoryTimeout": {
@@ -1097,8 +1094,7 @@
                         }
                     },
                     "required": [
-                        "image",
-                        "resources"
+                        "image"
                     ]
                 },
                 "persistence": {

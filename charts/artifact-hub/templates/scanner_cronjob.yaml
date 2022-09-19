@@ -27,8 +27,10 @@ spec:
             - name: scanner
               image: {{ .Values.scanner.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
               imagePullPolicy: {{ .Values.pullPolicy }}
+              {{- with .Values.scanner.cronjob.resources }}
               resources:
-                {{- toYaml .Values.scanner.cronjob.resources | nindent 16 }}
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
               {{- if .Values.scanner.cacheDir }}
               env:
                 - name: TRIVY_CACHE_DIR
