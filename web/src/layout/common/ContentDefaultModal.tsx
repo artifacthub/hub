@@ -42,6 +42,10 @@ const FILE_TYPE = {
     singular: 'rules',
     plural: 'rules',
   },
+  [ContentDefaultModalKind.Examples]: {
+    singular: 'example',
+    plural: 'examples',
+  },
 };
 
 const ContentDefaultModal = (props: Props) => {
@@ -188,6 +192,7 @@ const ContentDefaultModal = (props: Props) => {
       case ContentDefaultModalKind.Rules:
         return `${props.normalizedName}-${selectedItem.name.replace('.yaml', '')}.yaml`;
       case ContentDefaultModalKind.Policy:
+      case ContentDefaultModalKind.Examples:
         return `${props.normalizedName}-${selectedItem.name}`;
     }
   };

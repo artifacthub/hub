@@ -403,6 +403,11 @@ describe('Package index', () => {
 
       expect(await screen.findByText('Manifest')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Open Manifest' })).toBeInTheDocument();
+
+      expect(await screen.findByText('Examples')).toBeInTheDocument();
+      expect(await screen.findByText('Supported Platforms')).toBeInTheDocument();
+      const platforms = screen.getAllByTestId('platformBadge');
+      expect(platforms).toHaveLength(3);
     });
   });
 

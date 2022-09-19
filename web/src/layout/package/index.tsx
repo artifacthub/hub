@@ -365,16 +365,38 @@ const PackageView = (props: Props) => {
     return policies;
   };
 
+  const getTektonExamples = (): ContentDefaultModalItem[] | undefined => {
+    let examples: ContentDefaultModalItem[] | undefined;
+    if (
+      !isUndefined(detail) &&
+      !isNull(detail) &&
+      [RepositoryKind.TektonTask, RepositoryKind.TektonPipeline].includes(detail.repository.kind) &&
+      !isNull(detail.data) &&
+      !isUndefined(detail.data) &&
+      !isUndefined(detail.data.examples)
+    ) {
+      const currentExamples = detail.data!.examples! as { [key: string]: string };
+      examples = Object.keys(currentExamples).map((exampleName: string) => {
+        return {
+          name: exampleName,
+          file: currentExamples[exampleName],
+        };
+      });
+    }
+    return examples;
+  };
+
   const getGatekeeperExamples = (): GatekeeperExample[] | undefined => {
     let examples: GatekeeperExample[] | undefined;
     if (
       !isUndefined(detail) &&
       !isNull(detail) &&
+      detail.repository.kind === RepositoryKind.Gatekeeper &&
       !isNull(detail.data) &&
       !isUndefined(detail.data) &&
       !isUndefined(detail.data.examples)
     ) {
-      examples = detail.data.examples;
+      examples = detail.data.examples as GatekeeperExample[];
     }
     return examples;
   };
@@ -980,6 +1002,32 @@ const PackageView = (props: Props) => {
                               normalizedName={detail.normalizedName}
                               title="Policies"
                               files={getOPAPolicies() as any}
+                              searchUrlReferer={props.searchUrlReferer}
+                              fromStarredPage={props.fromStarredPage}
+                            />
+                          </div>
+
+                          <div className="d-none d-lg-block">
+                            <ContentDefaultModal
+                              kind={ContentDefaultModalKind.Examples}
+                              packageId={detail.packageId}
+                              modalName="examples"
+                              language="yaml"
+                              visibleModal={!isUndefined(props.visibleModal) && props.visibleModal === 'examples'}
+                              visibleFile={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
+                                  ? props.visibleFile
+                                  : undefined
+                              }
+                              btnModalContent={
+                                <div className="d-flex flex-row align-items-center justify-content-center">
+                                  <FiCode />
+                                  <span className="ms-2 fw-bold text-uppercase">Examples</span>
+                                </div>
+                              }
+                              normalizedName={detail.normalizedName}
+                              title="Examples"
+                              files={getTektonExamples() as any}
                               searchUrlReferer={props.searchUrlReferer}
                               fromStarredPage={props.fromStarredPage}
                             />

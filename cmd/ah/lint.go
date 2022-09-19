@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path"
 	"path/filepath"
 	"reflect"
 	"strconv"
 	"strings"
 
+	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/tracker/source/generic"
@@ -369,43 +371,60 @@ func lintOLM(basePath string) *lintReport {
 // on Artifact Hub.
 func lintTekton(basePath string, kind hub.RepositoryKind) *lintReport {
 	report := &lintReport{}
+	repository := &hub.Repository{
+		Kind: kind,
+		URL:  "https://github.com/user/repo/path",
+	}
 
-	// Walk the path provided looking for available Tekton tasks
-	_ = filepath.Walk(basePath, func(pkgPath string, info os.FileInfo, err error) error {
-		// If an error is raised while visiting a path or the path is not a
-		// directory, we skip it
-		if err != nil || !info.IsDir() {
-			return nil
+	// Read catalog path to get available packages
+	packages, err := os.ReadDir(basePath)
+	if err != nil {
+		return report
+	}
+	for _, p := range packages {
+		// If the path is not a directory, we skip it
+		if !p.IsDir() {
+			continue
 		}
 
-		// Initialize report entry. If a package is found in the current path,
-		// errors found while processing it will be added to the report.
-		e := &lintReportEntry{
-			path: pkgPath,
+		// Read package versions
+		pkgName := p.Name()
+		pkgBasePath := path.Join(basePath, pkgName)
+		versions, err := os.ReadDir(pkgBasePath)
+		if err != nil {
+			continue
 		}
-
-		// Get manifest and prepare package
-		manifest, manifestRaw, err := tekton.GetManifest(kind, pkgPath)
-		switch {
-		case err != nil:
-			e.result = multierror.Append(e.result, err)
-		case manifest == nil:
-			// Package manifest not found, not a package path
-			return nil
-		default:
-			repo := &hub.Repository{
-				Kind: kind,
-				URL:  "https://github.com/user/repo/path",
+		for _, v := range versions {
+			// If the path is not a directory or a ~valid semver version, we skip it
+			if !p.IsDir() {
+				continue
 			}
-			e.pkg, err = tekton.PreparePackage(repo, manifest, manifestRaw, basePath, pkgPath)
+			if _, err := semver.NewVersion(v.Name()); err != nil {
+				continue
+			}
+
+			// Initialize report entry. If a package is found in the current path,
+			// errors found while processing it will be added to the report.
+			pkgPath := path.Join(pkgBasePath, v.Name())
+			e := &lintReportEntry{
+				path: pkgPath,
+			}
+
+			// Get package manifest
+			manifest, manifestRaw, err := tekton.GetManifest(kind, pkgName, pkgPath)
 			if err != nil {
 				e.result = multierror.Append(e.result, err)
+			} else {
+				// Prepare package version
+				e.pkg, err = tekton.PreparePackage(repository, manifest, manifestRaw, basePath, pkgPath)
+				if err != nil {
+					e.result = multierror.Append(e.result, err)
+				}
 			}
-		}
 
-		report.entries = append(report.entries, e)
-		return nil
-	})
+			report.entries = append(report.entries, e)
+		}
+	}
 
 	return report
 }
