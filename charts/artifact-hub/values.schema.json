@@ -272,7 +272,7 @@
                                             }
                                         },
                                         "resources": {
-                                            "title": "Hub pod resource requirements",
+                                            "title": "Check DB migrator pod resource requirements",
                                             "type": "object",
                                             "default": {},
                                             "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
@@ -284,7 +284,7 @@
                                     "type": "object",
                                     "properties": {
                                         "resources": {
-                                            "title": "Hub pod resource requirements",
+                                            "title": "Check DB readiness pod resource requirements",
                                             "type": "object",
                                             "default": {},
                                             "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
