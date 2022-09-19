@@ -3773,6 +3773,16 @@ components:
                       example:
                         - task1
                         - task2
+                examples:
+                  type: object
+                  nullable: false
+                  additionalProperties: true
+                platforms:
+                  type: array
+                  items:
+                    type: string
+                    nullable: false
+                    example: darwin/amd64
     TektonTaskPackage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -3789,6 +3799,16 @@ components:
                   additionalProperties:
                     type: string
                   example: "apiVersion: tekton.dev/v1beta1"
+                examples:
+                  type: object
+                  nullable: false
+                  additionalProperties: true
+                platforms:
+                  type: array
+                  items:
+                    type: string
+                    nullable: false
+                    example: darwin/amd64
     Package:
       allOf:
         - $ref: "#/components/schemas/PackageBase"

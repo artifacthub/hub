@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -12,24 +13,48 @@ import (
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker/source"
+	"github.com/artifacthub/hub/internal/tracker/source/generic"
 	"github.com/ghodss/yaml"
 	"github.com/hashicorp/go-multierror"
 	"github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
 )
 
 const (
-	// PipelinesMinVersionKey represents the key used in the package's data
-	// field that contains the minimum pipelines version supported.
+	// Keys used in labels and annotations in the Tekton's manifest file.
+
+	// displayNameTKey defines the package's display name.
+	displayNameTKey = "tekton.dev/displayName"
+
+	// pipelinesMinVersionTKey defines the minimum pipelines version supported.
+	pipelinesMinVersionTKey = "tekton.dev/pipelines.minVersion"
+
+	// platformsTKey define the package supported plaatforms.
+	platformsTKey = "tekton.dev/platforms"
+
+	// tagsTKey define the package tags.
+	tagsTKey = "tekton.dev/tags"
+
+	// versionLabelTKey defines the package version.
+	versionLabelTKey = "app.kubernetes.io/version"
+
+	// Keys used in Artifact Hub package's data field.
+
+	// ExamplesKey defines the package examples.
+	ExamplesKey = "examples"
+
+	// PipelinesMinVersionKey defines the minimum pipelines version supported.
 	PipelinesMinVersionKey = "pipelines.minVersion"
 
-	// RawManifestKey represents the key used in the package's data field that
-	// contains the raw manifest.
+	// PlatformsKey define the package supported plaatforms.
+	PlatformsKey = "platforms"
+
+	// RawManifestKey defines the raw manifest.
 	RawManifestKey = "manifestRaw"
 
-	// TasksKey represents the key used in the package's data field that
-	// contains a list with the pipeline's tasks.
+	// TasksKey defines a list with the pipeline's tasks.
 	TasksKey = "tasks"
 
+	// Keys used for Artifact Hub specific annotations.
 	changesAnnotation         = "artifacthub.io/changes"
 	licenseAnnotation         = "artifacthub.io/license"
 	linksAnnotation           = "artifacthub.io/links"
@@ -38,7 +63,8 @@ const (
 	recommendationsAnnotation = "artifacthub.io/recommendations"
 	screenshotsAnnotation     = "artifacthub.io/screenshots"
 
-	versionLabelKey = "app.kubernetes.io/version"
+	// examplesPath defines the location of the examples in the package's path.
+	examplesPath = "samples"
 )
 
 var (
@@ -60,53 +86,57 @@ func NewTrackerSource(i *hub.TrackerSourceInput) *TrackerSource {
 func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) {
 	packagesAvailable := make(map[string]*hub.Package)
 
-	// Walk the path provided looking for available packages
-	err := filepath.Walk(s.i.BasePath, func(pkgPath string, info os.FileInfo, err error) error {
+	// Read catalog path to get available packages
+	packages, err := os.ReadDir(s.i.BasePath)
+	if err != nil {
+		return nil, fmt.Errorf("error reading catalog directory: %w", err)
+	}
+	for _, p := range packages {
 		// Return ASAP if context is cancelled
 		select {
 		case <-s.i.Svc.Ctx.Done():
-			return s.i.Svc.Ctx.Err()
+			return nil, s.i.Svc.Ctx.Err()
 		default:
 		}
 
-		// If an error is raised while visiting a path or the path is not a
-		// directory, we skip it
-		if err != nil || !info.IsDir() {
-			return nil
+		// If the path is not a directory, we skip it
+		if !p.IsDir() {
+			continue
 		}
 
-		// Get package manifest
-		manifest, manifestRaw, err := GetManifest(s.i.Repository.Kind, pkgPath)
+		// Read package versions
+		pkgName := p.Name()
+		pkgBasePath := path.Join(s.i.BasePath, pkgName)
+		versions, err := os.ReadDir(pkgBasePath)
 		if err != nil {
-			s.warn(fmt.Errorf("error getting package manifest (path: %s): %w", pkgPath, err))
-			return nil
+			s.warn(fmt.Errorf("error reading package %s versions: %w", pkgName, err))
+			continue
 		}
-		if manifest == nil {
-			// Package manifest not found, not a package path
-			return nil
-		}
-		var name, version string
-		switch m := manifest.(type) {
-		case *v1beta1.Task:
-			name = m.Name
-			version = m.Labels[versionLabelKey]
-		case *v1beta1.Pipeline:
-			name = m.Name
-			version = m.Labels[versionLabelKey]
-		}
+		for _, v := range versions {
+			// If the path is not a directory or a ~valid semver version, we skip it
+			if !p.IsDir() {
+				continue
+			}
+			if _, err := semver.NewVersion(v.Name()); err != nil {
+				continue
+			}
 
-		// Prepare and store package version
-		p, err := PreparePackage(s.i.Repository, manifest, manifestRaw, s.i.BasePath, pkgPath)
-		if err != nil {
-			s.warn(fmt.Errorf("error preparing package %s version %s: %w", name, version, err))
-			return nil
-		}
-		packagesAvailable[pkg.BuildKey(p)] = p
+			// Get package manifest
+			pkgPath := path.Join(pkgBasePath, v.Name())
+			manifest, manifestRaw, err := GetManifest(s.i.Repository.Kind, pkgName, pkgPath)
+			if err != nil {
+				s.warn(fmt.Errorf("error getting package manifest (path: %s): %w", pkgPath, err))
+				continue
+			}
 
-		return nil
-	})
-	if err != nil {
-		return nil, err
+			// Prepare and store package version
+			p, err := PreparePackage(s.i.Repository, manifest, manifestRaw, s.i.BasePath, pkgPath)
+			if err != nil {
+				s.warn(fmt.Errorf("error preparing package %s version %s: %w", pkgName, v.Name(), err))
+				continue
+			}
+			packagesAvailable[pkg.BuildKey(p)] = p
+		}
 	}
 
 	return packagesAvailable, nil
@@ -119,52 +149,28 @@ func (s *TrackerSource) warn(err error) {
 	s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
 }
 
-// GetManifest reads and parses the package manifest, which can be a Tekton
-// task or a pipeline manifest.
-func GetManifest(kind hub.RepositoryKind, pkgPath string) (interface{}, []byte, error) {
-	// Locate manifest file
-	matches, err := filepath.Glob(filepath.Join(pkgPath, "*.yaml"))
+// GetManifest reads, parses and validates the package manifest, which can be a
+// Tekton task or a pipeline manifest.
+func GetManifest(kind hub.RepositoryKind, pkgName, pkgPath string) (interface{}, []byte, error) {
+	manifestPath := path.Join(pkgPath, pkgName+".yaml")
+	manifestData, err := os.ReadFile(manifestPath)
 	if err != nil {
-		return nil, nil, fmt.Errorf("error locating manifest file: %w", err)
+		return nil, nil, err
 	}
-	if len(matches) != 1 {
-		return nil, nil, nil
+	var manifest interface{}
+	switch kind {
+	case hub.TektonTask:
+		manifest = &v1beta1.Task{}
+	case hub.TektonPipeline:
+		manifest = &v1beta1.Pipeline{}
 	}
-
-	// Process matches, returning the first valid resource manifest found
-	for _, match := range matches {
-		// Read and parse manifest file
-		manifestData, err := os.ReadFile(match)
-		if err != nil {
-			continue
-		}
-		var manifest interface{}
-		switch kind {
-		case hub.TektonTask:
-			manifest = &v1beta1.Task{}
-		case hub.TektonPipeline:
-			manifest = &v1beta1.Pipeline{}
-		}
-		if err := yaml.Unmarshal(manifestData, &manifest); err != nil {
-			continue
-		}
-		switch m := manifest.(type) {
-		case *v1beta1.Task:
-			if m.Kind != "Task" && m.Kind != "ClusterTask" {
-				continue
-			}
-		case *v1beta1.Pipeline:
-			if m.Kind != "Pipeline" {
-				continue
-			}
-		}
-		if err := validateManifest(manifest); err != nil {
-			return nil, nil, fmt.Errorf("error validating manifest: %w", err)
-		}
-		return manifest, manifestData, nil
+	if err := yaml.Unmarshal(manifestData, &manifest); err != nil {
+		return nil, nil, err
 	}
-
-	return nil, nil, nil
+	if err := validateManifest(manifest); err != nil {
+		return nil, nil, fmt.Errorf("error validating manifest: %w", err)
+	}
+	return manifest, manifestData, nil
 }
 
 // validateManifest checks if the Tekton manifest provided is valid.
@@ -176,11 +182,11 @@ func validateManifest(manifest interface{}) error {
 	switch m := manifest.(type) {
 	case *v1beta1.Task:
 		name = m.Name
-		version = m.Labels[versionLabelKey]
+		version = m.Labels[versionLabelTKey]
 		description = m.Spec.Description
 	case *v1beta1.Pipeline:
 		name = m.Name
-		version = m.Labels[versionLabelKey]
+		version = m.Labels[versionLabelTKey]
 		description = m.Spec.Description
 	}
 
@@ -217,13 +223,13 @@ func PreparePackage(
 	case *v1beta1.Task:
 		tektonKind = "task"
 		name = m.Name
-		version = m.Labels[versionLabelKey]
+		version = m.Labels[versionLabelTKey]
 		description = m.Spec.Description
 		annotations = m.Annotations
 	case *v1beta1.Pipeline:
 		tektonKind = "pipeline"
 		name = m.Name
-		version = m.Labels[versionLabelKey]
+		version = m.Labels[versionLabelTKey]
 		description = m.Spec.Description
 		annotations = m.Annotations
 		for _, task := range m.Spec.Tasks {
@@ -234,8 +240,11 @@ func PreparePackage(
 		}
 	}
 
-	// Parse version (previously validated)
-	sv, _ := semver.NewVersion(version)
+	// Prepare version
+	sv, err := semver.NewVersion(version)
+	if err != nil {
+		return nil, fmt.Errorf("invalid semver version (%s): %w", version, err)
+	}
 	version = sv.String()
 
 	// Prepare keywords
@@ -243,27 +252,81 @@ func PreparePackage(
 		"tekton",
 		tektonKind,
 	}
-	tags := strings.Split(annotations["tekton.dev/tags"], ",")
+	tags := strings.Split(annotations[tagsTKey], ",")
 	for _, tag := range tags {
 		keywords = append(keywords, strings.TrimSpace(tag))
 	}
 
-	// Prepare package from manifest
+	// Prepare package from manifest information
 	p := &hub.Package{
 		Name:        name,
 		Version:     version,
-		DisplayName: annotations["tekton.dev/displayName"],
+		DisplayName: annotations[displayNameTKey],
 		Description: description,
 		Keywords:    keywords,
 		Repository:  r,
 		Data: map[string]interface{}{
-			PipelinesMinVersionKey: annotations["tekton.dev/pipelines.minVersion"],
+			PipelinesMinVersionKey: annotations[pipelinesMinVersionTKey],
 			RawManifestKey:         string(manifestRaw),
 			TasksKey:               tasks,
 		},
 	}
 
-	// Prepare content and source urls whenever possible
+	// Include content and source links
+	contentURL, sourceURL := prepareContentAndSourceLinks(r, basePath, pkgPath, name)
+	p.ContentURL = contentURL
+	if sourceURL != "" {
+		p.Links = append(p.Links, &hub.Link{
+			Name: "source",
+			URL:  sourceURL,
+		})
+	}
+
+	// Include supported platforms
+	if annotations[platformsTKey] != "" {
+		tmp := strings.Split(annotations[platformsTKey], ",")
+		platforms := make([]string, 0, len(tmp))
+		for _, platform := range tmp {
+			platforms = append(platforms, strings.TrimSpace(platform))
+		}
+		p.Data[PlatformsKey] = platforms
+	}
+
+	// Include readme file
+	readme, err := os.ReadFile(filepath.Join(pkgPath, "README.md"))
+	if err == nil {
+		p.Readme = string(readme)
+	}
+
+	// Include examples files
+	examples, err := generic.GetFilesWithSuffix(".yaml", path.Join(pkgPath, examplesPath), nil)
+	if err != nil {
+		if !errors.Is(err, os.ErrNotExist) {
+			return nil, fmt.Errorf("error getting examples files: %w", err)
+		}
+	} else {
+		if len(examples) > 0 {
+			p.Data[ExamplesKey] = examples
+		}
+	}
+
+	// Enrich package with information from annotations
+	if err := enrichPackageFromAnnotations(p, annotations); err != nil {
+		return nil, fmt.Errorf("error enriching package %s version %s: %w", name, version, err)
+	}
+
+	return p, nil
+}
+
+// prepareContentAndSourceLinks prepares the content and source urls for the
+// git provider identified from the host part in the repository url.
+func prepareContentAndSourceLinks(
+	r *hub.Repository,
+	basePath string,
+	pkgPath string,
+	pkgName string,
+) (string, string) {
+	// Parse repository url
 	var repoBaseURL, host, pkgsPath string
 	matches := repo.GitRepoURLRE.FindStringSubmatch(r.URL)
 	if len(matches) >= 3 {
@@ -273,42 +336,24 @@ func PreparePackage(
 	if len(matches) == 4 {
 		pkgsPath = strings.TrimSuffix(matches[3], "/")
 	}
+
+	// Generate content and source url for the corresponding git provider
 	var contentURL, sourceURL string
 	branch := repo.GetBranch(r)
-	pkgVersionPath := strings.TrimPrefix(pkgPath, basePath)
+	pkgRelativePath := strings.TrimPrefix(pkgPath, basePath)
 	switch host {
 	case "bitbucket.org":
-		contentURL = fmt.Sprintf("%s/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgVersionPath, name)
-		sourceURL = fmt.Sprintf("%s/src/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgVersionPath, name)
+		contentURL = fmt.Sprintf("%s/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, pkgName)
+		sourceURL = fmt.Sprintf("%s/src/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, pkgName)
 	case "github.com":
-		contentURL = fmt.Sprintf("%s/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgVersionPath, name)
-		sourceURL = fmt.Sprintf("%s/blob/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgVersionPath, name)
+		contentURL = fmt.Sprintf("%s/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, pkgName)
+		sourceURL = fmt.Sprintf("%s/blob/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, pkgName)
 	case "gitlab.com":
-		contentURL = fmt.Sprintf("%s/-/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgVersionPath, name)
-		sourceURL = fmt.Sprintf("%s/-/blob/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgVersionPath, name)
-	}
-	if contentURL != "" {
-		p.ContentURL = contentURL
-	}
-	if sourceURL != "" {
-		p.Links = append(p.Links, &hub.Link{
-			Name: "source",
-			URL:  sourceURL,
-		})
+		contentURL = fmt.Sprintf("%s/-/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, pkgName)
+		sourceURL = fmt.Sprintf("%s/-/blob/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, pkgName)
 	}
 
-	// Include readme file if available
-	readme, err := os.ReadFile(filepath.Join(pkgPath, "README.md"))
-	if err == nil {
-		p.Readme = string(readme)
-	}
-
-	// Enrich package with information from annotations
-	if err := enrichPackageFromAnnotations(p, annotations); err != nil {
-		return nil, fmt.Errorf("error enriching package %s version %s: %w", name, version, err)
-	}
-
-	return p, nil
+	return contentURL, sourceURL
 }
 
 // enrichPackageFromAnnotations adds some extra information to the package from

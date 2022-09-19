@@ -214,9 +214,12 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 // provided, returning the resulting data structure.
 func prepareFalcoData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]interface{}, error) {
 	// Read rules files
-	files, err := getFilesWithSuffix(falcoRulesSuffix, pkgPath, ignorer)
+	files, err := GetFilesWithSuffix(falcoRulesSuffix, pkgPath, ignorer)
 	if err != nil {
 		return nil, fmt.Errorf("error getting falco rules files: %w", err)
+	}
+	if len(files) == 0 {
+		return nil, errors.New("no falco rules files found")
 	}
 
 	// Return package data field
@@ -284,9 +287,12 @@ func prepareGatekeeperData(pkgPath string) (map[string]interface{}, error) {
 // provided, returning the resulting data structure.
 func prepareOPAData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]interface{}, error) {
 	// Read policies files
-	files, err := getFilesWithSuffix(opaPoliciesSuffix, pkgPath, ignorer)
+	files, err := GetFilesWithSuffix(opaPoliciesSuffix, pkgPath, ignorer)
 	if err != nil {
 		return nil, fmt.Errorf("error getting opa policies files: %w", err)
+	}
+	if len(files) == 0 {
+		return nil, errors.New("no opa policies files found")
 	}
 
 	// Return package data field
@@ -295,9 +301,9 @@ func prepareOPAData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]int
 	}, nil
 }
 
-// getFilesWithSuffix returns the files with a given suffix in the path
+// GetFilesWithSuffix returns the files with a given suffix in the path
 // provided, ignoring the ones the ignorer matches.
-func getFilesWithSuffix(suffix, rootPath string, ignorer ignore.IgnoreParser) (map[string]string, error) {
+func GetFilesWithSuffix(suffix, rootPath string, ignorer ignore.IgnoreParser) (map[string]string, error) {
 	files := make(map[string]string)
 	err := filepath.Walk(rootPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -307,7 +313,7 @@ func getFilesWithSuffix(suffix, rootPath string, ignorer ignore.IgnoreParser) (m
 			return nil
 		}
 		name := strings.TrimPrefix(path, rootPath+"/")
-		if ignorer.MatchesPath(name) {
+		if ignorer != nil && ignorer.MatchesPath(name) {
 			return nil
 		}
 		if !strings.HasSuffix(info.Name(), suffix) {
@@ -322,9 +328,6 @@ func getFilesWithSuffix(suffix, rootPath string, ignorer ignore.IgnoreParser) (m
 	})
 	if err != nil {
 		return nil, err
-	}
-	if len(files) == 0 {
-		return nil, errors.New("no files found")
 	}
 	return files, nil
 }

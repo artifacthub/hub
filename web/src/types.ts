@@ -195,7 +195,7 @@ export interface RecommendedPackage {
 
 export interface PackageData {
   policies?: OPAPolicies;
-  examples?: GatekeeperExample[];
+  examples?: GatekeeperExample[] | { [key: string]: string };
   rules?: { Raw: string; Name: string }[] | FalcoRules;
   dependencies?: Dependency[];
   customResourcesDefinitionsExamples?: string;
@@ -756,6 +756,7 @@ export enum ContentDefaultModalKind {
   CustomResourcesDefinition,
   Policy,
   Rules,
+  Examples,
 }
 
 export interface ContainerTag {

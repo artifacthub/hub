@@ -288,7 +288,7 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
               kind: InstallMethodKind.KubectlGatekeeperInstall,
               props: {
                 repository: pkg.repository,
-                examples: pkg.data!.examples,
+                examples: pkg.data!.examples as GatekeeperExample[],
                 relativePath: pkg.relativePath!,
               },
             }

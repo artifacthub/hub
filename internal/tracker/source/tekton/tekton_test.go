@@ -128,6 +128,10 @@ func TestTrackerSource(t *testing.T) {
 				PipelinesMinVersionKey: "0.12.1",
 				RawManifestKey:         string(manifestRaw),
 				TasksKey:               tasks,
+				PlatformsKey:           []string{"linux/amd64", "linux/arm64"},
+				ExamplesKey: map[string]string{
+					"sample1.yaml": "sample content\n",
+				},
 			},
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
@@ -224,6 +228,10 @@ func TestTrackerSource(t *testing.T) {
 						"name":      "task3",
 						"run_after": []string{"task1", "task2"},
 					},
+				},
+				PlatformsKey: []string{"linux/amd64", "linux/arm64"},
+				ExamplesKey: map[string]string{
+					"sample1.yaml": "sample content\n",
 				},
 			},
 		}

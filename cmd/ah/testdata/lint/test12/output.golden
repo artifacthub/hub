@@ -1,6 +1,6 @@
 
 ------------------------------------------------------------------------------------------------------------------------
-✓ task1 0.1.0 (testdata/lint/test12/pkgs)
+✓ task1 0.1.0 (testdata/lint/test12/pkgs/task1/0.1)
 ------------------------------------------------------------------------------------------------------------------------
 
 Package lint SUCCEEDED!
@@ -24,7 +24,7 @@ Package lint SUCCEEDED!
   - tag1
   - tag2
 ✓ Links:
-  - Name: source | URL: https://github.com/user/repo/blob/master/path/task1.yaml
+  - Name: source | URL: https://github.com/user/repo/blob/master/path/task1/0.1/task1.yaml
   - Name: link1 | URL: https://link1.url
   - Name: link2 | URL: https://link2.url
 ✓ Maintainers:

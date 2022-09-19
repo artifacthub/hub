@@ -137,7 +137,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath:   "testdata/path4",
 			Svc:        sw.Svc,
 		}
-		expectedErr := "error preparing package pkg1 version 1.0.0 data: error getting falco rules files: no files found"
+		expectedErr := "error preparing package pkg1 version 1.0.0 data: no falco rules files found"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations
@@ -157,7 +157,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath:   "testdata/path4",
 			Svc:        sw.Svc,
 		}
-		expectedErr := "error preparing package pkg1 version 1.0.0 data: error getting opa policies files: no files found"
+		expectedErr := "error preparing package pkg1 version 1.0.0 data: no opa policies files found"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations

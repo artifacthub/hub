@@ -26,6 +26,7 @@ metadata:
       - title: Screenshot 1
         url: https://artifacthub.io/screenshot1.jpg
     tekton.dev/pipelines.minVersion: "0.12.1"
+    tekton.dev/platforms: "linux/amd64,linux/arm64"
     tekton.dev/tags: tag1, tag2
     tekton.dev/displayName: "Pipeline 1"
 spec:
