@@ -270,6 +270,24 @@
                                                     "default": ""
                                                 }
                                             }
+                                        },
+                                        "resources": {
+                                            "title": "Check DB migrator pod resource requirements",
+                                            "type": "object",
+                                            "default": {},
+                                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
+                                        }
+                                    }
+                                },
+                                "checkDbIsReady": {
+                                    "title": "Check DB readiness",
+                                    "type": ["object","null"],
+                                    "properties": {
+                                        "resources": {
+                                            "title": "Check DB readiness pod resource requirements",
+                                            "type": "object",
+                                            "default": {},
+                                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                                         }
                                     }
                                 }
@@ -308,8 +326,7 @@
                     },
                     "required": [
                         "image",
-                        "replicaCount",
-                        "resources"
+                        "replicaCount"
                     ]
                 },
                 "ingress": {
@@ -911,8 +928,7 @@
                         }
                     },
                     "required": [
-                        "image",
-                        "resources"
+                        "image"
                     ]
                 },
                 "enabled": {
@@ -1002,8 +1018,7 @@
                         }
                     },
                     "required": [
-                        "image",
-                        "resources"
+                        "image"
                     ]
                 },
                 "repositoryTimeout": {
@@ -1079,8 +1094,7 @@
                         }
                     },
                     "required": [
-                        "image",
-                        "resources"
+                        "image"
                     ]
                 },
                 "persistence": {

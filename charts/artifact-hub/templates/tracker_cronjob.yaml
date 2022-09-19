@@ -26,8 +26,10 @@ spec:
             - name: tracker
               image: {{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
               imagePullPolicy: {{ .Values.pullPolicy }}
+              {{- with .Values.tracker.cronjob.resources }}
               resources:
-                {{- toYaml .Values.tracker.cronjob.resources | nindent 16 }}
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
               {{- if .Values.tracker.cacheDir }}
               env:
                 - name: XDG_CACHE_HOME

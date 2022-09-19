@@ -119,12 +119,39 @@ hub:
     image:
       # Hub image repository (without the tag)
       repository: artifacthub/hub
-    resources: {}
+    # If you do want to specify resources, uncomment the following
+    # lines and adjust them as necessary.
+    # resources:
+    #   limits:
+    #     cpu: 100m
+    #     memory: 128Mi
+    #   requests:
+    #     cpu: 100m
+    #     memory: 128Mi
     initContainers:
       checkDbMigrator:
         image:
           repository: bitnami/kubectl
           # tag: 1.21
+        # If you do want to specify resources, uncomment the following
+        # lines and adjust them as necessary.
+        # resources:
+        #   limits:
+        #     cpu: 100m
+        #     memory: 128Mi
+        #   requests:
+        #     cpu: 100m
+        #     memory: 128Mi
+      checkDbIsReady:
+        # If you do want to specify resources, uncomment the following
+        # lines and adjust them as necessary.
+        # resources:
+        #   limits:
+        #     cpu: 100m
+        #     memory: 128Mi
+        #   requests:
+        #     cpu: 100m
+        #     memory: 128Mi
     # Optionally specify extra list of additional volumes for the hub deployment
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the hub deployment
@@ -251,7 +278,15 @@ scanner:
     image:
       # Scanner image repository (without the tag)
       repository: artifacthub/scanner
-    resources: {}
+    # If you do want to specify resources, uncomment the following
+    # lines and adjust them as necessary.
+    # resources:
+    #   limits:
+    #     cpu: 100m
+    #     memory: 128Mi
+    #   requests:
+    #     cpu: 100m
+    #     memory: 128Mi
     # Optionally specify extra list of additional volumes for the scanner cronjob
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the scanner cronjob
@@ -272,7 +307,15 @@ tracker:
     image:
       # Tracker image repository (without the tag)
       repository: artifacthub/tracker
-    resources: {}
+    # If you do want to specify resources, uncomment the following
+    # lines and adjust them as necessary.
+    # resources:
+    #   limits:
+    #     cpu: 100m
+    #     memory: 128Mi
+    #   requests:
+    #     cpu: 100m
+    #     memory: 128Mi
     # Optionally specify extra list of additional volumes for the tracker cronjob
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the tracker cronjob
@@ -298,7 +341,15 @@ trivy:
   enabled: true
   deploy:
     image: aquasec/trivy:0.31.3
-    resources: {}
+    # If you do want to specify resources, uncomment the following
+    # lines and adjust them as necessary.
+    # resources:
+    #   limits:
+    #     cpu: 100m
+    #     memory: 128Mi
+    #   requests:
+    #     cpu: 100m
+    #     memory: 128Mi
     # Optionally specify extra list of additional volumes for the trivy deployment
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the trivy deployment

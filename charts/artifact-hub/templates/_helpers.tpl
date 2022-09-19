@@ -93,6 +93,12 @@ Provide an init container to verify the database is accessible
 name: check-db-ready
 image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
 imagePullPolicy: {{ .Values.pullPolicy }}
+{{- if .Values.hub.deploy.initContainers.checkDbIsReady }}
+{{- with .Values.hub.deploy.initContainers.checkDbIsReady.resources }}
+resources:
+  {{-  toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
 env:
   - name: PGHOST
     value: {{ default (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.db.host }}
