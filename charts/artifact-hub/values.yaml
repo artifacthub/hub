@@ -120,38 +120,38 @@ hub:
       # Hub image repository (without the tag)
       repository: artifacthub/hub
     # If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #  cpu: 100m
-    #  memory: 128Mi
-    # requests:
-    #  cpu: 100m
-    #  memory: 128Mi
-    resources: {}
+    # lines and adjust them as necessary.
+    # resources:
+    #   limits:
+    #     cpu: 100m
+    #     memory: 128Mi
+    #   requests:
+    #     cpu: 100m
+    #     memory: 128Mi
     initContainers:
       checkDbMigrator:
         image:
           repository: bitnami/kubectl
           # tag: 1.21
         # If you do want to specify resources, uncomment the following
-        # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-        # limits:
-        #  cpu: 100m
-        #  memory: 128Mi
-        # requests:
-        #  cpu: 100m
-        #  memory: 128Mi
-        resources: {}
+        # lines and adjust them as necessary.
+        # resources:
+        #   limits:
+        #     cpu: 100m
+        #     memory: 128Mi
+        #   requests:
+        #     cpu: 100m
+        #     memory: 128Mi
       checkDbIsReady:
         # If you do want to specify resources, uncomment the following
-        # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-        # limits:
-        #  cpu: 100m
-        #  memory: 128Mi
-        # requests:
-        #  cpu: 100m
-        #  memory: 128Mi
-        resources: {}
+        # lines and adjust them as necessary.
+        # resources:
+        #   limits:
+        #     cpu: 100m
+        #     memory: 128Mi
+        #   requests:
+        #     cpu: 100m
+        #     memory: 128Mi
     # Optionally specify extra list of additional volumes for the hub deployment
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the hub deployment
@@ -279,14 +279,14 @@ scanner:
       # Scanner image repository (without the tag)
       repository: artifacthub/scanner
     # If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #  cpu: 100m
-    #  memory: 128Mi
-    # requests:
-    #  cpu: 100m
-    #  memory: 128Mi
-    resources: {}
+    # lines and adjust them as necessary.
+    # resources:
+    #   limits:
+    #     cpu: 100m
+    #     memory: 128Mi
+    #   requests:
+    #     cpu: 100m
+    #     memory: 128Mi
     # Optionally specify extra list of additional volumes for the scanner cronjob
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the scanner cronjob
@@ -308,14 +308,14 @@ tracker:
       # Tracker image repository (without the tag)
       repository: artifacthub/tracker
     # If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #  cpu: 100m
-    #  memory: 128Mi
-    # requests:
-    #  cpu: 100m
-    #  memory: 128Mi
-    resources: {}
+    # lines and adjust them as necessary.
+    # resources:
+    #   limits:
+    #     cpu: 100m
+    #     memory: 128Mi
+    #   requests:
+    #     cpu: 100m
+    #     memory: 128Mi
     # Optionally specify extra list of additional volumes for the tracker cronjob
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the tracker cronjob
@@ -342,14 +342,14 @@ trivy:
   deploy:
     image: aquasec/trivy:0.31.3
     # If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #  cpu: 100m
-    #  memory: 128Mi
-    # requests:
-    #  cpu: 100m
-    #  memory: 128Mi
-    resources: {}
+    # lines and adjust them as necessary.
+    # resources:
+    #   limits:
+    #     cpu: 100m
+    #     memory: 128Mi
+    #   requests:
+    #     cpu: 100m
+    #     memory: 128Mi
     # Optionally specify extra list of additional volumes for the trivy deployment
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the trivy deployment
