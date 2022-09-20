@@ -85,6 +85,15 @@ dbMigrator:
     image:
       # Database migrator image repository (without the tag)
       repository: artifacthub/db-migrator
+    resources: {}
+    # If you do want to specify resources, uncomment the following
+    # lines and adjust them as necessary.
+    #   limits:
+    #     cpu: 100m
+    #     memory: 128Mi
+    #   requests:
+    #     cpu: 100m
+    #     memory: 128Mi
   # Load demo user and sample repositories
   loadSampleData: true
   # Directory path where the configuration files should be mounted
@@ -119,9 +128,9 @@ hub:
     image:
       # Hub image repository (without the tag)
       repository: artifacthub/hub
+    resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
-    # resources:
     #   limits:
     #     cpu: 100m
     #     memory: 128Mi
@@ -133,9 +142,9 @@ hub:
         image:
           repository: bitnami/kubectl
           # tag: 1.21
+        resources: {}
         # If you do want to specify resources, uncomment the following
         # lines and adjust them as necessary.
-        # resources:
         #   limits:
         #     cpu: 100m
         #     memory: 128Mi
@@ -143,9 +152,9 @@ hub:
         #     cpu: 100m
         #     memory: 128Mi
       checkDbIsReady:
+        resources: {}
         # If you do want to specify resources, uncomment the following
         # lines and adjust them as necessary.
-        # resources:
         #   limits:
         #     cpu: 100m
         #     memory: 128Mi
@@ -278,9 +287,9 @@ scanner:
     image:
       # Scanner image repository (without the tag)
       repository: artifacthub/scanner
+    resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
-    # resources:
     #   limits:
     #     cpu: 100m
     #     memory: 128Mi
@@ -307,9 +316,9 @@ tracker:
     image:
       # Tracker image repository (without the tag)
       repository: artifacthub/tracker
+    resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
-    # resources:
     #   limits:
     #     cpu: 100m
     #     memory: 128Mi
@@ -341,9 +350,9 @@ trivy:
   enabled: true
   deploy:
     image: aquasec/trivy:0.31.3
+    resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
-    # resources:
     #   limits:
     #     cpu: 100m
     #     memory: 128Mi
