@@ -1,6 +1,8 @@
 package tekton
 
 import (
+	"crypto/sha256"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -15,6 +17,8 @@ import (
 	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/artifacthub/hub/internal/tracker/source/generic"
 	"github.com/ghodss/yaml"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/hashicorp/go-multierror"
 	"github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
 )
@@ -84,6 +88,29 @@ func NewTrackerSource(i *hub.TrackerSourceInput) *TrackerSource {
 
 // GetPackagesAvailable implements the TrackerSource interface.
 func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) {
+	// Get repository's Tekton specific data
+	if s.i.Repository.Data == nil {
+		return nil, errors.New("required repository data field not provided")
+	}
+	var data *hub.TektonData
+	if err := json.Unmarshal(s.i.Repository.Data, &data); err != nil {
+		return nil, fmt.Errorf("invalid tekton repository data: %w", err)
+	}
+
+	// Process catalog based on the versioning option configured
+	switch data.Versioning {
+	case hub.TektonDirBasedVersioning:
+		return s.processDirBasedCatalog()
+	case hub.TektonGitBasedVersioning:
+		return s.processGitBasedCatalog()
+	default:
+		return nil, fmt.Errorf("invalid catalog versioning option: %s", data.Versioning)
+	}
+}
+
+// processDirBasedCatalog returns the packages available in the catalog using
+// the directory based versioning.
+func (s *TrackerSource) processDirBasedCatalog() (map[string]*hub.Package, error) {
 	packagesAvailable := make(map[string]*hub.Package)
 
 	// Read catalog path to get available packages
@@ -117,7 +144,8 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			if !p.IsDir() {
 				continue
 			}
-			if _, err := semver.NewVersion(v.Name()); err != nil {
+			sv, err := semver.NewVersion(v.Name())
+			if err != nil {
 				continue
 			}
 
@@ -130,7 +158,16 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			}
 
 			// Prepare and store package version
-			p, err := PreparePackage(s.i.Repository, manifest, manifestRaw, s.i.BasePath, pkgPath)
+			p, err := PreparePackage(&PreparePackageInput{
+				R:           s.i.Repository,
+				Tag:         "",
+				Manifest:    manifest,
+				ManifestRaw: manifestRaw,
+				BasePath:    s.i.BasePath,
+				PkgName:     pkgName,
+				PkgPath:     pkgPath,
+				PkgVersion:  sv.String(),
+			})
 			if err != nil {
 				s.warn(fmt.Errorf("error preparing package %s version %s: %w", pkgName, v.Name(), err))
 				continue
@@ -138,6 +175,87 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			packagesAvailable[pkg.BuildKey(p)] = p
 		}
 	}
+
+	return packagesAvailable, nil
+}
+
+// processGitBasedCatalog returns the packages available in the catalog using
+// the git based versioning.
+func (s *TrackerSource) processGitBasedCatalog() (map[string]*hub.Package, error) {
+	// Open git repository and get all tags
+	gr, err := git.PlainOpenWithOptions(s.i.BasePath, &git.PlainOpenOptions{
+		DetectDotGit: true,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("error opening git repository: %w", err)
+	}
+	wt, err := gr.Worktree()
+	if err != nil {
+		return nil, fmt.Errorf("error getting worktree: %w", err)
+	}
+	tags, err := gr.Tags()
+	if err != nil {
+		return nil, fmt.Errorf("error reading tags references: %w", err)
+	}
+
+	// Read packages available in the catalog for each tag/version
+	packagesAvailable := make(map[string]*hub.Package)
+	_ = tags.ForEach(func(tag *plumbing.Reference) error {
+		// Skip tags that cannot be parsed as ~valid semver
+		sv, err := semver.NewVersion(tag.Name().Short())
+		if err != nil {
+			return nil
+		}
+
+		// Checkout version tag
+		if err := wt.Checkout(&git.CheckoutOptions{
+			Hash: tag.Hash(),
+		}); err != nil {
+			s.warn(fmt.Errorf("error checking out tag %s: %w", tag.Name().Short(), err))
+			return nil
+		}
+
+		// Process version packages
+		packages, err := os.ReadDir(s.i.BasePath)
+		if err != nil {
+			s.warn(fmt.Errorf("error reading catalog directory: %w", err))
+			return nil
+		}
+		for _, p := range packages {
+			// If the path is not a directory, we skip it
+			if !p.IsDir() {
+				continue
+			}
+
+			// Get package manifest
+			pkgName := p.Name()
+			pkgPath := path.Join(s.i.BasePath, pkgName)
+			manifest, manifestRaw, err := GetManifest(s.i.Repository.Kind, pkgName, pkgPath)
+			if err != nil {
+				s.warn(fmt.Errorf("error getting package manifest (path: %s): %w", pkgPath, err))
+				continue
+			}
+
+			// Prepare and store package version
+			p, err := PreparePackage(&PreparePackageInput{
+				R:           s.i.Repository,
+				Tag:         tag.Name().Short(),
+				Manifest:    manifest,
+				ManifestRaw: manifestRaw,
+				BasePath:    s.i.BasePath,
+				PkgName:     pkgName,
+				PkgPath:     pkgPath,
+				PkgVersion:  sv.String(),
+			})
+			if err != nil {
+				s.warn(fmt.Errorf("error preparing package %s version %s: %w", pkgName, sv.String(), err))
+				continue
+			}
+			packagesAvailable[pkg.BuildKey(p)] = p
+		}
+
+		return nil
+	})
 
 	return packagesAvailable, nil
 }
@@ -206,20 +324,27 @@ func validateManifest(manifest interface{}) error {
 	return errs.ErrorOrNil()
 }
 
+// PreparePackageInput represents the information required to prepare a package
+// of Tekton task and pipelines kinds.
+type PreparePackageInput struct {
+	R           *hub.Repository
+	Tag         string
+	Manifest    interface{}
+	ManifestRaw []byte
+	BasePath    string
+	PkgName     string
+	PkgPath     string
+	PkgVersion  string
+}
+
 // PreparePackage prepares a package version using the package manifest and the
 // files in the path provided.
-func PreparePackage(
-	r *hub.Repository,
-	manifest interface{},
-	manifestRaw []byte,
-	basePath string,
-	pkgPath string,
-) (*hub.Package, error) {
+func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 	// Extract some information from package manifest
 	var name, version, description, tektonKind string
 	var annotations map[string]string
 	var tasks []map[string]interface{}
-	switch m := manifest.(type) {
+	switch m := i.Manifest.(type) {
 	case *v1beta1.Task:
 		tektonKind = "task"
 		name = m.Name
@@ -246,6 +371,9 @@ func PreparePackage(
 		return nil, fmt.Errorf("invalid semver version (%s): %w", version, err)
 	}
 	version = sv.String()
+	if version != i.PkgVersion {
+		return nil, fmt.Errorf("version mismatch (%s != %s)", version, i.PkgVersion)
+	}
 
 	// Prepare keywords
 	keywords := []string{
@@ -264,16 +392,17 @@ func PreparePackage(
 		DisplayName: annotations[displayNameTKey],
 		Description: description,
 		Keywords:    keywords,
-		Repository:  r,
+		Digest:      fmt.Sprintf("%x", sha256.Sum256(i.ManifestRaw)),
+		Repository:  i.R,
 		Data: map[string]interface{}{
 			PipelinesMinVersionKey: annotations[pipelinesMinVersionTKey],
-			RawManifestKey:         string(manifestRaw),
+			RawManifestKey:         string(i.ManifestRaw),
 			TasksKey:               tasks,
 		},
 	}
 
 	// Include content and source links
-	contentURL, sourceURL := prepareContentAndSourceLinks(r, basePath, pkgPath, name)
+	contentURL, sourceURL := prepareContentAndSourceLinks(i)
 	p.ContentURL = contentURL
 	if sourceURL != "" {
 		p.Links = append(p.Links, &hub.Link{
@@ -293,13 +422,13 @@ func PreparePackage(
 	}
 
 	// Include readme file
-	readme, err := os.ReadFile(filepath.Join(pkgPath, "README.md"))
+	readme, err := os.ReadFile(filepath.Join(i.PkgPath, "README.md"))
 	if err == nil {
 		p.Readme = string(readme)
 	}
 
 	// Include examples files
-	examples, err := generic.GetFilesWithSuffix(".yaml", path.Join(pkgPath, examplesPath), nil)
+	examples, err := generic.GetFilesWithSuffix(".yaml", path.Join(i.PkgPath, examplesPath), nil)
 	if err != nil {
 		if !errors.Is(err, os.ErrNotExist) {
 			return nil, fmt.Errorf("error getting examples files: %w", err)
@@ -320,15 +449,10 @@ func PreparePackage(
 
 // prepareContentAndSourceLinks prepares the content and source urls for the
 // git provider identified from the host part in the repository url.
-func prepareContentAndSourceLinks(
-	r *hub.Repository,
-	basePath string,
-	pkgPath string,
-	pkgName string,
-) (string, string) {
+func prepareContentAndSourceLinks(i *PreparePackageInput) (string, string) {
 	// Parse repository url
 	var repoBaseURL, host, pkgsPath string
-	matches := repo.GitRepoURLRE.FindStringSubmatch(r.URL)
+	matches := repo.GitRepoURLRE.FindStringSubmatch(i.R.URL)
 	if len(matches) >= 3 {
 		repoBaseURL = matches[1]
 		host = matches[2]
@@ -339,18 +463,21 @@ func prepareContentAndSourceLinks(
 
 	// Generate content and source url for the corresponding git provider
 	var contentURL, sourceURL string
-	branch := repo.GetBranch(r)
-	pkgRelativePath := strings.TrimPrefix(pkgPath, basePath)
+	branch := i.Tag
+	if branch == "" {
+		branch = repo.GetBranch(i.R)
+	}
+	pkgRelativePath := strings.TrimPrefix(i.PkgPath, i.BasePath)
 	switch host {
 	case "bitbucket.org":
-		contentURL = fmt.Sprintf("%s/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, pkgName)
-		sourceURL = fmt.Sprintf("%s/src/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, pkgName)
+		contentURL = fmt.Sprintf("%s/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, i.PkgName)
+		sourceURL = fmt.Sprintf("%s/src/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, i.PkgName)
 	case "github.com":
-		contentURL = fmt.Sprintf("%s/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, pkgName)
-		sourceURL = fmt.Sprintf("%s/blob/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, pkgName)
+		contentURL = fmt.Sprintf("%s/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, i.PkgName)
+		sourceURL = fmt.Sprintf("%s/blob/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, i.PkgName)
 	case "gitlab.com":
-		contentURL = fmt.Sprintf("%s/-/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, pkgName)
-		sourceURL = fmt.Sprintf("%s/-/blob/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, pkgName)
+		contentURL = fmt.Sprintf("%s/-/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, i.PkgName)
+		sourceURL = fmt.Sprintf("%s/-/blob/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, i.PkgName)
 	}
 
 	return contentURL, sourceURL

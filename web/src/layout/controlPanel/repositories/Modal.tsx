@@ -10,7 +10,15 @@ import { MdAddCircle } from 'react-icons/md';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ContainerTag, ErrorKind, RefInputField, Repository, RepositoryKind, ResourceKind } from '../../../types';
+import {
+  ContainerTag,
+  ErrorKind,
+  RefInputField,
+  Repository,
+  RepositoryKind,
+  ResourceKind,
+  VersioningOption,
+} from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';
 import { OCI_PREFIX, RepoKindDef, REPOSITORY_KINDS } from '../../../utils/data';
 import getMetaTag from '../../../utils/getMetaTag';
@@ -32,7 +40,9 @@ interface Props {
   onClose: () => void;
   onAuthError: () => void;
 }
+
 const DEFAULT_SELECTED_REPOSITORY_KIND = RepositoryKind.Helm;
+const DEFAULT_VERSIONING_OPT = VersioningOption.Directory;
 
 const RepositoryModal = (props: Props) => {
   const { ctx } = useContext(AppCtx);
@@ -74,6 +84,11 @@ const RepositoryModal = (props: Props) => {
 
   const [containerTags, setContainerTags] = useState<ContainerTag[]>(prepareTags());
   const [repeatedTagNames, setRepeatedTagNames] = useState<boolean>(false);
+  const [versioning, setVersioning] = useState<VersioningOption>(
+    props.repository && props.repository.data && props.repository.data.versioning
+      ? props.repository.data.versioning
+      : DEFAULT_VERSIONING_OPT
+  );
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsValidInput(e.target.value === props.repository!.name);
@@ -173,6 +188,12 @@ const RepositoryModal = (props: Props) => {
           const readyTags = cleanTags.map((tag: ContainerTag) => ({ name: tag.name, mutable: tag.mutable }));
           repository.data = {
             tags: readyTags,
+          };
+        }
+
+        if ([RepositoryKind.TektonTask, RepositoryKind.TektonPipeline].includes(selectedKind)) {
+          repository.data = {
+            versioning: versioning,
           };
         }
       }
@@ -814,6 +835,49 @@ const RepositoryModal = (props: Props) => {
                   value={!isUndefined(props.repository) && props.repository.branch ? props.repository.branch : ''}
                 />
               </div>
+            )}
+
+            {[RepositoryKind.TektonTask, RepositoryKind.TektonPipeline].includes(selectedKind) && (
+              <>
+                <label className={`form-label fw-bold ${styles.label}`}>Versioning</label>
+
+                <div className="d-flex flex-row mb-2">
+                  {Object.entries(VersioningOption).map((opt: any) => {
+                    return (
+                      <div className="form-check me-4 mb-2" key={`versioning_${opt[1]}`}>
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          id={opt[1]}
+                          name="payload"
+                          value={opt[1]}
+                          checked={versioning === opt[1]}
+                          onChange={() => setVersioning(opt[1])}
+                        />
+                        <label className={`form-check-label ${styles.label}`} htmlFor={opt[1]}>
+                          {opt[0]}
+                        </label>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="mb-4">
+                  <small className="text-muted text-break">
+                    <p className="mb-0">
+                      Select which organization uses your Tekton catalog. For more details please see the{' '}
+                      <ExternalLink
+                        href="https://github.com/tektoncd/community/blob/main/teps/0115-tekton-catalog-git-based-versioning.md#tep-0115-tekton-catalog-git-based-versioning"
+                        className="text-primary fw-bold"
+                        label="Open Tekton docs"
+                      >
+                        Tekton docs
+                      </ExternalLink>
+                      .
+                    </p>
+                  </small>
+                </div>
+              </>
             )}
 
             {allowPrivateRepositories && (

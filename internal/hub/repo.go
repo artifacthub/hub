@@ -18,6 +18,12 @@ const (
 	RepositoryOCIPrefix = "oci://"
 )
 
+const (
+	// Tekton catalog versioning kinds
+	TektonDirBasedVersioning = "directory"
+	TektonGitBasedVersioning = "git"
+)
+
 // ContainerImageData represents some data specific to repositories of the
 // container image kind.
 type ContainerImageData struct {
@@ -28,6 +34,12 @@ type ContainerImageData struct {
 type ContainerImageTag struct {
 	Name    string `json:"name"`
 	Mutable bool   `json:"mutable"`
+}
+
+// TektonData represents some data specific to repositories of the Tekton tasks
+// or pipelines kinds.
+type TektonData struct {
+	Versioning string `json:"versioning"` // Options: directory or git
 }
 
 // RepositoryKind represents the kind of a given repository.

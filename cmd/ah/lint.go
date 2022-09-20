@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -374,6 +375,7 @@ func lintTekton(basePath string, kind hub.RepositoryKind) *lintReport {
 	repository := &hub.Repository{
 		Kind: kind,
 		URL:  "https://github.com/user/repo/path",
+		Data: json.RawMessage(fmt.Sprintf(`{"versioning": "%s"}`, hub.TektonDirBasedVersioning)),
 	}
 
 	// Read catalog path to get available packages
@@ -399,7 +401,8 @@ func lintTekton(basePath string, kind hub.RepositoryKind) *lintReport {
 			if !p.IsDir() {
 				continue
 			}
-			if _, err := semver.NewVersion(v.Name()); err != nil {
+			sv, err := semver.NewVersion(v.Name())
+			if err != nil {
 				continue
 			}
 
@@ -416,7 +419,16 @@ func lintTekton(basePath string, kind hub.RepositoryKind) *lintReport {
 				e.result = multierror.Append(e.result, err)
 			} else {
 				// Prepare package version
-				e.pkg, err = tekton.PreparePackage(repository, manifest, manifestRaw, basePath, pkgPath)
+				e.pkg, err = tekton.PreparePackage(&tekton.PreparePackageInput{
+					R:           repository,
+					Tag:         "",
+					Manifest:    manifest,
+					ManifestRaw: manifestRaw,
+					BasePath:    basePath,
+					PkgName:     pkgName,
+					PkgPath:     pkgPath,
+					PkgVersion:  sv.String(),
+				})
 				if err != nil {
 					e.result = multierror.Append(e.result, err)
 				}
