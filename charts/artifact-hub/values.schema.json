@@ -84,6 +84,12 @@
                             ]
                         }
                     },
+                    "resources": {
+                        "title": "DB migrator pod resource requirements",
+                        "type": "object",
+                        "default": {},
+                        "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
+                    },
                     "required": [
                         "image"
                     ]

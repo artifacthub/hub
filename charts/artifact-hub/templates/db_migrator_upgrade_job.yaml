@@ -20,6 +20,10 @@ spec:
         - name: db-migrator
           image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
           imagePullPolicy: {{ .Values.pullPolicy }}
+          {{- with .Values.dbMigrator.job.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           env:
             - name: TERN_CONF
               value: {{ .Values.dbMigrator.configDir }}/tern.conf
