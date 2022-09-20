@@ -1,6 +1,8 @@
 package tekton
 
 import (
+	"encoding/json"
+	"fmt"
 	"os"
 	"testing"
 
@@ -19,6 +21,7 @@ func TestTrackerSource(t *testing.T) {
 		i := &hub.TrackerSourceInput{
 			Repository: &hub.Repository{
 				Kind: hub.TektonTask,
+				Data: json.RawMessage(fmt.Sprintf(`{"versioning": "%s"}`, hub.TektonDirBasedVersioning)),
 			},
 			BasePath: "testdata/path1",
 			Svc:      sw.Svc,
@@ -39,6 +42,7 @@ func TestTrackerSource(t *testing.T) {
 		i := &hub.TrackerSourceInput{
 			Repository: &hub.Repository{
 				Kind: hub.TektonTask,
+				Data: json.RawMessage(fmt.Sprintf(`{"versioning": "%s"}`, hub.TektonDirBasedVersioning)),
 			},
 			BasePath: "testdata/path2",
 			Svc:      sw.Svc,
@@ -62,6 +66,7 @@ func TestTrackerSource(t *testing.T) {
 			Repository: &hub.Repository{
 				Kind: hub.TektonTask,
 				URL:  "https://github.com/user/repo/path",
+				Data: json.RawMessage(fmt.Sprintf(`{"versioning": "%s"}`, hub.TektonDirBasedVersioning)),
 			},
 			BasePath: "testdata/path3",
 			Svc:      sw.Svc,
@@ -79,6 +84,7 @@ func TestTrackerSource(t *testing.T) {
 			Version:     "0.1.0",
 			Provider:    "Some organization",
 			ContentURL:  "https://github.com/user/repo/raw/master/path/task1/0.1/task1.yaml",
+			Digest:      "d5ef3fb05c34644e5ba4fd5a5c3db13be13c11606e663f8583438c2a9d6d243f",
 			Repository:  i.Repository,
 			License:     "Apache-2.0",
 			Links: []*hub.Link{
@@ -151,6 +157,7 @@ func TestTrackerSource(t *testing.T) {
 			Repository: &hub.Repository{
 				Kind: hub.TektonPipeline,
 				URL:  "https://github.com/user/repo/path",
+				Data: json.RawMessage(fmt.Sprintf(`{"versioning": "%s"}`, hub.TektonDirBasedVersioning)),
 			},
 			BasePath: "testdata/path4",
 			Svc:      sw.Svc,
@@ -167,6 +174,7 @@ func TestTrackerSource(t *testing.T) {
 			Version:     "0.1.0",
 			Provider:    "Some organization",
 			ContentURL:  "https://github.com/user/repo/raw/master/path/pipeline1/0.1/pipeline1.yaml",
+			Digest:      "755a8708c075dbf62529d91495673ef45ad9eedf1cdf0798c97caf8761a69378",
 			Repository:  i.Repository,
 			License:     "Apache-2.0",
 			Links: []*hub.Link{

@@ -554,6 +554,17 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 		digest = desc.Digest.String()
 
 	case GitRepoURLRE.MatchString(r.URL):
+		// Do not track repo's digest for Tekton repos using git based versioning
+		if r.Data != nil {
+			var data *hub.TektonData
+			if err := json.Unmarshal(r.Data, &data); err != nil {
+				return "", fmt.Errorf("invalid tekton repository data: %w", err)
+			}
+			if data.Versioning == hub.TektonGitBasedVersioning {
+				return "", nil
+			}
+		}
+
 		// Digest is obtained from the last commit in the repository
 		matches := GitRepoURLRE.FindStringSubmatch(r.URL)
 		repoBaseURL := matches[1]

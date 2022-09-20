@@ -38,6 +38,11 @@ export enum Signature {
   Cosign = 'cosign',
 }
 
+export enum VersioningOption {
+  Directory = 'directory',
+  Git = 'git',
+}
+
 export interface Repository {
   repositoryId?: string;
   name: string;
@@ -61,6 +66,7 @@ export interface Repository {
   scannerDisabled?: boolean;
   data?: {
     tags?: ContainerTag[];
+    versioning?: VersioningOption;
   };
 }
 
