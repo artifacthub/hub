@@ -1,4 +1,3 @@
-import $RefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import merger from 'json-schema-merge-allof';
 import { isUndefined } from 'lodash';
 import { useEffect, useState } from 'react';
@@ -6,8 +5,10 @@ import { CgListTree } from 'react-icons/cg';
 import { useHistory } from 'react-router-dom';
 
 import API from '../../../api';
+import { JSONSchema } from '../../../jsonschema';
 import { SearchFiltersURL } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
+import dereferenceJSONSchema from '../../../utils/dereference';
 import ErrorBoundary from '../../common/ErrorBoundary';
 import Modal from '../../common/Modal';
 import Schema from './Schema';
@@ -25,25 +26,7 @@ interface Props {
 
 async function enrichValuesSchema(schema: JSONSchema) {
   try {
-    let tmpSchema = { ...schema };
-    // When root is a $ref pointing to a definition inside itself, the method dereference (json-schema-ref-parser) doesn't work properly
-    // https://github.com/APIDevTools/json-schema-ref-parser/issues/172
-    if (tmpSchema['$ref'] && tmpSchema['$ref'].startsWith('#/definitions')) {
-      const topLevelObj = tmpSchema['$ref'].split('/').pop();
-      delete tmpSchema['$ref'];
-      if (topLevelObj && tmpSchema.definitions && tmpSchema.definitions[topLevelObj]) {
-        const entryPoint: any = tmpSchema.definitions[topLevelObj];
-        tmpSchema = { ...tmpSchema, ...entryPoint };
-      }
-    }
-
-    // Dereferences all $ref pointers in the JSON Schema, replacing each reference with its resolved value.
-    const dereferencedSchema = await $RefParser.dereference(tmpSchema, {
-      continueOnError: true,
-      dereference: {
-        circular: true,
-      },
-    });
+    const dereferencedSchema = dereferenceJSONSchema(schema);
 
     // Merge schemas combined using allOf.
     const mergedSchema = merger(dereferencedSchema);

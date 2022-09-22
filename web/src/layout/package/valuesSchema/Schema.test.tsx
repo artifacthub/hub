@@ -1,6 +1,6 @@
-import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { render, screen } from '@testing-library/react';
 
+import { JSONSchema } from '../../../jsonschema';
 import Schema from './Schema';
 
 const defaultSchema = require('./__fixtures__/index/1.json') as JSONSchema;

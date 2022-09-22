@@ -19,7 +19,7 @@ Object.defineProperty(document, 'querySelector', {
 
 describe('OAuth', () => {
   beforeEach(() => {
-    /* eslint-disable no-native-reassign */
+    /* eslint-disable no-global-assign */
     window = Object.create(window);
     Object.defineProperty(window, 'location', {
       value: {

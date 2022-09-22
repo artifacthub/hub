@@ -1,6 +1,6 @@
-import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import fetchMock, { enableFetchMocks } from 'jest-fetch-mock';
 
+import { JSONSchema } from '../jsonschema';
 import {
   AHStats,
   APIKey,
@@ -1469,7 +1469,7 @@ describe('API', () => {
 
     describe('addAPIKey', () => {
       it('success', async () => {
-        fetchMock.mockResponse(JSON.stringify({ key: '123abc' }), {
+        fetchMock.mockResponse(JSON.stringify({ apiKeyId: '123abc' }), {
           headers: {
             'content-type': 'application/json',
           },
@@ -1481,7 +1481,7 @@ describe('API', () => {
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
-        expect(response.key).toEqual('123abc');
+        expect(response.apiKeyId).toEqual('123abc');
       });
     });
 

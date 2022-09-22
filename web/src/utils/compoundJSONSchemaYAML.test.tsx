@@ -1,9 +1,7 @@
-import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
-
 import compoundJSONSchemaYAML, { shouldIgnorePath } from './compoundJSONSchemaYAML';
 
 interface Tests {
-  input: JSONSchema;
+  input: any;
   opts?: { [key: string]: number };
   output: { yamlContent?: string; paths: string[] };
 }
@@ -1063,7 +1061,7 @@ reconcile:${' '}
                 type: 'object',
                 title: 'Affinity',
                 description: 'Affinity is a group of affinity scheduling rules.',
-                properties: { nodeAffinity: null, podAffinity: null, podAntiAffinity: null },
+                properties: { nodeAffinity: false, podAffinity: false, podAntiAffinity: false },
               },
               resources: {
                 type: 'object',
@@ -1071,13 +1069,13 @@ reconcile:${' '}
                 description: 'ResourceRequirements describes the compute resource requirements.',
                 properties: {
                   limits: {
-                    additionalProperties: null,
+                    additionalProperties: false,
                     description:
                       'Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/',
                     type: 'object',
                   },
                   requests: {
-                    additionalProperties: null,
+                    additionalProperties: false,
                     description:
                       'Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/',
                     type: 'object',
@@ -1152,7 +1150,7 @@ reconcile:${' '}
                       'AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN',
                     type: 'boolean',
                   },
-                  capabilities: null,
+                  capabilities: false,
                   privileged: {
                     description:
                       'Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.',
@@ -1184,8 +1182,8 @@ reconcile:${' '}
                     format: 'int64',
                     type: 'integer',
                   },
-                  seLinuxOptions: null,
-                  windowsOptions: null,
+                  seLinuxOptions: false,
+                  windowsOptions: false,
                 },
               },
               dagsterApiGrpcArgs: { type: 'array', items: { type: 'string' }, title: 'Dagsterapigrpcargs' },
@@ -1218,7 +1216,7 @@ reconcile:${' '}
                     format: 'int64',
                     type: 'integer',
                   },
-                  seLinuxOptions: null,
+                  seLinuxOptions: false,
                   supplementalGroups: {
                     description:
                       "A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.",
@@ -1228,10 +1226,10 @@ reconcile:${' '}
                   sysctls: {
                     description:
                       'Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.',
-                    items: null,
+                    items: false,
                     type: 'array',
                   },
-                  windowsOptions: null,
+                  windowsOptions: false,
                 },
               },
             },
@@ -1259,7 +1257,7 @@ reconcile:${' '}
           type: 'object',
           title: 'Affinity',
           description: 'Affinity is a group of affinity scheduling rules.',
-          properties: { nodeAffinity: null, podAffinity: null, podAntiAffinity: null },
+          properties: { nodeAffinity: false, podAffinity: false, podAntiAffinity: false },
         },
         Resources: {
           type: 'object',
@@ -1267,13 +1265,13 @@ reconcile:${' '}
           description: 'ResourceRequirements describes the compute resource requirements.',
           properties: {
             limits: {
-              additionalProperties: null,
+              additionalProperties: false,
               description:
                 'Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/',
               type: 'object',
             },
             requests: {
-              additionalProperties: null,
+              additionalProperties: false,
               description:
                 'Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/',
               type: 'object',
@@ -1347,7 +1345,7 @@ reconcile:${' '}
               type: 'object',
               title: 'Affinity',
               description: 'Affinity is a group of affinity scheduling rules.',
-              properties: { nodeAffinity: null, podAffinity: null, podAntiAffinity: null },
+              properties: { nodeAffinity: false, podAffinity: false, podAntiAffinity: false },
             },
             resources: {
               type: 'object',
@@ -1355,13 +1353,13 @@ reconcile:${' '}
               description: 'ResourceRequirements describes the compute resource requirements.',
               properties: {
                 limits: {
-                  additionalProperties: null,
+                  additionalProperties: false,
                   description:
                     'Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/',
                   type: 'object',
                 },
                 requests: {
-                  additionalProperties: null,
+                  additionalProperties: false,
                   description:
                     'Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/',
                   type: 'object',
@@ -1436,7 +1434,7 @@ reconcile:${' '}
                     'AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN',
                   type: 'boolean',
                 },
-                capabilities: null,
+                capabilities: false,
                 privileged: {
                   description:
                     'Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.',
@@ -1468,8 +1466,8 @@ reconcile:${' '}
                   format: 'int64',
                   type: 'integer',
                 },
-                seLinuxOptions: null,
-                windowsOptions: null,
+                seLinuxOptions: false,
+                windowsOptions: false,
               },
             },
             dagsterApiGrpcArgs: { type: 'array', items: { type: 'string' }, title: 'Dagsterapigrpcargs' },
@@ -1502,7 +1500,7 @@ reconcile:${' '}
                   format: 'int64',
                   type: 'integer',
                 },
-                seLinuxOptions: null,
+                seLinuxOptions: false,
                 supplementalGroups: {
                   description:
                     "A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.",
@@ -1512,10 +1510,10 @@ reconcile:${' '}
                 sysctls: {
                   description:
                     'Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.',
-                  items: null,
+                  items: false,
                   type: 'array',
                 },
-                windowsOptions: null,
+                windowsOptions: false,
               },
             },
           },
@@ -1538,7 +1536,7 @@ reconcile:${' '}
                 'AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN',
               type: 'boolean',
             },
-            capabilities: null,
+            capabilities: false,
             privileged: {
               description:
                 'Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.',
@@ -1570,8 +1568,8 @@ reconcile:${' '}
               format: 'int64',
               type: 'integer',
             },
-            seLinuxOptions: null,
-            windowsOptions: null,
+            seLinuxOptions: false,
+            windowsOptions: false,
           },
         },
         ConfigMapEnvSource: {
@@ -1610,7 +1608,7 @@ reconcile:${' '}
               format: 'int64',
               type: 'integer',
             },
-            seLinuxOptions: null,
+            seLinuxOptions: false,
             supplementalGroups: {
               description:
                 "A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.",
@@ -1620,10 +1618,10 @@ reconcile:${' '}
             sysctls: {
               description:
                 'Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.',
-              items: null,
+              items: false,
               type: 'array',
             },
-            windowsOptions: null,
+            windowsOptions: false,
           },
         },
       },

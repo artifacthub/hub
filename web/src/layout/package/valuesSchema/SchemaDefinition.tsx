@@ -1,4 +1,3 @@
-import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import classnames from 'classnames';
 import { isArray, isEmpty, isNull, isUndefined } from 'lodash';
 import { ChangeEvent, Fragment, MouseEvent as ReactMouseEvent, useEffect, useRef, useState } from 'react';
@@ -7,6 +6,7 @@ import { FaCheck } from 'react-icons/fa';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
+import { JSONSchema } from '../../../jsonschema';
 import { ActiveJSONSchemaValue } from '../../../types';
 import checkIfPropIsRequiredInSchema from '../../../utils/checkIfPropIsRequiredInSchema';
 import detectLinksInText from '../../../utils/detectLinksInText';
@@ -337,7 +337,7 @@ const SchemaDefinition = (props: Props) => {
                         {def.type && isArray(def.type) ? (
                           <select
                             aria-label="Type selection"
-                            className={`ms-1 d-inline form-select position-relative ${styles.select} ${styles.selectInLine}`}
+                            className={`ms-1 d-inline form-select position-relative ${styles.select} ${styles.selectInLine} ${styles.selectType}`}
                             value={activeType}
                             onClick={(e: ReactMouseEvent<HTMLSelectElement, MouseEvent>) => e.stopPropagation()}
                             onChange={(e: ChangeEvent<HTMLSelectElement>) => {

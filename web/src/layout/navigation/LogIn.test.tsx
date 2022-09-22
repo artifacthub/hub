@@ -55,10 +55,7 @@ describe('LogIn', () => {
     });
 
     xit('updates all fields and calls login', async () => {
-      mocked(API).login.mockResolvedValue({
-        email: 'jsmith@email.com',
-        password: 'pass123',
-      });
+      mocked(API).login.mockResolvedValue('true');
 
       render(
         <Router>

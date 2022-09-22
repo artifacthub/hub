@@ -112,6 +112,7 @@ describe('SecurityReport', () => {
         <SecurityReport
           summary={null}
           packageId="pkgID"
+          repoKind={0}
           version="1.1.1"
           visibleSecurityReport={false}
           disabledReport
@@ -131,6 +132,7 @@ describe('SecurityReport', () => {
         <SecurityReport
           summary={{}}
           packageId="pkgID"
+          repoKind={0}
           version="1.1.1"
           visibleSecurityReport={false}
           disabledReport={false}
@@ -163,6 +165,7 @@ describe('SecurityReport', () => {
         <SecurityReport
           packageId="pkgID"
           version="1.1.1"
+          repoKind={0}
           visibleSecurityReport={false}
           disabledReport={false}
           containers={defaultProps.containers}
@@ -178,6 +181,7 @@ describe('SecurityReport', () => {
           summary={null}
           packageId="pkgID"
           version="1.1.1"
+          repoKind={0}
           visibleSecurityReport={false}
           disabledReport={false}
           containers={defaultProps.containers}
@@ -193,6 +197,7 @@ describe('SecurityReport', () => {
           summary={{}}
           packageId="pkgID"
           version="1.1.1"
+          repoKind={0}
           visibleSecurityReport={false}
           disabledReport={false}
           containers={defaultProps.containers}
