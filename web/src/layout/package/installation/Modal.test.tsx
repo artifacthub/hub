@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import { RepositoryKind } from '../../../types';
 import Modal from './Modal';
-jest.mock('react-markdown', () => (props) => {
+jest.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
 jest.mock('remark-gfm', () => () => <div />);

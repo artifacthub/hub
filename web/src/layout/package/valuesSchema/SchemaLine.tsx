@@ -1,8 +1,8 @@
-import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import classnames from 'classnames';
 import { isArray, isEmpty, isNull, isString, isUndefined } from 'lodash';
 import { Fragment, useEffect, useState } from 'react';
 
+import { JSONSchema } from '../../../jsonschema';
 import { ActiveJSONSchemaValue } from '../../../types';
 import checkIfPropIsRequiredInSchema from '../../../utils/checkIfPropIsRequiredInSchema';
 import formatStringForYAML from '../../../utils/formatStringForYAML';
@@ -160,7 +160,7 @@ const SchemaLine = (props: Props) => {
     getCurrentJSON();
   }, [props.value]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if (isNull(value) || isNull(activeValue)) return null;
+  if (isNull(value) || isNull(activeValue) || isUndefined(activeValue)) return null;
 
   const { className, content } = getValue(activeValue);
 

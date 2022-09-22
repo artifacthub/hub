@@ -1,10 +1,10 @@
-import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { isNull } from 'lodash';
 import camelCase from 'lodash/camelCase';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 import isUndefined from 'lodash/isUndefined';
 
+import { JSONSchema } from '../jsonschema';
 import {
   AHStats,
   APIKey,
@@ -103,7 +103,7 @@ class API_CLASS {
   private csrfToken: string | null = null;
   private API_BASE_URL = '/api/v1';
 
-  private toCamelCase(r: any): any {
+  public toCamelCase(r: any): any {
     if (isArray(r)) {
       return r.map((v) => this.toCamelCase(v));
     } else if (isObject(r)) {
@@ -288,7 +288,7 @@ class API_CLASS {
     });
   }
 
-  private getUrlContext(fromOrgName?: string): string {
+  public getUrlContext(fromOrgName?: string): string {
     let context = '/user';
     if (!isUndefined(fromOrgName)) {
       context = `/org/${fromOrgName}`;
@@ -1155,6 +1155,12 @@ class API_CLASS {
         },
         body: JSON.stringify(data),
       },
+    });
+  }
+
+  public getSchemaDef(url: string): Promise<any> {
+    return this.apiFetch({
+      url: url,
     });
   }
 

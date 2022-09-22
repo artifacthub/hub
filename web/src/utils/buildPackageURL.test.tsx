@@ -1,3 +1,4 @@
+import { Package } from '../types';
 import buildPackageURL from './buildPackageURL';
 
 const getMockProps = (fixtureId: string): Package => {

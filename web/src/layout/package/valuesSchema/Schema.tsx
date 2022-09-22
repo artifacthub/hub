@@ -1,7 +1,7 @@
-import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { isUndefined } from 'lodash';
 import { Fragment, useEffect, useState } from 'react';
 
+import { JSONSchema } from '../../../jsonschema';
 import checkIfPropIsRequiredInSchema from '../../../utils/checkIfPropIsRequiredInSchema';
 import compoundJSONSchemaYAML from '../../../utils/compoundJSONSchemaYAML';
 import BlockCodeButtons from '../../common/BlockCodeButtons';

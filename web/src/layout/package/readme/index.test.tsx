@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
 import ReadmeWrapper from './index';
-jest.mock('react-markdown', () => (props) => {
+jest.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
 jest.mock('remark-gfm', () => () => <div />);

@@ -22,5 +22,5 @@
   },
   "include": [
     "src", "decs.d.ts"
-  ]
+, "public/config-overrides.js"  ]
 }

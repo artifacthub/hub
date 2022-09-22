@@ -1,9 +1,9 @@
-import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mocked } from 'jest-mock';
 
 import API from '../../../api';
+import { JSONSchema } from '../../../jsonschema';
 import { ErrorKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ValuesSchema from './';

@@ -1,4 +1,3 @@
-import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { isArray, isEmpty, isNull, isObject, isUndefined, repeat, set, trim } from 'lodash';
 
 import formatStringForYAML from './formatStringForYAML';
@@ -16,6 +15,10 @@ interface ItemValue {
   props?: { [key: string]: ItemValue };
   hasDecorator?: boolean;
   isArrayParent?: boolean;
+}
+
+interface JSONSchema {
+  [key: string]: any;
 }
 
 const renderValueLine = (item: ItemValue, name: string): string => {

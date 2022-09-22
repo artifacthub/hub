@@ -1,4 +1,4 @@
-import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
+import { JSONSchema } from './jsonschema';
 
 export enum RepositoryKind {
   Helm = 0,

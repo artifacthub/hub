@@ -9,7 +9,6 @@ updates:
       - dependency-name: "eslint-plugin-prettier"
       - dependency-name: "nanoid"
       - dependency-name: "react-router-dom"
-      - dependency-name: "react-scripts"
       - dependency-name: "remark-parse"
       - dependency-name: "unified"
       - dependency-name: "yaml"
