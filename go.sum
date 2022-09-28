@@ -1066,8 +1066,8 @@ github.com/subosito/gotenv v1.4.1 h1:jyEFiXpy21Wm81FBN71l9VoMMV8H8jG+qIK3GCpY6Qs
 github.com/subosito/gotenv v1.4.1/go.mod h1:ayKnFf/c6rvx/2iiLrJUk1e6plDbT3edrFNGqEflhK0=
 github.com/tchap/go-patricia/v2 v2.3.1 h1:6rQp39lgIYZ+MHmdEq4xzuk1t7OdC35z/xm0BGhTkes=
 github.com/tchap/go-patricia/v2 v2.3.1/go.mod h1:VZRHKAb53DLaG+nA9EaYYiaEx6YztwDlLElMsnSHD4k=
-github.com/tektoncd/pipeline v0.40.0 h1:g1xbNA/IvLK2eH0AaAqX8InxbyF03y49pEKhVaqARR4=
-github.com/tektoncd/pipeline v0.40.0/go.mod h1:DqabXb6NBN/CMMZn20UXiGkdHEgMfRDvh2r6g/YEQ50=
+github.com/tektoncd/pipeline v0.40.1 h1:O8Y3pZLa5JLe4WpPZSQcLG+KTd1fTplNPVQDu7+5tOI=
+github.com/tektoncd/pipeline v0.40.1/go.mod h1:DqabXb6NBN/CMMZn20UXiGkdHEgMfRDvh2r6g/YEQ50=
 github.com/theupdateframework/go-tuf v0.5.0 h1:aQ7i9CBw4q9QEZifCaW6G8qGQwoN23XGaZkOA+F50z4=
 github.com/theupdateframework/go-tuf v0.5.0/go.mod h1:vAqWV3zEs89byeFsAYoh/Q14vJTgJkHwnnRCWBBBINY=
 github.com/tidwall/pretty v1.0.0/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhVysOjyk=
