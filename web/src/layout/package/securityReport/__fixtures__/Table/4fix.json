@@ -1,0 +1,42 @@
+[
+  {
+    "Type": "npm",
+    "Target": "usr/share/ceph/mgr/dashboard/frontend/package-lock.json",
+    "Vulnerabilities": [
+      {
+        "CVSS": {
+          "nvd": {
+            "V2Score": 5.8,
+            "V3Score": 7.4,
+            "V2Vector": "AV:N/AC:M/Au:N/C:N/I:P/A:P",
+            "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H"
+          },
+          "redhat": {
+            "V3Score": 7.4,
+            "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H"
+          }
+        },
+        "Layer": {
+          "DiffID": "sha256:662009dcc4193ef33f9b4b4f8f158c8a0ce2b0f019ef8ad12b108e1659e949dc",
+          "Digest": "sha256:58b827811b460cc81672b1baf09b8188971ccd7a551fc6d95446ffc63bec449f"
+        },
+        "Title": "nodejs-lodash: prototype pollution in zipObjectDeep function",
+        "PkgName": "lodash",
+        "Severity": "MEDIUM",
+        "References": [
+          "https://github.com/advisories/GHSA-p6mc-m468-83gw",
+          "https://github.com/lodash/lodash/issues/4874",
+          "https://hackerone.com/reports/712065",
+          "https://nvd.nist.gov/vuln/detail/CVE-2020-8203",
+          "https://security.netapp.com/advisory/ntap-20200724-0006/",
+          "https://www.npmjs.com/advisories/1523"
+        ],
+        "Description": "Prototype pollution attack when using _.zipObjectDeep in lodash <= 4.17.15.",
+        "FixedVersion": "4.17.19",
+        "SeveritySource": "nvd",
+        "VulnerabilityID": "CVE-2020-8203",
+        "InstalledVersion": "4.17.14"
+      }
+    ]
+  }
+]

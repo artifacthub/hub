@@ -10,6 +10,10 @@ const getMockSecurityReport = (fixtureId: string): SecurityReportResult[] => {
   return require(`./__fixtures__/Table/${fixtureId}.json`) as SecurityReportResult[];
 };
 
+const getMockFixableSecurityReport = (fixtureId: string): SecurityReportResult[] => {
+  return require(`./__fixtures__/Table/${fixtureId}fix.json`) as SecurityReportResult[];
+};
+
 const mockSetVisibleImage = jest.fn();
 const mockSetVisibleTarget = jest.fn();
 const mockSetExpandedTarget = jest.fn();
@@ -27,6 +31,7 @@ const defaultProps = {
   setVisibleTarget: mockSetVisibleTarget,
   setExpandedTarget: mockSetExpandedTarget,
   lastReport: false,
+  showOnlyFixableVulnerabilities: false,
 };
 
 describe('SecurityTable', () => {
@@ -36,16 +41,20 @@ describe('SecurityTable', () => {
 
   it('creates snapshot', () => {
     const mockReports = getMockSecurityReport('1');
+    const mockFixableReports = getMockFixableSecurityReport('1');
 
-    const { asFragment } = render(<SecurityTable {...defaultProps} reports={mockReports} />);
+    const { asFragment } = render(
+      <SecurityTable {...defaultProps} reports={mockReports} fixableReports={mockFixableReports} />
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
       const mockReports = getMockSecurityReport('2');
+      const mockFixableReports = getMockFixableSecurityReport('2');
 
-      render(<SecurityTable {...defaultProps} reports={mockReports} />);
+      render(<SecurityTable {...defaultProps} reports={mockReports} fixableReports={mockFixableReports} />);
 
       const targets = screen.getAllByTestId('targetTitle');
       expect(targets).toHaveLength(2);
@@ -55,19 +64,22 @@ describe('SecurityTable', () => {
 
     it('renders empty report', () => {
       const mockReports = getMockSecurityReport('3');
+      const mockFixableReports = getMockFixableSecurityReport('3');
 
-      render(<SecurityTable {...defaultProps} reports={mockReports} />);
+      render(<SecurityTable {...defaultProps} reports={mockReports} fixableReports={mockFixableReports} />);
 
       expect(screen.queryByTestId('btnExpand')).toBeNull();
     });
 
     it('collapses report', async () => {
       const mockReports = getMockSecurityReport('4');
+      const mockFixableReports = getMockFixableSecurityReport('4');
 
       render(
         <SecurityTable
           {...defaultProps}
           reports={mockReports}
+          fixableReports={mockFixableReports}
           expandedTarget="imgName_usr/share/ceph/mgr/dashboard/frontend/package-lock.json"
         />
       );
@@ -84,11 +96,13 @@ describe('SecurityTable', () => {
 
     it('renders expanded target report', () => {
       const mockReports = getMockSecurityReport('5');
+      const mockFixableReports = getMockFixableSecurityReport('5');
 
       render(
         <SecurityTable
           {...defaultProps}
           reports={mockReports}
+          fixableReports={mockFixableReports}
           expandedTarget="imgName_rook/ceph:v1.1.1 (centos 7.7.1908)"
         />
       );

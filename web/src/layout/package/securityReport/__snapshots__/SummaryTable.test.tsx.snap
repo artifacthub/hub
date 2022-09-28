@@ -25,6 +25,12 @@ exports[`SummaryTable creates snapshot 1`] = `
             Rating
           </th>
           <th
+            class="text-center"
+            scope="col"
+          >
+            Type
+          </th>
+          <th
             class="col text-center text-capitalize"
           >
             critical
@@ -59,7 +65,10 @@ exports[`SummaryTable creates snapshot 1`] = `
       </thead>
       <tbody>
         <tr>
-          <td>
+          <td
+            class="align-middle"
+            rowspan="2"
+          >
             <div
               class="d-table w-100 imageNameWrapper"
             >
@@ -71,20 +80,21 @@ exports[`SummaryTable creates snapshot 1`] = `
             </div>
           </td>
           <td
-            class="text-center"
+            class="text-center align-middle"
+            rowspan="2"
           >
             <div
               class="d-inline-block"
             >
               <div
-                class="position-relative undefined"
+                class="position-relative ratingBadge"
               >
                 <div
                   data-testid="elementWithTooltip"
                 >
                   <small>
                     <div
-                      class="badge rounded-pill text-light fw-bold badge undefined"
+                      class="badge rounded-pill text-light fw-bold badge ratingBadge"
                       style="background-color: rgb(150, 0, 3);"
                     >
                       F
@@ -95,32 +105,74 @@ exports[`SummaryTable creates snapshot 1`] = `
             </div>
           </td>
           <td
-            class="text-center"
+            class="narrowCell"
           >
-            4
+            Fixable
           </td>
           <td
-            class="text-center"
-          >
-            22
-          </td>
-          <td
-            class="text-center"
-          >
-            461
-          </td>
-          <td
-            class="text-center"
-          >
-            455
-          </td>
-          <td
-            class="text-center"
+            class="text-center narrowCell"
           >
             0
           </td>
           <td
-            class="text-center fw-bold"
+            class="text-center narrowCell"
+          >
+            0
+          </td>
+          <td
+            class="text-center narrowCell"
+          >
+            0
+          </td>
+          <td
+            class="text-center narrowCell"
+          >
+            0
+          </td>
+          <td
+            class="text-center narrowCell"
+          >
+            0
+          </td>
+          <td
+            class="text-center fw-bold narrowCell"
+          >
+            0
+          </td>
+        </tr>
+        <tr>
+          <td
+            class="narrowCell"
+          >
+            All
+          </td>
+          <td
+            class="text-center narrowCell"
+          >
+            4
+          </td>
+          <td
+            class="text-center narrowCell"
+          >
+            22
+          </td>
+          <td
+            class="text-center narrowCell"
+          >
+            461
+          </td>
+          <td
+            class="text-center narrowCell"
+          >
+            455
+          </td>
+          <td
+            class="text-center narrowCell"
+          >
+            0
+          </td>
+          <td
+            class="text-center fw-bold narrowCell"
           >
             942
           </td>

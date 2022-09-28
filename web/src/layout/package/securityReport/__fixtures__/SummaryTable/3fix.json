@@ -1,0 +1,22 @@
+{
+  "report": {
+    "artifacthub/hub:v0.7.0": {
+      "summary": { "critical": 1, "high": 0, "medium": 3, "low": 1, "unknown": 0 },
+      "total": 5
+    },
+    "artifacthub/scanner:v0.7.0": {
+      "summary": { "critical": 0, "high": 0, "medium": 0, "low": 0, "unknown": 0 },
+      "total": 0
+    },
+    "artifacthub/tracker:v0.7.0": {
+      "summary": { "critical": 0, "high": 0, "medium": 0, "low": 0, "unknown": 0 },
+      "total": 0
+    },
+    "artifacthub/db-migrator:v0.7.0": {
+      "summary": { "critical": 0, "high": 0, "medium": 0, "low": 0, "unknown": 0 },
+      "total": 0
+    }
+  },
+  "summary": { "critical": 1, "high": 0, "medium": 3, "low": 1, "unknown": 0 },
+  "total": 7
+}

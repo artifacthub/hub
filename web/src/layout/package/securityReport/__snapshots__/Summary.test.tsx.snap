@@ -13,13 +13,74 @@ exports[`SecuritySummary creates snapshot 1`] = `
       >
         170
       </span>
-       vulnerabilities have been detected in this package's 
+       vulnerabilities (
+      <span
+        class="fw-bold"
+      >
+        80
+      </span>
+       fixable)  have been detected in this package's 
       <span
         class="fw-bold"
       >
         images
       </span>
       .
+    </div>
+    <div
+      class="fw-bold text-uppercase text-muted"
+    >
+      <small>
+        Fixable vulnerabilities (80)
+      </small>
+    </div>
+    <div
+      class="progress mb-4"
+      style="height: 25px;"
+    >
+      <div
+        aria-label="Vulnerabilities number - high"
+        class="progress-bar text-dark px-1 fw-bold progressBar"
+        role="progressbar"
+        style="width: 8.75%; background-color: rgb(223, 42, 25);"
+      >
+        <span
+          class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+        >
+          7
+        </span>
+      </div>
+      <div
+        aria-label="Vulnerabilities number - medium"
+        class="progress-bar text-dark px-1 fw-bold progressBar"
+        role="progressbar"
+        style="width: 51.25%; background-color: rgb(247, 134, 15);"
+      >
+        <span
+          class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+        >
+          41
+        </span>
+      </div>
+      <div
+        aria-label="Vulnerabilities number - low"
+        class="progress-bar text-dark px-1 fw-bold progressBar"
+        role="progressbar"
+        style="width: 40%; background-color: rgb(244, 189, 12);"
+      >
+        <span
+          class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+        >
+          32
+        </span>
+      </div>
+    </div>
+    <div
+      class="fw-bold text-uppercase text-muted"
+    >
+      <small>
+        All vulnerabilities (170)
+      </small>
     </div>
     <div
       class="progress mb-4"
