@@ -49,8 +49,8 @@
     "@types/json-schema": "^7.0.11",
     "@types/json-schema-merge-allof": "^0.6.1",
     "@types/lodash": "^4.14.185",
-    "@types/node": "^18.7.18",
-    "@types/react": "^18.0.8",
+    "@types/node": "^18.7.23",
+    "@types/react": "^18.0.21",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.0.3",
     "@types/react-router-dom": "^5.3.3",
@@ -63,9 +63,9 @@
     "jest-mock": "^29.0.2",
     "prettier": "^2.6.2",
     "react-scripts": "^5.0.1",
-    "sass": "^1.54.9",
+    "sass": "^1.55.0",
     "shx": "^0.3.4",
-    "typescript": "^4.8.3"
+    "typescript": "^4.8.4"
   },
   "resolutions": {
     "autoprefixer": "10.4.5"
