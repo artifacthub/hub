@@ -33,7 +33,7 @@ require (
 	github.com/rs/zerolog v1.28.0
 	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06
 	github.com/satori/uuid v1.2.0
-	github.com/sigstore/cosign v1.12.0
+	github.com/sigstore/cosign v1.12.1
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.13.0
 	github.com/stretchr/testify v1.8.0
@@ -125,7 +125,7 @@ require (
 	github.com/golang/glog v1.0.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
-	github.com/google/btree v1.0.1 // indirect
+	github.com/google/btree v1.1.2 // indirect
 	github.com/google/cel-go v0.10.1 // indirect
 	github.com/google/gnostic v0.6.9 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
@@ -205,8 +205,8 @@ require (
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/shogo82148/go-shuffle v0.0.0-20170808115208-59829097ff3b // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
-	github.com/sigstore/rekor v0.12.0 // indirect
-	github.com/sigstore/sigstore v1.4.1-0.20220908204944-ec922cf4f1c2 // indirect
+	github.com/sigstore/rekor v0.12.1-0.20220915152154-4bb6f441c1b2 // indirect
+	github.com/sigstore/sigstore v1.4.1 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/spf13/afero v1.8.2 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
