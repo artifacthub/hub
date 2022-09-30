@@ -121,7 +121,8 @@ const SecurityTable = (props: Props) => {
                             onlyBadge
                           />
                         </div>
-                        {visibleVulnerabilities.length > 0 && (
+                        {(visibleVulnerabilities.length > 0 ||
+                          (props.showOnlyFixableVulnerabilities && allVulnerabilities.list.length > 0)) && (
                           <button
                             className={`btn badge bg-secondary ms-3 ${styles.badge}`}
                             onClick={() => props.setExpandedTarget(isExpanded ? null : targetImageName)}
