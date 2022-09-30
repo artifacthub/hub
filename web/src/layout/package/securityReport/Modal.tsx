@@ -117,11 +117,7 @@ const SecurityModal = (props: Props) => {
           target.Vulnerabilities,
           (v: Vulnerability) => !isUndefined(v.FixedVersion)
         );
-        if (isEmpty(target.Vulnerabilities)) {
-          vulnerabilities = [];
-        } else {
-          vulnerabilities = isEmpty(filteredVulnerabilities) ? null : filteredVulnerabilities;
-        }
+        vulnerabilities = isEmpty(target.Vulnerabilities) ? [] : filteredVulnerabilities;
         if (!isNull(vulnerabilities)) {
           if (isUndefined(tmpReport[img])) {
             tmpReport[img] = { Results: [{ ...target, Vulnerabilities: vulnerabilities }] };
