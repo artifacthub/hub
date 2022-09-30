@@ -37,7 +37,7 @@
     "start": "REACT_APP_HUB_BASE_URL=http://localhost:8000 react-scripts start",
     "build": "craco build",
     "build:cra": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "sed -i -e 's/const FORCE_EXIT_DELAY = 500;/const FORCE_EXIT_DELAY = 1000;/g' ./node_modules/jest-worker/build/base/BaseWorkerPool.js && TZ=UTC react-scripts test # See https://github.com/facebook/jest/issues/11354",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
