@@ -1,0 +1,150 @@
+[
+  {
+    "Type": "centos",
+    "Target": "rook/ceph:v1.1.1 (centos 7.7.1908)",
+    "Vulnerabilities": [
+      {
+        "CVSS": {
+          "nvd": {
+            "V2Score": 7.5,
+            "V3Score": 9.8,
+            "V2Vector": "AV:N/AC:L/Au:N/C:P/I:P/A:P",
+            "V3Vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+          },
+          "redhat": {
+            "V3Score": 8.1,
+            "V3Vector": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H"
+          }
+        },
+        "Layer": {
+          "DiffID": "sha256:662009dcc4193ef33f9b4b4f8f158c8a0ce2b0f019ef8ad12b108e1659e949dc",
+          "Digest": "sha256:58b827811b460cc81672b1baf09b8188971ccd7a551fc6d95446ffc63bec449f"
+        },
+        "Title": "PyYAML: yaml.load() API could execute arbitrary code",
+        "PkgName": "PyYAML",
+        "Severity": "MEDIUM",
+        "References": [
+          "https://github.com/advisories/GHSA-rprw-h62v-c2w7",
+          "https://github.com/marshmallow-code/apispec/issues/278",
+          "https://github.com/yaml/pyyaml/blob/master/CHANGES",
+          "https://github.com/yaml/pyyaml/issues/193",
+          "https://github.com/yaml/pyyaml/pull/74",
+          "https://github.com/yaml/pyyaml/wiki/PyYAML-yaml.load(input)-Deprecation",
+          "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/JEX7IPV5P2QJITAMA5Z63GQCZA5I6NVZ/",
+          "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/KSQQMRUQSXBSUXLCRD3TSZYQ7SEZRKCE/",
+          "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/M6JCFGEIEOFMWWIXGHSELMKQDD4CV2BA/",
+          "https://nvd.nist.gov/vuln/detail/CVE-2017-18342",
+          "https://security.gentoo.org/glsa/202003-45"
+        ],
+        "Description": "In PyYAML before 5.1, the yaml.load() API could execute arbitrary code if used with untrusted data. The load() function has been deprecated in version 5.1 and the 'UnsafeLoader' has been introduced for backward compatibility with the function.",
+        "SeveritySource": "redhat",
+        "VulnerabilityID": "CVE-2017-18342",
+        "InstalledVersion": "3.10-11.el7"
+      },
+      {
+        "CVSS": {
+          "nvd": {
+            "V2Score": 5,
+            "V3Score": 5.3,
+            "V2Vector": "AV:N/AC:L/Au:N/C:N/I:P/A:N",
+            "V3Vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+          },
+          "redhat": {
+            "V2Score": 4.3,
+            "V2Vector": "AV:N/AC:M/Au:N/C:N/I:P/A:N"
+          }
+        },
+        "Layer": {
+          "DiffID": "sha256:662009dcc4193ef33f9b4b4f8f158c8a0ce2b0f019ef8ad12b108e1659e949dc",
+          "Digest": "sha256:58b827811b460cc81672b1baf09b8188971ccd7a551fc6d95446ffc63bec449f"
+        },
+        "Title": "Audit: log terminal emulator escape sequences handling",
+        "PkgName": "audit-libs",
+        "Severity": "MEDIUM",
+        "References": [
+          "http://www.openwall.com/lists/oss-security/2015/08/13/9",
+          "http://www.securityfocus.com/bid/76840",
+          "https://bugzilla.redhat.com/show_bug.cgi?id=1251621",
+          "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5186",
+          "https://people.redhat.com/sgrubb/audit/ChangeLog"
+        ],
+        "Description": "Audit before 2.4.4 in Linux does not sanitize escape characters in filenames.",
+        "SeveritySource": "redhat",
+        "VulnerabilityID": "CVE-2015-5186",
+        "InstalledVersion": "2.8.5-4.el7"
+      },
+      {
+        "CVSS": {
+          "nvd": {
+            "V2Score": 5,
+            "V3Score": 5.3,
+            "V2Vector": "AV:N/AC:L/Au:N/C:N/I:P/A:N",
+            "V3Vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+          },
+          "redhat": {
+            "V2Score": 4.3,
+            "V2Vector": "AV:N/AC:M/Au:N/C:N/I:P/A:N"
+          }
+        },
+        "Layer": {
+          "DiffID": "sha256:662009dcc4193ef33f9b4b4f8f158c8a0ce2b0f019ef8ad12b108e1659e949dc",
+          "Digest": "sha256:58b827811b460cc81672b1baf09b8188971ccd7a551fc6d95446ffc63bec449f"
+        },
+        "Title": "Audit: log terminal emulator escape sequences handling",
+        "PkgName": "audit-libs-python",
+        "Severity": "MEDIUM",
+        "References": [
+          "http://www.openwall.com/lists/oss-security/2015/08/13/9",
+          "http://www.securityfocus.com/bid/76840",
+          "https://bugzilla.redhat.com/show_bug.cgi?id=1251621",
+          "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5186",
+          "https://people.redhat.com/sgrubb/audit/ChangeLog"
+        ],
+        "Description": "Audit before 2.4.4 in Linux does not sanitize escape characters in filenames.",
+        "SeveritySource": "redhat",
+        "VulnerabilityID": "CVE-2015-5186",
+        "InstalledVersion": "2.8.5-4.el7"
+      }
+    ]
+  },
+  {
+    "Type": "npm",
+    "Target": "usr/share/ceph/mgr/dashboard/frontend/package-lock.json",
+    "Vulnerabilities": [
+      {
+        "CVSS": {
+          "nvd": {
+            "V2Score": 5.8,
+            "V3Score": 7.4,
+            "V2Vector": "AV:N/AC:M/Au:N/C:N/I:P/A:P",
+            "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H"
+          },
+          "redhat": {
+            "V3Score": 7.4,
+            "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H"
+          }
+        },
+        "Layer": {
+          "DiffID": "sha256:662009dcc4193ef33f9b4b4f8f158c8a0ce2b0f019ef8ad12b108e1659e949dc",
+          "Digest": "sha256:58b827811b460cc81672b1baf09b8188971ccd7a551fc6d95446ffc63bec449f"
+        },
+        "Title": "nodejs-lodash: prototype pollution in zipObjectDeep function",
+        "PkgName": "lodash",
+        "Severity": "MEDIUM",
+        "References": [
+          "https://github.com/advisories/GHSA-p6mc-m468-83gw",
+          "https://github.com/lodash/lodash/issues/4874",
+          "https://hackerone.com/reports/712065",
+          "https://nvd.nist.gov/vuln/detail/CVE-2020-8203",
+          "https://security.netapp.com/advisory/ntap-20200724-0006/",
+          "https://www.npmjs.com/advisories/1523"
+        ],
+        "Description": "Prototype pollution attack when using _.zipObjectDeep in lodash <= 4.17.15.",
+        "FixedVersion": "4.17.19",
+        "SeveritySource": "nvd",
+        "VulnerabilityID": "CVE-2020-8203",
+        "InstalledVersion": "4.17.14"
+      }
+    ]
+  }
+]

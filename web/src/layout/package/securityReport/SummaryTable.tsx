@@ -1,7 +1,14 @@
-import { useEffect, useState } from 'react';
+import classNames from 'classnames';
+import { Fragment, useEffect, useState } from 'react';
 
 import useBreakpointDetect from '../../../hooks/useBreakpointDetect';
-import { SecurityReport, SecurityReportResult, Vulnerability, VulnerabilitySeverity } from '../../../types';
+import {
+  FixableVulnerabilitiesInReport,
+  SecurityReport,
+  SecurityReportResult,
+  Vulnerability,
+  VulnerabilitySeverity,
+} from '../../../types';
 import { SEVERITY_ORDER } from '../../../utils/data';
 import formatSecurityReport from '../../../utils/formatSecurityReport';
 import sumObjectValues from '../../../utils/sumObjectValues';
@@ -10,7 +17,9 @@ import styles from './SummaryTable.module.css';
 
 interface Props {
   report: SecurityReport;
+  fixableVulnerabilities: FixableVulnerabilitiesInReport;
   hasWhitelistedContainers: boolean;
+  allVulnerabilitiesAreFixable: boolean;
 }
 
 const SummaryTable = (props: Props) => {
@@ -37,6 +46,12 @@ const SummaryTable = (props: Props) => {
             <th scope="col" className="text-center">
               Rating
             </th>
+            {!props.allVulnerabilitiesAreFixable && (
+              <th scope="col" className="text-center">
+                Type
+              </th>
+            )}
+
             {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => (
               <th key={`col_${severity}`} className="col text-center text-capitalize">
                 {severity}
@@ -56,33 +71,73 @@ const SummaryTable = (props: Props) => {
               }
             });
             const { summary } = formatSecurityReport(vulnerabilitiesList);
+            const fixableVulnerabilities = props.fixableVulnerabilities.report[image] || { summary: {}, total: 0 };
             const total = sumObjectValues(summary);
 
             return (
-              <tr key={`tr_${image}`}>
-                <td>
-                  <div className={`d-table w-100 ${styles.imageNameWrapper}`}>
-                    <div className="text-truncate">{image}</div>
-                  </div>
-                </td>
-                <td className="text-center">
-                  <div className="d-inline-block">
-                    <SecurityRating
-                      summary={summary}
-                      onlyBadge
-                      tooltipAlignment="left"
-                      tooltipClassName={styles.tooltip}
-                      withoutTooltip={!visibleTooltip}
-                    />
-                  </div>
-                </td>
-                {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => (
-                  <td key={`col_${severity}_${image}`} className="text-center">
-                    {summary[severity] || 0}
+              <Fragment key={`tr_${image}`}>
+                <tr>
+                  <td rowSpan={!props.allVulnerabilitiesAreFixable ? 2 : 1} className="align-middle">
+                    <div className={`d-table w-100 ${styles.imageNameWrapper}`}>
+                      <div className="text-truncate">{image}</div>
+                    </div>
                   </td>
-                ))}
-                <td className="text-center fw-bold">{total}</td>
-              </tr>
+                  <td className="text-center align-middle" rowSpan={!props.allVulnerabilitiesAreFixable ? 2 : 1}>
+                    <div className="d-inline-block">
+                      <SecurityRating
+                        summary={summary}
+                        onlyBadge
+                        tooltipAlignment="left"
+                        className={styles.ratingBadge}
+                        tooltipClassName={styles.tooltip}
+                        withoutTooltip={!visibleTooltip}
+                      />
+                    </div>
+                  </td>
+                  {!props.allVulnerabilitiesAreFixable ? (
+                    <>
+                      <td className={styles.narrowCell}>Fixable</td>
+                      {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => (
+                        <td key={`col_fix_${severity}_${image}`} className={`text-center ${styles.narrowCell}`}>
+                          {fixableVulnerabilities.summary[severity] || 0}
+                        </td>
+                      ))}
+                      <td className={`text-center fw-bold ${styles.narrowCell}`}>{fixableVulnerabilities.total}</td>
+                    </>
+                  ) : (
+                    <>
+                      {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => (
+                        <td
+                          key={`col_${severity}_${image}`}
+                          className={classNames('text-center', {
+                            [styles.narrowCell]: !props.allVulnerabilitiesAreFixable,
+                          })}
+                        >
+                          {summary[severity] || 0}
+                        </td>
+                      ))}
+                      <td
+                        className={classNames('text-center fw-bold', {
+                          [styles.narrowCell]: !props.allVulnerabilitiesAreFixable,
+                        })}
+                      >
+                        {total}
+                      </td>
+                    </>
+                  )}
+                </tr>
+                {!props.allVulnerabilitiesAreFixable && (
+                  <tr>
+                    <td className={styles.narrowCell}>All</td>
+                    {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => (
+                      <td key={`col_${severity}_${image}`} className={`text-center ${styles.narrowCell}`}>
+                        {summary[severity] || 0}
+                      </td>
+                    ))}
+                    <td className={`text-center fw-bold ${styles.narrowCell}`}>{total}</td>
+                  </tr>
+                )}
+              </Fragment>
             );
           })}
         </tbody>

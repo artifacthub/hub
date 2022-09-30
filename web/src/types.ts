@@ -603,6 +603,14 @@ export interface Vulnerability {
   Severity: VulnerabilitySeverity;
 }
 
+export interface FixableVulnerabilitiesInReport {
+  report: {
+    [key: string]: { summary: SecurityReportSummary; total: number };
+  };
+  summary: SecurityReportSummary;
+  total: number;
+}
+
 export enum VulnerabilitySeverity {
   Critical = 'critical',
   High = 'high',

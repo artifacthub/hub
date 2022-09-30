@@ -1,10 +1,14 @@
 import { render, screen } from '@testing-library/react';
 
-import { SecurityReport } from '../../../types';
+import { FixableVulnerabilitiesInReport, SecurityReport } from '../../../types';
 import SummaryTable from './SummaryTable';
 
 const getMockSecurityReport = (fixtureId: string): SecurityReport => {
   return require(`./__fixtures__/SummaryTable/${fixtureId}.json`) as SecurityReport;
+};
+
+const getMockFixableSecurityReport = (fixtureId: string): FixableVulnerabilitiesInReport => {
+  return require(`./__fixtures__/SummaryTable/${fixtureId}fix.json`) as FixableVulnerabilitiesInReport;
 };
 
 describe('SummaryTable', () => {
@@ -14,15 +18,29 @@ describe('SummaryTable', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(
-      <SummaryTable report={getMockSecurityReport('1')} hasWhitelistedContainers={false} />
+      <SummaryTable
+        report={getMockSecurityReport('1')}
+        fixableVulnerabilities={getMockFixableSecurityReport('1')}
+        hasWhitelistedContainers={false}
+        allVulnerabilitiesAreFixable={false}
+      />
     );
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      render(<SummaryTable report={getMockSecurityReport('2')} hasWhitelistedContainers={false} />);
+      render(
+        <SummaryTable
+          report={getMockSecurityReport('2')}
+          fixableVulnerabilities={getMockFixableSecurityReport('2')}
+          hasWhitelistedContainers={false}
+          allVulnerabilitiesAreFixable={false}
+        />
+      );
       expect(screen.getByText('Image')).toBeInTheDocument();
+      expect(screen.getByText('Fixable')).toBeInTheDocument();
+      expect(screen.getByText('All')).toBeInTheDocument();
       expect(screen.getByText('Rating')).toBeInTheDocument();
       expect(screen.getByText('critical')).toBeInTheDocument();
       expect(screen.getByText('high')).toBeInTheDocument();
@@ -36,12 +54,19 @@ describe('SummaryTable', () => {
       expect(screen.getByText('22')).toBeInTheDocument();
       expect(screen.getByText('461')).toBeInTheDocument();
       expect(screen.getByText('455')).toBeInTheDocument();
-      expect(screen.getByText('0')).toBeInTheDocument();
+      expect(screen.getAllByText('0')).toHaveLength(7);
       expect(screen.getByText('942')).toBeInTheDocument();
     });
 
     it('renders table with more than one image', () => {
-      render(<SummaryTable report={getMockSecurityReport('3')} hasWhitelistedContainers={false} />);
+      render(
+        <SummaryTable
+          report={getMockSecurityReport('3')}
+          fixableVulnerabilities={getMockFixableSecurityReport('3')}
+          hasWhitelistedContainers={false}
+          allVulnerabilitiesAreFixable={false}
+        />
+      );
       expect(screen.getByText('Image')).toBeInTheDocument();
       expect(screen.getByText('Rating')).toBeInTheDocument();
       expect(screen.getByText('critical')).toBeInTheDocument();
@@ -56,8 +81,8 @@ describe('SummaryTable', () => {
       expect(screen.getByText('artifacthub/db-migrator:v0.7.0')).toBeInTheDocument();
       expect(screen.getByText('F')).toBeInTheDocument();
       expect(screen.getAllByText('A')).toHaveLength(3);
-      expect(screen.getAllByText('1')).toHaveLength(2);
-      expect(screen.getAllByText('0')).toHaveLength(20);
+      expect(screen.getAllByText('1')).toHaveLength(4);
+      expect(screen.getAllByText('0')).toHaveLength(40);
       expect(screen.getByText('7')).toBeInTheDocument();
     });
   });

@@ -1,0 +1,14 @@
+{
+  "report": {
+    "rook/ceph:v1.1.1 (centos 7.7.1908)": {
+      "summary": { "critical": 1, "high": 0, "medium": 3, "low": 1, "unknown": 0 },
+      "total": 5
+    },
+    "usr/share/ceph/mgr/dashboard/frontend/package-lock.json": {
+      "summary": { "critical": 0, "high": 0, "medium": 1, "low": 1, "unknown": 0 },
+      "total": 5
+    }
+  },
+  "summary": { "critical": 1, "high": 0, "medium": 4, "low": 2, "unknown": 0 },
+  "total": 7
+}

@@ -1,3 +1,4 @@
+import { isUndefined } from 'lodash';
 import { useEffect, useRef } from 'react';
 import { FaLink } from 'react-icons/fa';
 
@@ -7,6 +8,7 @@ interface Props {
   title: string;
   name: string;
   className?: string;
+  rightElement?: JSX.Element;
   onClick: () => void;
   visibleSection?: string;
 }
@@ -22,15 +24,23 @@ const SectionBtn = (props: Props) => {
   }, [props.name, props.visibleSection]);
 
   return (
-    <div ref={ref} className={`position-relative ${styles.btnWrapper} `}>
-      <button
-        onClick={props.onClick}
-        className={`btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white ${styles.linkBtn} ${styles.inSection}`}
-      >
-        <FaLink />
-      </button>
+    <div
+      ref={ref}
+      className={`position-relative d-flex flex-row justify-content-between ${styles.btnWrapper} ${props.className}`}
+    >
+      <div>
+        <button
+          onClick={props.onClick}
+          className={`btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white ${styles.linkBtn} ${styles.inSection}`}
+          aria-label={`Go to ${props.title} section`}
+        >
+          <FaLink />
+        </button>
 
-      <div className={`h5 text-dark text-uppercase fw-bold ${props.className}`}>{props.title}</div>
+        <div className="h5 text-dark text-uppercase fw-bold">{props.title}</div>
+      </div>
+
+      {!isUndefined(props.rightElement) && <>{props.rightElement}</>}
     </div>
   );
 };

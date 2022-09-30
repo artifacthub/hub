@@ -20,9 +20,11 @@ interface Props {
   setExpandedTarget: Dispatch<SetStateAction<string | null>>;
   image: string;
   reports: SecurityReportResult[];
+  fixableReports: SecurityReportResult[];
   hasOnlyOneTarget: boolean;
   lastReport: boolean;
   contentHeight?: number;
+  showOnlyFixableVulnerabilities: boolean;
 }
 
 const MAX_VULNERABILITY_NUMBER = 100;
@@ -35,6 +37,23 @@ const SecurityTable = (props: Props) => {
     return getTextBetweenParenthesis(target) || target;
   };
   const isActiveImage = isNull(props.visibleTarget) ? props.visibleImage === props.image : false;
+  const activeReports = props.showOnlyFixableVulnerabilities ? props.fixableReports : props.reports;
+
+  const getWarningCellAboutNotDisplayedVulnerabilities = (total: number, visible: number): JSX.Element | null => {
+    const diff = total - visible;
+    if (diff === 0) {
+      return null;
+    } else {
+      return (
+        <tr>
+          <td colSpan={6} className={`align-middle text-center table-warning ${styles.warningCell}`}>
+            <span className="fw-bold">{diff}</span> not fixable {diff === 1 ? 'vulnerability' : 'vulnerabilities'} not
+            displayed
+          </td>
+        </tr>
+      );
+    }
+  };
 
   return (
     <div className="my-1">
@@ -51,13 +70,14 @@ const SecurityTable = (props: Props) => {
       />
 
       <div data-testid="securityReportInfo">
-        {isNull(props.reports) ? (
+        {isNull(activeReports) ? (
           <div className="ms-4 mb-4">{getEmptyMessage()}</div>
         ) : (
           <>
-            {props.reports.map((item: SecurityReportResult, index: number) => {
+            {activeReports.map((item: SecurityReportResult, index: number) => {
               const targetImageName = `${props.image}_${item.Target}`;
-              const { list, summary } = formatSecurityReport(item.Vulnerabilities);
+              const allVulnerabilities = formatSecurityReport(props.reports[index].Vulnerabilities);
+              const { list } = formatSecurityReport(item.Vulnerabilities);
               const visibleVulnerabilities = slice(list, 0, MAX_VULNERABILITY_NUMBER);
               const isActive = !isNull(props.visibleTarget)
                 ? targetImageName === `${props.visibleImage}_${props.visibleTarget}`
@@ -96,7 +116,7 @@ const SecurityTable = (props: Props) => {
                         <div className={`${styles.tableTitle} d-flex flex-row align-items-center fw-bold text-nowrap`}>
                           <span className="text-uppercase text-muted">Rating:</span>
                           <SecurityRating
-                            summary={summary}
+                            summary={allVulnerabilities.summary}
                             className={`ms-2 ${styles.securityRatingBadge}`}
                             onlyBadge
                           />
@@ -137,13 +157,21 @@ const SecurityTable = (props: Props) => {
                             </tr>
                           </thead>
                           <tbody className="bg-white">
+                            {props.showOnlyFixableVulnerabilities && (
+                              <>
+                                {getWarningCellAboutNotDisplayedVulnerabilities(
+                                  allVulnerabilities.list.length,
+                                  list.length
+                                )}
+                              </>
+                            )}
                             {visibleVulnerabilities.map((item: Vulnerability, index: number) => {
                               const vulnerabilityName = `${item.VulnerabilityID}_${index}`;
                               return (
                                 <SecurityCell
                                   name={vulnerabilityName}
                                   vulnerability={item}
-                                  key={`cell_${item.PkgName}_${item.VulnerabilityID}`}
+                                  key={`cell_${item.PkgName}_${item.VulnerabilityID}_${index}`}
                                   isExpanded={visibleVulnerability === vulnerabilityName}
                                   setVisibleVulnerability={setVisibleVulnerability}
                                 />

@@ -23,6 +23,14 @@
   margin-left: -3px;
 }
 
+.ratingBadge {
+  top: -3px;
+}
+
+.narrowCell {
+  padding: 0.5rem 0.75rem !important;
+}
+
 @media only screen and (min-width: 1200px) {
   .tableWrapper {
     overflow: visible;
