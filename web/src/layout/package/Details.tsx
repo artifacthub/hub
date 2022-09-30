@@ -164,6 +164,14 @@ const Details = (props: Props) => {
       {(() => {
         switch (props.package.repository.kind) {
           case RepositoryKind.Helm:
+          case RepositoryKind.Falco:
+          case RepositoryKind.OPA:
+          case RepositoryKind.TBAction:
+          case RepositoryKind.KedaScaler:
+          case RepositoryKind.CoreDNS:
+          case RepositoryKind.Keptn:
+          case RepositoryKind.Kubewarden:
+          case RepositoryKind.Gatekeeper:
             return (
               <>
                 {props.package.appVersion && (
@@ -176,6 +184,7 @@ const Details = (props: Props) => {
                 )}
               </>
             );
+
           case RepositoryKind.Container:
             return (
               <>
@@ -196,6 +205,7 @@ const Details = (props: Props) => {
                 )}
               </>
             );
+
           default:
             return null;
         }
@@ -266,6 +276,19 @@ const Details = (props: Props) => {
               </>
             );
           case RepositoryKind.TektonTask:
+            return (
+              <>
+                {props.package.data && props.package.data.pipelinesMinVersion && (
+                  <div>
+                    <SmallTitle text="Pipeline minimal version" />
+                    <p data-testid="appVersion" className="text-truncate">
+                      {props.package.data.pipelinesMinVersion}
+                    </p>
+                  </div>
+                )}
+              </>
+            );
+
           case RepositoryKind.TektonPipeline:
             return (
               <>
@@ -349,11 +372,11 @@ const Details = (props: Props) => {
                         {resource}
                       </p>
                     ))}
-                    {props.package.data && !isUndefined(props.package.data[KubewardenData.Mutation]) && (
-                      <div className="mb-3 text-muted">
-                        <small>{`Validation ${isMutationTrue ? '+ Mutation ' : ''}policy`}</small>
-                      </div>
-                    )}
+                  </div>
+                )}
+                {props.package.data && !isUndefined(props.package.data[KubewardenData.Mutation]) && (
+                  <div className="mb-3 text-muted">
+                    <small>{`Validation ${isMutationTrue ? '+ Mutation ' : ''}policy`}</small>
                   </div>
                 )}
               </>
@@ -382,7 +405,10 @@ const Details = (props: Props) => {
         containers={props.package.containersImages || []}
       />
 
-      <CapabilityLevel capabilityLevel={props.package.capabilities} />
+      {(RepositoryKind.OLM === props.package.repository.kind ||
+        (RepositoryKind.Helm === props.package.repository.kind &&
+          !isUndefined(props.package.isOperator) &&
+          props.package.isOperator)) && <CapabilityLevel capabilityLevel={props.package.capabilities} />}
 
       {props.package.provider && (
         <>
