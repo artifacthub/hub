@@ -39,8 +39,8 @@ export enum Signature {
 }
 
 export enum VersioningOption {
-  Directory = 'directory',
   Git = 'git',
+  Directory = 'directory',
 }
 
 export interface Repository {

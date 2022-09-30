@@ -42,7 +42,7 @@ interface Props {
 }
 
 const DEFAULT_SELECTED_REPOSITORY_KIND = RepositoryKind.Helm;
-const DEFAULT_VERSIONING_OPT = VersioningOption.Directory;
+const DEFAULT_VERSIONING_OPT = VersioningOption.Git;
 
 const RepositoryModal = (props: Props) => {
   const { ctx } = useContext(AppCtx);
@@ -865,7 +865,8 @@ const RepositoryModal = (props: Props) => {
                 <div className="mb-4">
                   <small className="text-muted text-break">
                     <p className="mb-0">
-                      Select which organization uses your Tekton catalog. For more details please see the{' '}
+                      Select the layout of your Tekton catalog (the Tekton community recommends using{' '}
+                      <code className={styles.code}>git</code> based versioning). For more details please see the{' '}
                       <ExternalLink
                         href="https://github.com/tektoncd/community/blob/main/teps/0115-tekton-catalog-git-based-versioning.md#tep-0115-tekton-catalog-git-based-versioning"
                         className="text-primary fw-bold"
