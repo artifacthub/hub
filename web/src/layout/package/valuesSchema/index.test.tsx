@@ -93,7 +93,7 @@ describe('ValuesSchema', () => {
       expect(screen.getByText('Values schema reference')).toBeInTheDocument();
     });
 
-    xit('closes modal', async () => {
+    it('closes modal', async () => {
       const mockValuesSchema = getMockValuesSchema('4');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 

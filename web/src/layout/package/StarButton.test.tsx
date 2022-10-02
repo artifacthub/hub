@@ -69,7 +69,7 @@ describe('StarButton', () => {
 
   describe('Render', () => {
     describe('when user is signed in', () => {
-      xit('renders unstarred package', async () => {
+      it('renders unstarred package', async () => {
         mocked(API)
           .getStars.mockResolvedValue({ stars: 5, starredByUser: true })
           .mockResolvedValueOnce({ stars: 4, starredByUser: false });
@@ -115,7 +115,7 @@ describe('StarButton', () => {
         expect(screen.getByText('5')).toBeInTheDocument();
       });
 
-      xit('renders starred package', async () => {
+      it('renders starred package', async () => {
         mocked(API)
           .getStars.mockResolvedValue({ stars: 4, starredByUser: false })
           .mockResolvedValueOnce({ stars: 5, starredByUser: true });

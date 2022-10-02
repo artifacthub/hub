@@ -27,7 +27,6 @@ interface Props {
 async function enrichValuesSchema(schema: JSONSchema) {
   try {
     const dereferencedSchema = dereferenceJSONSchema(schema);
-
     // Merge schemas combined using allOf.
     const mergedSchema = merger(dereferencedSchema);
 

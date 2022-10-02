@@ -1,0 +1,829 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompareView creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-flex flex-row align-items-stretch g-0 h-100 mh-100"
+  >
+    <div
+      class="col-3 h-100"
+    >
+      <div
+        class="h-100 d-flex flex-column overflow-auto pe-2"
+      >
+        <div
+          class="position-relative w-100"
+        >
+          <div
+            class="mb-3 input-group-sm"
+          >
+            <input
+              class="flex-grow-1 form-control ps-3 pe-4 input"
+              name="CompareChartTemplateInput"
+              placeholder="Search by template or resource kind"
+              spellcheck="false"
+              type="text"
+              value=""
+            />
+            <svg
+              class="text-muted position-absolute searchIcon"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div>
+          <button
+            aria-label="Show template configmap-authscripts.yaml"
+            aria-pressed="true"
+            class="btn btn-light btn-sm mb-2 text-start w-100 btn activeTemplate active"
+          >
+            <div
+              class="d-flex flex-column"
+            >
+              <div
+                class="d-flex flex-row align-items-baseline mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Template:
+                  </small>
+                </div>
+                <div
+                  class="text-truncate templateName"
+                >
+                  configmap-authscripts.yaml
+                </div>
+                <div
+                  class="ps-2 ms-auto"
+                >
+                  <span
+                    class="text-success"
+                    data-testid="tmpl-added-icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 14 16"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13 1H1c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V2c0-.55-.45-1-1-1zm0 13H1V2h12v12zM6 9H3V7h3V4h2v3h3v2H8v3H6V9z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="d-flex flex-row mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Resource:
+                  </small>
+                </div>
+                <span
+                  class="text-truncate border fw-bold label"
+                >
+                  ConfigMap
+                </span>
+              </div>
+            </div>
+          </button>
+        </div>
+        <div>
+          <button
+            aria-label="Show template configmap-sshconfig.yaml"
+            aria-pressed="false"
+            class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+          >
+            <div
+              class="d-flex flex-column"
+            >
+              <div
+                class="d-flex flex-row align-items-baseline mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Template:
+                  </small>
+                </div>
+                <div
+                  class="text-truncate templateName"
+                >
+                  configmap-sshconfig.yaml
+                </div>
+                <div
+                  class="ps-2 ms-auto"
+                >
+                  <span
+                    class="text-success"
+                    data-testid="tmpl-added-icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 14 16"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13 1H1c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V2c0-.55-.45-1-1-1zm0 13H1V2h12v12zM6 9H3V7h3V4h2v3h3v2H8v3H6V9z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="d-flex flex-row mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Resource:
+                  </small>
+                </div>
+                <span
+                  class="text-truncate border fw-bold label"
+                >
+                  ConfigMap
+                </span>
+              </div>
+            </div>
+          </button>
+        </div>
+        <div>
+          <button
+            aria-label="Show template configmap.yaml"
+            aria-pressed="false"
+            class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+          >
+            <div
+              class="d-flex flex-column"
+            >
+              <div
+                class="d-flex flex-row align-items-baseline mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Template:
+                  </small>
+                </div>
+                <div
+                  class="text-truncate templateName"
+                >
+                  configmap.yaml
+                </div>
+                <div
+                  class="ps-2 ms-auto"
+                >
+                  <span
+                    class="modifiedIcon"
+                    data-testid="tmpl-modified-icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 14 16"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13 1H1c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V2c0-.55-.45-1-1-1zm0 13H1V2h12v12zM4 8c0-1.66 1.34-3 3-3s3 1.34 3 3-1.34 3-3 3-3-1.34-3-3z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="d-flex flex-row mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Resource:
+                  </small>
+                </div>
+                <span
+                  class="text-truncate border fw-bold label"
+                >
+                  ConfigMap
+                </span>
+              </div>
+            </div>
+          </button>
+        </div>
+        <div>
+          <button
+            aria-label="Show template deployment.yaml"
+            aria-pressed="false"
+            class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+          >
+            <div
+              class="d-flex flex-column"
+            >
+              <div
+                class="d-flex flex-row align-items-baseline mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Template:
+                  </small>
+                </div>
+                <div
+                  class="text-truncate templateName"
+                >
+                  deployment.yaml
+                </div>
+                <div
+                  class="ps-2 ms-auto"
+                >
+                  <span
+                    class="text-success"
+                    data-testid="tmpl-added-icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 14 16"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13 1H1c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V2c0-.55-.45-1-1-1zm0 13H1V2h12v12zM6 9H3V7h3V4h2v3h3v2H8v3H6V9z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="d-flex flex-row mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Resource:
+                  </small>
+                </div>
+                <span
+                  class="text-truncate border fw-bold label"
+                >
+                  Deployment
+                </span>
+              </div>
+            </div>
+          </button>
+        </div>
+        <div>
+          <button
+            aria-label="Show template metrics-service.yaml"
+            aria-pressed="false"
+            class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+          >
+            <div
+              class="d-flex flex-column"
+            >
+              <div
+                class="d-flex flex-row align-items-baseline mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Template:
+                  </small>
+                </div>
+                <div
+                  class="text-truncate templateName"
+                >
+                  metrics-service.yaml
+                </div>
+                <div
+                  class="ps-2 ms-auto"
+                >
+                  <span
+                    class="text-success"
+                    data-testid="tmpl-added-icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 14 16"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13 1H1c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V2c0-.55-.45-1-1-1zm0 13H1V2h12v12zM6 9H3V7h3V4h2v3h3v2H8v3H6V9z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="d-flex flex-row mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Resource:
+                  </small>
+                </div>
+                <span
+                  class="text-truncate border fw-bold label"
+                >
+                  Service
+                </span>
+              </div>
+            </div>
+          </button>
+        </div>
+        <div>
+          <button
+            aria-label="Show template secret.yaml"
+            aria-pressed="false"
+            class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+          >
+            <div
+              class="d-flex flex-column"
+            >
+              <div
+                class="d-flex flex-row align-items-baseline mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Template:
+                  </small>
+                </div>
+                <div
+                  class="text-truncate templateName"
+                >
+                  secret.yaml
+                </div>
+                <div
+                  class="ps-2 ms-auto"
+                >
+                  <span
+                    class="text-success"
+                    data-testid="tmpl-added-icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 14 16"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13 1H1c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V2c0-.55-.45-1-1-1zm0 13H1V2h12v12zM6 9H3V7h3V4h2v3h3v2H8v3H6V9z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="d-flex flex-row mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Resource:
+                  </small>
+                </div>
+                <span
+                  class="text-truncate border fw-bold label"
+                >
+                  Secret
+                </span>
+              </div>
+            </div>
+          </button>
+        </div>
+        <div>
+          <button
+            aria-label="Show template servicemonitor.yaml"
+            aria-pressed="false"
+            class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+          >
+            <div
+              class="d-flex flex-column"
+            >
+              <div
+                class="d-flex flex-row align-items-baseline mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Template:
+                  </small>
+                </div>
+                <div
+                  class="text-truncate templateName"
+                >
+                  servicemonitor.yaml
+                </div>
+                <div
+                  class="ps-2 ms-auto"
+                >
+                  <span
+                    class="text-success"
+                    data-testid="tmpl-added-icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 14 16"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13 1H1c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V2c0-.55-.45-1-1-1zm0 13H1V2h12v12zM6 9H3V7h3V4h2v3h3v2H8v3H6V9z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="d-flex flex-row mb-1"
+              >
+                <div
+                  class="legend"
+                >
+                  <small
+                    class="text-muted text-uppercase"
+                  >
+                    Resource:
+                  </small>
+                </div>
+                <span
+                  class="text-truncate border fw-bold label"
+                >
+                  ServiceMonitor
+                </span>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-9 ps-3 h-100"
+    >
+      <div
+        class="position-relative h-100 mh-100 border templateWrapper"
+      >
+        <div
+          class="position-absolute d-flex wrapper"
+        >
+          <div
+            class="position-relative"
+          >
+            <button
+              aria-label="Expand code"
+              class="btn btn-sm btn-primary rounded-circle fs-5 btn"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zM7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <pre
+          class="text-muted h-100 mh-100 mb-0 overflow-hidden position-relative diffTemplate pre"
+        >
+          <div
+            class="file-diff h-100"
+            data-testid="diffTemplate"
+          >
+            <header
+              class="d-flex flex-row align-items-center justify-content-between diff-header fw-bold py-1 header"
+            >
+              <div
+                class="text-truncate"
+              >
+                configmap-authscripts.yaml
+              </div>
+              <div
+                class="pe-5 me-3 ps-3"
+              >
+                <span
+                  class="pe-2 versionTitle"
+                >
+                  Changes from
+                </span>
+                <span
+                  class="badge bg-dark px-2 py-1 badge-md"
+                >
+                  	0.1.0
+                </span>
+                <span
+                  class="px-2 versionTitle"
+                >
+                  to
+                </span>
+                <span
+                  class="badge bg-dark px-2 py-1 badge-md"
+                >
+                  	0.8.0
+                </span>
+              </div>
+            </header>
+            <div
+              class="overflow-scroll border-top py-2 codeWrapper"
+            >
+              <table
+                class="diff diff-unified"
+              >
+                <colgroup>
+                  <col
+                    class="diff-gutter-col"
+                  />
+                  <col
+                    class="diff-gutter-col"
+                  />
+                  <col />
+                </colgroup>
+                <tbody
+                  class="diff-decoration"
+                >
+                  <tr>
+                    <td
+                      class="diff-decoration-content"
+                      colspan="3"
+                    >
+                      <div
+                        class="hunk-header py-1 px-3 fw-bold hunkHeader mb-2"
+                      >
+                        @@ -0,0 +1,10 @@
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody
+                  class="diff-hunk"
+                >
+                  <tr
+                    class="diff-line"
+                  >
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    />
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    >
+                      1
+                    </td>
+                    <td
+                      class="diff-code diff-code-insert"
+                    >
+                      {{- if .Values.authScripts.enabled }}
+                    </td>
+                  </tr>
+                  <tr
+                    class="diff-line"
+                  >
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    />
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    >
+                      2
+                    </td>
+                    <td
+                      class="diff-code diff-code-insert"
+                    >
+                      apiVersion: v1
+                    </td>
+                  </tr>
+                  <tr
+                    class="diff-line"
+                  >
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    />
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    >
+                      3
+                    </td>
+                    <td
+                      class="diff-code diff-code-insert"
+                    >
+                      kind: ConfigMap
+                    </td>
+                  </tr>
+                  <tr
+                    class="diff-line"
+                  >
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    />
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    >
+                      4
+                    </td>
+                    <td
+                      class="diff-code diff-code-insert"
+                    >
+                      metadata:
+                    </td>
+                  </tr>
+                  <tr
+                    class="diff-line"
+                  >
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    />
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    >
+                      5
+                    </td>
+                    <td
+                      class="diff-code diff-code-insert"
+                    >
+                        labels:
+                    </td>
+                  </tr>
+                  <tr
+                    class="diff-line"
+                  >
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    />
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    >
+                      6
+                    </td>
+                    <td
+                      class="diff-code diff-code-insert"
+                    >
+                          {{- include "argocd-image-updater.labels" . | nindent 4 }}
+                    </td>
+                  </tr>
+                  <tr
+                    class="diff-line"
+                  >
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    />
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    >
+                      7
+                    </td>
+                    <td
+                      class="diff-code diff-code-insert"
+                    >
+                        name: argocd-image-updater-authscripts
+                    </td>
+                  </tr>
+                  <tr
+                    class="diff-line"
+                  >
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    />
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    >
+                      8
+                    </td>
+                    <td
+                      class="diff-code diff-code-insert"
+                    >
+                      data:
+                    </td>
+                  </tr>
+                  <tr
+                    class="diff-line"
+                  >
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    />
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    >
+                      9
+                    </td>
+                    <td
+                      class="diff-code diff-code-insert"
+                    >
+                        {{- toYaml .Values.authScripts.scripts | nindent 2}}
+                    </td>
+                  </tr>
+                  <tr
+                    class="diff-line"
+                  >
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    />
+                    <td
+                      class="diff-gutter diff-gutter-insert"
+                    >
+                      10
+                    </td>
+                    <td
+                      class="diff-code diff-code-insert"
+                    >
+                      {{- end }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </pre>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

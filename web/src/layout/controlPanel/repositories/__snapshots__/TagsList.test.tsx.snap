@@ -1,0 +1,270 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TagsList creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mb-4"
+  >
+    <label
+      class="form-check-label fw-bold mb-2 label"
+    >
+      Tags
+      <button
+        aria-label="Add tag"
+        class="btn btn-primary btn-sm ms-2 rounded-circle p-0 position-relative lh-1 btn inTitle"
+        type="button"
+      >
+        <svg
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 20 20"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </button>
+    </label>
+    <div
+      class="d-flex flex-row align-items-stretch justify-content-between"
+    >
+      <div
+        class="mb-3 position-relative flex-grow-1"
+      >
+        <input
+          autocomplete="off"
+          class="form-control"
+          data-testid="tag_0Input"
+          id="tag_0"
+          name="tag_0"
+          placeholder="Tag name"
+          spellcheck="false"
+          type="text"
+          value="tag1"
+        />
+        <div
+          class="invalid-feedback mt-0 inputFeedback"
+        />
+      </div>
+      <div
+        class="d-flex flex-row align-items-center mb-3 ms-3 flex-nowrap"
+      >
+        <div
+          class="ms-2 me-5 position-relative inputWrapper"
+        >
+          <div
+            class="form-check form-switch ps-0"
+          >
+            <label
+              class="form-check-label fw-bold label"
+              for="mutable_0"
+            >
+              Mutable
+            </label>
+            <input
+              class="form-check-input position-absolute ms-2"
+              id="mutable_0"
+              role="switch"
+              type="checkbox"
+              value="true"
+            />
+          </div>
+        </div>
+        <div
+          class="position-relative text-end btnWrapper"
+        >
+          <button
+            aria-label="Delete tag from repository"
+            class="btn btn-danger btn-sm ms-auto rounded-circle p-0 position-relative lh-1 btn"
+            type="button"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="d-flex flex-row align-items-stretch justify-content-between"
+    >
+      <div
+        class="mb-3 position-relative flex-grow-1"
+      >
+        <input
+          autocomplete="off"
+          class="form-control"
+          data-testid="tag_1Input"
+          id="tag_1"
+          name="tag_1"
+          placeholder="Tag name"
+          spellcheck="false"
+          type="text"
+          value="tag2"
+        />
+        <div
+          class="invalid-feedback mt-0 inputFeedback"
+        />
+      </div>
+      <div
+        class="d-flex flex-row align-items-center mb-3 ms-3 flex-nowrap"
+      >
+        <div
+          class="ms-2 me-5 position-relative inputWrapper"
+        >
+          <div
+            class="form-check form-switch ps-0"
+          >
+            <label
+              class="form-check-label fw-bold label"
+              for="mutable_1"
+            >
+              Mutable
+            </label>
+            <input
+              class="form-check-input position-absolute ms-2"
+              id="mutable_1"
+              role="switch"
+              type="checkbox"
+              value="true"
+            />
+          </div>
+        </div>
+        <div
+          class="position-relative text-end btnWrapper"
+        >
+          <button
+            aria-label="Delete tag from repository"
+            class="btn btn-danger btn-sm ms-auto rounded-circle p-0 position-relative lh-1 btn"
+            type="button"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="d-flex flex-row align-items-stretch justify-content-between"
+    >
+      <div
+        class="mb-3 position-relative flex-grow-1"
+      >
+        <input
+          autocomplete="off"
+          class="form-control"
+          data-testid="tag_2Input"
+          id="tag_2"
+          name="tag_2"
+          placeholder="Tag name"
+          spellcheck="false"
+          type="text"
+          value="tag3"
+        />
+        <div
+          class="invalid-feedback mt-0 inputFeedback"
+        />
+      </div>
+      <div
+        class="d-flex flex-row align-items-center mb-3 ms-3 flex-nowrap"
+      >
+        <div
+          class="ms-2 me-5 position-relative inputWrapper"
+        >
+          <div
+            class="form-check form-switch ps-0"
+          >
+            <label
+              class="form-check-label fw-bold label"
+              for="mutable_2"
+            >
+              Mutable
+            </label>
+            <input
+              checked=""
+              class="form-check-input position-absolute ms-2"
+              id="mutable_2"
+              role="switch"
+              type="checkbox"
+              value="true"
+            />
+          </div>
+        </div>
+        <div
+          class="position-relative text-end btnWrapper"
+        >
+          <button
+            aria-label="Delete tag from repository"
+            class="btn btn-danger btn-sm ms-auto rounded-circle p-0 position-relative lh-1 btn"
+            type="button"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="form-text text-muted mt-2"
+    >
+      The tags you'd like to list on Artifact Hub must be explicitly added. You can add up to 
+      <span
+        class="fw-bold"
+      >
+        10
+      </span>
+       (they can be edited later though). Mutable tags will be processed periodically, whereas immutable tags will be only processed once.
+    </div>
+  </div>
+</DocumentFragment>
+`;

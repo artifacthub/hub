@@ -205,7 +205,7 @@ describe('RepositoriesSection', () => {
   });
 
   describe('when change opt-out entry fails', () => {
-    xit('generic error', async () => {
+    it('generic error', async () => {
       const mockOptOut = getMockOptOut('6');
       mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
       mocked(API).deleteOptOut.mockRejectedValue({ kind: ErrorKind.Other });

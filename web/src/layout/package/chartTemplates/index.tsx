@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { compact, isUndefined, uniq } from 'lodash';
+import { isUndefined } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { GoCheck } from 'react-icons/go';
 import { ImInsertTemplate } from 'react-icons/im';
@@ -19,6 +19,7 @@ import {
   Version as VersionData,
 } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
+import formatChartTemplates from '../../../utils/formatChartTemplates';
 import ElementWithTooltip from '../../common/ElementWithTooltip';
 import Modal from '../../common/Modal';
 import styles from './ChartTemplatesModal.module.css';
@@ -39,66 +40,7 @@ interface Props {
   fromStarredPage?: boolean;
 }
 
-interface FileProps {
-  name: string;
-  extension: string;
-}
-
-const KIND = /(\nkind: [A-Za-z0-9"]*|^kind: [A-Za-z0-9"]*)/g;
 const HELPER_TEMPLATE_NAME = /define "(.*?)"/;
-
-const getFileNameAndExt = (str: string): FileProps => {
-  const file = str.split('/').pop() || str;
-  return {
-    name: file.substr(0, file.lastIndexOf('.')),
-    extension: file.substr(file.lastIndexOf('.') + 1, file.length),
-  };
-};
-
-const getResourceKinds = (data: string): string[] => {
-  const kinds = data.match(KIND);
-  if (kinds) {
-    const cleanKinds = kinds.map((kind: string) => {
-      const parts = kind.split(':');
-      return parts[1].replaceAll('"', '').trim();
-    });
-    return uniq(compact(cleanKinds));
-  }
-  return [];
-};
-
-const decodeData = (data: string): string => {
-  try {
-    return atob(data);
-  } catch {
-    return Buffer.from(data, 'base64').toString('binary');
-  }
-};
-
-const formatTemplates = (templates: ChartTemplate[]): ChartTemplate[] => {
-  let finalTemplates: ChartTemplate[] = [];
-  let finalHelpers: ChartTemplate[] = [];
-  templates.forEach((template: ChartTemplate) => {
-    const templateName = template.name.replace('templates/', '');
-    const { name, extension } = getFileNameAndExt(templateName);
-    if (['yaml', 'tpl'].includes(extension)) {
-      const decodedData = decodeData(template.data);
-      const tmpl = {
-        name: templateName,
-        fileName: name,
-        resourceKinds: getResourceKinds(decodedData),
-        data: decodedData,
-      };
-
-      if (extension === 'yaml') {
-        finalTemplates.push({ ...tmpl, type: ChartTmplTypeFile.Template });
-      } else {
-        finalHelpers.push({ ...tmpl, type: ChartTmplTypeFile.Helper });
-      }
-    }
-  });
-  return [...finalTemplates, ...finalHelpers];
-};
 
 const getDefinedTemplates = (templates: ChartTemplate[]): DefinedTemplatesList => {
   let tmplsInHelpers: DefinedTemplatesList = {};
@@ -193,7 +135,7 @@ const ChartTemplatesModal = (props: Props) => {
 
       const data = await API.getChartTemplates(props.packageId, props.version);
       if (data && data.templates) {
-        const formattedTemplates = formatTemplates(data.templates);
+        const formattedTemplates = formatChartTemplates(data.templates);
         if (formattedTemplates.length > 0) {
           setTemplatesInHelpers(getDefinedTemplates(formattedTemplates));
           setTemplates(formattedTemplates);
@@ -421,7 +363,6 @@ const ChartTemplatesModal = (props: Props) => {
                     updateUrl={updateUrl}
                     comparedVersion={comparedVersion}
                     visibleTemplate={props.visibleTemplate}
-                    formatTemplates={formatTemplates}
                   />
                 ) : (
                   <TemplatesView

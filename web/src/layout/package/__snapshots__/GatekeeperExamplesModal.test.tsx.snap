@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gatekeeper examples modal creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mb-2"
+  >
+    <div
+      class="text-center"
+    >
+      <button
+        aria-label="Open examples modal"
+        class="btn btn-outline-secondary btn-sm text-nowrap w-100"
+      >
+        <div
+          class="d-flex flex-row align-items-center justify-content-center"
+        >
+          <svg
+            fill="none"
+            height="1em"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <polyline
+              points="16 18 22 12 16 6"
+            />
+            <polyline
+              points="8 6 2 12 8 18"
+            />
+          </svg>
+          <span
+            class="ms-2 fw-bold text-uppercase"
+          >
+            Examples
+          </span>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

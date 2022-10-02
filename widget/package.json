@@ -38,7 +38,7 @@
     "build": "craco build",
     "build:cra": "react-scripts build",
     "test": "sed -i -e 's/const FORCE_EXIT_DELAY = 500;/const FORCE_EXIT_DELAY = 1000;/g' ./node_modules/jest-worker/build/base/BaseWorkerPool.js && TZ=UTC react-scripts test # See https://github.com/facebook/jest/issues/11354",
-    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "test:coverage": "TZ=UTC react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src --fix",

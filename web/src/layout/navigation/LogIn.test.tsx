@@ -54,7 +54,7 @@ describe('LogIn', () => {
       expect(screen.getByRole('button', { name: 'Open reset password' })).toBeInTheDocument();
     });
 
-    xit('updates all fields and calls login', async () => {
+    it('updates all fields and calls login', async () => {
       mocked(API).login.mockResolvedValue('true');
 
       render(
@@ -86,7 +86,7 @@ describe('LogIn', () => {
       });
     });
 
-    xit('display UnauthorizedError', async () => {
+    it('display UnauthorizedError', async () => {
       mocked(API).login.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
@@ -120,7 +120,7 @@ describe('LogIn', () => {
       expect(screen.getByText('Authentication failed. Please check your credentials.')).toBeInTheDocument();
     });
 
-    xit('with custom error message', async () => {
+    it('with custom error message', async () => {
       mocked(API).login.mockRejectedValue({
         kind: ErrorKind.Other,
         message: 'Password not provided',
@@ -155,7 +155,7 @@ describe('LogIn', () => {
       expect(await screen.findByText('An error occurred signing in: Password not provided')).toBeInTheDocument();
     });
 
-    xit('displays common login error', async () => {
+    it('displays common login error', async () => {
       mocked(API).login.mockRejectedValue({
         kind: ErrorKind.Other,
       });
@@ -189,7 +189,7 @@ describe('LogIn', () => {
       expect(await screen.findByText('An error occurred signing in, please try again later.')).toBeInTheDocument();
     });
 
-    xit('calls history replace on close modal when redirect is not undefined', async () => {
+    it('calls history replace on close modal when redirect is not undefined', async () => {
       render(
         <Router>
           <LogIn {...defaultProps} redirect="/control-panel" />
@@ -207,7 +207,7 @@ describe('LogIn', () => {
     });
 
     describe('Reset password', () => {
-      xit('displays form', async () => {
+      it('displays form', async () => {
         render(
           <Router>
             <LogIn {...defaultProps} />
