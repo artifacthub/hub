@@ -229,6 +229,7 @@ jobs:
       - linter-backend
       - linter-openapi
       - linter-artifacthub
+      - linter-clomonitor
       - tests-database
       - tests-backend
       - tests-frontend

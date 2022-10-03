@@ -27,6 +27,12 @@ jobs:
           registry: public.ecr.aws
           username: ${{ secrets.AWS_ACCESS_KEY_ID }}
           password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@v5
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Release Docker images and CLI tool binaries
         uses: goreleaser/goreleaser-action@v3
         with:
@@ -34,6 +40,7 @@ jobs:
           args: release --rm-dist --timeout 60m
         env:
           GITHUB_TOKEN: ${{ secrets.GHT_RELEASE }}
+          GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
       - name: Set up Helm
         uses: azure/setup-helm@v3
       - name: Checkout Helm charts repo
