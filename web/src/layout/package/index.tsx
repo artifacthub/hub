@@ -370,7 +370,6 @@ const PackageView = (props: Props) => {
     if (
       !isUndefined(detail) &&
       !isNull(detail) &&
-      [RepositoryKind.TektonTask, RepositoryKind.TektonPipeline].includes(detail.repository.kind) &&
       !isNull(detail.data) &&
       !isUndefined(detail.data) &&
       !isUndefined(detail.data.examples)
@@ -391,7 +390,6 @@ const PackageView = (props: Props) => {
     if (
       !isUndefined(detail) &&
       !isNull(detail) &&
-      detail.repository.kind === RepositoryKind.Gatekeeper &&
       !isNull(detail.data) &&
       !isUndefined(detail.data) &&
       !isUndefined(detail.data.examples)
@@ -955,119 +953,49 @@ const PackageView = (props: Props) => {
                             />
                           </div>
 
-                          <div className="d-none d-lg-block">
-                            <ContentDefaultModal
-                              kind={ContentDefaultModalKind.Rules}
-                              packageId={detail.packageId}
-                              modalName="rules"
-                              language="yaml"
-                              visibleModal={!isUndefined(props.visibleModal) && props.visibleModal === 'rules'}
-                              visibleFile={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'rules'
-                                  ? props.visibleFile
-                                  : undefined
-                              }
-                              btnModalContent={
-                                <div className="d-flex flex-row align-items-center justify-content-center">
-                                  <FiCode />
-                                  <span className="ms-2 fw-bold text-uppercase">Rules</span>
-                                </div>
-                              }
-                              normalizedName={detail.normalizedName}
-                              title="Rules"
-                              files={getFalcoRules() as any}
-                              searchUrlReferer={props.searchUrlReferer}
-                              fromStarredPage={props.fromStarredPage}
-                            />
-                          </div>
-
-                          <div className="d-none d-lg-block">
-                            <ContentDefaultModal
-                              kind={ContentDefaultModalKind.Policy}
-                              packageId={detail.packageId}
-                              modalName="policies"
-                              language="text"
-                              visibleModal={!isUndefined(props.visibleModal) && props.visibleModal === 'policies'}
-                              visibleFile={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'policies'
-                                  ? props.visibleFile
-                                  : undefined
-                              }
-                              btnModalContent={
-                                <div className="d-flex flex-row align-items-center justify-content-center">
-                                  <FiCode />
-                                  <span className="ms-2 fw-bold text-uppercase">Policies</span>
-                                </div>
-                              }
-                              normalizedName={detail.normalizedName}
-                              title="Policies"
-                              files={getOPAPolicies() as any}
-                              searchUrlReferer={props.searchUrlReferer}
-                              fromStarredPage={props.fromStarredPage}
-                            />
-                          </div>
-
-                          <div className="d-none d-lg-block">
-                            <ContentDefaultModal
-                              kind={ContentDefaultModalKind.Examples}
-                              packageId={detail.packageId}
-                              modalName="examples"
-                              language="yaml"
-                              visibleModal={!isUndefined(props.visibleModal) && props.visibleModal === 'examples'}
-                              visibleFile={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
-                                  ? props.visibleFile
-                                  : undefined
-                              }
-                              btnModalContent={
-                                <div className="d-flex flex-row align-items-center justify-content-center">
-                                  <FiCode />
-                                  <span className="ms-2 fw-bold text-uppercase">Examples</span>
-                                </div>
-                              }
-                              normalizedName={detail.normalizedName}
-                              title="Examples"
-                              files={getTektonExamples() as any}
-                              searchUrlReferer={props.searchUrlReferer}
-                              fromStarredPage={props.fromStarredPage}
-                            />
-                          </div>
-
-                          <div className="d-none d-lg-block">
-                            <GatekeeperExamplesModal
-                              packageId={detail.packageId}
-                              visibleModal={!isUndefined(props.visibleModal) && props.visibleModal === 'examples'}
-                              visibleExample={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
-                                  ? props.visibleExample
-                                  : undefined
-                              }
-                              visibleFile={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
-                                  ? props.visibleFile
-                                  : undefined
-                              }
-                              normalizedName={detail.normalizedName}
-                              examples={getGatekeeperExamples()}
-                              searchUrlReferer={props.searchUrlReferer}
-                              fromStarredPage={props.fromStarredPage}
-                            />
-                          </div>
-
                           {(() => {
                             switch (detail.repository.kind) {
                               case RepositoryKind.TektonTask:
                               case RepositoryKind.TektonPipeline:
                                 return (
-                                  <TektonManifestModal
-                                    normalizedName={detail.normalizedName}
-                                    manifestRaw={getManifestRaw()}
-                                    searchUrlReferer={props.searchUrlReferer}
-                                    fromStarredPage={props.fromStarredPage}
-                                    visibleManifest={
-                                      !isUndefined(props.visibleModal) && props.visibleModal === 'manifest'
-                                    }
-                                  />
+                                  <>
+                                    <div className="d-none d-lg-block">
+                                      <ContentDefaultModal
+                                        kind={ContentDefaultModalKind.Examples}
+                                        packageId={detail.packageId}
+                                        modalName="examples"
+                                        language="yaml"
+                                        visibleModal={
+                                          !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
+                                        }
+                                        visibleFile={
+                                          !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
+                                            ? props.visibleFile
+                                            : undefined
+                                        }
+                                        btnModalContent={
+                                          <div className="d-flex flex-row align-items-center justify-content-center">
+                                            <FiCode />
+                                            <span className="ms-2 fw-bold text-uppercase">Examples</span>
+                                          </div>
+                                        }
+                                        normalizedName={detail.normalizedName}
+                                        title="Examples"
+                                        files={getTektonExamples() as any}
+                                        searchUrlReferer={props.searchUrlReferer}
+                                        fromStarredPage={props.fromStarredPage}
+                                      />
+                                    </div>
+                                    <TektonManifestModal
+                                      normalizedName={detail.normalizedName}
+                                      manifestRaw={getManifestRaw()}
+                                      searchUrlReferer={props.searchUrlReferer}
+                                      fromStarredPage={props.fromStarredPage}
+                                      visibleManifest={
+                                        !isUndefined(props.visibleModal) && props.visibleModal === 'manifest'
+                                      }
+                                    />
+                                  </>
                                 );
 
                               case RepositoryKind.Helm:
@@ -1116,6 +1044,92 @@ const PackageView = (props: Props) => {
                                       </div>
                                     )}
                                   </>
+                                );
+
+                              case RepositoryKind.Gatekeeper:
+                                return (
+                                  <div className="d-none d-lg-block">
+                                    <GatekeeperExamplesModal
+                                      packageId={detail.packageId}
+                                      visibleModal={
+                                        !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
+                                      }
+                                      visibleExample={
+                                        !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
+                                          ? props.visibleExample
+                                          : undefined
+                                      }
+                                      visibleFile={
+                                        !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
+                                          ? props.visibleFile
+                                          : undefined
+                                      }
+                                      normalizedName={detail.normalizedName}
+                                      examples={getGatekeeperExamples()}
+                                      searchUrlReferer={props.searchUrlReferer}
+                                      fromStarredPage={props.fromStarredPage}
+                                    />
+                                  </div>
+                                );
+
+                              case RepositoryKind.OPA:
+                                return (
+                                  <div className="d-none d-lg-block">
+                                    <ContentDefaultModal
+                                      kind={ContentDefaultModalKind.Policy}
+                                      packageId={detail.packageId}
+                                      modalName="policies"
+                                      language="text"
+                                      visibleModal={
+                                        !isUndefined(props.visibleModal) && props.visibleModal === 'policies'
+                                      }
+                                      visibleFile={
+                                        !isUndefined(props.visibleModal) && props.visibleModal === 'policies'
+                                          ? props.visibleFile
+                                          : undefined
+                                      }
+                                      btnModalContent={
+                                        <div className="d-flex flex-row align-items-center justify-content-center">
+                                          <FiCode />
+                                          <span className="ms-2 fw-bold text-uppercase">Policies</span>
+                                        </div>
+                                      }
+                                      normalizedName={detail.normalizedName}
+                                      title="Policies"
+                                      files={getOPAPolicies() as any}
+                                      searchUrlReferer={props.searchUrlReferer}
+                                      fromStarredPage={props.fromStarredPage}
+                                    />
+                                  </div>
+                                );
+
+                              case RepositoryKind.Falco:
+                                return (
+                                  <div className="d-none d-lg-block">
+                                    <ContentDefaultModal
+                                      kind={ContentDefaultModalKind.Rules}
+                                      packageId={detail.packageId}
+                                      modalName="rules"
+                                      language="yaml"
+                                      visibleModal={!isUndefined(props.visibleModal) && props.visibleModal === 'rules'}
+                                      visibleFile={
+                                        !isUndefined(props.visibleModal) && props.visibleModal === 'rules'
+                                          ? props.visibleFile
+                                          : undefined
+                                      }
+                                      btnModalContent={
+                                        <div className="d-flex flex-row align-items-center justify-content-center">
+                                          <FiCode />
+                                          <span className="ms-2 fw-bold text-uppercase">Rules</span>
+                                        </div>
+                                      }
+                                      normalizedName={detail.normalizedName}
+                                      title="Rules"
+                                      files={getFalcoRules() as any}
+                                      searchUrlReferer={props.searchUrlReferer}
+                                      fromStarredPage={props.fromStarredPage}
+                                    />
+                                  </div>
                                 );
 
                               default:
