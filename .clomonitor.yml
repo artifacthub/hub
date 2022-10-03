@@ -1,0 +1,6 @@
+# CLOMonitor metadata file
+# https://github.com/cncf/clomonitor/blob/main/docs/metadata/.clomonitor.yml
+
+exemptions:
+  - check: trademark_disclaimer
+    reason: "The trademark disclaimer is being displayed on the website but CLOMonitor isn't able to detect it yet as it isn't part of the index HTML document (it's rendered from JS)"
