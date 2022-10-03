@@ -146,3 +146,6 @@ signs:
         "--detach-sign",
         "${artifact}",
       ]
+
+sboms:
+  - artifacts: archive
