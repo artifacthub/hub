@@ -33,17 +33,11 @@ spec:
   description: Test pipeline
   tasks:
     - name: task1
-      taskRef:
-        name: task1
       runAfter: []
     - name: task2
-      taskRef:
-        name: task2
       runAfter:
         - task1
     - name: task3
-      taskRef:
-        name: task3
       runAfter:
         - task1
         - task2

@@ -359,7 +359,7 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 		annotations = m.Annotations
 		for _, task := range m.Spec.Tasks {
 			tasks = append(tasks, map[string]interface{}{
-				"name":      task.TaskRef.Name,
+				"name":      task.Name,
 				"run_after": task.RunAfter,
 			})
 		}
