@@ -174,7 +174,7 @@ func TestTrackerSource(t *testing.T) {
 			Version:     "0.1.0",
 			Provider:    "Some organization",
 			ContentURL:  "https://github.com/user/repo/raw/master/path/pipeline1/0.1/pipeline1.yaml",
-			Digest:      "755a8708c075dbf62529d91495673ef45ad9eedf1cdf0798c97caf8761a69378",
+			Digest:      "42ca2266946a1bedec7eb5a9f1045ba92ff81f3f65b097aab085e1cc22554755",
 			Repository:  i.Repository,
 			License:     "Apache-2.0",
 			Links: []*hub.Link{
