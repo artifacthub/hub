@@ -1,5 +1,5 @@
 # Build backend
-FROM golang:1.19.1-alpine3.16 AS backend-builder
+FROM golang:1.19.2-alpine3.16 AS backend-builder
 WORKDIR /go/src/github.com/artifacthub/hub
 COPY go.* ./
 COPY cmd/hub cmd/hub
@@ -25,7 +25,7 @@ RUN yarn install
 RUN yarn build
 
 # Build docs
-FROM klakegg/hugo:0.101.0 AS docs-builder
+FROM klakegg/hugo:0.104.0 AS docs-builder
 WORKDIR /
 COPY scripts scripts
 COPY docs docs
