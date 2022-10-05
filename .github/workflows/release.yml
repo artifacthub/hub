@@ -33,6 +33,8 @@ jobs:
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
+      - name: Setup Syft
+        uses: anchore/sbom-action/download-syft@v0
       - name: Release Docker images and CLI tool binaries
         uses: goreleaser/goreleaser-action@v3
         with:
