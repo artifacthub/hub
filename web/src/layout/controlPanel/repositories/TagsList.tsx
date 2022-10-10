@@ -63,6 +63,7 @@ const TagsList = (props: Props) => {
           className={`btn btn-primary btn-sm ms-2 rounded-circle p-0 position-relative lh-1 ${styles.btn} ${styles.inTitle}`}
           onClick={addTag}
           disabled={props.tags.length === 10}
+          aria-label="Add tag"
         >
           <HiPlus />
         </button>
@@ -72,7 +73,10 @@ const TagsList = (props: Props) => {
         <>
           {props.tags.map((item: ContainerTag, idx: number) => {
             return (
-              <div className="d-flex flex-row align-items-stretch justify-content-between" key={`tag_${item.id!}`}>
+              <div
+                className="d-flex flex-row align-items-stretch justify-content-between"
+                key={`tag_${item.name}_${idx}`}
+              >
                 <InputField
                   className="flex-grow-1"
                   type="text"

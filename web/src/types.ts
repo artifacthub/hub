@@ -684,7 +684,10 @@ export enum PathTips {
 }
 
 export interface ChartTemplatesData {
-  templates: ChartTemplate[];
+  templates: {
+    name: string;
+    data: string;
+  }[];
   values: any;
 }
 

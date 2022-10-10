@@ -1,0 +1,351 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompareView creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="position-relative h-100 mh-100 border templateWrapper"
+  >
+    <div
+      class="position-absolute d-flex wrapper"
+    >
+      <div
+        class="position-relative"
+      >
+        <button
+          aria-label="Expand code"
+          class="btn btn-sm btn-primary rounded-circle fs-5 btn"
+        >
+          <svg
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 16 16"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zM7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10z"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <pre
+      class="text-muted h-100 mh-100 mb-0 overflow-hidden position-relative diffTemplate pre"
+    >
+      <div
+        class="file-diff h-100"
+        data-testid="diffTemplate"
+      >
+        <header
+          class="d-flex flex-row align-items-center justify-content-between diff-header fw-bold py-1 header"
+        >
+          <div
+            class="pe-5 me-3"
+          >
+            <span
+              class="pe-2 versionTitle"
+            >
+              Changes from
+            </span>
+            <span
+              class="badge bg-dark px-2 py-1 badge-md"
+            >
+              	0.0.2
+            </span>
+            <span
+              class="px-2 versionTitle"
+            >
+              to
+            </span>
+            <span
+              class="badge bg-dark px-2 py-1 badge-md"
+            >
+              	0.0.1
+            </span>
+          </div>
+        </header>
+        <div
+          class="overflow-scroll border-top py-2 codeWrapper"
+        >
+          <table
+            class="diff diff-unified"
+          >
+            <colgroup>
+              <col
+                class="diff-gutter-col"
+              />
+              <col
+                class="diff-gutter-col"
+              />
+              <col />
+            </colgroup>
+            <tbody
+              class="diff-decoration"
+            >
+              <tr>
+                <td
+                  class="diff-decoration-content"
+                  colspan="3"
+                >
+                  <div
+                    class="hunk-header py-1 px-3 fw-bold hunkHeader mb-2"
+                  >
+                    @@ -27,4 +27,5 @@
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tbody
+              class="diff-hunk"
+            >
+              <tr
+                class="diff-line"
+              >
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  27
+                </td>
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  27
+                </td>
+                <td
+                  class="diff-code diff-code-normal"
+                >
+                  ## @param haproxy.image.repository HAProxy image repository
+                </td>
+              </tr>
+              <tr
+                class="diff-line"
+              >
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  28
+                </td>
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  28
+                </td>
+                <td
+                  class="diff-code diff-code-normal"
+                >
+                  ## @param haproxy.image.tag HAProxy image tag (immutable tags are recommended)
+                </td>
+              </tr>
+              <tr
+                class="diff-line"
+              >
+                <td
+                  class="diff-gutter diff-gutter-insert"
+                />
+                <td
+                  class="diff-gutter diff-gutter-insert"
+                >
+                  29
+                </td>
+                <td
+                  class="diff-code diff-code-insert"
+                >
+                  ## @param haproxy.image.digest HAProxy image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+                </td>
+              </tr>
+              <tr
+                class="diff-line"
+              >
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  29
+                </td>
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  30
+                </td>
+                <td
+                  class="diff-code diff-code-normal"
+                >
+                  ## @param haproxy.image.pullPolicy HAProxy image pull policy
+                </td>
+              </tr>
+              <tr
+                class="diff-line"
+              >
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  30
+                </td>
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  31
+                </td>
+                <td
+                  class="diff-code diff-code-normal"
+                >
+                  ## @param haproxy.image.pullSecrets HAProxy image pull secrets
+                </td>
+              </tr>
+            </tbody>
+            <tbody
+              class="diff-decoration"
+            >
+              <tr>
+                <td
+                  class="diff-decoration-content"
+                  colspan="3"
+                >
+                  <div
+                    class="hunk-header py-1 px-3 fw-bold hunkHeader my-2"
+                  >
+                    @@ -34,5 +35,6 @@
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tbody
+              class="diff-hunk"
+            >
+              <tr
+                class="diff-line"
+              >
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  34
+                </td>
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  35
+                </td>
+                <td
+                  class="diff-code diff-code-normal"
+                >
+                      registry: docker.io
+                </td>
+              </tr>
+              <tr
+                class="diff-line"
+              >
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  35
+                </td>
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  36
+                </td>
+                <td
+                  class="diff-code diff-code-normal"
+                >
+                      repository: bitnami/haproxy-intel
+                </td>
+              </tr>
+              <tr
+                class="diff-line"
+              >
+                <td
+                  class="diff-gutter diff-gutter-delete"
+                >
+                  36
+                </td>
+                <td
+                  class="diff-gutter diff-gutter-delete"
+                />
+                <td
+                  class="diff-code diff-code-delete"
+                >
+                      tag: 2.5.7-debian-10-r4
+                </td>
+              </tr>
+              <tr
+                class="diff-line"
+              >
+                <td
+                  class="diff-gutter diff-gutter-insert"
+                />
+                <td
+                  class="diff-gutter diff-gutter-insert"
+                >
+                  37
+                </td>
+                <td
+                  class="diff-code diff-code-insert"
+                >
+                      tag: 2.6.6-debian-11-r0
+                </td>
+              </tr>
+              <tr
+                class="diff-line"
+              >
+                <td
+                  class="diff-gutter diff-gutter-insert"
+                />
+                <td
+                  class="diff-gutter diff-gutter-insert"
+                >
+                  38
+                </td>
+                <td
+                  class="diff-code diff-code-insert"
+                >
+                      digest: ""
+                </td>
+              </tr>
+              <tr
+                class="diff-line"
+              >
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  37
+                </td>
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  39
+                </td>
+                <td
+                  class="diff-code diff-code-normal"
+                >
+                      ## Specify a imagePullPolicy
+                </td>
+              </tr>
+              <tr
+                class="diff-line"
+              >
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  38
+                </td>
+                <td
+                  class="diff-gutter diff-gutter-normal"
+                >
+                  40
+                </td>
+                <td
+                  class="diff-code diff-code-normal"
+                >
+                      ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </pre>
+  </div>
+</DocumentFragment>
+`;

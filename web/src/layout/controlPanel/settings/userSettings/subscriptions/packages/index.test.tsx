@@ -210,7 +210,7 @@ describe('PackagesSection', () => {
   });
 
   describe('to change subscription', () => {
-    xit('to inactivate New release notification', async () => {
+    it('to inactivate New release notification', async () => {
       const mockSubscriptions = getMockSubscriptions('5');
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
       mocked(API).deleteSubscription.mockResolvedValue('');

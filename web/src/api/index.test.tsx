@@ -25,6 +25,7 @@ import {
   Stats,
   Subscription,
   TestWebhook,
+  TwoFactorAuth,
   User,
   UserFullName,
   UserLogin,
@@ -1978,6 +1979,57 @@ describe('API', () => {
       });
     });
 
+    describe('requestPasswordResetCode', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 200,
+        });
+
+        const response = await API.requestPasswordResetCode('test@email.com');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/password-reset-code');
+        expect(response).toEqual('');
+      });
+    });
+
+    describe('verifyPasswordResetCode', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 200,
+        });
+
+        const response = await API.verifyPasswordResetCode('code');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/verify-password-reset-code');
+        expect(response).toEqual('');
+      });
+    });
+
+    describe('resetPassword', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await API.resetPassword('code', 'pass');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/reset-password');
+        expect(response).toEqual('');
+      });
+    });
+
     describe('getAHStats', () => {
       it('success', async () => {
         const stats: AHStats = getData('38') as AHStats;
@@ -1993,6 +2045,117 @@ describe('API', () => {
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/stats');
         expect(response).toEqual(stats);
+      });
+    });
+
+    describe('setUpTFA', () => {
+      it('success', async () => {
+        const tfa: TwoFactorAuth = {
+          qrCode: 'qrCode',
+          recoveryCodes: ['1', '2', '3'],
+          secret: 'secret',
+        };
+        fetchMock.mockResponse(JSON.stringify(tfa), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await API.setUpTFA();
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/tfa');
+        expect(response).toEqual(tfa);
+      });
+    });
+
+    describe('enableTFA', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await API.enableTFA('pass');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/tfa/enable');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
+        expect(response).toBe('');
+      });
+    });
+
+    describe('disableTFA', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await API.disableTFA('pass');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/tfa/disable');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
+        expect(response).toBe('');
+      });
+    });
+
+    describe('approveSession', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await API.approveSession('pass');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/approve-session');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
+        expect(response).toBe('');
+      });
+    });
+
+    describe('registerDeleteUserCode', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await API.registerDeleteUserCode();
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/delete-user-code');
+        expect(response).toEqual('');
+      });
+    });
+
+    describe('deleteUser', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await API.deleteUser('code');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
+        expect(response).toBe('');
       });
     });
 
@@ -2140,6 +2303,41 @@ describe('API', () => {
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/helm/stable/pkgName/production-usage/orgName');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
         expect(response).toBe('');
+      });
+    });
+
+    describe('getSchemaDef', () => {
+      it('success', async () => {
+        const sample = { test: 'a' };
+        fetchMock.mockResponse(JSON.stringify(sample), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await API.getSchemaDef('http://url.com');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('http://url.com');
+        expect(response).toEqual(sample);
+      });
+    });
+
+    describe('getPublicSignKey', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('test', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 200,
+        });
+
+        const response = await API.getPublicSignKey('http://url.com');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('http://url.com');
+        expect(response).toEqual('test');
       });
     });
   });

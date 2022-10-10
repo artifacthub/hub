@@ -113,7 +113,7 @@ const defaultProps = {
   ],
 };
 
-describe('Files modal', () => {
+describe('Content default modal', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });

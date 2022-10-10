@@ -32,19 +32,19 @@ const CompareTemplatesList = (props: Props) => {
           switch (status) {
             case CompareChartTemplateStatus.Deleted:
               return (
-                <div className="text-danger">
+                <div className="text-danger" data-testid="tmpl-deleted-icon">
                   <GoDiffRemoved />
                 </div>
               );
             case CompareChartTemplateStatus.Added:
               return (
-                <span className="text-success">
+                <span className="text-success" data-testid="tmpl-added-icon">
                   <GoDiffAdded />
                 </span>
               );
             case CompareChartTemplateStatus.Modified:
               return (
-                <span className={styles.modifiedIcon}>
+                <span className={styles.modifiedIcon} data-testid="tmpl-modified-icon">
                   <GoDiffModified />
                 </span>
               );

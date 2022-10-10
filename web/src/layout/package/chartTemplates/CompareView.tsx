@@ -4,6 +4,7 @@ import { BsArrowsCollapse, BsArrowsExpand } from 'react-icons/bs';
 
 import API from '../../../api';
 import { ChartTemplate, CompareChartTemplate, CompareChartTemplateStatus, TemplatesQuery } from '../../../types';
+import formatChartTemplates from '../../../utils/formatChartTemplates';
 import ErrorBoundary from '../../common/ErrorBoundary';
 import Loading from '../../common/Loading';
 import CompareTemplatesList from './CompareTemplatesList';
@@ -16,7 +17,6 @@ interface Props {
   currentVersion: string;
   visibleTemplate?: string;
   comparedVersion: string;
-  formatTemplates: (templates: ChartTemplate[]) => ChartTemplate[];
   updateUrl: (q: TemplatesQuery) => void;
 }
 
@@ -42,7 +42,7 @@ const CompareView = (props: Props) => {
         setIsLoading(true);
         const data = await API.getChartTemplates(props.packageId, version);
         if (data && data.templates) {
-          const formattedTemplates: ChartTemplate[] = props.formatTemplates(data.templates);
+          const formattedTemplates: ChartTemplate[] = formatChartTemplates(data.templates);
           if (formattedTemplates.length > 0) {
             setDiffTemplates(formattedTemplates);
           } else {

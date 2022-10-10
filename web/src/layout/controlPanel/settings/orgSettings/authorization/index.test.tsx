@@ -330,7 +330,7 @@ describe('Authorization settings index', () => {
   });
 
   describe('calls updateAuthorizationPolicy', () => {
-    xit('on success', async () => {
+    it('on success', async () => {
       const mockMembers = getAllOrganizationMembers();
       mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('5');

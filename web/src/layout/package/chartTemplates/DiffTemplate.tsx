@@ -46,7 +46,7 @@ const Changes = (props: DiffProps) => {
     newEndingNewLine,
   }: any) => {
     return (
-      <div key={`${oldRevision}-${newRevision}`} className="file-diff h-100">
+      <div key={`${oldRevision}-${newRevision}`} className="file-diff h-100" data-testid="diffTemplate">
         <header
           className={`d-flex flex-row align-items-center justify-content-between diff-header fw-bold py-1 ${styles.header}`}
         >
