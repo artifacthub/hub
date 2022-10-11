@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isArray, isUndefined } from 'lodash';
+import { isArray, isString, isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
 import { ElementType, memo, useCallback, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -230,6 +230,9 @@ const AVAILABLE_LANGUAGES = [
   'zephir',
 ];
 
+const EmojiConvertor = require('emoji-js');
+const emoji = new EmojiConvertor();
+
 const checkCodeLanguage = (language: string | null): string => {
   let lang = 'text';
   if (language) {
@@ -333,7 +336,19 @@ const Readme = (props: Props) => {
   const Paragraph: ElementType = (data: BasicProps) => {
     const isOneChild = data.children && isArray(data.children) && data.children.length === 1;
     if (isUndefined(data.children)) return null;
-    return <p className={classnames({ 'd-block w-100 h-100': isOneChild }, styles.paragraph)}>{data.children}</p>;
+    let content = data.children;
+    if (isArray(data.children)) {
+      content = data.children.map((child: JSX.Element) => {
+        if (isString(child)) {
+          return emoji.replace_colons(child);
+        }
+        return child;
+      });
+    } else if (isString(data.children)) {
+      return emoji.replace_colons(data.children);
+    }
+
+    return <p className={classnames({ 'd-block w-100 h-100': isOneChild }, styles.paragraph)}>{content}</p>;
   };
 
   const Blockquote: ElementType = (data: BasicProps) => {
