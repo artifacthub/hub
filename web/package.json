@@ -69,7 +69,8 @@
     "typescript": "^4.8.4"
   },
   "resolutions": {
-    "autoprefixer": "10.4.5"
+    "autoprefixer": "10.4.5",
+    "nth-check": "2.0.1"
   },
   "proxy": "http://localhost:8000",
   "scripts": {

@@ -33,6 +33,9 @@
     "typescript": "^4.8.4",
     "webpack-cli": "^4.9.2"
   },
+  "resolutions": {
+    "nth-check": "2.0.1"
+  },
   "scripts": {
     "start": "REACT_APP_HUB_BASE_URL=http://localhost:8000 react-scripts start",
     "build": "craco build",
