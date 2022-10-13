@@ -23,7 +23,7 @@ require (
 	github.com/jackc/pgconn v1.13.0
 	github.com/jackc/pgx/v4 v4.17.2
 	github.com/open-policy-agent/gatekeeper v0.0.0-20220914233027-c4e08c683e2c
-	github.com/open-policy-agent/opa v0.44.0
+	github.com/open-policy-agent/opa v0.45.0
 	github.com/opencontainers/image-spec v1.1.0-rc2
 	github.com/operator-framework/api v0.17.1
 	github.com/patrickmn/go-cache v2.1.0+incompatible
@@ -33,8 +33,8 @@ require (
 	github.com/rs/zerolog v1.28.0
 	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06
 	github.com/satori/uuid v1.2.0
-	github.com/sigstore/cosign v1.12.1
-	github.com/spf13/cobra v1.5.0
+	github.com/sigstore/cosign v1.13.0
+	github.com/spf13/cobra v1.6.0
 	github.com/spf13/viper v1.13.0
 	github.com/stretchr/testify v1.8.0
 	github.com/tektoncd/pipeline v0.40.2
@@ -42,14 +42,14 @@ require (
 	github.com/versine/loginauth v0.0.0-20170330164406-8380ec243689
 	github.com/vincent-petithory/dataurl v1.0.0
 	github.com/wagslane/go-password-validator v0.3.0
-	golang.org/x/crypto v0.0.0-20221005025214-4161e89ecf1b
-	golang.org/x/oauth2 v0.0.0-20220909003341-f21342109be1
-	golang.org/x/text v0.3.8-0.20211004125949-5bd84dd9b33b
+	golang.org/x/crypto v0.0.0-20221012134737-56aed061732a
+	golang.org/x/oauth2 v0.0.0-20221006150949-b44042a4b9c1
+	golang.org/x/text v0.3.8
 	google.golang.org/api v0.98.0
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
-	helm.sh/helm/v3 v3.10.0
-	k8s.io/apimachinery v0.25.0
+	helm.sh/helm/v3 v3.10.1
+	k8s.io/apimachinery v0.25.2
 	oras.land/oras-go v1.2.0
 	sigs.k8s.io/krew v0.4.3
 	sigs.k8s.io/yaml v1.3.0
@@ -126,7 +126,7 @@ require (
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/btree v1.1.2 // indirect
-	github.com/google/cel-go v0.12.4 // indirect
+	github.com/google/cel-go v0.12.5 // indirect
 	github.com/google/gnostic v0.6.9 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
@@ -134,7 +134,7 @@ require (
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.1.0 // indirect
-	github.com/googleapis/gax-go/v2 v2.4.0 // indirect
+	github.com/googleapis/gax-go/v2 v2.5.1 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/gosuri/uitable v0.0.4 // indirect
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
@@ -144,7 +144,7 @@ require (
 	github.com/hhatto/gorst v0.0.0-20181029133204-ca9f730cac5b // indirect
 	github.com/huandu/xstrings v1.3.2 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
-	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
@@ -206,7 +206,7 @@ require (
 	github.com/shogo82148/go-shuffle v0.0.0-20170808115208-59829097ff3b // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/sigstore/rekor v0.12.1-0.20220915152154-4bb6f441c1b2 // indirect
-	github.com/sigstore/sigstore v1.4.1 // indirect
+	github.com/sigstore/sigstore v1.4.2 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/spf13/afero v1.8.2 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
@@ -216,7 +216,7 @@ require (
 	github.com/stretchr/objx v0.4.0 // indirect
 	github.com/subosito/gotenv v1.4.1 // indirect
 	github.com/tchap/go-patricia/v2 v2.3.1 // indirect
-	github.com/theupdateframework/go-tuf v0.5.0 // indirect
+	github.com/theupdateframework/go-tuf v0.5.1-0.20220920170306-f237d7ca5b42 // indirect
 	github.com/titanous/rocacheck v0.0.0-20171023193734-afe73141d399 // indirect
 	github.com/vbatts/tar-split v0.11.2 // indirect
 	github.com/xanzy/ssh-agent v0.3.0 // indirect
@@ -225,6 +225,7 @@ require (
 	github.com/xeipuuv/gojsonschema v1.2.0 // indirect
 	github.com/xlab/treeprint v1.1.0 // indirect
 	github.com/yashtewari/glob-intersection v0.1.0 // indirect
+	go.etcd.io/etcd/api/v3 v3.6.0-alpha.0 // indirect
 	go.mongodb.org/mongo-driver v1.10.0 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	go.opentelemetry.io/contrib v0.20.0 // indirect
@@ -245,7 +246,7 @@ require (
 	golang.org/x/image v0.0.0-20220722155232-062f8c9fd539 // indirect
 	golang.org/x/net v0.0.0-20220909164309-bea034e7d591 // indirect
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4 // indirect
-	golang.org/x/sys v0.0.0-20220907062415-87db552b00fd // indirect
+	golang.org/x/sys v0.0.0-20220919091848-fb04ddd9f9c8 // indirect
 	golang.org/x/term v0.0.0-20220526004731-065cf7ba2467 // indirect
 	golang.org/x/time v0.0.0-20220722155302-e5dcc9cfc0b9 // indirect
 	golang.org/x/xerrors v0.0.0-20220609144429-65e65417b02f // indirect
@@ -253,7 +254,7 @@ require (
 	gonum.org/v1/gonum v0.8.1-0.20200930085651-eea0b5cb5cc9 // indirect
 	gonum.org/v1/netlib v0.0.0-20220323200511-14de99971b2d // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/genproto v0.0.0-20220805133916-01dd62135a58 // indirect
+	google.golang.org/genproto v0.0.0-20220920201722-2b89144ce006 // indirect
 	google.golang.org/grpc v1.49.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
@@ -261,15 +262,15 @@ require (
 	gopkg.in/neurosnap/sentences.v1 v1.0.6 // indirect
 	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
-	k8s.io/api v0.25.0 // indirect
-	k8s.io/apiextensions-apiserver v0.25.0 // indirect
-	k8s.io/apiserver v0.25.0 // indirect
-	k8s.io/cli-runtime v0.25.0 // indirect
+	k8s.io/api v0.25.2 // indirect
+	k8s.io/apiextensions-apiserver v0.25.2 // indirect
+	k8s.io/apiserver v0.25.2 // indirect
+	k8s.io/cli-runtime v0.25.2 // indirect
 	k8s.io/client-go v11.0.0+incompatible // indirect
-	k8s.io/component-base v0.25.0 // indirect
+	k8s.io/component-base v0.25.2 // indirect
 	k8s.io/klog/v2 v2.70.2-0.20220707122935-0990e81f1a8f // indirect
 	k8s.io/kube-openapi v0.0.0-20220803162953-67bda5d908f1 // indirect
-	k8s.io/kubectl v0.25.0 // indirect
+	k8s.io/kubectl v0.25.2 // indirect
 	k8s.io/utils v0.0.0-20220728103510-ee6ede2d64ed // indirect
 	knative.dev/pkg v0.0.0-20220818004048-4a03844c0b15 // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.32 // indirect
