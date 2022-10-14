@@ -391,7 +391,9 @@ func getMetadata(
 		if err == nil {
 			var platforms []string
 			for _, m := range indexManifest.Manifests {
-				platforms = append(platforms, fmt.Sprintf("%s/%s", m.Platform.OS, m.Platform.Architecture))
+				if m.Platform != nil {
+					platforms = append(platforms, fmt.Sprintf("%s/%s", m.Platform.OS, m.Platform.Architecture))
+				}
 			}
 			md[platformsAnnotation] = strings.Join(platforms, ",")
 		}
