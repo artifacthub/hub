@@ -354,10 +354,8 @@ const Details = (props: Props) => {
 
             const isMutationTrue =
               props.package.data &&
-              !isUndefined(
-                props.package.data[KubewardenData.Mutation] && props.package.data[KubewardenData.Mutation] === 'true'
-              );
-
+              !isUndefined(props.package.data[KubewardenData.Mutation]) &&
+              props.package.data[KubewardenData.Mutation] === 'true';
             return (
               <>
                 {resources.length > 0 && (
