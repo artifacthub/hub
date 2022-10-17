@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"os/signal"
+	"runtime/debug"
 	"sync"
 	"syscall"
 
@@ -82,6 +83,13 @@ L:
 
 			logger := log.With().Str("pkg", snapshot.PackageID).Str("version", snapshot.Version).Logger()
 			logger.Info().Msg("scanning snapshot")
+
+			defer func() {
+				if r := recover(); r != nil {
+					logger.Error().Bytes("stacktrace", debug.Stack()).Interface("recover", r).Send()
+				}
+			}()
+
 			report, err := s.Scan(snapshot)
 			if err != nil {
 				logger.Error().Err(err).Send()
