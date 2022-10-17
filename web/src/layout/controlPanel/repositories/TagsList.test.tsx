@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import TagsList from './TagsList';
@@ -49,6 +49,10 @@ describe('TagsList', () => {
       const inputs = screen.getAllByRole('textbox');
       await userEvent.type(inputs[0], 'a');
 
+      act(() => {
+        inputs[0].blur();
+      });
+
       await waitFor(() => {
         expect(setContainerTagsMock).toHaveBeenCalledTimes(1);
         expect(setContainerTagsMock).toHaveBeenCalledWith([
@@ -72,6 +76,10 @@ describe('TagsList', () => {
       );
       const inputs = screen.getAllByRole('textbox');
       await userEvent.type(inputs[0], 'a');
+
+      act(() => {
+        inputs[0].blur();
+      });
 
       await waitFor(() => {
         expect(setRepeatedTagNamesMock).toHaveBeenCalledTimes(1);

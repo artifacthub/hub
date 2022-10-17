@@ -44,6 +44,7 @@ export interface Props {
   visiblePassword?: boolean;
   excludedValues?: string[];
   smallBottomMargin?: boolean;
+  onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const VALIDATION_DELAY = 3 * 100; // 300ms
@@ -166,7 +167,10 @@ const InputField = forwardRef((props: Props, ref: Ref<RefInputField>) => {
     return checkValidity();
   };
 
-  const handleOnBlur = (): void => {
+  const handleOnBlur = (e: ChangeEvent<HTMLInputElement>): void => {
+    if (!isUndefined(props.onBlur)) {
+      props.onBlur(e);
+    }
     if (!isUndefined(props.validateOnBlur) && props.validateOnBlur && input.current) {
       cleanTimeout(); // On blur we clean timeout if it's necessary
       isValidField();
