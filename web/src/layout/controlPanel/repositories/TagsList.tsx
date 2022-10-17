@@ -84,7 +84,7 @@ const TagsList = (props: Props) => {
                   autoComplete="off"
                   value={item.name}
                   placeholder="Tag name"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  onBlur={(e: ChangeEvent<HTMLInputElement>) => {
                     onUpdateTag(idx, 'name', e.target.value);
                   }}
                   smallBottomMargin
