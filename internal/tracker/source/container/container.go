@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"path"
+	"runtime/debug"
 	"strconv"
 	"strings"
 	"sync"
@@ -130,6 +131,11 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			defer func() {
 				<-limiter
 				wg.Done()
+			}()
+			defer func() {
+				if r := recover(); r != nil {
+					s.i.Svc.Logger.Error().Bytes("stacktrace", debug.Stack()).Interface("recover", r).Send()
+				}
 			}()
 			p, err := PreparePackage(s.i.Svc.Ctx, s.i.Svc.Cfg, s.i.Svc.Hc, s.i.Svc.Is, s.i.Svc.Sc, s.i.Repository, tag)
 			if err != nil {
