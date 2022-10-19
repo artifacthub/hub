@@ -7,7 +7,7 @@ import { Route, Router, Switch } from 'react-router-dom';
 
 import { AppCtxProvider } from '../context/AppCtx';
 import buildSearchParams from '../utils/buildSearchParams';
-import history from '../utils/history';
+import browserHistory from '../utils/history';
 import AlertController from './common/AlertController';
 import UserNotificationsController from './common/userNotifications';
 import ControlPanelView from './controlPanel';
@@ -38,7 +38,7 @@ export default function App() {
 
   return (
     <AppCtxProvider>
-      <Router history={history}>
+      <Router history={browserHistory}>
         <div className="d-flex flex-column min-vh-100 position-relative whiteBranded">
           <div className="visually-hidden visually-hidden-focusable">
             <a href="#content">Skip to Main Content</a>
@@ -59,29 +59,37 @@ export default function App() {
                 '/delete-user',
               ]}
               exact
-              render={({ location }) => (
+              render={(routeProps) => (
                 <div className="d-flex flex-column flex-grow-1">
                   <Navbar
                     isSearching={isSearching}
-                    redirect={getQueryParam(location.search, 'redirect') || undefined}
-                    visibleModal={getQueryParam(location.search, 'modal') || undefined}
+                    redirect={getQueryParam(routeProps.location.search, 'redirect') || undefined}
+                    visibleModal={getQueryParam(routeProps.location.search, 'modal') || undefined}
                     fromHome
                   />
                   <HomeView
                     isSearching={isSearching}
                     emailCode={
-                      location.pathname === '/verify-email' ? getQueryParam(location.search, 'code') : undefined
+                      routeProps.location.pathname === '/verify-email'
+                        ? getQueryParam(routeProps.location.search, 'code')
+                        : undefined
                     }
                     deleteCode={
-                      location.pathname === '/delete-user' ? getQueryParam(location.search, 'code') : undefined
+                      routeProps.location.pathname === '/delete-user'
+                        ? getQueryParam(routeProps.location.search, 'code')
+                        : undefined
                     }
                     resetPwdCode={
-                      location.pathname === '/reset-password' ? getQueryParam(location.search, 'code') : undefined
+                      routeProps.location.pathname === '/reset-password'
+                        ? getQueryParam(routeProps.location.search, 'code')
+                        : undefined
                     }
                     orgToConfirm={
-                      location.pathname === '/accept-invitation' ? getQueryParam(location.search, 'org') : undefined
+                      routeProps.location.pathname === '/accept-invitation'
+                        ? getQueryParam(routeProps.location.search, 'org')
+                        : undefined
                     }
-                    onOauthFailed={location.pathname === '/oauth-failed'}
+                    onOauthFailed={routeProps.location.pathname === '/oauth-failed'}
                   />
                   <Footer />
                 </div>
@@ -91,13 +99,13 @@ export default function App() {
             <Route
               path="/packages/search"
               exact
-              render={({ location }: any) => {
-                const searchParams = buildSearchParams(location.search);
+              render={(routeProps: any) => {
+                const searchParams = buildSearchParams(routeProps.location.search);
                 return (
                   <>
                     <Navbar
-                      redirect={getQueryParam(location.search, 'redirect') || undefined}
-                      visibleModal={getQueryParam(location.search, 'modal') || undefined}
+                      redirect={getQueryParam(routeProps.location.search, 'redirect') || undefined}
+                      visibleModal={getQueryParam(routeProps.location.search, 'modal') || undefined}
                       isSearching={isSearching}
                       searchText={searchParams.tsQueryWeb}
                     />
@@ -108,8 +116,10 @@ export default function App() {
                         setIsSearching={setIsSearching}
                         scrollPosition={scrollPosition}
                         setScrollPosition={setScrollPosition}
-                        fromDetail={location.state ? location.state.hasOwnProperty('from-detail') : false}
-                        visibleModal={getQueryParam(location.search, 'modal') || undefined}
+                        fromDetail={
+                          routeProps.location.state ? routeProps.location.state.hasOwnProperty('from-detail') : false
+                        }
+                        visibleModal={getQueryParam(routeProps.location.search, 'modal') || undefined}
                       />
                     </div>
                   </>
@@ -120,32 +130,32 @@ export default function App() {
             <Route
               path="/packages/:repositoryKind/:repositoryName/:packageName/:version?"
               exact
-              render={({ location, match }) => {
-                const state = location.state ? (location.state as Object) : {};
+              render={(routeProps) => {
+                const state = routeProps.location.state ? (routeProps.location.state as Object) : {};
                 return (
                   <>
                     <Navbar
                       isSearching={isSearching}
-                      redirect={getQueryParam(location.search, 'redirect') || undefined}
-                      visibleModal={getQueryParam(location.search, 'modal') || undefined}
+                      redirect={getQueryParam(routeProps.location.search, 'redirect') || undefined}
+                      visibleModal={getQueryParam(routeProps.location.search, 'modal') || undefined}
                     />
                     <div className="d-flex flex-column flex-grow-1">
                       <PackageView
-                        hash={location.hash}
-                        visibleModal={getQueryParam(location.search, 'modal') || undefined}
-                        visibleTemplate={getQueryParam(location.search, 'template') || undefined}
-                        visibleLine={getQueryParam(location.search, 'line') || undefined}
-                        compareVersionTo={getQueryParam(location.search, 'compare-to') || undefined}
-                        visibleExample={getQueryParam(location.search, 'example') || undefined}
-                        visibleFile={getQueryParam(location.search, 'file') || undefined}
-                        visibleVersion={getQueryParam(location.search, 'version') || undefined}
-                        visibleValuesPath={getQueryParam(location.search, 'path') || undefined}
-                        visibleImage={getQueryParam(location.search, 'image') || undefined}
-                        visibleTarget={getQueryParam(location.search, 'target') || undefined}
-                        visibleSection={getQueryParam(location.search, 'section') || undefined}
-                        eventId={getQueryParam(location.search, 'event-id') || undefined}
+                        hash={routeProps.location.hash}
+                        visibleModal={getQueryParam(routeProps.location.search, 'modal') || undefined}
+                        visibleTemplate={getQueryParam(routeProps.location.search, 'template') || undefined}
+                        visibleLine={getQueryParam(routeProps.location.search, 'line') || undefined}
+                        compareVersionTo={getQueryParam(routeProps.location.search, 'compare-to') || undefined}
+                        visibleExample={getQueryParam(routeProps.location.search, 'example') || undefined}
+                        visibleFile={getQueryParam(routeProps.location.search, 'file') || undefined}
+                        visibleVersion={getQueryParam(routeProps.location.search, 'version') || undefined}
+                        visibleValuesPath={getQueryParam(routeProps.location.search, 'path') || undefined}
+                        visibleImage={getQueryParam(routeProps.location.search, 'image') || undefined}
+                        visibleTarget={getQueryParam(routeProps.location.search, 'target') || undefined}
+                        visibleSection={getQueryParam(routeProps.location.search, 'section') || undefined}
+                        eventId={getQueryParam(routeProps.location.search, 'event-id') || undefined}
                         {...state}
-                        {...match.params}
+                        {...routeProps.match.params}
                       />
                     </div>
                   </>
@@ -156,17 +166,17 @@ export default function App() {
             <Route
               path="/control-panel/:section?/:subsection?"
               exact
-              render={({ location, match }) => (
+              render={(routeProps) => (
                 <>
                   <Navbar isSearching={isSearching} privateRoute />
                   <div className="d-flex flex-column flex-grow-1">
                     <ControlPanelView
-                      {...match.params}
-                      visibleModal={getQueryParam(location.search, 'modal') || undefined}
-                      userAlias={getQueryParam(location.search, 'user-alias') || undefined}
-                      organizationName={getQueryParam(location.search, 'org-name') || undefined}
-                      repoName={getQueryParam(location.search, 'repo-name') || undefined}
-                      activePage={getQueryParam(location.search, 'page') || undefined}
+                      {...routeProps.match.params}
+                      visibleModal={getQueryParam(routeProps.location.search, 'modal') || undefined}
+                      userAlias={getQueryParam(routeProps.location.search, 'user-alias') || undefined}
+                      organizationName={getQueryParam(routeProps.location.search, 'org-name') || undefined}
+                      repoName={getQueryParam(routeProps.location.search, 'repo-name') || undefined}
+                      activePage={getQueryParam(routeProps.location.search, 'page') || undefined}
                     />
                   </div>
                   <Footer />
@@ -177,11 +187,11 @@ export default function App() {
             <Route
               path="/packages/starred"
               exact
-              render={({ location }) => (
+              render={(routeProps) => (
                 <>
                   <Navbar isSearching={isSearching} privateRoute />
                   <div className="d-flex flex-column flex-grow-1">
-                    <StarredPackagesView activePage={getQueryParam(location.search, 'page') || undefined} />
+                    <StarredPackagesView activePage={getQueryParam(routeProps.location.search, 'page') || undefined} />
                   </div>
                   <Footer />
                 </>
@@ -191,15 +201,15 @@ export default function App() {
             <Route
               path="/stats"
               exact
-              render={({ location }) => (
+              render={(routeProps) => (
                 <>
                   <Navbar
                     isSearching={isSearching}
-                    redirect={getQueryParam(location.search, 'redirect') || undefined}
-                    visibleModal={getQueryParam(location.search, 'modal') || undefined}
+                    redirect={getQueryParam(routeProps.location.search, 'redirect') || undefined}
+                    visibleModal={getQueryParam(routeProps.location.search, 'modal') || undefined}
                   />
                   <div className="d-flex flex-column flex-grow-1">
-                    <StatsView hash={location.hash} />
+                    <StatsView hash={routeProps.location.hash} />
                   </div>
                   <Footer />
                 </>

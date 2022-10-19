@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mocked } from 'jest-mock';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
@@ -55,7 +56,9 @@ describe('StatsView', () => {
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-        <StatsView />
+        <Router>
+          <StatsView />
+        </Router>
       </AppCtx.Provider>
     );
 
@@ -76,7 +79,9 @@ describe('StatsView', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <StatsView />
+          <Router>
+            <StatsView />
+          </Router>
         </AppCtx.Provider>
       );
 
@@ -100,7 +105,9 @@ describe('StatsView', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <StatsView />
+          <Router>
+            <StatsView />
+          </Router>
         </AppCtx.Provider>
       );
 
@@ -123,7 +130,9 @@ describe('StatsView', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <StatsView />
+          <Router>
+            <StatsView />
+          </Router>
         </AppCtx.Provider>
       );
 
@@ -137,7 +146,9 @@ describe('StatsView', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <StatsView />
+          <Router>
+            <StatsView />
+          </Router>
         </AppCtx.Provider>
       );
 
@@ -154,7 +165,9 @@ describe('StatsView', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <StatsView />
+          <Router>
+            <StatsView />
+          </Router>
         </AppCtx.Provider>
       );
 
@@ -174,7 +187,9 @@ describe('StatsView', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <StatsView hash="#repositories" />
+          <Router>
+            <StatsView hash="#repositories" />
+          </Router>
         </AppCtx.Provider>
       );
 

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import TOCEntry from './TOCEntry';
 
@@ -22,13 +23,21 @@ describe('TOCEntry', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<TOCEntry {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <TOCEntry {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders properly', () => {
-      render(<TOCEntry {...defaultProps} />);
+      render(
+        <Router>
+          <TOCEntry {...defaultProps} />
+        </Router>
+      );
 
       const link = screen.getByText('Installing the Chart');
       expect(link).toBeInTheDocument();
@@ -37,7 +46,11 @@ describe('TOCEntry', () => {
     });
 
     it('clicks link', async () => {
-      render(<TOCEntry {...defaultProps} />);
+      render(
+        <Router>
+          <TOCEntry {...defaultProps} />
+        </Router>
+      );
 
       const link = screen.getByText('Installing the Chart');
       await userEvent.click(link);
@@ -51,7 +64,11 @@ describe('TOCEntry', () => {
 
   describe('does not render element', () => {
     it('when value is an empty string', () => {
-      const { container } = render(<TOCEntry {...defaultProps} entry={{ ...defaultProps.entry, value: '' }} />);
+      const { container } = render(
+        <Router>
+          <TOCEntry {...defaultProps} entry={{ ...defaultProps.entry, value: '' }} />
+        </Router>
+      );
       expect(container).toBeEmptyDOMElement();
     });
   });

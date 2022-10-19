@@ -6,7 +6,7 @@ import getMetaTag from './getMetaTag';
 import updateMetaIndex from './updateMetaIndex';
 import notificationsDispatcher from './userNotificationsDispatcher';
 
-const history = createBrowserHistory();
+const browserHistory = createBrowserHistory();
 const analyticsConfig: string | null = getMetaTag('gaTrackingID');
 let analytics: any = null;
 
@@ -17,7 +17,7 @@ if (!isNull(analyticsConfig)) {
   });
 }
 
-history.listen((location) => {
+browserHistory.listen((location) => {
   // Updates meta tags every time that history is called for all locations except for package detail page
   if (!PKG_DETAIL_PATH.test(location.pathname)) {
     updateMetaIndex();
@@ -31,4 +31,4 @@ history.listen((location) => {
   notificationsDispatcher.dismissNotification(location.pathname);
 });
 
-export default history;
+export default browserHistory;

@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import TOCList from './TOCList';
 
@@ -53,13 +54,21 @@ describe('TOCList', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<TOCList {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <TOCList {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders properly', () => {
-      render(<TOCList {...defaultProps} />);
+      render(
+        <Router>
+          <TOCList {...defaultProps} />
+        </Router>
+      );
 
       expect(screen.getByText('Title 1')).toBeInTheDocument();
       expect(screen.getByText('Subtitle 1a')).toBeInTheDocument();

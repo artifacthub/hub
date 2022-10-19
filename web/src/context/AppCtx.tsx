@@ -7,7 +7,7 @@ import useSystemThemeMode from '../hooks/useSystemThemeMode';
 import { Prefs, Profile, ThemePrefs, UserFullName } from '../types';
 import cleanLoginUrlParams from '../utils/cleanLoginUrlParams';
 import detectActiveThemeMode from '../utils/detectActiveThemeMode';
-import history from '../utils/history';
+import browserHistory from '../utils/history';
 import isControlPanelSectionAvailable from '../utils/isControlPanelSectionAvailable';
 import lsPreferences from '../utils/localStoragePreferences';
 import lsStorage from '../utils/localStoragePreferences';
@@ -92,16 +92,20 @@ export async function refreshUserProfile(dispatch: Dispatch<any>, redirectUrl?: 
     }`;
     if (!isUndefined(redirectUrl)) {
       if (redirectUrl === currentUrl) {
-        history.replace(redirectUrl);
+        browserHistory.replace(redirectUrl);
       } else {
+        const redirection = redirectUrl.split('?');
         // Redirect to correct route when necessary
-        history.push(redirectUrl);
+        browserHistory.push({
+          pathname: redirection[0],
+          search: !isUndefined(redirection[1]) ? `?${redirection[1]}` : '',
+        });
       }
     }
   } catch (err: any) {
     dispatch({ type: 'signOut' });
     if (err.message === 'invalid session') {
-      history.push(
+      browserHistory.push(
         `${window.location.pathname}${
           window.location.search === '' ? '?' : `${window.location.search}&`
         }modal=login&redirect=${encodeURIComponent(`${window.location.pathname}${window.location.search}`)}`
@@ -111,10 +115,10 @@ export async function refreshUserProfile(dispatch: Dispatch<any>, redirectUrl?: 
 }
 
 function redirectToControlPanel(context: 'user' | 'org') {
-  if (history.location.pathname.startsWith('/control-panel')) {
-    const sections = history.location.pathname.split('/');
+  if (browserHistory.location.pathname.startsWith('/control-panel')) {
+    const sections = browserHistory.location.pathname.split('/');
     if (!isControlPanelSectionAvailable(context, sections[2], sections[3])) {
-      history.push('/control-panel/repositories');
+      browserHistory.push('/control-panel/repositories');
     }
   }
 }

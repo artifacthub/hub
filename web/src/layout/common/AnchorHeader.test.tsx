@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import AnchorHeader from './AnchorHeader';
 
@@ -41,19 +42,31 @@ describe('AnchorHeader', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<AnchorHeader {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <AnchorHeader {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders header properly', () => {
-    render(<AnchorHeader {...defaultProps} />);
+    render(
+      <Router>
+        <AnchorHeader {...defaultProps} />
+      </Router>
+    );
     const header = screen.getByText(/Header/i);
     expect(header).toBeInTheDocument();
     expect(header.tagName).toBe('H2');
   });
 
   it('calls scroll into view', async () => {
-    render(<AnchorHeader {...defaultProps} />);
+    render(
+      <Router>
+        <AnchorHeader {...defaultProps} />
+      </Router>
+    );
     const link = screen.getByRole('button');
     expect(link).toBeInTheDocument();
     await userEvent.click(link);
@@ -62,7 +75,11 @@ describe('AnchorHeader', () => {
 
   for (let i = 0; i < tests.length; i++) {
     it('renders proper id and href from title', () => {
-      render(<AnchorHeader {...defaultProps} title={tests[i].title} anchorName={tests[i].anchor} />);
+      render(
+        <Router>
+          <AnchorHeader {...defaultProps} title={tests[i].title} anchorName={tests[i].anchor} />
+        </Router>
+      );
       expect(screen.getByText(new RegExp(tests[i].title, 'i'))).toBeInTheDocument();
       const link = screen.getByRole('button');
       expect(link).toHaveProperty('href', `http://localhost/#${tests[i].id}`);
