@@ -50,7 +50,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1
 	helm.sh/helm/v3 v3.10.1
 	k8s.io/apimachinery v0.25.2
-	oras.land/oras-go v1.2.0
+	oras.land/oras-go v1.2.1
 	sigs.k8s.io/krew v0.4.3
 	sigs.k8s.io/yaml v1.3.0
 )
