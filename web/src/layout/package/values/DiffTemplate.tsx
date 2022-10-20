@@ -15,6 +15,7 @@ interface Props {
   compareData: string;
   data: string;
   expanded: boolean;
+  removeLoading: () => void;
 }
 
 interface DiffProps {
@@ -73,21 +74,27 @@ const DiffTemplate = (props: Props) => {
 
   useEffect(() => {
     const prepareDiff = () => {
-      setDiffContent(
-        DiffLibrary.createTwoFilesPatch(
-          '  ',
-          '  ',
-          props.compareData,
-          props.data,
-          props.diffVersion,
-          props.currentVersion,
-          { context: props.expanded ? Number.MAX_SAFE_INTEGER : 2 }
-        )
+      const newDiff = DiffLibrary.createTwoFilesPatch(
+        '  ',
+        '  ',
+        props.compareData,
+        props.data,
+        props.diffVersion,
+        props.currentVersion,
+        { context: props.expanded ? Number.MAX_SAFE_INTEGER : 2 }
       );
+      if (newDiff === diffContent) {
+        props.removeLoading();
+      }
+      setDiffContent(newDiff);
     };
 
     prepareDiff();
   }, [props.compareData, props.expanded]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    props.removeLoading();
+  }, [diffContent]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return <>{!isNull(diffContent) && <Changes diffText={`diff --git \n ${diffContent}`} />}</>;
 };

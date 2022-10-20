@@ -1,5 +1,5 @@
 import { isNull } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BsArrowsCollapse, BsArrowsExpand } from 'react-icons/bs';
 
 import API from '../../../api';
@@ -20,20 +20,27 @@ const CompareView = (props: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [expanded, setExpanded] = useState<boolean>(false);
 
+  const removeLoading = useCallback(() => {
+    if (isLoading) {
+      setIsLoading(false);
+    }
+  }, [isLoading]);
+
   useEffect(() => {
     async function getDiffCompareValues(version: string) {
       try {
-        setIsLoading(true);
         setIsLoading(true);
         const data = await API.getChartValues(props.packageId, version);
         if (data === props.values) {
           setDiffValues(null);
         } else {
           setDiffValues(data);
+          if (data === diffValues) {
+            setIsLoading(false);
+          }
         }
       } catch {
         setDiffValues(null);
-      } finally {
         setIsLoading(false);
       }
     }
@@ -53,6 +60,7 @@ const CompareView = (props: Props) => {
           <button
             className={`btn btn-sm btn-primary rounded-circle fs-5 ${styles.btn}`}
             onClick={() => {
+              setIsLoading(true);
               setExpanded(!expanded);
             }}
             aria-label={`${expanded ? 'Collapse' : 'Expand'} code`}
@@ -82,6 +90,7 @@ const CompareView = (props: Props) => {
               compareData={diffValues}
               data={props.values}
               expanded={expanded}
+              removeLoading={removeLoading}
             />
           </ErrorBoundary>
         )}
