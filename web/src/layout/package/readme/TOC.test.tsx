@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import TOC from './TOC';
 jest.mock('react-markdown', () => () => <div>Readme</div>);
@@ -55,20 +56,32 @@ describe('TOC', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<TOC {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <TOC {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders properly', () => {
-      render(<TOC {...defaultProps} />);
+      render(
+        <Router>
+          <TOC {...defaultProps} />
+        </Router>
+      );
 
       expect(screen.getByText('Readme')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /Table of contents/ })).toBeInTheDocument();
     });
 
     it('displays dropdown', async () => {
-      render(<TOC {...defaultProps} />);
+      render(
+        <Router>
+          <TOC {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Table of contents/ });
       await userEvent.click(btn);
@@ -84,7 +97,11 @@ describe('TOC', () => {
     });
 
     it('displays dropdown', async () => {
-      render(<TOC {...defaultProps} />);
+      render(
+        <Router>
+          <TOC {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Table of contents/ });
       await userEvent.click(btn);
@@ -97,12 +114,20 @@ describe('TOC', () => {
     });
 
     it('renders support button', () => {
-      render(<TOC {...defaultProps} supportLink="http://link.test" />);
+      render(
+        <Router>
+          <TOC {...defaultProps} supportLink="http://link.test" />
+        </Router>
+      );
       expect(screen.getByRole('button', { name: 'Open support link' })).toBeInTheDocument();
     });
 
     it('does not render component when list is empty', () => {
-      const { container } = render(<TOC {...defaultProps} toc={[]} />);
+      const { container } = render(
+        <Router>
+          <TOC {...defaultProps} toc={[]} />
+        </Router>
+      );
       expect(container).toBeEmptyDOMElement();
     });
   });

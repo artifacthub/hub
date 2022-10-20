@@ -2,9 +2,10 @@ import { isObject, isString } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import { ElementType, MouseEvent as ReactMouseEvent } from 'react';
 import { GoLink } from 'react-icons/go';
+import { Link } from 'react-router-dom';
 
 import getAnchorValue from '../../utils/getAnchorValue';
-import history from '../../utils/history';
+import browserHistory from '../../utils/history';
 import styles from './AnchorHeader.module.css';
 interface Props {
   level: number;
@@ -39,8 +40,8 @@ const AnchorHeader: ElementType = (props: Props) => {
     <span className={styles.header}>
       <Tag className={`position-relative anchorHeader ${styles.headingWrapper} ${props.className}`}>
         <div data-testid="anchor" className={`position-absolute ${styles.headerAnchor}`} id={anchor} />
-        <a
-          href={`${history.location.pathname}#${anchor}`}
+        <Link
+          to={{ pathname: browserHistory.location.pathname, hash: anchor }}
           onClick={(e: ReactMouseEvent<HTMLAnchorElement, MouseEvent>) => {
             e.preventDefault();
             e.stopPropagation();
@@ -51,7 +52,8 @@ const AnchorHeader: ElementType = (props: Props) => {
           aria-label={value}
         >
           <GoLink />
-        </a>
+        </Link>
+
         {props.title || props.children}
       </Tag>
     </span>

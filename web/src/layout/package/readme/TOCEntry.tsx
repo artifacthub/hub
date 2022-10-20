@@ -1,9 +1,10 @@
 import { Dispatch, MouseEvent as ReactMouseEvent, SetStateAction } from 'react';
+import { Link } from 'react-router-dom';
 
 import { TOCEntryItem } from '../../../types';
 import cleanTOCEntry from '../../../utils/cleanTOCEntry';
 import getAnchorValue from '../../../utils/getAnchorValue';
-import history from '../../../utils/history';
+import browserHistory from '../../../utils/history';
 import styles from './TOCEntry.module.css';
 
 interface Props {
@@ -21,11 +22,11 @@ const TOCEntry = (props: Props) => {
 
   return (
     <div className={`${styles.dropdownItem} dropdownItem`}>
-      <a
+      <Link
+        to={{ pathname: browserHistory.location.pathname, hash: link }}
         className={`btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start ${styles.btn} ${
           styles[`level${props.level}`]
         }`}
-        href={`${history.location.pathname}#${link}`}
         onClick={(e: ReactMouseEvent<HTMLAnchorElement, MouseEvent>) => {
           e.preventDefault();
           e.stopPropagation();
@@ -38,7 +39,7 @@ const TOCEntry = (props: Props) => {
         aria-selected={false}
       >
         {title}
-      </a>
+      </Link>
     </div>
   );
 };
