@@ -11,7 +11,7 @@ interface Props {
 
 interface SampleQuery {
   name: string;
-  queryString: string;
+  querystring: string;
 }
 
 const QUERIES_NUMBER = 5;
@@ -31,7 +31,7 @@ const SampleQueries = (props: Props) => {
             className={`badge rounded-pill border fw-normal mx-2 mt-3 ${props.className}`}
             to={{
               pathname: '/packages/search',
-              search: `?${query.queryString}`,
+              search: `?${query.querystring}`,
             }}
             aria-label={`Filter by ${query.name}`}
           >
