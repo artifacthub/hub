@@ -125,11 +125,11 @@ theme:
   siteName: "Artifact Hub"
   sampleQueries:
     - name: Packages from verified publishers
-      queryString: "verified_publisher=true"
+      querystring: "verified_publisher=true"
     - name: Operators with auto pilot capabilities
-      queryString: "capabilities=auto+pilot"
+      querystring: "capabilities=auto+pilot"
     - name: Helm Charts in the storage category
-      queryString: "kind=0&ts_query=storage"
+      querystring: "kind=0&ts_query=storage"
 ```
 
 This sample configuration does not use all options available. For more information please see [the Chart configuration options](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=values-schema) and [the Chart hub secret template file](https://github.com/artifacthub/hub/blob/master/charts/artifact-hub/templates/hub_secret.yaml).
@@ -168,7 +168,7 @@ tracker:
   repositoriesKinds: []
   bypassDigestCheck: false
 images:
-  store: pg  
+  store: pg
 ```
 
 Once the configuration file is ready, it's time to launch the `tracker` for the first time:

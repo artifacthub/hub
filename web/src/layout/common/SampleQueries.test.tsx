@@ -8,71 +8,71 @@ jest.mock('../../utils/getSampleQueries', () => () => {
   return [
     {
       name: 'OLM operators for databases',
-      queryString: 'kind=3&ts_query_web=database',
+      querystring: 'kind=3&ts_query_web=database',
     },
     {
       name: 'Helm Charts provided by Bitnami',
-      queryString: 'kind=0&org=bitnami',
+      querystring: 'kind=0&org=bitnami',
     },
     {
       name: 'Packages of any kind related to etcd',
-      queryString: 'ts_query_web=etcd',
+      querystring: 'ts_query_web=etcd',
     },
     {
       name: 'Falco rules for CVE',
-      queryString: 'kind=1&ts_query_web=cve',
+      querystring: 'kind=1&ts_query_web=cve',
     },
     {
       name: 'OLM operators in the monitoring category',
-      queryString: 'kind=3&ts_query=monitoring',
+      querystring: 'kind=3&ts_query=monitoring',
     },
     {
       name: 'Packages from verified publishers',
-      queryString: 'verified_publisher=true',
+      querystring: 'verified_publisher=true',
     },
     {
       name: 'Official Prometheus packages',
-      queryString: 'ts_query_web=prometheus&official=true',
+      querystring: 'ts_query_web=prometheus&official=true',
     },
     {
       name: 'Operators with auto pilot capabilities',
-      queryString: 'capabilities=auto+pilot',
+      querystring: 'capabilities=auto+pilot',
     },
     {
       name: 'Helm Charts in the storage category',
-      queryString: 'kind=0&ts_query=storage',
+      querystring: 'kind=0&ts_query=storage',
     },
     {
       name: 'Packages with Apache-2.0 license',
-      queryString: 'license=Apache-2.0',
+      querystring: 'license=Apache-2.0',
     },
     {
       name: 'OPA policies with MIT license',
-      queryString: 'kind=2&license=MIT',
+      querystring: 'kind=2&license=MIT',
     },
     {
       name: 'Helm plugins',
-      queryString: 'kind=6',
+      querystring: 'kind=6',
     },
     {
       name: 'Kubectl plugins',
-      queryString: 'kind=5',
+      querystring: 'kind=5',
     },
     {
       name: 'Tekton tasks',
-      queryString: 'kind=7',
+      querystring: 'kind=7',
     },
     {
       name: 'Container images',
-      queryString: 'kind=12',
+      querystring: 'kind=12',
     },
     {
       name: 'Kubewarden policies',
-      queryString: 'kind=13',
+      querystring: 'kind=13',
     },
     {
       name: 'Gatekeeper policies',
-      queryString: 'kind=14',
+      querystring: 'kind=14',
     },
   ];
 });
@@ -80,23 +80,23 @@ jest.mock('../../utils/getSampleQueries', () => () => {
 const mockQueries = [
   {
     name: 'OLM operators for databases',
-    queryString: 'kind=3&ts_query_web=database',
+    querystring: 'kind=3&ts_query_web=database',
   },
   {
     name: 'Helm Charts provided by Bitnami',
-    queryString: 'kind=0&org=bitnami',
+    querystring: 'kind=0&org=bitnami',
   },
   {
     name: 'Packages of any kind related to etcd',
-    queryString: 'ts_query_web=etcd',
+    querystring: 'ts_query_web=etcd',
   },
   {
     name: 'Falco rules for CVE',
-    queryString: 'kind=1&ts_query_web=cve',
+    querystring: 'kind=1&ts_query_web=cve',
   },
   {
     name: 'OLM operators in the monitoring category',
-    queryString: 'kind=3&ts_query=monitoring',
+    querystring: 'kind=3&ts_query=monitoring',
   },
 ];
 
