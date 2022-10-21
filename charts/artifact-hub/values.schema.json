@@ -1155,7 +1155,7 @@
                     "title": "Name of the search query. It will be displayed on the home and no results found pages.",
                     "type": "string"
                 },
-                "queryString": {
+                "querystring": {
                     "title": "Search query string",
                     "type": "string",
                     "description": "Query string that defines the search filters to use. Example: ts_query_web=prometheus&official=true"
@@ -1163,7 +1163,7 @@
             },
             "required": [
                 "name",
-                "queryString"
+                "querystring"
             ]
         }
     }
