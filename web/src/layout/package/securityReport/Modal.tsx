@@ -21,6 +21,7 @@ import isFuture from '../../../utils/isFuture';
 import sumObjectValues from '../../../utils/sumObjectValues';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
+import OldVulnerabilitiesWarning from './OldVulnerabilitiesWarning';
 import SectionBtn from './SectionBtn';
 import SecuritySummary from './Summary';
 import SummaryTable from './SummaryTable';
@@ -260,6 +261,9 @@ const SecurityModal = (props: Props) => {
               visibleSection={props.visibleSection}
               onClick={() => onClickSection('summary')}
             />
+
+            {/* Warning */}
+            <OldVulnerabilitiesWarning fixableReport={fixableReport} />
 
             {props.totalVulnerabilities > 0 && !isUndefined(fixableReportSummary) && (
               <>
