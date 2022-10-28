@@ -41,7 +41,7 @@ updates:
       day: "wednesday"
     ignore:
       - dependency-name: "node"
-        versions: ["18-alpine3.16"]
+        versions: ["18-alpine3.16", "19-alpine3.16"]
   - package-ecosystem: "docker"
     directory: "/cmd/scanner"
     schedule:
