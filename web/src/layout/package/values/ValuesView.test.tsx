@@ -178,6 +178,14 @@ describe('ValuesView', () => {
       expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
     });
 
+    it('renders component with empty values', () => {
+      render(<ValuesView {...defaultProps} values=" " />);
+
+      expect(screen.getByRole('textbox')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Download' })).toBeDisabled();
+    });
+
     it('clicks line', async () => {
       render(<ValuesView {...defaultProps} />);
 

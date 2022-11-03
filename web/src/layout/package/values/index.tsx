@@ -100,7 +100,7 @@ const Values = (props: Props) => {
     try {
       setIsLoading(true);
       const data = await API.getChartValues(props.packageId, props.version);
-      setValues(data);
+      setValues(data || ' ');
       setLines(getPathsPerLine(data));
       setCurrentPkgId(props.packageId);
       setIsLoading(false);
@@ -159,7 +159,7 @@ const Values = (props: Props) => {
     }
   }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  const isDisabledDiffView = props.sortedVersions.length <= 1;
+  const isDisabledDiffView = props.sortedVersions.length <= 1 || values === ' ';
 
   return (
     <>

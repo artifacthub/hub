@@ -295,6 +295,20 @@ describe('Values', () => {
       await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
     });
 
+    it('opens modal with empty values', async () => {
+      mocked(API).getChartValues.mockResolvedValue('');
+
+      render(<Values {...defaultProps} visibleValues />);
+
+      await waitFor(() => {
+        expect(API.getChartValues).toHaveBeenCalledTimes(1);
+      });
+
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Download' })).toBeDisabled();
+    });
+
     it('calls again to getChartValues when version is different', async () => {
       mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
