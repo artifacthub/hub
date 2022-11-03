@@ -11,6 +11,7 @@ interface Props {
   boxShadowColor?: string;
   hiddenCopyBtn?: boolean;
   tooltipType?: 'normal' | 'light';
+  disabled?: boolean;
 }
 
 const BlockCodeButtons = (props: Props) => {
@@ -42,6 +43,7 @@ const BlockCodeButtons = (props: Props) => {
           text={props.content}
           style={btnStyle}
           tooltipType={props.tooltipType}
+          disabled={props.disabled}
         />
       )}
 
@@ -50,6 +52,7 @@ const BlockCodeButtons = (props: Props) => {
         style={btnStyle}
         onClick={downloadFile}
         aria-label="Download"
+        disabled={props.disabled}
       >
         <BiCloudDownload aria-hidden="true" />
       </button>

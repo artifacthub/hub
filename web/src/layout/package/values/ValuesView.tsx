@@ -32,6 +32,7 @@ const ValuesView = (props: Props) => {
   const [clickedLine, setClickedLine] = useState<number | undefined>();
   const [fullWidth, setFullWidth] = useState<number | undefined>();
   const [activeLine, setActiveLine] = useState<string | undefined>();
+  const isEmptyValues = props.values === ' ';
 
   const cleanClickedLine = () => {
     setClickedLine(undefined);
@@ -118,7 +119,11 @@ const ValuesView = (props: Props) => {
       )}
 
       <div className={`position-relative flex-grow-1 ${styles.content}`}>
-        <BlockCodeButtons filename={`values-${props.normalizedName}.yaml`} content={props.values} />
+        <BlockCodeButtons
+          filename={`values-${props.normalizedName}.yaml`}
+          content={props.values}
+          disabled={isEmptyValues}
+        />
 
         <div ref={code} className={`overflow-auto h-100 position-relative border ${styles.codeWrapper}`}>
           {!isUndefined(props.lines) && !isUndefined(clickedLine) && !isUndefined(topPositionMenu) && (
@@ -142,53 +147,56 @@ const ValuesView = (props: Props) => {
                   setClickedLine(undefined);
                   setTopPositionMenu(undefined);
                 }}
+                disabled={isEmptyValues}
                 noTooltip
               />
             </div>
           )}
 
-          <SyntaxHighlighter
-            language="yaml"
-            style={docco}
-            customStyle={{
-              backgroundColor: 'transparent',
-              padding: '1.5rem',
-              paddingLeft: '4.5rem',
-              lineHeight: '1.25rem',
-              marginBottom: '0',
-              height: '100%',
-              fontSize: '80%',
-              color: '#636a6e',
-              overflow: 'visible',
-            }}
-            lineNumberStyle={{
-              display: 'none',
-            }}
-            className="customYAML"
-            useInlineStyles={false}
-            showLineNumbers
-            wrapLines
-            lineProps={(lineNumber) => {
-              return {
-                id: `line_${lineNumber}`,
-                className: 'line',
-                style: { position: 'relative', width: fullWidth ? `${fullWidth}px` : 'auto' },
-                'data-line-number': lineNumber,
-                'data-clickable-line': props.lines && props.lines[lineNumber] ? 'true' : 'false',
-                'data-active-line': lineNumber === clickedLine,
-                onClick() {
-                  const isClicked = clickedLine === lineNumber;
-                  if (props.lines && !isUndefined(props.lines[lineNumber]) && !isClicked) {
-                    setClickedLine(lineNumber);
-                  } else {
-                    cleanClickedLine();
-                  }
-                },
-              };
-            }}
-          >
-            {props.values}
-          </SyntaxHighlighter>
+          {!isEmptyValues && (
+            <SyntaxHighlighter
+              language="yaml"
+              style={docco}
+              customStyle={{
+                backgroundColor: 'transparent',
+                padding: '1.5rem',
+                paddingLeft: '4.5rem',
+                lineHeight: '1.25rem',
+                marginBottom: '0',
+                height: '100%',
+                fontSize: '80%',
+                color: '#636a6e',
+                overflow: 'visible',
+              }}
+              lineNumberStyle={{
+                display: 'none',
+              }}
+              className="customYAML"
+              useInlineStyles={false}
+              showLineNumbers
+              wrapLines
+              lineProps={(lineNumber) => {
+                return {
+                  id: `line_${lineNumber}`,
+                  className: 'line',
+                  style: { position: 'relative', width: fullWidth ? `${fullWidth}px` : 'auto' },
+                  'data-line-number': lineNumber,
+                  'data-clickable-line': props.lines && props.lines[lineNumber] ? 'true' : 'false',
+                  'data-active-line': lineNumber === clickedLine,
+                  onClick() {
+                    const isClicked = clickedLine === lineNumber;
+                    if (props.lines && !isUndefined(props.lines[lineNumber]) && !isClicked) {
+                      setClickedLine(lineNumber);
+                    } else {
+                      cleanClickedLine();
+                    }
+                  },
+                };
+              }}
+            >
+              {props.values}
+            </SyntaxHighlighter>
+          )}
         </div>
       </div>
     </>

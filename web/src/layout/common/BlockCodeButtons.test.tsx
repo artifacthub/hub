@@ -33,6 +33,13 @@ describe('BlockCodeButtons', () => {
     expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
   });
 
+  it('renders disabled buttons', () => {
+    render(<BlockCodeButtons {...defaultProps} disabled />);
+
+    expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Download' })).toBeDisabled();
+  });
+
   it('download file', async () => {
     render(<BlockCodeButtons {...defaultProps} />);
 
