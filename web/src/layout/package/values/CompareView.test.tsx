@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { mocked } from 'jest-mock';
 
 import API from '../../../api';
@@ -59,6 +59,7 @@ describe('CompareView', () => {
         expect(API.getChartValues).toHaveBeenCalledWith('id', '0.0.2');
       });
 
+      await waitForElementToBeRemoved(() => screen.queryByRole('status'));
       expect(await screen.findByText(/No changes found when comparing version/)).toBeInTheDocument();
     });
   });
