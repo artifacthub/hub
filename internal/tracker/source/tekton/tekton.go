@@ -1,6 +1,7 @@
 package tekton
 
 import (
+	"context"
 	"crypto/sha256"
 	"encoding/json"
 	"errors"
@@ -21,6 +22,8 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/hashicorp/go-multierror"
 	"github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
+	pipelinerun "github.com/tektoncd/pipeline/pkg/reconciler/pipelinerun/resources"
+	taskrun "github.com/tektoncd/pipeline/pkg/reconciler/taskrun/resources"
 )
 
 const (
@@ -348,6 +351,8 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 	var name, version, description, tektonKind string
 	var annotations map[string]string
 	var tasks []map[string]interface{}
+	var steps []v1beta1.Step
+
 	switch m := i.Manifest.(type) {
 	case *v1beta1.Task:
 		tektonKind = "task"
@@ -355,16 +360,30 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 		version = m.Labels[versionLabelTKey]
 		description = m.Spec.Description
 		annotations = m.Annotations
+
+		ts := m.TaskSpec()
+		var defaults []v1beta1.ParamSpec
+		if len(ts.Params) > 0 {
+			defaults = append(defaults, ts.Params...)
+		}
+		mts := taskrun.ApplyParameters(context.Background(), &ts, &v1beta1.TaskRun{}, defaults...)
+		steps = mts.Steps
 	case *v1beta1.Pipeline:
 		tektonKind = "pipeline"
 		name = m.Name
 		version = m.Labels[versionLabelTKey]
 		description = m.Spec.Description
 		annotations = m.Annotations
-		for _, task := range m.Spec.Tasks {
+
+		ps := m.PipelineSpec()
+		mps := pipelinerun.ApplyParameters(context.Background(), &ps, &v1beta1.PipelineRun{})
+		for _, mts := range mps.Tasks {
+			if mts.TaskSpec != nil {
+				steps = append(steps, mts.TaskSpec.Steps...)
+			}
 			tasks = append(tasks, map[string]interface{}{
-				"name":      task.Name,
-				"run_after": task.RunAfter,
+				"name":      mts.Name,
+				"run_after": mts.RunAfter,
 			})
 		}
 	}
@@ -404,6 +423,22 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 			TasksKey:               tasks,
 		},
 	}
+
+	// Prepare container images
+	var containerImages []*hub.ContainerImage
+	uniqueImages := make(map[string]struct{})
+	for _, step := range steps {
+		if step.Image != "" {
+			if _, ok := uniqueImages[step.Image]; !ok {
+				uniqueImages[step.Image] = struct{}{}
+				containerImages = append(containerImages, &hub.ContainerImage{Image: step.Image})
+			}
+		}
+	}
+	if err := pkg.ValidateContainersImages(hub.TektonTask, containerImages); err != nil {
+		return nil, err
+	}
+	p.ContainersImages = containerImages
 
 	// Include content and source links
 	contentURL, sourceURL := prepareContentAndSourceLinks(i)
@@ -557,7 +592,7 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 		}
 	}
 
-	// Sign key
+	// Signature
 	if v, ok := annotations[signatureAnnotation]; ok {
 		var signature string
 		if err := yaml.Unmarshal([]byte(v), &signature); err != nil {

@@ -84,7 +84,7 @@ func TestTrackerSource(t *testing.T) {
 			Version:     "0.1.0",
 			Provider:    "Some organization",
 			ContentURL:  "https://github.com/user/repo/raw/master/path/task1/0.1/task1.yaml",
-			Digest:      "02bac9928e46c44079c259cd6d04adfd2b9f3bcf5c854f92fb80de4e4b4595fd",
+			Digest:      "5210153181f3c091a967abd96d94b09a939dbdf52eb30037f1fdf7d39ebc3e94",
 			Repository:  i.Repository,
 			License:     "Apache-2.0",
 			Links: []*hub.Link{
@@ -141,6 +141,14 @@ func TestTrackerSource(t *testing.T) {
 			},
 			Signatures: []string{tekton},
 			Signed:     true,
+			ContainersImages: []*hub.ContainerImage{
+				{
+					Image: "bash:latest",
+				},
+				{
+					Image: "alphine",
+				},
+			},
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{
@@ -176,7 +184,7 @@ func TestTrackerSource(t *testing.T) {
 			Version:     "0.1.0",
 			Provider:    "Some organization",
 			ContentURL:  "https://github.com/user/repo/raw/master/path/pipeline1/0.1/pipeline1.yaml",
-			Digest:      "c871546c7f4ae01c2611b828a7eaba60461a555d8e24ad84a1c553d1af52beee",
+			Digest:      "f267eb9b1347935e55503cde2a17abf896af2a1a6fc52b903632e687d509a5e3",
 			Repository:  i.Repository,
 			License:     "Apache-2.0",
 			Links: []*hub.Link{
@@ -227,16 +235,16 @@ func TestTrackerSource(t *testing.T) {
 				RawManifestKey:         string(manifestRaw),
 				TasksKey: []map[string]interface{}{
 					{
-						"name":      "task1",
+						"name":      "say-hello",
 						"run_after": []string{},
 					},
 					{
-						"name":      "task2",
-						"run_after": []string{"task1"},
+						"name":      "say-world",
+						"run_after": []string{"say-hello"},
 					},
 					{
-						"name":      "task3",
-						"run_after": []string{"task1", "task2"},
+						"name":      "say-final",
+						"run_after": []string{"say-world", "say-hello"},
 					},
 				},
 				PlatformsKey: []string{"linux/amd64", "linux/arm64"},
@@ -246,6 +254,14 @@ func TestTrackerSource(t *testing.T) {
 			},
 			Signatures: []string{tekton},
 			Signed:     true,
+			ContainersImages: []*hub.ContainerImage{
+				{
+					Image: "bash:latest",
+				},
+				{
+					Image: "alpine",
+				},
+			},
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{
