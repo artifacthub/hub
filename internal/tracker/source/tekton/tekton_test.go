@@ -84,7 +84,7 @@ func TestTrackerSource(t *testing.T) {
 			Version:     "0.1.0",
 			Provider:    "Some organization",
 			ContentURL:  "https://github.com/user/repo/raw/master/path/task1/0.1/task1.yaml",
-			Digest:      "d5ef3fb05c34644e5ba4fd5a5c3db13be13c11606e663f8583438c2a9d6d243f",
+			Digest:      "02bac9928e46c44079c259cd6d04adfd2b9f3bcf5c854f92fb80de4e4b4595fd",
 			Repository:  i.Repository,
 			License:     "Apache-2.0",
 			Links: []*hub.Link{
@@ -139,6 +139,8 @@ func TestTrackerSource(t *testing.T) {
 					"sample1.yaml": "sample content\n",
 				},
 			},
+			Signatures: []string{tekton},
+			Signed:     true,
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{
@@ -174,7 +176,7 @@ func TestTrackerSource(t *testing.T) {
 			Version:     "0.1.0",
 			Provider:    "Some organization",
 			ContentURL:  "https://github.com/user/repo/raw/master/path/pipeline1/0.1/pipeline1.yaml",
-			Digest:      "42ca2266946a1bedec7eb5a9f1045ba92ff81f3f65b097aab085e1cc22554755",
+			Digest:      "c871546c7f4ae01c2611b828a7eaba60461a555d8e24ad84a1c553d1af52beee",
 			Repository:  i.Repository,
 			License:     "Apache-2.0",
 			Links: []*hub.Link{
@@ -242,6 +244,8 @@ func TestTrackerSource(t *testing.T) {
 					"sample1.yaml": "sample content\n",
 				},
 			},
+			Signatures: []string{tekton},
+			Signed:     true,
 		}
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{
