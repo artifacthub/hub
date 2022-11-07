@@ -33,6 +33,7 @@ const CompareView = (props: Props) => {
         const data = await API.getChartValues(props.packageId, version);
         if (data === props.values) {
           setDiffValues(null);
+          setIsLoading(false);
         } else {
           setDiffValues(data);
           if (data === diffValues) {
