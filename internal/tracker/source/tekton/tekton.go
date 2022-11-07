@@ -66,9 +66,13 @@ const (
 	providerAnnotation        = "artifacthub.io/provider"
 	recommendationsAnnotation = "artifacthub.io/recommendations"
 	screenshotsAnnotation     = "artifacthub.io/screenshots"
+	signatureAnnotation       = "tekton.dev/signature"
 
 	// examplesPath defines the location of the examples in the package's path.
 	examplesPath = "samples"
+
+	// tekton represents the tekton signature kind.
+	tekton = "tekton"
 )
 
 var (
@@ -550,6 +554,17 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 			errs = multierror.Append(errs, fmt.Errorf("%w: invalid screenshots value", errInvalidAnnotation))
 		} else {
 			p.Screenshots = screenshots
+		}
+	}
+
+	// Sign key
+	if v, ok := annotations[signatureAnnotation]; ok {
+		var signature string
+		if err := yaml.Unmarshal([]byte(v), &signature); err != nil {
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid signature value", errInvalidAnnotation))
+		} else if signature != "" {
+			p.Signatures = []string{tekton}
+			p.Signed = true
 		}
 	}
 

@@ -29,5 +29,6 @@ metadata:
     tekton.dev/platforms: "linux/amd64, linux/arm64"
     tekton.dev/tags: tag1, tag2
     tekton.dev/displayName: "Task 1"
+    tekton.dev/signature: "task signature val"
 spec:
   description: Test task
