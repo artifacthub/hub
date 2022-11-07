@@ -115,4 +115,14 @@ describe('SignedBadge', () => {
     const { container } = render(<SignedBadge repositoryKind={0} signed={false} />);
     expect(container).toBeEmptyDOMElement();
   });
+
+  it('does not render tooltip when Signature is a new one', async () => {
+    render(<SignedBadge repositoryKind={0} signed signatures={['new' as Signature]} />);
+
+    const badge = screen.getByTestId('elementWithTooltip');
+    expect(badge).toBeInTheDocument();
+    await userEvent.hover(badge);
+
+    expect(screen.queryByRole('tooltip')).toBeNull();
+  });
 });

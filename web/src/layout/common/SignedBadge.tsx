@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import { BsDot } from 'react-icons/bs';
 import { FaAward } from 'react-icons/fa';
@@ -15,8 +16,8 @@ interface Props {
   repositoryKind?: RepositoryKind;
 }
 
-const getMessage = (sign: Signature, repoKind?: RepositoryKind): JSX.Element => {
-  if (isUndefined(repoKind)) return <></>;
+const getMessage = (sign: Signature, repoKind?: RepositoryKind): JSX.Element | null => {
+  if (isUndefined(repoKind)) return null;
 
   let pkgName: string = '';
   switch (repoKind) {
@@ -43,13 +44,16 @@ const getMessage = (sign: Signature, repoKind?: RepositoryKind): JSX.Element => 
           This {pkgName} has been signed with <span className="fw-bold">cosign</span> (Sigstore)
         </span>
       );
+
+    default:
+      return null;
   }
 };
 
 const SIGNED_REPO_KINDS = [RepositoryKind.Helm, RepositoryKind.Container, RepositoryKind.Kubewarden];
 
 const SignedBadge = (props: Props) => {
-  const getTooltipMessage = (): JSX.Element | string => {
+  const getTooltipMessage = (): JSX.Element | null => {
     if (props.signatures) {
       if (props.signatures.length === 1) {
         return getMessage(props.signatures[0], props.repositoryKind);
@@ -57,13 +61,15 @@ const SignedBadge = (props: Props) => {
         return (
           <>
             {props.signatures.map((sign: Signature, index: number) => {
+              const message = getMessage(sign, props.repositoryKind);
+              if (isNull(message)) return null;
               return (
                 <div
                   className={classnames('d-flex flex-row align-items-start', { 'mt-1': index !== 0 })}
                   key={`message_${sign}`}
                 >
                   <BsDot className={`mt-1 position-relative ${styles.iconDot}`} />
-                  <div className="text-start">{getMessage(sign, props.repositoryKind)}</div>
+                  <div className="text-start">{message}</div>
                 </div>
               );
             })}
@@ -72,7 +78,7 @@ const SignedBadge = (props: Props) => {
       }
     }
 
-    return '';
+    return null;
   };
 
   const message = getTooltipMessage();
@@ -83,9 +89,9 @@ const SignedBadge = (props: Props) => {
       className={props.className}
       element={<Label text="Signed" icon={<FaAward />} />}
       tooltipWidth={385}
-      tooltipMessage={message}
+      tooltipMessage={message || ''}
       visibleTooltip={
-        !isUndefined(props.repositoryKind) && SIGNED_REPO_KINDS.includes(props.repositoryKind) && message !== ''
+        !isUndefined(props.repositoryKind) && SIGNED_REPO_KINDS.includes(props.repositoryKind) && !isNull(message)
       }
     />
   );
