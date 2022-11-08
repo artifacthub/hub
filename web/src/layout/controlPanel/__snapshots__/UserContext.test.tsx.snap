@@ -68,12 +68,18 @@ exports[`UserContext creates snapshot 1`] = `
         </button>
       </div>
       <div
-        class="position-absolute text-secondary loading"
-        role="status"
+        class="position-absolute loading"
       >
-        <span
-          class="spinner-border spinner-border-sm"
-        />
+        <div
+          class="spinner-border text-primary miniSpinner"
+          role="status"
+        >
+          <span
+            class="visually-hidden"
+          >
+            Loading...
+          </span>
+        </div>
       </div>
     </div>
     <div

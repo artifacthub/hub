@@ -11,6 +11,7 @@ import { AppCtx, unselectOrg, updateOrg } from '../../context/AppCtx';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ErrorKind, Organization } from '../../types';
 import authorizer from '../../utils/authorizer';
+import Loading from '../common/Loading';
 import styles from './UserContext.module.css';
 
 const UserContext = () => {
@@ -104,8 +105,8 @@ const UserContext = () => {
           </button>
         </div>
         {isLoading && (
-          <div className={`position-absolute text-secondary ${styles.loading}`} role="status">
-            <span className="spinner-border spinner-border-sm" />
+          <div className={`position-absolute ${styles.loading}`}>
+            <Loading noWrapper smallSize />
           </div>
         )}
       </div>

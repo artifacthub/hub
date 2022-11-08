@@ -13,6 +13,7 @@ import { ErrorKind, LogoImage } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import Image from './Image';
 import styles from './InputFileField.module.css';
+import Loading from './Loading';
 import Modal from './Modal';
 
 interface Props {
@@ -226,9 +227,7 @@ const InputFileField = (props: Props) => {
                 <>{props.placeholderIcon ? <>{props.placeholderIcon}</> : <MdAddAPhoto data-testid="defaultIcon" />}</>
               )}
             </button>
-            {isSending && (
-              <span className={`position-absolute spinner-border spinner-border-lg text-primary ${styles.spinner}`} />
-            )}
+            {isSending && <Loading spinnerClassName={`position-absolute text-primary ${styles.spinner}`} noWrapper />}
           </div>
         </div>
 

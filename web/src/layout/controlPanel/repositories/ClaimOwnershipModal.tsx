@@ -12,6 +12,7 @@ import { ErrorKind, Organization, Repository } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';
 import getMetaTag from '../../../utils/getMetaTag';
 import ExternalLink from '../../common/ExternalLink';
+import Loading from '../../common/Loading';
 import Modal from '../../common/Modal';
 import RepositoryIcon from '../../common/RepositoryIcon';
 import SearchRepositories from '../../common/SearchRepositories';
@@ -326,7 +327,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
             </div>
             {isFetchingOrgs && (
               <div className="d-inline ms-3">
-                <span className="spinner-border spinner-border-sm text-primary" />
+                <Loading noWrapper smallSize />
               </div>
             )}
           </div>

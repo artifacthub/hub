@@ -197,6 +197,10 @@ const PackageView = (props: Props) => {
     }
   }
 
+  const stopPkgLoading = useCallback(() => {
+    setIsLoadingPackage(false);
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   async function fetchPackageDetail() {
     try {
       setRelatedPosition(null);
@@ -222,7 +226,9 @@ const PackageView = (props: Props) => {
       setCurrentPkgId(detailPkg.packageId);
       setRelatedPosition(undefined);
       window.scrollTo(0, 0); // Scroll to top when a new version is loaded
-      setIsLoadingPackage(false);
+      if (isNull(detailPkg.readme) || isUndefined(detailPkg.readme)) {
+        stopPkgLoading();
+      }
     } catch (err: any) {
       if (err.kind === ErrorKind.NotFound) {
         setApiError(
@@ -256,7 +262,7 @@ const PackageView = (props: Props) => {
         setApiError(err.message);
       }
       setDetail(null);
-      setIsLoadingPackage(false);
+      stopPkgLoading();
     }
   }
 
@@ -264,14 +270,14 @@ const PackageView = (props: Props) => {
     setIsLoadingPackage(true);
     fetchPackageDetail();
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, [packageName, version, repositoryName, repositoryKind, setIsLoadingPackage]);
+  }, [packageName, version, repositoryName, repositoryKind]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
   useEffect(() => {
     return () => {
-      setIsLoadingPackage(false);
+      stopPkgLoading();
     };
-  }, [setIsLoadingPackage]);
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   let sortedVersions: Version[] = [];
   if (detail && detail.availableVersions) {
@@ -1231,6 +1237,7 @@ const PackageView = (props: Props) => {
                               markdownContent={detail.readme}
                               scrollIntoView={scrollIntoView}
                               additionalTitles={isNull(additionalInfo) ? '' : additionalInfo.titles}
+                              stopPkgLoading={stopPkgLoading}
                             />
                           )}
 

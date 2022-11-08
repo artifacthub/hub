@@ -10,6 +10,7 @@ const defaultProps = {
   packageName: 'package-name',
   markdownContent: 'test # Sample',
   scrollIntoView: jest.fn(),
+  stopPkgLoading: jest.fn(),
 };
 
 describe('ReadmeWrapper', () => {

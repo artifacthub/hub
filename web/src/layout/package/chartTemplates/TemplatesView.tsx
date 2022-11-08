@@ -21,7 +21,7 @@ interface Props {
 
 const TemplatesView = (props: Props) => {
   const tmplWrapper = useRef<HTMLPreElement>(null);
-  const [activeTemplate, setActiveTemplate] = useState<ChartTemplate | null>(null);
+  const [activeTemplate, setActiveTemplate] = useState<ChartTemplate | null | undefined>();
   const [isChangingTemplate, setIsChangingTemplate] = useState<boolean>(false);
 
   const getChartTemplate = (name: string): ChartTemplate | null => {
@@ -33,7 +33,6 @@ const TemplatesView = (props: Props) => {
   };
 
   const onTemplateChange = (template: ChartTemplate | null, line?: string) => {
-    props.updateUrl({ template: template ? template.name : undefined, line: line });
     if (template !== activeTemplate || isNull(template)) {
       setIsChangingTemplate(true);
     }
@@ -46,6 +45,7 @@ const TemplatesView = (props: Props) => {
         }
       }
     }
+    props.updateUrl({ template: template ? template.name : undefined, line: line });
   };
 
   const onDefinedTemplateClick = (templateName: string, line: string, lineNumber: string) => {
@@ -75,7 +75,11 @@ const TemplatesView = (props: Props) => {
       if (!activeTmpl) {
         props.updateUrl({ template: props.templates[0].name });
       }
-      if (isNull(activeTemplate) || (activeTmpl && activeTemplate.name !== activeTmpl.name)) {
+      if (
+        isUndefined(activeTemplate) ||
+        isNull(activeTemplate) ||
+        (activeTmpl && activeTemplate.name !== activeTmpl.name)
+      ) {
         setActiveTemplate(activeTmpl || props.templates[0]);
       }
     }
@@ -93,7 +97,7 @@ const TemplatesView = (props: Props) => {
 
       <div className="col-9 ps-3 h-100">
         <div className={`position-relative h-100 mh-100 border ${styles.templateWrapper}`}>
-          {isChangingTemplate && activeTemplate && <Loading />}
+          {((isChangingTemplate && activeTemplate) || isUndefined(activeTemplate)) && <Loading />}
           {activeTemplate && (
             <BlockCodeButtons
               filename={`${props.normalizedName}-${activeTemplate.name}`}

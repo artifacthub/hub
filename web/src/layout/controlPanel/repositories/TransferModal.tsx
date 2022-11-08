@@ -8,6 +8,7 @@ import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Organization, Repository } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';
+import Loading from '../../common/Loading';
 import Modal from '../../common/Modal';
 import styles from './TransferModal.module.css';
 
@@ -219,8 +220,8 @@ const TransferRepositoryModal = (props: Props) => {
               <div className={`invalid-feedback ${styles.fieldFeedback}`}>This field is required</div>
             </div>
             {isFetchingOrgs && (
-              <div className="d-inline ms-3" role="status">
-                <span className="spinner-border spinner-border-sm text-primary" />
+              <div className="d-inline ms-3">
+                <Loading noWrapper smallSize />
               </div>
             )}
           </div>

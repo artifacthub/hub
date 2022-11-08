@@ -366,8 +366,8 @@ const StatsView = (props: Props) => {
                   {!isUndefined(stats.generatedAt) ? (
                     moment(stats.generatedAt).format('YYYY/MM/DD HH:mm:ss (Z)')
                   ) : (
-                    <div className={`d-inline text-secondary ${styles.loading}`} role="status">
-                      <span className="spinner-border spinner-border-sm" />
+                    <div className="d-inline">
+                      <Loading noWrapper smallSize />
                     </div>
                   )}
                 </small>

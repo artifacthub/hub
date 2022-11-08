@@ -12,6 +12,7 @@ interface Props {
   supportLink?: string;
   additionalTitles?: string;
   scrollIntoView: (id?: string) => void;
+  stopPkgLoading: () => void;
 }
 
 // (?![!/[]) - Don't allow images as readme title
@@ -69,7 +70,7 @@ const ReadmeWrapper = (props: Props) => {
     >
       <span data-testid="readme">
         <TOC title={mainTitle} toc={toc} scrollIntoView={props.scrollIntoView} supportLink={props.supportLink} />
-        <Readme readme={readme} scrollIntoView={props.scrollIntoView} />
+        <Readme readme={readme} scrollIntoView={props.scrollIntoView} stopPkgLoading={props.stopPkgLoading} />
       </span>
     </ErrorBoundary>
   );

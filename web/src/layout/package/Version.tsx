@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Repository, SearchFiltersURL } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
+import Loading from '../common/Loading';
 import styles from './Version.module.css';
 
 interface Props {
@@ -102,9 +103,12 @@ const Version = (props: Props) => {
               {props.version}
             </button>
             <small className="text-muted">({formattedDate})</small>
-            {isLoading && <span className="spinner-border spinner-border-sm ms-2" role="status" />}
+            {isLoading && (
+              <div className="position-relative ms-2">
+                <Loading spinnerClassName={styles.spinner} noWrapper smallSize />
+              </div>
+            )}
           </div>
-
           {getBadges()}
         </>
       )}

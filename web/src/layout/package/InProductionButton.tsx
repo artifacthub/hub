@@ -15,6 +15,7 @@ import alertDispatcher from '../../utils/alertDispatcher';
 import { getRepoKindName } from '../../utils/repoKind';
 import ElementWithTooltip from '../common/ElementWithTooltip';
 import Image from '../common/Image';
+import Loading from '../common/Loading';
 import styles from './InProductionButton.module.css';
 
 interface Props {
@@ -152,9 +153,7 @@ const InProductionButton = (props: Props) => {
             <div className="d-flex align-items-center justify-content-center">
               {isLoading && (
                 <div className={styles.loading}>
-                  <div className={`spinner-border text-primary ${styles.spinner}`} role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </div>
+                  <Loading noWrapper spinnerClassName={`position-absolute start-0 ${styles.spinner}`} />
                 </div>
               )}
               <RiMedalLine className={classnames('rounded-circle', { 'text-muted': isDisabled })} />
@@ -210,8 +209,12 @@ const InProductionButton = (props: Props) => {
                           {isActive ? <FaRegCheckCircle className="text-success" /> : <FaRegCircle />}
                         </span>
                         {isUpdating && (
-                          <div className="text-secondary top-0">
-                            <span className="spinner-border spinner-border-sm" />
+                          <div className="position-absolute top-0">
+                            <Loading
+                              spinnerClassName={`position-absolute ${styles.updatingSpinner}`}
+                              noWrapper
+                              smallSize
+                            />
                           </div>
                         )}
                       </div>

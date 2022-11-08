@@ -4,11 +4,120 @@
 }
 
 .spinner {
-  width: 4rem !important;
-  height: 4rem !important;
+  width: 4rem;
+  height: 4rem;
 }
 
 .miniSpinner {
-  width: 1.5rem !important;
-  height: 1.5rem !important;
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.2em;
+}
+
+.wave {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+.miniWave {
+  height: 12px;
+  width: 12px;
+}
+
+.wave:before,
+.wave:after {
+  content: '';
+  border: 2px solid var(--color-1-500);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+}
+
+[data-theme='dark'] .wave:before,
+[data-theme='dark'] .wave:after {
+  border-color: var(--font-color-light);
+}
+
+.miniWave:before,
+.miniWave:after {
+  width: 12px;
+  height: 12px;
+  border-width: 1px;
+}
+
+.wave:before {
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+  opacity: 1;
+  -webkit-animation: spWaveBe 0.6s infinite linear;
+  animation: spWaveBe 0.6s infinite linear;
+}
+
+.wave:after {
+  -webkit-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  transform: scale(0, 0);
+  opacity: 0;
+  -webkit-animation: spWaveAf 0.6s infinite linear;
+  animation: spWaveAf 0.6s infinite linear;
+}
+
+@-webkit-keyframes spWaveAf {
+  from {
+    -webkit-transform: scale(0.5, 0.5);
+    transform: scale(0.5, 0.5);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+@keyframes spWaveAf {
+  from {
+    -webkit-transform: scale(0.5, 0.5);
+    transform: scale(0.5, 0.5);
+    -webkit-transform: scale(0.5, 0.5);
+    transform: scale(0.5, 0.5);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes spWaveBe {
+  from {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+  to {
+    -webkit-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+    opacity: 0;
+  }
+}
+@keyframes spWaveBe {
+  from {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+  to {
+    -webkit-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+    opacity: 0;
+  }
 }
