@@ -49,7 +49,7 @@
     "@types/jest": "^29.2.1",
     "@types/json-schema": "^7.0.11",
     "@types/json-schema-merge-allof": "^0.6.1",
-    "@types/lodash": "^4.14.187",
+    "@types/lodash": "^4.14.188",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.24",
     "@types/react-color": "^3.0.6",
