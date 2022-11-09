@@ -36,7 +36,6 @@
     "remark-unlink": "^3.1.0",
     "semver": "^7.3.8",
     "tinycolor2": "^1.4.2",
-    "ua-parser-js": "^1.0.32",
     "unified": "^9.2.1",
     "yaml": "2.0.1"
   },

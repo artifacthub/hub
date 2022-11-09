@@ -90,7 +90,7 @@ exports[`Home index creates snapshot 1`] = `
               data-testid="searchBarSpinning"
             >
               <div
-                class="spinner-border text-primary miniSpinner"
+                class="wave miniWave"
                 role="status"
               >
                 <span

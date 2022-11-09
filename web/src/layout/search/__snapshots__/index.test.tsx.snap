@@ -159,7 +159,7 @@ exports[`Search index creates snapshot 1`] = `
         class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
       >
         <div
-          class="spinner-border text-primary spinner position-fixed top-50"
+          class="wave position-fixed top-50"
           role="status"
         >
           <span

@@ -211,7 +211,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                 class="position-absolute loading"
               >
                 <div
-                  class="spinner-border text-primary miniSpinner"
+                  class="wave miniWave"
                   role="status"
                 >
                   <span
