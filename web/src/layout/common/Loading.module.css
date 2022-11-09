@@ -3,17 +3,6 @@
   z-index: 100;
 }
 
-.spinner {
-  width: 4rem;
-  height: 4rem;
-}
-
-.miniSpinner {
-  width: 1rem;
-  height: 1rem;
-  border-width: 0.2em;
-}
-
 .wave {
   height: 50px;
   width: 50px;

@@ -226,7 +226,12 @@ const PackageView = (props: Props) => {
       setCurrentPkgId(detailPkg.packageId);
       setRelatedPosition(undefined);
       window.scrollTo(0, 0); // Scroll to top when a new version is loaded
-      if (isNull(detailPkg.readme) || isUndefined(detailPkg.readme)) {
+      // Stop loading when readme is not defined or is the same than the previous one
+      if (
+        isNull(detailPkg.readme) ||
+        isUndefined(detailPkg.readme) ||
+        (detail && detail?.readme === detailPkg.readme)
+      ) {
         stopPkgLoading();
       }
     } catch (err: any) {
