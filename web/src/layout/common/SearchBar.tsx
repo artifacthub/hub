@@ -14,6 +14,7 @@ import isPackageOfficial from '../../utils/isPackageOfficial';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import HoverableItem from './HoverableItem';
 import Image from './Image';
+import Loading from './Loading';
 import OfficialBadge from './OfficialBadge';
 import RepositoryIconLabel from './RepositoryIconLabel';
 import styles from './SearchBar.module.css';
@@ -257,11 +258,12 @@ const SearchBar = (props: Props) => {
 
           {props.isSearching && (
             <div
+              data-testid="searchBarSpinning"
               className={classnames('position-absolute text-secondary', styles.loading, {
                 [styles.bigLoading]: props.size === 'big',
               })}
             >
-              <span data-testid="searchBarSpinning" className="spinner-border spinner-border-sm" />
+              <Loading noWrapper smallSize />
             </div>
           )}
 

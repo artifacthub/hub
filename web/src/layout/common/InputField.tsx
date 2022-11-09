@@ -8,6 +8,7 @@ import API from '../../api';
 import { AvailabilityInfo, RefInputField } from '../../types';
 import capitalizeFirstLetter from '../../utils/capitalizeFirstLetter';
 import styles from './InputField.module.css';
+import Loading from './Loading';
 
 export interface Props {
   type: 'text' | 'password' | 'email' | 'url' | 'number';
@@ -259,7 +260,7 @@ const InputField = forwardRef((props: Props, ref: Ref<RefInputField>) => {
 
       {(isCheckingAvailability || isCheckingPwdStrength) && (
         <div className={`position-absolute ${styles.spinner}`}>
-          <span className="spinner-border spinner-border-sm text-primary" />
+          <Loading noWrapper smallSize />
         </div>
       )}
 

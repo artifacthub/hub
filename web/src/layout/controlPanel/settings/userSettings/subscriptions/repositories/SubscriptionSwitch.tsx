@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import useIsMounted from '../../../../../../hooks/useIsMounted';
 import { EventKind, OptOutItem, Repository } from '../../../../../../types';
+import Loading from '../../../../../common/Loading';
 import styles from '../SubscriptionsSection.module.css';
 
 interface ChangeSubsProps {
@@ -59,8 +60,8 @@ const SubscriptionSwitch = (props: Props) => {
         />
       </div>
       {isLoading && (
-        <div className={`position-absolute text-secondary top-0 ${styles.switchLoading}`}>
-          <span className="spinner-border spinner-border-sm" role="status" />
+        <div className={`position-absolute ${styles.switchLoading}`}>
+          <Loading noWrapper smallSize />
         </div>
       )}
     </>

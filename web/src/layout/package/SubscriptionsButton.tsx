@@ -13,6 +13,7 @@ import { ErrorKind, EventKind, Subscription } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import { PACKAGE_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../utils/data';
 import ElementWithTooltip from '../common/ElementWithTooltip';
+import Loading from '../common/Loading';
 import styles from './SubscriptionsButton.module.css';
 
 interface Props {
@@ -164,9 +165,7 @@ const SubscriptionsButton = (props: Props) => {
             <div className="d-flex align-items-center justify-content-center">
               {isLoading && (
                 <div className={styles.loading}>
-                  <div className={`spinner-border text-primary ${styles.spinner}`} role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </div>
+                  <Loading noWrapper spinnerClassName={`position-absolute start-0 ${styles.spinner}`} />
                 </div>
               )}
               {activeSubscriptions && activeSubscriptions.length > 0 ? (

@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { isArray, isString, isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
-import { ElementType, memo, useCallback, useEffect, useRef, useState } from 'react';
+import { ElementType, memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { github } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
@@ -14,6 +14,7 @@ import styles from './Readme.module.css';
 interface Props {
   readme: string;
   scrollIntoView: (id?: string) => void;
+  stopPkgLoading: () => void;
 }
 
 interface CodeProps {
@@ -246,6 +247,10 @@ const checkCodeLanguage = (language: string | null): string => {
 };
 
 const Readme = (props: Props) => {
+  useLayoutEffect(() => {
+    props.stopPkgLoading();
+  }, [props.readme]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   const Code: ElementType = ({ inline, className, children }: CodeProps) => {
     const match = /language-(\w+)/.exec(className || '');
     if (inline) {

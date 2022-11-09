@@ -947,6 +947,24 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                     <div
                       class="position-relative h-100 mh-100 border templateWrapper"
                     >
+                      <div
+                        class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                        >
+                          <div
+                            class="spinner-border text-primary spinner"
+                            role="status"
+                          >
+                            <span
+                              class="visually-hidden"
+                            >
+                              Loading...
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                       <pre
                         class="text-muted h-100 mh-100 mb-0 overflow-auto position-relative pre"
                       />

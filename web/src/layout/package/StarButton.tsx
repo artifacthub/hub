@@ -13,6 +13,7 @@ import { ErrorKind, PackageStars } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import prettifyNumber from '../../utils/prettifyNumber';
 import ElementWithTooltip from '../common/ElementWithTooltip';
+import Loading from '../common/Loading';
 import styles from './StarButton.module.css';
 
 interface Props {
@@ -144,9 +145,7 @@ const StarButton = (props: Props) => {
         </span>
 
         {(isSending || isGettingIfStarred) && (
-          <div className={`position-absolute ${styles.spinner}`} role="status">
-            <span className="spinner-border spinner-border-sm text-primary" />
-          </div>
+          <Loading spinnerClassName={`position-absolute ${styles.spinner}`} noWrapper smallSize />
         )}
       </div>
     </>

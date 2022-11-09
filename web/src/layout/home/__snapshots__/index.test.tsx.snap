@@ -87,11 +87,18 @@ exports[`Home index creates snapshot 1`] = `
             </div>
             <div
               class="position-absolute text-secondary loading bigLoading"
+              data-testid="searchBarSpinning"
             >
-              <span
-                class="spinner-border spinner-border-sm"
-                data-testid="searchBarSpinning"
-              />
+              <div
+                class="spinner-border text-primary miniSpinner"
+                role="status"
+              >
+                <span
+                  class="visually-hidden"
+                >
+                  Loading...
+                </span>
+              </div>
             </div>
             <button
               aria-label="Close"

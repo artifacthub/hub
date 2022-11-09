@@ -11,8 +11,10 @@
 }
 
 .spinner {
-  top: 15px;
-  left: 15px;
+  top: 5px;
+  left: 5px;
+  width: 50px !important;
+  height: 50px !important;
 }
 
 .label {

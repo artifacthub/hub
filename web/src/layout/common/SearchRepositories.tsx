@@ -11,6 +11,7 @@ import API from '../../api';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ErrorKind, Repository, SearchQuery } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
+import Loading from './Loading';
 import RepositoryIcon from './RepositoryIcon';
 import styles from './SearchRepositories.module.css';
 
@@ -230,8 +231,8 @@ const SearchRepositories = (props: Props) => {
           />
 
           {isSearching && (
-            <div className={`position-absolute text-secondary ${styles.loading}`}>
-              <span data-testid="searchBarSpinning" className="spinner-border spinner-border-sm" />
+            <div className={`position-absolute ${styles.loading}`}>
+              <Loading data-testid="searchBarSpinning" noWrapper smallSize />
             </div>
           )}
         </div>
