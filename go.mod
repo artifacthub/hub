@@ -28,7 +28,7 @@ require (
 	github.com/operator-framework/api v0.17.1
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pquerna/otp v1.3.0
-	github.com/prometheus/client_golang v1.13.0
+	github.com/prometheus/client_golang v1.14.0
 	github.com/rs/cors v1.8.2
 	github.com/rs/zerolog v1.28.0
 	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06
@@ -193,7 +193,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/pquerna/cachecontrol v0.1.0 // indirect
-	github.com/prometheus/client_model v0.2.0 // indirect
+	github.com/prometheus/client_model v0.3.0 // indirect
 	github.com/prometheus/common v0.37.0 // indirect
 	github.com/prometheus/procfs v0.8.0 // indirect
 	github.com/prometheus/statsd_exporter v0.22.7 // indirect
