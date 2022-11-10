@@ -211,6 +211,7 @@ const StatsView = (props: Props) => {
       plotOptions: {
         bar: {
           borderRadius: 5,
+          borderRadiusApplication: 'end',
           dataLabels: {
             position: 'top',
           },
@@ -290,6 +291,7 @@ const StatsView = (props: Props) => {
             plotOptions: {
               bar: {
                 borderRadius: 2,
+                borderRadiusApplication: 'end',
                 columnWidth: '50%',
               },
             },

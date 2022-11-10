@@ -57,6 +57,7 @@ const BrushChart = (props: Props) => {
       plotOptions: {
         bar: {
           borderRadius: 5,
+          borderRadiusApplication: 'end',
           dataLabels: {
             position: 'top',
           },
@@ -183,6 +184,7 @@ const BrushChart = (props: Props) => {
       plotOptions: {
         bar: {
           borderRadius: 5,
+          borderRadiusApplication: 'end',
           dataLabels: {
             position: 'top',
           },
