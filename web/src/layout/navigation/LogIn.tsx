@@ -306,7 +306,7 @@ const LogIn = (props: Props) => {
                       {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
                         <>
                           <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                          <span className="ms-2">Singing in...</span>
+                          <span className="ms-2">Signing in...</span>
                         </>
                       ) : (
                         <>
