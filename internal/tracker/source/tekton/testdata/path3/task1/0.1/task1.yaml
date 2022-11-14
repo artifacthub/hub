@@ -32,3 +32,17 @@ metadata:
     tekton.dev/signature: "task signature val"
 spec:
   description: Test task
+  params:
+    - name: hello-image
+      description: this is the hello image
+      type: string
+      default: bash:latest
+  steps:
+    - name: step1
+      image: $(params.hello-image)
+      script: |
+        echo 'hello'
+    - name: step2
+      image: alphine
+      script: |
+        echo 'world'

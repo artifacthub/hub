@@ -32,13 +32,42 @@ metadata:
     tekton.dev/signature: "pipeline signature val"
 spec:
   description: Test pipeline
+  params:
+    - name: say-hello-image
+      type: string
+      default: "bash:latest"
+    - name: say-world-image
+      type: string
+      default: "alpine"
   tasks:
-    - name: task1
+    - name: say-hello
       runAfter: []
-    - name: task2
+      params:
+        - name: say-hello-image
+          value: "$(params.say-hello-image)"
+      taskSpec:
+        params:
+          - name: say-hello-image
+        steps:
+        - image: "$(params.say-hello-image)"
+          script: echo 'hello'
+    - name: say-world
       runAfter:
-        - task1
-    - name: task3
+          - say-hello
+      params:
+        - name: say-world-image
+          value: "$(params.say-world-image)"
+      taskSpec:
+        params:
+          - name: say-world-image
+        steps:
+        - image: "$(params.say-world-image)"
+          script: echo 'world'
+    - name: say-final
       runAfter:
-        - task1
-        - task2
+        - say-world
+        - say-hello
+      taskSpec:
+        steps:
+        - image: alpine
+          script: echo 'final'
