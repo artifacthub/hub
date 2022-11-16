@@ -13,7 +13,7 @@ RUN apk --no-cache add build-base
 RUN GO111MODULE=on go get github.com/operator-framework/operator-registry/cmd/opm@v1.24.0
 
 # Final stage
-FROM alpine:3.16.2
+FROM alpine:3.16.3
 RUN apk --no-cache add ca-certificates && addgroup -S tracker -g 1000 && adduser -S tracker -u 1000 -G tracker
 USER 1000
 WORKDIR /home/tracker
