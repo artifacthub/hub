@@ -12,14 +12,14 @@ require (
 	github.com/go-chi/chi/v5 v5.0.7
 	github.com/go-enry/go-license-detector/v4 v4.3.0
 	github.com/go-git/go-git/v5 v5.4.2
-	github.com/google/go-containerregistry v0.12.0
+	github.com/google/go-containerregistry v0.12.1
 	github.com/google/go-github v17.0.0+incompatible
 	github.com/gorilla/csrf v1.7.1
 	github.com/gorilla/feeds v1.1.1
 	github.com/gorilla/securecookie v1.1.1
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
 	github.com/hashicorp/go-multierror v1.1.1
-	github.com/hashicorp/golang-lru v0.5.4
+	github.com/hashicorp/golang-lru v0.6.0
 	github.com/jackc/pgconn v1.13.0
 	github.com/jackc/pgx/v4 v4.17.2
 	github.com/open-policy-agent/gatekeeper v0.0.0-20220914233027-c4e08c683e2c
@@ -42,13 +42,13 @@ require (
 	github.com/versine/loginauth v0.0.0-20170330164406-8380ec243689
 	github.com/vincent-petithory/dataurl v1.0.0
 	github.com/wagslane/go-password-validator v0.3.0
-	golang.org/x/crypto v0.2.0
+	golang.org/x/crypto v0.3.0
 	golang.org/x/oauth2 v0.2.0
 	golang.org/x/text v0.4.0
 	google.golang.org/api v0.103.0
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
-	helm.sh/helm/v3 v3.10.1
+	helm.sh/helm/v3 v3.10.2
 	k8s.io/apimachinery v0.25.3
 	oras.land/oras-go v1.2.1
 	sigs.k8s.io/krew v0.4.3
