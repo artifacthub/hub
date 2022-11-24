@@ -3306,7 +3306,7 @@ cjs-module-lexer@^1.0.0:
   resolved "https://registry.yarnpkg.com/cjs-module-lexer/-/cjs-module-lexer-1.2.2.tgz#9f84ba3244a512f3a54e5277e8eef4c489864e40"
   integrity sha512-cOU9usZw8/dXIXKtwa8pM0OTJQuJkxMN6w30csNRUerHfeQ5R6U3kkU/FtJeIf3M202OHfY2U8ccInBG7/xogA==
 
-classnames@^2.2.6, classnames@^2.3.2:
+classnames@^2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.2.tgz#351d813bf0137fcc6a76a16b88208d2560a0d924"
   integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
@@ -8587,15 +8587,15 @@ react-dev-utils@^12.0.1:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
-react-diff-view@^2.4.10:
-  version "2.4.10"
-  resolved "https://registry.yarnpkg.com/react-diff-view/-/react-diff-view-2.4.10.tgz#7d38ebd43683f0e506d0d38472c0607e24f30a58"
-  integrity sha512-H9cyh+a002RyP4BMkSaL4OOBDNhkVpaCA+8oHeb6kS3X9Sj8cZymRHf/CyVkTmm+je/qWMa8Po0VBwSnktQ79w==
+react-diff-view@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/react-diff-view/-/react-diff-view-2.5.0.tgz#e327e771441afe30d6f9446dfb6f1f267d77c176"
+  integrity sha512-iGmuo4VwGf0Nxji9bZFD6/IGm2ri50lf2+11ls1zONgNgVxQxR5X1hLl6QSNzkdGT9shYWlJma2JirkQ0UYl1Q==
   dependencies:
-    classnames "^2.2.6"
+    classnames "^2.3.2"
     diff-match-patch "^1.0.5"
     shallow-equal "^1.2.1"
-    warning "^4.0.2"
+    warning "^4.0.3"
 
 react-dom@^18.1.0:
   version "18.2.0"
@@ -10472,7 +10472,7 @@ walker@^1.0.7:
   dependencies:
     makeerror "1.0.12"
 
-warning@^4.0.2:
+warning@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
   integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
