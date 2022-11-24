@@ -76,6 +76,9 @@ var (
 	// does not match the one we were expecting.
 	errRepositoryIndexMismatch = errors.New("repository index mismatch: unexpected index.yaml file received (stale copy?), we'll retry soon")
 
+	// readmeRE is a regexp used to locate the chart's readme file.
+	readmeRE = regexp.MustCompile(`(?i)^readme\.md$`)
+
 	// validOperatorCapabilities represents the valid operator capabilities
 	// values that can be provided.
 	validOperatorCapabilities = []string{
@@ -536,7 +539,7 @@ func EnrichPackageFromChart(p *hub.Package, chrt *chart.Chart) {
 	}
 
 	// Readme
-	readme := getFile(chrt, "README.md")
+	readme := getFileRE(chrt, readmeRE)
 	if readme != nil {
 		p.Readme = string(readme.Data)
 	}
@@ -760,6 +763,16 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 func getFile(chrt *chart.Chart, name string) *chart.File {
 	for _, file := range chrt.Files {
 		if file.Name == name {
+			return file
+		}
+	}
+	return nil
+}
+
+// getFileRE returns the first file from the chart that matches the regex.
+func getFileRE(chrt *chart.Chart, re *regexp.Regexp) *chart.File {
+	for _, file := range chrt.Files {
+		if re.Match([]byte(file.Name)) {
 			return file
 		}
 	}
