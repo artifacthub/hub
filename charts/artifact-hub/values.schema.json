@@ -287,7 +287,10 @@
                                 },
                                 "checkDbIsReady": {
                                     "title": "Check DB readiness",
-                                    "type": ["object","null"],
+                                    "type": [
+                                        "object",
+                                        "null"
+                                    ],
                                     "properties": {
                                         "resources": {
                                             "title": "Check DB readiness pod resource requirements",
@@ -1090,7 +1093,7 @@
                         "image": {
                             "title": "Trivy container image",
                             "type": "string",
-                            "default": "aquasec/trivy:0.31.3"
+                            "default": "aquasec/trivy:0.34.0"
                         },
                         "resources": {
                             "title": "Trivy pod resource requirements",

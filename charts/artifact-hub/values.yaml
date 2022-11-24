@@ -349,7 +349,7 @@ tracker:
 trivy:
   enabled: true
   deploy:
-    image: aquasec/trivy:0.31.3
+    image: aquasec/trivy:0.34.0
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
