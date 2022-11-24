@@ -251,14 +251,17 @@ const SchemaDefinition = (props: Props) => {
               return (
                 <>
                   {getItemsDef(value)}
-                  {!isUndefined(value) && !isNull(value) && value.type === 'object' && !isUndefined(value.properties) && (
-                    <div className="w-100">
-                      <div>
-                        <small className="text-muted text-uppercase">Properties</small>:
+                  {!isUndefined(value) &&
+                    !isNull(value) &&
+                    value.type === 'object' &&
+                    !isUndefined(value.properties) && (
+                      <div className="w-100">
+                        <div>
+                          <small className="text-muted text-uppercase">Properties</small>:
+                        </div>
+                        {formatPropValue(value.properties, value.required)}
                       </div>
-                      {formatPropValue(value.properties, value.required)}
-                    </div>
-                  )}
+                    )}
                 </>
               );
             default:
