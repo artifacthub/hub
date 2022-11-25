@@ -40,6 +40,16 @@ returns setof json as $$
                     group by day
                     order by day asc
                 ) dt
+            ),
+            'views_monthly', (
+                select json_agg(json_build_array(extract(epoch from month)*1000, total))
+                from (
+                    select date_trunc('month', day) as month, sum(total) as total
+                    from package_views
+                    where day >= current_date - '2 year'::interval
+                    group by month
+                    order by month asc
+                ) mt
             )
         ),
         'snapshots', json_build_object(
