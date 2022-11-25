@@ -36,6 +36,8 @@ const StatsView = (props: Props) => {
     packages: {
       total: 0,
       runningTotal: [],
+      viewsDaily: [],
+      viewsMonthly: [],
     },
     snapshots: {
       total: 0,
