@@ -67,7 +67,7 @@ describe('StatsView', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getAllByText('Chart')).toHaveLength(8);
+      expect(screen.getAllByText('Chart')).toHaveLength(9);
     });
     expect(asFragment()).toMatchSnapshot();
   });
@@ -90,16 +90,17 @@ describe('StatsView', () => {
       });
 
       await waitFor(() => {
-        expect(screen.getAllByText('Chart')).toHaveLength(8);
+        expect(screen.getAllByText('Chart')).toHaveLength(9);
       });
 
       expect(screen.getByText('Report generated at:')).toBeInTheDocument();
+      expect(screen.getByText('Usage')).toBeInTheDocument();
       expect(screen.getByText('Packages and releases')).toBeInTheDocument();
       expect(screen.getByText('Repositories')).toBeInTheDocument();
       expect(screen.getByText('Organizations and users')).toBeInTheDocument();
     });
 
-    it('renders only 2 sections', async () => {
+    it('renders only 3 sections', async () => {
       const mockStats = getMockStats('3');
       mocked(API).getAHStats.mockResolvedValue(mockStats);
 
@@ -114,13 +115,14 @@ describe('StatsView', () => {
       await waitFor(() => {
         expect(API.getAHStats).toHaveBeenCalledTimes(1);
       });
-      expect(await screen.findByText('Packages and releases')).toBeInTheDocument();
+      expect(await screen.findByText('Usage')).toBeInTheDocument();
+      expect(screen.getByText('Packages and releases')).toBeInTheDocument();
       expect(screen.getByText('Repositories')).toBeInTheDocument();
 
       await waitFor(() => {
         expect(screen.queryByText('Organizations and users')).toBeNull();
       });
-      expect(screen.getAllByText('Chart')).toHaveLength(6);
+      expect(screen.getAllByText('Chart')).toHaveLength(7);
     });
   });
 

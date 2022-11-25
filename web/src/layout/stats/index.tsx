@@ -192,7 +192,7 @@ const StatsView = (props: Props) => {
     };
   };
 
-  const getBarChartConfig = (title: string): ApexCharts.ApexOptions => {
+  const getBarChartConfig = (title: string, monthlyFormatter: boolean): ApexCharts.ApexOptions => {
     return {
       chart: {
         height: 300,
@@ -232,12 +232,13 @@ const StatsView = (props: Props) => {
       colors: ['var(--color-1-500)'],
       xaxis: {
         type: 'datetime',
-        min: moment().subtract(30, 'days').unix() * 1000,
+        min: monthlyFormatter ? undefined : moment().subtract(30, 'days').unix() * 1000,
         labels: {
           style: {
             colors: 'var(--color-font)',
             fontSize: '11px',
           },
+          format: monthlyFormatter ? 'MM/yy' : undefined,
         },
       },
       yaxis: {
@@ -250,7 +251,7 @@ const StatsView = (props: Props) => {
       tooltip: {
         x: {
           formatter: (val: number): string => {
-            return moment(val).format('DD MMM YY');
+            return monthlyFormatter ? moment(val).format('MM/YY') : moment(val).format('DD MMM YY');
           },
         },
       },
@@ -381,11 +382,57 @@ const StatsView = (props: Props) => {
                 </div>
               )}
 
+              {(stats.packages.viewsDaily || stats.packages.viewsMonthly) && (
+                <>
+                  <AnchorHeader
+                    level={2}
+                    scrollIntoView={scrollIntoView}
+                    className={`mb-4 fw-bold ${styles.title}`}
+                    title="Usage"
+                  />
+
+                  {stats.packages.viewsMonthly && (
+                    <div className="row my-4 pb-4">
+                      <div className="col-12">
+                        <div className="mt-4">
+                          <div className={`card ${styles.chartWrapper}`}>
+                            {(stats.packages.viewsMonthly!.length === 0 || isLoading) && <Loading />}
+                            <ReactApexChart
+                              options={getBarChartConfig('Packages monthly views', true)}
+                              series={[{ name: 'Monthly views', data: stats.packages.viewsMonthly }]}
+                              type="bar"
+                              height={300}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {stats.packages.viewsDaily && (
+                    <div className="row my-4 pb-4">
+                      <div className="col-12">
+                        <div className="mt-4">
+                          <div className={`card ${styles.chartWrapper}`}>
+                            {(stats.packages.viewsDaily!.length === 0 || isLoading) && <Loading />}
+                            <ReactApexChart
+                              options={getBarChartConfig('Packages daily views', false)}
+                              series={[{ name: 'Daily views', data: stats.packages.viewsDaily }]}
+                              type="bar"
+                              height={300}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+
               {(stats.packages.runningTotal ||
                 stats.snapshots.runningTotal ||
                 stats.packages.createdMonthly ||
-                stats.snapshots.createdMonthly ||
-                stats.packages.viewsDaily) && (
+                stats.snapshots.createdMonthly) && (
                 <>
                   <AnchorHeader
                     level={2}
@@ -463,24 +510,6 @@ const StatsView = (props: Props) => {
                           </div>
                         </div>
                       )}
-                    </div>
-                  )}
-
-                  {stats.packages.viewsDaily && (
-                    <div className="row my-4 pb-4">
-                      <div className="col-12">
-                        <div className="mt-4">
-                          <div className={`card ${styles.chartWrapper}`}>
-                            {(stats.packages.viewsDaily!.length === 0 || isLoading) && <Loading />}
-                            <ReactApexChart
-                              options={getBarChartConfig('Daily views')}
-                              series={[{ name: 'Views', data: stats.packages.viewsDaily }]}
-                              type="bar"
-                              height={300}
-                            />
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   )}
                 </>
