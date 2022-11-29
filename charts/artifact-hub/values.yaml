@@ -173,6 +173,8 @@ hub:
     cacheDir: ""
     # Directory path where the configuration files should be mounted
     configDir: "/home/hub/.cfg"
+    # Banners configuration file url
+    bannersURL: ""
     # Hub server base url
     baseURL: ""
     # Hub server shutdown timeout
