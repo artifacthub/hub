@@ -105,7 +105,7 @@ trivy:
         cpu: 1
         memory: 2000Mi
   persistence:
-    enabled: false
+    enabled: true
     size: 100Gi
     storageClassName: gp2
   authURL: https://registry.hub.docker.com

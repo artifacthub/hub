@@ -15,6 +15,7 @@ import API from '../../api';
 import useBreakpointDetect from '../../hooks/useBreakpointDetect';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import {
+  Banner as IBanner,
   ContentDefaultModalItem,
   ContentDefaultModalKind,
   CustomResourcesDefinition,
@@ -29,6 +30,7 @@ import {
   SearchFiltersURL,
   Version,
 } from '../../types';
+import bannerDispatcher from '../../utils/bannerDispatcher';
 import isFuture from '../../utils/isFuture';
 import isPackageOfficial from '../../utils/isPackageOfficial';
 import { prepareQueryString } from '../../utils/prepareQueryString';
@@ -51,6 +53,7 @@ import SignedBadge from '../common/SignedBadge';
 import VerifiedPublisherBadge from '../common/VerifiedPublisherBadge';
 import Footer from '../navigation/Footer';
 import SubNavbar from '../navigation/SubNavbar';
+import Banner from './Banner';
 import ChangelogModal from './changelog/Modal';
 import ChartTemplatesModal from './chartTemplates';
 import Details from './Details';
@@ -116,6 +119,7 @@ const PackageView = (props: Props) => {
   const [currentPkgId, setCurrentPkgId] = useState<null | string>(null);
   const [relatedPackages, setRelatedPackages] = useState<Package[] | undefined>(undefined);
   const [viewsStats, setViewsStats] = useState<PackageViewsStats | undefined>();
+  const [banner, setBanner] = useState<IBanner | null>(null);
 
   useScrollRestorationFix();
 
@@ -177,6 +181,7 @@ const PackageView = (props: Props) => {
       }
     }
     if (!isNull(currentPkgId) && detail) {
+      setBanner(bannerDispatcher.getBanner());
       fetchRelatedPackages(detail);
     }
   }, [currentPkgId]); /* eslint-disable-line react-hooks/exhaustive-deps */
@@ -1179,6 +1184,8 @@ const PackageView = (props: Props) => {
                               fromStarredPage={props.fromStarredPage}
                             />
                           )}
+
+                          {!isNull(banner) && <Banner banner={banner} removeBanner={() => setBanner(null)} />}
 
                           <div className={`card shadow-sm position-relative info ${styles.info}`}>
                             <div className={`card-body ${styles.detailsBody}`}>

@@ -801,3 +801,12 @@ export interface DefinedTemplate {
   template: string;
   line: number;
 }
+
+export interface Banner {
+  name?: string;
+  link?: string;
+  images: {
+    'light-theme': string;
+    'dark-theme': string;
+  };
+}
