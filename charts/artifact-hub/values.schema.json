@@ -407,6 +407,11 @@
                             "type": "boolean",
                             "default": false
                         },
+                        "bannersURL": {
+                            "title": "Banners configuration file url",
+                            "type": "string",
+                            "default": ""
+                        },
                         "cacheDir": {
                             "title": "Cache directory path",
                             "description": "If set, the cache directory for the Helm client will be explicitly set (otherwise defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir).",

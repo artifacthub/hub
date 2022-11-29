@@ -42,6 +42,7 @@ hub:
         cpu: 1
         memory: 1000Mi
   server:
+    bannersURL: https://cncf.github.io/banners/banners.yml
     baseURL: https://staging.artifacthub.io
     shutdownTimeout: 20s
     oauth:
@@ -104,7 +105,7 @@ trivy:
         cpu: 1
         memory: 2000Mi
   persistence:
-    enabled: true
+    enabled: false
     size: 100Gi
     storageClassName: gp2
   authURL: https://registry.hub.docker.com

@@ -147,6 +147,7 @@ func (h *Handlers) Index(w http.ResponseWriter, r *http.Request) {
 		"allowPrivateRepositories": h.cfg.GetBool("server.allowPrivateRepositories"),
 		"appleTouchIcon192":        h.cfg.GetString("theme.images.appleTouchIcon192"),
 		"appleTouchIcon512":        h.cfg.GetString("theme.images.appleTouchIcon512"),
+		"bannersURL":               h.cfg.GetString("server.bannersURL"),
 		"description":              description,
 		"gaTrackingID":             h.cfg.GetString("analytics.gaTrackingID"),
 		"githubAuth":               h.cfg.IsSet("server.oauth.github"),

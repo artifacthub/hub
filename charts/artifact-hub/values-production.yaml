@@ -57,6 +57,7 @@ hub:
         cpu: 2
         memory: 8000Mi
   server:
+    bannersURL: https://cncf.github.io/banners/banners.yml
     baseURL: https://artifacthub.io
     shutdownTimeout: 20s
     oauth:
@@ -102,7 +103,7 @@ scanner:
   cronjob:
     resources:
       requests:
-        cpu: 3
+        cpu: 2
         memory: 8000Mi
   concurrency: 5
 
@@ -120,7 +121,7 @@ trivy:
         cpu: 1
         memory: 4000Mi
   persistence:
-    enabled: true
+    enabled: false
     size: 100Gi
     storageClassName: gp2
   authURL: https://registry.hub.docker.com
