@@ -226,6 +226,8 @@ class API_CLASS {
       case 'text/plain; charset=utf-8':
       case 'text/markdown':
       case 'application/yaml':
+      case 'text/yaml; charset=UTF-8':
+      case 'text/yaml':
         const text = await response.text();
         return text;
       case 'application/json':
@@ -1155,6 +1157,12 @@ class API_CLASS {
         },
         body: JSON.stringify(data),
       },
+    });
+  }
+
+  public getBannersInfo(url: string): Promise<any> {
+    return this.apiFetch({
+      url: url,
     });
   }
 

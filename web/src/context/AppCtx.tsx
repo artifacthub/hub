@@ -5,6 +5,7 @@ import { createContext, Dispatch, useContext, useEffect, useReducer, useState } 
 import API from '../api';
 import useSystemThemeMode from '../hooks/useSystemThemeMode';
 import { Prefs, Profile, ThemePrefs, UserFullName } from '../types';
+import bannerDispatcher from '../utils/bannerDispatcher';
 import cleanLoginUrlParams from '../utils/cleanLoginUrlParams';
 import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 import browserHistory from '../utils/history';
@@ -301,6 +302,7 @@ function AppCtxProvider(props: Props) {
         ? detectActiveThemeMode()
         : activeProfilePrefs.theme.configured;
     themeBuilder.init();
+    bannerDispatcher.init();
     updateActiveStyleSheet(theme);
     setActiveInitialTheme(theme);
     refreshUserProfile(dispatch);

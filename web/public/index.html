@@ -21,6 +21,7 @@
       <meta name="artifacthub:sampleQueries" content='[{"name":"OLM operators for databases","querystring":"kind=3\u0026ts_query_web=database"},{"name":"Helm Charts provided by Bitnami","querystring":"kind=0\u0026org=bitnami"},{"name":"Packages of any kind related to etcd","querystring":"ts_query_web=etcd"},{"name":"Falco rules for CVE","querystring":"kind=1\u0026ts_query_web=cve"},{"name":"OLM operators in the monitoring category","querystring":"kind=3\u0026ts_query=monitoring"},{"name":"Packages from verified publishers","querystring":"verified_publisher=true"},{"name":"Official Prometheus packages","querystring":"ts_query_web=prometheus\u0026official=true"},{"name":"Operators with auto pilot capabilities","querystring":"capabilities=auto+pilot"},{"name":"Helm Charts in the storage category","querystring":"kind=0\u0026ts_query=storage"},{"name":"Packages with Apache-2.0 license","querystring":"license=Apache-2.0"},{"name":"OPA policies with MIT license","querystring":"kind=2\u0026license=MIT"},{"name":"Helm plugins","querystring":"kind=6"},{"name":"Kubectl plugins","querystring":"kind=5"},{"name":"Tekton tasks","querystring":"kind=7"}]' />
       <meta name="artifacthub:allowPrivateRepositories" content="true" />
       <meta name="artifacthub:reportURL" content="https://github.com/artifacthub/hub/issues/new?labels=abuse+report&template=report-abuse.md" />
+      <meta name="artifacthub:bannersURL" content="https://cncf.github.io/banners/banners.yml" />
     <% } else { %>
       <title>{{ .title }}</title>
       <meta name="description" content="{{ .description }}" />
@@ -37,6 +38,7 @@
       <meta name="artifacthub:motd" content="{{ .motd }}" />
       <meta name="artifacthub:motdSeverity" content="{{ .motdSeverity }}" />
       <meta name="artifacthub:reportURL" content="{{ .reportURL }}" />
+      <meta name="artifacthub:bannersURL" content="{{ .bannersURL }}" />
     <% } %>
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ .title }}" />
