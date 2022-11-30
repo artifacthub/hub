@@ -1175,14 +1175,16 @@ const PackageView = (props: Props) => {
                           )}
 
                           {!isUndefined(detail.screenshots) && (
-                            <ScreenshotsModal
-                              screenshots={detail.screenshots}
-                              visibleScreenshotsModal={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'screenshots'
-                              }
-                              searchUrlReferer={props.searchUrlReferer}
-                              fromStarredPage={props.fromStarredPage}
-                            />
+                            <div className="mb-2">
+                              <ScreenshotsModal
+                                screenshots={detail.screenshots}
+                                visibleScreenshotsModal={
+                                  !isUndefined(props.visibleModal) && props.visibleModal === 'screenshots'
+                                }
+                                searchUrlReferer={props.searchUrlReferer}
+                                fromStarredPage={props.fromStarredPage}
+                              />
+                            </div>
                           )}
 
                           {!isNull(banner) && <Banner banner={banner} removeBanner={() => setBanner(null)} />}

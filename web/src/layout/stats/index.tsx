@@ -16,6 +16,7 @@ import AnchorHeader from '../common/AnchorHeader';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
 import BrushChart from './BrushChart';
+import PackagesList from './PackagesList';
 import styles from './StatsView.module.css';
 
 interface Props {
@@ -38,6 +39,8 @@ const StatsView = (props: Props) => {
       runningTotal: [],
       viewsDaily: [],
       viewsMonthly: [],
+      topViewsToday: [],
+      topViewsCurrentMonth: [],
     },
     snapshots: {
       total: 0,
@@ -393,10 +396,14 @@ const StatsView = (props: Props) => {
                     title="Usage"
                   />
 
-                  {stats.packages.viewsMonthly && (
-                    <div className="row my-4 pb-4">
-                      <div className="col-12">
-                        <div className="mt-4">
+                  {(stats.packages.viewsMonthly || stats.packages.topViewsCurrentMonth) && (
+                    <div className="row my-4 pb-4 mt-4">
+                      {stats.packages.viewsMonthly && (
+                        <div
+                          className={
+                            !isUndefined(stats.packages.topViewsCurrentMonth) ? 'col-12 col-lg-8 col-xxl-9' : 'col-12'
+                          }
+                        >
                           <div className={`card ${styles.chartWrapper}`}>
                             {(stats.packages.viewsMonthly!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart
@@ -407,14 +414,27 @@ const StatsView = (props: Props) => {
                             />
                           </div>
                         </div>
-                      </div>
+                      )}
+
+                      {stats.packages.topViewsCurrentMonth && (
+                        <div className="col-12 col-lg-4 col-xxl-3 mt-4 mt-lg-0">
+                          <div className={`card h-100 ${styles.chartWrapper}`}>
+                            {(stats.packages.topViewsCurrentMonth!.length === 0 || isLoading) && <Loading />}
+                            <PackagesList title="Most viewed this month" data={stats.packages.topViewsCurrentMonth} />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
 
-                  {stats.packages.viewsDaily && (
+                  {(stats.packages.viewsDaily || stats.packages.topViewsToday) && (
                     <div className="row my-4 pb-4">
-                      <div className="col-12">
-                        <div className="mt-4">
+                      {stats.packages.viewsDaily && (
+                        <div
+                          className={
+                            !isUndefined(stats.packages.topViewsToday) ? 'col-12 col-lg-8 col-xxl-9' : 'col-12'
+                          }
+                        >
                           <div className={`card ${styles.chartWrapper}`}>
                             {(stats.packages.viewsDaily!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart
@@ -425,7 +445,16 @@ const StatsView = (props: Props) => {
                             />
                           </div>
                         </div>
-                      </div>
+                      )}
+
+                      {stats.packages.topViewsToday && (
+                        <div className="col-12 col-lg-4 col-xxl-3 mt-4 mt-lg-0">
+                          <div className={`card h-100 ${styles.chartWrapper}`}>
+                            {(stats.packages.topViewsToday!.length === 0 || isLoading) && <Loading />}
+                            <PackagesList title="Most viewed today" data={stats.packages.topViewsToday} />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </>

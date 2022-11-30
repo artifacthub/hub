@@ -80,20 +80,16 @@ exports[`StatsView creates snapshot 1`] = `
           </h2>
         </span>
         <div
-          class="row my-4 pb-4"
+          class="row my-4 pb-4 mt-4"
         >
           <div
             class="col-12"
           >
             <div
-              class="mt-4"
+              class="card chartWrapper"
             >
-              <div
-                class="card chartWrapper"
-              >
-                <div>
-                  Chart
-                </div>
+              <div>
+                Chart
               </div>
             </div>
           </div>
@@ -105,14 +101,10 @@ exports[`StatsView creates snapshot 1`] = `
             class="col-12"
           >
             <div
-              class="mt-4"
+              class="card chartWrapper"
             >
-              <div
-                class="card chartWrapper"
-              >
-                <div>
-                  Chart
-                </div>
+              <div>
+                Chart
               </div>
             </div>
           </div>
