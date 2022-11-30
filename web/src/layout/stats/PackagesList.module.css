@@ -1,0 +1,51 @@
+.listWrapper {
+  max-height: 315px;
+}
+
+.title {
+  font-size: 14px;
+}
+
+.list {
+  font-size: 0.8rem;
+}
+
+.line {
+  margin: 0.2rem 0;
+  width: 100%;
+}
+
+.views {
+  min-width: 40px;
+}
+
+.link {
+  color: var(--gray-dark);
+  max-width: 100%;
+}
+
+.link:hover {
+  color: inherit;
+}
+
+.icon {
+  height: 14px;
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .list {
+    height: 130px;
+  }
+
+  .line {
+    width: 50%;
+  }
+
+  .line:nth-child(-n + 5) {
+    padding-right: 1rem;
+  }
+
+  .line:nth-child(n + 6) {
+    padding-left: 1rem;
+  }
+}

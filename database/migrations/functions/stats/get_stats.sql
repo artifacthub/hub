@@ -50,6 +50,39 @@ returns setof json as $$
                     group by month
                     order by month asc
                 ) mt
+            ),
+            'top_views_today', (
+                select json_agg(json_build_object(
+                    'package', package,
+                    'views', total
+                ))
+                from (
+                    select
+                        get_package_summary(jsonb_build_object('package_id', package_id)) as package,
+                        sum(total) as total
+                    from package_views
+                    where day = current_date
+                    group by package_id
+                    order by total desc
+                    limit 10
+                ) views_today
+            ),
+            'top_views_current_month', (
+                select json_agg(json_build_object(
+                    'package', package,
+                    'views', total
+                ))
+                from (
+                    select
+                        get_package_summary(jsonb_build_object('package_id', package_id)) as package,
+                        sum(total) as total
+                    from package_views
+                    where date_trunc('year', day) = date_trunc('year', current_date)
+                    and date_trunc('month', day) = date_trunc('month', current_date)
+                    group by package_id
+                    order by total desc
+                    limit 10
+                ) views_current_month
             )
         ),
         'snapshots', json_build_object(

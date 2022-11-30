@@ -737,6 +737,8 @@ export interface AHStats {
     createdMonthly?: any[];
     viewsDaily?: any[];
     viewsMonthly?: any[];
+    topViewsToday?: TopViewsItem[];
+    topViewsCurrentMonth?: TopViewsItem[];
   };
   repositories: {
     total: number;
@@ -756,6 +758,11 @@ export interface AHStats {
     total: number;
     runningTotal?: any[];
   };
+}
+
+export interface TopViewsItem {
+  package: Package;
+  views: number;
 }
 
 export interface PackageViewsStats {
