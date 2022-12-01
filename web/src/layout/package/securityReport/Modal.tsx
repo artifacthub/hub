@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { filter, isEmpty, isNull, isUndefined } from 'lodash';
+import { isEmpty, isNull, isUndefined } from 'lodash';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
@@ -11,14 +11,11 @@ import {
   RepositoryKind,
   SearchFiltersURL,
   SecurityReport,
-  SecurityReportResult,
   SecurityReportSummary,
-  Vulnerability,
 } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
-import formatSecurityReport from '../../../utils/formatSecurityReport';
 import isFuture from '../../../utils/isFuture';
-import sumObjectValues from '../../../utils/sumObjectValues';
+import { filterFixableVulnerabilities, prepareFixableSummary } from '../../../utils/vulnerabilities';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
 import OldVulnerabilitiesWarning from './OldVulnerabilitiesWarning';
@@ -78,57 +75,6 @@ const SecurityModal = (props: Props) => {
         }
       }
     }
-  };
-
-  const prepareFixableSummary = (
-    fixableVulnerabilities: SecurityReport | null | undefined
-  ): FixableVulnerabilitiesInReport => {
-    let fixReport: FixableVulnerabilitiesInReport = { report: {}, summary: {}, total: 0 };
-    if (fixableVulnerabilities) {
-      let allVulnerabilities: Vulnerability[] = [];
-      Object.keys(fixableVulnerabilities).forEach((image: string) => {
-        let vulnerabilitiesList: Vulnerability[] = [];
-        fixableVulnerabilities[image].Results.forEach((targetReport: SecurityReportResult) => {
-          if (targetReport.Vulnerabilities) {
-            vulnerabilitiesList = [...vulnerabilitiesList, ...targetReport.Vulnerabilities];
-            allVulnerabilities = [...allVulnerabilities, ...targetReport.Vulnerabilities];
-          }
-        });
-        const { summary } = formatSecurityReport(vulnerabilitiesList);
-        const total = sumObjectValues(summary);
-        fixReport.report[image] = {
-          summary: summary,
-          total: total,
-        };
-      });
-      fixReport.summary = formatSecurityReport(allVulnerabilities).summary;
-      fixReport.total = sumObjectValues(formatSecurityReport(allVulnerabilities).summary);
-    }
-    return fixReport;
-  };
-
-  const filterFixableVulnerabilities = (currentReport: SecurityReport | null): SecurityReport | null => {
-    if (isNull(currentReport)) return null;
-
-    let tmpReport: SecurityReport = {};
-    Object.keys(currentReport).forEach((img: string) => {
-      currentReport[img].Results.forEach((target: SecurityReportResult) => {
-        let vulnerabilities: null | Vulnerability[] = [];
-        const filteredVulnerabilities = filter(
-          target.Vulnerabilities,
-          (v: Vulnerability) => !isUndefined(v.FixedVersion)
-        );
-        vulnerabilities = isEmpty(target.Vulnerabilities) ? [] : filteredVulnerabilities;
-        if (!isNull(vulnerabilities)) {
-          if (isUndefined(tmpReport[img])) {
-            tmpReport[img] = { Results: [{ ...target, Vulnerabilities: vulnerabilities }] };
-          } else {
-            tmpReport[img].Results.push({ ...target, Vulnerabilities: vulnerabilities });
-          }
-        }
-      });
-    });
-    return tmpReport;
   };
 
   async function getSecurityReports(eventId?: string) {
