@@ -1,10 +1,13 @@
+import classNames from 'classnames';
 import { isNull, isUndefined, slice } from 'lodash';
 import { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 
-import { SecurityReportResult, Vulnerability } from '../../../types';
+import { SecurityReportResult, SecurityReportSummary, Vulnerability, VulnerabilitySeverity } from '../../../types';
+import { SEVERITY_ORDER } from '../../../utils/data';
 import formatSecurityReport from '../../../utils/formatSecurityReport';
 import getTextBetweenParenthesis from '../../../utils/getTextBetweenParenthesis';
+import sumObjectValues from '../../../utils/sumObjectValues';
 import SecurityRating from '../../common/SecurityRating';
 import SecurityCell from './Cell';
 import ImageBtn from './ImageBtn';
@@ -27,7 +30,88 @@ interface Props {
   showOnlyFixableVulnerabilities: boolean;
 }
 
+interface TargetProps {
+  targetImage: string;
+  list: Vulnerability[];
+  summary: SecurityReportSummary;
+  fixableReport?: SecurityReportResult;
+}
+
 const MAX_VULNERABILITY_NUMBER = 100;
+
+const SummaryTarget = (props: TargetProps): JSX.Element => {
+  const total = sumObjectValues(props.summary);
+  const fixableVulnerabilities = formatSecurityReport(
+    !isUndefined(props.fixableReport) && !isNull(props.fixableReport.Vulnerabilities)
+      ? props.fixableReport.Vulnerabilities
+      : []
+  );
+  const fixableTotal = sumObjectValues(fixableVulnerabilities.summary);
+  const allVulnerabilitiesAreFixable = fixableTotal === total;
+
+  return (
+    <table className={`table table-bordered table-sm mb-4 mt-2 ${styles.table} ${styles.summaryTable}`}>
+      <thead>
+        <tr className={styles.tableTitle}>
+          {!allVulnerabilitiesAreFixable && <th scope="col">Type</th>}
+
+          {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => (
+            <th key={`col_${severity}`} className="col text-center text-capitalize">
+              {severity}
+            </th>
+          ))}
+          <th scope="col" className="text-center">
+            Total
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {!allVulnerabilitiesAreFixable ? (
+          <tr>
+            <td className={styles.narrowCell}>Fixable</td>
+            {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => (
+              <td key={`col_fix_${severity}_${props.targetImage}`} className={`text-center ${styles.narrowCell}`}>
+                {fixableVulnerabilities.summary[severity] || 0}
+              </td>
+            ))}
+            <td className={`text-center fw-bold ${styles.narrowCell}`}>{fixableTotal}</td>
+          </tr>
+        ) : (
+          <tr>
+            {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => (
+              <td
+                key={`col_${severity}_${props.targetImage}`}
+                className={classNames('text-center', {
+                  [styles.narrowCell]: !allVulnerabilitiesAreFixable,
+                })}
+              >
+                {props.summary[severity] || 0}
+              </td>
+            ))}
+            <td
+              className={classNames('text-center fw-bold', {
+                [styles.narrowCell]: !allVulnerabilitiesAreFixable,
+              })}
+            >
+              {total}
+            </td>
+          </tr>
+        )}
+        {!allVulnerabilitiesAreFixable && (
+          <tr>
+            <td className={styles.narrowCell}>All</td>
+            {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => (
+              <td key={`col_${severity}_${props.targetImage}`} className={`text-center ${styles.narrowCell}`}>
+                {props.summary[severity] || 0}
+              </td>
+            ))}
+            <td className={`text-center fw-bold ${styles.narrowCell}`}>{total}</td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  );
+};
 
 const SecurityTable = (props: Props) => {
   const [visibleVulnerability, setVisibleVulnerability] = useState<string | undefined>();
@@ -84,6 +168,9 @@ const SecurityTable = (props: Props) => {
                 : false;
               const isExpanded = props.expandedTarget === targetImageName;
               const isLastTarget = props.lastReport && index === props.reports.length - 1;
+              const fixableReport = props.fixableReports.find(
+                (fixableItem: SecurityReportResult) => item.Target === fixableItem.Target
+              );
 
               return (
                 <Fragment key={`table_${targetImageName}`}>
@@ -136,6 +223,11 @@ const SecurityTable = (props: Props) => {
 
                     {isExpanded && (
                       <div className="w-100 overflow-auto mb-2">
+                        <SummaryTarget
+                          {...allVulnerabilities}
+                          fixableReport={fixableReport}
+                          targetImage={targetImageName}
+                        />
                         <table className={`table table-sm table-hover ${styles.table}`}>
                           <thead>
                             <tr className="text-uppercase text-muted">
