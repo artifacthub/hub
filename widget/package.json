@@ -1,6 +1,6 @@
 {
   "name": "widget",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "private": true,
   "dependencies": {
     "lodash": "^4.17.21",

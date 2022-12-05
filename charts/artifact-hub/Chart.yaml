@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.10.1-4
-appVersion: 1.10.0
+version: 1.11.0
+appVersion: 1.11.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -37,55 +37,59 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Support for Gatekeeper policies
+      description: Monthly views graph to stats page
     - kind: added
-      description: Support for Tekton git-based versioning
+      description: List top 10 most viewed packages in stats page
     - kind: added
-      description: Docs link to top navigation bar
+      description: Display vulnerabilities summary table per target
     - kind: added
-      description: Sign release checksum file
+      description: Process Tekton packages signatures
     - kind: added
-      description: Generate SBOM for AH CLI tool
+      description: Scan Tekton packages for security vulnerabilities
+    - kind: added
+      description: Display CNCF events banners in UI
+    - kind: added
+      description: Display warning when old fixable vulns are found
+    - kind: added
+      description: Some more frontend tests
     - kind: changed
-      description: Improve security report view
+      description: Disable Trivy secret scanning
     - kind: changed
-      description: Split repositories guide into multiple pages
+      description: Accept lowercase readme.md files in Helm charts
     - kind: changed
-      description: Improve Kubewarden repos validation and documentation
+      description: Bump Alpine to 3.16.3
     - kind: changed
-      description: Update Keptn annotations documentation
+      description: Bump Go to 1.19.3
     - kind: changed
-      description: Some improvements to AH Helm chart
+      description: Bump Trivy to 0.34.0
     - kind: changed
-      description: Do not scan Kubewarden policies for security vulnerabilities
-    - kind: changed
-      description: Use explicit numeric UID/GID in Dockerfiles
-    - kind: changed
-      description: Bump Alpine to 1.16.2
-    - kind: changed
-      description: Bump Go to 1.19.2
-    - kind: changed
-      description: Bump Trivy to 0.31.3
+      description: Bump OPM to 1.26.2
     - kind: changed
       description: Upgrade backend and frontend dependencies
     - kind: fixed
-      description: Issue scrolling to anchors in package view
+      description: Issue with loading animations
     - kind: fixed
-      description: Issue interacting with package views graph
+      description: Issue editing container image repository tags
     - kind: fixed
-      description: Issue applying migrations in local storage
+      description: Issue processing container image package
+    - kind: fixed
+      description: Issue displaying mutation info in KW policies
+    - kind: fixed
+      description: Issue with emojis in readme file
+    - kind: fixed
+      description: Sample queries links
     - kind: fixed
       description: Some other minor bugs and improvements
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.10.0
+      image: artifacthub/db-migrator:v1.11.0
     - name: hub
-      image: artifacthub/hub:v1.10.0
+      image: artifacthub/hub:v1.11.0
     - name: tracker
-      image: artifacthub/tracker:v1.10.0
+      image: artifacthub/tracker:v1.11.0
     - name: scanner
-      image: artifacthub/scanner:v1.10.0
+      image: artifacthub/scanner:v1.11.0
     - name: trivy
       image: aquasec/trivy:0.34.0
   artifacthub.io/links: |
