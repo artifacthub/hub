@@ -6,25 +6,3 @@
 .loaded {
   max-height: 1500px;
 }
-
-.banner {
-  margin-top: 25px;
-  width: 230px;
-  background-color: var(--color-1-2) !important;
-}
-
-.image {
-  width: auto;
-}
-
-@media only screen and (min-width: 1400px) {
-  .banner {
-    width: 260px;
-  }
-}
-
-@media only screen and (min-width: 1920px) {
-  .banner {
-    width: 310px;
-  }
-}

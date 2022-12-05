@@ -306,10 +306,15 @@
     background-color: var(--color-1-300);
   }
 
-  .card,
+  .card:not(.banner),
   .card.bg-white,
   .list-group-item {
     background-color: var(--color-1-500) !important;
+    border-color: var(--border-md) !important;
+    box-shadow: none !important;
+  }
+
+  .banner {
     border-color: var(--border-md) !important;
     box-shadow: none !important;
   }

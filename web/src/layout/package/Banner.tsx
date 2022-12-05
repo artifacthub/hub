@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { isNull } from 'lodash';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import { AppCtx } from '../../context/AppCtx';
 import { Banner as IBanner } from '../../types';
@@ -8,13 +8,17 @@ import ExternalLink from '../common/ExternalLink';
 import styles from './Banner.module.css';
 
 interface Props {
+  wrapperClassName?: string;
+  className?: string;
   banner: IBanner;
   removeBanner: () => void;
+  maxEqualRatio: boolean;
 }
 
 const Banner = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const { effective } = ctx.prefs.theme;
+  const img = useRef<HTMLImageElement>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [visibleBanner, setVisibleBanner] = useState<IBanner | null>(props.banner);
   const [bannerTimeout, setBannerTimeout] = useState<NodeJS.Timeout | null>(null);
@@ -42,14 +46,19 @@ const Banner = (props: Props) => {
   if (isNull(visibleBanner)) return null;
 
   const getCardImage = () => (
-    <div className={`card shadow-sm p-3 mb-2 overflow-hidden ${styles.banner}`}>
+    <div className={`card flex-row shadow-sm mw-100 p-3 overflow-hidden ${props.className}`}>
       <img
+        ref={img}
         src={effective === 'light' ? visibleBanner.images['light-theme'] : visibleBanner.images['dark-theme']}
         alt={visibleBanner.name || 'Banner'}
-        className={`mw-100 rounded mx-auto ${styles.image}`}
+        className="mw-100 h-auto rounded mx-auto"
         onError={props.removeBanner}
         onLoad={() => {
-          setIsLoaded(true);
+          if (props.maxEqualRatio && img && img.current && img.current.naturalHeight > img.current.naturalWidth) {
+            setIsLoaded(false);
+          } else {
+            setIsLoaded(true);
+          }
         }}
       />
     </div>
@@ -58,11 +67,15 @@ const Banner = (props: Props) => {
   return (
     <div className={classNames('overflow-hidden', styles.bannerWrapper, { [styles.loaded]: isLoaded })}>
       {visibleBanner.link ? (
-        <ExternalLink href={visibleBanner.link} label={`${props.banner.name} link` || 'Banner link'}>
+        <ExternalLink
+          href={visibleBanner.link}
+          className={props.wrapperClassName}
+          label={`${props.banner.name} link` || 'Banner link'}
+        >
           <>{getCardImage()}</>
         </ExternalLink>
       ) : (
-        <>{getCardImage()}</>
+        <div className={props.wrapperClassName}>{getCardImage()}</div>
       )}
     </div>
   );

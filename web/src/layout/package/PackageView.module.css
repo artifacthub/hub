@@ -141,6 +141,12 @@
   width: 100%;
 }
 
+.banner {
+  margin-top: 25px;
+  width: 230px;
+  background-color: var(--color-1-2) !important;
+}
+
 @media only screen and (max-width: 767.98px) {
   .imageWrapper {
     min-width: 50px;
@@ -240,7 +246,8 @@
     max-width: 260px;
   }
 
-  .info {
+  .info,
+  .banner {
     width: 260px;
   }
 
@@ -264,7 +271,8 @@
     max-width: 310px;
   }
 
-  .info {
+  .info,
+  .banner {
     width: 310px;
   }
 

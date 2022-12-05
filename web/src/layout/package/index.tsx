@@ -180,8 +180,18 @@ const PackageView = (props: Props) => {
         setRelatedPackages([]);
       }
     }
+
+    async function getBanner() {
+      try {
+        const CNCFBanner = await bannerDispatcher.getBanner();
+        setBanner(CNCFBanner);
+      } catch {
+        setBanner(null);
+      }
+    }
+
     if (!isNull(currentPkgId) && detail) {
-      setBanner(bannerDispatcher.getBanner());
+      getBanner();
       fetchRelatedPackages(detail);
     }
   }, [currentPkgId]); /* eslint-disable-line react-hooks/exhaustive-deps */
@@ -1187,7 +1197,14 @@ const PackageView = (props: Props) => {
                             </div>
                           )}
 
-                          {!isNull(banner) && <Banner banner={banner} removeBanner={() => setBanner(null)} />}
+                          {!isNull(banner) && (
+                            <Banner
+                              className={`mb-2 ${styles.banner}`}
+                              banner={banner}
+                              removeBanner={() => setBanner(null)}
+                              maxEqualRatio={false}
+                            />
+                          )}
 
                           <div className={`card shadow-sm position-relative info ${styles.info}`}>
                             <div className={`card-body ${styles.detailsBody}`}>

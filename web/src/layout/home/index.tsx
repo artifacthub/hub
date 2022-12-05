@@ -4,8 +4,9 @@ import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 
 import API from '../../api';
-import { RepositoryKind, Stats } from '../../types';
+import { Banner as IBanner, RepositoryKind, Stats } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
+import bannerDispatcher from '../../utils/bannerDispatcher';
 import getSampleQueries from '../../utils/getSampleQueries';
 import isWhiteLabel from '../../utils/isWhiteLabel';
 import ExternalLink from '../common/ExternalLink';
@@ -14,6 +15,7 @@ import SampleQueries from '../common/SampleQueries';
 import SearchBar from '../common/SearchBar';
 import SearchTipsModal from '../common/SearchTipsModal';
 import UserInvitation from '../controlPanel/members/UserInvitation';
+import Banner from '../package/Banner';
 import AccountDeletion from './AccountDeletion';
 import Counter from './Counter';
 import styles from './HomeView.module.css';
@@ -37,6 +39,7 @@ const HomeView = (props: Props) => {
   const [isLoadingStats, setIsLoadingStats] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
   const [openTips, setOpenTips] = useState<boolean>(false);
+  const [banner, setBanner] = useState<IBanner | null>(null);
 
   const whiteLabel = isWhiteLabel();
 
@@ -51,7 +54,18 @@ const HomeView = (props: Props) => {
         setIsLoadingStats(false);
       }
     }
+
+    async function getBanner() {
+      try {
+        const CNCFBanner = await bannerDispatcher.getBanner();
+        setBanner(CNCFBanner);
+      } catch {
+        setBanner(null);
+      }
+    }
+
     fetchStats();
+    getBanner();
   }, []);
 
   useEffect(() => {
@@ -137,6 +151,16 @@ const HomeView = (props: Props) => {
           <div className={`mx-3 mx-md-5 separator ${styles.separator}`} />
           <Counter isLoading={isLoadingStats} value={isNull(stats) ? null : stats.releases} name="releases" />
         </div>
+
+        {!isNull(banner) && (
+          <Banner
+            className={`${styles.banner} banner`}
+            wrapperClassName="d-flex align-items-center justify-content-center mt-4 mt-md-5"
+            banner={banner}
+            removeBanner={() => setBanner(null)}
+            maxEqualRatio
+          />
+        )}
 
         {!whiteLabel && (
           <>

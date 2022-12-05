@@ -6,6 +6,7 @@ import { Banner } from '../types';
 import getMetaTag from './getMetaTag';
 
 class BannerDispatcher {
+  private isInitiated: boolean = false;
   private url: string | null = null;
   private banners: Banner[] = [];
 
@@ -14,6 +15,7 @@ class BannerDispatcher {
     if (!isNull(this.url)) {
       this.banners = await this.getBannersInfo(this.url);
     }
+    this.isInitiated = true;
   }
 
   private async getBannersInfo(url: string): Promise<Banner[]> {
@@ -54,7 +56,10 @@ class BannerDispatcher {
     }
   }
 
-  public getBanner(): Banner | null {
+  public async getBanner(): Promise<Banner | null> {
+    if (!this.isInitiated) {
+      await this.init();
+    }
     if (this.banners.length > 0) {
       return this.banners[Math.floor(Math.random() * this.banners.length)];
     } else {
