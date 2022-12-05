@@ -62,6 +62,7 @@ returns setof json as $$
                         sum(total) as total
                     from package_views
                     where day = current_date
+                    and package_id is not null
                     group by package_id
                     order by total desc
                     limit 10
@@ -79,6 +80,7 @@ returns setof json as $$
                     from package_views
                     where date_trunc('year', day) = date_trunc('year', current_date)
                     and date_trunc('month', day) = date_trunc('month', current_date)
+                    and package_id is not null
                     group by package_id
                     order by total desc
                     limit 10
