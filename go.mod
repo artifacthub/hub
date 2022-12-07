@@ -322,6 +322,7 @@ require (
 
 replace (
 	github.com/emicklei/go-restful => github.com/emicklei/go-restful v2.16.0+incompatible
+	github.com/pjbgf/sha1cd => github.com/pjbgf/sha1cd v0.2.3
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp => go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.20.0
 	go.opentelemetry.io/otel => go.opentelemetry.io/otel v0.20.0
 	go.opentelemetry.io/otel/metric => go.opentelemetry.io/otel/metric v0.20.0
