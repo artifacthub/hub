@@ -9,6 +9,9 @@ jest.mock('../../api');
 jest.mock('./SearchTip', () => () => <div />);
 jest.mock('../common/SampleQueries', () => () => <div />);
 jest.mock('./RandomPackages', () => () => <div />);
+jest.mock('../../utils/bannerDispatcher', () => ({
+  getBanner: () => null,
+}));
 
 const getMockStats = (fixtureId: string): Stats => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as Stats;

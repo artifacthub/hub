@@ -155,7 +155,7 @@ const HomeView = (props: Props) => {
         {!isNull(banner) && (
           <Banner
             className={`${styles.banner} banner`}
-            wrapperClassName="d-flex align-items-center justify-content-center mt-4 mt-md-5"
+            wrapperClassName="d-inline-block position-relative mt-4 mt-md-5"
             banner={banner}
             removeBanner={() => setBanner(null)}
             maxEqualRatio
