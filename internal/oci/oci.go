@@ -148,28 +148,28 @@ func (c *SignatureChecker) HasCosignSignature(
 	return true, nil
 }
 
-// OCITagsGetter provides a mechanism to get all the version tags available for
+// TagsGetter provides a mechanism to get all the version tags available for
 // a given repository in a OCI registry. Tags that aren't valid semver versions
 // will be filtered out.
-type TagsGetter struct{}
+type TagsGetter struct {
+	cfg *viper.Viper
+}
+
+// TagsGetter creates a new TagsGetter instance.
+func NewTagsGetter(cfg *viper.Viper) *TagsGetter {
+	return &TagsGetter{
+		cfg: cfg,
+	}
+}
 
 // Tags returns a list with the tags available for the provided repository.
 func (tg *TagsGetter) Tags(ctx context.Context, r *hub.Repository, onlySemver bool) ([]string, error) {
-	u := strings.TrimPrefix(r.URL, hub.RepositoryOCIPrefix)
-	ociRepo, err := name.NewRepository(u)
+	ref, err := name.ParseReference(strings.TrimPrefix(r.URL, hub.RepositoryOCIPrefix))
 	if err != nil {
 		return nil, err
 	}
-	options := []remote.Option{
-		remote.WithContext(ctx),
-	}
-	if r.AuthUser != "" || r.AuthPass != "" {
-		options = append(options, remote.WithAuth(&authn.Basic{
-			Username: r.AuthUser,
-			Password: r.AuthPass,
-		}))
-	}
-	tags, err := remote.List(ociRepo, options...)
+	options := PrepareRemoteOptions(ctx, tg.cfg, ref, r.AuthUser, r.AuthPass)
+	tags, err := remote.List(ref.Context(), options...)
 	if err != nil {
 		return nil, err
 	}
