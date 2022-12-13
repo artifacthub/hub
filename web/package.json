@@ -36,6 +36,7 @@
     "remark-unlink": "^3.1.0",
     "semver": "^7.3.8",
     "tinycolor2": "^1.4.2",
+    "ua-parser-js": "^1.0.32",
     "unified": "^9.2.1",
     "yaml": "2.0.1"
   },
@@ -76,7 +77,7 @@
   "proxy": "http://localhost:8000",
   "scripts": {
     "copy:static": "shx rm -rf src/static && shx mkdir src/static && shx cp -r public/static/* src/static",
-    "start": "yarn copy:static && react-scripts start",
+    "start": "yarn copy:static && DANGEROUSLY_DISABLE_HOST_CHECK=true react-scripts start",
     "build": "yarn copy:static && INLINE_RUNTIME_CHUNK=false IMAGE_INLINE_SIZE_LIMIT=0 react-scripts build",
     "test": "sed -i -e 's/const FORCE_EXIT_DELAY = 500;/const FORCE_EXIT_DELAY = 1000;/g' ./node_modules/jest-worker/build/base/BaseWorkerPool.js && TZ=UTC react-scripts test # See https://github.com/facebook/jest/issues/11354",
     "test:coverage": "TZ=UTC react-scripts test --coverage --watchAll=false",

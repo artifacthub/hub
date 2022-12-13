@@ -34,6 +34,7 @@ import bannerDispatcher from '../../utils/bannerDispatcher';
 import isFuture from '../../utils/isFuture';
 import isPackageOfficial from '../../utils/isPackageOfficial';
 import { prepareQueryString } from '../../utils/prepareQueryString';
+import scrollToTop from '../../utils/scrollToTop';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import updateMetaIndex from '../../utils/updateMetaIndex';
 import AnchorHeader from '../common/AnchorHeader';
@@ -240,7 +241,7 @@ const PackageView = (props: Props) => {
       setApiError(null);
       setCurrentPkgId(detailPkg.packageId);
       setRelatedPosition(undefined);
-      window.scrollTo(0, 0); // Scroll to top when a new version is loaded
+      scrollToTop(); // Scroll to top when a new version is loaded
       // Stop loading when readme is not defined or is the same than the previous one
       if (
         isNull(detailPkg.readme) ||
@@ -508,7 +509,7 @@ const PackageView = (props: Props) => {
     if (props.hash !== currentHash) {
       setCurrentHash(props.hash);
       if (isUndefined(props.hash) || props.hash === '') {
-        window.scrollTo(0, 0);
+        scrollToTop();
       } else {
         scrollIntoView();
       }

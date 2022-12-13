@@ -6,6 +6,7 @@ import API from '../../../../../api';
 import { AppCtx, unselectOrg } from '../../../../../context/AppCtx';
 import { AuthorizerAction, ErrorKind, Organization } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
+import scrollToTop from '../../../../../utils/scrollToTop';
 import InputField from '../../../../common/InputField';
 import Modal from '../../../../common/Modal';
 import ActionBtn from '../../../ActionBtn';
@@ -31,7 +32,7 @@ const DeleteOrganization = (props: Props) => {
       setIsDeleting(true);
       await API.deleteOrganization(props.organization.name);
       dispatch(unselectOrg());
-      window.scrollTo(0, 0); // Scroll to top when org is deleted
+      scrollToTop(); // Scroll to top when org is deleted
       setIsDeleting(false);
     } catch (err: any) {
       setIsDeleting(false);

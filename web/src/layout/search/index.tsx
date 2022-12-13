@@ -15,6 +15,7 @@ import { FacetOption, Facets, Package, RepositoryKind, SearchFiltersURL, SearchR
 import { TS_QUERY } from '../../utils/data';
 import getSampleQueries from '../../utils/getSampleQueries';
 import { prepareQueryString } from '../../utils/prepareQueryString';
+import scrollToTop from '../../utils/scrollToTop';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
 import Pagination from '../common/Pagination';
@@ -119,10 +120,6 @@ const SearchView = (props: Props) => {
 
   const saveScrollPosition = () => {
     setScrollPosition(window.scrollY);
-  };
-
-  const updateWindowScrollPosition = (newPosition: number) => {
-    window.scrollTo(0, newPosition);
   };
 
   const prepareSelectedFilters = (name: string, newFilters: string[], prevFilters: FiltersProp): FiltersProp => {
@@ -260,7 +257,7 @@ const SearchView = (props: Props) => {
       }),
     });
     setScrollPosition(0);
-    updateWindowScrollPosition(0);
+    scrollToTop(0);
   };
 
   const onPaginationLimitChange = (newLimit: number): void => {
@@ -272,7 +269,7 @@ const SearchView = (props: Props) => {
       }),
     });
     setScrollPosition(0);
-    updateWindowScrollPosition(0);
+    scrollToTop(0);
     dispatch(updateLimit(newLimit));
   };
 
@@ -322,14 +319,14 @@ const SearchView = (props: Props) => {
         if (history.action === 'PUSH') {
           // When search page is open from detail page
           if (props.fromDetail && !isUndefined(scrollPosition)) {
-            updateWindowScrollPosition(scrollPosition);
+            scrollToTop(scrollPosition);
             // When search has changed
           } else {
-            updateWindowScrollPosition(0);
+            scrollToTop(0);
           }
           // On pop action and when scroll position has been previously saved
         } else if (!isUndefined(scrollPosition)) {
-          updateWindowScrollPosition(scrollPosition);
+          scrollToTop(scrollPosition);
         }
       }
     }
