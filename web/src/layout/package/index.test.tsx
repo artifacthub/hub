@@ -14,6 +14,9 @@ jest.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
 jest.mock('remark-gfm', () => () => <div />);
+jest.mock('../../utils/bannerDispatcher', () => ({
+  getBanner: () => null,
+}));
 
 const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as Package;
