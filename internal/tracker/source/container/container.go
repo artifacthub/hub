@@ -28,7 +28,7 @@ import (
 
 const (
 	// Number of tags processed concurrently
-	concurrency = 10
+	concurrency = 1
 
 	// Annotations based on OCI pre-defined annotation keys
 	// https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys
