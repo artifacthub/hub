@@ -8,6 +8,7 @@ import {
   SecurityReportSummary,
   VulnerabilitySeverity,
 } from '../../../types';
+import calculateDiffInYears from '../../../utils/calculateDiffInYears';
 import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';
 import prettifyNumber from '../../../utils/prettifyNumber';
 import sumObjectValues from '../../../utils/sumObjectValues';
@@ -25,6 +26,7 @@ interface Props {
   className?: string;
   summary?: SecurityReportSummary | null;
   packageId: string;
+  ts: number;
   version: string;
   createdAt?: number;
   visibleSecurityReport: boolean;
@@ -37,6 +39,8 @@ interface Props {
 }
 
 const SecurityReport = (props: Props) => {
+  const [isOlderThenOneYear, setIsOlderThenOneYear] = useState<boolean>(false);
+
   const hasSomeWhitelistedContainers = useCallback((): boolean => {
     return props.containers.some((container: ContainerImage) => container.whitelisted);
   }, [props.containers]);
@@ -51,6 +55,14 @@ const SecurityReport = (props: Props) => {
   useEffect(() => {
     setHasWhitelistedContainers(hasSomeWhitelistedContainers());
   }, [props.containers]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    const diffInYears = calculateDiffInYears(props.ts);
+    setIsOlderThenOneYear(diffInYears > 1);
+  }, [props.ts]);
+
+  // Do not display security reports when version is older than 1 year
+  if (isOlderThenOneYear) return null;
 
   if (!props.disabledReport) {
     if (isNull(props.summary) || isUndefined(props.summary) || isEmpty(props.summary)) {

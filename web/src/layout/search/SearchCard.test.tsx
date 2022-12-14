@@ -3,8 +3,10 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Package } from '../../types';
+import calculateDiffInYears from '../../utils/calculateDiffInYears';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import SearchCard from './SearchCard';
+jest.mock('../../utils/calculateDiffInYears');
 
 const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/SearchCard/${fixtureId}.json`) as Package;
@@ -20,6 +22,10 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('SearchCard', () => {
+  beforeEach(() => {
+    (calculateDiffInYears as jest.Mock).mockImplementation(() => 0.5);
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -165,6 +171,34 @@ describe('SearchCard', () => {
           }),
         });
       });
+    });
+  });
+
+  describe('Security Rating label', () => {
+    it('renders label', () => {
+      const mockPackage = getMockPackage('12');
+
+      render(
+        <Router>
+          <SearchCard package={mockPackage} />
+        </Router>
+      );
+
+      expect(screen.getByText('Images Security Rating')).toBeInTheDocument();
+    });
+
+    it('does not render label when package is older than 1 year', () => {
+      (calculateDiffInYears as jest.Mock).mockImplementation(() => 1.5);
+
+      const mockPackage = getMockPackage('12');
+
+      render(
+        <Router>
+          <SearchCard package={mockPackage} />
+        </Router>
+      );
+
+      expect(screen.queryByText('Images Security Rating')).toBeNull();
     });
   });
 

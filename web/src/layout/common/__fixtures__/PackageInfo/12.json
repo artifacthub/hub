@@ -1,0 +1,27 @@
+{
+  "packageId": "id",
+  "name": "test",
+  "normalizedName": "test",
+  "displayName": "Pretty name",
+  "description": "desc",
+  "logoImageId": "imageId",
+  "appVersion": "1.0.0",
+  "ts": 1671093633,
+  "securityReportSummary": {
+    "low": 0,
+    "high": 0,
+    "medium": 1,
+    "unknown": 0,
+    "critical": 0
+  },
+  "repository": {
+    "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
+    "kind": 0,
+    "name": "test",
+    "url": "repoUrl",
+    "userAlias": "user",
+    "verifiedPublisher": true,
+    "scannerDisabled": false,
+    "official": false
+  }
+}
