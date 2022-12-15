@@ -392,6 +392,7 @@ const Details = (props: Props) => {
         summary={props.package.securityReportSummary}
         packageId={props.package.packageId}
         version={props.package.version!}
+        ts={props.package.ts}
         createdAt={props.package.securityReportCreatedAt}
         visibleSecurityReport={props.visibleSecurityReport}
         visibleImage={props.visibleImage}

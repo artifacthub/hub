@@ -1,9 +1,11 @@
 import moment from 'moment';
+import { useEffect, useState } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 
 import { Package, RepositoryKind } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
+import calculateDiffInYears from '../../utils/calculateDiffInYears';
 import cutString from '../../utils/cutString';
 import isFuture from '../../utils/isFuture';
 import isPackageOfficial from '../../utils/isPackageOfficial';
@@ -30,6 +32,7 @@ interface Props {
 
 const PackageInfo = (props: Props) => {
   const history = useHistory();
+  const [isVersionOlderThanOneYear, setIsVersionOlderThanOneYear] = useState<boolean>(false);
 
   const pkgTS = (
     <>
@@ -60,6 +63,11 @@ const PackageInfo = (props: Props) => {
       />
     </div>
   );
+
+  useEffect(() => {
+    const diffInYears = calculateDiffInYears(props.package.ts);
+    setIsVersionOlderThanOneYear(diffInYears > 1);
+  }, [props.package]);
 
   return (
     <>
@@ -237,12 +245,15 @@ const PackageInfo = (props: Props) => {
             className="d-inline mt-3"
           />
         )}
-        <SecurityRating
-          summary={props.package.securityReportSummary}
-          className="d-inline mt-3"
-          onlyBadge={false}
-          withLink={buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!)}
-        />
+        {/* Do not display security rating badge when version is older than 1 year */}
+        {!isVersionOlderThanOneYear && (
+          <SecurityRating
+            summary={props.package.securityReportSummary}
+            className="d-inline mt-3"
+            onlyBadge={false}
+            withLink={buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!)}
+          />
+        )}
         {(props.package.repository.scannerDisabled || props.package.allContainersImagesWhitelisted) && (
           <ScannerDisabledRepositoryBadge
             className="d-inline mt-3"

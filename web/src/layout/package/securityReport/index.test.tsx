@@ -1,7 +1,9 @@
 import { render, screen } from '@testing-library/react';
 
 import { RepositoryKind } from '../../../types';
+import calculateDiffInYears from '../../../utils/calculateDiffInYears';
 import SecurityReport from './index';
+jest.mock('../../../utils/calculateDiffInYears');
 
 const defaultProps = {
   repoKind: RepositoryKind.Helm,
@@ -12,6 +14,7 @@ const defaultProps = {
     high: 10,
     unknown: 9,
   },
+  ts: 1671024110,
   packageId: 'pkgID',
   version: '1.1.1',
   visibleSecurityReport: false,
@@ -37,6 +40,10 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('SecurityReport', () => {
+  beforeEach(() => {
+    (calculateDiffInYears as jest.Mock).mockImplementation(() => 0.5);
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -114,6 +121,7 @@ describe('SecurityReport', () => {
           packageId="pkgID"
           repoKind={0}
           version="1.1.1"
+          ts={1671024110}
           visibleSecurityReport={false}
           disabledReport
           containers={defaultProps.containers}
@@ -134,6 +142,7 @@ describe('SecurityReport', () => {
           packageId="pkgID"
           repoKind={0}
           version="1.1.1"
+          ts={1671024110}
           visibleSecurityReport={false}
           disabledReport={false}
           allContainersImagesWhitelisted={true}
@@ -165,6 +174,7 @@ describe('SecurityReport', () => {
         <SecurityReport
           packageId="pkgID"
           version="1.1.1"
+          ts={1671024110}
           repoKind={0}
           visibleSecurityReport={false}
           disabledReport={false}
@@ -181,6 +191,7 @@ describe('SecurityReport', () => {
           summary={null}
           packageId="pkgID"
           version="1.1.1"
+          ts={1671024110}
           repoKind={0}
           visibleSecurityReport={false}
           disabledReport={false}
@@ -197,6 +208,7 @@ describe('SecurityReport', () => {
           summary={{}}
           packageId="pkgID"
           version="1.1.1"
+          ts={1671024110}
           repoKind={0}
           visibleSecurityReport={false}
           disabledReport={false}
@@ -204,6 +216,28 @@ describe('SecurityReport', () => {
           allContainersImagesWhitelisted={false}
         />
       );
+      expect(container).toBeEmptyDOMElement();
+    });
+  });
+
+  describe('Does not render component', () => {
+    it('when package is older than 1 year', () => {
+      (calculateDiffInYears as jest.Mock).mockImplementation(() => 1.5);
+
+      const { container } = render(
+        <SecurityReport
+          summary={null}
+          packageId="pkgID"
+          repoKind={0}
+          version="1.1.1"
+          ts={1631960186}
+          visibleSecurityReport={false}
+          disabledReport
+          containers={defaultProps.containers}
+          allContainersImagesWhitelisted={false}
+        />
+      );
+
       expect(container).toBeEmptyDOMElement();
     });
   });
