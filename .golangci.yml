@@ -3,7 +3,6 @@ linters:
   enable:
     - asciicheck
     - bodyclose
-    - deadcode
     - errcheck
     - errorlint
     - exportloopref
@@ -24,7 +23,6 @@ linters:
     - unconvert
     - unparam
     - unused
-    - varcheck
   fast: false
 
 linters-settings:
@@ -35,4 +33,4 @@ linters-settings:
     min-occurrences: 5
 
 service:
-  golangci-lint-version: 1.48.x
+  golangci-lint-version: 1.50.x

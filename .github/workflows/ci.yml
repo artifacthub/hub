@@ -16,8 +16,8 @@ jobs:
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.48.0
-          args: --timeout 5m
+          version: v1.50.1
+          args: --timeout 10m
 
   linter-openapi:
     runs-on: ubuntu-20.04
