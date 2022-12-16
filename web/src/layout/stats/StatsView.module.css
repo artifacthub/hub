@@ -13,6 +13,10 @@
   background-color: var(--color-black-5) !important;
 }
 
+.listWrapper {
+  height: calc(100% - 1.5rem);
+}
+
 :global(.apexcharts-tooltip) {
   background-color: var(--bs-white) !important;
   border-color: var(--color-1-900) !important;
@@ -58,6 +62,12 @@
 @media only screen and (max-width: 767.98px) {
   .title {
     font-size: 1.5rem !important;
+  }
+}
+
+@media only screen and (max-width: 991.98px) {
+  .listWrapper {
+    height: auto;
   }
 }
 

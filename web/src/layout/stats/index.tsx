@@ -304,6 +304,17 @@ const StatsView = (props: Props) => {
           },
         },
         {
+          breakpoint: 1400,
+          options: {
+            dataLabels: {
+              offsetY: monthlyFormatter ? -15 : -12,
+              style: {
+                fontSize: monthlyFormatter ? '9px' : '7px',
+              },
+            },
+          },
+        },
+        {
           breakpoint: 992,
           options: {
             dataLabels: {
@@ -381,7 +392,7 @@ const StatsView = (props: Props) => {
 
   return (
     <div className="d-flex flex-column flex-grow-1 position-relative">
-      <main role="main" className="container-lg px-sm-4 px-lg-0 py-5 noFocus" id="content" tabIndex={-1}>
+      <main role="main" className="container-lg px-sm-4 px-lg-0 pt-5 pb-0 pb-lg-5 noFocus" id="content" tabIndex={-1}>
         <div className="flex-grow-1 position-relative">
           <div className={`h2 text-dark text-center ${styles.title}`}>{siteName} Stats</div>
 
@@ -417,35 +428,43 @@ const StatsView = (props: Props) => {
                   />
 
                   {(stats.packages.viewsMonthly || stats.packages.topViewsCurrentMonth) && (
-                    <div className="row my-4 pb-4 mt-4">
+                    <div className="row my-4 pb-0 pb-lg-2">
                       {stats.packages.viewsMonthly && (
                         <div
                           className={
                             !isUndefined(stats.packages.topViewsCurrentMonth) ? 'col-12 col-lg-8 col-xxl-9' : 'col-12'
                           }
                         >
-                          <div className={`card ${styles.chartWrapper}`}>
-                            {(stats.packages.viewsMonthly!.length === 0 || isLoading) && <Loading />}
-                            <ReactApexChart
-                              options={getBarChartConfig(
-                                'viewsMonthly',
-                                'Packages monthly views',
-                                true,
-                                stats.packages.viewsMonthly.length
-                              )}
-                              series={[{ name: 'Monthly views', data: stats.packages.viewsMonthly }]}
-                              type="bar"
-                              height={300}
-                            />
+                          <div
+                            className={classnames('mt-4 mb-4 mb-lg-0', {
+                              'pe-0 pe-lg-3 pe-xxxl-4': !isUndefined(stats.packages.topViewsCurrentMonth),
+                            })}
+                          >
+                            <div className={`card ${styles.chartWrapper}`}>
+                              {(stats.packages.viewsMonthly!.length === 0 || isLoading) && <Loading />}
+                              <ReactApexChart
+                                options={getBarChartConfig(
+                                  'viewsMonthly',
+                                  'Packages monthly views',
+                                  true,
+                                  stats.packages.viewsMonthly.length
+                                )}
+                                series={[{ name: 'Monthly views', data: stats.packages.viewsMonthly }]}
+                                type="bar"
+                                height={300}
+                              />
+                            </div>
                           </div>
                         </div>
                       )}
 
                       {stats.packages.topViewsCurrentMonth && (
                         <div className="col-12 col-lg-4 col-xxl-3 mt-4 mt-lg-0">
-                          <div className={`card h-100 ${styles.chartWrapper}`}>
-                            {(stats.packages.topViewsCurrentMonth!.length === 0 || isLoading) && <Loading />}
-                            <PackagesList title="Most viewed this month" data={stats.packages.topViewsCurrentMonth} />
+                          <div className={`mt-0 mt-lg-4 ps-0 ps-lg-3 ps-xxxl-4 ${styles.listWrapper}`}>
+                            <div className={`card h-100 ${styles.chartWrapper}`}>
+                              {(stats.packages.topViewsCurrentMonth!.length === 0 || isLoading) && <Loading />}
+                              <PackagesList title="Most viewed this month" data={stats.packages.topViewsCurrentMonth} />
+                            </div>
                           </div>
                         </div>
                       )}
@@ -460,28 +479,36 @@ const StatsView = (props: Props) => {
                             !isUndefined(stats.packages.topViewsToday) ? 'col-12 col-lg-8 col-xxl-9' : 'col-12'
                           }
                         >
-                          <div className={`card ${styles.chartWrapper}`}>
-                            {(stats.packages.viewsDaily!.length === 0 || isLoading) && <Loading />}
-                            <ReactApexChart
-                              options={getBarChartConfig(
-                                'viewsDaily',
-                                'Packages daily views',
-                                false,
-                                stats.packages.viewsDaily.length
-                              )}
-                              series={[{ name: 'Daily views', data: stats.packages.viewsDaily }]}
-                              type="bar"
-                              height={300}
-                            />
+                          <div
+                            className={classnames('mt-4 mb-4 mb-lg-0', {
+                              'pe-0 pe-lg-3 pe-xxxl-4': !isUndefined(stats.packages.topViewsToday),
+                            })}
+                          >
+                            <div className={`card ${styles.chartWrapper}`}>
+                              {(stats.packages.viewsDaily!.length === 0 || isLoading) && <Loading />}
+                              <ReactApexChart
+                                options={getBarChartConfig(
+                                  'viewsDaily',
+                                  'Packages daily views',
+                                  false,
+                                  stats.packages.viewsDaily.length
+                                )}
+                                series={[{ name: 'Daily views', data: stats.packages.viewsDaily }]}
+                                type="bar"
+                                height={300}
+                              />
+                            </div>
                           </div>
                         </div>
                       )}
 
                       {stats.packages.topViewsToday && (
                         <div className="col-12 col-lg-4 col-xxl-3 mt-4 mt-lg-0">
-                          <div className={`card h-100 ${styles.chartWrapper}`}>
-                            {(stats.packages.topViewsToday!.length === 0 || isLoading) && <Loading />}
-                            <PackagesList title="Most viewed today" data={stats.packages.topViewsToday} />
+                          <div className={`mt-0 mt-lg-4 ps-0 ps-lg-3 ps-xxxl-4 ${styles.listWrapper}`}>
+                            <div className={`card h-100 ${styles.chartWrapper}`}>
+                              {(stats.packages.topViewsToday!.length === 0 || isLoading) && <Loading />}
+                              <PackagesList title="Most viewed today" data={stats.packages.topViewsToday} />
+                            </div>
                           </div>
                         </div>
                       )}
@@ -503,7 +530,7 @@ const StatsView = (props: Props) => {
                   />
 
                   {(stats.packages.runningTotal || stats.snapshots.runningTotal) && (
-                    <div className="row my-4 pb-0 pb-lg-4">
+                    <div className="row my-4 pb-0 pb-lg-2">
                       {stats.packages.runningTotal && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.snapshots.runningTotal })}>
                           <div className="pe-0 pe-lg-3 pe-xxxl-4 mt-4 mb-4 mb-lg-0">
@@ -633,7 +660,7 @@ const StatsView = (props: Props) => {
 
                     {stats.users.runningTotal && (
                       <div className={classnames('col-12', { 'col-lg-6': stats.organizations.runningTotal })}>
-                        <div className="ps-0 ps-lg-3 ps-xxxl-4 pt-4">
+                        <div className="ps-0 ps-lg-3 ps-xxxl-4 pt-4 my-4 my-lg-0">
                           <div className={`card ${styles.chartWrapper}`}>
                             {(stats.users.runningTotal!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart

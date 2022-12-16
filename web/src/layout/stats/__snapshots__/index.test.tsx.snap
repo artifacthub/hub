@@ -6,7 +6,7 @@ exports[`StatsView creates snapshot 1`] = `
     class="d-flex flex-column flex-grow-1 position-relative"
   >
     <main
-      class="container-lg px-sm-4 px-lg-0 py-5 noFocus"
+      class="container-lg px-sm-4 px-lg-0 pt-5 pb-0 pb-lg-5 noFocus"
       id="content"
       role="main"
       tabindex="-1"
@@ -80,16 +80,20 @@ exports[`StatsView creates snapshot 1`] = `
           </h2>
         </span>
         <div
-          class="row my-4 pb-4 mt-4"
+          class="row my-4 pb-0 pb-lg-2"
         >
           <div
             class="col-12"
           >
             <div
-              class="card chartWrapper"
+              class="mt-4 mb-4 mb-lg-0"
             >
-              <div>
-                Chart
+              <div
+                class="card chartWrapper"
+              >
+                <div>
+                  Chart
+                </div>
               </div>
             </div>
           </div>
@@ -101,10 +105,14 @@ exports[`StatsView creates snapshot 1`] = `
             class="col-12"
           >
             <div
-              class="card chartWrapper"
+              class="mt-4 mb-4 mb-lg-0"
             >
-              <div>
-                Chart
+              <div
+                class="card chartWrapper"
+              >
+                <div>
+                  Chart
+                </div>
               </div>
             </div>
           </div>
@@ -145,7 +153,7 @@ exports[`StatsView creates snapshot 1`] = `
           </h2>
         </span>
         <div
-          class="row my-4 pb-0 pb-lg-4"
+          class="row my-4 pb-0 pb-lg-2"
         >
           <div
             class="col-12 col-lg-6"
@@ -319,7 +327,7 @@ exports[`StatsView creates snapshot 1`] = `
             class="col-12 col-lg-6"
           >
             <div
-              class="ps-0 ps-lg-3 ps-xxxl-4 pt-4"
+              class="ps-0 ps-lg-3 ps-xxxl-4 pt-4 my-4 my-lg-0"
             >
               <div
                 class="card chartWrapper"
