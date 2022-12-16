@@ -2,7 +2,7 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.11.0
+version: 1.11.1-0
 appVersion: 1.11.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
