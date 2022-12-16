@@ -7,7 +7,7 @@ kind: CronJob
 metadata:
   name: {{ include "chart.resourceNamePrefix" . }}tracker
 spec:
-  schedule: "0,30 * * * *"
+  schedule: "1,30 * * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
