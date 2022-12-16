@@ -197,9 +197,25 @@ const StatsView = (props: Props) => {
     };
   };
 
-  const getBarChartConfig = (title: string, monthlyFormatter: boolean): ApexCharts.ApexOptions => {
+  const getBarChartConfig = (
+    id: string,
+    title: string,
+    monthlyFormatter: boolean,
+    dataLength: number
+  ): ApexCharts.ApexOptions => {
+    const getBarColors = (): string[] => {
+      if (dataLength > 0) {
+        let colors = Array.from({ length: dataLength - 1 }, () => 'var(--color-1-500)');
+        // Color for the last bar
+        colors.push(activeTheme === 'dark' ? 'var(--highlighted)' : 'var(--color-1-900)');
+        return colors;
+      }
+      return ['var(--color-1-500)'];
+    };
+
     return {
       chart: {
+        id: `${id}BarChart`,
         height: 300,
         type: 'bar',
         redrawOnWindowResize: true,
@@ -215,12 +231,16 @@ const StatsView = (props: Props) => {
       grid: { borderColor: 'var(--border-md)' },
       plotOptions: {
         bar: {
+          distributed: true, // Its is neccesary to display different bar colors
           borderRadius: 5,
           borderRadiusApplication: 'end',
           dataLabels: {
             position: 'top',
           },
         },
+      },
+      legend: {
+        show: false, // After enabling 'distributed', we have to hide the legend
       },
       dataLabels: {
         enabled: true,
@@ -234,7 +254,7 @@ const StatsView = (props: Props) => {
           return prettifyNumber(value, 1);
         },
       },
-      colors: ['var(--color-1-500)'],
+      colors: getBarColors(),
       xaxis: {
         type: 'datetime',
         min: monthlyFormatter ? undefined : moment().subtract(30, 'days').unix() * 1000,
@@ -407,7 +427,12 @@ const StatsView = (props: Props) => {
                           <div className={`card ${styles.chartWrapper}`}>
                             {(stats.packages.viewsMonthly!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart
-                              options={getBarChartConfig('Packages monthly views', true)}
+                              options={getBarChartConfig(
+                                'viewsMonthly',
+                                'Packages monthly views',
+                                true,
+                                stats.packages.viewsMonthly.length
+                              )}
                               series={[{ name: 'Monthly views', data: stats.packages.viewsMonthly }]}
                               type="bar"
                               height={300}
@@ -438,7 +463,12 @@ const StatsView = (props: Props) => {
                           <div className={`card ${styles.chartWrapper}`}>
                             {(stats.packages.viewsDaily!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart
-                              options={getBarChartConfig('Packages daily views', false)}
+                              options={getBarChartConfig(
+                                'viewsDaily',
+                                'Packages daily views',
+                                false,
+                                stats.packages.viewsDaily.length
+                              )}
                               series={[{ name: 'Daily views', data: stats.packages.viewsDaily }]}
                               type="bar"
                               height={300}
