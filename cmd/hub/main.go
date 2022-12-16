@@ -97,9 +97,15 @@ func main() {
 
 	// Setup and launch metrics server
 	go func() {
-		http.Handle("/metrics", promhttp.Handler())
-		err := http.ListenAndServe(cfg.GetString("server.metricsAddr"), nil)
-		if err != nil {
+		handler := http.NewServeMux()
+		handler.Handle("/metrics", promhttp.Handler())
+		metricsSrv := &http.Server{
+			Addr:         cfg.GetString("server.metricsAddr"),
+			ReadTimeout:  5 * time.Second,
+			WriteTimeout: 5 * time.Second,
+			Handler:      handler,
+		}
+		if err := metricsSrv.ListenAndServe(); err != nil {
 			log.Fatal().Err(err).Msg("metrics server ListenAndServe failed")
 		}
 	}()
