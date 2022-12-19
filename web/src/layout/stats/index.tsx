@@ -585,7 +585,7 @@ const StatsView = (props: Props) => {
 
                       {stats.snapshots.createdMonthly && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.packages.createdMonthly })}>
-                          <div className="ps-0 ps-lg-3 ps-xxxl-4 mt-4">
+                          <div className="ps-0 ps-lg-3 ps-xxxl-4 mt-4 mb-4 mb-lg-0">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.snapshots.createdMonthly!.length === 0 || isLoading) && <Loading />}
                               <BrushChart
