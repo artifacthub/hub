@@ -208,7 +208,7 @@ exports[`StatsView creates snapshot 1`] = `
             class="col-12 col-lg-6"
           >
             <div
-              class="ps-0 ps-lg-3 ps-xxxl-4 mt-4"
+              class="ps-0 ps-lg-3 ps-xxxl-4 mt-4 mb-4 mb-lg-0"
             >
               <div
                 class="card chartWrapper"
