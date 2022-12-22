@@ -11,7 +11,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if .Values.hub.ingress.defaultBackendEnabled -}}
+  {{- if .Values.hub.ingress.defaultBackendEnabled }}  
   defaultBackend:
     service:
       name: {{ include "chart.resourceNamePrefix" . }}hub
