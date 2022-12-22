@@ -360,6 +360,11 @@
                             "type": "boolean",
                             "default": true
                         },
+                        "defaultBackendEnabled": {
+                            "title": "Enable default backend for Hub Ingress",
+                            "type": "boolean",
+                            "default": true
+                        },
                         "rules": {
                             "title": "Hub ingress rules",
                             "type": "array",
@@ -381,7 +386,8 @@
                     },
                     "required": [
                         "annotations",
-                        "enabled"
+                        "enabled",
+                        "defaultBackendEnabled"
                     ]
                 },
                 "rbac": {
