@@ -386,7 +386,8 @@
                     },
                     "required": [
                         "annotations",
-                        "enabled"
+                        "enabled",
+                        "defaultBackendEnabled"
                     ]
                 },
                 "rbac": {
