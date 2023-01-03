@@ -129,6 +129,7 @@ hub:
     image:
       # Hub image repository (without the tag)
       repository: artifacthub/hub
+    securityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
@@ -353,6 +354,7 @@ trivy:
   enabled: true
   deploy:
     image: aquasec/trivy:0.35.0
+    securityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.

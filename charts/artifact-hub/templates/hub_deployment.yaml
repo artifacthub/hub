@@ -21,14 +21,18 @@ spec:
         app.kubernetes.io/component: hub
         {{- include "chart.selectorLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.hub.deploy.readinessGates }}
+      {{- with .Values.hub.deploy.readinessGates }}
       readinessGates:
         {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.imagePullSecrets }}
+      {{- end }}
+      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
-    {{- end }}
+      {{- end }}
+      {{- with .Values.hub.deploy.securityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if .Release.IsInstall }}
       serviceAccountName: {{ include "chart.serviceAccountName" . }}
       {{- end }}
