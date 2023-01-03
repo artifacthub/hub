@@ -20,6 +20,10 @@ spec:
         app.kubernetes.io/component: trivy
         {{- include "chart.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.trivy.deploy.securityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: trivy
           image: {{ .Values.trivy.deploy.image }}
