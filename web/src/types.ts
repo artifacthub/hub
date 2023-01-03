@@ -735,8 +735,8 @@ export interface AHStats {
     total: number;
     runningTotal?: any[];
     createdMonthly?: any[];
-    viewsDaily?: any[];
-    viewsMonthly?: any[];
+    viewsDaily?: number[][];
+    viewsMonthly?: number[][];
     topViewsToday?: TopViewsItem[];
     topViewsCurrentMonth?: TopViewsItem[];
   };

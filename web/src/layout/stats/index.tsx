@@ -201,13 +201,21 @@ const StatsView = (props: Props) => {
     id: string,
     title: string,
     monthlyFormatter: boolean,
-    dataLength: number
+    dataLength: number,
+    lastBarDate?: number
   ): ApexCharts.ApexOptions => {
     const getBarColors = (): string[] => {
       if (dataLength > 0) {
+        const isCurrent = !isUndefined(lastBarDate)
+          ? moment(moment.unix(lastBarDate / 1000)).isSame(moment(), monthlyFormatter ? 'month' : 'day')
+          : false;
         let colors = Array.from({ length: dataLength - 1 }, () => 'var(--color-1-500)');
-        // Color for the last bar
-        colors.push(activeTheme === 'dark' ? 'var(--highlighted)' : 'var(--color-1-900)');
+        if (isCurrent) {
+          // Color for the last bar
+          colors.push(activeTheme === 'dark' ? 'var(--highlighted)' : 'var(--color-1-900)');
+        } else {
+          colors.push('var(--color-1-500)');
+        }
         return colors;
       }
       return ['var(--color-1-500)'];
@@ -447,7 +455,10 @@ const StatsView = (props: Props) => {
                                   'viewsMonthly',
                                   'Packages monthly views',
                                   true,
-                                  stats.packages.viewsMonthly.length
+                                  stats.packages.viewsMonthly.length,
+                                  stats.packages.viewsMonthly.length > 0
+                                    ? stats.packages.viewsMonthly.slice(-1)[0][0]
+                                    : undefined
                                 )}
                                 series={[{ name: 'Monthly views', data: stats.packages.viewsMonthly }]}
                                 type="bar"
@@ -491,7 +502,10 @@ const StatsView = (props: Props) => {
                                   'viewsDaily',
                                   'Packages daily views',
                                   false,
-                                  stats.packages.viewsDaily.length
+                                  stats.packages.viewsDaily.length,
+                                  stats.packages.viewsDaily.length > 0
+                                    ? stats.packages.viewsDaily.slice(-1)[0][0]
+                                    : undefined
                                 )}
                                 series={[{ name: 'Daily views', data: stats.packages.viewsDaily }]}
                                 type="bar"
