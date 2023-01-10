@@ -521,7 +521,8 @@ select results_eq(
         (11, 'Tekton pipelines'),
         (12, 'Containers images'),
         (13, 'Kubewarden policies'),
-        (14, 'Gatekeeper policies')
+        (14, 'Gatekeeper policies'),
+        (15, 'Kyverno policies')
     $$,
     'Repository kinds should exist'
 );

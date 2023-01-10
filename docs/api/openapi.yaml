@@ -1341,6 +1341,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/kyverno/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getKyvernoPoliciesDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KyvernoPolicy"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/opa/{repoName}/{packageName}":
     get:
       tags:
@@ -1690,6 +1713,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/KubewardenPoliciesPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/kyverno/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getKyvernoPoliciesVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KyvernoPolicy"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -3581,6 +3628,43 @@ components:
                 kubewarden/mutation:
                   type: string
                   example: "true"
+    KyvernoPolicy:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            relative_path:
+              type: string
+              nullable: false
+              example: /general/allowedrepos
+            data:
+              type: object
+              nullable: false
+              properties:
+                policy:
+                  type: string
+                  nullable: false
+                  example: >-
+                    apiVersion: kyverno.io/v1
+                    kind: ClusterPolicy
+                    metadata:
+                      name: add-certificates-volume
+                      annotations:
+                        policies.kyverno.io/title: Add Certificates as a Volume
+                        policies.kyverno.io/category: Sample
+                        policies.kyverno.io/subject: Pod,Volume
+                kyverno/subject:
+                  type: string
+                  example: "Pod, Volume"
+                kyverno/version:
+                  type: string
+                  example: "1.5.0"
+                kyverno/kubernetesVersion:
+                  type: string
+                  example: "1.21"
+                kyverno/category:
+                  type: string
+                  example: "OpenShift"
     Link:
       type: object
       nullable: false
@@ -4168,6 +4252,7 @@ components:
           * `12` - Container images
           * `13` - Kubewarden policies
           * `14` - Gatekeeper policies
+          * `15` - Kyverno policies
     RepositoryKindParam:
       type: string
       enum:
@@ -4186,6 +4271,7 @@ components:
         - container
         - kubewarden
         - gatekeeper
+        - kyverno
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4203,6 +4289,7 @@ components:
         * `container` - Container images
         * `kubewarden` - Kubewarden policies
         * `gatekeeper` - Gatekeeper policies
+        * `kyverno` - Kyverno policies
     RepositorySummary:
       type: object
       required:
@@ -4700,6 +4787,7 @@ components:
           * `12` - Container images
           * `13` - Kubewarden policies
           * `14` - Gatekeeper policies
+          * `15` - Kyverno policies
     PackageNameParam:
       in: path
       name: packageName

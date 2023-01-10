@@ -110,6 +110,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Kubewarden policies
                     </option>
                     <option
+                      value="15"
+                    >
+                      Kyverno policies
+                    </option>
+                    <option
                       value="3"
                     >
                       OLM operators

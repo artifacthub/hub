@@ -112,7 +112,15 @@ func SetupSource(i *hub.TrackerSourceInput) hub.TrackerSource {
 		source = krew.NewTrackerSource(i)
 	case hub.OLM:
 		source = olm.NewTrackerSource(i)
-	case hub.OPA, hub.TBAction, hub.KedaScaler, hub.CoreDNS, hub.Keptn, hub.Kubewarden, hub.Gatekeeper:
+	case
+		hub.CoreDNS,
+		hub.Gatekeeper,
+		hub.KedaScaler,
+		hub.Keptn,
+		hub.Kubewarden,
+		hub.Kyverno,
+		hub.OPA,
+		hub.TBAction:
 		source = generic.NewTrackerSource(i)
 	case hub.TektonTask, hub.TektonPipeline:
 		source = tekton.NewTrackerSource(i)

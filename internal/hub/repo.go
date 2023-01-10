@@ -91,6 +91,9 @@ const (
 
 	// Gatekeeper represents a repository with Gatekeeper policies.
 	Gatekeeper RepositoryKind = 14
+
+	// Kyverno represents a repository with Kyverno policies.
+	Kyverno RepositoryKind = 15
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -116,6 +119,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "krew"
 	case Kubewarden:
 		return "kubewarden"
+	case Kyverno:
+		return "kyverno"
 	case OLM:
 		return "olm"
 	case OPA:
@@ -155,6 +160,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return Krew, nil
 	case "kubewarden":
 		return Kubewarden, nil
+	case "kyverno":
+		return Kyverno, nil
 	case "olm":
 		return OLM, nil
 	case "opa":

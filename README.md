@@ -24,6 +24,7 @@ At the moment, the following artifacts kinds are supported *(with plans to suppo
 - [Keptn integrations](https://keptn.sh)
 - [Kubectl plugins (Krew)](https://krew.sigs.k8s.io/)
 - [Kubewarden policies](https://www.kubewarden.io)
+- [Kyverno policies](https://kyverno.io)
 - [OLM operators](https://github.com/operator-framework)
 - [Open Policy Agent (OPA) policies](https://www.openpolicyagent.org/)
 - [Tekton tasks and pipelines](https://tekton.dev/)

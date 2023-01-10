@@ -8,6 +8,7 @@ import {
   HelmChartType,
   KeptnData,
   KubewardenData,
+  KyvernoData,
   Package,
   PackageViewsStats,
   RepositoryKind,
@@ -275,6 +276,58 @@ const Details = (props: Props) => {
                 )}
               </>
             );
+
+          case RepositoryKind.Kyverno:
+            const subjects: string[] =
+              props.package.data &&
+              !isUndefined(props.package.data[KyvernoData.Subject]) &&
+              props.package.data[KyvernoData.Subject] !== ''
+                ? props.package.data[KyvernoData.Subject]!.split(',')
+                : [];
+
+            return (
+              <>
+                {props.package.data && props.package.data.kyvernoVersion && (
+                  <div>
+                    <SmallTitle text="Minimal version" />
+                    <p data-testid="appVersion" className="text-truncate">
+                      {props.package.data.kyvernoVersion}
+                    </p>
+                  </div>
+                )}
+                {props.package.data && props.package.data.kyvernoKubernetesVersion && (
+                  <div>
+                    <SmallTitle text="Kubernetes version" />
+                    <p data-testid="kubernetesVersion" className="text-truncate">
+                      {props.package.data.kyvernoKubernetesVersion}
+                    </p>
+                  </div>
+                )}
+                {props.package.data && props.package.data.kyvernoCategory && (
+                  <div>
+                    <SmallTitle text="Category" />
+                    <p data-testid="category" className="text-truncate">
+                      {props.package.data.kyvernoCategory}
+                    </p>
+                  </div>
+                )}
+                {subjects.length > 0 && (
+                  <div>
+                    <SmallTitle text="Subjects" />
+                    {subjects.map((subject: string, index: number) => (
+                      <p
+                        data-testid="kyvernoSubject"
+                        className={classnames('text-truncate', { 'mb-1': index + 1 !== subjects.length })}
+                        key={`kyverno-subject-${subject}`}
+                      >
+                        {subject}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </>
+            );
+
           case RepositoryKind.TektonTask:
             return (
               <>

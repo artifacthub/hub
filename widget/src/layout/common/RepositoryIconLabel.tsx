@@ -76,6 +76,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.Gatekeeper,
     name: 'Gatekeeper policy',
   },
+  {
+    kind: RepositoryKind.Kyverno,
+    name: 'Kyverno policy',
+  },
 ];
 
 const Wrapper = styled('span')`

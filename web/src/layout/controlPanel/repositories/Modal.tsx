@@ -409,6 +409,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.Kyverno:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/kyverno-policies"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Kyverno policies
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -431,6 +442,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.TektonPipeline:
               case RepositoryKind.Kubewarden:
               case RepositoryKind.Gatekeeper:
+              case RepositoryKind.Kyverno:
                 return (
                   <>
                     <p
@@ -817,6 +829,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.TektonPipeline,
               RepositoryKind.Kubewarden,
               RepositoryKind.Gatekeeper,
+              RepositoryKind.Kyverno,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -956,6 +969,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Container,
               RepositoryKind.Kubewarden,
               RepositoryKind.Gatekeeper,
+              RepositoryKind.Kyverno,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

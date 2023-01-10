@@ -59,6 +59,8 @@ const Image = (props: Props) => {
           return '/static/media/placeholder_pkg_kubewarden.png';
         case RepositoryKind.Gatekeeper:
           return '/static/media/placeholder_pkg_gatekeeper.png';
+        case RepositoryKind.Kyverno:
+          return '/static/media/placeholder_pkg_kyverno.png';
         default:
           return PLACEHOLDER_SRC;
       }

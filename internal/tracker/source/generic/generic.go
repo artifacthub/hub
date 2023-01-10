@@ -29,6 +29,10 @@ const (
 	// that contains the template.
 	GatekeeperTemplateKey = "template"
 
+	// KyvernoPolicyKey represents the key used in the package's data field that
+	// contains the raw policy.
+	KyvernoPolicyKey = "policy"
+
 	// OPAPoliciesKey represents the key used in the package's data field that
 	// contains the raw policies.
 	OPAPoliciesKey = "policies"
@@ -191,6 +195,8 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 		kindData, err = prepareFalcoData(pkgPath, ignorer)
 	case hub.Gatekeeper:
 		kindData, err = prepareGatekeeperData(pkgPath)
+	case hub.Kyverno:
+		kindData, err = prepareKyvernoData(pkgPath)
 	case hub.OPA:
 		kindData, err = prepareOPAData(pkgPath, ignorer)
 	}
@@ -280,6 +286,22 @@ func prepareGatekeeperData(pkgPath string) (map[string]interface{}, error) {
 	return map[string]interface{}{
 		GatekeeperTemplateKey: string(template),
 		GatekeeperExamplesKey: examples,
+	}, nil
+}
+
+// prepareKyernoData reads and formats Kyverno specific data available in the
+// path provided, returning the resulting data structure.
+func prepareKyvernoData(pkgPath string) (map[string]interface{}, error) {
+	// Read policy file
+	policyPath := path.Join(pkgPath, path.Base(pkgPath)+".yaml")
+	policy, err := os.ReadFile(policyPath)
+	if err != nil {
+		return nil, fmt.Errorf("error reading kyverno policy file: %w", err)
+	}
+
+	// Return package data field
+	return map[string]interface{}{
+		KyvernoPolicyKey: string(policy),
 	}, nil
 }
 

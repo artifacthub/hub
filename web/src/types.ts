@@ -16,6 +16,7 @@ export enum RepositoryKind {
   Container,
   Kubewarden,
   Gatekeeper,
+  Kyverno,
 }
 
 export enum KeptnData {
@@ -26,6 +27,13 @@ export enum KeptnData {
 export enum KubewardenData {
   Resources = 'kubewardenResources',
   Mutation = 'kubewardenMutation',
+}
+
+export enum KyvernoData {
+  Subject = 'kyvernoSubject',
+  Version = 'kyvernoVersion',
+  KubernetesVersion = 'kyvernoKubernetesVersion',
+  Category = 'kyvernoCategory',
 }
 
 export enum HelmChartType {
@@ -214,10 +222,15 @@ export interface PackageData {
   apiVersion?: string;
   type?: HelmChartType;
   kubeVersion?: string;
+  policy?: string;
   [KeptnData.Version]?: string;
   [KeptnData.Kind]?: string;
   [KubewardenData.Resources]?: string;
   [KubewardenData.Mutation]?: string;
+  [KyvernoData.Subject]?: string;
+  [KyvernoData.Version]?: string;
+  [KyvernoData.Category]?: string;
+  [KyvernoData.KubernetesVersion]?: string;
   tasks?: TektonTaskInPipeline[];
   alternativeLocations?: string[];
 }
