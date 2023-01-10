@@ -38,6 +38,7 @@ export enum RepositoryKind {
   Container,
   Kubewarden,
   Gatekeeper,
+  Kyverno,
 }
 
 export interface SearchResults {

@@ -2047,6 +2047,17 @@ func TestBuildURL(t *testing.T) {
 			"2.0.0",
 			baseURL + "/packages/gatekeeper/repo1/pkg1/2.0.0",
 		},
+		{
+			&hub.Package{
+				NormalizedName: "pkg1",
+				Repository: &hub.Repository{
+					Kind: hub.Kyverno,
+					Name: "repo1",
+				},
+			},
+			"2.0.0",
+			baseURL + "/packages/kyverno/repo1/pkg1/2.0.0",
+		},
 	}
 	for _, tc := range testCases {
 		tc := tc

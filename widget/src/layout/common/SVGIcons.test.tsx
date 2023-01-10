@@ -98,6 +98,11 @@ describe('SVGIcons', () => {
     expect(screen.getByTitle('gatekeeper'));
   });
 
+  it('renders kyverno icon', () => {
+    render(<SVGIcons name="kyverno" />);
+    expect(screen.getByTitle('kyverno'));
+  });
+
   it('does not render when name is not in the list', () => {
     render(<SVGIcons name="not-listed" />);
     expect(screen.getByTestId('iconWrapper')).toBeEmptyDOMElement();

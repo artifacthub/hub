@@ -130,6 +130,13 @@ describe('Image', () => {
     expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/placeholder_pkg_gatekeeper.png');
   });
 
+  it('renders Kyverno icon', () => {
+    render(<Image {...defaultProps} kind={RepositoryKind.Kyverno} />);
+    const image = screen.getByAltText('alt image');
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/placeholder_pkg_kyverno.png');
+  });
+
   it('renders placeholder icon', () => {
     render(<Image {...defaultProps} placeholderIcon={<>icon</>} />);
     expect(screen.getByText('icon')).toBeInTheDocument();

@@ -63,6 +63,10 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('gatekeeper')).toBe(RepositoryKind.Gatekeeper);
     });
 
+    it('kyverno', () => {
+      expect(methods.getRepoKind('kyverno')).toBe(RepositoryKind.Kyverno);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -127,6 +131,10 @@ describe('repoKind', () => {
 
     it('gatekeeper kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.Gatekeeper)).toBe('gatekeeper');
+    });
+
+    it('kyverno kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.Kyverno)).toBe('kyverno');
     });
 
     it('unknown kind', () => {

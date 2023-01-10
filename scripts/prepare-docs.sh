@@ -16,6 +16,7 @@ cat docs/www/headers/keda_scalers_repositories docs/keda_scalers_repositories.md
 cat docs/www/headers/keptn_integrations_repositories docs/keptn_integrations_repositories.md > docs/www/content/topics/repositories/keptn-integrations.md
 cat docs/www/headers/krew_kubectl_plugins_repositories docs/krew_kubectl_plugins_repositories.md > docs/www/content/topics/repositories/krew-kubectl-plugins.md
 cat docs/www/headers/kubewarden_policies_repositories docs/kubewarden_policies_repositories.md > docs/www/content/topics/repositories/kubewarden-policies.md
+cat docs/www/headers/kyverno_policies_repositories docs/kyverno_policies_repositories.md > docs/www/content/topics/repositories/kyverno-policies.md
 cat docs/www/headers/olm_operators_repositories docs/olm_operators_repositories.md > docs/www/content/topics/repositories/olm-operators.md
 cat docs/www/headers/opa_policies_repositories docs/opa_policies_repositories.md > docs/www/content/topics/repositories/opa-policies.md
 cat docs/www/headers/tekton_pipelines_repositories docs/tekton_pipelines_repositories.md > docs/www/content/topics/repositories/tekton-pipelines.md
@@ -24,8 +25,9 @@ cat docs/www/headers/tinkerbell_actions_repositories docs/tinkerbell_actions_rep
 cat docs/www/headers/security_report docs/security_report.md > docs/www/content/topics/security_report.md
 cat docs/www/headers/cli docs/cli.md > docs/www/content/topics/cli.md
 cat docs/www/headers/helm_annotations docs/helm_annotations.md > docs/www/content/topics/annotations/helm.md
-cat docs/www/headers/olm_annotations docs/olm_annotations.md > docs/www/content/topics/annotations/olm.md
-cat docs/www/headers/krew_annotations docs/krew_annotations.md > docs/www/content/topics/annotations/krew.md
-cat docs/www/headers/tekton_annotations docs/tekton_annotations.md > docs/www/content/topics/annotations/tekton.md
 cat docs/www/headers/keptn_annotations docs/keptn_annotations.md > docs/www/content/topics/annotations/keptn.md
+cat docs/www/headers/krew_annotations docs/krew_annotations.md > docs/www/content/topics/annotations/krew.md
 cat docs/www/headers/kubewarden_annotations docs/kubewarden_annotations.md > docs/www/content/topics/annotations/kubewarden.md
+cat docs/www/headers/kyverno_annotations docs/kyverno_annotations.md > docs/www/content/topics/annotations/kyverno.md
+cat docs/www/headers/olm_annotations docs/olm_annotations.md > docs/www/content/topics/annotations/olm.md
+cat docs/www/headers/tekton_annotations docs/tekton_annotations.md > docs/www/content/topics/annotations/tekton.md

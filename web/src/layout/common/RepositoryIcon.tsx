@@ -69,6 +69,10 @@ const ICONS = {
     default: '/static/media/gatekeeper.svg',
     white: '/static/media/gatekeeper-light.svg',
   },
+  [RepositoryKind.Kyverno]: {
+    default: '/static/media/kyverno.svg',
+    white: '/static/media/kyverno-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

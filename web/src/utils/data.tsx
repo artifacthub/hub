@@ -179,6 +179,15 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     active: true,
   },
   {
+    kind: RepositoryKind.Kyverno,
+    label: 'kyverno',
+    name: 'Kyverno policies',
+    singular: 'Kyverno policy',
+    plural: 'Kyverno policies',
+    icon: <RepositoryIcon kind={RepositoryKind.Kyverno} className="mw-100 mh-100" />,
+    active: true,
+  },
+  {
     kind: RepositoryKind.OLM,
     label: 'olm',
     name: 'OLM operators',
@@ -777,4 +786,4 @@ export const CVSS_V3_VECTORS: { [key: string]: CVSSVectorMetric[] } = {
 export const OCI_PREFIX = 'oci://';
 
 export const PKG_DETAIL_PATH =
-  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|container)\//;
+  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|container)\//;
