@@ -1039,8 +1039,8 @@ github.com/subosito/gotenv v1.4.1 h1:jyEFiXpy21Wm81FBN71l9VoMMV8H8jG+qIK3GCpY6Qs
 github.com/subosito/gotenv v1.4.1/go.mod h1:ayKnFf/c6rvx/2iiLrJUk1e6plDbT3edrFNGqEflhK0=
 github.com/tchap/go-patricia/v2 v2.3.1 h1:6rQp39lgIYZ+MHmdEq4xzuk1t7OdC35z/xm0BGhTkes=
 github.com/tchap/go-patricia/v2 v2.3.1/go.mod h1:VZRHKAb53DLaG+nA9EaYYiaEx6YztwDlLElMsnSHD4k=
-github.com/tektoncd/pipeline v0.43.0 h1:Rx4L68YG9WnVMA4nEBoFxiTxAoBcmnY0mDgZegeMuFM=
-github.com/tektoncd/pipeline v0.43.0/go.mod h1:KEnQsGxxeK7UjVMzVt62CEa7VZ6GUuMJfUHAaEpVP+E=
+github.com/tektoncd/pipeline v0.43.2 h1:4ia0gBE7YEcbclbI7yO4rwNH37IhxOhfI/cSs89qdm8=
+github.com/tektoncd/pipeline v0.43.2/go.mod h1:KEnQsGxxeK7UjVMzVt62CEa7VZ6GUuMJfUHAaEpVP+E=
 github.com/theupdateframework/go-tuf v0.5.2-0.20220930112810-3890c1e7ace4 h1:1i/Afw3rmaR1gF3sfVkG2X6ldkikQwA9zY380LrR5YI=
 github.com/theupdateframework/go-tuf v0.5.2-0.20220930112810-3890c1e7ace4/go.mod h1:vAqWV3zEs89byeFsAYoh/Q14vJTgJkHwnnRCWBBBINY=
 github.com/thoas/go-funk v0.9.1 h1:O549iLZqPpTUQ10ykd26sZhzD+rmR5pWhuElrhbC20M=
