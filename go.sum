@@ -125,8 +125,8 @@ github.com/anmitsu/go-shlex v0.0.0-20200514113438-38f4b401e2be/go.mod h1:ySMOLuW
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/antlr/antlr4/runtime/Go/antlr v0.0.0-20220418222510-f25a4f6275ed h1:ue9pVfIcP+QMEjfgo/Ez4ZjNZfonGgR6NgjMaJMu1Cg=
 github.com/antlr/antlr4/runtime/Go/antlr v0.0.0-20220418222510-f25a4f6275ed/go.mod h1:F7bn7fEU90QkQ3tnmaTx3LTKLEDqnwWODIYppRQ5hnY=
-github.com/aquasecurity/trivy v0.36.0 h1:gSdhCEKxgyGFqePNpd1iN0aDE6KVZKD5DCeNuFFncb8=
-github.com/aquasecurity/trivy v0.36.0/go.mod h1:BYf0N35ngRuVFrH4tBodwHefmQPmV62rcafMTHt9QjY=
+github.com/aquasecurity/trivy v0.36.1 h1:us206bak5Nn3OD28fqtF8REuX/8/SxtMyrw6pxcZbtU=
+github.com/aquasecurity/trivy v0.36.1/go.mod h1:Ks5KGacvQr1R22PzQa2smp5qO5ZhisZoS2kgD0zT7pc=
 github.com/aquasecurity/trivy-db v0.0.0-20221227141502-af78ecb7db4c h1:CgJiXxVxgFOQ4btP97LEYqEHnx++FRpf2IJEXJV+xHs=
 github.com/aquasecurity/trivy-db v0.0.0-20221227141502-af78ecb7db4c/go.mod h1:/nULgnDeq/JMPMVwE1dmf4kWlYn++7VrM3O2naj4BHA=
 github.com/arbovm/levenshtein v0.0.0-20160628152529-48b4e1c0c4d0 h1:jfIu9sQUG6Ig+0+Ap1h4unLjW6YQJpKZVmUzxsD4E/Q=
@@ -975,8 +975,8 @@ github.com/shurcooL/sanitized_anchor_name v0.0.0-20170918181015-86672fcb3f95/go.
 github.com/shurcooL/sanitized_anchor_name v1.0.0/go.mod h1:1NzhyTcUVG4SuEtjjoZeVRXNmyL/1OwPU0+IJeTBvfc=
 github.com/sigstore/cosign v1.13.1 h1:+5oF8jisEcDw2TuXxCADC1u5//HfdnJhGbpv9Isiwu4=
 github.com/sigstore/cosign v1.13.1/go.mod h1:PlfJODkovUOKsLrGI7Su57Ie/Eb/Ks7hRHw3tn5hQS4=
-github.com/sigstore/rekor v1.0.0 h1:64IeShnl8n862APKu4MyDObAOjwNL//je6okig4uQw8=
-github.com/sigstore/rekor v1.0.0/go.mod h1:8FPG2wHngSA4Bo8tgOn0C/PIDDNi4iiNePhAiyJlv5Q=
+github.com/sigstore/rekor v1.0.1 h1:rcESXSNkAPRWFYZel9rarspdvneET60F2ngNkadi89c=
+github.com/sigstore/rekor v1.0.1/go.mod h1:ecTKdZWGWqE1pl3U1m1JebQJLU/hSjD9vYHOmHQ7w4g=
 github.com/sigstore/sigstore v1.4.6 h1:2F1LPnQf6h1lRDCyNMoBE0WCPsA+IU5kAEAbGxG8S+U=
 github.com/sigstore/sigstore v1.4.6/go.mod h1:jGHEfVTFgpfDpBz7pSY4X+Sd+g36qdAUxGufNk47k7g=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
