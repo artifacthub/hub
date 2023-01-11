@@ -1,5 +1,5 @@
 # Build tracker
-FROM golang:1.19.4-alpine3.16 AS builder
+FROM golang:1.19.5-alpine3.17 AS builder
 WORKDIR /go/src/github.com/artifacthub/hub
 COPY go.* ./
 COPY cmd/tracker cmd/tracker
@@ -13,7 +13,7 @@ RUN apk --no-cache add build-base
 RUN GO111MODULE=on go get github.com/operator-framework/operator-registry/cmd/opm@v1.26.2
 
 # Final stage
-FROM alpine:3.16.3
+FROM alpine:3.17.1
 RUN apk --no-cache add ca-certificates && addgroup -S tracker -g 1000 && adduser -S tracker -u 1000 -G tracker
 USER 1000
 WORKDIR /home/tracker
