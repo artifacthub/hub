@@ -27,11 +27,7 @@ describe('OLMInstall', () => {
       render(<OLMInstall {...defaultProps} />);
 
       expect(screen.getByText('Install the operator by running the following command:')).toBeInTheDocument();
-      expect(
-        screen.getByText(
-          `kubectl create -f https://operatorhub.io/install/${defaultProps.defaultChannel}/${defaultProps.name}.yaml`
-        )
-      ).toBeInTheDocument();
+      expect(screen.getByText(`cat <<EOF | kubectl apply -f -`)).toBeInTheDocument();
       expect(screen.getByText('After install, watch your operator come up using next command:')).toBeInTheDocument();
       expect(screen.getByText(`kubectl get csv -n my-${defaultProps.name}`)).toBeInTheDocument();
       expect(

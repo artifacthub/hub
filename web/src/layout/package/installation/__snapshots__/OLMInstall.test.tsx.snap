@@ -12,7 +12,7 @@ exports[`OLMInstall creates snapshot 1`] = `
     </small>
   </div>
   <div
-    class=" w-50"
+    class="mb-3 w-50"
   >
     <select
       aria-label="channel-select"
@@ -49,12 +49,38 @@ exports[`OLMInstall creates snapshot 1`] = `
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
       >
         <code
-          class="language-bash"
+          class="language-text"
           style="white-space: pre;"
         >
           <span>
-            kubectl create -f https://operatorhub.io/install/stable/packageName.yaml
+            cat &lt;&lt;EOF | kubectl apply -f -
+
           </span>
+          apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-packageName
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: operatorgroup
+  namespace: my-packageName
+spec:
+  targetNamespaces:
+  - my-packageName
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: my-packageName
+  namespace: my-packageName
+spec:
+  channel: stable
+  name: packageName
+  source: operatorhubio-catalog
+  sourceNamespace: olm
+EOF
         </code>
       </pre>
     </div>

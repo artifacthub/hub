@@ -2,6 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, useState } from 'react';
 
 import { Channel } from '../../../types';
+import getOLMInstallInstructions from '../../../utils/getOLMInstallInstructions';
 import ExternalLink from '../../common/ExternalLink';
 import CommandBlock from './CommandBlock';
 import styles from './ContentInstall.module.css';
@@ -26,7 +27,11 @@ const OLMInstall = (props: Props) => {
   const namespace = !isUndefined(props.isGlobalOperator) && props.isGlobalOperator ? 'operators' : `my-${props.name}`;
   const [activeChannel, setActiveChannel] = useState<string | undefined>(getActiveChannel());
 
-  if (isUndefined(props.channels)) return null;
+  if (isUndefined(props.channels) || isUndefined(activeChannel)) return null;
+
+  const install = `cat <<EOF | kubectl apply -f -
+${getOLMInstallInstructions(props.name, activeChannel, props.isGlobalOperator)}
+EOF`;
 
   return (
     <>
@@ -34,7 +39,7 @@ const OLMInstall = (props: Props) => {
         <small className="text-muted mt-2 mb-1">Channel</small>
       </div>
 
-      <div className=" w-50">
+      <div className="mb-3 w-50">
         <select
           className="form-select form-select-sm"
           aria-label="channel-select"
@@ -49,10 +54,7 @@ const OLMInstall = (props: Props) => {
         </select>
       </div>
 
-      <CommandBlock
-        command={`kubectl create -f https://operatorhub.io/install/${activeChannel}/${props.name}.yaml`}
-        title="Install the operator by running the following command:"
-      />
+      <CommandBlock command={install} language="text" title="Install the operator by running the following command:" />
 
       <small>
         This Operator will be installed in the "<span className="fw-bold">{namespace}</span>" namespace and will be
