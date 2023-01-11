@@ -63,7 +63,7 @@
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-mock": "^29.3.1",
-    "prettier": "^2.8.1",
+    "prettier": "^2.8.2",
     "react-scripts": "^5.0.1",
     "sass": "^1.57.1",
     "shx": "^0.3.4",
