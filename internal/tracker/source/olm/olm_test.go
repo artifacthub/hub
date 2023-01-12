@@ -180,6 +180,7 @@ func TestTrackerSource(t *testing.T) {
 		// Run test and check expectations
 		p := source.ClonePackage(basePkg)
 		p.Repository = i.Repository
+		p.Digest = "8593896476590401712"
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{
 			pkg.BuildKey(p): p,
@@ -204,6 +205,7 @@ func TestTrackerSource(t *testing.T) {
 		p := source.ClonePackage(basePkg)
 		p.Repository = i.Repository
 		p.LogoImageID = "logoImageID"
+		p.Digest = "8593896476590401712"
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{
 			pkg.BuildKey(p): p,
@@ -243,8 +245,10 @@ func TestTrackerSource(t *testing.T) {
 			formatKey:           "bundle",
 			isGlobalOperatorKey: true,
 		}
+		p1.Digest = "4754685990438200306"
 		p2 := source.ClonePackage(p1)
 		p2.Version = "0.2.0"
+		p2.Digest = "6605061498162416521"
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{
 			pkg.BuildKey(p1): p1,

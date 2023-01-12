@@ -22,6 +22,7 @@ require (
 	github.com/hashicorp/golang-lru v0.6.0
 	github.com/jackc/pgconn v1.13.0
 	github.com/jackc/pgx/v4 v4.17.2
+	github.com/mitchellh/hashstructure/v2 v2.0.2
 	github.com/open-policy-agent/gatekeeper v0.0.0-20220914233027-c4e08c683e2c
 	github.com/open-policy-agent/opa v0.46.1
 	github.com/opencontainers/image-spec v1.1.0-rc2
