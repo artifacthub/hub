@@ -594,6 +594,8 @@ func setPackagesDefaultChannel(packages map[string]*hub.Package) {
 				if p.DefaultChannel != "" {
 					latestDefaultChannel[name] = p.DefaultChannel
 				}
+			} else if latestDefaultChannel[name] == "" && p.DefaultChannel != "" {
+				latestDefaultChannel[name] = p.DefaultChannel
 			}
 		}
 	}
