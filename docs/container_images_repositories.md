@@ -70,4 +70,13 @@ oras push \
 
 The repository metadata file is pushed to the registry using a special tag named `artifacthub.io`. Artifact Hub will pull that artifact looking for the `application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml` layer when the repository metadata is needed.
 
-*Please note that publishing an Artifact Hub repository metadata file requires that the registry supports [OCI artifacts](https://oras.land/implementors/). At the time of writing this, the Docker Hub [does not support them yet](https://github.com/docker/roadmap/issues/135).*
+The [OCI Artifacts support](https://www.docker.com/blog/announcing-docker-hub-oci-artifacts-support/) has been landed on Docker Hub recently, so you can now start publishing your repository metadata file to the Docker Hub without having any problem. You can use the following command to do so:
+
+```bash
+oras push \
+  docker.io/repository:artifacthub.io \
+  --manifest-config /dev/null:application/vnd.cncf.artifacthub.config.v1+yaml \
+  artifacthub-repo.yml:application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml
+```
+
+*Please note that publishing an Artifact Hub repository metadata file requires that the registry supports [OCI artifacts](https://oras.land/implementors/).
