@@ -3,13 +3,13 @@
 exports[`Navbar creates snapshot 1`] = `
 <DocumentFragment>
   <nav
-    class="navbar navbar-top navbar-expand-lg navbar-dark border-top-0 p-3 navbar bg-transparent w-100 position-absolute homeNavbar"
+    class="navbar navbar-top navbar-expand-lg navbar-dark border-top-0 p-2 p-sm-3 navbar bg-transparent w-100 position-absolute homeNavbar"
   >
     <div
-      class="container-lg px-sm-4 px-lg-0"
+      class="container-lg px-0 px-sm-4 px-lg-0"
     >
       <div
-        class="d-flex flex-row mobileWrapper"
+        class="d-flex flex-row px-1 mobileWrapper"
       >
         <a
           class="navbar-brand d-flex align-items-center"

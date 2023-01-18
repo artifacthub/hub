@@ -96,7 +96,7 @@ const OrganizationInfo = (props: Props) => {
             <div className={styles.content}>
               <div className="d-flex flex-row align-items-center">
                 <div
-                  className={`d-flex align-items-center justify-content-center overflow-hidden me-2 p-1 position-relative border border-2 rounded-circle bg-white ${styles.imageWrapper} imageWrapper`}
+                  className={`d-flex align-items-center justify-content-center overflow-hidden me-2 position-relative ${styles.imageWrapper}`}
                 >
                   {organization.logoImageId ? (
                     <Image
@@ -137,15 +137,15 @@ const OrganizationInfo = (props: Props) => {
         </div>
       </div>
 
-      <div className="d-flex flex-row align-items-start text-truncate">
+      <div className="d-flex flex-row align-items-baseline text-truncate">
         {props.visibleLegend && (
-          <div className="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase">
-            <small>Org:</small>
+          <div className={`d-flex flex-row align-items-baseline me-1 text-dark position-relative ${styles.icon}`}>
+            <MdBusiness />
           </div>
         )}
 
         <button
-          className={`p-0 border-0 text-dark text-truncate flex-grow-1 bg-transparent position-relative ${styles.link} ${props.btnClassName}`}
+          className={`p-0 border-0 text-muted text-truncate flex-grow-1 bg-transparent position-relative ${styles.link} ${props.btnClassName}`}
           onClick={(e) => {
             e.preventDefault();
             history.push({

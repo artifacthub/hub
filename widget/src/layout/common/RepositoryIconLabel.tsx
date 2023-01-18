@@ -85,7 +85,6 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
 const Wrapper = styled('span')`
   background-color: var(--bg-badge);
   border: 1px solid var(--color-ah-black-15);
-  border-radius: 50rem;
   display: flex;
   align-items: center;
   padding: 0.25em 0.4em;

@@ -312,7 +312,7 @@ const ContentDefaultModal = (props: Props) => {
                                         <div className={styles.legend}>
                                           <small className="text-muted text-uppercase">Kind:</small>
                                         </div>
-                                        <span className={`text-truncate border fw-bold ${styles.label}`}>
+                                        <span className={`text-truncate border fw-semibold ${styles.label}`}>
                                           {resource.kind}
                                         </span>
                                       </div>
@@ -360,20 +360,18 @@ const ContentDefaultModal = (props: Props) => {
                               return (
                                 <div className={`p-3 border-bottom ${styles.extraInfo}`}>
                                   <div className="h6 fw-bold">{selectedItem.displayName || selectedItem.name}</div>
-                                  <div className="d-flex flex-row align-items-baseline mb-1">
-                                    <div className={styles.legend}>
-                                      <small className="text-muted text-uppercase">Name:</small>
-                                    </div>
-                                    <div className={`text-truncate ${styles.btnItemContent}`}>{selectedItem.name}</div>
+                                  <div className="mb-1">
+                                    <small className="text-muted text-uppercase me-2">Name:</small>
+                                    <span className={`text-truncate ${styles.btnItemContent}`}>
+                                      {selectedItem.name}
+                                    </span>
                                   </div>
 
-                                  <div className="d-flex flex-row align-items-baseline mb-1">
-                                    <div className={styles.legend}>
-                                      <small className="text-muted text-uppercase">Description:</small>
-                                    </div>
-                                    <div className={styles.btnItemContent}>
+                                  <div className="mb-1">
+                                    <small className="text-muted text-uppercase me-2">Description:</small>
+                                    <span className={styles.btnItemContent}>
                                       {selectedItem.description.replace(/\n/g, ' ')}
-                                    </div>
+                                    </span>
                                   </div>
                                 </div>
                               );

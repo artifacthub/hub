@@ -48,7 +48,7 @@ exports[`StatsView creates snapshot 1`] = `
           class="header"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper mb-4 fw-bold title"
+            class="position-relative anchorHeader headingWrapper mb-4 fw-semibold title"
           >
             <div
               class="position-absolute headerAnchor"
@@ -121,7 +121,7 @@ exports[`StatsView creates snapshot 1`] = `
           class="header"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper mb-4 fw-bold title"
+            class="position-relative anchorHeader headingWrapper mb-4 fw-semibold title"
           >
             <div
               class="position-absolute headerAnchor"
@@ -224,7 +224,7 @@ exports[`StatsView creates snapshot 1`] = `
           class="header"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper my-4 fw-bold title"
+            class="position-relative anchorHeader headingWrapper my-4 fw-semibold title"
           >
             <div
               class="position-absolute headerAnchor"
@@ -274,7 +274,7 @@ exports[`StatsView creates snapshot 1`] = `
           class="header"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper mt-4 fw-bold title"
+            class="position-relative anchorHeader headingWrapper mt-4 fw-semibold title"
           >
             <div
               class="position-absolute headerAnchor"

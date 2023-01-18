@@ -19,7 +19,7 @@ exports[`Details renders correctly 1`] = `
       </small>
     </div>
     <p
-      class="text-truncate"
+      class="text-truncate text"
       data-testid="appVersion"
     >
       0.5.1
@@ -40,7 +40,7 @@ exports[`Details renders correctly 1`] = `
       </div>
       <small>
         <a
-          class="badge rounded-pill bg-secondary rssBadge ms-3"
+          class="badge bg-secondary rssBadge ms-3"
           href="/api/v1/packages/helm/incubator/undefined/feed/rss"
           rel="alternate noopener noreferrer"
           role="button"
@@ -87,7 +87,7 @@ exports[`Details renders correctly 1`] = `
           >
             <button
               aria-label="Open version 1.0.0"
-              class="btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-start"
+              class="btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-start version"
             >
               1.0.0
             </button>
@@ -148,7 +148,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border rounded-circle top-0 marker level0"
+                  class="me-2 border top-0 marker level0"
                 />
                 Releases: 
                 <span
@@ -184,7 +184,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border rounded-circle top-0 marker level0"
+                  class="me-2 border top-0 marker level0"
                 />
                 Releases: 
                 <span
@@ -220,7 +220,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border rounded-circle top-0 marker level0"
+                  class="me-2 border top-0 marker level0"
                 />
                 Releases: 
                 <span
@@ -256,7 +256,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border rounded-circle top-0 marker level0"
+                  class="me-2 border top-0 marker level0"
                 />
                 Releases: 
                 <span
@@ -292,7 +292,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border rounded-circle top-0 marker level0"
+                  class="me-2 border top-0 marker level0"
                 />
                 Releases: 
                 <span
@@ -328,7 +328,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border rounded-circle top-0 marker level0"
+                  class="me-2 border top-0 marker level0"
                 />
                 Releases: 
                 <span
@@ -364,7 +364,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border rounded-circle top-0 marker level0"
+                  class="me-2 border top-0 marker level0"
                 />
                 Releases: 
                 <span
@@ -400,7 +400,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border rounded-circle top-0 marker level0"
+                  class="me-2 border top-0 marker level0"
                 />
                 Releases: 
                 <span
@@ -436,7 +436,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border rounded-circle top-0 marker level0"
+                  class="me-2 border top-0 marker level0"
                 />
                 Releases: 
                 <span
@@ -472,7 +472,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border rounded-circle top-0 marker level0"
+                  class="me-2 border top-0 marker level0"
                 />
                 Releases: 
                 <span
@@ -508,7 +508,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border rounded-circle top-0 marker level0"
+                  class="me-2 border top-0 marker level0"
                 />
                 Releases: 
                 <span
@@ -544,7 +544,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border rounded-circle top-0 marker level0"
+                  class="me-2 border top-0 marker level0"
                 />
                 Releases: 
                 <span

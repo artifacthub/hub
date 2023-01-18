@@ -45,12 +45,12 @@ const Navbar = (props: Props) => {
   return (
     <>
       <nav
-        className={classnames('navbar navbar-top navbar-expand-lg navbar-dark border-top-0 p-3', styles.navbar, {
+        className={classnames('navbar navbar-top navbar-expand-lg navbar-dark border-top-0 p-2 p-sm-3', styles.navbar, {
           [`bg-transparent w-100 position-absolute ${styles.homeNavbar}`]: props.fromHome,
         })}
       >
-        <div className="container-lg px-sm-4 px-lg-0">
-          <div className={`d-flex flex-row ${styles.mobileWrapper}`}>
+        <div className="container-lg px-0 px-sm-4 px-lg-0">
+          <div className={`d-flex flex-row px-1 ${styles.mobileWrapper}`}>
             <Link data-testid="brandLink" className="navbar-brand d-flex align-items-center" to="/">
               <div className="d-flex align-items-start">
                 <img className={`w-auto ${styles.logo}`} src={logo} alt={`Logo ${siteName}`} />
@@ -67,7 +67,7 @@ const Navbar = (props: Props) => {
           {isUndefined(props.fromHome) && (
             <SearchBar
               size="normal"
-              formClassName={`mx-2 me-md-auto my-3 my-md-0 flex-grow-1 pe-4 ${styles.search}`}
+              formClassName={`mx-2 me-md-auto my-3 my-md-0 flex-grow-1 pe-0 pe-sm-4 ${styles.search}`}
               isSearching={props.isSearching}
               tsQueryWeb={props.searchText}
               openTips={openTips}

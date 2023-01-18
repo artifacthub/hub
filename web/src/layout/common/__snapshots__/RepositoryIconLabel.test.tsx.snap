@@ -9,7 +9,7 @@ exports[`RepositoryIconLabel creates snapshot 1`] = `
       class="d-flex fs-6"
     >
       <span
-        class="badge bg-light text-dark rounded-pill border bg badge"
+        class="badge bg-light text-dark border bg badge"
       >
         <div
           class="d-flex flex-row align-items-center"
@@ -30,7 +30,7 @@ exports[`RepositoryIconLabel creates snapshot 1`] = `
             />
           </div>
           <div
-            class="ms-1"
+            class="ms-1 text"
           >
             Helm chart
           </div>
@@ -42,7 +42,7 @@ exports[`RepositoryIconLabel creates snapshot 1`] = `
     class="d-flex d-md-none fs-6"
   >
     <span
-      class="badge bg-light text-dark rounded-pill border bg badge"
+      class="badge bg-light text-dark border bg badge"
     >
       <div
         class="d-flex flex-row align-items-center"
@@ -63,7 +63,7 @@ exports[`RepositoryIconLabel creates snapshot 1`] = `
           />
         </div>
         <div
-          class="ms-1"
+          class="ms-1 text"
         >
           Helm chart
         </div>

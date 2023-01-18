@@ -12,43 +12,21 @@ const LabelText = styled('div')`
   padding: 0 5px 0 10px;
   font-weight: 700;
   border: 1px solid var(--color-ah-black-15);
-  border-radius: 3px;
 `;
 
 const IconWrapper = styled('div')`
   position: relative;
   border: 1px solid var(--color-ah-black-15);
-  border-radius: 3px;
   height: 20px;
   color: var(--dark);
-  border-right: none;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-  box-shadow: inset -1px 0 var(--color-ah-black-15);
-  margin-right: -3px;
   padding-left: 3px;
+  margin-right: -1px;
   width: 20px;
   background-color: var(--light-gray);
-
-  &:before {
-    content: '';
-    position: absolute;
-    right: -3px;
-    top: calc(50% - 3px);
-    height: 6px;
-    width: 6px;
-    border-radius: 50%;
-    box-shadow: inset -1px 0 var(--color-ah-black-15);
-    background-color: var(--light-gray);
-  }
 
   &.success {
     background-color: var(--success);
     color: var(--icon-color);
-
-    &:before {
-      background-color: var(--success);
-    }
   }
 `;
 

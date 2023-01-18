@@ -6,14 +6,11 @@
   min-width: 30px;
   width: 30px;
   height: 30px;
-  border-color: (--color-1-10) !important;
-
-  box-shadow: 0px 0px 5px 0px var(--color-1-20);
 }
 
 .image {
-  max-width: calc(100% - 1px);
-  max-height: calc(100% - 1px);
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .link {
@@ -54,7 +51,12 @@
 .badgeIcon {
   height: 10px;
   width: 10px;
-  top: -4px;
+  top: -6px;
+}
+
+.starBadge {
+  line-height: 0.55rem;
+  font-size: 0.55rem;
 }
 
 @media (min-width: 1920px) {

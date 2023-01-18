@@ -1,12 +1,10 @@
 .searchBar {
   height: 36px;
-  border-radius: 18px;
   box-shadow: 0 0 0 0.3rem var(--color-black-15);
 }
 
 .big {
   height: 50px;
-  border-radius: 25px;
 }
 
 .iconWrapper {
@@ -47,14 +45,11 @@
   min-width: 50px;
   width: 50px;
   height: 50px;
-  border-color: var(--color-1-10) !important;
-
-  box-shadow: 0px 0px 3px 0px var(--color-1-20);
 }
 
 .image {
-  max-width: calc(100% - 7px);
-  max-height: calc(100% - 7px);
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .activeDropdownItem {
@@ -95,7 +90,6 @@
 @media only screen and (max-width: 767.98px) {
   .searchBar {
     height: 30px;
-    border-radius: 15px;
   }
 
   .loading {
@@ -104,7 +98,6 @@
 
   .big {
     height: 40px;
-    border-radius: 20px;
   }
 
   .big + .loading {

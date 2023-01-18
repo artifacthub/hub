@@ -59,7 +59,7 @@ const MobileSettings = (props: Props) => {
           buttonIcon={
             <div
               className={classnames(
-                'rounded-circle d-flex align-items-center justify-content-center lh-1 fs-3 bg-white',
+                'rounded-circle d-flex align-items-center justify-content-center lh-1 bg-white',
                 styles.iconWrapper
               )}
             >

@@ -12,13 +12,13 @@ exports[`OrganizationInfo creates snapshot 1`] = `
       />
     </div>
     <div
-      class="d-flex flex-row align-items-start text-truncate"
+      class="d-flex flex-row align-items-baseline text-truncate"
     >
       <button
         aria-expanded="false"
         aria-hidden="true"
         aria-label="Organization info"
-        class="p-0 border-0 text-dark text-truncate flex-grow-1 bg-transparent position-relative link undefined"
+        class="p-0 border-0 text-muted text-truncate flex-grow-1 bg-transparent position-relative link undefined"
         tabindex="-1"
       >
         <div

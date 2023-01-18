@@ -473,16 +473,12 @@ const WebhookForm = (props: Props) => {
                           </td>
                           <td className="align-middle">
                             <div className="d-flex flex-row align-items-center">
-                              <div
-                                className={`d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white ${styles.imageWrapper} imageWrapper`}
-                              >
-                                <Image
-                                  alt={item.displayName || item.name}
-                                  imageId={item.logoImageId}
-                                  className="mw-100 mh-100 fs-4"
-                                  kind={item.repository.kind}
-                                />
-                              </div>
+                              <Image
+                                alt={item.displayName || item.name}
+                                imageId={item.logoImageId}
+                                className={`fs-4 ${styles.image}`}
+                                kind={item.repository.kind}
+                              />
 
                               <div className={`ms-2 text-dark ${styles.cellWrapper}`}>
                                 <div className="text-truncate">

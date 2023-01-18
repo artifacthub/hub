@@ -44,39 +44,6 @@
   --color-code: #a3a3a6;
 }
 
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 300;
-  src: local('Lato Light'), local('Lato-Light'), url('/static/fonts/Lato/lato-300.woff2') format('woff2'),
-    url('/static/fonts/Lato/lato-300.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Lato Bold'), local('Lato-Bold'), url('/static/fonts/Lato/lato-700.woff2') format('woff2'),
-    url('/static/fonts/Lato/lato-700.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Lato Regular'), local('Lato-Regular'), url('/static/fonts/Lato/lato-regular.woff2') format('woff2'),
-    url('/static/fonts/Lato/lato-regular.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Roboto Mono';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Roboto Mono'), local('RobotoMono-Regular'),
-    url('/static/fonts/Roboto_Mono/roboto-mono-regular.woff2') format('woff2'),
-    url('/static/fonts/Roboto_Mono/roboto-mono-regular.woff') format('woff');
-}
-
 body {
   background-color: var(--body-bg);
   color: var(--color-font);
@@ -86,11 +53,11 @@ body {
 }
 
 body, .gdoc-mermaid, .gdoc-header {
-  font-family: 'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 code {
-  font-family: 'Roboto Mono', 'Courier New', monospace;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 .gdoc-header {
@@ -126,7 +93,6 @@ code {
   word-wrap: break-word;
   background-color: var(--mid-gray) !important;
   border: 1px solid rgba(28, 44, 53, 0.1) !important;
-  border-radius: 3px;
   padding: 0 0.15rem;
 }
 
@@ -138,7 +104,6 @@ code {
 
 .gdoc-markdown pre {
   overflow-x: auto;
-  border-radius: 3px;
   padding: .5rem 1rem;
   tab-size: 4;
   background-color: var(--bg-code) !important;
@@ -172,7 +137,6 @@ code {
 }
 
 .gdoc-nav--main {
-  border-radius: .25rem;
   background-color: var(--ah-white);
   border: 1px solid var(--color-black-125);
   box-shadow: 0 .125rem .25rem var(--color-black-75);

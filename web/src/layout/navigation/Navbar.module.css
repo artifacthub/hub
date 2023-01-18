@@ -66,3 +66,10 @@
     opacity: 0.5;
   }
 }
+
+@media only screen and (max-width: 767.98px) {
+  .search {
+    max-width: 100%;
+    width: 100%;
+  }
+}

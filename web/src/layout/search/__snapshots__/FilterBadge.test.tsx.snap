@@ -3,7 +3,7 @@
 exports[`FilterBadge creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="badge bg-light rounded-pill me-2 mb-2 p-0 ps-2 border badgeFilter"
+    class="badge bg-light me-2 mb-2 p-0 ps-1 border badgeFilter"
   >
     <div
       class="d-flex flex-row align-items-center"
@@ -20,7 +20,7 @@ exports[`FilterBadge creates snapshot 1`] = `
       </div>
       <button
         aria-label="Remove filter: Category - Test"
-        class="btn btn-link btn-sm py-0 text-center btn"
+        class="btn btn-link btn-sm py-0 pe-1 text-center btn"
       >
         <svg
           class="position-relative btnIcon"

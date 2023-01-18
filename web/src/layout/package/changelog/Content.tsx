@@ -107,12 +107,12 @@ const Content = (props: Props) => {
                 {(item.containsSecurityUpdates || item.prerelease) && (
                   <div className={styles.badgesWrapper}>
                     {item.prerelease && (
-                      <span className={`badge badge-sm rounded-pill me-2 position-relative border ${styles.badge}`}>
+                      <span className={`badge badge-sm me-2 position-relative border ${styles.badge}`}>
                         Pre-release
                       </span>
                     )}
                     {item.containsSecurityUpdates && (
-                      <span className={`badge badge-sm rounded-pill me-2 position-relative border ${styles.badge}`}>
+                      <span className={`badge badge-sm me-2 position-relative border ${styles.badge}`}>
                         Contains security updates
                       </span>
                     )}
@@ -134,7 +134,7 @@ const Content = (props: Props) => {
                         <div className={`position-relative ${styles.changeBadgeWrapper}`}>
                           <div
                             className={classnames(
-                              'd-flex flex-row align-items-center justify-content-center text-uppercase badge rounded-pill me-2 fw-normal px-1 py-0',
+                              'd-flex flex-row align-items-center justify-content-center text-uppercase badge me-2 fw-normal px-1 py-0',
                               styles.changeBadge,
                               styles[`${change.kind.toString()}ChangeBadge`]
                             )}

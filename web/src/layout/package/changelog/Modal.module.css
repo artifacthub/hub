@@ -22,6 +22,7 @@
   bottom: 0;
   background-color: var(--color-1-10);
   border-left: 2px solid var(--color-1-500);
+  margin: -1px 0;
 }
 
 @media only screen and (max-width: 767.98px) {

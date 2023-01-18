@@ -1,7 +1,7 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { memo, useCallback, useEffect, useState } from 'react';
-import { GoPackage } from 'react-icons/go';
+import { FiPackage } from 'react-icons/fi';
 
 import { ContainerImage, RepositoryKind } from '../../types';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
@@ -64,8 +64,8 @@ const ContainersImages = (props: Props) => {
           key={`container-${index}-${containerImage.image}`}
           role="listitem"
         >
-          <div className="d-flex flex-row align-items-start mw-100">
-            <GoPackage className={`text-muted me-2 ${styles.icon}`} />
+          <div className="d-flex flex-row align-items-center mw-100">
+            <FiPackage className={`text-muted me-2 ${styles.icon}`} />
             <div data-testid="containerImage" className={`text-truncate text-break ${styles.containerImage}`}>
               {containerImage.name || containerImage.image}
             </div>
@@ -87,7 +87,7 @@ const ContainersImages = (props: Props) => {
           <td>
             <div className={`d-flex flex-row align-items-center`}>
               <div className="mx-1">
-                <GoPackage className="text-muted" />
+                <FiPackage className="text-muted" />
               </div>
               <div data-testid="containerImage" className="text-truncate ps-1">
                 {containerImage.name || containerImage.image}

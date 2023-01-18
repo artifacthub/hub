@@ -45,7 +45,7 @@ exports[`Changelog content  creates snapshot 1`] = `
           class="badgesWrapper"
         >
           <span
-            class="badge badge-sm rounded-pill me-2 position-relative border badge"
+            class="badge badge-sm me-2 position-relative border badge"
           >
             Pre-release
           </span>
@@ -425,7 +425,7 @@ exports[`Changelog content  creates snapshot 1`] = `
           class="badgesWrapper"
         >
           <span
-            class="badge badge-sm rounded-pill me-2 position-relative border badge"
+            class="badge badge-sm me-2 position-relative border badge"
           >
             Contains security updates
           </span>

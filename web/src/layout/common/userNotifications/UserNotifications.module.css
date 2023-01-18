@@ -4,7 +4,6 @@
   width: 700px;
   max-width: 80%;
   border-color: var(--color-1-500) !important;
-  border-radius: 15px;
   z-index: 1100;
 }
 

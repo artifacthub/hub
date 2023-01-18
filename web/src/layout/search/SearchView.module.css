@@ -17,6 +17,7 @@
 
 .searchText {
   line-height: 28px;
+  font-size: 0.8rem;
 }
 
 .filtersBadge::before {

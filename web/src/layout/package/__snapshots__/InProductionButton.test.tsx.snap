@@ -3,7 +3,7 @@
 exports[`InProductionButton creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="d-none d-md-block position-relative ms-2"
+    class="d-none d-lg-block position-relative ms-2"
   >
     <div
       class="position-relative undefined"
@@ -100,7 +100,7 @@ exports[`InProductionButton creates snapshot 1`] = `
                     class="me-2"
                   >
                     <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle border bg-white imageWrapper imageWrapper"
+                      class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                     >
                       <img
                         alt="Artifact Hub"
@@ -158,7 +158,7 @@ exports[`InProductionButton creates snapshot 1`] = `
                     class="me-2"
                   >
                     <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle border bg-white imageWrapper imageWrapper"
+                      class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                     >
                       <img
                         alt="Org test"
@@ -216,7 +216,7 @@ exports[`InProductionButton creates snapshot 1`] = `
                     class="me-2"
                   >
                     <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle border bg-white imageWrapper imageWrapper"
+                      class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                     >
                       <svg
                         class="orgIcon"

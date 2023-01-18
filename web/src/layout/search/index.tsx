@@ -18,6 +18,7 @@ import { prepareQueryString } from '../../utils/prepareQueryString';
 import scrollToTop from '../../utils/scrollToTop';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
+import PackageCard from '../common/PackageCard';
 import Pagination from '../common/Pagination';
 import SampleQueries from '../common/SampleQueries';
 import Sidebar from '../common/Sidebar';
@@ -27,7 +28,6 @@ import FilterBadge from './FilterBadge';
 import Filters from './Filters';
 import MoreActionsButton from './MoreActionsButton';
 import PaginationLimit from './PaginationLimit';
-import SearchCard from './SearchCard';
 import styles from './SearchView.module.css';
 import SortOptions from './SortOptions';
 
@@ -443,7 +443,7 @@ const SearchView = (props: Props) => {
                         <span className="ps-1"> results </span>
                         {props.tsQueryWeb && props.tsQueryWeb !== '' && (
                           <span className="d-none d-sm-inline ps-1">
-                            for "<span className="fw-bold">{props.tsQueryWeb}</span>"
+                            for "<span className="fw-semibold">{props.tsQueryWeb}</span>"
                           </span>
                         )}
                         {activeFilters && (
@@ -568,7 +568,7 @@ const SearchView = (props: Props) => {
           )}
 
           <div
-            className={classnames('flex-grow-1 mt-3 px-xs-0 px-sm-3 px-lg-0', styles.list, {
+            className={classnames('flex-grow-1 mt-1 mt-sm-3 px-xs-0 px-sm-3 px-lg-0', styles.list, {
               [styles.emptyList]: isNull(searchResults.packages) || searchResults.packages.length === 0,
             })}
           >
@@ -583,7 +583,7 @@ const SearchView = (props: Props) => {
                           <span> We can't seem to find any packages that match your search </span>
                           {props.tsQueryWeb && (
                             <span className="ps-1">
-                              for "<span className="fw-bold">{props.tsQueryWeb}</span>"
+                              for "<span className="fw-semibold">{props.tsQueryWeb}</span>"
                             </span>
                           )}
                           {!isEmpty(props.filters) && <span className="ps-1">with the selected filters</span>}
@@ -592,7 +592,7 @@ const SearchView = (props: Props) => {
                           You can{' '}
                           {!isEmpty(props.filters) ? (
                             <button
-                              className="btn btn-link text-dark fw-bold py-0 pb-1 px-0"
+                              className="btn btn-link text-dark fw-semibold py-0 pb-1 px-0"
                               onClick={onResetFilters}
                               aria-label="Reset filters"
                             >
@@ -600,7 +600,7 @@ const SearchView = (props: Props) => {
                             </button>
                           ) : (
                             <button
-                              className="btn btn-link text-dark fw-bold py-0 pb-1 px-0"
+                              className="btn btn-link text-dark fw-semibold py-0 pb-1 px-0"
                               onClick={() => {
                                 history.push({
                                   pathname: '/packages/search',
@@ -636,8 +636,9 @@ const SearchView = (props: Props) => {
                     <div className="mb-2 noFocus" id="content" tabIndex={-1} aria-label="Packages list">
                       <div className="row" role="list">
                         {searchResults.packages.map((item: Package) => (
-                          <SearchCard
+                          <PackageCard
                             key={item.packageId}
+                            cardWrapperClassName="col-12 col-xxxl-6"
                             package={item}
                             searchUrlReferer={{
                               tsQueryWeb: props.tsQueryWeb,

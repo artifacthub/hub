@@ -1,7 +1,6 @@
 .badge {
   top: -2px;
-  width: 22px;
-  box-shadow: inset 0px 0px 2px 1px var(--color-black-25);
+  width: 20px;
 }
 
 .tooltip {

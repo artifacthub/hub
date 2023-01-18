@@ -3,3 +3,7 @@
   background-color: var(--color-2-500);
   font-size: 0.875rem;
 }
+
+.navbar label {
+  font-size: 0.8rem;
+}

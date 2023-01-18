@@ -1,19 +1,12 @@
-.card {
-  box-shadow: 0px 0px 5px 0px var(--bs-light);
-}
-
 .imageWrapper {
   min-width: 50px;
   width: 50px;
   height: 50px;
-  border-color: var(--color-1-10) !important;
-
-  box-shadow: 0px 0px 5px 0px var(--color-1-20);
 }
 
 .image {
-  max-width: calc(100% - 5px);
-  max-height: calc(100% - 5px);
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .link {
@@ -29,7 +22,7 @@
 }
 
 .title {
-  font-size: 1.15rem;
+  font-size: 1rem;
 }
 
 .titleWrapper {
@@ -50,6 +43,11 @@
   color: var(--color-1-500);
 }
 
+.kindIcon {
+  height: 16px;
+  width: 16px;
+}
+
 .truncateWrapper {
   min-width: 0;
 }
@@ -58,27 +56,34 @@
   font-size: 75%;
 }
 
+.userLink {
+  top: -1px;
+}
+
+.userIcon {
+  top: -2px;
+}
+
 @media (hover: hover) {
   .link:hover {
     text-decoration: underline;
   }
 
   .card:hover {
-    border-color: var(--color-black-50);
-    box-shadow: 0px 0px 5px 0px var(--color-black-75);
+    border-color: var(--color-black-25);
+    box-shadow: 0 0 0 2px var(--color-black-25);
   }
 }
 
 @media only screen and (max-width: 767.98px) {
   .imageWrapper {
-    min-width: 60px;
-    width: 60px;
-    height: 60px;
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
     margin: 0;
   }
 
-  .image {
-    max-width: calc(100% - 9px);
-    max-height: calc(100% - 9px);
+  .title {
+    font-size: 0.95rem;
   }
 }

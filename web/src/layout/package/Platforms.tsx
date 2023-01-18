@@ -31,7 +31,7 @@ const Platforms = (props: Props) => {
   return (
     <>
       <SmallTitle text={props.title} />
-      <div className="mb-3 d-flex flex-row flex-wrap">
+      <div className="mb-3 d-flex flex-row flex-wrap pt-1">
         {platforms.map((platform: string) => (
           <div
             data-testid="platformBadge"

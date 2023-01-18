@@ -1,8 +1,3 @@
-@import './fonts.css';
-
-$font-family-sans-serif: 'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default;
-$font-family-monospace: 'Roboto Mono', 'Courier New', monospace !default;
-
 $grid-breakpoints: (
   xs: 0,
   sm: 576px,
@@ -121,6 +116,14 @@ button,
   opacity: 0.97;
 }
 
+.tooltip-inner {
+  border-radius: 0;
+}
+
+body {
+  min-width: 350px;
+}
+
 @media only screen and (max-width: 575.98px) {
   h1,
   .h1 {
@@ -235,6 +238,23 @@ button,
 }
 
 // Bootstrap 5
+.btn,
+.card,
+.badge,
+.form-select,
+.form-control,
+.form-check:not(.form-switch) .form-check-input[type='checkbox'],
+.alert,
+.dropdown-menu {
+  border-radius: 0;
+}
+
+.input-group-sm > .form-control,
+.input-group-sm > .form-select,
+.input-group-sm > .input-group-text,
+.input-group-sm > .btn {
+  border-radius: 0;
+}
 
 .btn-link,
 a {

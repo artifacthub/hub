@@ -442,17 +442,13 @@ exports[`WebhookForm creates snapshot 1`] = `
                       <div
                         class="d-flex flex-row align-items-center"
                       >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
-                        >
-                          <img
-                            alt="envoy"
-                            aria-hidden="true"
-                            class="mw-100 mh-100 fs-4"
-                            src="/image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc"
-                            srcset="/image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@1x 1x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@2x 2x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@3x 3x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@4x 4x"
-                          />
-                        </div>
+                        <img
+                          alt="envoy"
+                          aria-hidden="true"
+                          class="fs-4 image"
+                          src="/image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc"
+                          srcset="/image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@1x 1x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@2x 2x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@3x 3x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@4x 4x"
+                        />
                         <div
                           class="ms-2 text-dark cellWrapper"
                         >

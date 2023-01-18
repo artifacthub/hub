@@ -42,7 +42,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           >
             <small>
               <div
-                class="badge rounded-pill text-light fw-bold badge position-relative ms-1"
+                class="badge text-light fw-bold badge position-relative ms-1"
                 style="background-color: rgb(150, 0, 3);"
               >
                 F

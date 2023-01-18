@@ -1,6 +1,5 @@
 .chartWrapper {
   background-color: var(--bs-white) !important;
-  box-shadow: 0px 0px 5px 0px var(--bs-light);
   padding: 1rem;
   padding-bottom: 1.5rem;
   padding-right: 2rem;

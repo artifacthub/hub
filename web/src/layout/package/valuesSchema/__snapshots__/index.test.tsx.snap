@@ -176,7 +176,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -309,7 +309,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -442,7 +442,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -575,7 +575,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -708,7 +708,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -841,7 +841,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -949,7 +949,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -2120,7 +2120,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -2218,7 +2218,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -2351,7 +2351,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -2484,7 +2484,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -2617,7 +2617,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -2843,7 +2843,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -4287,7 +4287,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -4420,7 +4420,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -4680,7 +4680,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -4813,7 +4813,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -4911,7 +4911,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -5044,7 +5044,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -5431,7 +5431,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -5529,7 +5529,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -5790,7 +5790,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -5898,7 +5898,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -6031,7 +6031,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -6129,7 +6129,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -6262,7 +6262,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -6395,7 +6395,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -6712,7 +6712,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -6845,7 +6845,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -6978,7 +6978,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -7086,7 +7086,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -7184,7 +7184,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -7307,7 +7307,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -7440,7 +7440,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -7919,7 +7919,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -8179,7 +8179,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -8414,7 +8414,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -8512,7 +8512,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -8610,7 +8610,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -8743,7 +8743,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -8876,7 +8876,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -9009,7 +9009,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -9142,7 +9142,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -9250,7 +9250,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -9348,7 +9348,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -9573,7 +9573,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -9671,7 +9671,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -9804,7 +9804,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -9937,7 +9937,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -10070,7 +10070,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -10203,7 +10203,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -10336,7 +10336,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -10475,7 +10475,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -10614,7 +10614,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -10747,7 +10747,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -10855,7 +10855,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -10953,7 +10953,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -11051,7 +11051,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -11184,7 +11184,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -11317,7 +11317,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>
@@ -11440,7 +11440,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                                   class="ms-auto ps-2"
                                 >
                                   <span
-                                    class="badge badge-sm rounded-pill bg-success text-uppercase position-relative badge"
+                                    class="badge badge-sm bg-success text-uppercase position-relative badge"
                                   >
                                     Required
                                   </span>

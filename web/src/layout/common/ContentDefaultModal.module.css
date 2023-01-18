@@ -3,7 +3,6 @@
 }
 
 .templateWrapper {
-  border-radius: 3px;
   border-color: var(--color-black-15) !important;
   background-color: var(--extra-light-gray);
 }
@@ -47,7 +46,6 @@
   line-height: 18px;
   padding: 0 5px;
   border-color: var(--gray) !important;
-  border-radius: 3px;
 }
 
 .searchIcon {

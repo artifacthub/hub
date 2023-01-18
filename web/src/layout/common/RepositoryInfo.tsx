@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
 import { useEffect, useRef, useState } from 'react';
-import { MdInfoOutline } from 'react-icons/md';
+import { FiPackage } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -10,7 +10,6 @@ import { prepareQueryString } from '../../utils/prepareQueryString';
 import AttachedIconToText from './AttachedIconToText';
 import ButtonCopyToClipboard from './ButtonCopyToClipboard';
 import RepositoryIcon from './RepositoryIcon';
-import RepositoryIconLabel from './RepositoryIconLabel';
 import styles from './RepositoryInfo.module.css';
 import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
@@ -19,8 +18,6 @@ interface Props {
   deprecated?: boolean | null;
   className?: string;
   repoLabelClassName?: string;
-  visibleInfoIcon?: boolean;
-  visibleIcon?: boolean;
   withLabels: boolean;
 }
 
@@ -101,28 +98,19 @@ const RepositoryInfo = (props: Props) => {
           </div>
         </div>
 
-        <div className="d-flex flex-row text-truncate">
-          <div className="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase">
-            <small>Repo:</small>
-            {props.visibleIcon && (
-              <RepositoryIconLabel
-                kind={props.repository.kind}
-                deprecated={props.deprecated}
-                className="ms-1"
-                clickable
-              />
-            )}
+        <div className="d-flex flex-row align-items-baseline text-truncate">
+          <div className="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase">
+            <div className={`position-relative ${styles.icon}`}>
+              <FiPackage />
+            </div>
           </div>
           <span className="visually-hidden">{props.repository.name}</span>
 
           <button
             data-testid="repoLink"
             className={classnames(
-              'd-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative',
-              styles.link,
-              {
-                [styles.moreMarginTop]: props.visibleIcon,
-              }
+              'd-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative',
+              styles.link
             )}
             onClick={(e) => {
               e.preventDefault();
@@ -151,10 +139,6 @@ const RepositoryInfo = (props: Props) => {
           >
             <>
               <div className="text-truncate">{props.repository.displayName || props.repository.name}</div>
-
-              {props.repository.url && props.visibleInfoIcon && (
-                <MdInfoOutline className={`d-none d-sm-inline-block ms-1 position-relative ${styles.infoIcon}`} />
-              )}
             </>
           </button>
         </div>

@@ -23,7 +23,7 @@ const SearchTip = () => {
           <span className="fw-semibold me-1">Tip:</span>
           {activeTip.content} Example:{' '}
           <Link
-            className="fw-bold textLighter p-0"
+            className="fw-semibold textLighter p-0"
             to={{
               pathname: '/packages/search',
               search: prepareQueryString({

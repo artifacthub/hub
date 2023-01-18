@@ -187,7 +187,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                           be used once.{' '}
                           <span className="fw-bold">Please treat them as passwords and store them safely</span>.
                         </div>
-                        <div className={`border rounded position-relative p-2 p-sm-4 ${styles.codesWrapper}`}>
+                        <div className={`border position-relative p-2 p-sm-4 ${styles.codesWrapper}`}>
                           <BlockCodeButtons
                             filename="artifacthub-recovery-codes.txt"
                             content={setUp.recoveryCodes.join('\n')}
@@ -229,7 +229,7 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
                         </div>
 
                         <div className="text-center mb-4">
-                          <div className="border rounded d-inline-block p-1 my-1">
+                          <div className="border d-inline-block p-1 my-1">
                             <img className={styles.qrCode} src={setUp.qrCode} alt="QR code" />
                           </div>
                         </div>

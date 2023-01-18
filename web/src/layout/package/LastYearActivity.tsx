@@ -70,7 +70,7 @@ const LastYearActivity = (props: Props) => {
                   </div>
                   <div className="popover-body text-nowrap">
                     <div className="d-flex flex-row align-items-center">
-                      <div className={`me-2 border rounded-circle top-0 ${styles.marker} ${styles[`level${level}`]}`} />
+                      <div className={`me-2 border top-0 ${styles.marker} ${styles[`level${level}`]}`} />
                       Releases: <span className="fw-bold ms-2">{versions[month] ? versions[month].length : 0}</span>
                     </div>
                   </div>

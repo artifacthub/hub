@@ -3,7 +3,7 @@
 exports[`SubscriptionsButton creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="d-none d-md-block position-relative ms-2"
+    class="d-none d-lg-block position-relative ms-2"
   >
     <div
       class="position-relative undefined"

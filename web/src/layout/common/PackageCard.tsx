@@ -1,40 +1,262 @@
 import isUndefined from 'lodash/isUndefined';
-import { Link } from 'react-router-dom';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { AiOutlineStop } from 'react-icons/ai';
+import { FaUser } from 'react-icons/fa';
+import { Link, useHistory } from 'react-router-dom';
 
-import { Package, SearchFiltersURL } from '../../types';
+import { Package, RepositoryKind, SearchFiltersURL } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
+import calculateDiffInYears from '../../utils/calculateDiffInYears';
+import cutString from '../../utils/cutString';
+import isFuture from '../../utils/isFuture';
+import isPackageOfficial from '../../utils/isPackageOfficial';
+import { prepareQueryString } from '../../utils/prepareQueryString';
+import Image from '../common/Image';
+import Label from '../common/Label';
+import OfficialBadge from '../common/OfficialBadge';
+import OrganizationInfo from '../common/OrganizationInfo';
+import ProductionBadge from '../common/ProductionBadge';
+import RepositoryIconLabel from '../common/RepositoryIconLabel';
+import RepositoryInfo from '../common/RepositoryInfo';
+import ScannerDisabledRepositoryBadge from '../common/ScannerDisabledRepositoryBadge';
+import SecurityRating from '../common/SecurityRating';
+import SignedBadge from '../common/SignedBadge';
+import StarBadge from '../common/StarBadge';
+import VerifiedPublisherBadge from '../common/VerifiedPublisherBadge';
 import styles from './PackageCard.module.css';
-import PackageInfo from './PackageInfo';
 
 interface Props {
   package: Package;
+  cardWrapperClassName?: string;
   className?: string;
   saveScrollPosition?: () => void;
+  noBadges?: boolean;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
 }
 
-const PackageCard = (props: Props) => (
-  <div className={`col-12 col-xxl-6 py-sm-3 py-2 ${styles.cardWrapper}`} role="listitem">
-    <div className={`card cardWithHover h-100 mw-100 bg-white ${styles.card} ${props.className}`}>
-      <Link
-        className={`text-decoration-none text-reset h-100 bg-transparent ${styles.link}`}
-        onClick={() => {
-          if (!isUndefined(props.saveScrollPosition)) {
-            props.saveScrollPosition();
-          }
-        }}
-        to={{
-          pathname: buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!),
-          state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-        }}
-      >
-        <div className={`card-body d-flex flex-column h-100 ${styles.body}`}>
-          <PackageInfo package={props.package} breakpointForInfoSection="lg" />
-        </div>
-      </Link>
+const PackageCard = (props: Props) => {
+  const history = useHistory();
+  const [isVersionOlderThanOneYear, setIsVersionOlderThanOneYear] = useState<boolean>(false);
+
+  const pkgTS = (
+    <>
+      {!isFuture(props.package.ts) && (
+        <small className={`text-muted text-nowrap ${styles.date}`}>
+          Updated {moment.unix(props.package.ts).fromNow()}
+        </small>
+      )}
+    </>
+  );
+
+  const starsAndKindInfo = (
+    <div className={`align-self-start d-flex align-items-center text-uppercase ms-auto ${styles.kind}`}>
+      <StarBadge className="me-2" starsNumber={props.package.stars} />
+      <RepositoryIconLabel
+        btnClassName={`position-relative ${styles.repoLabel}`}
+        kind={props.package.repository.kind}
+        deprecated={props.package.deprecated}
+        clickable
+      />
     </div>
-  </div>
-);
+  );
+
+  useEffect(() => {
+    const diffInYears = calculateDiffInYears(props.package.ts);
+    setIsVersionOlderThanOneYear(diffInYears > 1);
+  }, [props.package]);
+
+  return (
+    <div className={`py-sm-3 py-2 ${styles.cardWrapper} ${props.cardWrapperClassName}`} role="listitem">
+      <div className={`card cardWithHover h-100 mw-100 bg-white ${styles.card} ${props.className}`}>
+        <Link
+          className={`text-decoration-none text-reset h-100 bg-transparent ${styles.link}`}
+          onClick={() => {
+            if (!isUndefined(props.saveScrollPosition)) {
+              props.saveScrollPosition();
+            }
+          }}
+          to={{
+            pathname: buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!),
+            state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+          }}
+        >
+          <div className={`card-body d-flex flex-column h-100 ${styles.body}`}>
+            <div className="d-flex align-items-start justify-content-between mw-100">
+              <div className={`d-flex align-items-stretch flex-grow-1 h-100 ${styles.truncateWrapper}`}>
+                <div
+                  className={`my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative ${styles.imageWrapper}`}
+                >
+                  <Image
+                    imageId={props.package.logoImageId}
+                    alt={`Logo ${props.package.displayName || props.package.name}`}
+                    className={styles.image}
+                    kind={props.package.repository.kind}
+                  />
+                </div>
+
+                <div
+                  className={`d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between ${styles.truncateWrapper} ${styles.titleWrapper}`}
+                >
+                  <div className="text-truncate card-title mb-0">
+                    <div className="d-flex flex-row align-items-center justify-content-between">
+                      <div className={`text-truncate ${styles.title}`}>
+                        {props.package.displayName || props.package.name}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="d-block d-md-none">
+                    <div className={`card-subtitle align-items-baseline ${styles.subtitle}`}>
+                      <RepositoryInfo
+                        repository={props.package.repository}
+                        deprecated={props.package.deprecated}
+                        className="d-inline d-md-none text-truncate w-100"
+                        repoLabelClassName="d-none"
+                        withLabels={false}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={`d-none d-md-block card-subtitle align-items-center ${styles.subtitle}`}>
+                    <div className="d-flex flex-row align-items-center">
+                      {props.package.repository.organizationName && (
+                        <OrganizationInfo
+                          className={`me-0 d-flex flex-row align-items-baseline text-left w-auto ${styles.mx50} `}
+                          btnClassName="text-truncate mw-100"
+                          organizationName={props.package.repository.organizationName}
+                          organizationDisplayName={props.package.repository.organizationDisplayName}
+                          deprecated={props.package.deprecated}
+                          visibleLegend
+                        />
+                      )}
+
+                      {props.package.repository.userAlias && (
+                        <div className={`d-flex flex-row align-items-baseline ${styles.userInfo}`}>
+                          <div className={`text-dark me-1 position-relative ${styles.userIcon}`}>
+                            <FaUser />
+                          </div>
+                          <span className="visually-hidden">{props.package.repository.userAlias}</span>
+
+                          <button
+                            data-testid="userLink"
+                            className={`p-0 border-0 text-truncate text-muted mw-100 bg-transparent ${styles.link} ${styles.mx50}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              history.push({
+                                pathname: '/packages/search',
+                                search: prepareQueryString({
+                                  pageNumber: 1,
+                                  filters: {
+                                    user: [props.package.repository.userAlias!],
+                                  },
+                                  deprecated: props.package.deprecated,
+                                }),
+                              });
+                            }}
+                            aria-label={`Filter by ${props.package.repository.userAlias}`}
+                            aria-hidden="true"
+                            tabIndex={-1}
+                          >
+                            <div className="text-truncate">{props.package.repository.userAlias}</div>
+                          </button>
+                        </div>
+                      )}
+
+                      <div className={styles.mx50}>
+                        <RepositoryInfo
+                          repository={props.package.repository}
+                          deprecated={props.package.deprecated}
+                          className={`d-flex flex-row align-items-baseline ms-3 ${styles.truncateWrapper}`}
+                          repoLabelClassName="d-none d-lg-inline"
+                          withLabels={false}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={`d-none d-lg-flex flex-column align-items-end mb-auto ms-auto ${styles.rightInfo}`}>
+                  {starsAndKindInfo}
+                  <div className="mt-1">{pkgTS}</div>
+                  <div className={`mt-1 text-truncate align-items-baseline position-relative ${styles.version}`}>
+                    <div className="d-flex flex-row align-items-baseline text-truncate">
+                      <span className="text-muted me-1">
+                        {props.package.repository.kind === RepositoryKind.Container ? 'Tag' : 'Version'}{' '}
+                      </span>
+                      {cutString(props.package.version || '-', 16)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {!isUndefined(props.package.description) && (
+              <div className={`mb-0 mb-md-1 mt-3 text-muted text-truncate ${styles.description} ${styles.lineClamp} `}>
+                {props.package.description}
+              </div>
+            )}
+
+            <div
+              className={`d-flex d-lg-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-3 pt-lg-0 mt-1 mt-lg-0 mt-xxl-1 mt-xxxl-0`}
+            >
+              {pkgTS}
+              <span>{starsAndKindInfo}</span>
+            </div>
+
+            {(isUndefined(props.noBadges) || !props.noBadges) && (
+              <div
+                className={`d-none d-sm-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto ${styles.labelsWrapper}`}
+              >
+                <OfficialBadge official={isPackageOfficial(props.package)} className="d-inline mt-3" type="package" />
+                <ProductionBadge
+                  productionOrganizationsCount={props.package.productionOrganizationsCount}
+                  className="d-inline mt-3"
+                />
+                <VerifiedPublisherBadge
+                  verifiedPublisher={props.package.repository.verifiedPublisher}
+                  className="d-inline mt-3"
+                />
+                {props.package.deprecated && (
+                  <Label text="Deprecated" icon={<AiOutlineStop />} labelStyle="danger" className="d-inline mt-3" />
+                )}
+                {props.package.signed && (
+                  <SignedBadge
+                    signed={props.package.signed}
+                    signatures={props.package.signatures}
+                    repositoryKind={props.package.repository.kind}
+                    className="d-inline mt-3"
+                  />
+                )}
+                {/* Do not display security rating badge when version is older than 1 year */}
+                {!isVersionOlderThanOneYear && (
+                  <SecurityRating
+                    summary={props.package.securityReportSummary}
+                    className="d-inline mt-3"
+                    onlyBadge={false}
+                    withLink={buildPackageURL(
+                      props.package.normalizedName,
+                      props.package.repository,
+                      props.package.version!
+                    )}
+                  />
+                )}
+                {(props.package.repository.scannerDisabled || props.package.allContainersImagesWhitelisted) && (
+                  <ScannerDisabledRepositoryBadge
+                    className="d-inline mt-3"
+                    scannerDisabled={props.package.repository.scannerDisabled || false}
+                    allContainersImagesWhitelisted={props.package.allContainersImagesWhitelisted || false}
+                    withTooltip
+                  />
+                )}
+              </div>
+            )}
+          </div>
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 export default PackageCard;

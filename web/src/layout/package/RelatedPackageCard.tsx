@@ -18,13 +18,6 @@ interface Props {
 }
 
 const RelatedPackageCard = (props: Props) => {
-  const isRepeatedRepoName = (): boolean => {
-    return (
-      (props.repository.displayName || props.repository.name) ===
-      (props.repository.userAlias || props.repository.organizationDisplayName || props.repository.organizationName)
-    );
-  };
-
   return (
     <div className={`card cardWithHover mt-2 w-100 relatedCard ${styles.card}`} role="listitem">
       <Link
@@ -36,9 +29,7 @@ const RelatedPackageCard = (props: Props) => {
       >
         <div className={`card-body d-flex flex-column ${styles.body}`}>
           <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
-            <div
-              className={`d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white ${styles.imageWrapper} imageWrapper`}
-            >
+            <div className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper}`}>
               <Image
                 imageId={props.logoImageId}
                 alt={`Logo ${props.displayName || props.name}`}
@@ -57,25 +48,14 @@ const RelatedPackageCard = (props: Props) => {
                       iconClassName={styles.badgeIcon}
                       noBackground
                     />
-                    <StarBadge starsNumber={props.stars} size="xs" />
+                    <StarBadge starsNumber={props.stars} size="xs" className={styles.starBadge} />
                   </div>
                   <div className={`align-self-end text-truncate card-title mb-2 ${styles.title}`}>
                     {props.displayName || props.name}
                   </div>
                   <div className={`card-subtitle align-items-center text-muted ${styles.subtitle}`}>
                     <div className="w-100">
-                      <div className="text-truncate">
-                        {!isRepeatedRepoName() && (
-                          <>
-                            {props.repository.userAlias ||
-                              props.repository.organizationDisplayName ||
-                              props.repository.organizationName}
-                            <span className="px-1">/</span>
-                          </>
-                        )}
-
-                        {props.repository.displayName || props.repository.name}
-                      </div>
+                      <div className="text-truncate">{props.repository.displayName || props.repository.name}</div>
                     </div>
                   </div>
                 </div>

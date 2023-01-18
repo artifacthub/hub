@@ -1,7 +1,7 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useCallback, useEffect, useState } from 'react';
-import { GoPackage } from 'react-icons/go';
+import { FiPackage } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 import { Dependency, RepositoryKind } from '../../types';
@@ -37,7 +37,7 @@ const Dependencies = (props: Props) => {
           role="listitem"
         >
           <div className="d-flex flex-row align-items-center">
-            <GoPackage className={`text-muted me-2 mb-0 ${styles.pkgIcon}`} />
+            <FiPackage className={`text-muted me-2 mb-0 ${styles.pkgIcon}`} />
             <div className="text-truncate">
               {!isUndefined(dependency.artifacthubRepositoryName) ? (
                 <Link
@@ -75,7 +75,7 @@ const Dependencies = (props: Props) => {
       itemsForModal.push(
         <tr key={`dependency_row_${index}`}>
           <td className={`border-end-0 ${styles.fitCell}`}>
-            <GoPackage className={`text-muted ms-1 ${styles.icon}`} />
+            <FiPackage className={`text-muted ms-1 ${styles.icon}`} />
           </td>
           <td className="border-start-0">
             <div className={`d-table w-100 h-100 px-1 ${styles.textWrapper}`}>

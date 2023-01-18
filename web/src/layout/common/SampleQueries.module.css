@@ -1,0 +1,5 @@
+[data-theme='dark'] .sampleQuery {
+  color: var(--font-color-light) !important;
+  border-color: var(--border-solid) !important;
+  background-color: #1a1d21 !important;
+}

@@ -82,6 +82,18 @@ body {
   color: var(--color-font);
 }
 
+.swagger-ui input[type=email], .swagger-ui input[type=file], .swagger-ui input[type=password], .swagger-ui input[type=search], .swagger-ui input[type=text], .swagger-ui textarea {
+  border-radius: 0 !important;
+}
+
+.swagger-ui .opblock, .swagger-ui .opblock-body pre.microlight, .swagger-ui select, .swagger-ui .opblock .opblock-summary-method, .swagger-ui .btn, .swagger-ui .copy-to-clipboard {
+  border-radius: 0 !important;
+}
+
+.swagger-ui .model-box-control:focus, .swagger-ui .models-control:focus, .swagger-ui .opblock-summary-control:focus {
+  outline: none;
+}
+
 .swagger-ui .topbar .download-url-wrapper .select-label select {
   border-color: var(--color-1-500);
 }

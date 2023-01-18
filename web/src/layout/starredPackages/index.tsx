@@ -110,7 +110,12 @@ const StarredPackagesView = (props: Props) => {
                 ) : (
                   <>
                     {packages.map((item: Package) => (
-                      <PackageCard key={item.packageId} package={item} fromStarredPage={true} />
+                      <PackageCard
+                        cardWrapperClassName="col-12 col-xxl-6"
+                        key={item.packageId}
+                        package={item}
+                        fromStarredPage={true}
+                      />
                     ))}
                   </>
                 )}

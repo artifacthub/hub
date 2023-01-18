@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { FaLink } from 'react-icons/fa';
-import { GoPackage } from 'react-icons/go';
+import { FiPackage } from 'react-icons/fi';
 
 import styles from './Btns.module.css';
 
@@ -29,7 +29,7 @@ const ImageBtn = (props: Props) => {
         <FaLink />
       </button>
 
-      <GoPackage />
+      <FiPackage />
       <div className="ps-2 text-truncate">
         <span className={`text-uppercase text-muted me-2 ${styles.tableTitle}`}>Image:</span>
         {props.image}
