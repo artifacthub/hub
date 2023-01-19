@@ -29,7 +29,7 @@ const Footer = (props: Props) => {
                 className={`d-flex flex-row flex-wrap align-items-stretch justify-content-between ${styles.footerContent}`}
               >
                 <div>
-                  <div className="h6 fw-bold text-uppercase">Project</div>
+                  <div className="h6 fw-semibold text-uppercase">Project</div>
                   <div className="d-flex flex-column text-start">
                     <ExternalLink
                       className={`mb-1 ${styles.link}`}
@@ -58,7 +58,7 @@ const Footer = (props: Props) => {
                 </div>
 
                 <div>
-                  <div className="h6 fw-bold text-uppercase">Community</div>
+                  <div className="h6 fw-semibold text-uppercase">Community</div>
                   <div className="d-flex flex-column text-start">
                     <ExternalLink
                       className={`mb-1 ${styles.link}`}
@@ -94,7 +94,7 @@ const Footer = (props: Props) => {
                 </div>
 
                 <div className={styles.fullMobileSection}>
-                  <div className="h6 fw-bold text-uppercase">About</div>
+                  <div className="h6 fw-semibold text-uppercase">About</div>
                   <div className={styles.copyrightContent}>
                     Artifact Hub is an <b className="d-inline-block">Open Source</b> project licensed under the{' '}
                     <ExternalLink

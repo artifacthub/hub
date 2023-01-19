@@ -10,7 +10,7 @@ exports[`Home index creates snapshot 1`] = `
     >
       <div
         aria-label="Find, install and publisher Kubernetes packages"
-        class="display-4 text-center fw-light d-block d-xxl-flex justify-content-center noFocus mainTitle"
+        class="display-4 text-center d-block d-xxl-flex justify-content-center noFocus mainTitle"
         id="content"
         role="banner"
         tabindex="-1"
@@ -106,7 +106,7 @@ exports[`Home index creates snapshot 1`] = `
               type="button"
             />
             <div
-              class="position-absolute text-dark tipIcon bigTipIcon"
+              class="d-none d-sm-block position-absolute text-dark tipIcon bigTipIcon"
             >
               <button
                 aria-label="Open search tips modal"
@@ -136,7 +136,7 @@ exports[`Home index creates snapshot 1`] = `
           - or -
           <a
             aria-label="Browse all packages"
-            class="btn btn-link textLighter fw-bold py-0 pb-1 ps-1 allPkgBtn"
+            class="btn btn-link textLighter fw-semibold py-0 pb-1 ps-1 allPkgBtn"
             href="/packages/search"
           >
             browse all packages
@@ -148,7 +148,7 @@ exports[`Home index creates snapshot 1`] = `
           Or you can also 
           <a
             aria-label="Browse all packages"
-            class="btn btn-link textLighter fw-bold py-0 pb-1 ps-1 pe-0"
+            class="btn btn-link textLighter fw-semibold py-0 pb-1 ps-1 pe-0"
             href="/packages/search"
           >
             browse all packages
@@ -206,9 +206,11 @@ exports[`Home index creates snapshot 1`] = `
         class="text-center h5 my-4 mt-md-5 legend"
       >
         Artifact Hub is an 
-        <b>
+        <span
+          class="fw-semibold"
+        >
           Open Source
-        </b>
+        </span>
          project
       </div>
       <div
@@ -308,7 +310,7 @@ exports[`Home index creates snapshot 1`] = `
         Please see the 
         <a
           aria-label="Open documentation"
-          class="link btn btn-link text-light fw-bold textLight p-0 align-baseline inlineLink"
+          class="link btn btn-link text-light fw-semibold textLight p-0 align-baseline inlineLink"
           href="/docs/topics/repositories"
           rel="noopener noreferrer"
           role="button"
@@ -604,6 +606,9 @@ exports[`Home index creates snapshot 1`] = `
           <div
             class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
           >
+            <div
+              class="col"
+            />
             <a
               aria-label="Open Container Initiative site"
               class="link col iconLink"
@@ -682,6 +687,9 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </a>
+            <div
+              class="col"
+            />
           </div>
           Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
         </div>
@@ -707,7 +715,7 @@ exports[`Home index creates snapshot 1`] = `
             Artifact Hub is a 
             <a
               aria-label="Open CNCF sandbox projects site"
-              class="link fw-bold text-dark"
+              class="link fw-semibold text-dark"
               href="https://www.cncf.io/sandbox-projects/"
               rel="noopener noreferrer"
               role="button"

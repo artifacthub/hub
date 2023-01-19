@@ -48,7 +48,7 @@ const BrushChart = (props: Props) => {
         zoom: {
           enabled: false,
         },
-        fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
+        fontFamily: 'var(--bs-body-font-family)',
         toolbar: {
           show: false,
         },
@@ -56,8 +56,7 @@ const BrushChart = (props: Props) => {
       grid: { borderColor: 'var(--border-md)' },
       plotOptions: {
         bar: {
-          borderRadius: 5,
-          borderRadiusApplication: 'end',
+          borderRadius: 0,
           dataLabels: {
             position: 'top',
           },
@@ -175,7 +174,7 @@ const BrushChart = (props: Props) => {
             opacity: 1,
           },
         },
-        fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
+        fontFamily: 'var(--bs-body-font-family)',
         toolbar: {
           show: false,
         },
@@ -183,8 +182,7 @@ const BrushChart = (props: Props) => {
       grid: { borderColor: 'var(--border-md)' },
       plotOptions: {
         bar: {
-          borderRadius: 5,
-          borderRadiusApplication: 'end',
+          borderRadius: 0,
           dataLabels: {
             position: 'top',
           },

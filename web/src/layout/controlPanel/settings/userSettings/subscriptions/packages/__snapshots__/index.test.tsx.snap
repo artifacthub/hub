@@ -215,7 +215,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                             >
                               <img
                                 alt="airflow"
@@ -330,7 +330,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                             >
                               <img
                                 alt="cerebro"
@@ -445,7 +445,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                             >
                               <img
                                 alt="elastic-stack"
@@ -560,7 +560,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                             >
                               <img
                                 alt="ibm-redis"
@@ -675,7 +675,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                             >
                               <img
                                 alt="SSH connections"
@@ -790,7 +790,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                             >
                               <img
                                 alt="Traefik"
@@ -905,7 +905,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                             >
                               <img
                                 alt="Trusted Registry Images"
@@ -1020,7 +1020,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                             >
                               <img
                                 alt="zookeeper"

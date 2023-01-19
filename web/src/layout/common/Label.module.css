@@ -5,9 +5,8 @@
 .labelText {
   background-color: var(--body-light-bg);
   line-height: 18px;
-  padding: 0 5px 0 10px;
+  padding: 0 5px;
   border-color: var(--color-black-15) !important;
-  border-radius: 3px;
 }
 
 .labelTextNoIcon {
@@ -19,10 +18,6 @@
   height: 20px;
   line-height: 1rem;
   color: var(--light-gray);
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-  box-shadow: inset -1px 0 var(--color-black-25);
-  margin-right: -3px;
   min-width: 20px;
 }
 
@@ -31,7 +26,6 @@
 }
 
 .onlyIcon {
-  border-radius: 3px !important;
   width: 21px;
 }
 
@@ -39,31 +33,12 @@
   stroke: var(--light-gray);
 }
 
-.iconWrapper:not(.onlyIcon)::before {
-  content: '';
-  position: absolute;
-  right: -3px;
-  top: calc(50% - 3px);
-  height: 6px;
-  width: 6px;
-  border-radius: 50%;
-  box-shadow: inset -1px 0 var(--color-black-25);
-}
-
 .default .iconWrapper {
   background-color: var(--light-gray);
   color: var(--bs-dark);
 }
 
-.default .iconWrapper::before {
-  background-color: var(--light-gray);
-}
-
 .warning .iconWrapper {
-  background-color: var(--bs-orange);
-}
-
-.warning .iconWrapper::before {
   background-color: var(--bs-orange);
 }
 
@@ -71,22 +46,10 @@
   background-color: var(--bs-success);
 }
 
-.success .iconWrapper::before {
-  background-color: var(--bs-success);
-}
-
 .danger .iconWrapper {
-  background-color: var(--bs-danger);
-}
-
-.danger .iconWrapper::before {
   background-color: var(--bs-danger);
 }
 
 .custom .iconWrapper {
   color: var(--light-gray);
-}
-
-.custom .iconWrapper::before {
-  background-color: inherit;
 }

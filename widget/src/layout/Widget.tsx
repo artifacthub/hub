@@ -155,13 +155,12 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 const CardWrapper = styled('div')`
-  font-family: 'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
   color: var(--color-ah-font);
   background-color: var(--white);
   background-clip: padding-box;
   border: 3px solid var(--color-ah-primary);
-  border-radius: 0.25rem;
   overflow: hidden;
   width: 350px;
   line-height: 1.15rem;
@@ -218,15 +217,11 @@ const Brand = styled(SVGIcons)`
 `;
 
 const ImageWrapper = styled('div')`
-  flex: 0 0 60px;
+  flex: 0 0 50px;
   position: relative;
-  min-width: 60px;
-  width: 60px;
-  height: 60px;
-  background-color: ${(props) => (props.theme === 'dark' ? 'var(--white)' : 'var(--white)')};
-  border: 2px solid var(--color-ah-primary-10);
-  box-shadow: 0px 0px 5px 0px var(--color-ah-primary-20);
-  border-radius: 50%;
+  min-width: 50px;
+  width: 50px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -287,6 +282,7 @@ const BadgesWrapper = styled('div')`
 const Description = styled('div')`
   overflow: hidden;
   font-size: 0.9rem;
+  line-height: 1.5;
   margin-bottom: 1rem;
   display: -webkit-box;
   -webkit-line-clamp: 5;
@@ -294,7 +290,7 @@ const Description = styled('div')`
 
   .groupedItem & {
     -webkit-line-clamp: 3;
-    height: 55px;
+    height: 62px;
   }
 `;
 
@@ -341,7 +337,6 @@ const Badge = styled('div')`
   line-height: 1;
   text-align: center;
   white-space: nowrap;
-  border-radius: 50rem;
 `;
 
 const DEFAULT_THEME = 'light';

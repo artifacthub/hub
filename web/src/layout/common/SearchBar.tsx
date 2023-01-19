@@ -277,7 +277,7 @@ const SearchBar = (props: Props) => {
           ></button>
 
           <div
-            className={classnames('position-absolute text-dark', styles.tipIcon, {
+            className={classnames('d-none d-sm-block position-absolute text-dark', styles.tipIcon, {
               [styles.bigTipIcon]: props.size === 'big',
             })}
           >
@@ -327,7 +327,7 @@ const SearchBar = (props: Props) => {
                         id={`sl-opt${index}`}
                       >
                         <div
-                          className={`d-none d-md-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 border border-2 bg-white position-relative ${styles.imageWrapper} imageWrapper`}
+                          className={`d-none d-md-flex align-items-center justify-content-center overflow-hidden position-relative ${styles.imageWrapper}`}
                         >
                           <Image
                             imageId={pkg.logoImageId}
@@ -339,7 +339,9 @@ const SearchBar = (props: Props) => {
 
                         <div className={`ms-0 ms-md-3 flex-grow-1 ${styles.truncateWrapper}`}>
                           <div className="d-flex flex-row align-items-center">
-                            <div className={`text-truncate fw-bold ${styles.title}`}>{pkg.displayName || pkg.name}</div>
+                            <div className={`text-truncate fw-bold mt-1 ${styles.title}`}>
+                              {pkg.displayName || pkg.name}
+                            </div>
 
                             <div
                               className={`align-self-start d-flex align-items-center text-uppercase ms-auto ps-2 ${styles.midText}`}

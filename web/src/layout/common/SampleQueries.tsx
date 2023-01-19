@@ -3,6 +3,7 @@ import { Fragment, memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import getSampleQueries from '../../utils/getSampleQueries';
+import styles from './SampleQueries.module.css';
 
 interface Props {
   className?: string;
@@ -28,7 +29,7 @@ const SampleQueries = (props: Props) => {
       {queries.map((query: SampleQuery, index: number) => (
         <Fragment key={`sampleQuery_${index}`}>
           <Link
-            className={`badge rounded-pill border fw-normal mx-2 mt-3 ${props.className}`}
+            className={`badge border fw-normal mx-2 mt-3 ${styles.sampleQuery} ${props.className}`}
             to={{
               pathname: '/packages/search',
               search: `?${query.querystring}`,

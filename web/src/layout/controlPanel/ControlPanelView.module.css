@@ -14,8 +14,6 @@
 
 .section {
   border-color: transparent !important;
-  border-top-left-radius: 0.25rem !important;
-  border-top-right-radius: 0.25rem !important;
 }
 
 .section:hover {
@@ -25,7 +23,11 @@
 .activeSection {
   border-color: var(--color-1-20) !important;
   border-bottom-color: transparent !important;
-  background-color: var(--body-bg) !important;
+  background-color: #2c2e31 !important;
+}
+
+[data-theme='light'] .activeSection {
+  background-color: var(--extra-light-gray) !important;
 }
 
 .activeSection::before {
@@ -33,11 +35,9 @@
   position: absolute;
   top: -1px;
   height: 4px;
-  left: 0;
-  right: 0;
+  left: -1px;
+  right: -1px;
   background-color: var(--color-1-700);
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
 }
 
 @media only screen and (max-width: 767.98px) {

@@ -2,6 +2,7 @@
   background-color: var(--badge-bg);
   border-color: var(--gray) !important;
   height: 19px;
+  line-height: 0.8rem;
 }
 
 .size-xs {

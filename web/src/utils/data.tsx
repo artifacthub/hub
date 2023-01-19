@@ -1,5 +1,5 @@
 import { FaKey, FaScroll, FaUserFriends } from 'react-icons/fa';
-import { GoPackage } from 'react-icons/go';
+import { FiPackage } from 'react-icons/fi';
 import { GrConnect } from 'react-icons/gr';
 import { MdBusiness, MdNewReleases, MdNotificationsActive, MdSecurity, MdSettings } from 'react-icons/md';
 import { TiWarning } from 'react-icons/ti';
@@ -253,7 +253,7 @@ export const CONTROL_PANEL_SECTIONS: NavSection = {
       name: 'repositories',
       displayName: 'Repositories',
       disabled: false,
-      icon: <GoPackage />,
+      icon: <FiPackage />,
     },
     {
       name: 'organizations',
@@ -279,7 +279,7 @@ export const CONTROL_PANEL_SECTIONS: NavSection = {
       name: 'repositories',
       displayName: 'Repositories',
       disabled: false,
-      icon: <GoPackage />,
+      icon: <FiPackage />,
     },
     {
       name: 'members',

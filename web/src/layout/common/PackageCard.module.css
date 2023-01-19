@@ -1,11 +1,7 @@
-.card {
-  box-shadow: 0px 0px 5px 0px var(--bs-light);
-}
-
 @media (hover: hover) {
   .card:hover {
-    border-color: var(--color-black-50);
-    box-shadow: 0px 0px 5px 0px var(--color-black-75);
+    border-color: var(--color-black-25);
+    box-shadow: 0 0 0 2px var(--color-black-25);
   }
 }
 
@@ -21,15 +17,145 @@
   color: inherit;
 }
 
+.imageWrapper {
+  min-width: 70px;
+  width: 70px;
+  height: 70px;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.link {
+  color: var(--gray-dark);
+}
+
+.link:hover {
+  color: inherit;
+}
+
+.mx50 {
+  max-width: 50%;
+}
+
+.title {
+  font-size: 1.1rem;
+}
+
+.titleWrapper {
+  background-color: var(--body-bg);
+  padding: 0.6rem 1rem;
+  height: 70px;
+  margin-left: 0.75rem;
+}
+
+.rightInfo {
+  padding-left: 2.25rem;
+}
+
+[data-theme='dark'] .titleWrapper {
+  background-color: #2c2e31;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  line-height: 20px;
+}
+
+.subtitle span {
+  font-size: 0.75rem;
+}
+
+.kind {
+  font-size: 0.9rem;
+  color: var(--color-1-500);
+}
+
+.truncateWrapper {
+  min-width: 0;
+}
+
+.version {
+  font-size: 0.8rem;
+  max-width: 150px;
+}
+
+.date {
+  font-size: 75%;
+}
+
+.userInfo {
+  margin-top: -2px;
+}
+
+.userIcon {
+  font-size: 0.8rem;
+  top: -2px;
+}
+
+.licenseBtn {
+  top: -2px;
+}
+
+.labelsWrapper > div:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.description {
+  font-size: 0.85rem;
+}
+
+@media (hover: hover) {
+  .link:hover {
+    text-decoration: underline;
+  }
+}
+
+@media only screen and (max-width: 575.98px) {
+  .lineClamp {
+    overflow: hidden;
+    text-overflow: unset;
+    white-space: inherit;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    word-wrap: normal;
+    max-height: 62px;
+  }
+}
+
 @media only screen and (max-width: 767.98px) {
+  .imageWrapper {
+    min-width: 50px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .description {
+    font-size: 0.85rem;
+  }
+
   .body {
     padding: 1rem !important;
   }
 }
 
-@media only screen and (min-width: 768px) {
-  .card {
-    min-height: 215px;
+@media only screen and (min-width: 576px) {
+  .titleWrapper {
+    width: 600px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .labelsWrapper > div:not(:first-child) {
+    margin-right: 0;
+    margin-left: 0.5rem;
+  }
+
+  .labelsWrapper > div:first-child {
+    margin-right: 0;
   }
 }
 
@@ -42,5 +168,17 @@
 @media only screen and (min-width: 1400px) {
   .cardWrapper {
     padding: 0 1rem;
+  }
+}
+
+@media only screen and (min-width: 1920px) {
+  .titleWrapper {
+    width: 400px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .card {
+    min-height: 215px;
   }
 }

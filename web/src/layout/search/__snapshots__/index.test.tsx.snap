@@ -7,7 +7,7 @@ exports[`Search index creates snapshot 1`] = `
     role="navigation"
   >
     <div
-      class="container-lg px-sm-4 px-lg-0 d-flex align-items-center justify-content-between flex-nowrap"
+      class="container-lg px-1 px-sm-4 px-lg-0 d-flex align-items-center justify-content-between flex-nowrap"
     >
       <div
         class="d-flex flex-column w-100"
@@ -175,7 +175,7 @@ exports[`Search index creates snapshot 1`] = `
       role="main"
     >
       <div
-        class="flex-grow-1 mt-3 px-xs-0 px-sm-3 px-lg-0 list emptyList"
+        class="flex-grow-1 mt-1 mt-sm-3 px-xs-0 px-sm-3 px-lg-0 list emptyList"
       />
     </main>
   </div>
@@ -194,7 +194,7 @@ exports[`Search index creates snapshot 1`] = `
         >
           <div>
             <div
-              class="h6 fw-bold text-uppercase"
+              class="h6 fw-semibold text-uppercase"
             >
               Project
             </div>
@@ -233,7 +233,7 @@ exports[`Search index creates snapshot 1`] = `
           </div>
           <div>
             <div
-              class="h6 fw-bold text-uppercase"
+              class="h6 fw-semibold text-uppercase"
             >
               Community
             </div>
@@ -333,7 +333,7 @@ exports[`Search index creates snapshot 1`] = `
             class="fullMobileSection"
           >
             <div
-              class="h6 fw-bold text-uppercase"
+              class="h6 fw-semibold text-uppercase"
             >
               About
             </div>

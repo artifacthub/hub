@@ -1,6 +1,5 @@
 .list {
   border-color: var(--color-black-15) !important;
-  border-radius: 3px;
   z-index: 100;
   top: 31px;
 }

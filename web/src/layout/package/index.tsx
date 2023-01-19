@@ -4,7 +4,9 @@ import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
+import { FaUser } from 'react-icons/fa';
 import { FiCode, FiPlus } from 'react-icons/fi';
+import { FiPackage } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import { Link, useHistory } from 'react-router-dom';
@@ -49,6 +51,7 @@ import NoData from '../common/NoData';
 import OfficialBadge from '../common/OfficialBadge';
 import OrganizationInfo from '../common/OrganizationInfo';
 import RepositoryIcon from '../common/RepositoryIcon';
+import RepositoryIconLabel from '../common/RepositoryIconLabel';
 import RepositoryInfo from '../common/RepositoryInfo';
 import SignedBadge from '../common/SignedBadge';
 import VerifiedPublisherBadge from '../common/VerifiedPublisherBadge';
@@ -484,6 +487,10 @@ const PackageView = (props: Props) => {
 
   const getBadges = (withRepoInfo: boolean, extraStyle?: string): JSX.Element => (
     <>
+      <RepositoryIconLabel
+        kind={detail!.repository.kind}
+        className={`d-none d-md-inline me-3 position-relative ${styles.kindIcon} ${extraStyle}`}
+      />
       <OfficialBadge official={isPackageOfficial(detail)} className={`d-inline me-3 ${extraStyle}`} type="package" />
       {withRepoInfo && (
         <VerifiedPublisherBadge
@@ -798,9 +805,7 @@ const PackageView = (props: Props) => {
                   <div className="container-lg px-sm-4 px-lg-0 position-relative">
                     <div className="d-flex align-items-start w-100 mb-3">
                       <div className="d-flex align-items-center flex-grow-1 mw-100">
-                        <div
-                          className={`d-flex align-items-center justify-content-center p-1 p-md-2 overflow-hidden border border-2 rounded-circle bg-white ${styles.imageWrapper} imageWrapper`}
-                        >
+                        <div className={`d-flex align-items-center justify-content-center ${styles.imageWrapper}`}>
                           <Image
                             className={styles.image}
                             alt={detail.displayName || detail.name}
@@ -809,31 +814,41 @@ const PackageView = (props: Props) => {
                           />
                         </div>
 
-                        <div className={`ms-3 flex-grow-1 ${styles.wrapperWithContentEllipsis}`}>
+                        <div
+                          className={`position-relative ms-3 flex-grow-1 pe-3 py-0 py-sm-2 ${styles.wrapperWithContentEllipsis}`}
+                        >
                           <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
-                            <div className={`h3 mb-0 text-nowrap text-truncate ${styles.title}`}>
+                            <div className={`position-relative h3 mb-0 text-nowrap text-truncate ${styles.title}`}>
                               {detail.displayName || detail.name}
                             </div>
                             <div className="d-none d-md-flex ms-3">{getBadges(false, 'mt-1')}</div>
                           </div>
 
-                          <div className={`d-flex d-md-none text-truncate mt-2 w-100 ${styles.mobileSubtitle}`}>
-                            <small className="text-muted text-uppercase">Repo: </small>
-                            <div className={`mx-1 d-inline ${styles.mobileIcon}`}>
+                          <div
+                            className={`position-relative d-flex d-md-none text-truncate mt-2 w-100 ${styles.mobileSubtitle}`}
+                          >
+                            <div className="d-none d-md-block text-dark me-2">
+                              <FiPackage />
+                            </div>
+                            <div className={`d-inline ${styles.mobileIcon}`}>
                               <RepositoryIcon kind={detail.repository.kind} className={`w-auto ${styles.repoIcon}`} />
                             </div>
-                            <span className={`text-dark d-inline-block text-truncate mw-100 ${styles.mobileVersion}`}>
+                            <span className={`text-muted d-inline-block text-truncate mw-100 ${styles.mobileVersion}`}>
                               {detail.repository.displayName || detail.repository.name}
                             </span>
                           </div>
 
-                          <div className={`d-none d-md-flex flex-row align-items-baseline mt-2 ${styles.subtitle}`}>
+                          <div
+                            className={`position-relative d-none d-md-flex flex-row align-items-baseline mt-2 ${styles.subtitle}`}
+                          >
                             {detail.repository.userAlias ? (
                               <div className={`me-2 text-truncate ${styles.mw50}`}>
-                                <small className="me-1 text-uppercase text-muted">User: </small>
+                                <span className={`text-dark me-1 position-relative ${styles.userIcon}`}>
+                                  <FaUser />
+                                </span>
 
                                 <Link
-                                  className="text-dark"
+                                  className="text-muted"
                                   to={{
                                     pathname: '/packages/search',
                                     search: prepareQueryString({
@@ -861,9 +876,8 @@ const PackageView = (props: Props) => {
                             <RepositoryInfo
                               repository={detail.repository}
                               deprecated={detail.deprecated}
-                              className={`text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
+                              className={`text-truncate d-flex flex-row align-items-baseline ms-2 ${styles.mw50}`}
                               repoLabelClassName={styles.repoLabel}
-                              visibleIcon
                               withLabels
                             />
                           </div>
@@ -884,7 +898,7 @@ const PackageView = (props: Props) => {
                       className={`position-absolute d-flex flex-row align-items-center top-0 end-0 ${styles.optsWrapper}`}
                     >
                       {detail!.ts && !isFuture(detail!.ts) && (
-                        <span className={`d-block d-md-none text-muted text-nowrap ${styles.date}`}>
+                        <span className={`d-block d-lg-none text-muted text-nowrap ${styles.date}`}>
                           Updated {moment.unix(detail!.ts).fromNow()}
                         </span>
                       )}

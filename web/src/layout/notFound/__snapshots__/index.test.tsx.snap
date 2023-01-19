@@ -42,7 +42,7 @@ exports[`NotFoundView renders correctly 1`] = `
       The page you were looking for wasn't found
     </div>
     <a
-      class="btn btn-outline-secondary btn-lg"
+      class="btn btn-secondary btn-lg"
       href="/"
     >
       Back Home

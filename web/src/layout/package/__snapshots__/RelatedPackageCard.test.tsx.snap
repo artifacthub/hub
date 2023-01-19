@@ -18,7 +18,7 @@ exports[`RelatedPackageCard creates snapshot 1`] = `
           class="d-flex align-items-center flex-grow-1 truncateWrapper"
         >
           <div
-            class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
+            class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
           >
             <img
               alt="Logo Pretty name"
@@ -68,7 +68,7 @@ exports[`RelatedPackageCard creates snapshot 1`] = `
                             />
                           </div>
                           <div
-                            class="ms-1"
+                            class="ms-1 text"
                           >
                             Helm chart
                           </div>
@@ -101,7 +101,7 @@ exports[`RelatedPackageCard creates snapshot 1`] = `
                           />
                         </div>
                         <div
-                          class="ms-1"
+                          class="ms-1 text"
                         >
                           Helm chart
                         </div>
@@ -123,12 +123,6 @@ exports[`RelatedPackageCard creates snapshot 1`] = `
                     <div
                       class="text-truncate"
                     >
-                      Helm
-                      <span
-                        class="px-1"
-                      >
-                        /
-                      </span>
                       incubator
                     </div>
                   </div>

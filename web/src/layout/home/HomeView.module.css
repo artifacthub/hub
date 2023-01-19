@@ -4,6 +4,10 @@
   padding-top: 7rem !important;
 }
 
+.mainTitle {
+  font-weight: 200;
+}
+
 .search {
   min-width: 250px;
   max-width: 500px;
@@ -30,6 +34,10 @@
 
 .aboutIcon {
   width: 75px;
+}
+
+.legend {
+  font-weight: 300;
 }
 
 .legendIcon {
@@ -96,6 +104,10 @@
   .socialBtn {
     font-size: 85%;
     width: 90px;
+  }
+
+  .banner {
+    width: 250px;
   }
 }
 

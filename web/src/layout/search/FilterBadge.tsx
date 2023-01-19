@@ -10,14 +10,14 @@ interface Props {
 
 const FilterBadge = (props: Props) => {
   return (
-    <div className={`badge bg-light rounded-pill me-2 mb-2 p-0 ps-2 border ${styles.badgeFilter}`}>
+    <div className={`badge bg-light me-2 mb-2 p-0 ps-1 border ${styles.badgeFilter}`}>
       <div className="d-flex flex-row align-items-center">
         <div className="position-relative">
           {props.type && <small className="fw-normal me-1 text-uppercase">{props.type}:</small>}
           {props.name}
         </div>
         <button
-          className={`btn btn-link btn-sm py-0 text-center ${styles.btn}`}
+          className={`btn btn-link btn-sm py-0 pe-1 text-center ${styles.btn}`}
           onClick={props.onClick}
           aria-label={`Remove filter: ${props.type ? `${props.type} -` : ''} ${props.name}`}
         >

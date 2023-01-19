@@ -11,13 +11,12 @@
 }
 
 .containerImage {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .icon {
   min-width: 15px;
   font-size: 0.85rem;
-  margin-top: 6px;
   padding-right: 1px;
 }
 

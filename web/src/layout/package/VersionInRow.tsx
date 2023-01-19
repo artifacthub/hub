@@ -51,7 +51,7 @@ const VersionInRow = (props: Props) => {
                 return (
                   <span
                     key={`vir_channel_${channel}`}
-                    className={`badge rounded-pill me-2 border ${styles.badge} ${styles.isHighlighted}`}
+                    className={`badge me-2 border ${styles.badge} ${styles.isHighlighted}`}
                   >
                     <small className="text-uppercase me-1">Channel:</small>
                     {channel}
@@ -60,9 +60,9 @@ const VersionInRow = (props: Props) => {
               })}
             </>
           )}
-          {props.prerelease && <span className={`badge rounded-pill me-2 border ${styles.badge}`}>Pre-release</span>}
+          {props.prerelease && <span className={`badge me-2 border ${styles.badge}`}>Pre-release</span>}
           {props.containsSecurityUpdates && (
-            <span className={`badge rounded-pill border ${styles.badge}`}>Contains security updates</span>
+            <span className={`badge border ${styles.badge}`}>Contains security updates</span>
           )}
         </div>
       </td>

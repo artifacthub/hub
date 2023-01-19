@@ -1,6 +1,6 @@
 import { isNull, isUndefined } from 'lodash';
 import { memo, useEffect, useState } from 'react';
-import { GoPackage } from 'react-icons/go';
+import { FiPackage } from 'react-icons/fi';
 
 import { Recommendation, RecommendedPackage, RepositoryKind } from '../../../types';
 import { getRepoKind } from '../../../utils/repoKind';
@@ -52,7 +52,7 @@ const RecommendedPackages = (props: Props) => {
     <div className={`w-100 ${props.className}`}>
       <div className="w-100 text-nowrap mb-2">
         <span className={`position-relative ${styles.pkgIcon}`}>
-          <GoPackage />
+          <FiPackage />
         </span>
         <small className="text-muted ms-2">Other packages recommended by the publisher:</small>
         <small className="fw-bold ms-2">{recommendations.length}</small>

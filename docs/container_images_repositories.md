@@ -79,4 +79,4 @@ oras push \
   artifacthub-repo.yml:application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml
 ```
 
-*Please note that publishing an Artifact Hub repository metadata file requires that the registry supports [OCI artifacts](https://oras.land/implementors/).
+*Please note that publishing an Artifact Hub repository metadata file requires that the registry supports [OCI artifacts](https://oras.land/implementors/).*

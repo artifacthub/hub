@@ -103,32 +103,6 @@ describe('RelatedPackageCard', () => {
   });
 
   describe('Subtitle for Helm Chart', () => {
-    it('renders user alias', () => {
-      const mockProps = getMockProps('6');
-
-      render(
-        <Router>
-          <RelatedPackageCard {...mockProps} />
-        </Router>
-      );
-
-      expect(screen.getByText(new RegExp(mockProps.repository.userAlias!, 'i'))).toBeInTheDocument();
-      expect(screen.getByText('/')).toBeInTheDocument();
-    });
-
-    it('renders organization', () => {
-      const mockProps = getMockProps('7');
-
-      render(
-        <Router>
-          <RelatedPackageCard {...mockProps} />
-        </Router>
-      );
-
-      expect(screen.getByText(new RegExp('Org name', 'i'))).toBeInTheDocument();
-      expect(screen.getByText('/')).toBeInTheDocument();
-    });
-
     it('renders repo', () => {
       const mockProps = getMockProps('8');
 
@@ -139,20 +113,6 @@ describe('RelatedPackageCard', () => {
       );
 
       expect(screen.getByText(new RegExp(mockProps.repository.name, 'i'))).toBeInTheDocument();
-      expect(screen.getByText('/')).toBeInTheDocument();
-    });
-  });
-
-  describe('Subtitle for OPA/Falco', () => {
-    it('renders user alias', () => {
-      const mockProps = getMockProps('9');
-
-      render(
-        <Router>
-          <RelatedPackageCard {...mockProps} />
-        </Router>
-      );
-      expect(screen.getByText(new RegExp(mockProps.repository.userAlias!, 'i'))).toBeInTheDocument();
     });
   });
 });

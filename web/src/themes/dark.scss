@@ -61,7 +61,7 @@
   --font-color-light: #cbd3da;
 
   body {
-    background-color: var(--body-bg);
+    background-color: #2c2e31;
     color: var(--color-font);
   }
 
@@ -229,7 +229,7 @@
   select,
   input,
   .form-control {
-    background-color: var(--body-bg);
+    background-color: #2c2e31;
     border-color: $color2 !important;
     color: $font-color;
   }
@@ -309,9 +309,8 @@
   .card:not(.banner),
   .card.bg-white,
   .list-group-item {
-    background-color: var(--color-1-500) !important;
-    border-color: var(--border-md) !important;
-    box-shadow: none !important;
+    background-color: #222529;
+    border-color: #676869 !important;
   }
 
   .banner {
@@ -434,7 +433,7 @@
   }
 
   .package-detail-jumbotron {
-    background-color: var(--color-1-500) !important;
+    background-color: var(--body-bg) !important;
     border-top: 1px solid var(--border-md);
   }
 
@@ -509,7 +508,7 @@
   }
 
   .relatedCard {
-    background-color: var(--color-1-20) !important;
+    background-color: var(--body-bg) !important;
   }
 
   .sectionIcon {
@@ -570,7 +569,7 @@
   }
 
   .info {
-    background-color: var(--color-1-500) !important;
+    background-color: var(--body-bg) !important;
     border-color: var(--border-md) !important;
   }
 

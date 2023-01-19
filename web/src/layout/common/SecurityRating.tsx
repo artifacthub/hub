@@ -46,7 +46,7 @@ const SecurityRating = (props: Props) => {
         props.onlyBadge ? (
           <small>
             <div
-              className={`badge rounded-pill text-light fw-bold ${styles.badge} ${className}`}
+              className={`badge text-light fw-bold ${styles.badge} ${className}`}
               style={{
                 backgroundColor: severity.color,
               }}
@@ -66,13 +66,13 @@ const SecurityRating = (props: Props) => {
           />
         )
       }
-      tooltipWidth={285}
+      tooltipWidth={300}
       tooltipClassName={`${styles.tooltip} ${props.tooltipClassName} ${props.onlyBadge ? styles.onlyBadgeTooltip : ''}`}
       tooltipMessage={
         <div className="d-flex flex-column">
           <div className="d-flex flex-row align-items-center my-1">
             <span
-              className={`badge rounded-pill text-light fw-bold me-2 ${styles.badge}`}
+              className={`badge text-light fw-semibold me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING.default!.color,
               }}
@@ -83,7 +83,7 @@ const SecurityRating = (props: Props) => {
           </div>
           <div className="d-flex flex-row align-items-center my-1">
             <span
-              className={`badge rounded-pill text-light fw-bold me-2 ${styles.badge}`}
+              className={`badge text-light fw-semibold me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING[VulnerabilitySeverity.Low]!.color,
               }}
@@ -96,7 +96,7 @@ const SecurityRating = (props: Props) => {
           </div>
           <div className="d-flex flex-row align-items-center my-1">
             <span
-              className={`badge rounded-pill text-light fw-bold me-2 ${styles.badge}`}
+              className={`badge text-light fw-semibold me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING[VulnerabilitySeverity.Medium]!.color,
               }}
@@ -109,7 +109,7 @@ const SecurityRating = (props: Props) => {
           </div>
           <div className="d-flex flex-row align-items-center my-1">
             <span
-              className={`badge rounded-pill text-light fw-bold me-2 ${styles.badge}`}
+              className={`badge text-light fw-semibold me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING[VulnerabilitySeverity.High]!.color,
               }}
@@ -122,7 +122,7 @@ const SecurityRating = (props: Props) => {
           </div>
           <div className="d-flex flex-row align-items-center my-1">
             <span
-              className={`badge rounded-pill text-light fw-bold me-2 ${styles.badge}`}
+              className={`badge text-light fw-semibold me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING[VulnerabilitySeverity.Critical]!.color,
               }}
@@ -135,7 +135,7 @@ const SecurityRating = (props: Props) => {
           </div>
           <div className="d-flex flex-row align-items-center my-1">
             <span
-              className={`badge rounded-pill text-light fw-bold me-2 ${styles.badge}`}
+              className={`badge text-light fw-semibold me-2 ${styles.badge}`}
               style={{
                 backgroundColor: SEVERITY_RATING[VulnerabilitySeverity.UnKnown]!.color,
               }}

@@ -16,7 +16,7 @@ const StarBadge = (props: Props) => {
   return (
     <div
       data-testid="starBadge"
-      className={classnames('badge rounded-pill bg-light text-dark border', styles.badge, props.className, {
+      className={classnames('badge bg-light text-dark border', styles.badge, props.className, {
         [styles[`size-${props.size}`]]: !isUndefined(props.size),
       })}
       aria-label={`${props.starsNumber} stars`}

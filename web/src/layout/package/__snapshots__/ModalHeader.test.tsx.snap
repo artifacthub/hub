@@ -6,7 +6,7 @@ exports[`ModalHeader creates snapshot 1`] = `
     class="d-flex align-items-center flex-grow-1"
   >
     <div
-      class="d-flex align-items-center justify-content-center p-1 overflow-hidden border border-2 bg-white rounded-circle imageWrapper imageWrapper"
+      class="d-flex align-items-center justify-content-center overflow-hidden border border-2 bg-white rounded-circle imageWrapper imageWrapper"
     >
       <img
         alt="Pretty name"

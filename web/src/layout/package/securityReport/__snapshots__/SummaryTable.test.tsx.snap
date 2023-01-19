@@ -94,7 +94,7 @@ exports[`SummaryTable creates snapshot 1`] = `
                 >
                   <small>
                     <div
-                      class="badge rounded-pill text-light fw-bold badge ratingBadge"
+                      class="badge text-light fw-bold badge ratingBadge"
                       style="background-color: rgb(150, 0, 3);"
                     >
                       F

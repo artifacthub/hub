@@ -372,7 +372,7 @@ const SchemaDefinition = (props: Props) => {
                       <div className="ms-auto ps-2">
                         {props.isRequired && (
                           <span
-                            className={`badge badge-sm rounded-pill bg-success text-uppercase position-relative ${styles.badge}`}
+                            className={`badge badge-sm bg-success text-uppercase position-relative ${styles.badge}`}
                           >
                             Required
                           </span>

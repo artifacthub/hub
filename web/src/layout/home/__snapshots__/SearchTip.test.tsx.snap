@@ -36,7 +36,7 @@ exports[`SearchTip creates snapshot 1`] = `
         </span>
          to refine your search. Example: 
         <a
-          class="fw-bold textLighter p-0"
+          class="fw-semibold textLighter p-0"
           href="/packages/search?ts_query_web=kafka+operator&sort=relevance&page=1"
         >
           kafka operator

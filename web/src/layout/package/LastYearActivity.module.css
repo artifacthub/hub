@@ -5,7 +5,6 @@
 .heatMapCell {
   height: 16px;
   width: 16px;
-  border-radius: 2px;
   border-color: var(--color-black-25) !important;
 }
 

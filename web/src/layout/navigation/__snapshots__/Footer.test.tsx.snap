@@ -17,7 +17,7 @@ exports[`Footer creates snapshot 1`] = `
         >
           <div>
             <div
-              class="h6 fw-bold text-uppercase"
+              class="h6 fw-semibold text-uppercase"
             >
               Project
             </div>
@@ -56,7 +56,7 @@ exports[`Footer creates snapshot 1`] = `
           </div>
           <div>
             <div
-              class="h6 fw-bold text-uppercase"
+              class="h6 fw-semibold text-uppercase"
             >
               Community
             </div>
@@ -156,7 +156,7 @@ exports[`Footer creates snapshot 1`] = `
             class="fullMobileSection"
           >
             <div
-              class="h6 fw-bold text-uppercase"
+              class="h6 fw-semibold text-uppercase"
             >
               About
             </div>

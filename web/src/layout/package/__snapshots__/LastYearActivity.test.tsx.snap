@@ -48,7 +48,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border rounded-circle top-0 marker level3"
+                class="me-2 border top-0 marker level3"
               />
               Releases: 
               <span
@@ -84,7 +84,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border rounded-circle top-0 marker level1"
+                class="me-2 border top-0 marker level1"
               />
               Releases: 
               <span
@@ -120,7 +120,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border rounded-circle top-0 marker level3"
+                class="me-2 border top-0 marker level3"
               />
               Releases: 
               <span
@@ -156,7 +156,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border rounded-circle top-0 marker level2"
+                class="me-2 border top-0 marker level2"
               />
               Releases: 
               <span
@@ -192,7 +192,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border rounded-circle top-0 marker level3"
+                class="me-2 border top-0 marker level3"
               />
               Releases: 
               <span
@@ -228,7 +228,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border rounded-circle top-0 marker level1"
+                class="me-2 border top-0 marker level1"
               />
               Releases: 
               <span
@@ -264,7 +264,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border rounded-circle top-0 marker level3"
+                class="me-2 border top-0 marker level3"
               />
               Releases: 
               <span
@@ -300,7 +300,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border rounded-circle top-0 marker level1"
+                class="me-2 border top-0 marker level1"
               />
               Releases: 
               <span
@@ -336,7 +336,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border rounded-circle top-0 marker level0"
+                class="me-2 border top-0 marker level0"
               />
               Releases: 
               <span
@@ -372,7 +372,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border rounded-circle top-0 marker level1"
+                class="me-2 border top-0 marker level1"
               />
               Releases: 
               <span
@@ -408,7 +408,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border rounded-circle top-0 marker level1"
+                class="me-2 border top-0 marker level1"
               />
               Releases: 
               <span
@@ -444,7 +444,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border rounded-circle top-0 marker level0"
+                class="me-2 border top-0 marker level0"
               />
               Releases: 
               <span

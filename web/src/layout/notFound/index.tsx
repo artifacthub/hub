@@ -12,7 +12,7 @@ const NotFound = () => (
     <TiWarningOutline className={`m-3 ${styles.icon}`} />
     <div className="h1 text-center mb-4">Error 404 - Page Not Found</div>
     <div className="h3 text-center mb-5">The page you were looking for wasn't found</div>
-    <Link to="/" className="btn btn-outline-secondary btn-lg">
+    <Link to="/" className="btn btn-secondary btn-lg">
       Back Home
     </Link>
   </div>

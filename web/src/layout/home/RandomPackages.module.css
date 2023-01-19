@@ -2,3 +2,14 @@
   min-height: 500px;
   background-color: var(--body-bg);
 }
+
+.card {
+  max-width: 750px !important;
+  margin: 0 auto;
+}
+
+@media only screen and (min-width: 768px) {
+  .card {
+    min-height: 172px;
+  }
+}

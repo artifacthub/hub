@@ -66,7 +66,7 @@ exports[`SearchBar creates snapshot 1`] = `
         type="button"
       />
       <div
-        class="position-absolute text-dark tipIcon bigTipIcon"
+        class="d-none d-sm-block position-absolute text-dark tipIcon bigTipIcon"
       >
         <button
           aria-label="Open search tips modal"

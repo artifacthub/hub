@@ -57,7 +57,7 @@ const Last30DaysViews = (props: Props) => {
         type: 'area',
         width: 100,
         height: 40,
-        fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
+        fontFamily: 'var(--bs-body-font-family)',
         sparkline: {
           enabled: true,
         },
@@ -72,7 +72,7 @@ const Last30DaysViews = (props: Props) => {
       tooltip: {
         style: {
           fontSize: '10px',
-          fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
+          fontFamily: 'var(--bs-body-font-family)',
         },
         fixed: {
           enabled: false,

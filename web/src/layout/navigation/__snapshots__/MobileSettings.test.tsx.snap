@@ -19,7 +19,7 @@ exports[`MobileSettings creates snapshot 1`] = `
           class="d-flex align-items-center justify-content-center"
         >
           <div
-            class="rounded-circle d-flex align-items-center justify-content-center lh-1 fs-3 bg-white iconWrapper"
+            class="rounded-circle d-flex align-items-center justify-content-center lh-1 bg-white iconWrapper"
           >
             <svg
               fill="currentColor"

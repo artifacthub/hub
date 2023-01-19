@@ -6,7 +6,7 @@ import API from '../../api';
 import { Package } from '../../types';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
-import PackageCard from './PackageCard';
+import PackageCard from '../common/PackageCard';
 import styles from './RandomPackages.module.css';
 
 const RandomPackages = () => {
@@ -45,7 +45,11 @@ const RandomPackages = () => {
                         <PackageCard
                           key={`rp_${item.packageId}`}
                           package={item}
-                          className={classnames({ 'd-none d-xxl-block': index > 4 })}
+                          className={styles.card}
+                          cardWrapperClassName={classnames('col-12 col-xxl-6 col-xxxl-5', {
+                            'd-none d-xxl-block': index > 4,
+                          })}
+                          noBadges
                         />
                       );
                     })}

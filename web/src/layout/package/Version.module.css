@@ -24,6 +24,10 @@
   color: var(--highlighted);
 }
 
-.spinner {
-  top: 2px;
+.spinnerWrapper {
+  margin-top: -3px;
+}
+
+.version {
+  font-size: 0.9rem;
 }

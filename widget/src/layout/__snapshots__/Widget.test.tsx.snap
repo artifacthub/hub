@@ -7,7 +7,7 @@ exports[`Widget creates snapshot 1`] = `
     data-testid="mainWrapper"
   >
     <div
-      class="sc-kDvujY kRFZH"
+      class="sc-kDvujY yeSOt"
       data-testid="cardWrapper"
     >
       <a
@@ -120,11 +120,11 @@ exports[`Widget creates snapshot 1`] = `
             class="sc-fnGiBr gEjgmO"
           >
             <div
-              class="sc-ksBlkl etQpPL"
+              class="sc-ksBlkl cPnDlr"
             >
               <img
                 alt="Logo artifact-hub"
-                class="sc-bcXHqe yFbVY"
+                class="sc-bcXHqe ccpfWE"
                 src="https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111"
                 srcset="https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111@1x 1x, https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111@2x 2x, https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111@3x 3x, https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111@4x 4x"
               />
@@ -141,7 +141,7 @@ exports[`Widget creates snapshot 1`] = `
                   artifact-hub
                 </div>
                 <div
-                  class="sc-iJnaPW bEQdqd"
+                  class="sc-iJnaPW hUGsgM"
                 >
                   <div
                     class="sc-dIfARi cvVvOe"
@@ -194,7 +194,7 @@ exports[`Widget creates snapshot 1`] = `
             class="sc-bBABsx lcDDfq"
           >
             <span
-              class="sc-iBYQkv kyYQUs"
+              class="sc-iBYQkv jbIloF"
             >
               <div>
                 <div
@@ -239,7 +239,7 @@ exports[`Widget creates snapshot 1`] = `
             </small>
           </div>
           <div
-            class="sc-kgTSHT zkbdg"
+            class="sc-kgTSHT ccKOJV"
           >
             Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
           </div>
@@ -260,7 +260,7 @@ exports[`Widget creates snapshot 1`] = `
               class="sc-gswNZR cZvnHI"
             >
               <div
-                class="sc-hLBbgP benVdW success"
+                class="sc-hLBbgP hWkYBj success"
               >
                 <div
                   aria-hidden="true"
@@ -288,7 +288,7 @@ exports[`Widget creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="sc-dkrFOg Cryud"
+                class="sc-dkrFOg fjwaaA"
               >
                 Official
               </div>
@@ -297,7 +297,7 @@ exports[`Widget creates snapshot 1`] = `
               class="sc-gswNZR cZvnHI"
             >
               <div
-                class="sc-hLBbgP benVdW"
+                class="sc-hLBbgP hWkYBj"
               >
                 <div
                   aria-hidden="true"
@@ -323,7 +323,7 @@ exports[`Widget creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="sc-dkrFOg Cryud"
+                class="sc-dkrFOg fjwaaA"
               >
                 Verified Publisher
               </div>

@@ -1,6 +1,6 @@
 .inputWrapper {
   height: 36px;
-  border-radius: 18px;
+  margin: 0 0.3rem;
   box-shadow: 0 0 0 0.3rem var(--color-black-15);
 }
 
@@ -60,14 +60,11 @@
   min-width: 30px;
   width: 30px;
   height: 30px;
-  border-color: var(--color-1-10) !important;
-
-  box-shadow: 0px 0px 2px 0px var(--color-1-20);
 }
 
 .image {
-  max-width: calc(100% - 2px);
-  max-height: calc(100% - 2px);
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .tableWrapper {

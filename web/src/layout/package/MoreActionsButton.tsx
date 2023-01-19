@@ -38,7 +38,7 @@ const MoreActionsButton = (props: Props) => {
 
   return (
     <>
-      <div className="d-none d-md-block position-relative ms-2">
+      <div className="d-none d-lg-block position-relative ms-2">
         <button
           className={`btn btn-outline-primary rounded-circle p-0 position-relative lh-1 fs-5 ${styles.iconWrapper}`}
           type="button"

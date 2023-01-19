@@ -19,7 +19,7 @@ exports[`Package index creates snapshot 1`] = `
             class="d-flex align-items-center flex-grow-1 mw-100"
           >
             <div
-              class="d-flex align-items-center justify-content-center p-1 p-md-2 overflow-hidden border border-2 rounded-circle bg-white imageWrapper imageWrapper"
+              class="d-flex align-items-center justify-content-center imageWrapper"
             >
               <img
                 alt="Pretty name"
@@ -30,13 +30,13 @@ exports[`Package index creates snapshot 1`] = `
               />
             </div>
             <div
-              class="ms-3 flex-grow-1 wrapperWithContentEllipsis"
+              class="position-relative ms-3 flex-grow-1 pe-3 py-0 py-sm-2 wrapperWithContentEllipsis"
             >
               <div
                 class="d-flex flex-row align-items-center titleWrapper"
               >
                 <div
-                  class="h3 mb-0 text-nowrap text-truncate title"
+                  class="position-relative h3 mb-0 text-nowrap text-truncate title"
                 >
                   Pretty name
                 </div>
@@ -44,20 +44,117 @@ exports[`Package index creates snapshot 1`] = `
                   class="d-none d-md-flex ms-3"
                 >
                   <div
+                    class="d-none d-md-inline-block"
+                  >
+                    <div
+                      class="d-flex fs-6"
+                    >
+                      <span
+                        class="badge bg-light text-dark border bg badge d-none d-md-inline me-3 position-relative kindIcon mt-1"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <div
+                            aria-hidden="true"
+                            class="position-relative icon undefined"
+                          >
+                            <img
+                              alt="Icon"
+                              class="mw-100 mh-100 iconLight"
+                              src="/static/media/helm-chart.svg"
+                            />
+                            <img
+                              alt="Icon"
+                              class="mw-100 mh-100 iconDark"
+                              src="/static/media/helm-chart-light.svg"
+                            />
+                          </div>
+                          <div
+                            class="ms-1 text"
+                          >
+                            Helm chart
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex d-md-none fs-6"
+                  >
+                    <span
+                      class="badge bg-light text-dark border bg badge d-none d-md-inline me-3 position-relative kindIcon mt-1"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          aria-hidden="true"
+                          class="position-relative icon undefined"
+                        >
+                          <img
+                            alt="Icon"
+                            class="mw-100 mh-100 iconLight"
+                            src="/static/media/helm-chart.svg"
+                          />
+                          <img
+                            alt="Icon"
+                            class="mw-100 mh-100 iconDark"
+                            src="/static/media/helm-chart-light.svg"
+                          />
+                        </div>
+                        <div
+                          class="ms-1 text"
+                        >
+                          Helm chart
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                  <div
                     class="d-none d-lg-inline"
                   />
                 </div>
               </div>
               <div
-                class="d-flex d-md-none text-truncate mt-2 w-100 mobileSubtitle"
+                class="position-relative d-flex d-md-none text-truncate mt-2 w-100 mobileSubtitle"
               >
-                <small
-                  class="text-muted text-uppercase"
-                >
-                  Repo: 
-                </small>
                 <div
-                  class="mx-1 d-inline mobileIcon"
+                  class="d-none d-md-block text-dark me-2"
+                >
+                  <svg
+                    fill="none"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="16.5"
+                      x2="7.5"
+                      y1="9.4"
+                      y2="4.21"
+                    />
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                    />
+                    <polyline
+                      points="3.27 6.96 12 12.01 20.73 6.96"
+                    />
+                    <line
+                      x1="12"
+                      x2="12"
+                      y1="22.08"
+                      y2="12"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="d-inline mobileIcon"
                 >
                   <img
                     alt="Icon"
@@ -71,13 +168,13 @@ exports[`Package index creates snapshot 1`] = `
                   />
                 </div>
                 <span
-                  class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
+                  class="text-muted d-inline-block text-truncate mw-100 mobileVersion"
                 >
                   incubator
                 </span>
               </div>
               <div
-                class="d-none d-md-flex flex-row align-items-baseline mt-2 subtitle"
+                class="position-relative d-none d-md-flex flex-row align-items-baseline mt-2 subtitle"
               >
                 <div
                   class="me-2 text-truncate d-flex flex-row align-items-baseline mw50"
@@ -91,20 +188,34 @@ exports[`Package index creates snapshot 1`] = `
                     />
                   </div>
                   <div
-                    class="d-flex flex-row align-items-start text-truncate"
+                    class="d-flex flex-row align-items-baseline text-truncate"
                   >
                     <div
-                      class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                      class="d-flex flex-row align-items-baseline me-1 text-dark position-relative icon"
                     >
-                      <small>
-                        Org:
-                      </small>
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"
+                        />
+                      </svg>
                     </div>
                     <button
                       aria-expanded="false"
                       aria-hidden="true"
                       aria-label="Organization info"
-                      class="p-0 border-0 text-dark text-truncate flex-grow-1 bg-transparent position-relative link undefined"
+                      class="p-0 border-0 text-muted text-truncate flex-grow-1 bg-transparent position-relative link undefined"
                       tabindex="-1"
                     >
                       <div
@@ -116,7 +227,7 @@ exports[`Package index creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="text-truncate d-flex flex-row align-items-baseline mw50"
+                  class="text-truncate d-flex flex-row align-items-baseline ms-2 mw50"
                 >
                   <div
                     class="position-absolute"
@@ -302,90 +413,44 @@ exports[`Package index creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="d-flex flex-row text-truncate"
+                    class="d-flex flex-row align-items-baseline text-truncate"
                   >
                     <div
-                      class="d-flex flex-row align-items-baseline me-1 text-muted text-uppercase"
+                      class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                     >
-                      <small>
-                        Repo:
-                      </small>
                       <div
-                        class="d-none d-md-inline-block"
+                        class="position-relative icon"
                       >
-                        <span
-                          class="visually-hidden"
+                        <svg
+                          fill="none"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          Helm chart
-                        </span>
-                        <button
-                          aria-hidden="true"
-                          aria-label="Filter by Helm chart repository kind"
-                          class="btn btn-link m-0 p-0"
-                          data-testid="repoIconLabelLink"
-                          tabindex="-1"
-                        >
-                          <span
-                            class="badge bg-light text-dark rounded-pill border bg badge ms-1"
-                          >
-                            <div
-                              class="d-flex flex-row align-items-center"
-                            >
-                              <div
-                                aria-hidden="true"
-                                class="position-relative icon undefined"
-                              >
-                                <img
-                                  alt="Icon"
-                                  class="mw-100 mh-100 iconLight"
-                                  src="/static/media/helm-chart.svg"
-                                />
-                                <img
-                                  alt="Icon"
-                                  class="mw-100 mh-100 iconDark"
-                                  src="/static/media/helm-chart-light.svg"
-                                />
-                              </div>
-                              <div
-                                class="ms-1"
-                              >
-                                Helm chart
-                              </div>
-                            </div>
-                          </span>
-                        </button>
-                      </div>
-                      <div
-                        class="d-flex d-md-none fs-6"
-                      >
-                        <span
-                          class="badge bg-light text-dark rounded-pill border bg badge ms-1"
-                        >
-                          <div
-                            class="d-flex flex-row align-items-center"
-                          >
-                            <div
-                              aria-hidden="true"
-                              class="position-relative icon undefined"
-                            >
-                              <img
-                                alt="Icon"
-                                class="mw-100 mh-100 iconLight"
-                                src="/static/media/helm-chart.svg"
-                              />
-                              <img
-                                alt="Icon"
-                                class="mw-100 mh-100 iconDark"
-                                src="/static/media/helm-chart-light.svg"
-                              />
-                            </div>
-                            <div
-                              class="ms-1"
-                            >
-                              Helm chart
-                            </div>
-                          </div>
-                        </span>
+                          <line
+                            x1="16.5"
+                            x2="7.5"
+                            y1="9.4"
+                            y2="4.21"
+                          />
+                          <path
+                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                          />
+                          <polyline
+                            points="3.27 6.96 12 12.01 20.73 6.96"
+                          />
+                          <line
+                            x1="12"
+                            x2="12"
+                            y1="22.08"
+                            y2="12"
+                          />
+                        </svg>
                       </div>
                     </div>
                     <span
@@ -397,7 +462,7 @@ exports[`Package index creates snapshot 1`] = `
                       aria-expanded="false"
                       aria-hidden="true"
                       aria-label="Filter by repo incubator"
-                      class="d-flex flex-row p-0 border-0 text-dark text-truncate bg-transparent position-relative link moreMarginTop"
+                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
                       data-testid="repoLink"
                       tabindex="-1"
                     >
@@ -422,6 +487,74 @@ exports[`Package index creates snapshot 1`] = `
           class="d-flex flex-wrap d-md-none"
         >
           <div
+            class="d-none d-md-inline-block"
+          >
+            <div
+              class="d-flex fs-6"
+            >
+              <span
+                class="badge bg-light text-dark border bg badge d-none d-md-inline me-3 position-relative kindIcon mt-3 mt-md-0"
+              >
+                <div
+                  class="d-flex flex-row align-items-center"
+                >
+                  <div
+                    aria-hidden="true"
+                    class="position-relative icon undefined"
+                  >
+                    <img
+                      alt="Icon"
+                      class="mw-100 mh-100 iconLight"
+                      src="/static/media/helm-chart.svg"
+                    />
+                    <img
+                      alt="Icon"
+                      class="mw-100 mh-100 iconDark"
+                      src="/static/media/helm-chart-light.svg"
+                    />
+                  </div>
+                  <div
+                    class="ms-1 text"
+                  >
+                    Helm chart
+                  </div>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div
+            class="d-flex d-md-none fs-6"
+          >
+            <span
+              class="badge bg-light text-dark border bg badge d-none d-md-inline me-3 position-relative kindIcon mt-3 mt-md-0"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  aria-hidden="true"
+                  class="position-relative icon undefined"
+                >
+                  <img
+                    alt="Icon"
+                    class="mw-100 mh-100 iconLight"
+                    src="/static/media/helm-chart.svg"
+                  />
+                  <img
+                    alt="Icon"
+                    class="mw-100 mh-100 iconDark"
+                    src="/static/media/helm-chart-light.svg"
+                  />
+                </div>
+                <div
+                  class="ms-1 text"
+                >
+                  Helm chart
+                </div>
+              </div>
+            </span>
+          </div>
+          <div
             class="d-none d-lg-inline"
           />
         </div>
@@ -429,7 +562,7 @@ exports[`Package index creates snapshot 1`] = `
           class="position-absolute d-flex flex-row align-items-center top-0 end-0 optsWrapper"
         >
           <div
-            class="d-none d-md-block position-relative ms-2"
+            class="d-none d-lg-block position-relative ms-2"
           >
             <div
               class="position-relative undefined"
@@ -486,7 +619,7 @@ exports[`Package index creates snapshot 1`] = `
             </div>
           </div>
           <div
-            class="d-none d-md-block position-relative ms-2"
+            class="d-none d-lg-block position-relative ms-2"
           >
             <button
               aria-expanded="false"
@@ -610,7 +743,7 @@ exports[`Package index creates snapshot 1`] = `
                       class="d-flex align-items-center flex-grow-1"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center p-1 overflow-hidden border border-2 bg-white rounded-circle imageWrapper imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden border border-2 bg-white rounded-circle imageWrapper imageWrapper"
                       >
                         <img
                           alt="Pretty name"
@@ -865,7 +998,7 @@ exports[`Package index creates snapshot 1`] = `
                       </small>
                     </div>
                     <p
-                      class="text-truncate"
+                      class="text-truncate text"
                       data-testid="appVersion"
                     >
                       1.0.0
@@ -886,7 +1019,7 @@ exports[`Package index creates snapshot 1`] = `
                       </div>
                       <small>
                         <a
-                          class="badge rounded-pill bg-secondary rssBadge ms-3"
+                          class="badge bg-secondary rssBadge ms-3"
                           href="/api/v1/packages/helm/incubator/pr/feed/rss"
                           rel="alternate noopener noreferrer"
                           role="button"
@@ -1224,7 +1357,7 @@ exports[`Package index creates snapshot 1`] = `
         >
           <div>
             <div
-              class="h6 fw-bold text-uppercase"
+              class="h6 fw-semibold text-uppercase"
             >
               Project
             </div>
@@ -1263,7 +1396,7 @@ exports[`Package index creates snapshot 1`] = `
           </div>
           <div>
             <div
-              class="h6 fw-bold text-uppercase"
+              class="h6 fw-semibold text-uppercase"
             >
               Community
             </div>
@@ -1363,7 +1496,7 @@ exports[`Package index creates snapshot 1`] = `
             class="fullMobileSection"
           >
             <div
-              class="h6 fw-bold text-uppercase"
+              class="h6 fw-semibold text-uppercase"
             >
               About
             </div>

@@ -70,7 +70,7 @@ const UserContext = () => {
         <small className={`text-uppercase text-muted ${styles.legendCtx}`}>Control panel context</small>
         <div className="d-flex flex-row align-items-center">
           <button
-            className={`btn btn-primary rounded-pill btn-sm pe-3 position-relative lh-1 ${styles.ctxBtn}`}
+            className={`btn btn-primary btn-sm pe-3 position-relative lh-1 ${styles.ctxBtn}`}
             type="button"
             onClick={() => {
               fetchOrganizations();

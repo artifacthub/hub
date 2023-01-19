@@ -128,7 +128,7 @@ const InProductionButton = (props: Props) => {
   const isDisabled = isNull(ctx.user) || isUndefined(ctx.user);
 
   return (
-    <div className="d-none d-md-block position-relative ms-2">
+    <div className="d-none d-lg-block position-relative ms-2">
       <ElementWithTooltip
         active
         tooltipClassName={styles.tooltip}
@@ -222,7 +222,7 @@ const InProductionButton = (props: Props) => {
                         <div className="d-flex flex-row align-items-center">
                           <div className="me-2">
                             <div
-                              className={`d-flex align-items-center justify-content-center overflow-hidden rounded-circle border bg-white ${styles.imageWrapper} imageWrapper`}
+                              className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper}`}
                             >
                               <Image
                                 alt={org.displayName || org.name}

@@ -11,6 +11,7 @@ interface Props {
   kind: RepositoryKind;
   isPlural?: boolean;
   className?: string;
+  btnClassName?: string;
   iconClassName?: string;
   noBackground?: boolean;
   clickable?: boolean;
@@ -27,8 +28,7 @@ const RepositoryIconLabel = (props: Props) => {
     <span
       className={classnames(
         {
-          [`badge bg-light text-dark rounded-pill border ${styles.bg}`]:
-            isUndefined(props.noBackground) || !props.noBackground,
+          [`badge bg-light text-dark border ${styles.bg}`]: isUndefined(props.noBackground) || !props.noBackground,
         },
         styles.badge,
         props.className
@@ -38,7 +38,7 @@ const RepositoryIconLabel = (props: Props) => {
         <div className={`position-relative ${styles.icon} ${props.iconClassName}`} aria-hidden="true">
           {repo.icon}
         </div>
-        <div className="ms-1">{props.isPlural ? repo.plural : repo.singular}</div>
+        <div className={`ms-1 ${styles.text}`}>{props.isPlural ? repo.plural : repo.singular}</div>
       </div>
     </span>
   );
@@ -52,7 +52,7 @@ const RepositoryIconLabel = (props: Props) => {
 
             <button
               data-testid="repoIconLabelLink"
-              className="btn btn-link m-0 p-0"
+              className={`btn btn-link m-0 p-0 border-0 ${styles.btn} ${props.btnClassName}`}
               onClick={(e) => {
                 e.preventDefault();
                 history.push({

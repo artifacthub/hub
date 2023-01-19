@@ -174,7 +174,7 @@ const SubscriptionModal = (props: Props) => {
           {!isNull(packageItem) ? (
             <div
               data-testid="activePackageItem"
-              className={`border border-secondary w-100 rounded mt-1 ${styles.packageWrapper}`}
+              className={`border border-secondary w-100 mt-1 ${styles.packageWrapper}`}
             >
               <div className="d-flex flex-row flex-nowrap align-items-stretch justify-content-between">
                 <div className="flex-grow-1 text-truncate py-2">
@@ -184,7 +184,7 @@ const SubscriptionModal = (props: Props) => {
                     </div>
 
                     <div
-                      className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ms-2 ms-md-0 rounded-circle border border-2 bg-white ${styles.imageWrapper} imageWrapper`}
+                      className={`d-flex align-items-center justify-content-center overflow-hidden ms-2 ms-md-0 ${styles.imageWrapper}`}
                     >
                       <Image
                         alt={packageItem.displayName || packageItem.name}

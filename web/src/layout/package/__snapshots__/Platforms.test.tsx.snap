@@ -18,7 +18,7 @@ exports[`Platforms creates snapshot 1`] = `
     </small>
   </div>
   <div
-    class="mb-3 d-flex flex-row flex-wrap"
+    class="mb-3 d-flex flex-row flex-wrap pt-1"
   >
     <div
       class="d-inline badge fw-normal me-2 mb-1 mw-100 text-truncate badge"

@@ -19,7 +19,7 @@ exports[`UserContext creates snapshot 1`] = `
         <button
           aria-expanded="false"
           aria-label="Open context"
-          class="btn btn-primary rounded-pill btn-sm pe-3 position-relative lh-1 ctxBtn"
+          class="btn btn-primary btn-sm pe-3 position-relative lh-1 ctxBtn"
           type="button"
         >
           <div

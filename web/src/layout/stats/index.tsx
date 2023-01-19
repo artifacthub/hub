@@ -89,7 +89,7 @@ const StatsView = (props: Props) => {
 
     return {
       chart: {
-        fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
+        fontFamily: 'var(--bs-body-font-family)',
         height: 300,
         type: 'area',
         redrawOnParentResize: false,
@@ -231,7 +231,7 @@ const StatsView = (props: Props) => {
         zoom: {
           enabled: false,
         },
-        fontFamily: "'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default",
+        fontFamily: 'var(--bs-body-font-family)',
         toolbar: {
           show: false,
         },
@@ -240,8 +240,7 @@ const StatsView = (props: Props) => {
       plotOptions: {
         bar: {
           distributed: true, // Its is neccesary to display different bar colors
-          borderRadius: 5,
-          borderRadiusApplication: 'end',
+          borderRadius: 0,
           dataLabels: {
             position: 'top',
           },
@@ -335,8 +334,7 @@ const StatsView = (props: Props) => {
           options: {
             plotOptions: {
               bar: {
-                borderRadius: 2,
-                borderRadiusApplication: 'end',
+                borderRadius: 0,
                 columnWidth: '50%',
               },
             },
@@ -431,7 +429,7 @@ const StatsView = (props: Props) => {
                   <AnchorHeader
                     level={2}
                     scrollIntoView={scrollIntoView}
-                    className={`mb-4 fw-bold ${styles.title}`}
+                    className={`mb-4 fw-semibold ${styles.title}`}
                     title="Usage"
                   />
 
@@ -539,7 +537,7 @@ const StatsView = (props: Props) => {
                   <AnchorHeader
                     level={2}
                     scrollIntoView={scrollIntoView}
-                    className={`mb-4 fw-bold ${styles.title}`}
+                    className={`mb-4 fw-semibold ${styles.title}`}
                     title="Packages and releases"
                   />
 
@@ -622,7 +620,7 @@ const StatsView = (props: Props) => {
                   <AnchorHeader
                     level={2}
                     scrollIntoView={scrollIntoView}
-                    className={`my-4 fw-bold ${styles.title}`}
+                    className={`my-4 fw-semibold ${styles.title}`}
                     title="Repositories"
                   />
 
@@ -647,7 +645,7 @@ const StatsView = (props: Props) => {
                   <AnchorHeader
                     level={2}
                     scrollIntoView={scrollIntoView}
-                    className={`mt-4 fw-bold ${styles.title}`}
+                    className={`mt-4 fw-semibold ${styles.title}`}
                     title="Organizations and users"
                   />
                   <div className="row my-4">

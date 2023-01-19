@@ -46,7 +46,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                 >
                   <img
                     alt="Logo centrifugo"
@@ -96,7 +96,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1"
+                                  class="ms-1 text"
                                 >
                                   Helm chart
                                 </div>
@@ -129,7 +129,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1"
+                                class="ms-1 text"
                               >
                                 Helm chart
                               </div>
@@ -151,12 +151,6 @@ exports[`RelatedPackages renders correctly 1`] = `
                           <div
                             class="text-truncate"
                           >
-                            user
-                            <span
-                              class="px-1"
-                            >
-                              /
-                            </span>
                             stable
                           </div>
                         </div>
@@ -188,7 +182,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                 >
                   <img
                     alt="Logo kafka"
@@ -238,7 +232,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1"
+                                  class="ms-1 text"
                                 >
                                   Helm chart
                                 </div>
@@ -271,7 +265,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1"
+                                class="ms-1 text"
                               >
                                 Helm chart
                               </div>
@@ -293,12 +287,6 @@ exports[`RelatedPackages renders correctly 1`] = `
                           <div
                             class="text-truncate"
                           >
-                            user
-                            <span
-                              class="px-1"
-                            >
-                              /
-                            </span>
                             incubator
                           </div>
                         </div>
@@ -330,7 +318,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                 >
                   <img
                     alt="Logo kafka-topics-ui"
@@ -380,7 +368,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1"
+                                  class="ms-1 text"
                                 >
                                   Helm chart
                                 </div>
@@ -413,7 +401,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1"
+                                class="ms-1 text"
                               >
                                 Helm chart
                               </div>
@@ -435,12 +423,6 @@ exports[`RelatedPackages renders correctly 1`] = `
                           <div
                             class="text-truncate"
                           >
-                            user
-                            <span
-                              class="px-1"
-                            >
-                              /
-                            </span>
                             dhiatn
                           </div>
                         </div>
@@ -472,7 +454,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                 >
                   <img
                     alt="Logo nats"
@@ -522,7 +504,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1"
+                                  class="ms-1 text"
                                 >
                                   Helm chart
                                 </div>
@@ -555,7 +537,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1"
+                                class="ms-1 text"
                               >
                                 Helm chart
                               </div>
@@ -577,12 +559,6 @@ exports[`RelatedPackages renders correctly 1`] = `
                           <div
                             class="text-truncate"
                           >
-                            user
-                            <span
-                              class="px-1"
-                            >
-                              /
-                            </span>
                             stable
                           </div>
                         </div>
@@ -614,7 +590,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                 >
                   <img
                     alt="Logo rabbitmq"
@@ -664,7 +640,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1"
+                                  class="ms-1 text"
                                 >
                                   Helm chart
                                 </div>
@@ -697,7 +673,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1"
+                                class="ms-1 text"
                               >
                                 Helm chart
                               </div>
@@ -719,12 +695,6 @@ exports[`RelatedPackages renders correctly 1`] = `
                           <div
                             class="text-truncate"
                           >
-                            user
-                            <span
-                              class="px-1"
-                            >
-                              /
-                            </span>
                             stable
                           </div>
                         </div>
@@ -756,7 +726,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                 >
                   <img
                     alt="Logo rabbitmq-ha"
@@ -806,7 +776,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1"
+                                  class="ms-1 text"
                                 >
                                   Helm chart
                                 </div>
@@ -839,7 +809,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1"
+                                class="ms-1 text"
                               >
                                 Helm chart
                               </div>
@@ -861,12 +831,6 @@ exports[`RelatedPackages renders correctly 1`] = `
                           <div
                             class="text-truncate"
                           >
-                            user
-                            <span
-                              class="px-1"
-                            >
-                              /
-                            </span>
                             stable
                           </div>
                         </div>
@@ -898,7 +862,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                 class="d-flex align-items-center flex-grow-1 truncateWrapper"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                 >
                   <img
                     alt="Logo schema-registry"
@@ -948,7 +912,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1"
+                                  class="ms-1 text"
                                 >
                                   Helm chart
                                 </div>
@@ -981,7 +945,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1"
+                                class="ms-1 text"
                               >
                                 Helm chart
                               </div>
@@ -1003,12 +967,6 @@ exports[`RelatedPackages renders correctly 1`] = `
                           <div
                             class="text-truncate"
                           >
-                            user
-                            <span
-                              class="px-1"
-                            >
-                              /
-                            </span>
                             incubator
                           </div>
                         </div>

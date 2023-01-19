@@ -4,6 +4,7 @@ import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 
 import API from '../../api';
+import useBreakpointDetect from '../../hooks/useBreakpointDetect';
 import { Banner as IBanner, RepositoryKind, Stats } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import bannerDispatcher from '../../utils/bannerDispatcher';
@@ -34,6 +35,7 @@ interface Props {
 }
 
 const HomeView = (props: Props) => {
+  const point = useBreakpointDetect();
   const history = useHistory();
   const sampleQueries = getSampleQueries();
   const [isLoadingStats, setIsLoadingStats] = useState(false);
@@ -88,7 +90,7 @@ const HomeView = (props: Props) => {
         <div
           role="banner"
           aria-label="Find, install and publisher Kubernetes packages"
-          className={`display-4 text-center fw-light d-block d-xxl-flex justify-content-center noFocus ${styles.mainTitle}`}
+          className={`display-4 text-center d-block d-xxl-flex justify-content-center noFocus ${styles.mainTitle}`}
           id="content"
           tabIndex={-1}
         >
@@ -111,7 +113,7 @@ const HomeView = (props: Props) => {
           <div className="d-inline-block d-md-none text-center mt-3">
             - or -
             <Link
-              className={`btn btn-link textLighter fw-bold py-0 pb-1 ps-1 ${styles.allPkgBtn}`}
+              className={`btn btn-link textLighter fw-semibold py-0 pb-1 ps-1 ${styles.allPkgBtn}`}
               to={{
                 pathname: '/packages/search',
               }}
@@ -124,7 +126,7 @@ const HomeView = (props: Props) => {
           <div className="d-none d-md-inline-block text-center mt-5">
             {sampleQueries.length > 0 ? <>You can also </> : <>Or you can also </>}
             <Link
-              className="btn btn-link textLighter fw-bold py-0 pb-1 ps-1 pe-0"
+              className="btn btn-link textLighter fw-semibold py-0 pb-1 ps-1 pe-0"
               to={{
                 pathname: '/packages/search',
               }}
@@ -142,7 +144,7 @@ const HomeView = (props: Props) => {
           </div>
 
           <div className="d-none d-md-flex flex-row align-items-end justify-content-center flex-wrap">
-            <SampleQueries lineBreakIn={3} className="bg-secondary border-light" />
+            <SampleQueries lineBreakIn={3} className="bg-secondary" />
           </div>
         </div>
 
@@ -158,14 +160,14 @@ const HomeView = (props: Props) => {
             wrapperClassName="d-inline-block position-relative mt-4 mt-md-5"
             banner={banner}
             removeBanner={() => setBanner(null)}
-            maxEqualRatio
+            maxEqualRatio={point !== 'xs'}
           />
         )}
 
         {!whiteLabel && (
           <>
             <div className={`text-center h5 my-4 mt-md-5 ${styles.legend}`}>
-              Artifact Hub is an <b>Open Source</b> project
+              Artifact Hub is an <span className="fw-semibold">Open Source</span> project
             </div>
 
             <div className="d-flex flex-row align-items-center justify-content-center flex-wrap">
@@ -206,7 +208,7 @@ const HomeView = (props: Props) => {
             <div className={`text-center mx-3 mt-md-4 mb-4 fw-light ${styles.repoGuideText}`}>
               Please see the{' '}
               <ExternalLink
-                className={`btn btn-link text-light fw-bold textLight p-0 align-baseline ${styles.inlineLink}`}
+                className={`btn btn-link text-light fw-semibold textLight p-0 align-baseline ${styles.inlineLink}`}
                 href="/docs/topics/repositories"
                 label="Open documentation"
               >
@@ -335,6 +337,7 @@ const HomeView = (props: Props) => {
                   </ExternalLink>
                 </div>
                 <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
+                  <div className="col" />
                   <ExternalLink
                     href="https://opencontainers.org"
                     className={`col ${styles.iconLink}`}
@@ -371,6 +374,7 @@ const HomeView = (props: Props) => {
                       </div>
                     </div>
                   </ExternalLink>
+                  <div className="col" />
                 </div>
                 Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to
                 share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a
@@ -392,7 +396,7 @@ const HomeView = (props: Props) => {
                   Artifact Hub is a{' '}
                   <ExternalLink
                     href="https://www.cncf.io/sandbox-projects/"
-                    className="fw-bold text-dark"
+                    className="fw-semibold text-dark"
                     label="Open CNCF sandbox projects site"
                   >
                     Cloud Native Computing Foundation

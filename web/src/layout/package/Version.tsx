@@ -52,9 +52,7 @@ const Version = (props: Props) => {
                 return (
                   <div key={`v_channel_${channel}`} className="d-flex flex-row align-items-center">
                     <div className={`${styles.badgeDecorator} position-relative mx-1`} />
-                    <span
-                      className={`badge rounded-pill my-1 text-truncate border ${styles.badge} ${styles.isHighlighted}`}
-                    >
+                    <span className={`badge my-1 text-truncate border ${styles.badge} ${styles.isHighlighted}`}>
                       <small className="text-uppercase me-1">Channel:</small>
                       {channel}
                     </span>
@@ -67,14 +65,14 @@ const Version = (props: Props) => {
           {props.prerelease && (
             <div className="d-flex flex-row align-items-center">
               <div className={`${styles.badgeDecorator} position-relative mx-1`} />
-              <span className={`badge rounded-pill my-1 border ${styles.badge}`}>Pre-release</span>
+              <span className={`badge my-1 border ${styles.badge}`}>Pre-release</span>
             </div>
           )}
 
           {props.containsSecurityUpdates && (
             <div className="d-flex flex-row align-items-center">
               <div className={`${styles.badgeDecorator} position-relative mx-1`} />
-              <span className={`badge rounded-pill my-1 border ${styles.badge}`}>Contains security updates</span>
+              <span className={`badge my-1 border ${styles.badge}`}>Contains security updates</span>
             </div>
           )}
         </div>
@@ -87,7 +85,7 @@ const Version = (props: Props) => {
       {props.isActive ? (
         <>
           <div className="d-flex flex-row align-items-baseline activeVersion mw-100">
-            <div className="text-truncate">{props.version}</div>
+            <div className={`text-truncate ${styles.version}`}>{props.version}</div>
             <small className={`text-muted ${styles.activeVersionDate}`}>({formattedDate})</small>
           </div>
           {getBadges()}
@@ -97,15 +95,15 @@ const Version = (props: Props) => {
           <div className="d-flex flex-row align-items-baseline">
             <button
               onClick={() => openPackagePage()}
-              className="btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-start"
+              className={`btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-start ${styles.version}`}
               aria-label={`Open version ${props.version}`}
             >
               {props.version}
             </button>
             <small className="text-muted">({formattedDate})</small>
             {isLoading && (
-              <div className="position-relative ms-2">
-                <Loading spinnerClassName={styles.spinner} noWrapper smallSize />
+              <div className={`position-relative ms-2 ${styles.spinnerWrapper}`}>
+                <Loading noWrapper smallSize />
               </div>
             )}
           </div>

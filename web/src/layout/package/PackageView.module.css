@@ -11,14 +11,16 @@
   width: 80px;
   height: 80px;
   min-width: 80px;
-  border-color: var(--color-1-10) !important;
-
-  box-shadow: 0px 0px 5px 0px var(--color-1-20);
 }
 
 .image {
-  max-width: calc(100% - 10px);
-  max-height: calc(100% - 10px);
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.userIcon {
+  font-size: 0.8rem;
+  top: -2px;
 }
 
 .info {
@@ -41,6 +43,8 @@
 }
 
 .description {
+  font-size: 0.95rem;
+  line-height: 1.65;
   -webkit-line-clamp: 6;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -67,6 +71,7 @@
 
 .wrapperWithContentEllipsis {
   min-width: 0;
+  height: 80px;
 }
 
 .titleWrapper {
@@ -132,7 +137,6 @@
 }
 
 .manifestWrapper {
-  border-radius: 3px;
   border-color: var(--color-black-15) !important;
   background-color: var(--extra-light-gray);
 }
@@ -147,6 +151,15 @@
   background-color: var(--color-1-2) !important;
 }
 
+[data-theme='dark'] .banner {
+  background-color: var(--body-bg) !important;
+}
+
+.kindIcon {
+  height: 20px;
+  line-height: 14px;
+}
+
 @media only screen and (max-width: 767.98px) {
   .imageWrapper {
     min-width: 50px;
@@ -154,32 +167,13 @@
     height: 50px;
   }
 
-  .image {
-    max-width: calc(100% - 6px);
-    max-height: calc(100% - 6px);
-  }
-
   .readme {
     flex: 0 0 100%;
     max-width: 100%;
   }
 
-  .titleWrapper {
-    margin-right: 0px;
-  }
-
-  .optsWrapper {
-    margin-top: 1.5rem;
-    position: relative !important;
-    padding-right: 0;
-  }
-
   .deprecatedBadge {
     font-size: 0.6rem !important;
-  }
-
-  .optsWrapper {
-    justify-content: space-between;
   }
 
   .noDataWrapper {
@@ -189,11 +183,27 @@
   .contentWrapper {
     margin-right: 0;
   }
+
+  .repoIcon {
+    height: 12px;
+    margin-top: -3px;
+  }
 }
 
 @media only screen and (max-width: 991.98px) {
   .relatedWrapper {
     margin-right: 0;
+  }
+
+  .optsWrapper {
+    margin-top: 1.5rem;
+    position: relative !important;
+    padding-right: 0;
+    justify-content: space-between;
+  }
+
+  .titleWrapper {
+    margin-right: 0px;
   }
 }
 
@@ -219,7 +229,7 @@
   }
 
   .jumbotron {
-    padding: 2rem 0 !important;
+    padding: 1.25rem 0 !important;
   }
 
   .title {
@@ -231,8 +241,11 @@
   }
 
   .repoIcon {
-    height: 14px;
     margin-top: -3px;
+  }
+
+  .wrapperWithContentEllipsis {
+    height: 50px;
   }
 }
 

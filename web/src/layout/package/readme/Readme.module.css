@@ -1,6 +1,16 @@
 .md {
   z-index: 1;
   margin-top: -20px;
+  font-size: 0.95rem;
+}
+
+.md p,
+.md li,
+.md pre,
+.md td,
+.md blockquote,
+.md a {
+  line-height: 1.65;
 }
 
 .md p {
@@ -25,7 +35,6 @@
 .md pre {
   background-color: var(--color-1-5) !important;
   padding: 16px !important;
-  border-radius: 3px;
 }
 
 .md ul {
@@ -49,7 +58,6 @@
   word-wrap: break-word;
   background-color: var(--code-bg-md);
   border: 1px solid var(--color-1-20);
-  border-radius: 3px;
   padding: 0 0.15rem;
 }
 

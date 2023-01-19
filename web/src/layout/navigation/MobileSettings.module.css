@@ -5,6 +5,8 @@
 .iconWrapper {
   width: 2rem;
   height: 2rem;
+  border-width: 2px;
+  font-size: 1.75rem;
 }
 
 .profileImage {

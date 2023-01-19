@@ -9,7 +9,6 @@
 .colorInput {
   width: 36px;
   height: 14px;
-  border-radius: 2px;
 }
 
 .colorPickerWrapper {
@@ -40,4 +39,14 @@
   border-right-color: var(--color-1-900) !important;
   border-bottom-color: transparent !important;
   border-width: 0.4rem 0.4rem 0.4rem 0 !important;
+}
+
+:global(.sketch-picker) {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px !important;
+  border-radius: 0 !important;
+}
+
+:global(.sketch-picker) div {
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }

@@ -138,7 +138,7 @@ const SubscriptionsButton = (props: Props) => {
   const isDisabled = isNull(ctx.user) || isNull(activeSubscriptions) || isUndefined(activeSubscriptions);
 
   return (
-    <div className="d-none d-md-block position-relative ms-2">
+    <div className="d-none d-lg-block position-relative ms-2">
       <ElementWithTooltip
         active
         tooltipClassName={styles.tooltip}

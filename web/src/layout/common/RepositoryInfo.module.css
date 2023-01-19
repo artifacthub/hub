@@ -2,10 +2,6 @@
   top: -1px;
 }
 
-.moreMarginTop {
-  top: 3px;
-}
-
 .dropdown {
   width: 350px;
   font-size: 0.85rem;
@@ -45,8 +41,12 @@
   border-bottom-color: var(--color-1-900) !important;
 }
 
+.icon {
+  top: -2px;
+}
+
 .repoLabel {
-  top: -1px;
+  top: -4px;
 }
 
 @media only screen and (max-width: 575.98px) {

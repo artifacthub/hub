@@ -178,7 +178,7 @@ const Details = (props: Props) => {
                 {props.package.appVersion && (
                   <div>
                     <SmallTitle text="Application version" />
-                    <p data-testid="appVersion" className="text-truncate">
+                    <p data-testid="appVersion" className={`text-truncate ${styles.text}`}>
                       {props.package.appVersion}
                     </p>
                   </div>
@@ -258,7 +258,7 @@ const Details = (props: Props) => {
                       [HelmChartType.Application, HelmChartType.Library].includes(props.package.data.type) && (
                         <div>
                           <SmallTitle text="Type" />
-                          <p data-testid="chartType" className="text-truncate">
+                          <p data-testid="chartType" className={`text-truncate ${styles.text}`}>
                             {props.package.data.type}
                           </p>
                         </div>
@@ -267,7 +267,7 @@ const Details = (props: Props) => {
                     {props.package.data.kubeVersion && (
                       <div>
                         <SmallTitle text="Kubernetes version" />
-                        <p data-testid="kubeVersion" className="text-truncate">
+                        <p data-testid="kubeVersion" className={`text-truncate ${styles.text}`}>
                           {props.package.data.kubeVersion}
                         </p>
                       </div>
@@ -290,7 +290,7 @@ const Details = (props: Props) => {
                 {props.package.data && props.package.data.kyvernoVersion && (
                   <div>
                     <SmallTitle text="Minimal version" />
-                    <p data-testid="appVersion" className="text-truncate">
+                    <p data-testid="appVersion" className={`text-truncate ${styles.text}`}>
                       {props.package.data.kyvernoVersion}
                     </p>
                   </div>
@@ -298,7 +298,7 @@ const Details = (props: Props) => {
                 {props.package.data && props.package.data.kyvernoKubernetesVersion && (
                   <div>
                     <SmallTitle text="Kubernetes version" />
-                    <p data-testid="kubernetesVersion" className="text-truncate">
+                    <p data-testid="kubernetesVersion" className={`text-truncate ${styles.text}`}>
                       {props.package.data.kyvernoKubernetesVersion}
                     </p>
                   </div>
@@ -306,7 +306,7 @@ const Details = (props: Props) => {
                 {props.package.data && props.package.data.kyvernoCategory && (
                   <div>
                     <SmallTitle text="Category" />
-                    <p data-testid="category" className="text-truncate">
+                    <p data-testid="category" className={`text-truncate ${styles.text}`}>
                       {props.package.data.kyvernoCategory}
                     </p>
                   </div>
@@ -317,7 +317,7 @@ const Details = (props: Props) => {
                     {subjects.map((subject: string, index: number) => (
                       <p
                         data-testid="kyvernoSubject"
-                        className={classnames('text-truncate', { 'mb-1': index + 1 !== subjects.length })}
+                        className={classnames('text-truncate', styles.text, { 'mb-1': index + 1 !== subjects.length })}
                         key={`kyverno-subject-${subject}`}
                       >
                         {subject}
@@ -334,7 +334,7 @@ const Details = (props: Props) => {
                 {props.package.data && props.package.data.pipelinesMinVersion && (
                   <div>
                     <SmallTitle text="Pipeline minimal version" />
-                    <p data-testid="appVersion" className="text-truncate">
+                    <p data-testid="appVersion" className={`text-truncate ${styles.text}`}>
                       {props.package.data.pipelinesMinVersion}
                     </p>
                   </div>
@@ -348,7 +348,7 @@ const Details = (props: Props) => {
                 {props.package.data && props.package.data.pipelinesMinVersion && (
                   <div>
                     <SmallTitle text="Pipeline minimal version" />
-                    <p data-testid="appVersion" className="text-truncate">
+                    <p data-testid="appVersion" className={`text-truncate ${styles.text}`}>
                       {props.package.data.pipelinesMinVersion}
                     </p>
                   </div>
@@ -375,7 +375,7 @@ const Details = (props: Props) => {
                   props.package.data[KeptnData.Version] !== '' && (
                     <div>
                       <SmallTitle text="Keptn version" />
-                      <p data-testid="keptnVersion" className="text-truncate">
+                      <p data-testid="keptnVersion" className={`text-truncate ${styles.text}`}>
                         {props.package.data[KeptnData.Version]}
                       </p>
                     </div>
@@ -386,7 +386,7 @@ const Details = (props: Props) => {
                     {kinds.map((kind: string, index: number) => (
                       <p
                         data-testid="keptnKind"
-                        className={classnames('text-truncate', { 'mb-1': index + 1 !== kinds.length })}
+                        className={classnames('text-truncate', styles.text, { 'mb-1': index + 1 !== kinds.length })}
                         key={`keptn-kind-${kind}`}
                       >
                         {kind}
@@ -417,7 +417,7 @@ const Details = (props: Props) => {
                     {resources.map((resource: string) => (
                       <p
                         data-testid="kubewardenResource"
-                        className="text-truncate mb-1"
+                        className={`text-truncate mb-1 ${styles.text}`}
                         key={`kubewarden-resource-${resource}`}
                       >
                         {resource}
@@ -466,7 +466,7 @@ const Details = (props: Props) => {
         <>
           <div>
             <SmallTitle text="Provider" />
-            <p className="text-truncate">{props.package.provider}</p>
+            <p className={`text-truncate ${styles.text}`}>{props.package.provider}</p>
           </div>
         </>
       )}
