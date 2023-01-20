@@ -34,7 +34,7 @@ const RandomPackages = () => {
           {!isUndefined(packages) && !isLoading ? (
             <>
               <div data-testid="randomPackagesList" className="w-100 my-2">
-                <div className="h4 text-center text-dark mt-3 mt-md-2 mb-4" aria-level={4}>
+                <div className="h4 text-center text-dark mt-0 mt-sm-3 mt-md-2 mb-2 mb-sm-4" aria-level={4}>
                   Explore and discover packages
                 </div>
 

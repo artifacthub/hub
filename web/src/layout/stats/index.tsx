@@ -405,7 +405,7 @@ const StatsView = (props: Props) => {
           {apiError && <NoData issuesLinkVisible>{apiError}</NoData>}
           {stats && (
             <>
-              <div className="text-center mb-5">
+              <div className="text-center mb-4 mb-sm-5">
                 <small>
                   <span className="text-muted me-2">Report generated at:</span>
                   {!isUndefined(stats.generatedAt) ? (
@@ -429,12 +429,12 @@ const StatsView = (props: Props) => {
                   <AnchorHeader
                     level={2}
                     scrollIntoView={scrollIntoView}
-                    className={`mb-4 fw-semibold ${styles.title}`}
+                    className={`mb-2 mb-sm-4 fw-semibold ${styles.title}`}
                     title="Usage"
                   />
 
                   {(stats.packages.viewsMonthly || stats.packages.topViewsCurrentMonth) && (
-                    <div className="row my-4 pb-0 pb-lg-2">
+                    <div className="row my-1 my-sm-4 pb-0 pb-lg-2">
                       {stats.packages.viewsMonthly && (
                         <div
                           className={
@@ -442,7 +442,7 @@ const StatsView = (props: Props) => {
                           }
                         >
                           <div
-                            className={classnames('mt-4 mb-4 mb-lg-0', {
+                            className={classnames('mt-2 mt-sm-4 mb-1 mb-sm-4 mb-lg-0', {
                               'pe-0 pe-lg-3 pe-xxxl-4': !isUndefined(stats.packages.topViewsCurrentMonth),
                             })}
                           >
@@ -468,7 +468,7 @@ const StatsView = (props: Props) => {
                       )}
 
                       {stats.packages.topViewsCurrentMonth && (
-                        <div className="col-12 col-lg-4 col-xxl-3 mt-4 mt-lg-0">
+                        <div className="col-12 col-lg-4 col-xxl-3 mt-2 mt-sm-4 mt-lg-0">
                           <div className={`mt-0 mt-lg-4 ps-0 ps-lg-3 ps-xxxl-4 ${styles.listWrapper}`}>
                             <div className={`card h-100 ${styles.chartWrapper}`}>
                               {(stats.packages.topViewsCurrentMonth!.length === 0 || isLoading) && <Loading />}
@@ -481,7 +481,7 @@ const StatsView = (props: Props) => {
                   )}
 
                   {(stats.packages.viewsDaily || stats.packages.topViewsToday) && (
-                    <div className="row my-4 pb-4">
+                    <div className="row my-1 my-sm-4 pb-2 pb-sm-4">
                       {stats.packages.viewsDaily && (
                         <div
                           className={
@@ -489,7 +489,7 @@ const StatsView = (props: Props) => {
                           }
                         >
                           <div
-                            className={classnames('mt-4 mb-4 mb-lg-0', {
+                            className={classnames('mt-2 mt-sm-4 mb-1 mb-sm-4 mb-lg-0', {
                               'pe-0 pe-lg-3 pe-xxxl-4': !isUndefined(stats.packages.topViewsToday),
                             })}
                           >
@@ -515,7 +515,7 @@ const StatsView = (props: Props) => {
                       )}
 
                       {stats.packages.topViewsToday && (
-                        <div className="col-12 col-lg-4 col-xxl-3 mt-4 mt-lg-0">
+                        <div className="col-12 col-lg-4 col-xxl-3 mt-2 mt-sm-4 mt-lg-0">
                           <div className={`mt-0 mt-lg-4 ps-0 ps-lg-3 ps-xxxl-4 ${styles.listWrapper}`}>
                             <div className={`card h-100 ${styles.chartWrapper}`}>
                               {(stats.packages.topViewsToday!.length === 0 || isLoading) && <Loading />}
@@ -537,15 +537,15 @@ const StatsView = (props: Props) => {
                   <AnchorHeader
                     level={2}
                     scrollIntoView={scrollIntoView}
-                    className={`mb-4 fw-semibold ${styles.title}`}
+                    className={`mt-2 mt-sm-4 mb-2 mb-sm-4 fw-semibold ${styles.title}`}
                     title="Packages and releases"
                   />
 
                   {(stats.packages.runningTotal || stats.snapshots.runningTotal) && (
-                    <div className="row my-4 pb-0 pb-lg-2">
+                    <div className="row my-1 my-sm-4 pb-0 pb-lg-2">
                       {stats.packages.runningTotal && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.snapshots.runningTotal })}>
-                          <div className="pe-0 pe-lg-3 pe-xxxl-4 mt-4 mb-4 mb-lg-0">
+                          <div className="pe-0 pe-lg-3 pe-xxxl-4 mt-2 mt-sm-4 mb-2 mb-sm-4 mb-lg-0">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.snapshots.runningTotal!.length === 0 || isLoading) && <Loading />}
                               <ReactApexChart
@@ -561,7 +561,7 @@ const StatsView = (props: Props) => {
 
                       {stats.snapshots.runningTotal && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.packages.runningTotal })}>
-                          <div className="ps-0 ps-lg-3 ps-xxxl-4 mt-4">
+                          <div className="ps-0 ps-lg-3 ps-xxxl-4 mt-2 mt-sm-4">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.packages.runningTotal!.length === 0 || isLoading) && <Loading />}
                               <ReactApexChart
@@ -578,10 +578,10 @@ const StatsView = (props: Props) => {
                   )}
 
                   {(stats.packages.createdMonthly || stats.snapshots.createdMonthly) && (
-                    <div className="row my-4 pb-0 pb-lg-4">
+                    <div className="row my-1 my-sm-4 pb-0 pb-lg-4">
                       {stats.packages.createdMonthly && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.snapshots.createdMonthly })}>
-                          <div className="pe-0 pe-lg-3 pe-xxxl-4 mt-4 mb-4 mb-lg-0">
+                          <div className="pe-0 pe-lg-3 pe-xxxl-4 mt-2 mt-sm-4 mb-2 mb-sm-4 mb-lg-0">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.packages.createdMonthly!.length === 0 || isLoading) && <Loading />}
                               <BrushChart
@@ -597,7 +597,7 @@ const StatsView = (props: Props) => {
 
                       {stats.snapshots.createdMonthly && (
                         <div className={classnames('col-12', { 'col-lg-6': stats.packages.createdMonthly })}>
-                          <div className="ps-0 ps-lg-3 ps-xxxl-4 mt-4 mb-4 mb-lg-0">
+                          <div className="ps-0 ps-lg-3 ps-xxxl-4 mt-2 mt-sm-4 mb-1 mb-sm-4 mb-lg-0">
                             <div className={`card ${styles.chartWrapper}`}>
                               {(stats.snapshots.createdMonthly!.length === 0 || isLoading) && <Loading />}
                               <BrushChart
@@ -620,12 +620,12 @@ const StatsView = (props: Props) => {
                   <AnchorHeader
                     level={2}
                     scrollIntoView={scrollIntoView}
-                    className={`my-4 fw-semibold ${styles.title}`}
+                    className={`mb-2 mb-sm-4 mt-2 mt-sm-4 fw-semibold ${styles.title}`}
                     title="Repositories"
                   />
 
-                  <div className="row my-4">
-                    <div className="col-12 my-4">
+                  <div className="row my-1 my-sm-4">
+                    <div className="col-12 my-2 my-sm-4">
                       <div className={`card ${styles.chartWrapper}`}>
                         {(stats.repositories.runningTotal!.length === 0 || isLoading) && <Loading />}
                         <ReactApexChart
@@ -645,13 +645,13 @@ const StatsView = (props: Props) => {
                   <AnchorHeader
                     level={2}
                     scrollIntoView={scrollIntoView}
-                    className={`mt-4 fw-semibold ${styles.title}`}
+                    className={`mt-1 mt-sm-4 fw-semibold ${styles.title}`}
                     title="Organizations and users"
                   />
-                  <div className="row my-4">
+                  <div className="row mt-1 mt-sm-4 mb-4">
                     {stats.organizations.runningTotal && (
                       <div className={classnames('col-12', { 'col-lg-6': stats.users.runningTotal })}>
-                        <div className="pe-0 pe-lg-3 pe-xxxl-4 pt-4">
+                        <div className="pe-0 pe-lg-3 pe-xxxl-4 pt-2 pt-sm-4">
                           <div className={`card ${styles.chartWrapper}`}>
                             {(stats.organizations.runningTotal!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart
@@ -672,7 +672,7 @@ const StatsView = (props: Props) => {
 
                     {stats.users.runningTotal && (
                       <div className={classnames('col-12', { 'col-lg-6': stats.organizations.runningTotal })}>
-                        <div className="ps-0 ps-lg-3 ps-xxxl-4 pt-4 my-4 my-lg-0">
+                        <div className="ps-0 ps-lg-3 ps-xxxl-4 pt-2 pt-sm-4 my-1 my-sm-4 my-lg-0">
                           <div className={`card ${styles.chartWrapper}`}>
                             {(stats.users.runningTotal!.length === 0 || isLoading) && <Loading />}
                             <ReactApexChart

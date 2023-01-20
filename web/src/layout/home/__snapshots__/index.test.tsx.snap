@@ -24,7 +24,7 @@ exports[`Home index creates snapshot 1`] = `
         </span>
       </div>
       <div
-        class="mt-5 text-center"
+        class="mt-4 mt-sm-5 text-center"
       >
         <div
           class="position-relative m-auto w-50 search"
@@ -305,7 +305,7 @@ exports[`Home index creates snapshot 1`] = `
         </a>
       </div>
       <div
-        class="text-center mx-3 mt-md-4 mb-4 fw-light repoGuideText"
+        class="text-center mx-3 mt-md-4 mb-0 mb-sm-4 fw-light repoGuideText"
       >
         Please see the 
         <a

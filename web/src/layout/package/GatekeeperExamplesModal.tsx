@@ -285,7 +285,7 @@ const GatekeeperExamplesModal = (props: Props) => {
                                 aria-pressed={isActive}
                               >
                                 <div className="d-flex flex-column align-self-center">
-                                  <div className="d-flex flex-row align-items-baseline mb-1">
+                                  <div className="d-flex flex-row align-items-baseline">
                                     <div className={`text-truncate ${styles.btnItemContent}`}>{c.name}</div>
                                   </div>
                                 </div>

@@ -17,7 +17,7 @@ exports[`RandomPackages creates snapshot 1`] = `
         >
           <div
             aria-level="4"
-            class="h4 text-center text-dark mt-3 mt-md-2 mb-4"
+            class="h4 text-center text-dark mt-0 mt-sm-3 mt-md-2 mb-2 mb-sm-4"
           >
             Explore and discover packages
           </div>

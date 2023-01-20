@@ -93,7 +93,7 @@ const OrganizationCard = (props: Props) => {
           <div className="d-flex flex-row w-100 justify-content-between align-items-start">
             <div className="d-flex flex-row align-items-center w-100">
               <div
-                className={`d-flex align-items-center justify-content-center overflow-hidden p-1 me-2 position-relative border border-3 bg-white rounded-circle ${styles.imageWrapper} imageWrapper`}
+                className={`d-flex align-items-center justify-content-center overflow-hidden me-2 position-relative ${styles.imageWrapper}`}
               >
                 {!isUndefined(props.organization.logoImageId) ? (
                   <Image
@@ -103,7 +103,7 @@ const OrganizationCard = (props: Props) => {
                     placeholderIcon={<MdBusiness />}
                   />
                 ) : (
-                  <MdBusiness className={styles.image} />
+                  <MdBusiness className={styles.icon} />
                 )}
               </div>
 
@@ -257,7 +257,7 @@ const OrganizationCard = (props: Props) => {
 
           {props.organization.description && (
             <div className="mt-2">
-              <p className="mb-0">{props.organization.description}</p>
+              <p className="mb-0 text-muted">{props.organization.description}</p>
             </div>
           )}
         </div>

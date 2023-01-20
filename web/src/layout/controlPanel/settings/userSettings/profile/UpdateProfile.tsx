@@ -124,6 +124,7 @@ const UpdateProfile = (props: Props) => {
         label="Profile image"
         labelLegend={<small className="ms-1 fst-italic">(Click on the image to update)</small>}
         value={imageId}
+        circularCrop
         onImageChange={(imageId: string) => setImageId(imageId)}
         onAuthError={props.onAuthError}
       />

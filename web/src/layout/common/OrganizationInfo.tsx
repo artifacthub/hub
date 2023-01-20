@@ -116,7 +116,7 @@ const OrganizationInfo = (props: Props) => {
               </div>
 
               {organization.homeUrl && (
-                <div className="mt-1 text-truncate d-flex flex-row align-items-baseline">
+                <div className="mt-2 text-truncate d-flex flex-row align-items-baseline">
                   <small className="text-muted text-uppercase me-1">Homepage: </small>
                   <ExternalLink
                     href={organization.homeUrl}

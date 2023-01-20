@@ -150,7 +150,7 @@ exports[`Search index creates snapshot 1`] = `
     </div>
   </nav>
   <div
-    class="d-flex position-relative pt-3 pb-3 flex-grow-1"
+    class="d-flex position-relative pb-3 flex-grow-1"
   >
     <div
       class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
@@ -171,7 +171,7 @@ exports[`Search index creates snapshot 1`] = `
       </div>
     </div>
     <main
-      class="container-lg px-sm-4 px-lg-0 d-flex flex-row justify-content-between"
+      class="container-lg px-sm-4 px-lg-0 d-flex flex-row align-items-start"
       role="main"
     >
       <div
