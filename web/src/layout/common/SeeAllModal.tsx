@@ -57,9 +57,9 @@ const SeeAllModal = (props: Props) => {
             <small className="text-muted fst-italic">Displaying only the first 5 entries</small>
           </div>
 
-          <div className="d-flex flex-row align-items-baseline">
+          <div className="d-none d-md-flex flex-row align-items-baseline">
             <button
-              className={`btn btn-link ps-0 pe-1 d-none d-md-block position-relative text-primary ${styles.btn}`}
+              className={`btn btn-link ps-0 pe-1 position-relative text-primary ${styles.btn}`}
               onClick={() => setOpenStatus(true)}
               aria-label="See all entries"
             >

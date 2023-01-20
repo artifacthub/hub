@@ -143,6 +143,7 @@ const OrganizationForm = forwardRef<HTMLFormElement, Props>((props, ref) => {
         labelLegend={<small className="ms-1 fst-italic">(Click on the image to update)</small>}
         value={imageId}
         placeholderIcon={<MdBusiness />}
+        circularCrop={false}
         onImageChange={(imageId: string) => setImageId(imageId)}
         onAuthError={props.onAuthError}
       />

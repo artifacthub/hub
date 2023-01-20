@@ -533,16 +533,16 @@ const SearchView = (props: Props) => {
         </div>
       </SubNavbar>
 
-      <div className="d-flex position-relative pt-3 pb-3 flex-grow-1">
+      <div className="d-flex position-relative pb-3 flex-grow-1">
         {(isSearching || isNull(searchResults.packages)) && <Loading spinnerClassName="position-fixed top-50" />}
 
-        <main role="main" className="container-lg px-sm-4 px-lg-0 d-flex flex-row justify-content-between">
+        <main role="main" className="container-lg px-sm-4 px-lg-0 d-flex flex-row align-items-start">
           {!isEmptyFacets() && (
             <aside
-              className={`px-xs-0 px-sm-3 px-lg-0 d-none d-md-block position-relative ${styles.sidebar}`}
+              className={`bg-white p-3 border d-none d-md-block position-relative ${styles.sidebar}`}
               aria-label="Filters"
             >
-              <div className="me-5" role="menu">
+              <div role="menu">
                 <Filters
                   forceCollapseList={props.tsQueryWeb !== currentTsQueryWeb}
                   facets={searchResults.facets}

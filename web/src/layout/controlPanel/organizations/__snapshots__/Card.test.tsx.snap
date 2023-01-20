@@ -19,10 +19,10 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
             class="d-flex flex-row align-items-center w-100"
           >
             <div
-              class="d-flex align-items-center justify-content-center overflow-hidden p-1 me-2 position-relative border border-3 bg-white rounded-circle imageWrapper imageWrapper"
+              class="d-flex align-items-center justify-content-center overflow-hidden me-2 position-relative imageWrapper"
             >
               <svg
-                class="image"
+                class="icon"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -131,7 +131,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
           class="mt-2"
         >
           <p
-            class="mb-0"
+            class="mb-0 text-muted"
           >
             Lorem ipsum...
           </p>

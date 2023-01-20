@@ -4,8 +4,14 @@
 }
 
 .sidebar {
-  width: 250px;
-  min-width: 250px;
+  width: 230px;
+  min-width: 230px;
+  margin-top: 2rem;
+  margin-right: 1.9rem;
+}
+
+[data-theme='dark'] .sidebar {
+  border-color: #676869 !important;
 }
 
 .btnMobileFilters {
@@ -43,8 +49,8 @@
 
 @media only screen and (min-width: 768px) {
   .list {
-    flex-basis: calc(100% - 250px);
-    max-width: calc(100% - 250px);
+    flex-basis: calc(100% - 230px - 1.9rem);
+    max-width: calc(100% - 230px - 1.9rem);
   }
 
   .emptyList {
@@ -61,13 +67,13 @@
 
 @media only screen and (min-width: 1400px) {
   .sidebar {
-    width: 320px;
-    min-width: 320px;
+    width: 300px;
+    min-width: 300px;
   }
 
   .list {
-    flex-basis: calc(100% - 320px);
-    max-width: calc(100% - 320px);
+    flex-basis: calc(100% - 300px - 1.9rem);
+    max-width: calc(100% - 300px - 1.9rem);
   }
 
   .emptyList {

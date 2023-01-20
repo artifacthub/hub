@@ -50,7 +50,7 @@ const Navbar = (props: Props) => {
         })}
       >
         <div className="container-lg px-0 px-sm-4 px-lg-0">
-          <div className={`d-flex flex-row px-1 ${styles.mobileWrapper}`}>
+          <div className={`d-flex flex-row ps-1 ps-sm-0 pe-1 ${styles.mobileWrapper}`}>
             <Link data-testid="brandLink" className="navbar-brand d-flex align-items-center" to="/">
               <div className="d-flex align-items-start">
                 <img className={`w-auto ${styles.logo}`} src={logo} alt={`Logo ${siteName}`} />

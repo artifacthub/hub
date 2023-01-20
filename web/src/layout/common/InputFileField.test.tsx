@@ -16,6 +16,7 @@ const onAuthErrorMock = jest.fn();
 const defaultProps = {
   name: 'test',
   label: 'message',
+  circularCrop: false,
   onAuthError: onAuthErrorMock,
   onImageChange: onImageChangeMock,
 };

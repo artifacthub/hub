@@ -21,7 +21,7 @@ exports[`Filters creates snapshot 1`] = `
           value="official"
         />
         <label
-          class="form-check-label label mw-100"
+          class="form-check-label label mw-100 text-muted"
           data-testid="checkboxLabel"
           for="desktop-official-official"
         >
@@ -82,7 +82,7 @@ exports[`Filters creates snapshot 1`] = `
           value="verifiedPublisher"
         />
         <label
-          class="form-check-label label mw-100"
+          class="form-check-label label mw-100 text-muted"
           data-testid="checkboxLabel"
           for="desktop-verifiedPublisher-verifiedPublisher"
         >
@@ -166,7 +166,7 @@ exports[`Filters creates snapshot 1`] = `
             value="0"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-kind-0"
           >
@@ -199,7 +199,7 @@ exports[`Filters creates snapshot 1`] = `
             value="3"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-kind-3"
           >
@@ -232,7 +232,7 @@ exports[`Filters creates snapshot 1`] = `
             value="1"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-kind-1"
           >
@@ -265,7 +265,7 @@ exports[`Filters creates snapshot 1`] = `
             value="2"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-kind-2"
           >
@@ -323,7 +323,7 @@ exports[`Filters creates snapshot 1`] = `
             value="database"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-database"
           >
@@ -351,7 +351,7 @@ exports[`Filters creates snapshot 1`] = `
             value="integration-and-delivery"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-integration-and-delivery"
           >
@@ -379,7 +379,7 @@ exports[`Filters creates snapshot 1`] = `
             value="logging-and-tracing"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-logging-and-tracing"
           >
@@ -407,7 +407,7 @@ exports[`Filters creates snapshot 1`] = `
             value="machine-learning"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-machine-learning"
           >
@@ -435,7 +435,7 @@ exports[`Filters creates snapshot 1`] = `
             value="monitoring"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-monitoring"
           >
@@ -463,7 +463,7 @@ exports[`Filters creates snapshot 1`] = `
             value="networking"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-networking"
           >
@@ -491,7 +491,7 @@ exports[`Filters creates snapshot 1`] = `
             value="security"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-security"
           >
@@ -519,7 +519,7 @@ exports[`Filters creates snapshot 1`] = `
             value="storage"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-storage"
           >
@@ -547,7 +547,7 @@ exports[`Filters creates snapshot 1`] = `
             value="streaming-messaging"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-streaming-messaging"
           >
@@ -575,7 +575,7 @@ exports[`Filters creates snapshot 1`] = `
             value="web-applications"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-tsQuery-web-applications"
           >
@@ -629,7 +629,7 @@ exports[`Filters creates snapshot 1`] = `
             value="helmOrg"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-org-helmOrg"
           >
@@ -662,7 +662,7 @@ exports[`Filters creates snapshot 1`] = `
             value="falco"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-org-falco"
           >
@@ -695,7 +695,7 @@ exports[`Filters creates snapshot 1`] = `
             value="testUser"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-user-testUser"
           >
@@ -756,7 +756,7 @@ exports[`Filters creates snapshot 1`] = `
             value="stable"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-repo-stable"
           >
@@ -789,7 +789,7 @@ exports[`Filters creates snapshot 1`] = `
             value="incubator"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-repo-incubator"
           >
@@ -850,7 +850,7 @@ exports[`Filters creates snapshot 1`] = `
             value="Apache-2.0"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-license-Apache-2.0"
           >
@@ -883,7 +883,7 @@ exports[`Filters creates snapshot 1`] = `
             value="MIT"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-license-MIT"
           >
@@ -944,7 +944,7 @@ exports[`Filters creates snapshot 1`] = `
             value="basic install"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-capabilities-basic install"
           >
@@ -977,7 +977,7 @@ exports[`Filters creates snapshot 1`] = `
             value="seamless upgrades"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-capabilities-seamless upgrades"
           >
@@ -1010,7 +1010,7 @@ exports[`Filters creates snapshot 1`] = `
             value="full lifecycle"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-capabilities-full lifecycle"
           >
@@ -1043,7 +1043,7 @@ exports[`Filters creates snapshot 1`] = `
             value="deep insights"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-capabilities-deep insights"
           >
@@ -1076,7 +1076,7 @@ exports[`Filters creates snapshot 1`] = `
             value="auto pilot"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-capabilities-auto pilot"
           >
@@ -1134,7 +1134,7 @@ exports[`Filters creates snapshot 1`] = `
             value="operators"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-operators-operators"
           >
@@ -1162,7 +1162,7 @@ exports[`Filters creates snapshot 1`] = `
             value="deprecated"
           />
           <label
-            class="form-check-label label mw-100"
+            class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-deprecated-deprecated"
           >

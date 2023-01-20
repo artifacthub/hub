@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import { sortBy } from 'lodash';
 import find from 'lodash/find';
 import isEmpty from 'lodash/isEmpty';
@@ -63,7 +62,7 @@ const Filters = (props: Props) => {
           name={option.filterKey}
           device={props.device}
           value={option.id.toString()}
-          labelClassName="mw-100"
+          labelClassName="mw-100 text-muted"
           className={styles.checkbox}
           legend={option.total}
           label={option.name}
@@ -106,7 +105,7 @@ const Filters = (props: Props) => {
                 name={kind.filterKey!}
                 device={props.device}
                 value={option.id.toString()}
-                labelClassName="mw-100"
+                labelClassName="mw-100 text-muted"
                 className={styles.checkbox}
                 legend={option.total}
                 label={option.name}
@@ -155,7 +154,7 @@ const Filters = (props: Props) => {
                 name={capabilities.filterKey!}
                 device={props.device}
                 value={option.id.toString()}
-                labelClassName="mw-100"
+                labelClassName="mw-100 text-muted"
                 className={`text-capitalize ${styles.checkbox}`}
                 legend={option.total}
                 label={option.name}
@@ -192,7 +191,7 @@ const Filters = (props: Props) => {
           name={repo.filterKey!}
           device={props.device}
           value={option.id.toString()}
-          labelClassName="mw-100"
+          labelClassName="mw-100 text-muted"
           className={styles.checkbox}
           legend={option.total}
           label={option.name}
@@ -235,7 +234,7 @@ const Filters = (props: Props) => {
           name={license.filterKey!}
           device={props.device}
           value={option.id.toString()}
-          labelClassName="mw-100"
+          labelClassName="mw-100 text-muted"
           className={`text-capitalize ${styles.checkbox}`}
           legend={option.total}
           label={option.name}
@@ -264,7 +263,7 @@ const Filters = (props: Props) => {
   };
 
   return (
-    <div className={classnames(styles.filters, { 'pt-2 mt-3 mb-5': props.visibleTitle })}>
+    <div className={styles.filters}>
       {props.visibleTitle && (
         <div className="d-flex flex-row align-items-center justify-content-between pb-2 mb-4 border-bottom">
           <div className="h6 text-uppercase mb-0 lh-base">Filters</div>
@@ -294,7 +293,7 @@ const Filters = (props: Props) => {
           value="official"
           device={props.device}
           className={styles.checkbox}
-          labelClassName="mw-100"
+          labelClassName="mw-100 text-muted"
           label="Official"
           checked={props.official || false}
           onChange={props.onOfficialChange}
@@ -318,7 +317,7 @@ const Filters = (props: Props) => {
           value="verifiedPublisher"
           device={props.device}
           className={styles.checkbox}
-          labelClassName="mw-100"
+          labelClassName="mw-100 text-muted"
           label="Verified publishers"
           checked={props.verifiedPublisher || false}
           onChange={props.onVerifiedPublisherChange}
@@ -351,7 +350,7 @@ const Filters = (props: Props) => {
             name="operators"
             value="operators"
             device={props.device}
-            labelClassName="mw-100"
+            labelClassName="mw-100 text-muted"
             className={styles.checkbox}
             label="Only operators"
             checked={props.operators || false}
@@ -364,7 +363,7 @@ const Filters = (props: Props) => {
             device={props.device}
             className={styles.checkbox}
             label="Include deprecated"
-            labelClassName="mw-100"
+            labelClassName="mw-100 text-muted"
             checked={props.deprecated || false}
             onChange={props.onDeprecatedChange}
           />

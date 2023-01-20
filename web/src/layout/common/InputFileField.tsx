@@ -25,6 +25,7 @@ interface Props {
   onImageChange?: (imageId: string) => void;
   onAuthError: () => void;
   placeholderIcon?: JSX.Element;
+  circularCrop: boolean;
 }
 
 const InputFileField = (props: Props) => {
@@ -207,9 +208,10 @@ const InputFileField = (props: Props) => {
           <div className="position-relative">
             <button
               className={classnames(
-                'btn p-0 overflow-hidden position-relative border border-3 lh-1 rounded-circle fs-2 bg-white',
+                'btn p-0 overflow-hidden position-relative border border-3 lh-1 fs-2 bg-white',
                 styles.btn,
-                { 'opacity-50': isSending }
+                { 'opacity-50': isSending },
+                { 'rounded-circle': props.circularCrop }
               )}
               type="button"
               onClick={onClick}
@@ -287,7 +289,7 @@ const InputFileField = (props: Props) => {
                   <ReactCrop
                     crop={crop}
                     aspect={1}
-                    circularCrop
+                    circularCrop={props.circularCrop}
                     onChange={(c, percentCrop) => setCrop(c)}
                     onComplete={(c: PixelCrop, percentCrop: PercentCrop) => setCompletedCrop(c)}
                   >
@@ -299,10 +301,17 @@ const InputFileField = (props: Props) => {
             <div className="d-flex flex-row align-items-center mt-3">
               <div className="fw-bold me-3 text-uppercase">Preview</div>
               <div
-                className={`overflow-hidden position-relative border border-3 rounded-circle bg-white ${styles.imageWrapper}`}
+                className={classnames(
+                  'overflow-hidden position-relative border border-3 bg-white',
+                  styles.imageWrapper,
+                  { 'rounded-circle': props.circularCrop }
+                )}
               >
                 {completedCrop && (
-                  <canvas className={`rounded-circle mw-100 mh-100 ${styles.imageAsBg}`} ref={previewCanvasRef} />
+                  <canvas
+                    className={classnames('mw-100 mh-100', styles.imageAsBg, { 'rounded-circle': props.circularCrop })}
+                    ref={previewCanvasRef}
+                  />
                 )}
               </div>
             </div>

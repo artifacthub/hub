@@ -20,7 +20,7 @@ exports[`StatsView creates snapshot 1`] = `
            Stats
         </div>
         <div
-          class="text-center mb-5"
+          class="text-center mb-4 mb-sm-5"
         >
           <small>
             <span
@@ -48,7 +48,7 @@ exports[`StatsView creates snapshot 1`] = `
           class="header"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper mb-4 fw-semibold title"
+            class="position-relative anchorHeader headingWrapper mb-2 mb-sm-4 fw-semibold title"
           >
             <div
               class="position-absolute headerAnchor"
@@ -80,13 +80,13 @@ exports[`StatsView creates snapshot 1`] = `
           </h2>
         </span>
         <div
-          class="row my-4 pb-0 pb-lg-2"
+          class="row my-1 my-sm-4 pb-0 pb-lg-2"
         >
           <div
             class="col-12"
           >
             <div
-              class="mt-4 mb-4 mb-lg-0"
+              class="mt-2 mt-sm-4 mb-1 mb-sm-4 mb-lg-0"
             >
               <div
                 class="card chartWrapper"
@@ -99,13 +99,13 @@ exports[`StatsView creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="row my-4 pb-4"
+          class="row my-1 my-sm-4 pb-2 pb-sm-4"
         >
           <div
             class="col-12"
           >
             <div
-              class="mt-4 mb-4 mb-lg-0"
+              class="mt-2 mt-sm-4 mb-1 mb-sm-4 mb-lg-0"
             >
               <div
                 class="card chartWrapper"
@@ -121,7 +121,7 @@ exports[`StatsView creates snapshot 1`] = `
           class="header"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper mb-4 fw-semibold title"
+            class="position-relative anchorHeader headingWrapper mt-2 mt-sm-4 mb-2 mb-sm-4 fw-semibold title"
           >
             <div
               class="position-absolute headerAnchor"
@@ -153,13 +153,13 @@ exports[`StatsView creates snapshot 1`] = `
           </h2>
         </span>
         <div
-          class="row my-4 pb-0 pb-lg-2"
+          class="row my-1 my-sm-4 pb-0 pb-lg-2"
         >
           <div
             class="col-12 col-lg-6"
           >
             <div
-              class="pe-0 pe-lg-3 pe-xxxl-4 mt-4 mb-4 mb-lg-0"
+              class="pe-0 pe-lg-3 pe-xxxl-4 mt-2 mt-sm-4 mb-2 mb-sm-4 mb-lg-0"
             >
               <div
                 class="card chartWrapper"
@@ -174,7 +174,7 @@ exports[`StatsView creates snapshot 1`] = `
             class="col-12 col-lg-6"
           >
             <div
-              class="ps-0 ps-lg-3 ps-xxxl-4 mt-4"
+              class="ps-0 ps-lg-3 ps-xxxl-4 mt-2 mt-sm-4"
             >
               <div
                 class="card chartWrapper"
@@ -187,13 +187,13 @@ exports[`StatsView creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="row my-4 pb-0 pb-lg-4"
+          class="row my-1 my-sm-4 pb-0 pb-lg-4"
         >
           <div
             class="col-12 col-lg-6"
           >
             <div
-              class="pe-0 pe-lg-3 pe-xxxl-4 mt-4 mb-4 mb-lg-0"
+              class="pe-0 pe-lg-3 pe-xxxl-4 mt-2 mt-sm-4 mb-2 mb-sm-4 mb-lg-0"
             >
               <div
                 class="card chartWrapper"
@@ -208,7 +208,7 @@ exports[`StatsView creates snapshot 1`] = `
             class="col-12 col-lg-6"
           >
             <div
-              class="ps-0 ps-lg-3 ps-xxxl-4 mt-4 mb-4 mb-lg-0"
+              class="ps-0 ps-lg-3 ps-xxxl-4 mt-2 mt-sm-4 mb-1 mb-sm-4 mb-lg-0"
             >
               <div
                 class="card chartWrapper"
@@ -224,7 +224,7 @@ exports[`StatsView creates snapshot 1`] = `
           class="header"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper my-4 fw-semibold title"
+            class="position-relative anchorHeader headingWrapper mb-2 mb-sm-4 mt-2 mt-sm-4 fw-semibold title"
           >
             <div
               class="position-absolute headerAnchor"
@@ -256,10 +256,10 @@ exports[`StatsView creates snapshot 1`] = `
           </h2>
         </span>
         <div
-          class="row my-4"
+          class="row my-1 my-sm-4"
         >
           <div
-            class="col-12 my-4"
+            class="col-12 my-2 my-sm-4"
           >
             <div
               class="card chartWrapper"
@@ -274,7 +274,7 @@ exports[`StatsView creates snapshot 1`] = `
           class="header"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper mt-4 fw-semibold title"
+            class="position-relative anchorHeader headingWrapper mt-1 mt-sm-4 fw-semibold title"
           >
             <div
               class="position-absolute headerAnchor"
@@ -306,13 +306,13 @@ exports[`StatsView creates snapshot 1`] = `
           </h2>
         </span>
         <div
-          class="row my-4"
+          class="row mt-1 mt-sm-4 mb-4"
         >
           <div
             class="col-12 col-lg-6"
           >
             <div
-              class="pe-0 pe-lg-3 pe-xxxl-4 pt-4"
+              class="pe-0 pe-lg-3 pe-xxxl-4 pt-2 pt-sm-4"
             >
               <div
                 class="card chartWrapper"
@@ -327,7 +327,7 @@ exports[`StatsView creates snapshot 1`] = `
             class="col-12 col-lg-6"
           >
             <div
-              class="ps-0 ps-lg-3 ps-xxxl-4 pt-4 my-4 my-lg-0"
+              class="ps-0 ps-lg-3 ps-xxxl-4 pt-2 pt-sm-4 my-1 my-sm-4 my-lg-0"
             >
               <div
                 class="card chartWrapper"

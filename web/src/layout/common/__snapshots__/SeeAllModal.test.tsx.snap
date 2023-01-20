@@ -64,11 +64,11 @@ exports[`SeeAllModal creates snapshot 1`] = `
     </small>
   </div>
   <div
-    class="d-flex flex-row align-items-baseline"
+    class="d-none d-md-flex flex-row align-items-baseline"
   >
     <button
       aria-label="See all entries"
-      class="btn btn-link ps-0 pe-1 d-none d-md-block position-relative text-primary btn"
+      class="btn btn-link ps-0 pe-1 position-relative text-primary btn"
     >
       <div
         class="d-flex flex-row align-items-center"

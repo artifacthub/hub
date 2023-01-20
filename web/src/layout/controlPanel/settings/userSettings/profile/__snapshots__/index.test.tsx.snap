@@ -49,7 +49,7 @@ exports[`User settings index creates snapshot 1`] = `
               >
                 <button
                   aria-label="Add image"
-                  class="btn p-0 overflow-hidden position-relative border border-3 lh-1 rounded-circle fs-2 bg-white btn"
+                  class="btn p-0 overflow-hidden position-relative border border-3 lh-1 fs-2 bg-white btn rounded-circle"
                   type="button"
                 >
                   <svg

@@ -99,7 +99,7 @@ const HomeView = (props: Props) => {
           <span className={styles.secondLine}>Kubernetes packages</span>
         </div>
 
-        <div className="mt-5 text-center">
+        <div className="mt-4 mt-sm-5 text-center">
           <SearchBar
             formClassName={`m-auto w-50 ${styles.search}`}
             size="big"
@@ -205,7 +205,7 @@ const HomeView = (props: Props) => {
               </ExternalLink>
             </div>
 
-            <div className={`text-center mx-3 mt-md-4 mb-4 fw-light ${styles.repoGuideText}`}>
+            <div className={`text-center mx-3 mt-md-4 mb-0 mb-sm-4 fw-light ${styles.repoGuideText}`}>
               Please see the{' '}
               <ExternalLink
                 className={`btn btn-link text-light fw-semibold textLight p-0 align-baseline ${styles.inlineLink}`}
