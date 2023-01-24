@@ -149,7 +149,7 @@ select is(count(*), 0::bigint, 'No repository ownership claim events should have
 from event where repository_id=:'repo2ID' and event_kind_id = 3;
 select is(
     tsdoc,
-    '2:3A 2:7B description:4B package:2A package2:1A repo:6B repo2:5B user1:8B'::tsvector,
+    '2:3B 2:7B description:4B package:2B package2:1A repo:6B repo2:5B user1:8B'::tsvector,
     'Package 2 tsdoc should have been updated (user1 is now the publisher)'
 )
 from package where package_id=:'package2ID';
@@ -167,7 +167,7 @@ select transfer_repository(
 );
 select is(
     tsdoc,
-    '1:10B 2:3A,7B description:4B org1:8B organization:9B package:2A package2:1A repo:6B repo2:5B'::tsvector,
+    '1:10B 2:3B,7B description:4B org1:8B organization:9B package:2B package2:1A repo:6B repo2:5B'::tsvector,
     'Package 2 tsdoc should have been updated again (org1 is now the publisher)'
 )
 from package where package_id=:'package2ID';
