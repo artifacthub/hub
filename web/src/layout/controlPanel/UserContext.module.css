@@ -3,6 +3,7 @@
   min-width: 18px;
   height: 18px;
   line-height: 1rem;
+  top: 0 !important;
 }
 
 .badgeContent {

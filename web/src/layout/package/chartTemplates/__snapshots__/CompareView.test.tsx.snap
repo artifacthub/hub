@@ -554,7 +554,7 @@ exports[`CompareView creates snapshot 1`] = `
           >
             <button
               aria-label="Expand code"
-              class="btn btn-sm btn-primary rounded-circle fs-5 btn"
+              class="btn btn-sm btn-primary fs-5 btn"
             >
               <svg
                 fill="currentColor"

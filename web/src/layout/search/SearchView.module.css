@@ -8,6 +8,7 @@
   min-width: 230px;
   margin-top: 2rem;
   margin-right: 1.9rem;
+  padding: 1.75rem 1.6rem;
 }
 
 [data-theme='dark'] .sidebar {
@@ -69,6 +70,7 @@
   .sidebar {
     width: 300px;
     min-width: 300px;
+    padding: 1.75rem;
   }
 
   .list {

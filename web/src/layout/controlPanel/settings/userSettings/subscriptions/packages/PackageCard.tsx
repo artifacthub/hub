@@ -34,7 +34,7 @@ const PackageCard = (props: Props) => {
               <div className="d-flex align-items-start justify-content-between mb-3">
                 <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
                   <div
-                    className={`d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white ${styles.imageWrapper} imageWrapper`}
+                    className={`d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white ${styles.imageWrapper} imageWrapper`}
                   >
                     <Image
                       imageId={props.package.logoImageId}

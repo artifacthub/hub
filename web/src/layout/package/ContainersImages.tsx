@@ -25,7 +25,7 @@ const ContainersImages = (props: Props) => {
   const getBadge = (): JSX.Element => (
     <ElementWithTooltip
       className={styles.tooltipIcon}
-      element={<span className={`badge rounded-pill my-1 border ${styles.badge}`}>Whitelisted</span>}
+      element={<span className={`badge my-1 border ${styles.badge}`}>Whitelisted</span>}
       tooltipMessage="This image has been whitelisted by the publisher and it won't be scanned for security vulnerabilities."
       visibleTooltip
       active

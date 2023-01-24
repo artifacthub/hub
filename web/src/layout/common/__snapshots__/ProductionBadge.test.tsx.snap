@@ -40,7 +40,7 @@ exports[`VerifiedPublisherBadge creates snapshot 1`] = `
               </svg>
             </span>
             <span
-              class="ms-1 me-2 fw-bold position-relative iconLegend"
+              class="mx-1 fw-bold position-relative iconLegend"
             >
               3
             </span>

@@ -11,7 +11,7 @@ exports[`TagsList creates snapshot 1`] = `
       Tags
       <button
         aria-label="Add tag"
-        class="btn btn-primary btn-sm ms-2 rounded-circle p-0 position-relative lh-1 btn inTitle"
+        class="btn btn-primary btn-sm ms-2 p-0 position-relative lh-1 btn inTitle"
         type="button"
       >
         <svg
@@ -81,7 +81,7 @@ exports[`TagsList creates snapshot 1`] = `
         >
           <button
             aria-label="Delete tag from repository"
-            class="btn btn-danger btn-sm ms-auto rounded-circle p-0 position-relative lh-1 btn"
+            class="btn btn-danger btn-sm ms-auto p-0 position-relative lh-1 btn"
             type="button"
           >
             <svg
@@ -155,7 +155,7 @@ exports[`TagsList creates snapshot 1`] = `
         >
           <button
             aria-label="Delete tag from repository"
-            class="btn btn-danger btn-sm ms-auto rounded-circle p-0 position-relative lh-1 btn"
+            class="btn btn-danger btn-sm ms-auto p-0 position-relative lh-1 btn"
             type="button"
           >
             <svg
@@ -230,7 +230,7 @@ exports[`TagsList creates snapshot 1`] = `
         >
           <button
             aria-label="Delete tag from repository"
-            class="btn btn-danger btn-sm ms-auto rounded-circle p-0 position-relative lh-1 btn"
+            class="btn btn-danger btn-sm ms-auto p-0 position-relative lh-1 btn"
             type="button"
           >
             <svg

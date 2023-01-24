@@ -59,7 +59,7 @@ const CompareView = (props: Props) => {
       <div className={`position-absolute d-flex ${styles.wrapper}`}>
         <div className="position-relative">
           <button
-            className={`btn btn-sm btn-primary rounded-circle fs-5 ${styles.btn}`}
+            className={`btn btn-sm btn-primary fs-5 ${styles.btn}`}
             onClick={() => {
               setIsLoading(true);
               setExpanded(!expanded);

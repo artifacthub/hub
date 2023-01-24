@@ -14,7 +14,7 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
         <button
           aria-expanded="false"
           aria-label="Open subscriptions menu"
-          class="btn btn-outline-primary p-0 position-relative rounded-circle lh-1 fs-5 subsBtn iconWrapper disabled"
+          class="btn btn-outline-primary p-0 position-relative lh-1 fs-5 subsBtn iconWrapper disabled"
           type="button"
         >
           <div

@@ -145,7 +145,7 @@ const SubscriptionsButton = (props: Props) => {
         element={
           <button
             className={classnames(
-              'btn btn-outline-primary p-0 position-relative rounded-circle lh-1 fs-5',
+              'btn btn-outline-primary p-0 position-relative lh-1 fs-5',
               styles.subsBtn,
               styles.iconWrapper,
               {

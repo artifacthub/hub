@@ -573,14 +573,14 @@ exports[`Package index creates snapshot 1`] = `
                 <button
                   aria-expanded="false"
                   aria-label="Open organizations menu"
-                  class="btn btn-outline-primary rounded-circle p-0 position-relative lh-1 fs-5 iconWrapper disabled isDisabled"
+                  class="btn btn-outline-primary p-0 position-relative lh-1 fs-5 iconWrapper disabled isDisabled"
                   type="button"
                 >
                   <div
                     class="d-flex align-items-center justify-content-center"
                   >
                     <svg
-                      class="rounded-circle text-muted"
+                      class="text-muted"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -624,7 +624,7 @@ exports[`Package index creates snapshot 1`] = `
             <button
               aria-expanded="false"
               aria-label="Open menu"
-              class="btn btn-outline-primary rounded-circle p-0 position-relative lh-1 fs-5 iconWrapper"
+              class="btn btn-outline-primary p-0 position-relative lh-1 fs-5 iconWrapper"
               type="button"
             >
               <svg
@@ -743,7 +743,7 @@ exports[`Package index creates snapshot 1`] = `
                       class="d-flex align-items-center flex-grow-1"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden border border-2 bg-white rounded-circle imageWrapper imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                       >
                         <img
                           alt="Pretty name"

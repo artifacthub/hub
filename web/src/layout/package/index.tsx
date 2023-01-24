@@ -218,6 +218,8 @@ const PackageView = (props: Props) => {
 
   const stopPkgLoading = useCallback(() => {
     setIsLoadingPackage(false);
+    // Force check related packages position after rendering readme
+    setRelatedPosition(undefined);
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   async function fetchPackageDetail() {
@@ -243,7 +245,6 @@ const PackageView = (props: Props) => {
       }
       setApiError(null);
       setCurrentPkgId(detailPkg.packageId);
-      setRelatedPosition(undefined);
       scrollToTop(); // Scroll to top when a new version is loaded
       // Stop loading when readme is not defined or is the same than the previous one
       if (
@@ -252,6 +253,7 @@ const PackageView = (props: Props) => {
         (detail && detail?.readme === detailPkg.readme)
       ) {
         stopPkgLoading();
+        setRelatedPosition(undefined);
       }
     } catch (err: any) {
       if (err.kind === ErrorKind.NotFound) {
@@ -287,6 +289,7 @@ const PackageView = (props: Props) => {
       }
       setDetail(null);
       stopPkgLoading();
+      setRelatedPosition(undefined);
     }
   }
 

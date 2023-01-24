@@ -36,7 +36,7 @@ exports[`KrewInstall creates snapshot 1`] = `
       >
         <button
           aria-label="Copy command to clipboard"
-          class="btn btn-sm btn-primary rounded-circle copyBtn"
+          class="btn btn-sm btn-primary copyBtn"
           type="button"
         >
           <div
@@ -105,7 +105,7 @@ exports[`KrewInstall creates snapshot 1`] = `
       >
         <button
           aria-label="Copy command to clipboard"
-          class="btn btn-sm btn-primary rounded-circle copyBtn"
+          class="btn btn-sm btn-primary copyBtn"
           type="button"
         >
           <div

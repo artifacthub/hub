@@ -1142,7 +1142,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo airflow"
@@ -1336,7 +1336,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo cerebro"
@@ -1530,7 +1530,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo elastic-stack"
@@ -1724,7 +1724,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo ibm-redis"
@@ -1918,7 +1918,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo SSH connections"
@@ -2112,7 +2112,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo Traefik"
@@ -2306,7 +2306,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo Trusted Registry Images"
@@ -2500,7 +2500,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 rounded-circle border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo zookeeper"

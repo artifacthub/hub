@@ -179,7 +179,7 @@ const OrganizationCard = (props: Props) => {
 
                 {hasDropdownContent && (
                   <button
-                    className={`ms-3 mb-2 btn btn-outline-secondary rounded-circle p-0 text-center  ${styles.btnDropdown}`}
+                    className={`ms-3 mb-2 btn btn-outline-secondary p-0 text-center  ${styles.btnDropdown}`}
                     onClick={() => setDropdownMenuStatus(true)}
                     aria-label="Open menu"
                     aria-expanded={dropdownMenuStatus}
@@ -257,7 +257,7 @@ const OrganizationCard = (props: Props) => {
 
           {props.organization.description && (
             <div className="mt-2">
-              <p className="mb-0 text-muted">{props.organization.description}</p>
+              <p className={`mb-0 text-muted ${styles.description}`}>{props.organization.description}</p>
             </div>
           )}
         </div>

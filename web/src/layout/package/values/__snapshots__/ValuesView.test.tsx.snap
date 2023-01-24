@@ -47,7 +47,7 @@ exports[`ValuesView creates snapshot 1`] = `
       >
         <button
           aria-label="Copy to clipboard"
-          class="btn btn-sm btn-primary rounded-circle btn"
+          class="btn btn-sm btn-primary btn"
           type="button"
         >
           <div
@@ -82,7 +82,7 @@ exports[`ValuesView creates snapshot 1`] = `
       </div>
       <button
         aria-label="Download"
-        class="btn btn-sm btn-primary rounded-circle fs-5 btn"
+        class="btn btn-sm btn-primary fs-5 btn"
       >
         <svg
           aria-hidden="true"

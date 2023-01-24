@@ -216,7 +216,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
               {!isNull(repoItem) ? (
                 <div
                   data-testid="activeRepoItem"
-                  className={`border border-secondary w-100 rounded mt-1 ${styles.repoWrapper}`}
+                  className={`border border-secondary w-100 mt-1 ${styles.repoWrapper}`}
                 >
                   <div className="d-flex flex-row flex-nowrap align-items-stretch justify-content-between">
                     <div className="flex-grow-1 text-truncate py-2">

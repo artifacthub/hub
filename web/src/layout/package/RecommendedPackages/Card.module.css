@@ -12,11 +12,9 @@
   min-width: 23px;
   width: 23px;
   height: 23px;
-  border-color: var(--color-1-10) !important;
-  padding: 0.2rem;
 }
 
 .image {
-  max-width: calc(100% - 4px);
-  max-height: calc(100% - 4px);
+  max-width: 100%;
+  max-height: 100%;
 }

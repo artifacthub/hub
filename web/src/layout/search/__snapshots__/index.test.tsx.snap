@@ -91,7 +91,7 @@ exports[`Search index creates snapshot 1`] = `
                 <button
                   aria-expanded="false"
                   aria-label="Show menu"
-                  class="btn btn-outline-primary rounded-circle p-0 position-relative lh-1 iconWrapper"
+                  class="btn btn-outline-primary p-0 position-relative lh-1 iconWrapper"
                   type="button"
                 >
                   <svg

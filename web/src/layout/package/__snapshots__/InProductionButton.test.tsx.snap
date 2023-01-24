@@ -14,14 +14,13 @@ exports[`InProductionButton creates snapshot 1`] = `
         <button
           aria-expanded="true"
           aria-label="Open organizations menu"
-          class="btn btn-outline-primary rounded-circle p-0 position-relative lh-1 fs-5 iconWrapper"
+          class="btn btn-outline-primary p-0 position-relative lh-1 fs-5 iconWrapper"
           type="button"
         >
           <div
             class="d-flex align-items-center justify-content-center"
           >
             <svg
-              class="rounded-circle"
               fill="currentColor"
               height="1em"
               stroke="currentColor"

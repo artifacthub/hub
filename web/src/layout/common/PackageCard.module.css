@@ -124,6 +124,10 @@
     word-wrap: normal;
     max-height: 62px;
   }
+
+  .title {
+    font-size: 1rem;
+  }
 }
 
 @media only screen and (max-width: 767.98px) {

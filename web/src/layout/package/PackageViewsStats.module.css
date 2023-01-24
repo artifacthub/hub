@@ -39,3 +39,8 @@
 :global(.apexcharts-legend-text) {
   color: var(--font-color) !important;
 }
+
+:global(.apexcharts-gridline) {
+  position: relative;
+  z-index: -1;
+}
