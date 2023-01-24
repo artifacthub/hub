@@ -232,6 +232,11 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 	if pkg.Name == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
+	if pkg.AlternativeName != "" &&
+		!strings.Contains(pkg.Name, pkg.AlternativeName) &&
+		!strings.Contains(pkg.AlternativeName, pkg.Name) {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid alternative name (must be a subset or superset of the name)")
+	}
 	if pkg.Version == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "version not provided")
 	}

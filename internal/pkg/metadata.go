@@ -75,6 +75,7 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 	sv, _ := semver.NewVersion(md.Version)
 	p := &hub.Package{
 		Name:                    md.Name,
+		AlternativeName:         md.AlternativeName,
 		IsOperator:              md.Operator,
 		DisplayName:             md.DisplayName,
 		Description:             md.Description,
@@ -122,6 +123,11 @@ func ValidatePackageMetadata(kind hub.RepositoryKind, md *hub.PackageMetadata) e
 	}
 	if md.Name == "" {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "name not provided"))
+	}
+	if md.AlternativeName != "" &&
+		!strings.Contains(md.Name, md.AlternativeName) &&
+		!strings.Contains(md.AlternativeName, md.Name) {
+		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "invalid alternative name (must be a subset or superset of the name)"))
 	}
 	if md.DisplayName == "" {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "display name not provided"))

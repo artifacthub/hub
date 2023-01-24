@@ -64,6 +64,7 @@ type Package struct {
 	PackageID                      string                 `json:"package_id" hash:"ignore"`
 	Name                           string                 `json:"name"`
 	NormalizedName                 string                 `json:"normalized_name" hash:"ignore"`
+	AlternativeName                string                 `json:"alternative_name"`
 	LogoURL                        string                 `json:"logo_url"`
 	LogoImageID                    string                 `json:"logo_image_id" hash:"ignore"`
 	IsOperator                     bool                   `json:"is_operator"`
@@ -161,6 +162,7 @@ type PackageManager interface {
 type PackageMetadata struct {
 	Version                 string            `yaml:"version"`
 	Name                    string            `yaml:"name"`
+	AlternativeName         string            `yaml:"alternativeName"`
 	DisplayName             string            `yaml:"displayName"`
 	CreatedAt               string            `yaml:"createdAt"`
 	Description             string            `yaml:"description"`

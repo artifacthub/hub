@@ -1,6 +1,7 @@
 # Artifact Hub package metadata file
 version: A SemVer 2 version (required)
 name: The name of the package (only alphanum, no spaces, dashes allowed) (required)
+alternativeName: Alternative name of the package (optional)
 displayName: The name of the package nicely formatted (required)
 createdAt: The date this package was created (RFC3339 layout) (required)
 description: A short description of the package (required)

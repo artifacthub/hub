@@ -6,6 +6,12 @@ However, sometimes there might be cases in which it may be useful to provide som
 
 ## Supported annotations
 
+- **artifacthub.io/alternativeName** *(string)*
+
+Sometimes a package can be identified by two similar names. Some examples would be *postgres* / *postgresql* or *mongodb* / *mongo*. Users often may type any of the options and expect the same results. When searching for packages, Artifact Hub gives preference to **exact** matches in names, so sometimes the top results may not be what users would expect. This situation can be improved by providing an alternative name for your package, which will be given the same weight as the package name when indexing. So in cases like the previous examples, it can help ranking them higher in the search results.
+
+*Please note that the alternative name must be a substring of the name, or the name must be a substring of the alternative name.*
+
 - **artifacthub.io/changes** *(yaml string, see example below)*
 
 This annotation is used to provide some details about the changes introduced by a given package version. Artifact Hub can generate and display a **ChangeLog** based on the entries in the `changes` field in all your package versions. You can see an example of how the changelog would look like in the Artifact Hub UI [here](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog).

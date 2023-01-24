@@ -36,6 +36,7 @@ import (
 const (
 	concurrency = 10
 
+	alternativeNameAnnotation      = "artifacthub.io/alternativeName"
 	changesAnnotation              = "artifacthub.io/changes"
 	crdsAnnotation                 = "artifacthub.io/crds"
 	crdsExamplesAnnotation         = "artifacthub.io/crdsExamples"
@@ -594,6 +595,11 @@ func extractContainersImages(chrt *chart.Chart) (images []string, err error) {
 // the provided annotations.
 func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
 	var errs *multierror.Error
+
+	// Alternative name
+	if v, ok := annotations[alternativeNameAnnotation]; ok && v != "" {
+		p.AlternativeName = v
+	}
 
 	// Changes
 	if v, ok := annotations[changesAnnotation]; ok {

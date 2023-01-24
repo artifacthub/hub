@@ -18,6 +18,7 @@ values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'org1ID');
 select register_package('
 {
     "name": "package1",
+    "alternative_name": "mypackage1",
     "logo_url": "logo_url",
     "logo_image_id": "00000000-0000-0000-0000-000000000001",
     "channels": [
@@ -124,6 +125,7 @@ select results_eq(
     $$
         select
             name,
+            alternative_name,
             latest_version,
             is_operator,
             channels,
@@ -135,6 +137,7 @@ select results_eq(
     $$
         values (
             'package1',
+            'mypackage1',
             '1.0.0',
             true,
             '[
@@ -272,6 +275,7 @@ select is_empty(
 select register_package('
 {
     "name": "package1",
+    "alternative_name": "mypackage1",
     "logo_url": "logo_url",
     "logo_image_id": "00000000-0000-0000-0000-000000000001",
     "display_name": "Package 1 v2",
@@ -415,6 +419,7 @@ select isnt_empty(
 select register_package('
 {
     "name": "package1",
+    "alternative_name": "mypackage1",
     "display_name": "Package 1",
     "description": "description",
     "logo_url": "logo_url",

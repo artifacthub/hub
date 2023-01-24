@@ -58,7 +58,7 @@ insert into package (
     '1.0.0',
     true,
     10,
-    generate_package_tsdoc('package1', null, 'description', '{"kw1", "kw1", "kw2"}', '{"repo1"}', '{"user1"}'),
+    generate_package_tsdoc('package1', null, null, 'description', '{"kw1", "kw1", "kw2"}', '{"repo1"}', '{"user1"}'),
     false,
     :'repo1ID'
 );
@@ -129,7 +129,7 @@ insert into package (
     'package2',
     '1.0.0',
     11,
-    generate_package_tsdoc('package2', null, 'description', '{"kw1", "kw2"}', '{"repo2"}', '{"org1"}'),
+    generate_package_tsdoc('package2', null, null, 'description', '{"kw1", "kw2"}', '{"repo2"}', '{"org1"}'),
     true,
     :'repo2ID'
 );
@@ -201,7 +201,7 @@ insert into package (
     :'package3ID',
     'package3',
     '1.0.0',
-    generate_package_tsdoc('package3', null, 'description', '{"kw3"}', '{"repo3"}', '{"org1"}'),
+    generate_package_tsdoc('package3', null, null, 'description', '{"kw3"}', '{"repo3"}', '{"org1"}'),
     :'repo3ID'
 );
 insert into snapshot (

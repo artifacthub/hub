@@ -130,6 +130,7 @@ select columns_are('package', array[
     'package_id',
     'name',
     'normalized_name',
+    'alternative_name',
     'latest_version',
     'stars',
     'tsdoc',

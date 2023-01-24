@@ -28,7 +28,7 @@ insert into package (
     :'package1ID',
     'package1',
     '1.0.0',
-    generate_package_tsdoc('package1', null, 'description', '{"kw1", "kw2"}', '{"repo1"}', '{"user1"}'),
+    generate_package_tsdoc('package1', null, null, 'description', '{"kw1", "kw2"}', '{"repo1"}', '{"user1"}'),
     :'repo1ID'
 );
 insert into snapshot (
