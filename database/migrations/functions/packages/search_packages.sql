@@ -185,8 +185,8 @@ begin
                         select
                             fp.*,
                             (case when v_tsquery_web is not null then
-                                trunc(ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery_web, 1)::numeric, 2) +
-                                trunc(ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)::numeric, 2)
+                                trunc(ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery_web, 1)::numeric, 1) +
+                                trunc(ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)::numeric, 1)
                             else 1 end) as relevance,
                             (case
                                 when repository_official = true or package_official = true

@@ -12,7 +12,7 @@ create or replace function generate_package_tsdoc(
     select
         setweight(to_tsvector(p_name), 'A') ||
         setweight(to_tsvector(coalesce(p_alternative_name, '')), 'A') ||
-        setweight(to_tsvector(coalesce(p_display_name, '')), 'A') ||
+        setweight(to_tsvector(coalesce(p_display_name, '')), 'B') ||
         setweight(to_tsvector(coalesce(p_description, '')), 'B') ||
         setweight(to_tsvector(array_to_string(coalesce(p_keywords, '{}'), ' ')), 'C') ||
         setweight(to_tsvector(array_to_string(coalesce(p_repository, '{}'), ' ')), 'B') ||
