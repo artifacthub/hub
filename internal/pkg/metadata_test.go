@@ -246,10 +246,12 @@ func TestValidatePackageMetadata(t *testing.T) {
 			{
 				hub.Keptn,
 				&hub.PackageMetadata{
-					Version: "1.0.0",
-					Name:    "pkg1",
+					Version:         "1.0.0",
+					Name:            "pkg1",
+					AlternativeName: "something else",
 				},
 				[]string{
+					"invalid alternative name (must be a subset or superset of the name)",
 					"invalid metadata: display name not provided",
 					"invalid metadata: createdAt not provided",
 					"invalid metadata: description not provided",

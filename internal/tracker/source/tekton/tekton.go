@@ -62,6 +62,7 @@ const (
 	TasksKey = "tasks"
 
 	// Keys used for Artifact Hub specific annotations.
+	alternativeNameAnnotation = "artifacthub.io/alternativeName"
 	changesAnnotation         = "artifacthub.io/changes"
 	licenseAnnotation         = "artifacthub.io/license"
 	linksAnnotation           = "artifacthub.io/links"
@@ -526,6 +527,11 @@ func prepareContentAndSourceLinks(i *PreparePackageInput) (string, string) {
 // the provided annotations.
 func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
 	var errs *multierror.Error
+
+	// Alternative name
+	if v, ok := annotations[alternativeNameAnnotation]; ok && v != "" {
+		p.AlternativeName = v
+	}
 
 	// Changes
 	if v, ok := annotations[changesAnnotation]; ok {

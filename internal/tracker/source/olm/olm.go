@@ -31,6 +31,7 @@ const (
 	isGlobalOperatorKey = "isGlobalOperator"
 
 	// Artifact Hub special annotations
+	alternativeNameAnnotation = "artifacthub.io/alternativeName"
 	changesAnnotation         = "artifacthub.io/changes"
 	imagesWhitelistAnnotation = "artifacthub.io/imagesWhitelist"
 	installAnnotation         = "artifacthub.io/install"
@@ -451,6 +452,11 @@ func PreparePackage(r *hub.Repository, md *Metadata) (*hub.Package, error) {
 	var crdsExamples []interface{}
 	if err := json.Unmarshal([]byte(md.CSV.Annotations["alm-examples"]), &crdsExamples); err == nil {
 		p.CRDsExamples = crdsExamples
+	}
+
+	// Alternative name
+	if v, ok := md.CSV.Annotations[alternativeNameAnnotation]; ok && v != "" {
+		p.AlternativeName = v
 	}
 
 	// Changes

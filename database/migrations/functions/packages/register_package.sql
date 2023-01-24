@@ -7,6 +7,7 @@ create or replace function register_package(p_pkg jsonb)
 returns void as $$
 declare
     v_name text := p_pkg->>'name';
+    v_alternative_name text := nullif(p_pkg->>'alternative_name', '');
     v_display_name text := nullif(p_pkg->>'display_name', '');
     v_description text := nullif(p_pkg->>'description', '');
     v_keywords text[] := (select nullif(array(select jsonb_array_elements_text(nullif(p_pkg->'keywords', 'null'::jsonb))), '{}'));
@@ -59,6 +60,7 @@ begin
     -- Package (insert or update if latest has changed)
     insert into package (
         name,
+        alternative_name,
         latest_version,
         tsdoc,
         is_operator,
@@ -67,8 +69,9 @@ begin
         repository_id
     ) values (
         v_name,
+        v_alternative_name,
         v_version,
-        generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords, v_ts_repository, v_ts_publisher),
+        generate_package_tsdoc(v_name, v_alternative_name, v_display_name, v_description, v_keywords, v_ts_repository, v_ts_publisher),
         (p_pkg->>'is_operator')::boolean,
         nullif(p_pkg->'channels', 'null'),
         nullif(p_pkg->>'default_channel', ''),
@@ -77,8 +80,9 @@ begin
     on conflict (repository_id, name) do update
     set
         name = excluded.name,
+        alternative_name = excluded.alternative_name,
         latest_version = excluded.latest_version,
-        tsdoc = generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords, v_ts_repository, v_ts_publisher),
+        tsdoc = generate_package_tsdoc(v_name, v_alternative_name, v_display_name, v_description, v_keywords, v_ts_repository, v_ts_publisher),
         is_operator = excluded.is_operator,
         channels = excluded.channels,
         default_channel = excluded.default_channel

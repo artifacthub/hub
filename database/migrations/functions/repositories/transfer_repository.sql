@@ -72,6 +72,7 @@ begin
             p.package_id,
             generate_package_tsdoc(
                 p.name,
+                p.alternative_name,
                 s.display_name,
                 s.description,
                 s.keywords,

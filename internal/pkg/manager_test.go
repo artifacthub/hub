@@ -986,6 +986,13 @@ func TestRegister(t *testing.T) {
 				&hub.Package{},
 			},
 			{
+				"invalid alternative name (must be a subset or superset of the name)",
+				&hub.Package{
+					Name:            "package1",
+					AlternativeName: "something else",
+				},
+			},
+			{
 				"version not provided",
 				&hub.Package{
 					Name: "package1",
