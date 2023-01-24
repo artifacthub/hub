@@ -13,6 +13,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/satori/uuid"
+	stripmd "github.com/writeas/go-strip-markdown"
 )
 
 const (
@@ -289,6 +290,11 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 		if !areValidCapabilities(pkg.Capabilities) {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid capabilities")
 		}
+	}
+
+	// Strip markdown from changes entries description
+	for _, change := range pkg.Changes {
+		change.Description = stripmd.Strip(change.Description)
 	}
 
 	// Register package in database
