@@ -44,7 +44,7 @@ const CommandBlock = (props: Props) => (
       <div>
         <ButtonCopyToClipboard
           text={props.command}
-          className={`btn-primary rounded-circle ${styles.copyBtn}`}
+          className={`btn-primary ${styles.copyBtn}`}
           label="Copy command to clipboard"
         />
       </div>

@@ -65,13 +65,13 @@ const WebhookCard = (props: Props) => {
                 <div>{props.webhook.name}</div>
                 {props.webhook.active ? (
                   <span
-                    className={`ms-3 mt-1 fw-bold badge rounded-pill border border-success text-success text-uppercase ${styles.badge}`}
+                    className={`ms-3 mt-1 fw-bold badge border border-success text-success text-uppercase ${styles.badge}`}
                   >
                     Active
                   </span>
                 ) : (
                   <span
-                    className={`ms-3 mt-1 fw-bold badge rounded-pill border border-dark text-dark text-uppercase ${styles.badge} ${styles.inactiveBadge}`}
+                    className={`ms-3 mt-1 fw-bold badge border border-dark text-dark text-uppercase ${styles.badge} ${styles.inactiveBadge}`}
                   >
                     Inactive
                   </span>
@@ -171,7 +171,7 @@ const WebhookCard = (props: Props) => {
               </div>
 
               <button
-                className={`btn btn-outline-secondary rounded-circle p-0 text-center  ${styles.btnDropdown}`}
+                className={`btn btn-outline-secondary p-0 text-center  ${styles.btnDropdown}`}
                 onClick={() => setDropdownMenuStatus(true)}
                 aria-label="Open menu"
                 aria-expanded={dropdownMenuStatus}
@@ -202,9 +202,7 @@ const WebhookCard = (props: Props) => {
                 <div className="ms-auto mt-2">
                   <ElementWithTooltip
                     element={
-                      <span
-                        className={`d-flex flex-row align-items-center badge bg-warning rounded-pill ${styles.badgeNoPackages}`}
-                      >
+                      <span className={`d-flex flex-row align-items-center badge bg-warning ${styles.badgeNoPackages}`}>
                         <TiWarningOutline />
                         <span className="ms-1">No packages</span>
                       </span>

@@ -134,13 +134,9 @@ const InProductionButton = (props: Props) => {
         tooltipClassName={styles.tooltip}
         element={
           <button
-            className={classnames(
-              'btn btn-outline-primary rounded-circle p-0 position-relative lh-1 fs-5',
-              styles.iconWrapper,
-              {
-                [`disabled ${styles.isDisabled}`]: isDisabled,
-              }
-            )}
+            className={classnames('btn btn-outline-primary p-0 position-relative lh-1 fs-5', styles.iconWrapper, {
+              [`disabled ${styles.isDisabled}`]: isDisabled,
+            })}
             type="button"
             onClick={() => {
               if (!isLoading || isDisabled) {
@@ -156,7 +152,7 @@ const InProductionButton = (props: Props) => {
                   <Loading noWrapper spinnerClassName={`position-absolute start-0 ${styles.spinner}`} />
                 </div>
               )}
-              <RiMedalLine className={classnames('rounded-circle', { 'text-muted': isDisabled })} />
+              <RiMedalLine className={classnames({ 'text-muted': isDisabled })} />
             </div>
           </button>
         }

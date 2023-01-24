@@ -1,7 +1,5 @@
 .starBtn {
   border-color: var(--color-1-500);
-  border-top-left-radius: 50rem !important;
-  border-bottom-left-radius: 50rem !important;
   height: 31px;
 }
 
@@ -15,8 +13,6 @@
   height: 31px;
   font-size: 0.875rem !important;
   border-color: var(--color-1-500) !important;
-  border-top-right-radius: 50rem !important;
-  border-bottom-right-radius: 50rem !important;
 }
 
 .wrapper {

@@ -51,7 +51,7 @@ const Banner = (props: Props) => {
         ref={img}
         src={effective === 'light' ? visibleBanner.images['light-theme'] : visibleBanner.images['dark-theme']}
         alt={visibleBanner.name || 'Banner'}
-        className="mw-100 h-auto rounded mx-auto"
+        className="mw-100 h-auto mx-auto"
         onError={props.removeBanner}
         onLoad={() => {
           if (props.maxEqualRatio && img && img.current && img.current.naturalHeight > img.current.naturalWidth) {

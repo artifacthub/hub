@@ -120,7 +120,7 @@ const RepositoryCard = (props: Props) => {
 
     let nextCheckMsg: string = '';
     if (nextCheckTime > 0 && !props.repository.disabled) {
-      nextCheckMsg = `(it will be checked for updates again in ~ ${nextCheckTime} minutes)`;
+      nextCheckMsg = `(next check in ~ ${nextCheckTime} minutes)`;
     }
 
     if (hasErrors) {
@@ -214,8 +214,8 @@ const RepositoryCard = (props: Props) => {
           {props.repository.disabled
             ? '.'
             : nextCheckTime > 0
-            ? `, it will be scanned for security vulnerabilities in ~ ${nextCheckTime} minutes`
-            : ', it will be scanned for security vulnerabilities in less than 30 minutes'}
+            ? `, next scan in ~ ${nextCheckTime} minutes`
+            : ', next scan in less than 30 minutes'}
         </>
       );
     }
@@ -235,7 +235,7 @@ const RepositoryCard = (props: Props) => {
 
     let nextCheckMsg: string = '';
     if (nextCheckTime > 0 && !props.repository.disabled) {
-      nextCheckMsg = `(it will be checked for updates again in ~ ${nextCheckTime} minutes)`;
+      nextCheckMsg = `(next scan in ~ ${nextCheckTime} minutes)`;
     }
 
     if (hasScanningErrors) {
@@ -250,8 +250,8 @@ const RepositoryCard = (props: Props) => {
             buttonContent={
               <div className="d-flex flex-row align-items-center">
                 <HiExclamation className="me-2" />
-                <span className="d-none d-sm-inline">Show scanning errors log</span>
-                <span className="d-inline d-sm-none">Logs</span>
+                <span className="d-none d-xl-inline d-xxl-none d-xxxl-inline">Show scanning errors log</span>
+                <span className="d-inline d-xl-none d-xxl-inline d-xxxl-none">Logs</span>
               </div>
             }
             header={
@@ -445,7 +445,7 @@ const RepositoryCard = (props: Props) => {
               </div>
 
               <button
-                className={`btn btn-outline-secondary rounded-circle p-0 text-center ${styles.btnDropdown}`}
+                className={`btn btn-outline-secondary p-0 text-center ${styles.btnDropdown}`}
                 onClick={() => setDropdownMenuStatus(true)}
                 aria-label="Open menu"
                 aria-expanded={dropdownMenuStatus}

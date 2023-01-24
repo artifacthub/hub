@@ -48,7 +48,7 @@ const Label = (props: Props) => (
           {props.icon && <span className={classnames({ 'ms-1': !isUndefined(props.iconLegend) })}>{props.icon}</span>}
 
           {props.iconLegend && (
-            <span className={`ms-1 me-2 fw-bold position-relative ${styles.iconLegend}`}>{props.iconLegend}</span>
+            <span className={`mx-1 fw-bold position-relative ${styles.iconLegend}`}>{props.iconLegend}</span>
           )}
         </div>
       )}

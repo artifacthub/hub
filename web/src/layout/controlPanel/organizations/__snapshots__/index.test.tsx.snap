@@ -158,7 +158,7 @@ exports[`Organizations section index creates snapshot 1`] = `
                   class="mt-2"
                 >
                   <p
-                    class="mb-0 text-muted"
+                    class="mb-0 text-muted description"
                   >
                     Lorem ipsum...
                   </p>
@@ -250,7 +250,7 @@ exports[`Organizations section index creates snapshot 1`] = `
                   class="mt-2"
                 >
                   <p
-                    class="mb-0 text-muted"
+                    class="mb-0 text-muted description"
                   >
                     The package manager for Kubernetes
                   </p>

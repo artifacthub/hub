@@ -370,7 +370,7 @@ const SearchView = (props: Props) => {
                       label="Filters"
                       className="d-inline-block d-md-none me-2"
                       wrapperClassName="px-4"
-                      buttonType={classnames('btn-sm rounded-circle position-relative', styles.btnMobileFilters, {
+                      buttonType={classnames('btn-sm position-relative', styles.btnMobileFilters, {
                         [styles.filtersBadge]: activeFilters,
                       })}
                       buttonIcon={<FaFilter />}
@@ -539,7 +539,7 @@ const SearchView = (props: Props) => {
         <main role="main" className="container-lg px-sm-4 px-lg-0 d-flex flex-row align-items-start">
           {!isEmptyFacets() && (
             <aside
-              className={`bg-white p-3 border d-none d-md-block position-relative ${styles.sidebar}`}
+              className={`bg-white border d-none d-md-block position-relative ${styles.sidebar}`}
               aria-label="Filters"
             >
               <div role="menu">

@@ -60,7 +60,7 @@ const TagsList = (props: Props) => {
         Tags
         <button
           type="button"
-          className={`btn btn-primary btn-sm ms-2 rounded-circle p-0 position-relative lh-1 ${styles.btn} ${styles.inTitle}`}
+          className={`btn btn-primary btn-sm ms-2 p-0 position-relative lh-1 ${styles.btn} ${styles.inTitle}`}
           onClick={addTag}
           disabled={props.tags.length === 10}
           aria-label="Add tag"
@@ -112,7 +112,7 @@ const TagsList = (props: Props) => {
 
                   <div className={`position-relative text-end ${styles.btnWrapper}`}>
                     <button
-                      className={`btn btn-danger btn-sm ms-auto rounded-circle p-0 position-relative lh-1 ${styles.btn}`}
+                      className={`btn btn-danger btn-sm ms-auto p-0 position-relative lh-1 ${styles.btn}`}
                       type="button"
                       onClick={(event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
                         event.preventDefault();

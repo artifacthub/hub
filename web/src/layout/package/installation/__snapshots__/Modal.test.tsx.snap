@@ -72,7 +72,7 @@ exports[`HelmInstall creates snapshot 1`] = `
               class="d-flex align-items-center flex-grow-1"
             >
               <div
-                class="d-flex align-items-center justify-content-center overflow-hidden border border-2 bg-white rounded-circle imageWrapper imageWrapper"
+                class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
               >
                 <img
                   alt="Pretty name"
@@ -197,7 +197,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                     >
                       <button
                         aria-label="Copy command to clipboard"
-                        class="btn btn-sm btn-primary rounded-circle copyBtn"
+                        class="btn btn-sm btn-primary copyBtn"
                         type="button"
                       >
                         <div
@@ -274,7 +274,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                     >
                       <button
                         aria-label="Copy command to clipboard"
-                        class="btn btn-sm btn-primary rounded-circle copyBtn"
+                        class="btn btn-sm btn-primary copyBtn"
                         type="button"
                       >
                         <div

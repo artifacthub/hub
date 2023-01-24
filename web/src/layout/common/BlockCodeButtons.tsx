@@ -48,7 +48,7 @@ const BlockCodeButtons = (props: Props) => {
       )}
 
       <button
-        className={`btn btn-sm btn-primary rounded-circle fs-5 ${styles.btn}`}
+        className={`btn btn-sm btn-primary fs-5 ${styles.btn}`}
         style={btnStyle}
         onClick={downloadFile}
         aria-label="Download"

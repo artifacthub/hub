@@ -109,7 +109,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           test
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge rounded-pill border border-dark text-dark text-uppercase badge inactiveBadge"
+                          class="ms-3 mt-1 fw-bold badge border border-dark text-dark text-uppercase badge inactiveBadge"
                         >
                           Inactive
                         </span>
@@ -180,7 +180,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       <button
                         aria-expanded="false"
                         aria-label="Open menu"
-                        class="btn btn-outline-secondary rounded-circle p-0 text-center  btnDropdown"
+                        class="btn btn-outline-secondary p-0 text-center  btnDropdown"
                       >
                         <svg
                           fill="currentColor"
@@ -252,7 +252,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           test1
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge rounded-pill border border-success text-success text-uppercase badge"
+                          class="ms-3 mt-1 fw-bold badge border border-success text-success text-uppercase badge"
                         >
                           Active
                         </span>
@@ -323,7 +323,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       <button
                         aria-expanded="false"
                         aria-label="Open menu"
-                        class="btn btn-outline-secondary rounded-circle p-0 text-center  btnDropdown"
+                        class="btn btn-outline-secondary p-0 text-center  btnDropdown"
                       >
                         <svg
                           fill="currentColor"
@@ -395,7 +395,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           dfgfgdhg
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge rounded-pill border border-success text-success text-uppercase badge"
+                          class="ms-3 mt-1 fw-bold badge border border-success text-success text-uppercase badge"
                         >
                           Active
                         </span>
@@ -466,7 +466,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       <button
                         aria-expanded="false"
                         aria-label="Open menu"
-                        class="btn btn-outline-secondary rounded-circle p-0 text-center  btnDropdown"
+                        class="btn btn-outline-secondary p-0 text-center  btnDropdown"
                       >
                         <svg
                           fill="currentColor"
@@ -536,7 +536,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           testdefault
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge rounded-pill border border-dark text-dark text-uppercase badge inactiveBadge"
+                          class="ms-3 mt-1 fw-bold badge border border-dark text-dark text-uppercase badge inactiveBadge"
                         >
                           Inactive
                         </span>
@@ -607,7 +607,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       <button
                         aria-expanded="false"
                         aria-label="Open menu"
-                        class="btn btn-outline-secondary rounded-circle p-0 text-center  btnDropdown"
+                        class="btn btn-outline-secondary p-0 text-center  btnDropdown"
                       >
                         <svg
                           fill="currentColor"
@@ -679,7 +679,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           ffdsffdfgdsd
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge rounded-pill border border-success text-success text-uppercase badge"
+                          class="ms-3 mt-1 fw-bold badge border border-success text-success text-uppercase badge"
                         >
                           Active
                         </span>
@@ -750,7 +750,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       <button
                         aria-expanded="false"
                         aria-label="Open menu"
-                        class="btn btn-outline-secondary rounded-circle p-0 text-center  btnDropdown"
+                        class="btn btn-outline-secondary p-0 text-center  btnDropdown"
                       >
                         <svg
                           fill="currentColor"
