@@ -276,9 +276,9 @@ describe('Details', () => {
       expect(screen.getByText('License')).toBeInTheDocument();
       expect(screen.getAllByText(mockPackage.license!)).toHaveLength(2);
 
-      expect(screen.getByText(/Containers Images/)).toBeInTheDocument();
-      expect(screen.getByTestId('containerImage')).toBeInTheDocument();
-      expect(screen.getByTestId('containerImage')).toHaveTextContent(mockPackage.containersImages![0].image);
+      expect(screen.getAllByText(/Containers Images/)).toHaveLength(2);
+      expect(screen.getAllByTestId('containerImage')).toHaveLength(2);
+      expect(screen.getAllByTestId('containerImage')[0]).toHaveTextContent(mockPackage.containersImages![0].image);
 
       expect(screen.getByText('Keywords')).toBeInTheDocument();
       expect(screen.getAllByRole('listitem', { name: /Filter by/ })).toHaveLength(mockPackage.keywords!.length);
@@ -310,9 +310,9 @@ describe('Details', () => {
       expect(screen.getByText('License')).toBeInTheDocument();
       expect(screen.getAllByText(mockPackage.license!)).toHaveLength(2);
 
-      expect(screen.getByText(/Containers Images/)).toBeInTheDocument();
-      expect(screen.getByTestId('containerImage')).toBeInTheDocument();
-      expect(screen.getByTestId('containerImage')).toHaveTextContent(mockPackage.containersImages![0].image);
+      expect(screen.getAllByText(/Containers Images/)).toHaveLength(2);
+      expect(screen.getAllByTestId('containerImage')).toHaveLength(2);
+      expect(screen.getAllByTestId('containerImage')[0]).toHaveTextContent(mockPackage.containersImages![0].image);
 
       expect(screen.getByText('Keywords')).toBeInTheDocument();
       expect(screen.getAllByRole('listitem', { name: /Filter by/ })).toHaveLength(mockPackage.keywords!.length);

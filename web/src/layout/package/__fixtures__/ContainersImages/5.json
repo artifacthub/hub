@@ -1,0 +1,21 @@
+[
+  {
+    "name": "db-migrator",
+    "image": "artifacthub/db-migrator:v0.7.0",
+    "platforms": ["linux/amd64"]
+  },
+  {
+    "name": "hub",
+    "image": "artifacthub/hub:v0.7.0",
+    "platforms": ["linux/amd64", "linux/arm64"]
+  },
+  {
+    "name": "tracker",
+    "image": "artifacthub/tracker:v0.7.0"
+  },
+  {
+    "name": "scanner",
+    "image": "artifacthub/scanner:v0.7.0",
+    "platforms": ["linux/s390x"]
+  }
+]

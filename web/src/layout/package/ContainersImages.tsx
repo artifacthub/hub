@@ -45,12 +45,12 @@ const ContainersImages = (props: Props) => {
     let itemsForModal: JSX.Element[] = [];
 
     props.containers.forEach((containerImage: ContainerImage, index: number) => {
-      const copyBtn = (
+      const copyBtn = (className?: string) => (
         <>
           {!isUndefined(containerImage.image) && (
             <ButtonCopyToClipboard
               text={containerImage.image}
-              className={`btn-link text-dark border-0 position-relative ${styles.copyBtn}`}
+              className={`btn-link text-dark border-0 position-relative ${styles.copyBtn} ${className}`}
               label={`Copy ${containerImage.name || containerImage.image} container image to clipboard`}
             />
           )}
@@ -69,7 +69,7 @@ const ContainersImages = (props: Props) => {
             <div data-testid="containerImage" className={`text-truncate text-break ${styles.containerImage}`}>
               {containerImage.name || containerImage.image}
             </div>
-            {copyBtn}
+            {copyBtn()}
           </div>
           {containerImage.whitelisted && (
             <div className={`d-flex flex-column mb-1 ${styles.badgesWrapper}`}>
@@ -92,9 +92,25 @@ const ContainersImages = (props: Props) => {
               <div data-testid="containerImage" className="text-truncate ps-1">
                 {containerImage.name || containerImage.image}
               </div>
-              {copyBtn}
+              {copyBtn('mt-1')}
               {containerImage.whitelisted && <div className="ms-2 me-1">{getBadge()}</div>}
             </div>
+          </td>
+          <td className="align-middle">
+            {!isUndefined(containerImage.platforms) && containerImage.platforms.length > 0 ? (
+              <div className="d-flex flex-row flex-wrap pt-1">
+                {containerImage.platforms.map((platform: string) => (
+                  <div
+                    className={`d-inline badge fw-normal me-2 mb-1 mw-100 text-truncate ${styles.platformBadge}`}
+                    key={`${containerImage.image}_${platform}`}
+                  >
+                    {platform}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <span>-</span>
+            )}
           </td>
         </tr>
       );
@@ -108,6 +124,9 @@ const ContainersImages = (props: Props) => {
             <tr className={styles.tableTitle}>
               <th scope="col">
                 <span className="px-1">Image</span>
+              </th>
+              <th scope="col">
+                <span className="px-1">Platforms</span>
               </th>
             </tr>
           </thead>
@@ -129,7 +148,13 @@ const ContainersImages = (props: Props) => {
     <>
       <SmallTitle text="Containers Images" />
       <div className="mb-3">
-        <SeeAllModal title="Containers Images" {...containers} packageId={props.packageId} />
+        <SeeAllModal
+          title="Containers Images"
+          moreBtnText="details"
+          {...containers}
+          packageId={props.packageId}
+          visibleModal
+        />
       </div>
     </>
   );
