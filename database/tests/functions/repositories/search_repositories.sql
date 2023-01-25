@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(9);
+select plan(10);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -361,6 +361,33 @@ select results_eq(
             1)
     $$,
     'Filtering by repo1 name including credentials, repository 1 returned'
+);
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_repositories('{
+            "url": "https://repo2.com"
+        }')
+    $$,
+    $$
+        values (
+            '[
+                {
+                    "repository_id": "00000000-0000-0000-0000-000000000002",
+                    "name": "repo2",
+                    "display_name": "Repo 2",
+                    "url": "https://repo2.com",
+                    "kind": 0,
+                    "verified_publisher": false,
+                    "official": false,
+                    "disabled": false,
+                    "scanner_disabled": false,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
+                }
+            ]'::jsonb,
+            1)
+    $$,
+    'Filtering by repo2 url, repository 2 returned'
 );
 
 -- Finish tests and rollback transaction

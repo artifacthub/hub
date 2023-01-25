@@ -219,6 +219,7 @@ func buildSearchInput(qs url.Values) (*hub.SearchRepositoryInput, error) {
 
 	return &hub.SearchRepositoryInput{
 		Name:               qs.Get("name"),
+		URL:                qs.Get("url"),
 		Kinds:              kinds,
 		Orgs:               qs["org"],
 		Users:              qs["user"],

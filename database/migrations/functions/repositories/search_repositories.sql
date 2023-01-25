@@ -4,6 +4,7 @@ create or replace function search_repositories(p_input jsonb)
 returns table(data json, total_count bigint) as $$
 declare
     v_name text := (p_input->>'name');
+    v_url text := nullif(p_input->>'url', '');
     v_kinds int[];
     v_users text[];
     v_orgs text[];
@@ -46,6 +47,8 @@ begin
         left join organization o using (organization_id)
         where
             case when v_name is not null then r.name ~* v_name else true end
+        and
+            case when v_url is not null then trim(trailing '/' from r.url) = trim(trailing '/' from v_url) else true end
         and
             case when cardinality(v_kinds) > 0
             then r.repository_kind_id = any(v_kinds) else true end

@@ -274,6 +274,7 @@ type RepositoryIgnoreEntry struct {
 // SearchRepositoryInput represents the query input when searching for repositories.
 type SearchRepositoryInput struct {
 	Name               string           `json:"name,omitempty"`
+	URL                string           `json:"url,omitempty"`
 	Kinds              []RepositoryKind `json:"kinds,omitempty"`
 	Orgs               []string         `json:"orgs,omitempty"`
 	Users              []string         `json:"users,omitempty"`

@@ -614,6 +614,7 @@ paths:
         - $ref: "#/components/parameters/UsersListParam"
         - $ref: "#/components/parameters/OrgsListParam"
         - $ref: "#/components/parameters/RepoNameQueryParam"
+        - $ref: "#/components/parameters/UrlQueryParam"
       responses:
         "200":
           description: ""
@@ -4846,6 +4847,14 @@ components:
         by the PostgreSQL websearch_to_tsquery function. See
         https://www.postgresql.org/docs/current/textsearch-controls.html
         (12.3.2. Parsing Queries) for more details.
+    UrlQueryParam:
+      in: query
+      name: url
+      schema:
+        type: string
+        example: https://repo2.com
+      required: false
+      description: Repository url
     UsersListParam:
       in: query
       name: user
