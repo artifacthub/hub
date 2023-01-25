@@ -31,6 +31,7 @@ const defaultProps = {
   isSearching: false,
   setIsSearching: mockIsSearching,
   scrollPosition: 0,
+  setViewedPackage: jest.fn(),
   setScrollPosition: jest.fn(),
   pathname: '/packages/search',
   tsQueryWeb: 'test',

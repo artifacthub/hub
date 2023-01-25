@@ -26,7 +26,7 @@ const MoreActionsButton = () => {
           aria-label="Show menu"
           aria-expanded={openStatus}
         >
-          <HiDotsVertical />
+          <HiDotsVertical className={`position-relative ${styles.icon}`} />
         </button>
 
         <div

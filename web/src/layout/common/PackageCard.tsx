@@ -1,6 +1,7 @@
+import { throttle } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { FaUser } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
@@ -12,6 +13,7 @@ import cutString from '../../utils/cutString';
 import isFuture from '../../utils/isFuture';
 import isPackageOfficial from '../../utils/isPackageOfficial';
 import { prepareQueryString } from '../../utils/prepareQueryString';
+import scrollToTop from '../../utils/scrollToTop';
 import Image from '../common/Image';
 import Label from '../common/Label';
 import OfficialBadge from '../common/OfficialBadge';
@@ -31,6 +33,9 @@ interface Props {
   cardWrapperClassName?: string;
   className?: string;
   saveScrollPosition?: () => void;
+  scrollPosition?: number;
+  viewedPackage?: string;
+  saveViewedPackage?: (id: string) => void;
   noBadges?: boolean;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
@@ -38,6 +43,11 @@ interface Props {
 
 const PackageCard = (props: Props) => {
   const history = useHistory();
+  const infoSection = useRef<HTMLDivElement>(null);
+  const ownerInfo = useRef<HTMLDivElement>(null);
+  const repoInfo = useRef<HTMLDivElement>(null);
+  const [infoStyle, setInfoStyle] = useState<(React.CSSProperties | undefined)[]>([]);
+  const [fullInfoWidth, setFullInfoWidth] = useState<number[]>([0, 0]);
   const [isVersionOlderThanOneYear, setIsVersionOlderThanOneYear] = useState<boolean>(false);
 
   const pkgTS = (
@@ -67,6 +77,54 @@ const PackageCard = (props: Props) => {
     setIsVersionOlderThanOneYear(diffInYears > 1);
   }, [props.package]);
 
+  const saveInfoWidth = () => {
+    setFullInfoWidth([ownerInfo.current?.clientWidth || 0, repoInfo.current?.clientWidth || 0]);
+  };
+
+  const checkPkgInfo = () => {
+    if (window.innerWidth > 768) {
+      if (fullInfoWidth[0] !== 0 && fullInfoWidth[1] !== 0) {
+        const wrapperWidth = infoSection.current?.clientWidth;
+        if (wrapperWidth) {
+          if (wrapperWidth > fullInfoWidth[0] + fullInfoWidth[1]) {
+            setInfoStyle([]);
+          } else {
+            if (fullInfoWidth[0] && fullInfoWidth[1] && fullInfoWidth[0] + fullInfoWidth[1] > wrapperWidth) {
+              if (fullInfoWidth[0] < wrapperWidth / 2) {
+                if (wrapperWidth - fullInfoWidth[0] < fullInfoWidth[1]) {
+                  setInfoStyle([undefined, { width: `${wrapperWidth - fullInfoWidth[0]}px` }]);
+                }
+              } else {
+                if (fullInfoWidth[0] > wrapperWidth / 2) {
+                  setInfoStyle([{ width: '50%' }, { width: '50%' }]);
+                } else if (wrapperWidth - fullInfoWidth[1] < fullInfoWidth[0]) {
+                  setInfoStyle([{ width: `${wrapperWidth - fullInfoWidth[1]}px` }, undefined]);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  };
+
+  useLayoutEffect(() => {
+    saveInfoWidth();
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    checkPkgInfo();
+  }, [fullInfoWidth]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    window.addEventListener('resize', throttle(saveInfoWidth, 200));
+    if (props.package.packageId === props.viewedPackage && props.scrollPosition) {
+      scrollToTop(props.scrollPosition, 'instant');
+    }
+
+    return () => window.removeEventListener('resize', saveInfoWidth);
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
   return (
     <div className={`py-sm-3 py-2 ${styles.cardWrapper} ${props.cardWrapperClassName}`} role="listitem">
       <div className={`card cardWithHover h-100 mw-100 bg-white ${styles.card} ${props.className}`}>
@@ -75,6 +133,9 @@ const PackageCard = (props: Props) => {
           onClick={() => {
             if (!isUndefined(props.saveScrollPosition)) {
               props.saveScrollPosition();
+            }
+            if (!isUndefined(props.saveViewedPackage)) {
+              props.saveViewedPackage(props.package.packageId);
             }
           }}
           to={{
@@ -120,51 +181,62 @@ const PackageCard = (props: Props) => {
                   </div>
 
                   <div className={`d-none d-md-block card-subtitle align-items-center ${styles.subtitle}`}>
-                    <div className="d-flex flex-row align-items-center">
-                      {props.package.repository.organizationName && (
-                        <OrganizationInfo
-                          className={`me-0 d-flex flex-row align-items-baseline text-left w-auto ${styles.mx50} `}
-                          btnClassName="text-truncate mw-100"
-                          organizationName={props.package.repository.organizationName}
-                          organizationDisplayName={props.package.repository.organizationDisplayName}
-                          deprecated={props.package.deprecated}
-                          visibleLegend
-                        />
-                      )}
+                    <div className="visually-hidden d-flex flex-row position-relative">
+                      <div className={styles.info} ref={ownerInfo}>
+                        {props.package.repository.organizationDisplayName ||
+                          props.package.repository.organizationName ||
+                          props.package.repository.userAlias}
+                      </div>
+                      <div className={`ms-3 ${styles.info}`} ref={repoInfo}>
+                        {props.package.repository.displayName || props.package.repository.name}
+                      </div>
+                    </div>
+                    <div ref={infoSection} className="d-flex flex-row mw-100">
+                      <div style={infoStyle[0]}>
+                        {props.package.repository.organizationName && (
+                          <OrganizationInfo
+                            className={`me-0 d-flex flex-row align-items-baseline text-left`}
+                            btnClassName="text-truncate mw-100"
+                            organizationName={props.package.repository.organizationName}
+                            organizationDisplayName={props.package.repository.organizationDisplayName}
+                            deprecated={props.package.deprecated}
+                            visibleLegend
+                          />
+                        )}
 
-                      {props.package.repository.userAlias && (
-                        <div className={`d-flex flex-row align-items-baseline ${styles.userInfo}`}>
-                          <div className={`text-dark me-1 position-relative ${styles.userIcon}`}>
-                            <FaUser />
+                        {props.package.repository.userAlias && (
+                          <div className={`d-flex flex-row align-items-baseline ${styles.userInfo}`}>
+                            <div className={`text-dark me-1 position-relative ${styles.userIcon}`}>
+                              <FaUser />
+                            </div>
+                            <span className="visually-hidden">{props.package.repository.userAlias}</span>
+
+                            <button
+                              data-testid="userLink"
+                              className={`p-0 border-0 text-truncate text-muted mw-100 bg-transparent ${styles.link}`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                history.push({
+                                  pathname: '/packages/search',
+                                  search: prepareQueryString({
+                                    pageNumber: 1,
+                                    filters: {
+                                      user: [props.package.repository.userAlias!],
+                                    },
+                                    deprecated: props.package.deprecated,
+                                  }),
+                                });
+                              }}
+                              aria-label={`Filter by ${props.package.repository.userAlias}`}
+                              aria-hidden="true"
+                              tabIndex={-1}
+                            >
+                              <div className="text-truncate">{props.package.repository.userAlias}</div>
+                            </button>
                           </div>
-                          <span className="visually-hidden">{props.package.repository.userAlias}</span>
-
-                          <button
-                            data-testid="userLink"
-                            className={`p-0 border-0 text-truncate text-muted mw-100 bg-transparent ${styles.link} ${styles.mx50}`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              history.push({
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  filters: {
-                                    user: [props.package.repository.userAlias!],
-                                  },
-                                  deprecated: props.package.deprecated,
-                                }),
-                              });
-                            }}
-                            aria-label={`Filter by ${props.package.repository.userAlias}`}
-                            aria-hidden="true"
-                            tabIndex={-1}
-                          >
-                            <div className="text-truncate">{props.package.repository.userAlias}</div>
-                          </button>
-                        </div>
-                      )}
-
-                      <div className={styles.mx50}>
+                        )}
+                      </div>
+                      <div style={infoStyle[1]}>
                         <RepositoryInfo
                           repository={props.package.repository}
                           deprecated={props.package.deprecated}

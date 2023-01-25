@@ -208,10 +208,10 @@ const InputFileField = (props: Props) => {
           <div className="position-relative">
             <button
               className={classnames(
-                'btn p-0 overflow-hidden position-relative border border-3 lh-1 fs-2 bg-white',
+                'btn p-0 overflow-hidden position-relative lh-1 fs-2',
                 styles.btn,
                 { 'opacity-50': isSending },
-                { 'rounded-circle': props.circularCrop }
+                { [`rounded-circle border border-2 bg-white ${styles.circularBtn}`]: props.circularCrop }
               )}
               type="button"
               onClick={onClick}

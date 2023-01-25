@@ -4,6 +4,14 @@
   height: 60px;
 }
 
+.circularBtn {
+  border-color: #ced4da !important;
+}
+
+[data-theme='dark'] .circularBtn {
+  border-color: #8c96a1 !important;
+}
+
 .imageAsBg {
   object-fit: cover;
 }

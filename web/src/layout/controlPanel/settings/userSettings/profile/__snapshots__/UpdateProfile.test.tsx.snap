@@ -34,7 +34,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         >
           <button
             aria-label="Add image"
-            class="btn p-0 overflow-hidden position-relative border border-3 lh-1 fs-2 bg-white btn rounded-circle"
+            class="btn p-0 overflow-hidden position-relative lh-1 fs-2 btn rounded-circle border border-2 bg-white circularBtn"
             type="button"
           >
             <img

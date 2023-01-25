@@ -21,8 +21,6 @@ import SearchView from './search';
 import StarredPackagesView from './starredPackages';
 import StatsView from './stats';
 
-const ScrollMemory = require('react-router-scroll-memory');
-
 const getQueryParam = (query: string, param: string): string | undefined => {
   let result;
   const p = new URLSearchParams(query);
@@ -35,6 +33,7 @@ const getQueryParam = (query: string, param: string): string | undefined => {
 export default function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [scrollPosition, setScrollPosition] = useState<undefined | number>(undefined);
+  const [viewedPackage, setViewedPackage] = useState<undefined | string>(undefined);
 
   return (
     <AppCtxProvider>
@@ -43,7 +42,6 @@ export default function App() {
           <div className="visually-hidden visually-hidden-focusable">
             <a href="#content">Skip to Main Content</a>
           </div>
-          <ScrollMemory />
           <AlertController />
           <BannerMOTD />
           <UserNotificationsController />
@@ -116,6 +114,8 @@ export default function App() {
                         setIsSearching={setIsSearching}
                         scrollPosition={scrollPosition}
                         setScrollPosition={setScrollPosition}
+                        viewedPackage={viewedPackage}
+                        setViewedPackage={setViewedPackage}
                         fromDetail={
                           routeProps.location.state ? routeProps.location.state.hasOwnProperty('from-detail') : false
                         }

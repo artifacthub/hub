@@ -2,7 +2,11 @@
   width: 1.65rem;
   height: 1.65rem;
   padding: 2px;
-  font-size: 1.15rem !important;
+  font-size: 1.1rem !important;
+}
+
+.icon {
+  top: -1px;
 }
 
 .dropdown {

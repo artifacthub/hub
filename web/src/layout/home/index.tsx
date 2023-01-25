@@ -10,6 +10,7 @@ import alertDispatcher from '../../utils/alertDispatcher';
 import bannerDispatcher from '../../utils/bannerDispatcher';
 import getSampleQueries from '../../utils/getSampleQueries';
 import isWhiteLabel from '../../utils/isWhiteLabel';
+import scrollToTop from '../../utils/scrollToTop';
 import ExternalLink from '../common/ExternalLink';
 import RepositoryIcon from '../common/RepositoryIcon';
 import SampleQueries from '../common/SampleQueries';
@@ -66,6 +67,7 @@ const HomeView = (props: Props) => {
       }
     }
 
+    scrollToTop(0, 'instant');
     fetchStats();
     getBanner();
   }, []);
