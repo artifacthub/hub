@@ -12,7 +12,7 @@ require (
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/go-enry/go-license-detector/v4 v4.3.0
 	github.com/go-git/go-git/v5 v5.5.2
-	github.com/google/go-containerregistry v0.12.1
+	github.com/google/go-containerregistry v0.13.0
 	github.com/google/go-github v17.0.0+incompatible
 	github.com/gorilla/csrf v1.7.1
 	github.com/gorilla/feeds v1.1.1
