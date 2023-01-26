@@ -47,9 +47,10 @@ type Link struct {
 
 // ContainerImage represents a container image associated with a package.
 type ContainerImage struct {
-	Name        string `json:"name" yaml:"name"`
-	Image       string `json:"image" yaml:"image"`
-	Whitelisted bool   `json:"whitelisted" yaml:"whitelisted"`
+	Name        string   `json:"name" yaml:"name"`
+	Image       string   `json:"image" yaml:"image"`
+	Whitelisted bool     `json:"whitelisted" yaml:"whitelisted"`
+	Platforms   []string `json:"platforms" yaml:"platforms"`
 }
 
 // Maintainer represents a package's maintainer.

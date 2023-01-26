@@ -24,7 +24,7 @@ Use this annotation to indicate that this chart version contains security update
 
 - **artifacthub.io/images** *(yaml string, see example below)*
 
-By default, Artifact Hub will try to extract the containers images used by Helm charts from the manifests generated from a dry-run install using the default values. If you prefer, you can also provide a list of containers images manually by using this annotation.
+By default, Artifact Hub will try to extract the containers images used by Helm charts from the manifests generated from a dry-run install using the default values. If you prefer, you can also provide a list of containers images manually by using this annotation. Providing the information manually also allows adding some extra information, like the platforms supported by each of the images.
 
 Containers images will be scanned for security vulnerabilities. The security report generated will be available in the package detail view. It is possible to whitelist images so that they are not scanned by setting the `whitelisted` flag to true.
 
@@ -102,9 +102,13 @@ annotations:
   artifacthub.io/images: |
     - name: img1
       image: repo/img1:1.0.0
+      platforms:
+        - linux/amd64
     - name: img2
       image: repo/img2:2.0.0
       whitelisted: true
+      platforms:
+        - linux/amd64
   artifacthub.io/crds: |
     - kind: MyKind
       version: v1

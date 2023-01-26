@@ -14,6 +14,8 @@ interface Props {
   itemsForModal?: JSX.Element[] | JSX.Element;
   open?: boolean;
   modalClassName?: string;
+  moreBtnText?: string;
+  visibleModal?: boolean;
 }
 
 const DEFAULT_VISIBLE_ITEMS = 5;
@@ -47,9 +49,7 @@ const SeeAllModal = (props: Props) => {
 
   return (
     <>
-      {props.items.length <= numVisibleItems ? (
-        <div role="list">{props.items}</div>
-      ) : (
+      {props.items.length > numVisibleItems || (!isUndefined(props.visibleModal) && props.visibleModal) ? (
         <>
           <div role="list">{visibleItems}</div>
 
@@ -65,7 +65,7 @@ const SeeAllModal = (props: Props) => {
             >
               <div className="d-flex flex-row align-items-center">
                 <HiPlusCircle className="me-1" />
-                <span>See all</span>
+                <span>See {props.moreBtnText || 'all'}</span>
               </div>
             </button>
 
@@ -88,6 +88,8 @@ const SeeAllModal = (props: Props) => {
             </div>
           </Modal>
         </>
+      ) : (
+        <div role="list">{props.items}</div>
       )}
     </>
   );

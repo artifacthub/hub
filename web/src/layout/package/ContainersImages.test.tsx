@@ -30,18 +30,18 @@ describe('ContainersImages', () => {
       const mockContainers = getMockImages('2');
       render(<ContainersImages containers={mockContainers} {...defaultProps} />);
 
-      expect(screen.getByText('Containers Images')).toBeInTheDocument();
+      expect(screen.getAllByText('Containers Images')).toHaveLength(2);
 
       const containers = screen.getAllByTestId('containerImageItem');
-      expect(containers).toHaveLength(mockContainers.length);
+      expect(containers).toHaveLength(7);
     });
 
-    it('renders 3 images max + see all modal', async () => {
+    it('opens modal', async () => {
       const mockContainers = getMockImages('3');
       render(<ContainersImages containers={mockContainers} {...defaultProps} />);
 
       expect(screen.getAllByTestId('containerImageItem')).toHaveLength(8); // 3 + 5 mobile version
-      expect(screen.getByText('See all'));
+      expect(screen.getByText('See details'));
 
       const btn = screen.getByRole('button', { name: 'See all entries' });
       await userEvent.click(btn);
@@ -63,6 +63,25 @@ describe('ContainersImages', () => {
         <ContainersImages {...defaultProps} containers={mockContainers} kind={RepositoryKind.Container} />
       );
       expect(container).toBeEmptyDOMElement();
+    });
+
+    it('renders component with platforms', async () => {
+      const mockContainers = getMockImages('5');
+      render(<ContainersImages containers={mockContainers} {...defaultProps} />);
+
+      expect(screen.getAllByText('Containers Images')).toHaveLength(2);
+
+      const containers = screen.getAllByTestId('containerImageItem');
+      expect(containers).toHaveLength(7);
+
+      const btn = screen.getByRole('button', { name: 'See all entries' });
+      await userEvent.click(btn);
+
+      expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+
+      expect(screen.getAllByText('linux/amd64')).toHaveLength(2);
+      expect(screen.getByText('linux/arm64')).toBeInTheDocument();
+      expect(screen.getByText('linux/s390x')).toBeInTheDocument();
     });
   });
 });

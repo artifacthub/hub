@@ -39,3 +39,8 @@
   border-color: var(--bs-orange) !important;
   color: var(--bs-orange);
 }
+
+.platformBadge {
+  background-color: var(--color-black-15) !important;
+  color: var(--color-font);
+}

@@ -14,7 +14,7 @@ exports[`RecommendedPackageCard creates snapshot 1`] = `
         class="me-2"
       >
         <div
-          class="imageWrapper overflow-hidden"
+          class="imageWrapper ms-1 overflow-hidden"
         >
           <div
             class="d-flex align-items-center justify-content-center w-100 h-100"
