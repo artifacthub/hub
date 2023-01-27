@@ -167,6 +167,7 @@ const SearchView = (props: Props) => {
   };
 
   const updateCurrentPage = (searchChanges: any) => {
+    cleanPrevSearch();
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
@@ -175,7 +176,6 @@ const SearchView = (props: Props) => {
         ...searchChanges,
       }),
     });
-    cleanPrevSearch();
   };
 
   const onFiltersChange = (name: string, value: string, checked: boolean): void => {
@@ -242,6 +242,7 @@ const SearchView = (props: Props) => {
   };
 
   const onResetFilters = (): void => {
+    cleanPrevSearch();
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
@@ -252,7 +253,6 @@ const SearchView = (props: Props) => {
         sort: DEFAULT_SORT,
       }),
     });
-    cleanPrevSearch();
   };
 
   const onPageNumberChange = (pageNumber: number): void => {
@@ -262,6 +262,7 @@ const SearchView = (props: Props) => {
   };
 
   const onSortChange = (sort: string): void => {
+    cleanPrevSearch();
     history.replace({
       pathname: '/packages/search',
       search: prepareQueryString({
@@ -270,10 +271,10 @@ const SearchView = (props: Props) => {
         pageNumber: 1,
       }),
     });
-    cleanPrevSearch();
   };
 
   const onPaginationLimitChange = (newLimit: number): void => {
+    cleanPrevSearch();
     history.replace({
       pathname: '/packages/search',
       search: prepareQueryString({
@@ -281,7 +282,6 @@ const SearchView = (props: Props) => {
         pageNumber: 1,
       }),
     });
-    cleanPrevSearch();
     dispatch(updateLimit(newLimit));
   };
 
@@ -351,6 +351,10 @@ const SearchView = (props: Props) => {
     props.sort,
   ]);
   /* eslint-enable react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    cleanPrevSearch();
+  }, [props.tsQueryWeb]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const activeFilters =
     props.deprecated ||
@@ -572,7 +576,7 @@ const SearchView = (props: Props) => {
           )}
 
           <div
-            className={classnames('flex-grow-1 mt-1 mt-sm-3 px-xs-0 px-sm-3 px-lg-0', styles.list, {
+            className={classnames('flex-grow-1 mt-1 mt-sm-3 px-xs-0 px-sm-2 px-md-3 px-lg-0', styles.list, {
               [styles.emptyList]: isNull(searchResults.packages) || searchResults.packages.length === 0,
             })}
           >
@@ -638,7 +642,7 @@ const SearchView = (props: Props) => {
                 ) : (
                   <>
                     <div className="mb-2 noFocus" id="content" tabIndex={-1} aria-label="Packages list">
-                      <div className="row" role="list">
+                      <div className={`row ${styles.listRow}`} role="list">
                         {searchResults.packages.map((item: Package) => (
                           <PackageCard
                             key={item.packageId}
