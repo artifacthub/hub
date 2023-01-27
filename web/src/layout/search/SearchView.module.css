@@ -48,15 +48,28 @@
   max-width: 100%;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
   .list {
-    flex-basis: calc(100% - 230px - 1.9rem);
-    max-width: calc(100% - 230px - 1.9rem);
+    flex-basis: calc(100% - 230px - 1.4rem);
+    max-width: calc(100% - 230px - 1.4rem);
   }
 
   .emptyList {
     flex-basis: 100%;
     max-width: 100%;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1399.98px) {
+  .list {
+    flex-basis: calc(100% - 230px - 1.9rem);
+    max-width: calc(100% - 230px - 1.9rem);
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .listRow {
+    margin-right: calc(-0.675 * var(--bs-gutter-x));
   }
 }
 

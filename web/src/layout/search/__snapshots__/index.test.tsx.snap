@@ -176,7 +176,7 @@ exports[`Search index creates snapshot 1`] = `
       role="main"
     >
       <div
-        class="flex-grow-1 mt-1 mt-sm-3 px-xs-0 px-sm-3 px-lg-0 list emptyList"
+        class="flex-grow-1 mt-1 mt-sm-3 px-xs-0 px-sm-2 px-md-3 px-lg-0 list emptyList"
       />
     </main>
   </div>
