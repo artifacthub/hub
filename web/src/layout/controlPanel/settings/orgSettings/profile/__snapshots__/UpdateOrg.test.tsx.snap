@@ -34,7 +34,7 @@ exports[`Organization settings index creates snapshot 1`] = `
         >
           <button
             aria-label="Add image"
-            class="btn p-0 overflow-hidden position-relative border border-3 lh-1 fs-2 bg-white btn"
+            class="btn p-0 overflow-hidden position-relative lh-1 fs-2 btn"
             type="button"
           >
             <img

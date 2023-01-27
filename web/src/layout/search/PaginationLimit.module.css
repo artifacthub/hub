@@ -1,8 +1,16 @@
 .select {
-  height: 25px !important;
+  height: 26px !important;
   width: 62px !important;
   line-height: 1rem !important;
   padding-left: 0.75rem !important;
+}
+
+:global(.form-select).select {
+  border-color: var(--color-1-500) !important;
+}
+
+[data-theme='dark'] :global(.form-select).select {
+  border-color: var(--border-solid) !important;
 }
 
 @supports (-ms-ime-align: auto) {

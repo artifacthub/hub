@@ -9,6 +9,7 @@ import { Section } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import { CONTROL_PANEL_SECTIONS } from '../../utils/data';
 import isControlPanelSectionAvailable from '../../utils/isControlPanelSectionAvailable';
+import scrollToTop from '../../utils/scrollToTop';
 import styles from './ControlPanelView.module.css';
 import MembersSection from './members';
 import OrganizationsSection from './organizations';
@@ -62,6 +63,10 @@ const ControlPanelView = (props: Props) => {
 
     return false;
   };
+
+  useEffect(() => {
+    scrollToTop(0, 'instant');
+  }, []);
 
   useEffect(() => {
     if (ctx.user) {

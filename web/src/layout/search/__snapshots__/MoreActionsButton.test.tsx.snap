@@ -12,6 +12,7 @@ exports[`MoreActionsButton creates snapshot 1`] = `
       type="button"
     >
       <svg
+        class="position-relative icon"
         fill="currentColor"
         height="1em"
         stroke="currentColor"

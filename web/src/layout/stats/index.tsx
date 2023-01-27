@@ -12,6 +12,7 @@ import compoundErrorMessage from '../../utils/compoundErrorMessage';
 import getMetaTag from '../../utils/getMetaTag';
 import isWhiteLabel from '../../utils/isWhiteLabel';
 import prettifyNumber from '../../utils/prettifyNumber';
+import scrollToTop from '../../utils/scrollToTop';
 import AnchorHeader from '../common/AnchorHeader';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
@@ -370,6 +371,7 @@ const StatsView = (props: Props) => {
         setStats(null);
       }
     }
+    scrollToTop(0, 'instant');
     getStats();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 

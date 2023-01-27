@@ -28,6 +28,10 @@
   max-height: 100%;
 }
 
+.info {
+  padding-left: 18px;
+}
+
 .link {
   color: var(--gray-dark);
 }

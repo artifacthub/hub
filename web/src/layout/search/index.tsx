@@ -40,6 +40,8 @@ interface Props {
   setIsSearching: Dispatch<SetStateAction<boolean>>;
   scrollPosition?: number;
   setScrollPosition: Dispatch<SetStateAction<number | undefined>>;
+  viewedPackage?: string;
+  setViewedPackage: Dispatch<SetStateAction<string | undefined>>;
   tsQueryWeb?: string;
   tsQuery?: string[];
   pageNumber: number;
@@ -69,7 +71,7 @@ const SearchView = (props: Props) => {
     packages: null,
     paginationTotalCount: '0',
   });
-  const { isSearching, setIsSearching, scrollPosition, setScrollPosition } = props;
+  const { isSearching, setIsSearching, scrollPosition, setScrollPosition, viewedPackage, setViewedPackage } = props;
   const [apiError, setApiError] = useState<string | null>(null);
   const [currentTsQueryWeb, setCurrentTsQueryWeb] = useState(props.tsQueryWeb);
 
@@ -120,6 +122,10 @@ const SearchView = (props: Props) => {
 
   const saveScrollPosition = () => {
     setScrollPosition(window.scrollY);
+  };
+
+  const saveViewedPackage = (id: string) => {
+    setViewedPackage(id);
   };
 
   const prepareSelectedFilters = (name: string, newFilters: string[], prevFilters: FiltersProp): FiltersProp => {
@@ -257,7 +263,7 @@ const SearchView = (props: Props) => {
       }),
     });
     setScrollPosition(0);
-    scrollToTop(0);
+    scrollToTop();
   };
 
   const onPaginationLimitChange = (newLimit: number): void => {
@@ -269,7 +275,7 @@ const SearchView = (props: Props) => {
       }),
     });
     setScrollPosition(0);
-    scrollToTop(0);
+    scrollToTop();
     dispatch(updateLimit(newLimit));
   };
 
@@ -315,19 +321,6 @@ const SearchView = (props: Props) => {
         setApiError('An error occurred searching packages, please try again later.');
       } finally {
         setIsSearching(false);
-        // Update scroll position
-        if (history.action === 'PUSH') {
-          // When search page is open from detail page
-          if (props.fromDetail && !isUndefined(scrollPosition)) {
-            scrollToTop(scrollPosition);
-            // When search has changed
-          } else {
-            scrollToTop(0);
-          }
-          // On pop action and when scroll position has been previously saved
-        } else if (!isUndefined(scrollPosition)) {
-          scrollToTop(scrollPosition);
-        }
       }
     }
     fetchSearchResults();
@@ -652,6 +645,9 @@ const SearchView = (props: Props) => {
                               sort: props.sort,
                             }}
                             saveScrollPosition={saveScrollPosition}
+                            scrollPosition={scrollPosition}
+                            viewedPackage={props.fromDetail ? viewedPackage : undefined} // coming from pkg detail to prev viewed pkg in search list
+                            saveViewedPackage={saveViewedPackage}
                           />
                         ))}
                       </div>
