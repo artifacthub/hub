@@ -128,6 +128,12 @@ const SearchView = (props: Props) => {
     setViewedPackage(id);
   };
 
+  const cleanPrevSearch = () => {
+    setViewedPackage(undefined);
+    setScrollPosition(0);
+    scrollToTop();
+  };
+
   const prepareSelectedFilters = (name: string, newFilters: string[], prevFilters: FiltersProp): FiltersProp => {
     let cleanFilters: FiltersProp = {};
     switch (name) {
@@ -169,6 +175,7 @@ const SearchView = (props: Props) => {
         ...searchChanges,
       }),
     });
+    cleanPrevSearch();
   };
 
   const onFiltersChange = (name: string, value: string, checked: boolean): void => {
@@ -245,6 +252,7 @@ const SearchView = (props: Props) => {
         sort: DEFAULT_SORT,
       }),
     });
+    cleanPrevSearch();
   };
 
   const onPageNumberChange = (pageNumber: number): void => {
@@ -262,8 +270,7 @@ const SearchView = (props: Props) => {
         pageNumber: 1,
       }),
     });
-    setScrollPosition(0);
-    scrollToTop();
+    cleanPrevSearch();
   };
 
   const onPaginationLimitChange = (newLimit: number): void => {
@@ -274,8 +281,7 @@ const SearchView = (props: Props) => {
         pageNumber: 1,
       }),
     });
-    setScrollPosition(0);
-    scrollToTop();
+    cleanPrevSearch();
     dispatch(updateLimit(newLimit));
   };
 
@@ -321,6 +327,11 @@ const SearchView = (props: Props) => {
         setApiError('An error occurred searching packages, please try again later.');
       } finally {
         setIsSearching(false);
+        if (history.action === 'POP' && !isUndefined(viewedPackage) && !isUndefined(scrollPosition)) {
+          setTimeout(() => {
+            scrollToTop(scrollPosition);
+          }, 200);
+        }
       }
     }
     fetchSearchResults();
