@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.11.1-5
-appVersion: 1.11.0
+version: 1.12.0
+appVersion: 1.12.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -38,59 +38,65 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Monthly views graph to stats page
+      description: Experimental support for Kyverno policies
     - kind: added
-      description: List top 10 most viewed packages in stats page
+      description: URL filter to repository search API endpoint
     - kind: added
-      description: Display vulnerabilities summary table per target
+      description: Allow specifying charts containers images platforms
     - kind: added
-      description: Process Tekton packages signatures
+      description: Package alternative name to improve search results
     - kind: added
-      description: Scan Tekton packages for security vulnerabilities
+      description: CNCF banners to homepage
     - kind: added
-      description: Display CNCF events banners in UI
+      description: Option to disable default backend for ingress
     - kind: added
-      description: Display warning when old fixable vulns are found
-    - kind: added
-      description: Some more frontend tests
+      description: Option to set security context from chart
     - kind: changed
-      description: Disable Trivy secret scanning
+      description: Refresh UI design
     - kind: changed
-      description: Accept lowercase readme.md files in Helm charts
+      description: OLM community operators install instructions
     - kind: changed
-      description: Bump Alpine to 3.16.3
+      description: Set auto generated digest in OLM operators pkgs
     - kind: changed
-      description: Bump Go to 1.19.3
+      description: Highlight current month and day in usage graphs
     - kind: changed
-      description: Bump Trivy to 0.34.0
+      description: Keep views tracked when a pkg or repo is removed
     - kind: changed
-      description: Bump OPM to 1.26.2
+      description: Hide security report in pkgs older than 1 year
+    - kind: changed
+      description: Use credentials when listing repository tags
+    - kind: changed
+      description: Strip markdown from changes entries
+    - kind: changed
+      description: Update container images repositories document
+    - kind: changed
+      description: Adjust packages text search doc weights
+    - kind: changed
+      description: Bump Alpine to 3.17.1
+    - kind: changed
+      description: Bump Go to 1.19.5
+    - kind: changed
+      description: Bump Trivy to 0.36.1
     - kind: changed
       description: Upgrade backend and frontend dependencies
     - kind: fixed
-      description: Issue with loading animations
+      description: Issue setting default channel in OLM operators
     - kind: fixed
-      description: Issue editing container image repository tags
+      description: Include targets with no vulns in security report
     - kind: fixed
-      description: Issue processing container image package
-    - kind: fixed
-      description: Issue displaying mutation info in KW policies
-    - kind: fixed
-      description: Issue with emojis in readme file
-    - kind: fixed
-      description: Sample queries links
+      description: Scroll issue in search page
     - kind: fixed
       description: Some other minor bugs and improvements
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.11.0
+      image: artifacthub/db-migrator:v1.12.0
     - name: hub
-      image: artifacthub/hub:v1.11.0
+      image: artifacthub/hub:v1.12.0
     - name: tracker
-      image: artifacthub/tracker:v1.11.0
+      image: artifacthub/tracker:v1.12.0
     - name: scanner
-      image: artifacthub/scanner:v1.11.0
+      image: artifacthub/scanner:v1.12.0
     - name: trivy
       image: aquasec/trivy:0.36.1
   artifacthub.io/links: |
