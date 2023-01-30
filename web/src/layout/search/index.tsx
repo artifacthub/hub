@@ -82,8 +82,16 @@ const SearchView = (props: Props) => {
   const [offset, setOffset] = useState<number>(calculateOffset());
 
   const getFilterName = (key: string, label: string): FilterLabel | null => {
-    const correctKey = ['user', 'org'].includes(key) ? 'publisher' : key;
-    if (searchResults.facets) {
+    let correctKey = key;
+    if (['user', 'org'].includes(key)) {
+      correctKey = 'publisher';
+    } else if (key === 'repo') {
+      correctKey = 'repository';
+    }
+    // Org, user and repo are not included in facets
+    if (['publisher', 'repo'].includes(correctKey)) {
+      return { key: correctKey, name: label };
+    } else if (searchResults.facets) {
       const selectedKey = searchResults.facets.find((fac: Facets) => fac.filterKey === correctKey);
       if (selectedKey) {
         const selectedOpt = selectedKey.options.find((opt: FacetOption) => opt.id.toString() === label);
@@ -167,7 +175,7 @@ const SearchView = (props: Props) => {
   };
 
   const updateCurrentPage = (searchChanges: any) => {
-    cleanPrevSearch();
+    // cleanPrevSearch();
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
@@ -242,7 +250,6 @@ const SearchView = (props: Props) => {
   };
 
   const onResetFilters = (): void => {
-    cleanPrevSearch();
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
@@ -262,7 +269,6 @@ const SearchView = (props: Props) => {
   };
 
   const onSortChange = (sort: string): void => {
-    cleanPrevSearch();
     history.replace({
       pathname: '/packages/search',
       search: prepareQueryString({
@@ -274,7 +280,6 @@ const SearchView = (props: Props) => {
   };
 
   const onPaginationLimitChange = (newLimit: number): void => {
-    cleanPrevSearch();
     history.replace({
       pathname: '/packages/search',
       search: prepareQueryString({
@@ -327,10 +332,16 @@ const SearchView = (props: Props) => {
         setApiError('An error occurred searching packages, please try again later.');
       } finally {
         setIsSearching(false);
-        if (history.action === 'POP' && !isUndefined(viewedPackage) && !isUndefined(scrollPosition)) {
+        if (
+          (history.action === 'POP' || props.fromDetail) &&
+          !isUndefined(viewedPackage) &&
+          !isUndefined(scrollPosition)
+        ) {
           setTimeout(() => {
             scrollToTop(scrollPosition);
           }, 200);
+        } else {
+          cleanPrevSearch();
         }
       }
     }
@@ -351,10 +362,6 @@ const SearchView = (props: Props) => {
     props.sort,
   ]);
   /* eslint-enable react-hooks/exhaustive-deps */
-
-  useEffect(() => {
-    cleanPrevSearch();
-  }, [props.tsQueryWeb]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const activeFilters =
     props.deprecated ||

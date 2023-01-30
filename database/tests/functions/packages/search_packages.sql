@@ -342,38 +342,6 @@ select results_eq(
                         }]
                     },
                     {
-                        "title": "Publisher",
-                        "filter_key": "publisher",
-                        "options": [{
-                            "filter_key": "org",
-                            "id": "org1",
-                            "name": "Organization 1",
-                            "total": 2
-                        }, {
-                            "filter_key": "user",
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "Repository",
-                        "filter_key": "repo",
-                        "options": [{
-                            "id": "repo1",
-                            "name": "Repo 1",
-                            "total": 1
-                        }, {
-                            "id": "repo2",
-                            "name": "Repo 2",
-                            "total": 1
-                        }, {
-                            "id": "repo3",
-                            "name": "Repo 3",
-                            "total": 1
-                        }]
-                    },
-                    {
                         "title": "License",
                         "filter_key": "license",
                         "options": [{
@@ -816,34 +784,6 @@ select results_eq(
                         }]
                     },
                     {
-                        "title": "Publisher",
-                        "filter_key": "publisher",
-                        "options": [{
-                            "filter_key": "org",
-                            "id": "org1",
-                            "name": "Organization 1",
-                            "total": 1
-                        }, {
-                            "filter_key": "user",
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "Repository",
-                        "filter_key": "repo",
-                        "options": [{
-                            "id": "repo1",
-                            "name": "Repo 1",
-                            "total": 1
-                        }, {
-                            "id": "repo2",
-                            "name": "Repo 2",
-                            "total": 1
-                        }]
-                    },
-                    {
                         "title": "License",
                         "filter_key": "license",
                         "options": [{
@@ -913,25 +853,6 @@ select results_eq(
                         "options": [{
                             "id": 0,
                             "name": "Helm charts",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "Publisher",
-                        "filter_key": "publisher",
-                        "options": [{
-                            "filter_key": "user",
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "Repository",
-                        "filter_key": "repo",
-                        "options": [{
-                            "id": "repo1",
-                            "name": "Repo 1",
                             "total": 1
                         }]
                     },
@@ -1080,34 +1001,6 @@ select results_eq(
                         }]
                     },
                     {
-                        "title": "Publisher",
-                        "filter_key": "publisher",
-                        "options": [{
-                            "filter_key": "org",
-                            "id": "org1",
-                            "name": "Organization 1",
-                            "total": 1
-                        }, {
-                            "filter_key": "user",
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "Repository",
-                        "filter_key": "repo",
-                        "options": [{
-                            "id": "repo2",
-                            "name": "Repo 2",
-                            "total": 1
-                        }, {
-                            "id": "repo1",
-                            "name": "Repo 1",
-                            "total": 1
-                        }]
-                    },
-                    {
                         "title": "License",
                         "filter_key": "license",
                         "options": [{
@@ -1154,25 +1047,6 @@ select results_eq(
                         "options": [{
                             "id": 0,
                             "name": "Helm charts",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "Publisher",
-                        "filter_key": "publisher",
-                        "options": [{
-                            "filter_key": "user",
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "Repository",
-                        "filter_key": "repo",
-                        "options": [{
-                            "id": "repo1",
-                            "name": "Repo 1",
                             "total": 1
                         }]
                     },
@@ -1226,25 +1100,6 @@ select results_eq(
                         }]
                     },
                     {
-                        "title": "Publisher",
-                        "filter_key": "publisher",
-                        "options": [{
-                            "filter_key": "user",
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "Repository",
-                        "filter_key": "repo",
-                        "options": [{
-                            "id": "repo1",
-                            "name": "Repo 1",
-                            "total": 1
-                        }]
-                    },
-                    {
                         "title": "License",
                         "filter_key": "license",
                         "options": [{
@@ -1290,25 +1145,6 @@ select results_eq(
                         "options": [{
                             "id": 0,
                             "name": "Helm charts",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "Publisher",
-                        "filter_key": "publisher",
-                        "options": [{
-                            "filter_key": "user",
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "Repository",
-                        "filter_key": "repo",
-                        "options": [{
-                            "id": "repo1",
-                            "name": "Repo 1",
                             "total": 1
                         }]
                     },
@@ -1855,34 +1691,6 @@ select results_eq(
                             "id": 0,
                             "name": "Helm charts",
                             "total": 2
-                        }]
-                    },
-                    {
-                        "title": "Publisher",
-                        "filter_key": "publisher",
-                        "options": [{
-                            "filter_key": "org",
-                            "id": "org1",
-                            "name": "Organization 1",
-                            "total": 1
-                        }, {
-                            "filter_key": "user",
-                            "id": "user1",
-                            "name": "user1",
-                            "total": 1
-                        }]
-                    },
-                    {
-                        "title": "Repository",
-                        "filter_key": "repo",
-                        "options": [{
-                            "id": "repo1",
-                            "name": "Repo 1",
-                            "total": 1
-                        }, {
-                            "id": "repo2",
-                            "name": "Repo 2",
-                            "total": 1
                         }]
                     },
                     {

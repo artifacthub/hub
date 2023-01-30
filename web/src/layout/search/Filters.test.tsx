@@ -6,30 +6,6 @@ import Filters from './Filters';
 
 const FacetsMock: Facets[] = [
   {
-    title: 'Publisher',
-    filterKey: 'publisher',
-    options: [
-      {
-        id: 'helmOrg',
-        name: 'Helm org',
-        filterKey: 'org',
-        total: 256,
-      },
-      {
-        id: 'falco',
-        name: 'Falco',
-        filterKey: 'org',
-        total: 22,
-      },
-      {
-        id: 'testUser',
-        name: 'testUser',
-        filterKey: 'user',
-        total: 1,
-      },
-    ],
-  },
-  {
     title: 'Kind',
     filterKey: 'kind',
     options: [
@@ -52,22 +28,6 @@ const FacetsMock: Facets[] = [
         id: 2,
         name: 'OPA policies',
         total: 1,
-      },
-    ],
-  },
-  {
-    title: 'Repository',
-    filterKey: 'repo',
-    options: [
-      {
-        id: 'stable',
-        name: 'Stable',
-        total: 203,
-      },
-      {
-        id: 'incubator',
-        name: 'Incubator',
-        total: 53,
       },
     ],
   },
@@ -298,7 +258,7 @@ describe('Filters', () => {
     it('renders component', () => {
       render(<Filters {...defaultProps} />);
 
-      expect(screen.getAllByRole('checkbox')).toHaveLength(30);
+      expect(screen.getAllByRole('checkbox')).toHaveLength(25);
       expect(screen.getByLabelText('Official')).toBeInTheDocument();
       expect(screen.getByLabelText('Verified publishers')).toBeInTheDocument();
       expect(screen.getByLabelText('Include deprecated')).toBeInTheDocument();
@@ -371,15 +331,13 @@ describe('Filters', () => {
       render(<Filters {...defaultProps} />);
 
       const titles = screen.getAllByTestId('smallTitle');
-      expect(titles).toHaveLength(7);
+      expect(titles).toHaveLength(5);
 
       expect(titles[0]).toHaveTextContent('Kind');
       expect(titles[1]).toHaveTextContent('Category');
-      expect(titles[2]).toHaveTextContent('Publisher');
-      expect(titles[3]).toHaveTextContent('Repository');
-      expect(titles[4]).toHaveTextContent('License');
-      expect(titles[5]).toHaveTextContent('Operator capabilities');
-      expect(titles[6]).toHaveTextContent('Others');
+      expect(titles[2]).toHaveTextContent('License');
+      expect(titles[3]).toHaveTextContent('Operator capabilities');
+      expect(titles[4]).toHaveTextContent('Others');
     });
 
     it('renders all kind options', () => {
