@@ -89,7 +89,7 @@ const SearchView = (props: Props) => {
       correctKey = 'repository';
     }
     // Org, user and repo are not included in facets
-    if (['publisher', 'repo'].includes(correctKey)) {
+    if (['publisher', 'repository'].includes(correctKey)) {
       return { key: correctKey, name: label };
     } else if (searchResults.facets) {
       const selectedKey = searchResults.facets.find((fac: Facets) => fac.filterKey === correctKey);
