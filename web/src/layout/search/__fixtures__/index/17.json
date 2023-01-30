@@ -99,66 +99,39 @@
   ],
   "facets": [
     {
-      "title": "Organization",
-      "filterKey": "org",
-      "options": [
-        {
-          "id": "helmOrg",
-          "name": "Helm org",
-          "total": 256
-        },
-        {
-          "id": "falco",
-          "name": "Falco",
-          "total": 22
-        }
-      ]
-    },
-    {
-      "title": "User",
-      "filterKey": "user",
-      "options": [
-        {
-          "id": "testUser",
-          "name": "testUser",
-          "total": 1
-        }
-      ]
-    },
-    {
       "title": "Kind",
       "filterKey": "kind",
       "options": [
         {
           "id": 0,
           "name": "Helm charts",
-          "total": 256
+          "total": 47
         },
         {
-          "id": 1,
-          "name": "Falco rules",
-          "total": 21
+          "id": 15,
+          "name": "Kyverno policies",
+          "total": 3
         },
         {
           "id": 2,
           "name": "OPA policies",
-          "total": 1
+          "total": 3
         }
       ]
     },
     {
-      "title": "Repository",
-      "filterKey": "repo",
+      "title": "License",
+      "filterKey": "license",
       "options": [
         {
-          "id": "stable",
-          "name": "Stable",
-          "total": 203
+          "id": "Apache-2.0",
+          "name": "Apache-2.0",
+          "total": 9
         },
         {
-          "id": "incubator",
-          "name": "Incubator",
-          "total": 53
+          "id": "MIT",
+          "name": "MIT",
+          "total": 3
         }
       ]
     }

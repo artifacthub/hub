@@ -7,24 +7,34 @@
       "options": [
         {
           "id": 0,
-          "name": "Chart",
-          "total": 7
+          "name": "Helm charts",
+          "total": 47
+        },
+        {
+          "id": 15,
+          "name": "Kyverno policies",
+          "total": 3
+        },
+        {
+          "id": 2,
+          "name": "OPA policies",
+          "total": 3
         }
       ]
     },
     {
-      "title": "Repository",
-      "filterKey": "repo",
+      "title": "License",
+      "filterKey": "license",
       "options": [
         {
-          "id": "stable",
-          "name": "Stable",
-          "total": 4
+          "id": "Apache-2.0",
+          "name": "Apache-2.0",
+          "total": 9
         },
         {
-          "id": "incubator",
-          "name": "Incubator",
-          "total": 2
+          "id": "MIT",
+          "name": "MIT",
+          "total": 3
         }
       ]
     }

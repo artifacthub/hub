@@ -41,22 +41,6 @@
           "total": 7
         }
       ]
-    },
-    {
-      "title": "Repository",
-      "filterKey": "repo",
-      "options": [
-        {
-          "id": "43898497-a9d0-41eb-9dc7-5c4de0cd0433",
-          "name": "Stable",
-          "total": 4
-        },
-        {
-          "id": "dd9337b4-300c-4b40-b4d4-78f47ede6fcf",
-          "name": "Incubator",
-          "total": 2
-        }
-      ]
     }
   ],
   "paginationTotalCount": "7"

@@ -6,7 +6,7 @@ import { ChangeEvent } from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { MdInfoOutline } from 'react-icons/md';
 
-import { FacetOption, Facets, Option } from '../../types';
+import { FacetOption, Facets } from '../../types';
 import { OPERATOR_CAPABILITIES } from '../../utils/data';
 import CheckBox from '../common/Checkbox';
 import ElementWithTooltip from '../common/ElementWithTooltip';
@@ -41,49 +41,6 @@ interface Props {
 const Filters = (props: Props) => {
   const getFacetsByFilterKey = (filterKey: string): Facets | undefined => {
     return find(props.facets, (facets: Facets) => filterKey === facets.filterKey);
-  };
-
-  const getPublishers = (): JSX.Element | null => {
-    let crElement = null;
-    const publisherList = getFacetsByFilterKey('publisher');
-    if (!isUndefined(publisherList) && publisherList.options.length > 0) {
-      const isChecked = (facetOptionId: string, filterKey: string) => {
-        return (props.activeFilters[filterKey] || []).includes(facetOptionId.toString());
-      };
-
-      const options = publisherList.options.map((facet: FacetOption) => ({
-        ...facet,
-        filterKey: facet.filterKey!,
-      }));
-
-      const publisherOptions = options.map((option: Option) => (
-        <CheckBox
-          key={`${option.filterKey}_${option.id.toString()}`}
-          name={option.filterKey}
-          device={props.device}
-          value={option.id.toString()}
-          labelClassName="mw-100 text-muted"
-          className={styles.checkbox}
-          legend={option.total}
-          label={option.name}
-          checked={isChecked(option.id.toString(), option.filterKey)}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            props.onChange(e.target.name, e.target.value, e.target.checked)
-          }
-        />
-      ));
-
-      crElement = (
-        <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
-          <SmallTitle text="Publisher" className="text-dark fw-bold" />
-          <div className="mt-3" role="group">
-            <ExpandableList visibleItems={5} items={publisherOptions} forceCollapseList={props.forceCollapseList} />
-          </div>
-        </div>
-      );
-    }
-
-    return crElement;
   };
 
   const getKindFacets = (): JSX.Element | null => {
@@ -170,49 +127,6 @@ const Filters = (props: Props) => {
     }
 
     return element;
-  };
-
-  const getRepositoryFacets = (): JSX.Element | null => {
-    let crElement = null;
-    const repo = getFacetsByFilterKey('repo');
-    if (!isUndefined(repo) && repo.options.length > 0 && repo.filterKey) {
-      const options = repo.options.map((facet: FacetOption) => ({
-        ...facet,
-        filterKey: repo.filterKey,
-      }));
-
-      const isChecked = (facetOptionId: string) => {
-        return (props.activeFilters.repo || []).includes(facetOptionId.toString());
-      };
-
-      const repoOptions = options.map((option: FacetOption) => (
-        <CheckBox
-          key={`repo_${option.id.toString()}`}
-          name={repo.filterKey!}
-          device={props.device}
-          value={option.id.toString()}
-          labelClassName="mw-100 text-muted"
-          className={styles.checkbox}
-          legend={option.total}
-          label={option.name}
-          checked={isChecked(option.id.toString())}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            props.onChange(e.target.name, e.target.value, e.target.checked)
-          }
-        />
-      ));
-
-      crElement = (
-        <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
-          <SmallTitle text={repo.title} className="text-dark fw-bold" id={`pkg-${repo.filterKey}-${props.device}`} />
-          <div className="mt-3" role="group" aria-labelledby={`pkg-${repo.filterKey}-${props.device}`}>
-            <ExpandableList visibleItems={5} items={repoOptions} forceCollapseList={props.forceCollapseList} />
-          </div>
-        </div>
-      );
-    }
-
-    return crElement;
   };
 
   const getLicenseFacets = (): JSX.Element | null => {
@@ -337,8 +251,6 @@ const Filters = (props: Props) => {
 
       {getKindFacets()}
       <TsQuery device={props.device} active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
-      {getPublishers()}
-      {getRepositoryFacets()}
       {getLicenseFacets()}
       {getCapabilitiesFacets()}
 

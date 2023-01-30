@@ -107,7 +107,7 @@ describe('Search index', () => {
 
       render(
         <Router>
-          <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
+          <SearchView {...defaultProps} filters={{ kind: ['0'] }} />
         </Router>
       );
 
@@ -117,7 +117,7 @@ describe('Search index', () => {
 
       expect(await screen.findByText(/(some filters applied)/i)).toBeInTheDocument();
 
-      expect(screen.getByRole('button', { name: 'Remove filter: Repository - Stable' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Remove filter: Kind - Helm charts' })).toBeInTheDocument();
     });
 
     it('renders error message when searchPackages call fails', async () => {
@@ -202,7 +202,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const opts = await screen.findAllByLabelText(/Chart/);
+      const opts = await screen.findAllByLabelText(/Helm charts/);
       await userEvent.click(opts[0]);
 
       await waitFor(() => {

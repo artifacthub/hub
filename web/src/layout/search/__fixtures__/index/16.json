@@ -99,27 +99,6 @@
   ],
   "facets": [
     {
-      "title": "Organization",
-      "filterKey": "org",
-      "options": [
-        {
-          "id": "helm",
-          "name": "Helm",
-          "total": 256
-        },
-        {
-          "id": "falco",
-          "name": "Falco",
-          "total": 22
-        }
-      ]
-    },
-    {
-      "title": "User",
-      "filterKey": "user",
-      "options": []
-    },
-    {
       "title": "Kind",
       "filterKey": "kind",
       "options": [
@@ -137,22 +116,6 @@
           "id": 2,
           "name": "OPA policies",
           "total": 1
-        }
-      ]
-    },
-    {
-      "title": "Repository",
-      "filterKey": "repo",
-      "options": [
-        {
-          "id": "stable",
-          "name": "Stable",
-          "total": 203
-        },
-        {
-          "id": "incubator",
-          "name": "Incubator",
-          "total": 53
         }
       ]
     }
