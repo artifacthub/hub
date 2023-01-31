@@ -1,7 +1,7 @@
 import isNull from 'lodash/isNull';
 import { useEffect, useState } from 'react';
 import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import API from '../../api';
 import useBreakpointDetect from '../../hooks/useBreakpointDetect';
@@ -38,6 +38,7 @@ interface Props {
 const HomeView = (props: Props) => {
   const point = useBreakpointDetect();
   const history = useHistory();
+  const location = useLocation();
   const sampleQueries = getSampleQueries();
   const [isLoadingStats, setIsLoadingStats] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
@@ -108,7 +109,7 @@ const HomeView = (props: Props) => {
             isSearching={props.isSearching}
             openTips={openTips}
             setOpenTips={setOpenTips}
-            autoFocus={true}
+            autoFocus={location.pathname === '/' && location.search === ''}
           />
           <SearchTipsModal size="big" openTips={openTips} setOpenTips={setOpenTips} />
           <SearchTip />

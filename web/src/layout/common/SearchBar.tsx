@@ -251,7 +251,7 @@ const SearchBar = (props: Props) => {
             onChange={onChange}
             onKeyDown={onKeyDown}
             disabled={props.isSearching}
-            autoFocus={props.autoFocus}
+            autoFocus={point && !['xs', 'sm'].includes(point) ? props.autoFocus : false} // Disable autofoucs for small devices
           />
 
           <div className="d-none" tabIndex={0}>
