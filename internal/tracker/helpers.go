@@ -117,6 +117,7 @@ func SetupSource(i *hub.TrackerSourceInput) hub.TrackerSource {
 		hub.Gatekeeper,
 		hub.KedaScaler,
 		hub.Keptn,
+		hub.KnativeClientPlugin,
 		hub.Kubewarden,
 		hub.Kyverno,
 		hub.OPA,

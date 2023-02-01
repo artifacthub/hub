@@ -80,6 +80,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.Kyverno,
     name: 'Kyverno policy',
   },
+  {
+    kind: RepositoryKind.KnativeClientPlugin,
+    name: 'Knative client plugin',
+  },
 ];
 
 const Wrapper = styled('span')`

@@ -137,6 +137,13 @@ describe('Image', () => {
     expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/placeholder_pkg_kyverno.png');
   });
 
+  it('renders Knative client plugin icon', () => {
+    render(<Image {...defaultProps} kind={RepositoryKind.KnativeClientPlugin} />);
+    const image = screen.getByAltText('alt image');
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/placeholder_pkg_knative.png');
+  });
+
   it('renders placeholder icon', () => {
     render(<Image {...defaultProps} placeholderIcon={<>icon</>} />);
     expect(screen.getByText('icon')).toBeInTheDocument();

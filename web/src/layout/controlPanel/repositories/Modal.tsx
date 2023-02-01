@@ -420,6 +420,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.KnativeClientPlugin:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/knative-client-plugins"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Knative client plugins
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -443,6 +454,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.Kubewarden:
               case RepositoryKind.Gatekeeper:
               case RepositoryKind.Kyverno:
+              case RepositoryKind.KnativeClientPlugin:
                 return (
                   <>
                     <p
@@ -830,6 +842,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Kubewarden,
               RepositoryKind.Gatekeeper,
               RepositoryKind.Kyverno,
+              RepositoryKind.KnativeClientPlugin,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -970,6 +983,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Kubewarden,
               RepositoryKind.Gatekeeper,
               RepositoryKind.Kyverno,
+              RepositoryKind.KnativeClientPlugin,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

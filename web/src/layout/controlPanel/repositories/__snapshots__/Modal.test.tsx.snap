@@ -100,6 +100,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Keptn integrations
                     </option>
                     <option
+                      value="16"
+                    >
+                      Knative client plugins
+                    </option>
+                    <option
                       value="5"
                     >
                       Krew kubectl plugins

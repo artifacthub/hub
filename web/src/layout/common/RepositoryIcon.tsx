@@ -73,6 +73,10 @@ const ICONS = {
     default: '/static/media/kyverno.svg',
     white: '/static/media/kyverno-light.svg',
   },
+  [RepositoryKind.KnativeClientPlugin]: {
+    default: '/static/media/knative.svg',
+    white: '/static/media/knative-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

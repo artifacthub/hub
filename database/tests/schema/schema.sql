@@ -523,7 +523,8 @@ select results_eq(
         (12, 'Containers images'),
         (13, 'Kubewarden policies'),
         (14, 'Gatekeeper policies'),
-        (15, 'Kyverno policies')
+        (15, 'Kyverno policies'),
+        (16, 'Knative client plugins')
     $$,
     'Repository kinds should exist'
 );

@@ -14,6 +14,7 @@ cat docs/www/headers/helm_charts_repositories docs/helm_charts_repositories.md >
 cat docs/www/headers/helm_plugins_repositories docs/helm_plugins_repositories.md > docs/www/content/topics/repositories/helm-plugins.md
 cat docs/www/headers/keda_scalers_repositories docs/keda_scalers_repositories.md > docs/www/content/topics/repositories/keda-scalers.md
 cat docs/www/headers/keptn_integrations_repositories docs/keptn_integrations_repositories.md > docs/www/content/topics/repositories/keptn-integrations.md
+cat docs/www/headers/knative_client_plugins_repositories docs/knative_client_plugins_repositories.md > docs/www/content/topics/repositories/knative-client-plugins.md
 cat docs/www/headers/krew_kubectl_plugins_repositories docs/krew_kubectl_plugins_repositories.md > docs/www/content/topics/repositories/krew-kubectl-plugins.md
 cat docs/www/headers/kubewarden_policies_repositories docs/kubewarden_policies_repositories.md > docs/www/content/topics/repositories/kubewarden-policies.md
 cat docs/www/headers/kyverno_policies_repositories docs/kyverno_policies_repositories.md > docs/www/content/topics/repositories/kyverno-policies.md

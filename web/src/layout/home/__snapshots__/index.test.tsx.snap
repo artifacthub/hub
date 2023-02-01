@@ -332,7 +332,7 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-3 px-xs-0"
         >
-          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies and Kyverno policies.
+          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies and Knative client plugins.
           <div
             class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
           >
@@ -683,6 +683,32 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <small>
                     Kyverno policies
+                  </small>
+                </div>
+              </div>
+            </a>
+            <a
+              aria-label="Open Knative client repository"
+              class="link col iconLink"
+              href="https://github.com/knative/client"
+              rel="noopener noreferrer"
+              role="button"
+              tabindex="-1"
+              target="_blank"
+            >
+              <div
+                class="d-flex flex-column justify-content-between align-items-center h-100"
+              >
+                <img
+                  alt="Icon"
+                  class="aboutIcon"
+                  src="/static/media/knative-light.svg"
+                />
+                <div
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
+                >
+                  <small>
+                    Knative client plugins
                   </small>
                 </div>
               </div>

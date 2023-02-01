@@ -34,6 +34,8 @@ const getRepoKind = (repoName: string): RepositoryKind | null => {
       return RepositoryKind.Gatekeeper;
     case 'kyverno':
       return RepositoryKind.Kyverno;
+    case 'knative-client-plugin':
+      return RepositoryKind.KnativeClientPlugin;
     default:
       return null;
   }
@@ -73,6 +75,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'gatekeeper';
     case RepositoryKind.Kyverno:
       return 'kyverno';
+    case RepositoryKind.KnativeClientPlugin:
+      return 'knative-client-plugin';
     default:
       return null;
   }
