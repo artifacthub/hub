@@ -9,6 +9,7 @@ import { ImBooks } from 'react-icons/im';
 import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
+import getMetaTag from '../../utils/getMetaTag';
 import ExternalLink from '../common/ExternalLink';
 import Image from '../common/Image';
 import Sidebar from '../common/Sidebar';
@@ -21,6 +22,8 @@ interface Props {
   setOpenLogIn: Dispatch<SetStateAction<boolean>>;
   privateRoute?: boolean;
 }
+
+const allowUserSignUp: boolean = getMetaTag('allowUserSignUp', true);
 
 const MobileSettings = (props: Props) => {
   const { ctx } = useContext(AppCtx);
@@ -184,19 +187,25 @@ const MobileSettings = (props: Props) => {
                       </div>
                     </button>
 
-                    <button
-                      className="dropdown-item my-2"
-                      onClick={() => {
-                        setOpenSideBarStatus(false);
-                        props.setOpenSignUp(true);
-                      }}
-                      aria-label="Open sign up modal"
-                    >
-                      <div className="d-flex align-items-center">
-                        <FaEdit className="me-2" />
-                        <div>Sign up</div>
-                      </div>
-                    </button>
+                    {allowUserSignUp ? (
+                      <>
+                        <button
+                          className="dropdown-item my-2"
+                          onClick={() => {
+                            setOpenSideBarStatus(false);
+                            props.setOpenSignUp(true);
+                          }}
+                          aria-label="Open sign up modal"
+                        >
+                          <div className="d-flex align-items-center">
+                            <FaEdit className="me-2" />
+                            <div>Sign up</div>
+                          </div>
+                        </button>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </>
                 )}
               </>

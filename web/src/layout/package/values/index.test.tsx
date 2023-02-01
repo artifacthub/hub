@@ -105,6 +105,7 @@ hub:
     resources: {}
   server:
     allowPrivateRepositories: false
+    allowUserSignUp: true
     cacheDir: ""
     configDir: "/home/hub/.cfg"
     baseURL: ""
