@@ -170,6 +170,8 @@ hub:
   server:
     # Allow adding private repositories to the Hub
     allowPrivateRepositories: false
+    # Allow new Users to Sign Up
+    allowUserSignUp: true
     # Cache directory path. If set, the cache directory for the Helm client will be explicitly set (otherwise
     # defaults to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir)
     cacheDir: ""

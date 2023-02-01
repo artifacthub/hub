@@ -419,6 +419,11 @@
                             "type": "boolean",
                             "default": false
                         },
+                        "allowUserSignUp": {
+                            "title": "Allow new Users to Sign Up",
+                            "type": "boolean",
+                            "default": true
+                        },
                         "bannersURL": {
                             "title": "Banners configuration file url",
                             "type": "string",
