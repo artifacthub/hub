@@ -59,14 +59,14 @@
     "@types/semver": "^7.3.13",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-simple-import-sort": "^9.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-mock": "^29.4.1",
     "prettier": "^2.8.3",
     "react-scripts": "^5.0.1",
-    "sass": "^1.57.1",
+    "sass": "^1.58.0",
     "shx": "^0.3.4",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   },
   "resolutions": {
     "autoprefixer": "10.4.5",
