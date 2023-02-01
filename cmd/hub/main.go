@@ -57,6 +57,7 @@ func main() {
 	}
 	hc := util.SetupHTTPClient(cfg.GetBool("restrictedHTTPClient"), util.HTTPClientDefaultTimeout)
 	vt := pkg.NewViewsTracker(db)
+	cfg.SetDefault("server.allowUserSignUp", true)
 
 	// Setup and launch http server
 	ctx, stop := context.WithCancel(context.Background())

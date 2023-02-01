@@ -575,6 +575,13 @@ func (h *Handlers) RegisterPasswordResetCode(w http.ResponseWriter, r *http.Requ
 
 // RegisterUser is an http handler used to register a user in the hub database.
 func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
+	if h.cfg.GetBool("server.allowUserSignUp") {
+		h.logger.Error().Msg("New users sign up is disabled")
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusForbidden)
+		return
+	}
+
 	u := &hub.User{}
 	err := json.NewDecoder(r.Body).Decode(&u)
 	if err != nil {
