@@ -11,6 +11,7 @@ The following repositories kinds are supported at the moment:
 - [Helm plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/helm_plugins_repositories.md)
 - [KEDA scalers repositories](https://github.com/artifacthub/hub/blob/master/docs/keda_scalers_repositories.md)
 - [Keptn integrations repositories](https://github.com/artifacthub/hub/blob/master/docs/keptn_integrations_repositories.md)
+- [Knative client plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/knative_client_plugins_repositories.md)
 - [Krew kubectl plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/krew_kubectl_plugins_repositories.md)
 - [Kubewarden policies repositories](https://github.com/artifacthub/hub/blob/master/docs/kubewarden_policies_repositories.md)
 - [Kyverno policies repositories](https://github.com/artifacthub/hub/blob/master/docs/kyverno_policies_repositories.md)

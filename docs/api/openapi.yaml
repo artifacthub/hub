@@ -1296,6 +1296,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/knative-client-plugin/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getKnativeClientPluginIntegrationsDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KnativeClientPluginsPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/krew/{repoName}/{packageName}":
     get:
       tags:
@@ -1666,6 +1689,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/KeptnIntegrationsPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/knative-client-plugin/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getKnativeClientPluginsVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KnativeClientPluginsPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -3594,6 +3641,8 @@ components:
                 keptn/kind:
                   type: string
                   example: "service,sli-provider"
+    KnativeClientPluginsPackage:
+      $ref: "#/components/schemas/Package"
     KrewPluginsPackage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -4236,6 +4285,13 @@ components:
         - 7
         - 8
         - 9
+        - 10
+        - 11
+        - 12
+        - 13
+        - 14
+        - 15
+        - 16
       description: |
         Repository kind:
           * `0` - Helm charts
@@ -4254,6 +4310,7 @@ components:
           * `13` - Kubewarden policies
           * `14` - Gatekeeper policies
           * `15` - Kyverno policies
+          * `16` - Knative client plugins
     RepositoryKindParam:
       type: string
       enum:
@@ -4273,6 +4330,7 @@ components:
         - kubewarden
         - gatekeeper
         - kyverno
+        - knative-client-plugin
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4291,6 +4349,7 @@ components:
         * `kubewarden` - Kubewarden policies
         * `gatekeeper` - Gatekeeper policies
         * `kyverno` - Kyverno policies
+        * `knative-client-plugin` - Knative client plugins
     RepositorySummary:
       type: object
       required:
@@ -4789,6 +4848,7 @@ components:
           * `13` - Kubewarden policies
           * `14` - Gatekeeper policies
           * `15` - Kyverno policies
+          * `15` - Knative client plugins
     PackageNameParam:
       in: path
       name: packageName

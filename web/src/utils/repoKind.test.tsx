@@ -67,6 +67,10 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('kyverno')).toBe(RepositoryKind.Kyverno);
     });
 
+    it('knative-client-plugin', () => {
+      expect(methods.getRepoKind('knative-client-plugin')).toBe(RepositoryKind.KnativeClientPlugin);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -135,6 +139,10 @@ describe('repoKind', () => {
 
     it('kyverno kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.Kyverno)).toBe('kyverno');
+    });
+
+    it('knative-client-plugin kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.KnativeClientPlugin)).toBe('knative-client-plugin');
     });
 
     it('unknown kind', () => {

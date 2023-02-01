@@ -94,6 +94,9 @@ const (
 
 	// Kyverno represents a repository with Kyverno policies.
 	Kyverno RepositoryKind = 15
+
+	// KnativeClientPlugin represents a repository with Knative client plugins.
+	KnativeClientPlugin RepositoryKind = 16
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -115,6 +118,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "keda-scaler"
 	case Keptn:
 		return "keptn"
+	case KnativeClientPlugin:
+		return "knative-client-plugin"
 	case Krew:
 		return "krew"
 	case Kubewarden:
@@ -156,6 +161,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return KedaScaler, nil
 	case "keptn":
 		return Keptn, nil
+	case "knative-client-plugin":
+		return KnativeClientPlugin, nil
 	case "krew":
 		return Krew, nil
 	case "kubewarden":

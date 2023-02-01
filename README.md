@@ -22,6 +22,7 @@ At the moment, the following artifacts kinds are supported *(with plans to suppo
 - [Helm plugins](https://helm.sh/docs/topics/plugins/)
 - [KEDA scalers](https://keda.sh/)
 - [Keptn integrations](https://keptn.sh)
+- [Knative client plugins](https://knative.dev)
 - [Kubectl plugins (Krew)](https://krew.sigs.k8s.io/)
 - [Kubewarden policies](https://www.kubewarden.io)
 - [Kyverno policies](https://kyverno.io)

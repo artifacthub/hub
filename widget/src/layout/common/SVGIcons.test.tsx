@@ -103,6 +103,11 @@ describe('SVGIcons', () => {
     expect(screen.getByTitle('kyverno'));
   });
 
+  it('renders knative icon', () => {
+    render(<SVGIcons name="knative" />);
+    expect(screen.getByTitle('knative'));
+  });
+
   it('does not render when name is not in the list', () => {
     render(<SVGIcons name="not-listed" />);
     expect(screen.getByTestId('iconWrapper')).toBeEmptyDOMElement();

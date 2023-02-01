@@ -78,6 +78,10 @@ jest.mock('../../utils/getSampleQueries', () => () => {
       name: 'Kyverno policies',
       querystring: 'kind=15',
     },
+    {
+      name: 'Knative client plugings',
+      querystring: 'kind=16',
+    },
   ];
 });
 
