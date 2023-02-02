@@ -1092,6 +1092,50 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 }
 
 func TestRegisterUser(t *testing.T) {
+	t.Run("sign up is disabled", func(t *testing.T) {
+		userJSON := `{
+			"alias": "alias",
+			"first_name": "first_name",
+			"last_name": "last_name",
+			"email": "email",
+			"password": "password"
+		}`
+
+		testCases := []struct {
+			description        string
+			user               string
+			expectedStatusCode int
+		}{
+			{
+				"signup disabled (empty user)",
+				"",
+				http.StatusForbidden,
+			},
+			{
+				"signup disabled (valid user)",
+				userJSON,
+				http.StatusForbidden,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.user))
+
+				hw := newHandlersWrapper()
+				hw.cfg.Set("server.allowUserSignUp", false)
+
+				hw.h.RegisterUser(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+			})
+		}
+	})
+
 	t.Run("no user provided", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
@@ -1808,6 +1852,8 @@ func newHandlersWrapper() *handlersWrapper {
 	cfg := viper.New()
 	cfg.Set("server.baseURL", "baseURL")
 	cfg.Set("server.oauth.github", map[string]string{})
+	cfg.Set("server.allowUserSignUp", true)
+
 	um := &user.ManagerMock{}
 	am := &apikey.ManagerMock{}
 	h, _ := NewHandlers(context.Background(), um, am, cfg)
