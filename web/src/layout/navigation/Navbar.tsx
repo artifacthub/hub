@@ -114,24 +114,20 @@ const Navbar = (props: Props) => {
                 <>
                   {isNull(ctx.user) ? (
                     <>
-                      {allowUserSignUp ? (
-                        <>
-                          <li className="nav-item position-relative ms-4">
-                            <button
-                              type="button"
-                              className={classnames(
-                                'btn navbarBtn ps-0 pe-0 fw-bold text-uppercase text-white position-relative text-nowrap',
-                                styles.button
-                              )}
-                              onClick={() => setOpenSignUp(true)}
-                              aria-label="Open sign up modal"
-                            >
-                              Sign up
-                            </button>
-                          </li>
-                        </>
-                      ) : (
-                        <></>
+                      {allowUserSignUp && (
+                        <li className="nav-item position-relative ms-4">
+                          <button
+                            type="button"
+                            className={classnames(
+                              'btn navbarBtn ps-0 pe-0 fw-bold text-uppercase text-white position-relative text-nowrap',
+                              styles.button
+                            )}
+                            onClick={() => setOpenSignUp(true)}
+                            aria-label="Open sign up modal"
+                          >
+                            Sign up
+                          </button>
+                        </li>
                       )}
 
                       <li className="nav-item ms-4 position-relative">

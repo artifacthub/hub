@@ -23,11 +23,11 @@ interface Props {
   privateRoute?: boolean;
 }
 
-const allowUserSignUp: boolean = getMetaTag('allowUserSignUp', true);
-
 const MobileSettings = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const [openSideBarStatus, setOpenSideBarStatus] = useState(false);
+
+  const allowUserSignUp: boolean = getMetaTag('allowUserSignUp', true);
 
   const getSidebarIcon = (): JSX.Element => {
     if (ctx.user) {
@@ -187,24 +187,20 @@ const MobileSettings = (props: Props) => {
                       </div>
                     </button>
 
-                    {allowUserSignUp ? (
-                      <>
-                        <button
-                          className="dropdown-item my-2"
-                          onClick={() => {
-                            setOpenSideBarStatus(false);
-                            props.setOpenSignUp(true);
-                          }}
-                          aria-label="Open sign up modal"
-                        >
-                          <div className="d-flex align-items-center">
-                            <FaEdit className="me-2" />
-                            <div>Sign up</div>
-                          </div>
-                        </button>
-                      </>
-                    ) : (
-                      <></>
+                    {allowUserSignUp && (
+                      <button
+                        className="dropdown-item my-2"
+                        onClick={() => {
+                          setOpenSideBarStatus(false);
+                          props.setOpenSignUp(true);
+                        }}
+                        aria-label="Open sign up modal"
+                      >
+                        <div className="d-flex align-items-center">
+                          <FaEdit className="me-2" />
+                          <div>Sign up</div>
+                        </div>
+                      </button>
                     )}
                   </>
                 )}
