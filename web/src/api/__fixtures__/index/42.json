@@ -185,6 +185,7 @@
           "type": "object",
           "required": [
             "allowPrivateRepositories",
+            "allowUserSignUp",
             "baseURL",
             "basicAuth",
             "configDir",
