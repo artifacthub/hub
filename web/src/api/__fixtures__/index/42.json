@@ -418,7 +418,7 @@
               "type": "boolean",
               "title": "Allow new Users to Sign Up",
               "default": true
-            },
+            }
           }
         },
         "ingress": {
