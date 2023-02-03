@@ -62,6 +62,20 @@ const mockUndefinedUser = {
   },
 };
 
+Object.defineProperty(document, 'querySelector', {
+  value: (selector: any) => {
+    switch (selector) {
+      case `meta[name='artifacthub:allowUserSignUp']`:
+        return {
+          getAttribute: () => 'true',
+        };
+      default:
+        return false;
+    }
+  },
+  writable: true,
+});
+
 describe('Navbar', () => {
   afterEach(() => {
     jest.resetAllMocks();

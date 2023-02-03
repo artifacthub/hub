@@ -185,6 +185,7 @@
           "type": "object",
           "required": [
             "allowPrivateRepositories",
+            "allowUserSignUp",
             "baseURL",
             "basicAuth",
             "configDir",
@@ -412,6 +413,11 @@
               "type": "boolean",
               "title": "Allow adding private repositories to the Hub",
               "default": false
+            },
+            "allowUserSignUp": {
+              "type": "boolean",
+              "title": "Allow new Users to Sign Up",
+              "default": true
             }
           }
         },

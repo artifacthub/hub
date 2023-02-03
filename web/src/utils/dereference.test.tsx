@@ -1350,6 +1350,11 @@ const tests: Test[] = [
                   title: 'Allow adding private repositories to the Hub',
                   default: false,
                 },
+                allowUserSignUp: {
+                  type: 'boolean',
+                  title: 'Allow new Users to Sign Up',
+                  default: true,
+                },
               },
             },
             ingress: {
@@ -2005,6 +2010,11 @@ const tests: Test[] = [
                   type: 'boolean',
                   title: 'Allow adding private repositories to the Hub',
                   default: false,
+                },
+                allowUserSignUp: {
+                  type: 'boolean',
+                  title: 'Allow new Users to Sign Up',
+                  default: true,
                 },
               },
             },

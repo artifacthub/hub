@@ -56,6 +56,7 @@ const defaultProps = {
         },
         server: {
           allowPrivateRepositories: false,
+          allowUserSignUp: true,
           baseURL: '',
           basicAuth: {
             enabled: false,

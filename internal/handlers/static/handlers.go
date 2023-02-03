@@ -145,6 +145,7 @@ func (h *Handlers) Index(w http.ResponseWriter, r *http.Request) {
 	}
 	data := map[string]interface{}{
 		"allowPrivateRepositories": h.cfg.GetBool("server.allowPrivateRepositories"),
+		"allowUserSignUp":          h.cfg.GetBool("server.allowUserSignUp"),
 		"appleTouchIcon192":        h.cfg.GetString("theme.images.appleTouchIcon192"),
 		"appleTouchIcon512":        h.cfg.GetString("theme.images.appleTouchIcon512"),
 		"bannersURL":               h.cfg.GetString("server.bannersURL"),
