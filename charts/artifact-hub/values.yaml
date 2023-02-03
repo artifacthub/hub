@@ -85,6 +85,8 @@ dbMigrator:
     image:
       # Database migrator image repository (without the tag)
       repository: artifacthub/db-migrator
+    # Limits the lifetime of the job after it has finished execution
+    ttlSecondsAfterFinished: null
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
