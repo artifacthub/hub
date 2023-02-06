@@ -1,12 +1,17 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
+{{- if .Release.IsInstall }}
+  name: {{ include "chart.resourceNamePrefix" . }}db-migrator-install
+{{- else }}
   name: {{ include "chart.resourceNamePrefix" . }}db-migrator-upgrade
   annotations:
     "helm.sh/hook": pre-upgrade
     "helm.sh/hook-weight": "0"
     "helm.sh/hook-delete-policy": before-hook-creation
+{{- end }}
 spec:
+  ttlSecondsAfterFinished: {{ .Values.dbMigrator.job.ttlSecondsAfterFinished }}
   template:
     spec:
     {{- with .Values.imagePullSecrets }}
