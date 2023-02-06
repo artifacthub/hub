@@ -1,6 +1,5 @@
 ---
 title: "Kyverno policies"
-weight: 12
 aliases: [
   "/kyverno_policies_repositories",
 ]

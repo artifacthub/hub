@@ -18,6 +18,7 @@ export enum RepositoryKind {
   Gatekeeper,
   Kyverno,
   KnativeClientPlugin,
+  Backstage,
 }
 
 export enum KeptnData {

@@ -1112,6 +1112,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/backstage/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getBackstagePluginsDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackstagePlugin"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/container/{repoName}/{packageName}":
     get:
       tags:
@@ -1497,6 +1520,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TektonTaskPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/backstage/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getBackstagePluginsVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackstagePlugin"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -3429,6 +3476,8 @@ components:
             name: user1
             total: 3
             filter_key: user
+    BackstagePlugin:
+      $ref: "#/components/schemas/Package"
     ContainerImage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -4311,6 +4360,7 @@ components:
           * `14` - Gatekeeper policies
           * `15` - Kyverno policies
           * `16` - Knative client plugins
+          * `17` - Backstage plugins
     RepositoryKindParam:
       type: string
       enum:
@@ -4331,6 +4381,7 @@ components:
         - gatekeeper
         - kyverno
         - knative-client-plugin
+        - backstage
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4350,6 +4401,7 @@ components:
         * `gatekeeper` - Gatekeeper policies
         * `kyverno` - Kyverno policies
         * `knative-client-plugin` - Knative client plugins
+        * `backstage` - Backstage plugins
     RepositorySummary:
       type: object
       required:
@@ -4848,7 +4900,8 @@ components:
           * `13` - Kubewarden policies
           * `14` - Gatekeeper policies
           * `15` - Kyverno policies
-          * `15` - Knative client plugins
+          * `16` - Knative client plugins
+          * `17` - Backstage plugins
     PackageNameParam:
       in: path
       name: packageName

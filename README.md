@@ -14,6 +14,7 @@ Discovering artifacts to use with CNCF projects can be difficult. If every CNCF 
 
 At the moment, the following artifacts kinds are supported *(with plans to support more projects to follow)*:
 
+- [Backstage plugins](https://backstage.io)
 - [Containers images](https://opencontainers.org)
 - [CoreDNS plugins](https://coredns.io/)
 - [Falco configurations](https://falco.org/)

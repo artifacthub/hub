@@ -108,6 +108,11 @@ describe('SVGIcons', () => {
     expect(screen.getByTitle('knative'));
   });
 
+  it('renders backstage icon', () => {
+    render(<SVGIcons name="backstage" />);
+    expect(screen.getByTitle('backstage'));
+  });
+
   it('does not render when name is not in the list', () => {
     render(<SVGIcons name="not-listed" />);
     expect(screen.getByTestId('iconWrapper')).toBeEmptyDOMElement();

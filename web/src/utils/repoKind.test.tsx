@@ -71,6 +71,10 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('knative-client-plugin')).toBe(RepositoryKind.KnativeClientPlugin);
     });
 
+    it('backstage', () => {
+      expect(methods.getRepoKind('backstage')).toBe(RepositoryKind.Backstage);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -143,6 +147,10 @@ describe('repoKind', () => {
 
     it('knative-client-plugin kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.KnativeClientPlugin)).toBe('knative-client-plugin');
+    });
+
+    it('backstage kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.Backstage)).toBe('backstage');
     });
 
     it('unknown kind', () => {

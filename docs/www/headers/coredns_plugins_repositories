@@ -1,6 +1,5 @@
 ---
 title: "CoreDNS plugins"
-weight: 2
 aliases: [
   "/coredns_plugins_repositories",
 ]

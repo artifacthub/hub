@@ -431,6 +431,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.Backstage:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/backstage-plugins"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Backstage plugins
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -455,6 +466,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.Gatekeeper:
               case RepositoryKind.Kyverno:
               case RepositoryKind.KnativeClientPlugin:
+              case RepositoryKind.Backstage:
                 return (
                   <>
                     <p
@@ -843,6 +855,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Gatekeeper,
               RepositoryKind.Kyverno,
               RepositoryKind.KnativeClientPlugin,
+              RepositoryKind.Backstage,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -984,6 +997,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Gatekeeper,
               RepositoryKind.Kyverno,
               RepositoryKind.KnativeClientPlugin,
+              RepositoryKind.Backstage,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

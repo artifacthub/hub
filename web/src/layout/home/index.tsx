@@ -235,7 +235,7 @@ const HomeView = (props: Props) => {
                 configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco
                 configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions,
                 kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations,
-                container images, Kubewarden policies, Kyverno policies and Knative client plugins.
+                container images, Kubewarden policies, Kyverno policies, Knative client and Backstage plugins.
                 <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                   <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`} label="Open Helm site">
                     <div className="d-flex flex-column justify-content-between align-items-center h-100">
@@ -341,7 +341,6 @@ const HomeView = (props: Props) => {
                   </ExternalLink>
                 </div>
                 <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
-                  <div className="col" />
                   <ExternalLink
                     href="https://opencontainers.org"
                     className={`col ${styles.iconLink}`}
@@ -394,8 +393,18 @@ const HomeView = (props: Props) => {
                       </div>
                     </div>
                   </ExternalLink>
-
-                  <div className="col" />
+                  <ExternalLink
+                    href="https://backstage.io/plugins"
+                    className={`col ${styles.iconLink}`}
+                    label="Open Backstage web"
+                  >
+                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                      <RepositoryIcon kind={RepositoryKind.Backstage} type="white" className={styles.aboutIcon} />
+                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                        <small>Backstage plugins</small>
+                      </div>
+                    </div>
+                  </ExternalLink>
                 </div>
                 Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to
                 share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a

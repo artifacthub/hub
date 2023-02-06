@@ -1,6 +1,5 @@
 ---
 title: "Tekton pipelines"
-weight: 15
 aliases: [
   "/tekton_pipelines_repositories",
 ]

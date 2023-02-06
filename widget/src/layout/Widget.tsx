@@ -83,6 +83,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'kyverno';
     case RepositoryKind.KnativeClientPlugin:
       return 'knative-client-plugin';
+    case RepositoryKind.Backstage:
+      return 'backstage';
     default:
       return null;
   }

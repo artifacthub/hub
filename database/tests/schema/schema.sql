@@ -524,7 +524,8 @@ select results_eq(
         (13, 'Kubewarden policies'),
         (14, 'Gatekeeper policies'),
         (15, 'Kyverno policies'),
-        (16, 'Knative client plugins')
+        (16, 'Knative client plugins'),
+        (17, 'Backstage plugins')
     $$,
     'Repository kinds should exist'
 );
