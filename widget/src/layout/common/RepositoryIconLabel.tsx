@@ -84,6 +84,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.KnativeClientPlugin,
     name: 'Knative client plugin',
   },
+  {
+    kind: RepositoryKind.Backstage,
+    name: 'Backstage plugin',
+  },
 ];
 
 const Wrapper = styled('span')`

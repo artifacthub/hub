@@ -97,11 +97,16 @@ const (
 
 	// KnativeClientPlugin represents a repository with Knative client plugins.
 	KnativeClientPlugin RepositoryKind = 16
+
+	// Backstage represents a repository with Backstage plugins.
+	Backstage RepositoryKind = 17
 )
 
 // GetKindName returns the name of the provided repository kind.
 func GetKindName(kind RepositoryKind) string {
 	switch kind {
+	case Backstage:
+		return "backstage"
 	case Container:
 		return "container"
 	case CoreDNS:
@@ -145,6 +150,8 @@ func GetKindName(kind RepositoryKind) string {
 // provided.
 func GetKindFromName(kind string) (RepositoryKind, error) {
 	switch kind {
+	case "backstage":
+		return Backstage, nil
 	case "container":
 		return Container, nil
 	case "coredns":

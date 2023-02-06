@@ -77,6 +77,10 @@ const ICONS = {
     default: '/static/media/knative.svg',
     white: '/static/media/knative-light.svg',
   },
+  [RepositoryKind.Backstage]: {
+    default: '/static/media/backstage.svg',
+    white: '/static/media/backstage-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

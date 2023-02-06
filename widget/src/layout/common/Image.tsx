@@ -63,6 +63,8 @@ const Image = (props: Props) => {
           return '/static/media/placeholder_pkg_kyverno.png';
         case RepositoryKind.KnativeClientPlugin:
           return '/static/media/placeholder_pkg_knative.png';
+        case RepositoryKind.Backstage:
+          return '/static/media/placeholder_pkg_backstage.png';
         default:
           return PLACEHOLDER_SRC;
       }

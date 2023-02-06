@@ -1,6 +1,5 @@
 ---
 title: "Krew kubectl plugins"
-weight: 10
 aliases: [
   "/krew_kubectl_plugins_repositories",
 ]

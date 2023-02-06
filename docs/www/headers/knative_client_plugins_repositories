@@ -1,6 +1,5 @@
 ---
 title: "Knative client plugins"
-weight: 9
 aliases: [
   "/knative_client_plugins_repositories",
 ]

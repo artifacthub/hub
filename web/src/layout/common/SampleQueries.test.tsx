@@ -82,6 +82,10 @@ jest.mock('../../utils/getSampleQueries', () => () => {
       name: 'Knative client plugings',
       querystring: 'kind=16',
     },
+    {
+      name: 'Backstage plugings',
+      querystring: 'kind=17',
+    },
   ];
 });
 

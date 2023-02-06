@@ -34,6 +34,7 @@
 
 .aboutIcon {
   width: 75px;
+  max-height: 75px;
 }
 
 .legend {
@@ -75,6 +76,7 @@
 
   .aboutIcon {
     width: 55px;
+    max-height: 55px;
   }
 
   .extraInfo,
@@ -99,6 +101,7 @@
 
   .aboutIcon {
     width: 35px;
+    max-height: 35px;
   }
 
   .logo {

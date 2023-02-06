@@ -1,6 +1,5 @@
 ---
 title: "Helm charts"
-weight: 5
 aliases: [
   "/helm_charts_repositories",
 ]
