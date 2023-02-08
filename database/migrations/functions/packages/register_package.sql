@@ -66,6 +66,7 @@ begin
         is_operator,
         channels,
         default_channel,
+        package_category_id,
         repository_id
     ) values (
         v_name,
@@ -75,6 +76,7 @@ begin
         (p_pkg->>'is_operator')::boolean,
         nullif(p_pkg->'channels', 'null'),
         nullif(p_pkg->>'default_channel', ''),
+        nullif((p_pkg->>'category')::int, 0),
         v_repository_id
     )
     on conflict (repository_id, name) do update
@@ -85,7 +87,8 @@ begin
         tsdoc = generate_package_tsdoc(v_name, v_alternative_name, v_display_name, v_description, v_keywords, v_ts_repository, v_ts_publisher),
         is_operator = excluded.is_operator,
         channels = excluded.channels,
-        default_channel = excluded.default_channel
+        default_channel = excluded.default_channel,
+        package_category_id = excluded.package_category_id
     where is_latest(
         v_repository_kind_id,
         v_version,

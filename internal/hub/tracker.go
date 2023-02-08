@@ -28,6 +28,7 @@ type TrackerServices struct {
 	Op                 OCIPuller
 	Is                 img.Store
 	Sc                 OCISignatureChecker
+	Pcc                PackageCategoryClassifier
 	SetupTrackerSource TrackerSourceLoader
 }
 

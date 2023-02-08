@@ -70,6 +70,7 @@ func main() {
 	}
 	ec := repo.NewErrorsCollector(rm, repo.Tracker)
 	op := oci.NewPuller(cfg)
+	pcc := tracker.NewPackageCategoryClassifierML(cfg.GetString("tracker.categoryModelPath"))
 	svc := &hub.TrackerServices{
 		Ctx:                ctx,
 		Cfg:                cfg,
@@ -82,6 +83,7 @@ func main() {
 		Op:                 op,
 		Is:                 is,
 		Sc:                 oci.NewSignatureChecker(cfg, op),
+		Pcc:                pcc,
 		SetupTrackerSource: tracker.SetupSource,
 	}
 

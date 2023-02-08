@@ -196,10 +196,12 @@ func TestTracker(t *testing.T) {
 		sw.ec.On("Init", r1.RepositoryID)
 		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+		p := source.ClonePackage(p1v1)
 		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
-			pkg.BuildKey(p1v1): p1v1,
+			pkg.BuildKey(p1v1): p,
 		}, nil)
-		sw.pm.On("Register", sw.svc.Ctx, p1v1).Return(tests.ErrFake)
+		sw.pcc.On("Predict", p).Return(hub.UnknownCategory)
+		sw.pm.On("Register", sw.svc.Ctx, p).Return(tests.ErrFake)
 		expectedErr := "error registering package pkg1 version 1.0.0: fake error for tests"
 		sw.ec.On("Append", r1.RepositoryID, expectedErr).Return()
 
@@ -287,10 +289,12 @@ func TestTracker(t *testing.T) {
 		sw.ec.On("Init", r1.RepositoryID)
 		sw.rm.On("GetMetadata", r1, "").Return(nil, fmt.Errorf("error: %w", repo.ErrMetadataNotFound))
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+		p := source.ClonePackage(p1v1)
 		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
-			pkg.BuildKey(p1v1): p1v1,
+			pkg.BuildKey(p): p,
 		}, nil)
-		sw.pm.On("Register", sw.svc.Ctx, p1v1).Return(nil)
+		sw.pcc.On("Predict", p).Return(hub.UnknownCategory)
+		sw.pm.On("Register", sw.svc.Ctx, p).Return(nil)
 
 		// Run test and check expectations
 		err := New(sw.svc, r1, zerolog.Nop()).Run()
@@ -311,10 +315,12 @@ func TestTracker(t *testing.T) {
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
 			pkg.BuildKey(p1v1): "new digest",
 		}, nil)
+		p := source.ClonePackage(p1v1)
 		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
-			pkg.BuildKey(p1v1): p1v1,
+			pkg.BuildKey(p): p,
 		}, nil)
-		sw.pm.On("Register", sw.svc.Ctx, p1v1).Return(nil)
+		sw.pcc.On("Predict", p).Return(hub.UnknownCategory)
+		sw.pm.On("Register", sw.svc.Ctx, p).Return(nil)
 
 		// Run test and check expectations
 		err := New(sw.svc, r1, zerolog.Nop()).Run()
@@ -331,12 +337,16 @@ func TestTracker(t *testing.T) {
 		sw.ec.On("Init", r1.RepositoryID)
 		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+		p1 := source.ClonePackage(p1v1)
+		p2 := source.ClonePackage(p2v1)
 		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
-			pkg.BuildKey(p1v1): p1v1,
-			pkg.BuildKey(p2v1): p2v1,
+			pkg.BuildKey(p1): p1,
+			pkg.BuildKey(p2): p2,
 		}, nil)
-		sw.pm.On("Register", sw.svc.Ctx, p1v1).Return(nil)
-		sw.pm.On("Register", sw.svc.Ctx, p2v1).Return(nil)
+		sw.pcc.On("Predict", p1).Return(hub.UnknownCategory)
+		sw.pcc.On("Predict", p2).Return(hub.UnknownCategory)
+		sw.pm.On("Register", sw.svc.Ctx, p1).Return(nil)
+		sw.pm.On("Register", sw.svc.Ctx, p2).Return(nil)
 
 		// Run test and check expectations
 		err := New(sw.svc, r1, zerolog.Nop()).Run()
@@ -492,6 +502,7 @@ type servicesWrapper struct {
 	ec  *repo.ErrorsCollectorMock
 	hc  *tests.HTTPClientMock
 	is  *img.StoreMock
+	pcc *PackageCategoryClassifierMock
 	src *source.Mock
 	svc *hub.TrackerServices
 }
@@ -505,6 +516,7 @@ func newServicesWrapper() *servicesWrapper {
 	ec := &repo.ErrorsCollectorMock{}
 	hc := &tests.HTTPClientMock{}
 	is := &img.StoreMock{}
+	pcc := &PackageCategoryClassifierMock{}
 	src := &source.Mock{}
 
 	// Setup tracker services using mocks
@@ -518,6 +530,7 @@ func newServicesWrapper() *servicesWrapper {
 		Ec:  ec,
 		Hc:  hc,
 		Is:  is,
+		Pcc: pcc,
 		SetupTrackerSource: func(i *hub.TrackerSourceInput) hub.TrackerSource {
 			return src
 		},
@@ -532,6 +545,7 @@ func newServicesWrapper() *servicesWrapper {
 		ec:  ec,
 		hc:  hc,
 		is:  is,
+		pcc: pcc,
 		src: src,
 		svc: svc,
 	}
@@ -545,5 +559,6 @@ func (sw *servicesWrapper) assertExpectations(t *testing.T) {
 	sw.ec.AssertExpectations(t)
 	sw.hc.AssertExpectations(t)
 	sw.is.AssertExpectations(t)
+	sw.pcc.AssertExpectations(t)
 	sw.src.AssertExpectations(t)
 }

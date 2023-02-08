@@ -119,7 +119,6 @@ database;keyvalue,in-memory,database,serverless,raft
 database;kubernetes-dbaas,operator,database-as-a-service,dbaas,stored procedures,kubernetes operator,go,dbms,database management systems,stored procedures,automation,provisioning,databases
 database;kubernetes,database,opendj,ldap
 database;kubernetes,helm,startx,cluster-chart,cluster,infrastructure,couchbase,big data,nosql,memcached,couchdb
-database;kubernetes,kubectl,plugin
 database;ldap,openldap,iam-stack,high availability
 database;low-code,database,cluster
 database;mariadb-operator,mariadb,kubernetes,database,database
@@ -574,7 +573,6 @@ monitoring-logging;kubernetes,cloudwatch,monitoring
 monitoring-logging;kubernetes,cncf,networking,cni,security,open vswitch,ovs,antrea,observability,flow visibility
 monitoring-logging;kubernetes,cncf,networking,cni,security,open vswitch,ovs,antrea,observability,flow visibility,flow aggregator
 monitoring-logging;kubernetes,helm,startx,cluster-chart,cluster,infrastructure,logging,efk,elastic,fluend,kibana
-monitoring-logging;kubernetes,kubectl,plugin
 monitoring-logging;kubernetes,metrics-server,metrics
 monitoring-logging;kubernetes,monitoring-mixin,portefaix
 monitoring-logging;kubernetes,monitoring,slack
@@ -866,7 +864,6 @@ networking;kubernetes,helm,startx,cluster-chart,cluster,infrastructure,istio,kia
 networking;kubernetes,helm,startx,cluster-chart,cluster,infrastructure,openshift,router,haproxy
 networking;kubernetes,ingress,nginx,controller
 networking;kubernetes,istio,operator,service,mesh
-networking;kubernetes,kubectl,plugin
 networking;kubernetes,network,calico,calico-node,bgp,plugin,cni,node,felix
 networking;kubernetes,operator,multi-tenancy,multi-tenant,multitenancy,multitenant,namespace,proxy
 networking;kusk-gateway,kusk-gateway-api,api,openapi
@@ -1054,7 +1051,6 @@ security;kubernetes,helm,startx,cluster-chart,cluster,infrastructure,security,si
 security;kubernetes,helm,startx,cluster-chart,cluster,infrastructure,security,vault,secret management
 security;kubernetes,helm,startx,cluster-chart,cluster,infrastructure,security,vault,vault-config,secret management
 security;kubernetes,kube-hunter,security
-security;kubernetes,kubectl,plugin
 security;kubernetes,nirmata,kyverno,aws,adapter,policy
 security;kubernetes,nirmata,policy agent,validating webhook,admissions controller
 security;kubernetes,oauth,authentication,google,github

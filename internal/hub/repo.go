@@ -198,7 +198,7 @@ type HelmIndexLoader interface {
 }
 
 // OLMOCIExporter describes the methods an OLMOCIExporter implementation must
-// must provide.
+// provide.
 type OLMOCIExporter interface {
 	ExportRepository(ctx context.Context, r *Repository) (tmpDir string, err error)
 }
