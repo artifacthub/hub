@@ -12,7 +12,7 @@ tasks:
   - name: Backend
     init: |
       echo -e "\n- Setting up database..\n"
-      cd && go get -u github.com/jackc/tern
+      cd && go install github.com/jackc/tern@latest
       cd /tmp && git clone https://github.com/pgpartman/pg_partman && cd pg_partman && sudo make NO_BGW=1 install
       psql -c 'create database hub'
       cd /workspace/hub/database/migrations && TERN_CONF=/workspace/hub/.gitpod/tern.conf ./migrate.sh

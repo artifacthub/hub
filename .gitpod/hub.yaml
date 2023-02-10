@@ -12,3 +12,14 @@ server:
   shutdownTimeout: 10s
   webBuildPath: ../../web/build
   widgetBuildPath: ../../widget/build
+theme:
+  colors:
+    primary: "#417598"
+    secondary: "#2D4857"
+  images:
+    appleTouchIcon192: "/static/media/logo192_v2.png"
+    appleTouchIcon512: "/static/media/logo512_v2.png"
+    openGraphImage: "/static/media/artifactHub_v2.png"
+    shortcutIcon: "/static/media/logo_v2.png"
+    websiteLogo: "/static/media/logo/artifacthub-brand-white.svg"
+  siteName: "Artifact Hub"
