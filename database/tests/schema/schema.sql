@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(185);
+select plan(189);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -28,6 +28,7 @@ select has_table('notification');
 select has_table('opt_out');
 select has_table('organization');
 select has_table('package');
+select has_table('package_category');
 select has_table('package_views');
 select has_table('package__maintainer');
 select has_table('password_reset_code');
@@ -139,7 +140,13 @@ select columns_are('package', array[
     'channels',
     'default_channel',
     'created_at',
+    'package_category_id',
     'repository_id'
+]);
+select columns_are('package_category', array[
+    'package_category_id',
+    'name',
+    'display_name'
 ]);
 select columns_are('package_views', array[
     'package_id',
@@ -339,6 +346,9 @@ select indexes_are('package', array[
     'package_repository_id_idx',
     'package_repository_id_name_key'
 ]);
+select indexes_are('package_category', array[
+    'package_category_pkey'
+]);
 select indexes_are('package_views', array[
     'package_views_package_id_version_day_key'
 ]);
@@ -503,6 +513,22 @@ select has_function('get_user_webhooks');
 select has_function('get_webhooks_subscribed_to_package');
 select has_function('update_webhook');
 select has_function('user_has_access_to_webhook');
+
+-- Check package categories exist
+select results_eq(
+    'select * from package_category',
+    $$ values
+        (1, 'ai-machine-learning', 'AI / Machine learning'),
+        (2, 'database', 'Database'),
+        (3, 'integration-delivery', 'Integration and delivery'),
+        (4, 'monitoring-logging', 'Monitoring and logging'),
+        (5, 'networking', 'Networking'),
+        (6, 'security', 'Security'),
+        (7, 'storage', 'Storage'),
+        (8, 'streaming-messaging', 'Streaming and messaging')
+    $$,
+    'Event kinds should exist'
+);
 
 -- Check repository kinds exist
 select results_eq(

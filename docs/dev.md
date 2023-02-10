@@ -146,7 +146,7 @@ The `hub_server` alias runs the `hub` cmd, one of the two processes of the Artif
 
 ### Tracker
 
-The `tracker` is another backend cmd in charge of indexing registered repositories metadata. On production deployments, it is usually run periodically using a `cronjob` on Kubernetes. Locally while developing, you can just run it as often as you need as any other CLI tool. The tracker requires the [OPM cli tool](https://github.com/operator-framework/operator-registry/releases) to be installed and available in your PATH.
+The `tracker` is another backend cmd in charge of indexing registered repositories metadata. On production deployments, it is usually run periodically using a `cronjob` on Kubernetes. Locally while developing, you can just run it as often as you need as any other CLI tool. The tracker requires the [OPM cli tool](https://github.com/operator-framework/operator-registry/releases) to be installed and available in your PATH, and the [TensorFlow C library](https://www.tensorflow.org/install/lang_c), so please make sure it's available before proceeding.
 
 If you opened the url suggested before, you probably noticed there were no packages listed yet. This happened because no repositories had been indexed yet. If you used the configuration file suggested for Tern, some sample repositories should have been registered in the database owned by the `demo` user. To index them, we need to run the `tracker`.
 
@@ -167,6 +167,7 @@ tracker:
   repositoriesNames: []
   repositoriesKinds: []
   bypassDigestCheck: false
+  categoryModelPath: ../../ml/category/model
 images:
   store: pg
 ```

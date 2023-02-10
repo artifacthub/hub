@@ -116,6 +116,7 @@ select register_package('
         "url": "https://key.url"
     },
     "relative_path": "path1/path2",
+    "category": 1,
     "repository": {
         "repository_id": "00000000-0000-0000-0000-000000000001"
     }
@@ -130,6 +131,7 @@ select results_eq(
             is_operator,
             channels,
             default_channel,
+            package_category_id,
             repository_id
         from package
         where name='package1'
@@ -151,6 +153,7 @@ select results_eq(
                 }
             ]'::jsonb,
             'stable',
+            1,
             '00000000-0000-0000-0000-000000000001'::uuid
         )
     $$,
@@ -306,6 +309,7 @@ select register_package('
             "email": "email1"
         }
     ],
+    "category": 2,
     "repository": {
         "repository_id": "00000000-0000-0000-0000-000000000001"
     }
@@ -313,12 +317,19 @@ select register_package('
 ');
 select results_eq(
     $$
-        select is_operator from package where name = 'package1'
+        select
+            is_operator,
+            package_category_id
+        from package
+        where name = 'package1'
     $$,
     $$
-        values (false)
+        values (
+            false,
+            2
+        )
     $$,
-    'is_operator flag should have been updated'
+    'is_operator flag and category should have been updated'
 );
 select results_eq(
     $$
