@@ -19,18 +19,19 @@ TEST_DS_PATH = "data/generated/test"
 MODEL_PATH = "model"
 
 # Maximum vocabulary size
-VOCABULARY_SIZE = 2000
+VOCABULARY_SIZE = 2500
 
 # Categories
 CATEGORIES = [
-    "ai-machine-learning",
-    "database",
-    "integration-delivery",
-    "monitoring-logging",
-    "networking",
-    "security",
-    "storage",
-    "streaming-messaging"
+    "0-unknown",
+    "1-ai-machine-learning",
+    "2-database",
+    "3-integration-delivery",
+    "4-monitoring-logging",
+    "5-networking",
+    "6-security",
+    "7-storage",
+    "8-streaming-messaging"
 ]
 
 
@@ -46,7 +47,7 @@ def build_model():
         setup_vectorizer(train_ds),
         keras.Input(shape=(VOCABULARY_SIZE,)),
         layers.Dense(32, activation="relu"),
-        layers.Dense(8, activation="softmax")
+        layers.Dense(len(CATEGORIES), activation="softmax")
     ])
     model.compile(
         optimizer="rmsprop",
@@ -118,17 +119,6 @@ def custom_standardization_fn(string_tensor):
     return tf.strings.strip(lowercase_string)
 
 
-def predict(model, raw_text):
-    """Generate a prediction for a raw text using the model provided"""
-
-    # Calculate prediction
-    predictions = model.predict(tf.convert_to_tensor([[raw_text]]), verbose=0)
-
-    # Print prediction details and category selected
-    print(predictions[0])
-    print(CATEGORIES[predictions[0].argmax()])
-
-
 def build_data_trees():
     """Build the train, validation and test data trees from the CSV files"""
 
@@ -161,6 +151,20 @@ def build_data_trees():
     build_data_tree_from_csv(TRAIN_CSV_PATH, TRAIN_DS_PATH)
     build_data_tree_from_csv(VALIDATION_CSV_PATH, VALIDATION_DS_PATH)
     build_data_tree_from_csv(TEST_CSV_PATH, TEST_DS_PATH)
+
+
+def predict(raw_text):
+    """Generate a prediction for a raw text"""
+
+    # Load model
+    model = keras.models.load_model(MODEL_PATH)
+
+    # Calculate prediction
+    predictions = model.predict(tf.convert_to_tensor([[raw_text]]), verbose=0)
+
+    # Print prediction details and category selected
+    print(predictions[0])
+    print(CATEGORIES[predictions[0].argmax()])
 
 
 if __name__ == "__main__":

@@ -71,5 +71,5 @@ func (c *PackageCategoryClassifierML) Predict(p *hub.Package) hub.PackageCategor
 			maxIndex = i
 		}
 	}
-	return hub.PackageCategory(maxIndex + 1) // Package categories start at 1
+	return hub.PackageCategory(maxIndex)
 }
