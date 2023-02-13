@@ -1,200 +1,225 @@
-ai-machine-learning;a.i.,machine,learning
-ai-machine-learning;ai,machine-learning,deep learning
-ai-machine-learning;big data,learning,mlflow
-ai-machine-learning;business intelligence,artificial intelligence,artificial-intelligence
-ai-machine-learning;clearml,model,ml
-ai-machine-learning;colab,collaboratory
-ai-machine-learning;data,machine,learning
-ai-machine-learning;deep learning,keras,tensorflow
-ai-machine-learning;deep-learning,neural network,neural-network
-ai-machine-learning;jupyter,python,notebook
-ai-machine-learning;jupyterhub
-ai-machine-learning;kubeflow,tensorflow,xgboost
-ai-machine-learning;kubernetes,machinelearning,jupyterlab
-ai-machine-learning;machine learning
-ai-machine-learning;machine learning,data science
-ai-machine-learning;ml,ai
-ai-machine-learning;mlflow,model,mlops
-ai-machine-learning;model,gpu,tpu,cloud
-ai-machine-learning;mxnet,python
-ai-machine-learning;pytorch
-ai-machine-learning;pytorch,tensorflow,learning
-ai-machine-learning;r,rstats,rstudio,data,model
-ai-machine-learning;scikit,pytorch,python
-ai-machine-learning;spark,gpu,cuda
-ai-machine-learning;tensorflow
-database;cassandra
-database;couchbase,couchbasedb
-database;database,cluster,ha
-database;database,postgresql
-database;db,rdbms
-database;db2,sql
-database;dbaas,cloud
-database;dbms
-database;dgraph,graph
-database;elasticsearch,solr
-database;etcd,keyvalue
-database;influxdb,timeseries
-database;memcached,in-memory
-database;mongo,mongodb,atlas
-database;mysql,mysqldb,mariadb
-database;mysql,operator
-database;nosql,sql
-database;percona,tidb
-database;pgadmin,pgbouncer
-database;postgresql,postgres
-database;redis,keydb,cluster
-database;rethinkdb,questdb
-database;sql,proxy,replica
-database;sqlite
-database;timeseries,database
-integration-delivery;argo,flux,argocd
-integration-delivery;automation,ansible
-integration-delivery;build,deploy
-integration-delivery;ci/cd
-integration-delivery;cicd,integration,delivery
-integration-delivery;continuous delivery,ci
-integration-delivery;drone,deploy,runner
-integration-delivery;flux,flux2
-integration-delivery;git,pipeline
-integration-delivery;gitea,git,task
-integration-delivery;gitlab,ci
-integration-delivery;gitops,ci,cd
-integration-delivery;infrastructure,automation,testing
-integration-delivery;integration & delivery
-integration-delivery;jenkins
-integration-delivery;jfrog,xray
-integration-delivery;keptn,jenkins
-integration-delivery;kraken,kraken-ci
-integration-delivery;pipeline,pipelines,devops
-integration-delivery;pipeline,workflow
-integration-delivery;puppet,puppetserver
-integration-delivery;sonatype,repository
-integration-delivery;tekton,git,cd
-integration-delivery;terraform,cloud
-integration-delivery;workflow,github,actions
-monitoring-logging;aws,cloudwatch,azure,stackdriver
-monitoring-logging;exporter,gpu
-monitoring-logging;fluentd,fluentbit,fluent
-monitoring-logging;fluxcd,flagger
-monitoring-logging;grafana,loki
-monitoring-logging;icinga,sentry
-monitoring-logging;kubernetes,logging
-monitoring-logging;logs,alerting
-monitoring-logging;logs,alerts,agent,datadog
-monitoring-logging;logstash,kibana,elk
-monitoring-logging;metric,metrics
-monitoring-logging;metrics,tracing
-monitoring-logging;monitoring
-monitoring-logging;prometheus,exporter
-monitoring-logging;sematext,logging
-monitoring-logging;server,observability,metrics
-monitoring-logging;service mesh,monitoring
-monitoring-logging;splunk,anomaly detection,event
-monitoring-logging;statsd,influxdata,telegraf
-monitoring-logging;telemetry,open telemetry,otel
-monitoring-logging;thanos,portefaix
-monitoring-logging;traces,tracing,collector
-monitoring-logging;tracing,jaeger
-monitoring-logging;wavefront,newrelic,new relic
-monitoring-logging;zabbix,server
-networking;api gateway,ambassador
-networking;cni,calico
-networking;cni,mesh
-networking;dns,server
-networking;envoy,contour
-networking;gateway,router,switch
-networking;ingress,controller
-networking;ingress,networking
-networking;kiali,istio
-networking;kong,mesh,control plane
-networking;kusk,gateway
-networking;linkerd,linkerd2,traefik,istio
-networking;load balancer,load-balancer,cloud,gslb
-networking;network,tools
-networking;networking
-networking;nginx,http
-networking;proxy,reverse proxy,haproxy
-networking;serverless,knative
-networking;service mesh,service-mesh,mesh
-networking;tigera,kubernetes
-networking;vlan,bgp
-networking;voip,sip
-networking;vpn,aws,network
-networking;vpn,tunnel
-networking;wallarm
-security;admission,controller,admission-controller,admission controller
-security;anchore,keycloak
-security;aquasecurity
-security;auth,authentication
-security;aws,iam
-security;cert-manager,kubernetes
-security;certificate,certificates,letsencrypt
-security;falco
-security;gatekeeper,admission
-security;opa,conftest
-security;opa,policy
-security;owasp,psp
-security;pki,x509
-security;policy,policies,psp
-security;rbac,policies
-security;scanner
-security;secrets,management
-security;securecodebox
-security;security
-security;snyk
-security;ssl,tls
-security;sso,openid,oauth2
-security;trivy
-security;vault,hashicorp
-security;vulnerability,cve
-storage;aws,s3
-storage;backup,csi
-storage;backup,restore,buckets,data
-storage;blockstorage,kubernetes,cloud
-storage;ceph,rbd
-storage;ceph,rook
-storage;chartmuseum
-storage;chubaofs,beegfs
-storage;cloud provider,nexus,data
-storage;cloud volumes,azure,gcp,aws
-storage;container storage,kubernetes
-storage;ebs,nfs
-storage;file storage,file-storage,nfs
-storage;hpe,csi
-storage;ibm,gpfs
-storage;iscsi,snapshot
-storage;longhorn
-storage;minio,nextcloud
-storage;noobaa,data
-storage;nutanix,csi
-storage;persistent,volumes,kubernetes,provisioner
-storage;pvc,pv
-storage;replication,storage
-storage;san,block,device
-storage;storage
-streaming-messaging;amqp,stomp
-streaming-messaging;centrifugo
-streaming-messaging;cloudevents,webhook,webhooks
-streaming-messaging;distributed,messaging
-streaming-messaging;flink,messaging
-streaming-messaging;hazelcast
-streaming-messaging;kafka
-streaming-messaging;kafka,cmak,operator
-streaming-messaging;message queue,message,queue
-streaming-messaging;messaging
-streaming-messaging;mosquitto,mqtt
-streaming-messaging;mqtt,iot
-streaming-messaging;nats
-streaming-messaging;nsq,nsqd
-streaming-messaging;producer,consumer,queue,topics
-streaming-messaging;pub/sub,pubsub
-streaming-messaging;publish,subscribe
-streaming-messaging;pulsar,cloud native
-streaming-messaging;rabbitmq,broker
-streaming-messaging;rpc,grpc
-streaming-messaging;service bus,message
-streaming-messaging;service,discovery,service discovery
-streaming-messaging;streaming
-streaming-messaging;streaming & messaging
-streaming-messaging;streams,distributed,distributed system
+0-unknown;application,python
+0-unknown;asp,dotnet
+0-unknown;blog,web,tomcat
+0-unknown;drupal,cms
+0-unknown;ecommerce
+0-unknown;erp
+0-unknown;file,server,sharing,browser
+0-unknown;finance
+0-unknown;game,gaming,gameserver
+0-unknown;java,http
+0-unknown;kubernetes
+0-unknown;kubernetes,docker
+0-unknown;media,server,media-server,plex
+0-unknown;minecraft,server
+0-unknown;music,tv,streaming
+0-unknown;node,nodejs,webapp
+0-unknown;notes,productivity
+0-unknown;php,http
+0-unknown;ruby,rails
+0-unknown;tools,utilities
+0-unknown;tv,music
+0-unknown;web-application
+0-unknown;web,application
+0-unknown;wiki,media
+0-unknown;wordpress,cms
+1-ai-machine-learning;a.i.,machine,learning
+1-ai-machine-learning;ai,machine-learning,deep learning
+1-ai-machine-learning;big data,learning,mlflow
+1-ai-machine-learning;business intelligence,artificial intelligence,artificial-intelligence
+1-ai-machine-learning;clearml,model,ml
+1-ai-machine-learning;colab,collaboratory
+1-ai-machine-learning;data,machine,learning
+1-ai-machine-learning;deep learning,keras,tensorflow
+1-ai-machine-learning;deep-learning,neural network,neural-network
+1-ai-machine-learning;jupyter,python,notebook
+1-ai-machine-learning;jupyterhub
+1-ai-machine-learning;kubeflow,tensorflow,xgboost
+1-ai-machine-learning;kubernetes,machinelearning,jupyterlab
+1-ai-machine-learning;machine learning
+1-ai-machine-learning;machine learning,data science
+1-ai-machine-learning;ml,ai
+1-ai-machine-learning;mlflow,model,mlops
+1-ai-machine-learning;model,gpu,tpu,cloud
+1-ai-machine-learning;mxnet,python
+1-ai-machine-learning;pytorch
+1-ai-machine-learning;pytorch,tensorflow,learning
+1-ai-machine-learning;r,rstats,rstudio,data,model
+1-ai-machine-learning;scikit,pytorch,python
+1-ai-machine-learning;spark,gpu,cuda
+1-ai-machine-learning;tensorflow
+2-database;cassandra
+2-database;couchbase,couchbasedb
+2-database;database,cluster,ha
+2-database;database,postgresql
+2-database;db,rdbms
+2-database;db2,sql
+2-database;dbaas,cloud
+2-database;dbms
+2-database;dgraph,graph
+2-database;elasticsearch,solr
+2-database;etcd,keyvalue
+2-database;influxdb,timeseries
+2-database;memcached,in-memory
+2-database;mongo,mongodb,atlas
+2-database;mysql,mysqldb,mariadb
+2-database;mysql,operator
+2-database;nosql,sql
+2-database;percona,tidb
+2-database;pgadmin,pgbouncer
+2-database;postgresql,postgres
+2-database;redis,keydb,cluster
+2-database;rethinkdb,questdb
+2-database;sql,proxy,replica
+2-database;sqlite
+2-database;timeseries,database
+3-integration-delivery;argo,flux,argocd
+3-integration-delivery;automation,ansible
+3-integration-delivery;build,deploy
+3-integration-delivery;ci/cd
+3-integration-delivery;cicd,integration,delivery
+3-integration-delivery;continuous delivery,ci
+3-integration-delivery;drone,deploy,runner
+3-integration-delivery;flux,flux2
+3-integration-delivery;git,pipeline
+3-integration-delivery;gitea,git,task
+3-integration-delivery;gitlab,ci
+3-integration-delivery;gitops,ci,cd
+3-integration-delivery;infrastructure,automation,testing
+3-integration-delivery;integration & delivery
+3-integration-delivery;jenkins
+3-integration-delivery;jfrog,xray
+3-integration-delivery;keptn,jenkins
+3-integration-delivery;kraken,kraken-ci
+3-integration-delivery;pipeline,pipelines,devops
+3-integration-delivery;pipeline,workflow
+3-integration-delivery;puppet,puppetserver
+3-integration-delivery;sonatype,repository
+3-integration-delivery;tekton,git,cd
+3-integration-delivery;terraform,cloud
+3-integration-delivery;workflow,github,actions
+4-monitoring-logging;aws,cloudwatch,azure,stackdriver
+4-monitoring-logging;exporter,gpu
+4-monitoring-logging;fluentd,fluentbit,fluent
+4-monitoring-logging;fluxcd,flagger
+4-monitoring-logging;grafana,loki
+4-monitoring-logging;icinga,sentry
+4-monitoring-logging;kubernetes,logging
+4-monitoring-logging;logs,alerting
+4-monitoring-logging;logs,alerts,agent,datadog
+4-monitoring-logging;logstash,kibana,elk
+4-monitoring-logging;metric,metrics
+4-monitoring-logging;metrics,tracing
+4-monitoring-logging;monitoring
+4-monitoring-logging;prometheus,exporter
+4-monitoring-logging;sematext,logging
+4-monitoring-logging;server,observability,metrics
+4-monitoring-logging;service mesh,monitoring
+4-monitoring-logging;splunk,anomaly detection,event
+4-monitoring-logging;statsd,influxdata,telegraf
+4-monitoring-logging;telemetry,open telemetry,otel
+4-monitoring-logging;thanos,portefaix
+4-monitoring-logging;traces,tracing,collector
+4-monitoring-logging;tracing,jaeger
+4-monitoring-logging;wavefront,newrelic,new relic
+4-monitoring-logging;zabbix,server
+5-networking;api gateway,ambassador
+5-networking;cni,calico
+5-networking;cni,mesh
+5-networking;dns,server
+5-networking;envoy,contour
+5-networking;gateway,router,switch
+5-networking;ingress,controller
+5-networking;ingress,networking
+5-networking;kiali,istio
+5-networking;kong,mesh,control plane
+5-networking;kusk,gateway
+5-networking;linkerd,linkerd2,traefik,istio
+5-networking;load balancer,load-balancer,cloud,gslb
+5-networking;network,tools
+5-networking;networking
+5-networking;nginx,http
+5-networking;proxy,reverse proxy,haproxy
+5-networking;serverless,knative
+5-networking;service mesh,service-mesh,mesh
+5-networking;tigera,kubernetes
+5-networking;vlan,bgp
+5-networking;voip,sip
+5-networking;vpn,aws,network
+5-networking;vpn,tunnel
+5-networking;wallarm
+6-security;admission,controller,admission-controller,admission controller
+6-security;anchore,keycloak
+6-security;aquasecurity
+6-security;auth,authentication
+6-security;aws,iam
+6-security;cert-manager,kubernetes
+6-security;certificate,certificates,letsencrypt
+6-security;falco
+6-security;gatekeeper,admission
+6-security;opa,conftest
+6-security;opa,policy
+6-security;owasp,psp
+6-security;pki,x509
+6-security;policy,policies,psp
+6-security;rbac,policies
+6-security;scanner
+6-security;secrets,management
+6-security;securecodebox
+6-security;security
+6-security;snyk
+6-security;ssl,tls
+6-security;sso,openid,oauth2
+6-security;trivy
+6-security;vault,hashicorp
+6-security;vulnerability,cve
+7-storage;aws,s3
+7-storage;backup,csi
+7-storage;backup,restore,buckets,data
+7-storage;blockstorage,kubernetes,cloud
+7-storage;ceph,rbd
+7-storage;ceph,rook
+7-storage;chartmuseum
+7-storage;chubaofs,beegfs
+7-storage;cloud provider,nexus,data
+7-storage;cloud volumes,azure,gcp,aws
+7-storage;container storage,kubernetes
+7-storage;ebs,nfs
+7-storage;file storage,file-storage,nfs
+7-storage;hpe,csi
+7-storage;ibm,gpfs
+7-storage;iscsi,snapshot
+7-storage;longhorn
+7-storage;minio,nextcloud
+7-storage;noobaa,data
+7-storage;nutanix,csi
+7-storage;persistent,volumes,kubernetes,provisioner
+7-storage;pvc,pv
+7-storage;replication,storage
+7-storage;san,block,device
+7-storage;storage
+8-streaming-messaging;amqp,stomp
+8-streaming-messaging;centrifugo
+8-streaming-messaging;cloudevents,webhook,webhooks
+8-streaming-messaging;distributed,messaging
+8-streaming-messaging;flink,messaging
+8-streaming-messaging;hazelcast
+8-streaming-messaging;kafka
+8-streaming-messaging;kafka,cmak,operator
+8-streaming-messaging;message queue,message,queue
+8-streaming-messaging;messaging
+8-streaming-messaging;mosquitto,mqtt
+8-streaming-messaging;mqtt,iot
+8-streaming-messaging;nats
+8-streaming-messaging;nsq,nsqd
+8-streaming-messaging;producer,consumer,queue,topics
+8-streaming-messaging;pub/sub,pubsub
+8-streaming-messaging;publish,subscribe
+8-streaming-messaging;pulsar,cloud native
+8-streaming-messaging;rabbitmq,broker
+8-streaming-messaging;rpc,grpc
+8-streaming-messaging;service bus,message
+8-streaming-messaging;service,discovery,service discovery
+8-streaming-messaging;streaming
+8-streaming-messaging;streaming & messaging
+8-streaming-messaging;streams,distributed,distributed system
