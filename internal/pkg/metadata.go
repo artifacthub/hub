@@ -98,6 +98,9 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 		Recommendations:         md.Recommendations,
 		Screenshots:             md.Screenshots,
 	}
+	if md.Category != "" {
+		p.Category, _ = hub.PackageCategoryFromName(md.Category)
+	}
 	if p.Data == nil && len(md.Annotations) > 0 {
 		p.Data = make(map[string]interface{})
 	}
@@ -128,6 +131,11 @@ func ValidatePackageMetadata(kind hub.RepositoryKind, md *hub.PackageMetadata) e
 		!strings.Contains(md.Name, md.AlternativeName) &&
 		!strings.Contains(md.AlternativeName, md.Name) {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "invalid alternative name (must be a subset or superset of the name)"))
+	}
+	if md.Category != "" {
+		if _, err := hub.PackageCategoryFromName(md.Category); err != nil {
+			errs = multierror.Append(errs, fmt.Errorf("%w: %v", ErrInvalidMetadata, err))
+		}
 	}
 	if md.DisplayName == "" {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "display name not provided"))

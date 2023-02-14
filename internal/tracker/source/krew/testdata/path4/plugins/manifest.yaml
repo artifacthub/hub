@@ -3,6 +3,7 @@ kind: Plugin
 metadata:
   name: test-plugin
   annotations:
+    artifacthub.io/category: security
     artifacthub.io/changes: |
       - Added cool feature
       - Fixed minor bug

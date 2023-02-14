@@ -101,6 +101,7 @@
 0-unknown;orangehrm,http,https,web,application,php,human resources
 0-unknown;paperless
 0-unknown;passwordpusherephemeral,productivity,security,tools-utilities
+0-unknown;photos,pictures,sharing
 0-unknown;pigallery2,cloud,mediaapp-video,mediaapp-music,mediaapp-photos,mediaserver-video,mediaserver-music,mediaserver-photos
 0-unknown;plex,media-server,plex-media-server,streaming,tv
 0-unknown;plexripper,backup,downloaders,mediaapp-video,mediaapp-music,mediaapp-photos,mediaapp-other

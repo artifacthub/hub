@@ -197,10 +197,10 @@ func TestTracker(t *testing.T) {
 		sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
 		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
 		p := source.ClonePackage(p1v1)
+		p.Category = hub.SkipCategoryPrediction
 		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
-			pkg.BuildKey(p1v1): p,
+			pkg.BuildKey(p): p,
 		}, nil)
-		sw.pcc.On("Predict", p).Return(hub.UnknownCategory)
 		sw.pm.On("Register", sw.svc.Ctx, p).Return(tests.ErrFake)
 		expectedErr := "error registering package pkg1 version 1.0.0: fake error for tests"
 		sw.ec.On("Append", r1.RepositoryID, expectedErr).Return()
@@ -246,7 +246,7 @@ func TestTracker(t *testing.T) {
 		p := source.ClonePackage(p1v1)
 		p.Digest = hub.HasNotChanged
 		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
-			pkg.BuildKey(p1v1): p,
+			pkg.BuildKey(p): p,
 		}, nil)
 
 		// Run test and check expectations

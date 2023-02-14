@@ -19,6 +19,7 @@ import (
 
 const (
 	// Annotations
+	categoryAnnotation        = "artifacthub.io/category"
 	changesAnnotation         = "artifacthub.io/changes"
 	displayNameAnnotation     = "artifacthub.io/displayName"
 	keywordsAnnotation        = "artifacthub.io/keywords"
@@ -206,6 +207,16 @@ func PreparePackage(r *hub.Repository, manifest *index.Plugin, manifestRaw []byt
 // the provided annotations.
 func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
 	var errs *multierror.Error
+
+	// Category
+	if v, ok := annotations[categoryAnnotation]; ok {
+		category, err := hub.PackageCategoryFromName(v)
+		if err != nil {
+			errs = multierror.Append(errs, err)
+		} else {
+			p.Category = category
+		}
+	}
 
 	// Changes
 	if v, ok := annotations[changesAnnotation]; ok {
