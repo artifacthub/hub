@@ -655,6 +655,16 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		kinds = append(kinds, hub.RepositoryKind(kind))
 	}
 
+	// Categories
+	categories := make([]hub.PackageCategory, 0, len(qs["category"]))
+	for _, categoryStr := range qs["category"] {
+		category, err := strconv.Atoi(categoryStr)
+		if err != nil {
+			return nil, fmt.Errorf("invalid category: %s", categoryStr)
+		}
+		categories = append(categories, hub.PackageCategory(category))
+	}
+
 	// Only display content from verified publishers
 	var verifiedPublisher bool
 	if qs.Get("verified_publisher") != "" {
@@ -705,6 +715,7 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		Orgs:              qs["org"],
 		Repositories:      qs["repo"],
 		RepositoryKinds:   kinds,
+		Categories:        categories,
 		VerifiedPublisher: verifiedPublisher,
 		Official:          official,
 		Operators:         operators,

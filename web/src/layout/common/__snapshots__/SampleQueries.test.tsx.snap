@@ -30,12 +30,5 @@ exports[`SampleQueries creates snapshot 1`] = `
   >
     Falco rules for CVE
   </a>
-  <a
-    aria-label="Filter by OLM operators in the monitoring category"
-    class="badge border fw-normal mx-2 mt-3 sampleQuery undefined"
-    href="/packages/search?kind=3&ts_query=monitoring"
-  >
-    OLM operators in the monitoring category
-  </a>
 </DocumentFragment>
 `;

@@ -51,6 +51,7 @@ insert into package (
     stars,
     tsdoc,
     official,
+    package_category_id,
     repository_id
 ) values (
     :'package1ID',
@@ -60,6 +61,7 @@ insert into package (
     10,
     generate_package_tsdoc('package1', null, null, 'description', '{"kw1", "kw1", "kw2"}', '{"repo1"}', '{"user1"}'),
     false,
+    1,
     :'repo1ID'
 );
 insert into snapshot (
@@ -332,12 +334,21 @@ select results_eq(
                         "title": "Kind",
                         "filter_key": "kind",
                         "options": [{
+                            "id": 1,
+                            "name": "Falco rules",
+                            "total": 1
+                        }, {
                             "id": 0,
                             "name": "Helm charts",
                             "total": 2
-                        }, {
+                        }]
+                    },
+                    {
+                        "title": "Category",
+                        "filter_key": "category",
+                        "options": [{
                             "id": 1,
-                            "name": "Falco rules",
+                            "name": "AI / Machine learning",
                             "total": 1
                         }]
                     },
@@ -784,6 +795,15 @@ select results_eq(
                         }]
                     },
                     {
+                        "title": "Category",
+                        "filter_key": "category",
+                        "options": [{
+                            "id": 1,
+                            "name": "AI / Machine learning",
+                            "total": 1
+                        }]
+                    },
+                    {
                         "title": "License",
                         "filter_key": "license",
                         "options": [{
@@ -853,6 +873,15 @@ select results_eq(
                         "options": [{
                             "id": 0,
                             "name": "Helm charts",
+                            "total": 1
+                        }]
+                    },
+                    {
+                        "title": "Category",
+                        "filter_key": "category",
+                        "options": [{
+                            "id": 1,
+                            "name": "AI / Machine learning",
                             "total": 1
                         }]
                     },
@@ -997,26 +1026,23 @@ select results_eq(
                         "options": [{
                             "id": 0,
                             "name": "Helm charts",
-                            "total": 2
+                            "total": 1
                         }]
+                    },
+                    {
+                        "title": "Category",
+                        "filter_key": "category",
+                        "options": []
                     },
                     {
                         "title": "License",
                         "filter_key": "license",
-                        "options": [{
-                            "id": "Apache-2.0",
-                            "name": "Apache-2.0",
-                            "total": 1
-                        }]
+                        "options": []
                     },
                     {
                         "title": "Operator capabilities",
                         "filter_key": "capabilities",
-                        "options": [{
-                            "id": "basic install",
-                            "name": "basic install",
-                            "total": 1
-                        }]
+                        "options": []
                     }
                 ]
             }'::jsonb,
@@ -1044,36 +1070,29 @@ select results_eq(
                     {
                         "title": "Kind",
                         "filter_key": "kind",
-                        "options": [{
-                            "id": 0,
-                            "name": "Helm charts",
-                            "total": 1
-                        }]
+                        "options": []
+                    },
+                    {
+                        "title": "Category",
+                        "filter_key": "category",
+                        "options": []
                     },
                     {
                         "title": "License",
                         "filter_key": "license",
-                        "options": [{
-                            "id": "Apache-2.0",
-                            "name": "Apache-2.0",
-                            "total": 1
-                        }]
+                        "options": []
                     },
                     {
                         "title": "Operator capabilities",
                         "filter_key": "capabilities",
-                        "options": [{
-                            "id": "basic install",
-                            "name": "basic install",
-                            "total": 1
-                        }]
+                        "options": []
                     }
                 ]
             }'::jsonb,
             0
         )
     $$,
-    'Facets: true TSQueryWeb: kw1 Repo: repo2 Deprecated: false | No packages expected - Facets expected'
+    'Facets: true TSQueryWeb: kw1 Repo: repo2 Deprecated: false | No packages expected - Empty facets expected'
 );
 select results_eq(
     $$
@@ -1093,36 +1112,29 @@ select results_eq(
                     {
                         "title": "Kind",
                         "filter_key": "kind",
-                        "options": [{
-                            "id": 0,
-                            "name": "Helm charts",
-                            "total": 1
-                        }]
+                        "options": []
+                    },
+                    {
+                        "title": "Category",
+                        "filter_key": "category",
+                        "options": []
                     },
                     {
                         "title": "License",
                         "filter_key": "license",
-                        "options": [{
-                            "id": "Apache-2.0",
-                            "name": "Apache-2.0",
-                            "total": 1
-                        }]
+                        "options": []
                     },
                     {
                         "title": "Operator capabilities",
                         "filter_key": "capabilities",
-                        "options": [{
-                            "id": "basic install",
-                            "name": "basic install",
-                            "total": 1
-                        }]
+                        "options": []
                     }
                 ]
             }'::jsonb,
             0
         )
     $$,
-    'Facets: true TSQueryWeb: kw1 Repo: repo2 Deprecated: not provided | No packages expected - Facets expected'
+    'Facets: true TSQueryWeb: kw1 Repo: repo2 Deprecated: not provided | No packages expected - Empty facets expected'
 );
 select results_eq(
     $$
@@ -1142,36 +1154,29 @@ select results_eq(
                     {
                         "title": "Kind",
                         "filter_key": "kind",
-                        "options": [{
-                            "id": 0,
-                            "name": "Helm charts",
-                            "total": 1
-                        }]
+                        "options": []
+                    },
+                    {
+                        "title": "Category",
+                        "filter_key": "category",
+                        "options": []
                     },
                     {
                         "title": "License",
                         "filter_key": "license",
-                        "options": [{
-                            "id": "Apache-2.0",
-                            "name": "Apache-2.0",
-                            "total": 1
-                        }]
+                        "options": []
                     },
                     {
                         "title": "Operator capabilities",
                         "filter_key": "capabilities",
-                        "options": [{
-                            "id": "basic install",
-                            "name": "basic install",
-                            "total": 1
-                        }]
+                        "options": []
                     }
                 ]
             }'::jsonb,
             0
         )
     $$,
-    'Facets: true TSQueryWeb: kw1 Repo: inexistent | No packages expected - Facets expected'
+    'Facets: true TSQueryWeb: kw1 Repo: inexistent | No packages expected - Empty facets expected'
 );
 select results_eq(
     $$
@@ -1691,6 +1696,15 @@ select results_eq(
                             "id": 0,
                             "name": "Helm charts",
                             "total": 2
+                        }]
+                    },
+                    {
+                        "title": "Category",
+                        "filter_key": "category",
+                        "options": [{
+                            "id": 1,
+                            "name": "AI / Machine learning",
+                            "total": 1
                         }]
                     },
                     {

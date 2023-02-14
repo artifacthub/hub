@@ -32,6 +32,22 @@ const FacetsMock: Facets[] = [
     ],
   },
   {
+    title: 'Category',
+    filterKey: 'category',
+    options: [
+      {
+        id: 2,
+        name: 'Database',
+        total: 32,
+      },
+      {
+        id: 3,
+        name: 'Integration & delivery',
+        total: 10,
+      },
+    ],
+  },
+  {
     title: 'License',
     filterKey: 'license',
     options: [
@@ -90,13 +106,11 @@ const onOfficialChangeMock = jest.fn();
 const defaultProps = {
   forceCollapseList: false,
   activeFilters: {},
-  activeTsQuery: [],
   facets: FacetsMock,
   visibleTitle: false,
   device: 'desktop',
   onChange: onChangeMock,
   onResetSomeFilters: jest.fn(),
-  onTsQueryChange: jest.fn(),
   onDeprecatedChange: onDeprecatedChangeMock,
   onOperatorsChange: jest.fn(),
   onVerifiedPublisherChange: onVerifiedPublisherChangeMock,
@@ -258,7 +272,7 @@ describe('Filters', () => {
     it('renders component', () => {
       render(<Filters {...defaultProps} />);
 
-      expect(screen.getAllByRole('checkbox')).toHaveLength(25);
+      expect(screen.getAllByRole('checkbox')).toHaveLength(17);
       expect(screen.getByLabelText('Official')).toBeInTheDocument();
       expect(screen.getByLabelText('Verified publishers')).toBeInTheDocument();
       expect(screen.getByLabelText('Include deprecated')).toBeInTheDocument();
@@ -413,7 +427,7 @@ describe('Filters', () => {
         const labels = screen.getAllByTestId('checkboxLabel');
 
         for (let j = 0; j < capabitiesTests[i].output.length; j++) {
-          expect(labels[12 + j]).toHaveTextContent(capabitiesTests[i].output[j]);
+          expect(labels[2 + j]).toHaveTextContent(capabitiesTests[i].output[j]);
         }
       });
     }

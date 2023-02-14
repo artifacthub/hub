@@ -17,9 +17,6 @@ export const getURLSearchParams = (query: BasicQuery): URLSearchParams => {
   if (!isUndefined(query.name)) {
     q.set('name', query.name);
   }
-  if (query.tsQuery && query.tsQuery.length > 0) {
-    q.set('ts_query', query.tsQuery.join(' | '));
-  }
   if (!isUndefined(query.deprecated) && query.deprecated) {
     q.set('deprecated', 'true');
   }

@@ -188,8 +188,8 @@ describe('Search index', () => {
       const options = await screen.findAllByRole('checkbox');
 
       // Desktop + mobile (sidebar)
-      expect(facets).toHaveLength(2 * 3);
-      expect(options).toHaveLength(15 * 2);
+      expect(facets).toHaveLength(2 * 2);
+      expect(options).toHaveLength(5 * 2);
     });
 
     it('calls history push on filters change', async () => {
@@ -477,11 +477,11 @@ describe('Search index', () => {
 
       expect(main).toBeInTheDocument();
       const checks = await screen.findAllByRole('checkbox');
-      expect(checks).toHaveLength(38);
+      expect(checks).toHaveLength(18);
 
       rerender(
         <Router>
-          <SearchView {...defaultProps} tsQuery={['database']} />
+          <SearchView {...defaultProps} tsQueryWeb="test1" />
         </Router>
       );
 
@@ -492,8 +492,7 @@ describe('Search index', () => {
           filters: {},
           limit: 20,
           offset: 0,
-          tsQueryWeb: 'test',
-          tsQuery: ['database'],
+          tsQueryWeb: 'test1',
           sort: 'relevance',
         });
       });
@@ -501,9 +500,9 @@ describe('Search index', () => {
       const noData = await screen.findByRole('alert');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(
-        `We're sorry! We can't seem to find any packages that match your search for "test"`
+        `We're sorry! We can't seem to find any packages that match your search for "test1"`
       );
-      expect(checks).toHaveLength(38);
+      expect(checks).toHaveLength(18);
     });
   });
 
@@ -739,24 +738,6 @@ describe('Search index', () => {
           }),
         });
       });
-    });
-
-    it('displays some categories filters', async () => {
-      const mockSearchResults = getMockSearchResults('29');
-      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
-
-      render(
-        <Router>
-          <SearchView {...defaultProps} tsQuery={['database', 'logging-and-tracing']} />
-        </Router>
-      );
-
-      await waitFor(() => {
-        expect(API.searchPackages).toHaveBeenCalledTimes(1);
-      });
-
-      expect(await screen.findByRole('button', { name: 'Remove filter: Category - Database' })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Remove filter: Category - Logging and Tracing' })).toBeInTheDocument();
     });
   });
 });

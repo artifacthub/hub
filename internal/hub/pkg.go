@@ -273,22 +273,23 @@ type SnapshotToScan struct {
 
 // SearchPackageInput represents the query input when searching for packages.
 type SearchPackageInput struct {
-	Limit             int              `json:"limit,omitempty"`
-	Offset            int              `json:"offset,omitempty"`
-	Facets            bool             `json:"facets"`
-	TSQueryWeb        string           `json:"ts_query_web,omitempty"`
-	TSQuery           string           `json:"ts_query,omitempty"`
-	Users             []string         `json:"users,omitempty"`
-	Orgs              []string         `json:"orgs,omitempty"`
-	Repositories      []string         `json:"repositories,omitempty"`
-	RepositoryKinds   []RepositoryKind `json:"repository_kinds,omitempty"`
-	VerifiedPublisher bool             `json:"verified_publisher"`
-	Official          bool             `json:"official"`
-	Operators         bool             `json:"operators"`
-	Deprecated        bool             `json:"deprecated"`
-	Licenses          []string         `json:"licenses,omitempty"`
-	Capabilities      []string         `json:"capabilities,omitempty"`
-	Sort              string           `json:"sort,omitempty"`
+	Limit             int               `json:"limit,omitempty"`
+	Offset            int               `json:"offset,omitempty"`
+	Facets            bool              `json:"facets"`
+	TSQueryWeb        string            `json:"ts_query_web,omitempty"`
+	TSQuery           string            `json:"ts_query,omitempty"`
+	Users             []string          `json:"users,omitempty"`
+	Orgs              []string          `json:"orgs,omitempty"`
+	Repositories      []string          `json:"repositories,omitempty"`
+	RepositoryKinds   []RepositoryKind  `json:"repository_kinds,omitempty"`
+	Categories        []PackageCategory `json:"categories,omitempty"`
+	VerifiedPublisher bool              `json:"verified_publisher"`
+	Official          bool              `json:"official"`
+	Operators         bool              `json:"operators"`
+	Deprecated        bool              `json:"deprecated"`
+	Licenses          []string          `json:"licenses,omitempty"`
+	Capabilities      []string          `json:"capabilities,omitempty"`
+	Sort              string            `json:"sort,omitempty"`
 }
 
 // Version represents a package's version.

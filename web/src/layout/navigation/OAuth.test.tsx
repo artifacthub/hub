@@ -105,7 +105,7 @@ describe('OAuth', () => {
         value: {
           href: 'http://localhost',
           pathname: '/packages/search',
-          search: '?kind=0&ts_query=security&sort=relevance&page=1',
+          search: '?kind=0&sort=relevance&page=1',
         },
         writable: true,
       });
@@ -124,7 +124,7 @@ describe('OAuth', () => {
       });
 
       expect(window.location.href).toBe(
-        '/oauth/github?redirect_url=%2Fpackages%2Fsearch%3Fkind%3D0%26ts_query%3Dsecurity%26sort%3Drelevance%26page%3D1'
+        '/oauth/github?redirect_url=%2Fpackages%2Fsearch%3Fkind%3D0%26sort%3Drelevance%26page%3D1'
       );
     });
 

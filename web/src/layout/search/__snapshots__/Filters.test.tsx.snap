@@ -288,7 +288,7 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="mt-2 mt-sm-3 pt-1"
+      class="mt-1 mt-sm-2 pt-1 facet"
       role="menuitem"
     >
       <div
@@ -301,6 +301,7 @@ exports[`Filters creates snapshot 1`] = `
           <span
             aria-level="5"
             class="text-dark fw-bold"
+            id="repo-category-desktop"
             role="heading"
           >
             Category
@@ -308,7 +309,9 @@ exports[`Filters creates snapshot 1`] = `
         </small>
       </div>
       <div
+        aria-labelledby="repo-category-desktop"
         class="mt-3"
+        role="group"
       >
         <div
           class="form-check me-sm-2 mb-2 checkbox"
@@ -316,16 +319,16 @@ exports[`Filters creates snapshot 1`] = `
           <input
             aria-checked="false"
             class="form-check-input input"
-            id="desktop-tsQuery-database"
-            name="tsQuery"
+            id="desktop-category-2"
+            name="category"
             tabindex="0"
             type="checkbox"
-            value="database"
+            value="2"
           />
           <label
             class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
-            for="desktop-tsQuery-database"
+            for="desktop-category-2"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -335,6 +338,11 @@ exports[`Filters creates snapshot 1`] = `
               >
                 Database
               </span>
+              <small
+                class="ps-1"
+              >
+                (32)
+              </small>
             </div>
           </label>
         </div>
@@ -344,16 +352,16 @@ exports[`Filters creates snapshot 1`] = `
           <input
             aria-checked="false"
             class="form-check-input input"
-            id="desktop-tsQuery-integration-and-delivery"
-            name="tsQuery"
+            id="desktop-category-3"
+            name="category"
             tabindex="0"
             type="checkbox"
-            value="integration-and-delivery"
+            value="3"
           />
           <label
             class="form-check-label label mw-100 text-muted"
             data-testid="checkboxLabel"
-            for="desktop-tsQuery-integration-and-delivery"
+            for="desktop-category-3"
           >
             <div
               class="d-flex align-items-baseline mw-100"
@@ -361,232 +369,13 @@ exports[`Filters creates snapshot 1`] = `
               <span
                 class="d-inline-block text-truncate"
               >
-                Integration and Delivery
+                Integration & delivery
               </span>
-            </div>
-          </label>
-        </div>
-        <div
-          class="form-check me-sm-2 mb-2 checkbox"
-        >
-          <input
-            aria-checked="false"
-            class="form-check-input input"
-            id="desktop-tsQuery-logging-and-tracing"
-            name="tsQuery"
-            tabindex="0"
-            type="checkbox"
-            value="logging-and-tracing"
-          />
-          <label
-            class="form-check-label label mw-100 text-muted"
-            data-testid="checkboxLabel"
-            for="desktop-tsQuery-logging-and-tracing"
-          >
-            <div
-              class="d-flex align-items-baseline mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
+              <small
+                class="ps-1"
               >
-                Logging and Tracing
-              </span>
-            </div>
-          </label>
-        </div>
-        <div
-          class="form-check me-sm-2 mb-2 checkbox"
-        >
-          <input
-            aria-checked="false"
-            class="form-check-input input"
-            id="desktop-tsQuery-machine-learning"
-            name="tsQuery"
-            tabindex="0"
-            type="checkbox"
-            value="machine-learning"
-          />
-          <label
-            class="form-check-label label mw-100 text-muted"
-            data-testid="checkboxLabel"
-            for="desktop-tsQuery-machine-learning"
-          >
-            <div
-              class="d-flex align-items-baseline mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Machine learning
-              </span>
-            </div>
-          </label>
-        </div>
-        <div
-          class="form-check me-sm-2 mb-2 checkbox"
-        >
-          <input
-            aria-checked="false"
-            class="form-check-input input"
-            id="desktop-tsQuery-monitoring"
-            name="tsQuery"
-            tabindex="0"
-            type="checkbox"
-            value="monitoring"
-          />
-          <label
-            class="form-check-label label mw-100 text-muted"
-            data-testid="checkboxLabel"
-            for="desktop-tsQuery-monitoring"
-          >
-            <div
-              class="d-flex align-items-baseline mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Monitoring
-              </span>
-            </div>
-          </label>
-        </div>
-        <div
-          class="form-check me-sm-2 mb-2 checkbox"
-        >
-          <input
-            aria-checked="false"
-            class="form-check-input input"
-            id="desktop-tsQuery-networking"
-            name="tsQuery"
-            tabindex="0"
-            type="checkbox"
-            value="networking"
-          />
-          <label
-            class="form-check-label label mw-100 text-muted"
-            data-testid="checkboxLabel"
-            for="desktop-tsQuery-networking"
-          >
-            <div
-              class="d-flex align-items-baseline mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Networking
-              </span>
-            </div>
-          </label>
-        </div>
-        <div
-          class="form-check me-sm-2 mb-2 checkbox"
-        >
-          <input
-            aria-checked="false"
-            class="form-check-input input"
-            id="desktop-tsQuery-security"
-            name="tsQuery"
-            tabindex="0"
-            type="checkbox"
-            value="security"
-          />
-          <label
-            class="form-check-label label mw-100 text-muted"
-            data-testid="checkboxLabel"
-            for="desktop-tsQuery-security"
-          >
-            <div
-              class="d-flex align-items-baseline mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Security
-              </span>
-            </div>
-          </label>
-        </div>
-        <div
-          class="form-check me-sm-2 mb-2 checkbox"
-        >
-          <input
-            aria-checked="false"
-            class="form-check-input input"
-            id="desktop-tsQuery-storage"
-            name="tsQuery"
-            tabindex="0"
-            type="checkbox"
-            value="storage"
-          />
-          <label
-            class="form-check-label label mw-100 text-muted"
-            data-testid="checkboxLabel"
-            for="desktop-tsQuery-storage"
-          >
-            <div
-              class="d-flex align-items-baseline mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Storage
-              </span>
-            </div>
-          </label>
-        </div>
-        <div
-          class="form-check me-sm-2 mb-2 checkbox"
-        >
-          <input
-            aria-checked="false"
-            class="form-check-input input"
-            id="desktop-tsQuery-streaming-messaging"
-            name="tsQuery"
-            tabindex="0"
-            type="checkbox"
-            value="streaming-messaging"
-          />
-          <label
-            class="form-check-label label mw-100 text-muted"
-            data-testid="checkboxLabel"
-            for="desktop-tsQuery-streaming-messaging"
-          >
-            <div
-              class="d-flex align-items-baseline mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Streaming and Messaging
-              </span>
-            </div>
-          </label>
-        </div>
-        <div
-          class="form-check me-sm-2 mb-2 checkbox"
-        >
-          <input
-            aria-checked="false"
-            class="form-check-input input"
-            id="desktop-tsQuery-web-applications"
-            name="tsQuery"
-            tabindex="0"
-            type="checkbox"
-            value="web-applications"
-          />
-          <label
-            class="form-check-label label mw-100 text-muted"
-            data-testid="checkboxLabel"
-            for="desktop-tsQuery-web-applications"
-          >
-            <div
-              class="d-flex align-items-baseline mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Web applications
-              </span>
+                (10)
+              </small>
             </div>
           </label>
         </div>

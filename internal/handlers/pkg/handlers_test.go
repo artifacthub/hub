@@ -1390,6 +1390,7 @@ func TestSearch(t *testing.T) {
 			{"invalid limit", "limit=z"},
 			{"invalid offset", "offset=z"},
 			{"invalid facets", "facets=z"},
+			{"invalid category (one of them)", "category=1&category=z"},
 			{"invalid kind", "kind=z"},
 			{"invalid kind (one of them)", "kind=0&kind=z"},
 			{"invalid verified publisher", "verified_publisher=z"},
@@ -1437,6 +1438,8 @@ func TestSearch(t *testing.T) {
 		v.Set("facets", "true")
 		v.Set("ts_query_web", "q1")
 		v.Set("ts_query", "q2")
+		v.Add("category", "1")
+		v.Add("category", "2")
 		v.Add("user", "u1")
 		v.Add("user", "u2")
 		v.Add("org", "o1")
@@ -1467,6 +1470,7 @@ func TestSearch(t *testing.T) {
 			Orgs:              []string{"o1", "o2"},
 			Repositories:      []string{"r1", "r2"},
 			RepositoryKinds:   []hub.RepositoryKind{hub.Helm, hub.OLM},
+			Categories:        []hub.PackageCategory{hub.AIMachineLearning, hub.Database},
 			VerifiedPublisher: true,
 			Official:          true,
 			Operators:         true,
