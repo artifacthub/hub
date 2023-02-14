@@ -11,8 +11,7 @@ import { useHistory } from 'react-router-dom';
 import API from '../../api';
 import { AppCtx, updateLimit } from '../../context/AppCtx';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
-import { FacetOption, Facets, Package, RepositoryKind, SearchFiltersURL, SearchResults, TsQuery } from '../../types';
-import { TS_QUERY } from '../../utils/data';
+import { FacetOption, Facets, Package, RepositoryKind, SearchFiltersURL, SearchResults } from '../../types';
 import getSampleQueries from '../../utils/getSampleQueries';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import scrollToTop from '../../utils/scrollToTop';
@@ -43,7 +42,6 @@ interface Props {
   viewedPackage?: string;
   setViewedPackage: Dispatch<SetStateAction<string | undefined>>;
   tsQueryWeb?: string;
-  tsQuery?: string[];
   pageNumber: number;
   filters?: FiltersProp;
   deprecated?: boolean | null;
@@ -107,15 +105,6 @@ const SearchView = (props: Props) => {
     return null;
   };
 
-  const getTsQueryName = (ts: string): string | null => {
-    const selectedTsQuery = TS_QUERY.find((query: TsQuery) => query.label === ts);
-    if (selectedTsQuery) {
-      return selectedTsQuery.name;
-    } else {
-      return null;
-    }
-  };
-
   const isEmptyFacets = (): boolean => {
     if (searchResults.facets) {
       return every(searchResults.facets, (f: Facets) => {
@@ -164,7 +153,6 @@ const SearchView = (props: Props) => {
     return {
       pageNumber: props.pageNumber,
       tsQueryWeb: props.tsQueryWeb,
-      tsQuery: props.tsQuery,
       filters: props.filters,
       deprecated: props.deprecated,
       operators: props.operators,
@@ -211,19 +199,6 @@ const SearchView = (props: Props) => {
     });
   };
 
-  const onTsQueryChange = (value: string, checked: boolean): void => {
-    let query = isUndefined(props.tsQuery) ? [] : props.tsQuery.slice();
-    if (checked) {
-      query.push(value);
-    } else {
-      query = query.filter((el) => el !== value);
-    }
-
-    updateCurrentPage({
-      tsQuery: query,
-    });
-  };
-
   const onDeprecatedChange = (): void => {
     updateCurrentPage({
       deprecated: !isUndefined(props.deprecated) && !isNull(props.deprecated) ? !props.deprecated : true,
@@ -255,7 +230,6 @@ const SearchView = (props: Props) => {
       search: prepareQueryString({
         pageNumber: 1,
         tsQueryWeb: props.tsQueryWeb,
-        tsQuery: [],
         filters: {},
         sort: DEFAULT_SORT,
       }),
@@ -295,7 +269,6 @@ const SearchView = (props: Props) => {
       setIsSearching(true);
       const query = {
         tsQueryWeb: props.tsQueryWeb,
-        tsQuery: props.tsQuery,
         filters: props.filters,
         offset: calculateOffset(),
         limit: ctx.prefs.search.limit,
@@ -351,7 +324,6 @@ const SearchView = (props: Props) => {
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [
     props.tsQueryWeb,
-    JSON.stringify(props.tsQuery),
     props.pageNumber,
     JSON.stringify(props.filters), // https://twitter.com/dan_abramov/status/1104414272753487872
     props.deprecated,
@@ -364,12 +336,7 @@ const SearchView = (props: Props) => {
   /* eslint-enable react-hooks/exhaustive-deps */
 
   const activeFilters =
-    props.deprecated ||
-    props.operators ||
-    props.verifiedPublisher ||
-    props.official ||
-    !isUndefined(props.tsQuery) ||
-    !isEmpty(props.filters);
+    props.deprecated || props.operators || props.verifiedPublisher || props.official || !isEmpty(props.filters);
 
   return (
     <>
@@ -422,10 +389,8 @@ const SearchView = (props: Props) => {
                           forceCollapseList={props.tsQueryWeb !== currentTsQueryWeb}
                           facets={searchResults.facets}
                           activeFilters={props.filters || {}}
-                          activeTsQuery={props.tsQuery}
                           onChange={onFiltersChange}
                           onResetSomeFilters={onResetSomeFilters}
-                          onTsQueryChange={onTsQueryChange}
                           deprecated={props.deprecated}
                           operators={props.operators}
                           verifiedPublisher={props.verifiedPublisher}
@@ -524,22 +489,6 @@ const SearchView = (props: Props) => {
                     })}
                   </>
                 )}
-                {props.tsQuery && (
-                  <>
-                    {props.tsQuery.map((ts: string) => {
-                      const value = getTsQueryName(ts);
-                      if (isNull(value)) return null;
-                      return (
-                        <FilterBadge
-                          key={`btn_${ts}`}
-                          type="Category"
-                          name={value}
-                          onClick={() => onTsQueryChange(ts, false)}
-                        />
-                      );
-                    })}
-                  </>
-                )}
                 {props.operators && <FilterBadge name="Only operators" onClick={onOperatorsChange} />}
                 {props.deprecated && <FilterBadge name="Include deprecated" onClick={onDeprecatedChange} />}
               </div>
@@ -562,10 +511,8 @@ const SearchView = (props: Props) => {
                   forceCollapseList={props.tsQueryWeb !== currentTsQueryWeb}
                   facets={searchResults.facets}
                   activeFilters={props.filters || {}}
-                  activeTsQuery={props.tsQuery}
                   onChange={onFiltersChange}
                   onResetSomeFilters={onResetSomeFilters}
-                  onTsQueryChange={onTsQueryChange}
                   deprecated={props.deprecated}
                   operators={props.operators}
                   verifiedPublisher={props.verifiedPublisher}
@@ -622,7 +569,6 @@ const SearchView = (props: Props) => {
                                   search: prepareQueryString({
                                     pageNumber: 1,
                                     tsQueryWeb: '',
-                                    tsQuery: [],
                                     filters: {},
                                   }),
                                 });
@@ -657,7 +603,6 @@ const SearchView = (props: Props) => {
                             package={item}
                             searchUrlReferer={{
                               tsQueryWeb: props.tsQueryWeb,
-                              tsQuery: props.tsQuery,
                               pageNumber: props.pageNumber,
                               filters: props.filters,
                               deprecated: props.deprecated,

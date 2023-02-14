@@ -13,19 +13,16 @@ import ElementWithTooltip from '../common/ElementWithTooltip';
 import ExpandableList from '../common/ExpandableList';
 import SmallTitle from '../common/SmallTitle';
 import styles from './Filters.module.css';
-import TsQuery from './TsQuery';
 
 interface Props {
   forceCollapseList: boolean;
   activeFilters: {
     [key: string]: string[];
   };
-  activeTsQuery?: string[];
   facets?: Facets[] | null;
   visibleTitle: boolean;
   onChange: (name: string, value: string, checked: boolean) => void;
   onResetSomeFilters: (filterKeys: string[]) => void;
-  onTsQueryChange: (value: string, checked: boolean) => void;
   onDeprecatedChange: () => void;
   onOperatorsChange: () => void;
   onVerifiedPublisherChange: () => void;
@@ -78,6 +75,49 @@ const Filters = (props: Props) => {
     }
 
     return kindElement;
+  };
+
+  const getCategoriesFacets = (): JSX.Element | null => {
+    let categoryElement = null;
+    const categories = getFacetsByFilterKey('category');
+    if (!isUndefined(categories) && categories.options.length > 0 && categories.filterKey) {
+      const active = props.activeFilters.hasOwnProperty(categories.filterKey)
+        ? props.activeFilters[categories.filterKey]
+        : [];
+      const isChecked = (facetOptionId: string) => {
+        return active.includes(facetOptionId.toString());
+      };
+
+      categoryElement = (
+        <div role="menuitem" className={`mt-1 mt-sm-2 pt-1 ${styles.facet}`}>
+          <SmallTitle
+            text={categories.title}
+            className="text-dark fw-bold"
+            id={`repo-${categories.filterKey}-${props.device}`}
+          />
+          <div className="mt-3" role="group" aria-labelledby={`repo-${categories.filterKey}-${props.device}`}>
+            {categories.options.map((option: FacetOption) => (
+              <CheckBox
+                key={`kind_${option.id.toString()}`}
+                name={categories.filterKey!}
+                device={props.device}
+                value={option.id.toString()}
+                labelClassName="mw-100 text-muted"
+                className={styles.checkbox}
+                legend={option.total}
+                label={option.name}
+                checked={isChecked(option.id.toString())}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  props.onChange(e.target.name, e.target.value, e.target.checked)
+                }
+              />
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    return categoryElement;
   };
 
   const getCapabilitiesFacets = (): JSX.Element | null => {
@@ -185,8 +225,7 @@ const Filters = (props: Props) => {
             props.deprecated ||
             props.operators ||
             props.verifiedPublisher ||
-            props.official ||
-            !isEmpty(props.activeTsQuery)) && (
+            props.official) && (
             <div className={`d-flex align-items-center ${styles.resetBtnWrapper}`}>
               <IoMdCloseCircleOutline className={`text-dark ${styles.resetBtnDecorator}`} />
               <button
@@ -250,7 +289,7 @@ const Filters = (props: Props) => {
       </div>
 
       {getKindFacets()}
-      <TsQuery device={props.device} active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
+      {getCategoriesFacets()}
       {getLicenseFacets()}
       {getCapabilitiesFacets()}
 

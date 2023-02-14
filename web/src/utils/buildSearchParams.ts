@@ -7,6 +7,7 @@ const WHITELISTED_FILTER_KEYS = [
   'user', // User as publisher
   'capabilities', // Capability level: Basic Install, Seamless Upgrades, Full Lifecycle, Deep Insights, Auto Pilot
   'kind', // Repository kind
+  'category', // Package category
   'repo', // Repository name
   'license', // Package license
 ];
@@ -29,7 +30,6 @@ const buildSearchParams = (query: string): SearchFiltersURL => {
 
   return {
     tsQueryWeb: p.has('ts_query_web') ? p.get('ts_query_web')! : undefined,
-    tsQuery: p.has('ts_query') ? p.get('ts_query')!.split(' | ')! : undefined,
     filters: { ...filters },
     pageNumber: p.has('page') && !isNull(p.get('page')) ? parseInt(p.get('page')!) : 1,
     deprecated: p.has('deprecated') ? p.get('deprecated') === 'true' : false,

@@ -114,7 +114,7 @@ const PackageView = (props: Props) => {
   const [repositoryName, setRepositoryName] = useState(props.repositoryName);
   const [version, setVersion] = useState(props.version);
   const [detail, setDetail] = useState<Package | null | undefined>(undefined);
-  const { tsQueryWeb, tsQuery, pageNumber, filters, deprecated, operators, verifiedPublisher, official, sort } =
+  const { tsQueryWeb, pageNumber, filters, deprecated, operators, verifiedPublisher, official, sort } =
     props.searchUrlReferer || {};
   const [apiError, setApiError] = useState<null | string | JSX.Element>(null);
   const [currentHash, setCurrentHash] = useState<string | undefined>(props.hash);
@@ -749,7 +749,6 @@ const PackageView = (props: Props) => {
                 search: prepareQueryString({
                   pageNumber: pageNumber || 1,
                   tsQueryWeb: tsQueryWeb,
-                  tsQuery: tsQuery,
                   filters: filters,
                   deprecated: deprecated,
                   operators: operators,

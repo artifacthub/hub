@@ -275,7 +275,6 @@ export interface SearchFiltersURL extends BasicQuery {
 export interface BasicQuery {
   tsQueryWeb?: string;
   name?: string;
-  tsQuery?: string[];
   filters?: {
     [key: string]: string[];
   };
@@ -516,11 +515,6 @@ export interface APIKeyCode {
   apiKeyId: string;
 }
 
-export interface TsQuery {
-  name: string;
-  label: string;
-  value: string;
-}
 export interface Error {
   kind: ErrorKind;
   message?: string;

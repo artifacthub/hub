@@ -4,6 +4,7 @@ create or replace function search_packages(p_input jsonb)
 returns table(data json, total_count bigint) as $$
 declare
     v_repository_kinds int[];
+    v_categories int[];
     v_users text[];
     v_orgs text[];
     v_repositories text[];
@@ -18,6 +19,8 @@ begin
     -- Prepare filters for later use
     select array_agg(e::int) into v_repository_kinds
     from jsonb_array_elements_text(p_input->'repository_kinds') e;
+    select array_agg(e::int) into v_categories
+    from jsonb_array_elements_text(p_input->'categories') e;
     select array_agg(e::text) into v_users
     from jsonb_array_elements_text(p_input->'users') e;
     select array_agg(e::text) into v_orgs
@@ -49,6 +52,8 @@ begin
             p.package_id,
             p.name,
             p.normalized_name,
+            p.package_category_id,
+            pc.display_name as package_category_display_name,
             p.stars,
             p.tsdoc,
             p.official as package_official,
@@ -81,6 +86,7 @@ begin
         join snapshot s using (package_id)
         join repository r using (repository_id)
         join repository_kind rk using (repository_kind_id)
+        left join package_category pc using (package_category_id)
         left join "user" u using (user_id)
         left join organization o using (organization_id)
         where s.version = p.latest_version
@@ -92,6 +98,19 @@ begin
             case when v_tsquery is not null then
                 v_tsquery @@ p.tsdoc
             else true end
+        and
+            case
+                when cardinality(v_orgs) > 0 and cardinality(v_users) > 0 then
+                    (o.name = any(v_orgs) or u.alias = any(v_users))
+                when cardinality(v_orgs) > 0 then
+                    o.name = any(v_orgs)
+                when cardinality(v_users) > 0 then
+                    u.alias = any(v_users)
+                else true
+            end
+        and
+            case when cardinality(v_repositories) > 0
+            then r.name = any(v_repositories) else true end
         and
             case when p_input ? 'verified_publisher' and (p_input->>'verified_publisher')::boolean = true then
                 r.verified_publisher = true
@@ -122,18 +141,8 @@ begin
             case when cardinality(v_repository_kinds) > 0
             then repository_kind_id = any(v_repository_kinds) else true end
         and
-            case
-                when cardinality(v_orgs) > 0 and cardinality(v_users) > 0 then
-                    (organization_name = any(v_orgs) or user_alias = any(v_users))
-                when cardinality(v_orgs) > 0 then
-                    organization_name = any(v_orgs)
-                when cardinality(v_users) > 0 then
-                    user_alias = any(v_users)
-                else true
-            end
-        and
-            case when cardinality(v_repositories) > 0
-            then repository_name = any(v_repositories) else true end
+            case when cardinality(v_categories) > 0
+            then package_category_id = any(v_categories) else true end
         and
             case when cardinality(v_licenses) > 0
             then license = any(v_licenses) else true end
@@ -223,8 +232,31 @@ begin
                                         count(*) as total
                                     from filtered_packages_excluding_facets_filters
                                     group by repository_kind_id, repository_kind_name
-                                    order by total desc, repository_kind_name asc
+                                    order by repository_kind_name asc
                                 ) as kinds_breakdown
+                            )
+                        )
+                    ),
+                    (
+                        select json_build_object(
+                            'title', 'Category',
+                            'filter_key', 'category',
+                            'options', (
+                                select coalesce(json_agg(json_build_object(
+                                    'id', package_category_id,
+                                    'name', package_category_display_name,
+                                    'total', total
+                                )), '[]')
+                                from (
+                                    select
+                                        package_category_id,
+                                        package_category_display_name,
+                                        count(*) as total
+                                    from filtered_packages_excluding_facets_filters
+                                    where package_category_id is not null
+                                    group by package_category_id, package_category_display_name
+                                    order by package_category_display_name asc
+                                ) as categories_breakdown
                             )
                         )
                     ),

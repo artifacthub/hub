@@ -23,10 +23,6 @@ jest.mock('../../utils/getSampleQueries', () => () => {
       querystring: 'kind=1&ts_query_web=cve',
     },
     {
-      name: 'OLM operators in the monitoring category',
-      querystring: 'kind=3&ts_query=monitoring',
-    },
-    {
       name: 'Packages from verified publishers',
       querystring: 'verified_publisher=true',
     },
@@ -37,10 +33,6 @@ jest.mock('../../utils/getSampleQueries', () => () => {
     {
       name: 'Operators with auto pilot capabilities',
       querystring: 'capabilities=auto+pilot',
-    },
-    {
-      name: 'Helm Charts in the storage category',
-      querystring: 'kind=0&ts_query=storage',
     },
     {
       name: 'Packages with Apache-2.0 license',
@@ -105,10 +97,6 @@ const mockQueries = [
   {
     name: 'Falco rules for CVE',
     querystring: 'kind=1&ts_query_web=cve',
-  },
-  {
-    name: 'OLM operators in the monitoring category',
-    querystring: 'kind=3&ts_query=monitoring',
   },
 ];
 
