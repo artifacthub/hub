@@ -940,8 +940,8 @@ paths:
         - $ref: "#/components/parameters/LimitParam"
         - $ref: "#/components/parameters/FacetsParam"
         - $ref: "#/components/parameters/TSQueryWebParam"
-        - $ref: "#/components/parameters/TSQueryParam"
         - $ref: "#/components/parameters/RepositoryKindsListParam"
+        - $ref: "#/components/parameters/PackageCategoryListParam"
         - $ref: "#/components/parameters/UsersListParam"
         - $ref: "#/components/parameters/OrgsListParam"
         - $ref: "#/components/parameters/RepositoriesListParam"
@@ -4850,6 +4850,33 @@ components:
           - org2
       required: false
       description: List of organization names
+    PackageCategoryListParam:
+      in: query
+      name: category
+      schema:
+        type: array
+        items:
+          type: integer
+          enum:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+      required: false
+      description: |
+        Package category:
+          * `1` - AI / Machine learning
+          * `2` - Database
+          * `3` - Integration and delivery
+          * `4` - Monitoring and logging
+          * `5` - Networking
+          * `6` - Security
+          * `7` - Storage
+          * `8` - Streaming and messaging
     PackageIDParam:
       in: path
       name: packageID
