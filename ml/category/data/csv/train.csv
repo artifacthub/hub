@@ -4,7 +4,6 @@
 0-unknown;anonaddy
 0-unknown;anope,network-other,productivity,tools-utilities
 0-unknown;apache-musicindex,streaming,m3u,playlist
-0-unknown;apache-musicindex,streaming,m3u,playlist
 0-unknown;application,blog,cms,http,php,web,wordpress
 0-unknown;application,cms,http,php,web,shopware
 0-unknown;application,http,perl,web,backup,backuppc
@@ -22,6 +21,7 @@
 0-unknown;bi
 0-unknown;bitcoin,ethereum,blockchain,crypto
 0-unknown;blog,php,self,hosted,facebook
+0-unknown;blog,web,tomcat
 0-unknown;booksonic,audiobook
 0-unknown;bookstack,wiki,documentation
 0-unknown;bwapp,tools-utilities,other
@@ -29,6 +29,7 @@
 0-unknown;chat,communication,http,web,application,nodejs,javascript,meteor
 0-unknown;ckan,http,web,application,python
 0-unknown;cms,application
+0-unknown;common,helper,template,function
 0-unknown;community,forum
 0-unknown;cryptofolio
 0-unknown;cryptpad
@@ -42,9 +43,13 @@
 0-unknown;demo,web
 0-unknown;disk
 0-unknown;dizquetv,dizquetv
+0-unknown;docker,dashboard
+0-unknown;documents,books,wiki
 0-unknown;dokuwiki,wiki,http,web,application,php
 0-unknown;dont,don't,starve,together,don't starve together,dontstarvetogether,dst,klei
 0-unknown;drupal,cms,blog,http,web,application,php
+0-unknown;drupal,odoo
+0-unknown;electron,nodejs
 0-unknown;erp,crm,openerp
 0-unknown;euterpe,productivity,tools-utilities,mediaapp-music,mediaserver-music
 0-unknown;eve-online,rails,ruby
@@ -55,6 +60,7 @@
 0-unknown;fluttercoin-wallet,network-other,productivity,tools-utilities,crypto
 0-unknown;fuel,car,log,fill-up,vehicle
 0-unknown;funkwhale,mediaapp-music,mediaserver-music
+0-unknown;game,games,gaming
 0-unknown;game,server
 0-unknown;ghost,blog,http,web,application,nodejs,javascript
 0-unknown;go,golang,dedicated-gameservers,multiplayer,game-development
@@ -70,6 +76,7 @@
 0-unknown;jellyfin,media-server,streaming,tv,video,kodi
 0-unknown;jellyseerr
 0-unknown;kerbalspaceprogram-lmp,gameservers
+0-unknown;kubernetes,dashboard
 0-unknown;kubernetes,docker
 0-unknown;kubernetes,helm,falco,opa,olm,tinkerbell actions,krew,tekton,keda scalers,coredns,keptn
 0-unknown;kubernetes,helm,falco,opa,olm,tinkerbell actions,krew,tekton,keda scalers,coredns,keptn,containers images,kubewarden,gatekeeper,kyverno
@@ -81,6 +88,7 @@
 0-unknown;mediawiki,wiki,http,web,application,php
 0-unknown;message,web
 0-unknown;microbin
+0-unknown;migration,modernization,windup,modernization & migration
 0-unknown;minecraft
 0-unknown;minecraft,server,cli
 0-unknown;mojopaste,cloud,productivity,tools-utilities,network-web
@@ -127,6 +135,7 @@
 0-unknown;wallabag
 0-unknown;wallabag,read-it-later
 0-unknown;web
+0-unknown;web,application
 0-unknown;webapp,web application,generic,docker,openshift
 0-unknown;wildfly,java,http,web,application server,jsp
 0-unknown;wopi,efss
@@ -136,31 +145,43 @@
 0-unknown;wordpress,veilis,cms,web application,application,web,http,php
 0-unknown;wordpress,veilis,woocommerce,php,blog,http,web,application
 0-unknown;workout
+1-ai-machine-learning;ai,deep-learning,hpc,distributed-computing,inference,big-model,large-scale,data-parallelism,model-parallelism,pipeline-parallelism,heterogeneous-training
+1-ai-machine-learning;ai,deep-learning,speech,pytorch
+1-ai-machine-learning;ai,double-take
 1-ai-machine-learning;ai,machine learning,deep learning,hpc,openi
 1-ai-machine-learning;ai,resource orchestration,noops,ai,machine learning,openshift optional
+1-ai-machine-learning;ai,senseai
 1-ai-machine-learning;annotation,ml,text,machine-learning
 1-ai-machine-learning;apache spark,scala,r,vs code
 1-ai-machine-learning;apache,spark
+1-ai-machine-learning;bioinformatics,bigdata,ai,biofoundry,knowledgegraph
+1-ai-machine-learning;bot,text-to-speech,automation,privacy,ai,chatbot,artificial-intelligence,speech-synthesis,assistant,speech-recognition,personal-assistant,speech-to-text,leon,flite,voice-assistant,virtual-assistant,deepspeech
 1-ai-machine-learning;business intelligence,data science
 1-ai-machine-learning;clearml,machine learning,mlops
 1-ai-machine-learning;clearml,machine learning,mlops,model serving
 1-ai-machine-learning;clearml,machine learning,mlops,task agent
+1-ai-machine-learning;colab,collaboratory
 1-ai-machine-learning;data science
 1-ai-machine-learning;data science,machine learning,r,rstats,python,deploy,rstudio
 1-ai-machine-learning;data science,machine learning,r,rstats,python,ide,editor,jupyter,vscode,rstudio
 1-ai-machine-learning;data science,machine learning,r,rstats,python,package,cran,pypi,pip,bioconductor,rstudio
 1-ai-machine-learning;data science,spark,r,python,scala,notebooks
+1-ai-machine-learning;data-science,machine-learning,ai,deep-learning,pytorch,artificial-intelligence
+1-ai-machine-learning;data-science,machine-learning,roadmap,ai,deep-learning,neural-network,artificial-intelligence,data-analysis,study-plan,ai-roadmap
 1-ai-machine-learning;deep learning,a.i.,machine learning,infrastructure
 1-ai-machine-learning;deep learning,a.i.,machine learning,infrastructure,nfs,storage
+1-ai-machine-learning;deepstack,ai
+1-ai-machine-learning;desktop-app,application,app,ai,webview,openai,gpt,notes-app,tauri,gpt-3,chatgpt
 1-ai-machine-learning;docker,machine-learning,ai,ml,model-management,mlflow,mlflow-tracking-server,mlflow-docker,mlflow-tracking,mlflow-kube
 1-ai-machine-learning;durable,execution,workflow,sdk,application,distributed,application runtime,developer tools,ai,machine learning
+1-ai-machine-learning;facebox,ai
 1-ai-machine-learning;frigate,nvr,tensorflow,coral,ml,machine-learning
 1-ai-machine-learning;google,colab,jupyter
 1-ai-machine-learning;gpu enabled,jupyter notebook
 1-ai-machine-learning;gpu,cuda,compute,operator,deep learning,monitoring,tesla
 1-ai-machine-learning;h2o.ai,h2o,h2o-3,driverless ai,sparkling water,machine learning,ai
 1-ai-machine-learning;hadoop,spark,python,jupyter
-1-ai-machine-learning;intelligence,ai,gstreamer,neural-network,tensorflow,tizen,yocto
+1-ai-machine-learning;intelligence,ai,gstreamer,neural-netw
 1-ai-machine-learning;jupyter
 1-ai-machine-learning;jupyter notebook server
 1-ai-machine-learning;jupyter,jupyterhub,z2jh
@@ -171,33 +192,60 @@
 1-ai-machine-learning;kubeflow,operator,ibmcloud,gcp,openshift,ai,machine learning
 1-ai-machine-learning;kubernetes,machine-learning
 1-ai-machine-learning;kubernetes,rasa,rasa-oss
+1-ai-machine-learning;lama-cleaner,media,ai
 1-ai-machine-learning;limited,data science,analytics,amd64,ppc64le,rhocp,spectrum,symphony,cluster,grid,parallel,distributed,compute,workload
+1-ai-machine-learning;machine learning
+1-ai-machine-learning;machine learning,data scienceork,tensorflow,tizen,yocto
+1-ai-machine-learning;machine-learning,ai,apache-spark,ml,model-management,mlflow
+1-ai-machine-learning;machine-learning,ai,discord-bot,assistant,language-model,chatgpt,rlhf
 1-ai-machine-learning;machine-learning,ai,ml,model-management,mlflow,mlflow-tracking-server,mlflow-docker,mlflow-tracking,mlflow-kube
+1-ai-machine-learning;machine-learning,ai,photography,tensorflow,self-hosted,google-photos,private-cloud
+1-ai-machine-learning;machine-learning,caffe,ai,deep-learning,neural-network,mxnet,tensorflow,keras,ml,torch,pytorch,visualizer,machinelearning,deeplearning,darknet,paddle,caffe2,coreml,onnx,tensorflow-lite
 1-ai-machine-learning;machine-learning,computer-vision,ffmpeg,neural-network,unity3d,image-processing,support-vector-machines
+1-ai-machine-learning;machine-learning,deep-learning,artificial-intelligence,ibm-research,explainable-ai,explainable-ml,xai,ibm-research-ai,codait,trusted-ai,trusted-ml,explainabil
+1-ai-machine-learning;machine-learning,deep-learning,facial-recognition,face-recognition,openface,facenet,face-analysis,facial-expression-recognition,emotion-recognition,age-prediction,gender-prediction,deepid,vgg-face,deepface,arcface,race-classification
+1-ai-machine-learning;machine-learning,deep-learning,hadoop,tensorflow,horovod,hadoop-yarn
+1-ai-machine-learning;machine-learning,deep-neural-networks,ai,deep-learning,ml,artificial-intelligence,caffe2
+1-ai-machine-learning;machine-learning,deep-neural-networks,deep-learning,faceswap,neural-networks,face-swap,deeplearning,neural-nets,deepface,deepfakes,fakeapp,deep-face-swap,openfaceswap,myfakeapp
+1-ai-machine-learning;machine-learning,face-recognition,face-detection
 1-ai-machine-learning;machine-learning,ml
+1-ai-machine-learning;machine-learning,natural-language-processing,information-retrieval,research,reinforcement-learning,computer-vision,deep-learning,distributed-computing,image-processing,metric-learning,recommender-system,object-detection
+1-ai-machine-learning;machine-learning,ocr,tesseract,lstm,tesseract-ocr,ocr-engine
+1-ai-machine-learning;machine-learning,reinforcement-learning,ai,deep-learning,neural-network,statistical-learning,artificial-intelligence,unsupervised-learning,intelligent-systems,machine-intelligence,intelligent-machines
+1-ai-machine-learning;machine,learning,ai
 1-ai-machine-learning;metadata,data-science,data,machine-learning,automation,big-data,bigdata,artificial-intelligence,datascience,data-engineering,data-catalog,metadata-api,governance,data-profiling,metadata-management,dataengineering,dataquality,bigdataanalytics,datadiscovery
 1-ai-machine-learning;mlflow,machinelearning,mlops,model tracking,model versioning,mlflow projects,model registry
 1-ai-machine-learning;mlflow,mlops,datascience,machinelearning
 1-ai-machine-learning;mlops,aiops,production,monitoring,ai,machine learning
 1-ai-machine-learning;mxnet,python,machine,learning
+1-ai-machine-learning;nlp,data-science,machine-learning,natural-language-processing,ai,deep-learning
 1-ai-machine-learning;nlp,ops,deep-learning,text-classification,tensorflow,nlu,inference,text-generation,speech-recognition,seq2seq,sequence-to-sequence,speaker-verification,asr,emotion-recognition,custom-ops,serving
 1-ai-machine-learning;odpi, egeria, lab, jupyter, notebook
+1-ai-machine-learning;opencv,machine-learning,deep-neural-networks,ai,computer-vision,deep-learning,deeplearning,opencv-library,opencv-python,computervision,opencv3,opencv-tutorial,opencv-cpp
+1-ai-machine-learning;programming-language,science,machine-learning,hpc,scientific,numerical
 1-ai-machine-learning;python,machine-learning,attack,extraction,inference,artificial-intelligence,adversarial-machine-learning,trusted-ai,trustworthy-ai
 1-ai-machine-learning;python,nlp,data-science,machine-learning,time-series,clustering,gpu,ml,regression,classification
 1-ai-machine-learning;pytorch,python,machine,learning
 1-ai-machine-learning;qiskit,open source,quantum,developer tools
 1-ai-machine-learning;r,rstudio,workspace,openshift
+1-ai-machine-learning;rasa,ai assistants,chatbot,rasa enterprise
+1-ai-machine-learning;scikit,pytorch,python
 1-ai-machine-learning;scikit,sci-kit,ml
 1-ai-machine-learning;seldon-core,kubernetes,machine-learning,prometheus,grafana
+1-ai-machine-learning;spark,gpu,cuda
 1-ai-machine-learning;splunk,enterprise,operator,monitoring,logs,tracing,big data,logging & tracing,monitoring,security,ai,machine learning
+1-ai-machine-learning;tensorflow
 1-ai-machine-learning;tensorflow,pytorch,ml
 1-ai-machine-learning;tensorflow,serving,resnet,machine,learning,library
+1-ai-machine-learning;vald,ngt,vector,search,approximate-nearest-neighbor-search,nearest-neighbor-search,vector-search-engine,similarity-search,image-search,kubernetes,k8s,ai,artificial-intelligence
 2-database;adminer,postgres,mysql,sqlite,elasticsearch,mongodb,database,sql
 2-database;aerospike,database
 2-database;alembic,database,migration,postgresql
 2-database;apache,cassandra,database
 2-database;apache,geode,database
+2-database;aws,redshift,rds,aurora,cloudsql
 2-database;big data,database,big data,database
+2-database;cache,azuredatabase,asparadb,cloudsql
 2-database;cassandra
 2-database;cassandra,database,nosql
 2-database;clickhouse,database,oltp,timeseries,time series,altinity,database
@@ -220,8 +268,11 @@
 2-database;database,sql,scale out,notebook,acid
 2-database;database,vertica,database
 2-database;db,database,mariadb
+2-database;db,rdbms
 2-database;db2,database,sql,amd64,rhocp,commercial,limited
+2-database;db2,sql
 2-database;db2u,mpp,dashdb,db2warehouse,warehouse,local,db2,database,sql,rhocp,roks,amd64,limited,commercial
+2-database;dbaas,cloud
 2-database;devops,kubernetes,database,mongodb,opstree,operatork,cloud native,database,openshift optional,storage
 2-database;devops,kubernetes,database,redis,opstree,crd,database,storage
 2-database;dgraph,database,graph,graphql,nosql
@@ -279,10 +330,12 @@
 2-database;mongodb,databases,nosql,database
 2-database;mongodb,percona,database,replicaset,shard,database
 2-database;mysql,backup,s3,cloud-sql-proxy
+2-database;mysql,cluster,proxysql
 2-database;mysql,database,proxysql,cluster
 2-database;mysql,database,sql
 2-database;mysql,database,sql,cluster,high availability
 2-database;mysql,database,sql,cluster,high availablity
+2-database;mysql,database,sql,galera
 2-database;mysql,database,sql,kanister
 2-database;mysql,percona,database,pxc,galera,database
 2-database;mysql,percona,database,sql
@@ -297,6 +350,7 @@
 2-database;operator,starrocks,database,olap
 2-database;otc,rds,opentelekomcloud,database
 2-database;performance,repository,database,results,hyperfoil,benchmark,integration & delivery
+2-database;pgadmin,pgbouncer
 2-database;pgadmin,postgres
 2-database;pgadmin,postgres,database,sql
 2-database;pgbouncer,postgres,database,sql
@@ -332,10 +386,12 @@
 2-database;redis,memcached,cassandra,mongodb,solr,cache,dynamodb,driver,predis,couchbase,arangodb,ssdb,firestore
 2-database;redis,monitoring
 2-database;rethinkdb,database,nosql
+2-database;rethinkdb,questdb
 2-database;schemahero,database,kubernetes,postgresql,migration
 2-database;sitewhere,internet-of-things,open-source,iot,iot-framework,iot-platform,platform,integration,mongodb
 2-database;sql
 2-database;sql,distributed,python
+2-database;sqlite
 2-database;sqlite,browser,sqlitebrowser,database
 2-database;startx,os,fedora,database,couchbase
 2-database;startx,os,fedora,database,mongo
@@ -421,6 +477,10 @@
 3-integration-delivery;devops,uffizzi,continuous-previews,ephemeral,environments,pull-request,merge-request,on-demand,ci,cd,cp
 3-integration-delivery;discovery,integration & delivery
 3-integration-delivery;dnext,pia,crm,telecommunication,order management,billing,integration & delivery
+3-integration-delivery;docker,kubernetes,jenkins,microservice,openshift,continuous-integration,continuous-delivery,ci-cd,developer-tools,continuous,developer-experience
+3-integration-delivery;docker,shipping,package,integration,ci,cd,continuous,dag,delivery
+3-integration-delivery;dockerfiles,build,framework,ci,build-automation,ci-cd,build-tool,build-system,docker-images,cicd,reproducible-builds
+3-integration-delivery;drone,deploy,runner
 3-integration-delivery;ecr,aws,redhat,integration & delivery
 3-integration-delivery;edp,admin,console,pipelines
 3-integration-delivery;edp,argocd,deployment,pipelines,helm
@@ -437,9 +497,11 @@
 3-integration-delivery;fission,serverless,platform,faas,functions,integration & delivery
 3-integration-delivery;flagger,istio,appmesh,linkerd,gloo,osm,smi,gitops,load testing
 3-integration-delivery;flagger,istio,appmesh,linkerd,kuma,osm,smi,gloo,contour,nginx,traefik,gitops,canary
+3-integration-delivery;flux,flux2
 3-integration-delivery;flux,gitops,cd,continuous delivery,fluxcd,helm,kustomize,integration & delivery
 3-integration-delivery;git,ci,deploy
 3-integration-delivery;git,drone,drone-runner,ci,cd
+3-integration-delivery;git,pipeline
 3-integration-delivery;github,action runner,operator,ci,agent
 3-integration-delivery;gitlab,ci/cd,devops,sast,dast,integration & delivery,developer tools
 3-integration-delivery;gitlab,devops,ci/cd,dast,sast,integration & delivery,developer tools
@@ -543,6 +605,7 @@
 3-integration-delivery;startx,os,runner,bash
 3-integration-delivery;startx,os,runner,nodejs
 3-integration-delivery;startx,os,runner,openshift,kubernetes
+3-integration-delivery;tekton,git,cd
 3-integration-delivery;tekton,pipeline,build,push,deploy
 3-integration-delivery;tekton,pipeline,image-build
 3-integration-delivery;tekton,pipeline,nodejs,github
@@ -565,14 +628,17 @@
 3-integration-delivery;tekton,task,test
 3-integration-delivery;tekton,task,yq
 3-integration-delivery;tekton,tektoncd,build,pipeline,cicd,developer tools,integration & delivery
+3-integration-delivery;terraform,cloud
 3-integration-delivery;testing,api,http,unit-testing,validation,integration-testing,swagger,test-runner,openapi,tests,test-framework,api-blueprint,cli-app,dredd,openapi-validation,testing-framework,openapi3,sjs-team,openapi2
 3-integration-delivery;verification,amd64,ppc64le,s390x,automation,devops,tools,opensource,limited,icp
 3-integration-delivery;weave,flux,cd,continuous delivery,terraform,gitops,integration & delivery
+3-integration-delivery;webhook,webhooks,devops,automation,integration,ci,deploy,automate,redeploy
 3-integration-delivery;webhooks,tunnel,cicd,github,jenkins
 3-integration-delivery;wordpress,bitpoke,integration and delivery
 3-integration-delivery;wordpress,veilis,integration and delivery
 3-integration-delivery;workflow automation,workflow,ipaas,integration-framework,low-code-plattform,low-code
 3-integration-delivery;workflow,ci
+3-integration-delivery;workflow,github,actions
 3-integration-delivery;yaks,testing,microservices,knative,kafka,serverless,camel,camel-k,integration & delivery
 4-monitoring-logging;aerospike,prometheus,exporter
 4-monitoring-logging;alerta,alertmanager,alerting
@@ -594,6 +660,7 @@
 4-monitoring-logging;appdynamics,monitoring,infrastructure
 4-monitoring-logging;appranix,container protection service,application resilience service,aps,monitoring
 4-monitoring-logging;aspecto,opentelemetry,observability,traces,jaeger,otel,collector,sampling
+4-monitoring-logging;aws,cloudwatch,azure,stackdriver
 4-monitoring-logging;aws,tracing,xray
 4-monitoring-logging;azure-metrics-exporter
 4-monitoring-logging;azure,prometheus
@@ -621,13 +688,16 @@
 4-monitoring-logging;dashboard,utility,monitoring,kubernetes
 4-monitoring-logging;data,quality
 4-monitoring-logging;datadog,monitoring
+4-monitoring-logging;datadog,monitoring,alerting,metrics,logs,tracing
 4-monitoring-logging;datadog,monitoring,logs,tracing,monitoring,logging & tracing
 4-monitoring-logging;dataplatform,kafka,spark,solr,zookeeper,wavefront,observability,apache,tanzuobservability
 4-monitoring-logging;deepflow
 4-monitoring-logging;devops,it devops,devops,monitoring,status page,on-call,on-call management,incident management,performance monitoring,api test,website monitoring,website test,sre
 4-monitoring-logging;devops,kubernetes,operator,elasticsearch,fluentd,kibana,opstree,logging,monitoring,cloud native,database,monitoring,big data
+4-monitoring-logging;devops,monitor,monitoring,crash-reporting,error-monitoring,sentry,crash-reports,csp-report,apm,error-logging
 4-monitoring-logging;dnation,kubernetes,monitoring,logging
 4-monitoring-logging;dnation,kubernetes,monitoring,logging,prometheus,grafana,loki,thanos
+4-monitoring-logging;docker,kubernetes,filebeat,logging,container,fluentd,log-pilot
 4-monitoring-logging;dvo,application runtime,monitoring,security
 4-monitoring-logging;ebpf,network,monitoring
 4-monitoring-logging;eginnovations,egagent,cluster,kubernetes,openshift,monitoring,pod,deployment,apm,k8s,ocp
@@ -859,15 +929,18 @@
 4-monitoring-logging;sematext,observability,monitoring,logging,containers,ebpf,monitoring,logging & tracing
 4-monitoring-logging;sentry,crash-reporting,error-monitoring,hacktoberfest,python,devops,django,monitor monitoring,crash-reports,csp-report,apm,error-logging
 4-monitoring-logging;seq,structured,logging
+4-monitoring-logging;service mesh,monitoring
 4-monitoring-logging;service-mesh
 4-monitoring-logging;service-mesh,observability,monitoring,maistra,istio,monitoring,logging & tracing
 4-monitoring-logging;servicemesh,meshsync,monitoring
 4-monitoring-logging;skydive,logging & tracing,monitoring
 4-monitoring-logging;sosivio,kubernetes,observanility,monitoring,root cause,monitoring,integration & delivery,logging & tracing,developer tools
+4-monitoring-logging;splunk,anomaly detection,event
 4-monitoring-logging;splunk,enterprise,operator,monitoring,logs,tracing,big data,logging & tracing,monitoring,security,ai,machine learning
 4-monitoring-logging;splunk,observability,logs,traces,metrics
 4-monitoring-logging;splunk,opentelemetry,observability,logs,traces,metrics,apm
 4-monitoring-logging;spot,ocean,metric,exporter
+4-monitoring-logging;spring-boot,logger,logging,developer-tools,logviewer
 4-monitoring-logging;squash, metrics, influxdb, chronograf, s3
 4-monitoring-logging;statping,monitoring
 4-monitoring-logging;statping,status,status-page
@@ -889,10 +962,13 @@
 4-monitoring-logging;vector,events,logs,metrics,observability,stream-processing
 4-monitoring-logging;verik,monitoring,health check,services
 4-monitoring-logging;volume,storage,csi,expansion,monitoring
+4-monitoring-logging;wavefront,newrelic,new relic
+4-monitoring-logging;web-performance,metrics,logging,prometheus,zabbix,telegraf,apm,dapper,ebpf,service-mesh,observability,distributed-tracing,skywalking,open-telemetry
 4-monitoring-logging;zabbix,kubernetes,monitoring,kubernetes
 4-monitoring-logging;zabbix,monitoring,metics
 4-monitoring-logging;zabbix,monitoring,metrics
 4-monitoring-logging;zabbix,monitoring,metrics,kubernetes,helm
+4-monitoring-logging;zabbix,server
 4-monitoring-logging;zabbix,zabbix-agent,monitoring,application
 4-monitoring-logging;zabbix,zabbix-server,zabbix-server-mysql,monitoring,application,php
 4-monitoring-logging;zipkin,tracing
@@ -915,9 +991,14 @@
 5-networking;blockchain,ethereum,prometheus,proxy
 5-networking;blocky,adblock,dns
 5-networking;bpf,ebpf,kubernetes,networking,security,observability,troubleshooting
+5-networking;caching,http,nosql,key-value,https,high-performance,proxy,cache,http2,restful,load-balancer,reverse-proxy,haproxy,http-cache,nuster
 5-networking;choerodon,gateway
+5-networking;cli,tunnel,networking,tcp,proxy,self-hosted,localhost
+5-networking;cloudflare,dns,ipv4,ipv6,ddns,dnspod,alidns,dnscom
 5-networking;cloudflare,operator,dns,dyndns
 5-networking;cloudflared,dns-over-https,dns-proxy
+5-networking;cni,calico
+5-networking;cni,mesh
 5-networking;contour,operator,ingress,envoy
 5-networking;coredns,dns,kubedns
 5-networking;dask,gateway,crds
@@ -927,6 +1008,7 @@
 5-networking;ddclient,dns
 5-networking;digitalocean,dynamicdns
 5-networking;dns
+5-networking;dns,privacy,networking,firewall,privacy-enhancing-technologies,privacy-protection,privacy-tools,application-firewall,privacy-by-design
 5-networking;dns,tls,external-dns,cert-manager,traefik,dnsendpoint
 5-networking;dnscrypt-proxy
 5-networking;dynamic dns,ddns,route53
@@ -1067,6 +1149,7 @@
 5-networking;serverless workflow,kogito,knative,dmn,bpmn,eventing,cloudevents,messaging,networking
 5-networking;service mesh,control plane
 5-networking;service mesh,network service mesh,vnf,virtual network function,nfv,network function virtualization,networking
+5-networking;service mesh,service-mesh,mesh
 5-networking;service-mesh
 5-networking;service-mesh,confidential-computing
 5-networking;service-mesh,observability,monitoring,maistra,istio,monitoring,logging & tracing
@@ -1078,6 +1161,7 @@
 5-networking;squid,proxy
 5-networking;ssh,scp,reverse proxy,sshpiper
 5-networking;tf,tungsten,tungstenfabric,networking
+5-networking;tigera,kubernetes
 5-networking;traefik-forward-auth,traefik,oauth
 5-networking;traefik,ingress
 5-networking;traefik,ingress,acme,letsencrypt
@@ -1086,10 +1170,12 @@
 5-networking;traefik,networking,ingress,proxy,router,loadbalancer,http,websockets,tcp,udp,tls
 5-networking;traefik,traefik-forward-auth,oauth,oauth2,oidc
 5-networking;traefikee
+5-networking;tunnel,nat,proxy,http,network,firewall,ngrok,noise,frp,noise-protocol
 5-networking;twilio,routr,sip,voip,webrtc,ims,proxy,registrar,asterisk,kamailio,freepbx,yate,freeswitch,fusionpbx,server
 5-networking;unbound,dns-over-https,dns-proxy,recursive-dns
 5-networking;unbound,dns,pi,pihole,raspberrypi
 5-networking;varnish,cache,networking
+5-networking;vlan,bgp
 5-networking;voice gateway,sms gateway,message queue,watson,limited,amd64,icp,rhocp
 5-networking;vpn,tunnel
 5-networking;waf,web application firewall,owasp,airlock,microgateway,security,filtering,devsecops,shift left,ingress,nginx
@@ -1111,12 +1197,15 @@
 6-security;api,managedapi,apimanagement,cloud-native,security,ratelimiting,analytics,developer tools,integration & delivery,cloud provider
 6-security;aqua-security,scanning,security,runtime-security,security
 6-security;aqua-security,scanning,security,security
+6-security;aquasecurity
 6-security;aquasecurity,starboard,trivy
 6-security;aquasecurity,trivyoperator,trivy
+6-security;auth,authentication
 6-security;authentication,authorization,edp,idp,keycloak,oauth,oidc,operator,saml,sso,security
 6-security;authentication,authorization,keycloak,proxy
 6-security;authentication,sso,reverseproxy
 6-security;authority,ca,cert-manager,certificate,certificate-authority,certificates,kubernetes,pki,security,security-tools,smallstep,ssh,step,step-ca,step-issuer,tls,x509
+6-security;automation,scanner,bruteforce,owasp,penetration-testing,pentesting,cve,network-analysis,vulnerability-management,vulnerability-scanners,information-gathering,portscanner,security-tools,vulnerability-scanner,penetration-testing-framework,hacking-tools,pentesting-tools,cves
 6-security;aws,eks,aws-auth,iam,rbac,access,user,management,integration & delivery
 6-security;aws,gcp,iam
 6-security;aws,iam,crossplane,cncf,microservice,service account
@@ -1141,9 +1230,11 @@
 6-security;docker,registry,vulnerability,scan
 6-security;dvo,application runtime,monitoring,security
 6-security;encryption,decryption,oci,image,container,security
+6-security;falco
 6-security;falco,security,http server
 6-security;falco,security,http server,proxy,load balancer
 6-security;fim
+6-security;gatekeeper,admission
 6-security;gatekeeper,open-policy-agent,policies
 6-security;gatekeeper,proxy
 6-security;gitops,secrets
@@ -1152,8 +1243,11 @@
 6-security;godbox,isolate,sandboxing,isolation,security,api
 6-security;gogatekeeper,gatekeeper,louketo,keycloak-gatekeeper,openid-connect,openid connect,oidc,proxy,access-proxy,reverse-proxy,authentication,authorization,sso
 6-security;gravitee.io,gravitee,graviteeio,oauth2,oidc,authentication,api,security
+6-security;hacking,penetration-testing,bounty,vulnerability,bugbounty,pentest,bypass,payload,payloads,privilege-escalation,redteam
 6-security;helm,vault,hashicorp,security
+6-security;hook,opengl,compiler,shaders,vulkan,glsl,preprocessor,spir-v,injector,hlsl,d3d12,d3d11,post-processing,d3d9
 6-security;hpa,autoscale,banzaicloud,open source,security
+6-security;iac,infrastructure-as-code,cloudnative,appsec,vulnerability-detection,vulnerability-scanners,security-tools,devsecops,open-policy-agent
 6-security;iam,authorization,auth
 6-security;iam,aws,amazon,ack,cloud provider
 6-security;iam,oauth,openid connect,ldap,sso,saml,scim
@@ -1168,6 +1262,7 @@
 6-security;istio,security,sidecarinjectorwebhook,mixer,pilot,galley
 6-security;istio,security,sidecarinjectorwebhook,mixer,pilot,gateway,galley,amd64,ppc64le,s390x,opensource,operations,icp,iks
 6-security;istio,security,sidecarinjectorwebhook,pilot
+6-security;jenkins,npm,security,devops,gradle,maven,ci,nuget,docker-registry,nexus,gocd,artifactory,gradlew,sonatype-nexus,jfrog-artifactory,sonatype,artifact,jfrog
 6-security;k8s,credstash,secret,security
 6-security;kafka,zookeeper,storm,hdfs,security,metron
 6-security;keycloak,identity,access,security
@@ -1305,6 +1400,7 @@
 6-security;vault,security,encryption,secrets,management,automation,infrastructure
 6-security;vpn,privacy,security,wireguard
 6-security;vpn,security,network,zerotrust,overlay,automation,infrastructure
+6-security;vulnerability,cve
 6-security;waf,web application firewall,owasp,airlock,microgateway,security,filtering,devsecops,shift left,ingress,nginx
 6-security;xray,jfrog
 6-security;xray,jfrog,security,scan,devops
@@ -1360,11 +1456,16 @@
 7-storage;iop,cs3apis,cloud-storage,sync-and-share
 7-storage;ipfs,ipfs cluster,decentralized storage,peer-to-peer,distributed hash table,content-addressed,storage,networking,big data
 7-storage;irods,cyverse,csi
+7-storage;iscsi,snapshot
+7-storage;kubernetes,ceph,rbd,csi,cephfs
 7-storage;kubernetes,helm,startx,cluster-chart,cluster,infrastructure,nexus,repository,artifact storage
 7-storage;kubernetes,helm,startx,cluster-chart,cluster,infrastructure,storage,aws ebs
 7-storage;kubernetes,helm,startx,cluster-chart,cluster,infrastructure,storage,ceph,noobaa,openshift container storage,ocs,object storage,file storage,block storage
 7-storage;kubernetes,helm,startx,cluster-chart,cluster,infrastructure,storage,local-storage,file storage,block storage
+7-storage;kubernetes,local,storage,latency,high-performance,raw,lvm,csi,autotiering,opsfree
 7-storage;kubernetes,openshift,object,bucket,storage,cloud,s3,storage,big data
+7-storage;kubernetes,oss,disk,ebs,nas,lvm,csi,storage-driver,k8s-sig-cloud-provider,cpfs,csi-plugins
+7-storage;kubernetes,storage,ceph,rook,rook-ceph
 7-storage;linstor,drbd,storage,csi
 7-storage;localstorage,kubernetes,topolvm,storage,storage
 7-storage;longhorn,monitoring
@@ -1384,6 +1485,7 @@
 7-storage;nfs,storage,provisioner
 7-storage;nfs,storage,storage
 7-storage;noobaa,kubernetes,openshift,cloud,hybrid,multi,data,storage,s3,tiering,mirroring,storage,big data
+7-storage;nutanix,csi
 7-storage;nutanix,storage,snapshot,snapshotclass,csi
 7-storage;nutanix,storage,volumes,files,storageclass,redhat,centos,ubuntu,csi
 7-storage;openebs,containerattachedstorage,storage
@@ -1391,13 +1493,16 @@
 7-storage;osc,bsu,csi
 7-storage;owncloud,storage,http,web,php
 7-storage;owncloud,storage,http,web,php,dav
+7-storage;persistent,volumes,kubernetes,provisioner
 7-storage;pmem-csi,pmem-csi operator,persistent memory,pmem,intel,storage
 7-storage;portworx,persistent storage,storage,cloud native,open source,storage
 7-storage;powervc,openstack,icp,limited,storage,ppc64le
 7-storage;pulsar,bookkeeper,streamnative,storage
 7-storage;purestorage
 7-storage;pv,pvc,kubernetes
+7-storage;pvc,pv
 7-storage;qingcloud,csi
+7-storage;replication,storage
 7-storage;rook,ceph,storage,object storage,open source,block storage,shared filesystem,storage
 7-storage;rook,edgefs,storage,object storage,open source,block storage,shared filesystem,scale out,nfs,s3,iscsi,multi cloud,storage
 7-storage;s3
@@ -1411,6 +1516,7 @@
 7-storage;storage,big data,csi,databases,postgresql,cloudera,database,big data,storage
 7-storage;storage,block-storage,volume
 7-storage;storage,block-storage,volume,operator
+7-storage;storage,concurrency,ceph,rados
 7-storage;storage,csi,hedvig,cloud,block,nfs,iscsi,snapshot,volume,storage
 7-storage;storage,hostpath
 7-storage;storage,iscsi,plugin,csi
@@ -1436,6 +1542,9 @@
 8-streaming-messaging;apache,streaming,analytics,heron,heronpy,apache-heron,heron-helm
 8-streaming-messaging;apicurio,schema-registry,kafka,kubernetes,ui,streaming,openapi,asyncapi,swagger
 8-streaming-messaging;centrifugo,websocket,golang
+8-streaming-messaging;chat,communication,uwp-apps,chat-application,groupchat,team-platform,uwp-applications,uwp-app
+8-streaming-messaging;chat,mqtt,iot,erlang,server,sip,stun,turn,messaging,matrix,xmpp,pubsub,broker,jabber,ejabberd,voip,groupchat,sip-server,brokers,jabber-server
+8-streaming-messaging;chat,telegram,webrtc,messaging,xmpp,messenger,collaboration,whatsapp,instant-messaging,chatbots,video-call,chat-application,chatapp,video-conferencing,webchat-server,chatserver,video-chat,messaging-api
 8-streaming-messaging;cmak,operator,kafka-manager,kafka,kubernetes,ui,monitoring,streaming
 8-streaming-messaging;confluent,kafka-topics-ui,kafka
 8-streaming-messaging;fiware,orion-ld
@@ -1451,6 +1560,7 @@
 8-streaming-messaging;iot,messaging,amqp,mqtt,http,streaming & messaging
 8-streaming-messaging;kafka-proxy
 8-streaming-messaging;kafka,amd64,s390x,ppc64le,commercial,integration
+8-streaming-messaging;kafka,cmak,operator
 8-streaming-messaging;kafka,confluent,connect,kafka connect,kafka connect sink,kafka connect source,kafka connect plugin,kafka connect connector,kafka connect transformer,kafka connect transform,stream,streaming,streaming platform
 8-streaming-messaging;kafka,cruise control,messaging,streaming,banzaicloud,open source,streaming & messaging,big data
 8-streaming-messaging;kafka,hermes,allegro
@@ -1458,6 +1568,8 @@
 8-streaming-messaging;kafka,queue,stream,event,messaging,datastore,topic
 8-streaming-messaging;kafka,zookeeper,streaming,producer,consumer
 8-streaming-messaging;ksqldb,confluent,ksql,kafka,streaming
+8-streaming-messaging;kubernetes,akka,spark,flink,streaming-data,cloudflow,microservices-architectures,streaming-applications,streaming-runtimes
+8-streaming-messaging;kubernetes,microservices,state-management,microservice,serverless,containers,pubsub,event-driven,sidecar
 8-streaming-messaging;mattermost,collaboration,chat,developer tools
 8-streaming-messaging;mattermost,communication,messaging,team colaboration
 8-streaming-messaging;mattermost,communication,notification,messaging,team colaboration
@@ -1497,8 +1609,12 @@
 8-streaming-messaging;solace,pubsubplus,pubsub+,pubsub,messaging,advanced event broker,event broker,event mesh,event streaming,data streaming,event integration,middleware
 8-streaming-messaging;spring-cloud,dataflow,skipper,spring
 8-streaming-messaging;streaming & messaging
+8-streaming-messaging;streaming,messaging,eventing,cloud-native,rocketmq
+8-streaming-messaging;streaming,messaging,pubsub,pulsar,queuing,event-streaming
 8-streaming-messaging;streaming,messaging,streams,rocketmq,midware,distributed system,streaming & messaging
+8-streaming-messaging;streaming,real-time,websocket,messaging,websockets,scalability,sockjs,grpc,pubsub,http-streaming,eventsource,http3,webtransport
 8-streaming-messaging;streaming,video
+8-streaming-messaging;streams,distributed,distributed system
 8-streaming-messaging;tekton,task,messaging
 8-streaming-messaging;voice gateway,sms gateway,message queue,watson,limited,amd64,icp,rhocp
 8-streaming-messaging;webhook,broker,message passing,service bus
