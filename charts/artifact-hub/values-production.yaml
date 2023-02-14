@@ -71,15 +71,13 @@ hub:
     reportURL: "https://github.com/artifacthub/hub/issues/new?assignees=&labels=abuse+report&template=report-abuse.md&title=%5BABUSE-REPORT%5D+Repository+or+package+name"
     sampleQueries:
       - name: OLM operators for databases
-        querystring: "kind=3&ts_query_web=database"
-      - name: Helm Charts provided by Bitnami
-        querystring: "kind=0&org=bitnami"
+        querystring: "kind=3&category=2"
       - name: Packages of any kind related to etcd
         querystring: "ts_query_web=etcd"
       - name: Falco rules for CVE
         querystring: "kind=1&ts_query_web=cve"
       - name: OLM operators in the monitoring category
-        querystring: "kind=3&ts_query=monitoring"
+        querystring: "kind=3&category=4"
       - name: Packages from verified publishers
         querystring: "verified_publisher=true"
       - name: Official Prometheus packages
@@ -87,7 +85,7 @@ hub:
       - name: Operators with auto pilot capabilities
         querystring: "capabilities=auto+pilot"
       - name: Helm Charts in the storage category
-        querystring: "kind=0&ts_query=storage"
+        querystring: "kind=0&category=7"
       - name: Packages with Apache-2.0 license
         querystring: "license=Apache-2.0"
       - name: OPA policies with MIT license
@@ -96,8 +94,16 @@ hub:
         querystring: "kind=6"
       - name: Kubectl plugins
         querystring: "kind=5"
-      - name: Tekton tasks
-        querystring: "kind=7"
+      - name: Tekton tasks and pipelines
+        querystring: "kind=7&kind=11"
+      - name: Gatekeeper policies
+        querystring: "kind=14"
+      - name: Kubewarden policies
+        querystring: "kind=13"
+      - name: KEDA scalers
+        querystring: "kind=8"
+      - name: Keptn integrations
+        querystring: "kind=10"
 
 scanner:
   cronjob:
