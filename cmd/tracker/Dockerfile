@@ -1,5 +1,5 @@
 # Build tracker
-FROM golang:1.19.5-bullseye AS builder
+FROM golang:1.20.0-bullseye AS builder
 WORKDIR /tmp
 ENV LIBTENSORFLOW_TGZ libtensorflow-cpu-linux-x86_64-2.11.0.tar.gz
 RUN wget -q --no-check-certificate https://storage.googleapis.com/tensorflow/libtensorflow/$LIBTENSORFLOW_TGZ
@@ -13,7 +13,7 @@ WORKDIR /go/src/github.com/artifacthub/hub/cmd/tracker
 RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o /tracker .
 
 # OPM installer
-FROM golang:1.17-bullseye AS opm-installer
+FROM golang:1.20-bullseye AS opm-installer
 RUN GO111MODULE=on go get github.com/operator-framework/operator-registry/cmd/opm@v1.26.2
 
 # Final stage
