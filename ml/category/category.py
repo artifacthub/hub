@@ -11,10 +11,8 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 # Paths configuration
 TRAIN_CSV_PATH = "data/csv/train.csv"
-VALIDATION_CSV_PATH = "data/csv/validation.csv"
 TEST_CSV_PATH = "data/csv/test.csv"
 TRAIN_DS_PATH = "data/generated/train"
-VALIDATION_DS_PATH = "data/generated/validation"
 TEST_DS_PATH = "data/generated/test"
 MODEL_PATH = "model"
 
@@ -38,8 +36,8 @@ CATEGORIES = [
 def build_model():
     """Build and train model"""
 
-    # Load train, validation and test datasets
-    (train_ds, validation_ds, test_ds) = load_datasets()
+    # Load train and test datasets
+    (train_ds, test_ds) = load_datasets()
 
     # Create, train and save model
     model = keras.Sequential([
@@ -56,7 +54,6 @@ def build_model():
     )
     model.fit(
         train_ds.cache(),
-        validation_data=validation_ds.cache(),
         epochs=30
     )
     model.save(MODEL_PATH)
@@ -74,19 +71,13 @@ def load_datasets():
         label_mode="categorical"
     )
 
-    # Load validation dataset
-    validation_ds = keras.utils.text_dataset_from_directory(
-        VALIDATION_DS_PATH,
-        label_mode="categorical"
-    )
-
     # Load test dataset
     test_ds = keras.utils.text_dataset_from_directory(
         TEST_DS_PATH,
         label_mode="categorical"
     )
 
-    return (train_ds, validation_ds, test_ds)
+    return (train_ds, test_ds)
 
 
 def setup_vectorizer(train_ds):
@@ -120,7 +111,7 @@ def custom_standardization_fn(string_tensor):
 
 
 def build_data_trees():
-    """Build the train, validation and test data trees from the CSV files"""
+    """Build the train and test data trees from the CSV files"""
 
     def build_data_tree_from_csv(csv_path, dst_path):
         # Clean destination path
@@ -149,7 +140,6 @@ def build_data_trees():
                     f.write(keywords)
 
     build_data_tree_from_csv(TRAIN_CSV_PATH, TRAIN_DS_PATH)
-    build_data_tree_from_csv(VALIDATION_CSV_PATH, VALIDATION_DS_PATH)
     build_data_tree_from_csv(TEST_CSV_PATH, TEST_DS_PATH)
 
 
