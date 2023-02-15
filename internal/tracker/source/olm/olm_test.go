@@ -229,6 +229,7 @@ func TestTrackerSource(t *testing.T) {
 		// Run test and check expectations
 		p1 := source.ClonePackage(basePkg)
 		p1.Repository = i.Repository
+		p1.Category = hub.Security
 		p1.LogoImageID = "logoImageID"
 		p1.Channels = []*hub.Channel{
 			{
@@ -245,9 +246,10 @@ func TestTrackerSource(t *testing.T) {
 			formatKey:           "bundle",
 			isGlobalOperatorKey: true,
 		}
-		p1.Digest = "4754685990438200306"
+		p1.Digest = "10644756248648523549"
 		p2 := source.ClonePackage(p1)
 		p2.Version = "0.2.0"
+		p2.Category = hub.UnknownCategory
 		p2.Digest = "6605061498162416521"
 		packages, err := NewTrackerSource(i).GetPackagesAvailable()
 		assert.Equal(t, map[string]*hub.Package{

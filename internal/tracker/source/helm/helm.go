@@ -37,6 +37,7 @@ const (
 	concurrency = 10
 
 	alternativeNameAnnotation      = "artifacthub.io/alternativeName"
+	categoryAnnotation             = "artifacthub.io/category"
 	changesAnnotation              = "artifacthub.io/changes"
 	crdsAnnotation                 = "artifacthub.io/crds"
 	crdsExamplesAnnotation         = "artifacthub.io/crdsExamples"
@@ -599,6 +600,16 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	// Alternative name
 	if v, ok := annotations[alternativeNameAnnotation]; ok && v != "" {
 		p.AlternativeName = v
+	}
+
+	// Category
+	if v, ok := annotations[categoryAnnotation]; ok {
+		category, err := hub.PackageCategoryFromName(v)
+		if err != nil {
+			errs = multierror.Append(errs, err)
+		} else {
+			p.Category = category
+		}
 	}
 
 	// Changes

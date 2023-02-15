@@ -109,8 +109,13 @@ func (t *Tracker) Run() error {
 			continue
 		}
 
-		// Set package category from ML model prediction
-		p.Category = t.svc.Pcc.Predict(p)
+		// Set package category from ML model prediction if needed
+		switch p.Category {
+		case hub.UnknownCategory:
+			p.Category = t.svc.Pcc.Predict(p)
+		case hub.SkipCategoryPrediction:
+			p.Category = hub.UnknownCategory
+		}
 
 		// Register package
 		t.logger.Debug().Str("name", p.Name).Str("v", p.Version).Msg("registering package")

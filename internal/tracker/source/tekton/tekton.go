@@ -63,6 +63,7 @@ const (
 
 	// Keys used for Artifact Hub specific annotations.
 	alternativeNameAnnotation = "artifacthub.io/alternativeName"
+	categoryAnnotation        = "artifacthub.io/category"
 	changesAnnotation         = "artifacthub.io/changes"
 	licenseAnnotation         = "artifacthub.io/license"
 	linksAnnotation           = "artifacthub.io/links"
@@ -531,6 +532,16 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	// Alternative name
 	if v, ok := annotations[alternativeNameAnnotation]; ok && v != "" {
 		p.AlternativeName = v
+	}
+
+	// Category
+	if v, ok := annotations[categoryAnnotation]; ok {
+		category, err := hub.PackageCategoryFromName(v)
+		if err != nil {
+			errs = multierror.Append(errs, err)
+		} else {
+			p.Category = category
+		}
 	}
 
 	// Changes

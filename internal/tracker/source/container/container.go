@@ -43,6 +43,7 @@ const (
 
 	// Artifact Hub specific annotations
 	alternativeLocationsAnnotation = "io.artifacthub.package.alternative-locations"
+	categoryAnnotation             = "io.artifacthub.package.category"
 	deprecatedAnnotation           = "io.artifacthub.package.deprecated"
 	digestAnnotation               = "io.artifacthub.package.digest" // Populated internally in getMetadata
 	keywordsAnnotation             = "io.artifacthub.package.keywords"
@@ -222,6 +223,16 @@ func PreparePackage(
 			errs = multierror.Append(errs, fmt.Errorf("error getting readme file content: %w", err))
 		} else {
 			p.Readme = string(data)
+		}
+	}
+
+	// Category
+	if v, ok := md[categoryAnnotation]; ok {
+		category, err := hub.PackageCategoryFromName(v)
+		if err != nil {
+			errs = multierror.Append(errs, err)
+		} else {
+			p.Category = category
 		}
 	}
 

@@ -5,6 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/version: "0.1.0"
   annotations:
+    artifacthub.io/category: security
     artifacthub.io/changes: |
       - Added cool feature
       - Fixed minor bug

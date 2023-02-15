@@ -6,6 +6,12 @@ However, sometimes there might be cases in which it may be useful to provide som
 
 ## Supported annotations
 
+- **artifacthub.io/category** *(string, see example below)*
+
+This annotation allows publishers to provide the package's category. Please use only *one* category from the following list: `ai-machine-learning`, `database`, `integration-delivery`, `monitoring-logging`, `networking`, `security`, `storage` or `streaming-messaging`.
+
+When a category is not provided, Artifact Hub will **try to predict** one from the package's *keywords* by using a machine learning-based model. If you notice that the prediction isn't correct, we really appreciate that you submit the correct category as it helps us to train and improve the model. In the case that the prediction isn't correct but your package doesn't fit well in any of the categories supported, you can use the special value `skip-prediction` in the category field to prevent an incorrect classification.
+
 - **artifacthub.io/changes** *(yaml string, see example below)*
 
 This annotation is used to provide some details about the changes introduced by a given task version. Artifact Hub can generate and display a **ChangeLog** based on the entries in the `changes` field in all your plugin versions. You can see an example of how the changelog would look like in the Artifact Hub UI [here](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog).
@@ -61,6 +67,7 @@ Artifact Hub annotations in `plugin manifest` file:
 ```yaml
 metadata:
   annotations:
+    artifacthub.io/category: security
     artifacthub.io/changes: |
       - Added cool feature
       - Fixed minor bug

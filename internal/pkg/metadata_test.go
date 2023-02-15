@@ -59,6 +59,7 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 				DisplayName: "Package 1",
 				CreatedAt:   "2006-01-02T15:04:05Z",
 				Description: "Package description",
+				Category:    "security",
 				Digest:      "0123456789",
 				License:     "Apache-2.0",
 				HomeURL:     "https://home.url",
@@ -124,6 +125,7 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 				IsOperator:  false,
 				DisplayName: "Package 1",
 				Description: "Package description",
+				Category:    hub.Security,
 				Keywords: []string{
 					"kw1",
 					"kw2",
@@ -292,6 +294,20 @@ func TestValidatePackageMetadata(t *testing.T) {
 				},
 				[]string{
 					"invalid metadata: description not provided",
+				},
+			},
+			{
+				hub.Keptn,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Category:    "invalid",
+				},
+				[]string{
+					"invalid category name",
 				},
 			},
 			{
@@ -540,6 +556,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 					DisplayName: "Package 1",
 					CreatedAt:   "2006-01-02T15:04:05Z",
 					Description: "Package description",
+					Category:    "security",
 					Changes: []*hub.Change{
 						{
 							Kind:        "Added",
@@ -562,6 +579,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 					DisplayName: "Package 1",
 					CreatedAt:   "2006-01-02T15:04:05Z",
 					Description: "description",
+					Category:    "security",
 					ContainersImages: []*hub.ContainerImage{
 						{
 							Name:  "policy",
@@ -578,6 +596,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 					DisplayName: "Package 1",
 					CreatedAt:   "2006-01-02T15:04:05Z",
 					Description: "description",
+					Category:    "security",
 					ContainersImages: []*hub.ContainerImage{
 						{
 							Name:  "policy",
@@ -598,6 +617,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 					DisplayName: "Package 1",
 					CreatedAt:   "2006-01-02T15:04:05Z",
 					Description: "description",
+					Category:    "security",
 					ContainersImages: []*hub.ContainerImage{
 						{
 							Name:  "policy-alternative-location",

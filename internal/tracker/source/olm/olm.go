@@ -32,6 +32,7 @@ const (
 
 	// Artifact Hub special annotations
 	alternativeNameAnnotation = "artifacthub.io/alternativeName"
+	categoryAnnotation        = "artifacthub.io/category"
 	changesAnnotation         = "artifacthub.io/changes"
 	imagesWhitelistAnnotation = "artifacthub.io/imagesWhitelist"
 	installAnnotation         = "artifacthub.io/install"
@@ -457,6 +458,14 @@ func PreparePackage(r *hub.Repository, md *Metadata) (*hub.Package, error) {
 	// Alternative name
 	if v, ok := md.CSV.Annotations[alternativeNameAnnotation]; ok && v != "" {
 		p.AlternativeName = v
+	}
+
+	// Category
+	if v, ok := md.CSV.Annotations[categoryAnnotation]; ok {
+		category, err := hub.PackageCategoryFromName(v)
+		if err == nil {
+			p.Category = category
+		}
 	}
 
 	// Changes

@@ -2,6 +2,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
   annotations:
+    artifacthub.io/category: security
     artifacthub.io/changes: |
       - feature 1
       - fix 1
