@@ -152,7 +152,14 @@ const Footer = (props: Props) => {
             <ExternalLink className="opacity-100 text-white" href="https://linuxfoundation.org/trademark-usage">
               Trademark Usage
             </ExternalLink>{' '}
-            page.
+            page.{' '}
+            <ExternalLink
+              className="opacity-100 text-white"
+              href="https://www.linuxfoundation.org/legal/privacy-policy"
+            >
+              Privacy Policy
+            </ExternalLink>
+            .
           </small>
         </div>
       )}

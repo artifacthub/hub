@@ -288,7 +288,19 @@ exports[`Footer creates snapshot 1`] = `
         >
           Trademark Usage
         </a>
-         page.
+         page. 
+        <a
+          aria-label="Open external link"
+          class="link opacity-100 text-white"
+          href="https://www.linuxfoundation.org/legal/privacy-policy"
+          rel="noopener noreferrer"
+          role="button"
+          tabindex="-1"
+          target="_blank"
+        >
+          Privacy Policy
+        </a>
+        .
       </small>
     </div>
   </footer>
