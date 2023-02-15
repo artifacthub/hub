@@ -28,7 +28,7 @@ describe('Footer', () => {
       expect(screen.getByRole('contentinfo')).toBeInTheDocument();
 
       const links = screen.getAllByRole('button');
-      expect(links).toHaveLength(8);
+      expect(links).toHaveLength(9);
       expect(links[0]).toHaveTextContent('Documentation');
       expect(links[1]).toHaveTextContent('Blog');
       expect(links[2]).toHaveTextContent('GitHub');
@@ -37,6 +37,7 @@ describe('Footer', () => {
       expect(links[5]).toHaveTextContent('Apache License 2.0');
       expect(links[6]).toHaveTextContent('The Linux Foundation');
       expect(links[7]).toHaveTextContent('Trademark Usage');
+      expect(links[8]).toHaveTextContent('Privacy Policy');
 
       const statsLink = screen.getByText('Statistics');
       expect(statsLink).toBeInTheDocument();
