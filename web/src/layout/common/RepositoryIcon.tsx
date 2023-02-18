@@ -84,7 +84,9 @@ const ICONS = {
 };
 
 const RepositoryIcon = (props: Props) => {
-  if (!isUndefined(props.type) && props.type === 'white') {
+  if (isUndefined(ICONS[props.kind])) {
+    return <></>;
+  } else if (!isUndefined(props.type) && props.type === 'white') {
     return <img alt="Icon" src={ICONS[props.kind][props.type]} className={props.className} />;
   } else {
     return (
