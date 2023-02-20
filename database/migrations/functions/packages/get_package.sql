@@ -29,6 +29,7 @@ begin
         'package_id', p.package_id,
         'name', p.name,
         'normalized_name', p.normalized_name,
+        'category', p.package_category_id,
         'is_operator', p.is_operator,
         'official', p.official,
         'channels', p.channels,
