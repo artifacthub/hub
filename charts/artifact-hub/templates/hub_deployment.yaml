@@ -41,7 +41,7 @@ spec:
         {{- if .Release.IsInstall }}
         - name: check-db-migrator-run
           image: "{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.repository }}:{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.tag | default (include "chart.KubernetesVersion" . ) }}"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: {{ .Values.pullPolicy }}
           {{- with .Values.hub.deploy.initContainers.checkDbMigrator.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
