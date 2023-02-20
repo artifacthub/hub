@@ -157,6 +157,7 @@ begin
                     'package_id', package_id,
                     'name', name,
                     'normalized_name', normalized_name,
+                    'category', package_category_id,
                     'logo_image_id', logo_image_id,
                     'stars', stars,
                     'official', package_official,

@@ -50,6 +50,7 @@ insert into package (
     official,
     channels,
     default_channel,
+    package_category_id,
     repository_id
 ) values (
     :'package1ID',
@@ -68,6 +69,7 @@ insert into package (
         }
     ]'::jsonb,
     'stable',
+    1,
     :'repo1ID'
 );
 insert into package__maintainer (package_id, maintainer_id)
@@ -246,6 +248,7 @@ select is(
         "package_id": "00000000-0000-0000-0000-000000000001",
         "name": "Package 1",
         "normalized_name": "package-1",
+        "category": 1,
         "is_operator": true,
         "official": true,
         "channels": [
@@ -393,6 +396,7 @@ select is(
         "package_id": "00000000-0000-0000-0000-000000000001",
         "name": "Package 1",
         "normalized_name": "package-1",
+        "category": 1,
         "is_operator": true,
         "official": true,
         "channels": [
@@ -541,6 +545,7 @@ select is(
         "package_id": "00000000-0000-0000-0000-000000000001",
         "name": "Package 1",
         "normalized_name": "package-1",
+        "category": 1,
         "is_operator": true,
         "official": true,
         "channels": [

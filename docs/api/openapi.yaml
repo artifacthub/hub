@@ -1008,6 +1008,7 @@ paths:
                         normalized_name: sentry-kubernetes
                         logo_image_id: 55f2ed75-015d-4edd-9990-11fb2ffcae9e
                         stars: 0
+                        category: 4
                         description: A Helm chart for sentry-kubernetes
                         version: 0.2.3
                         app_version: latest
@@ -1029,6 +1030,7 @@ paths:
                         normalized_name: etcd-operator
                         logo_image_id: 5gt2ed75-015d-40dd-9990-11fb2tgcae9e
                         stars: 0
+                        category: 2
                         description: CoreOS etcd-operator Helm chart for Kubernetes
                         version: 0.10.3
                         app_version: 0.9.4
@@ -4021,6 +4023,8 @@ components:
               format: uri
               nullable: false
               example: "http://logo"
+            category:
+              $ref: "#/components/schemas/PackageCategoryId"
             keywords:
               type: array
               nullable: false
@@ -4261,11 +4265,35 @@ components:
         production_organizations_count:
           type: number
           nullable: false
+    PackageCategoryId:
+      type: integer
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+      nullable: false
+      description: |
+        Package category:
+          * `1` - AI / Machine learning
+          * `2` - Database
+          * `3` - Integration and delivery
+          * `4` - Monitoring and logging
+          * `5` - Networking
+          * `6` - Security
+          * `7` - Storage
+          * `8` - Streaming and messaging
     PackageSummary:
       allOf:
         - $ref: "#/components/schemas/PackageBase"
         - type: object
           properties:
+            category:
+              $ref: "#/components/schemas/PackageCategoryId"
             stars:
               type: integer
               nullable: false

@@ -122,6 +122,7 @@ func TestGet(t *testing.T) {
 			PackageID:      "00000000-0000-0000-0000-000000000001",
 			Name:           "Package 1",
 			NormalizedName: "package-1",
+			Category:       hub.AIMachineLearning,
 			LogoImageID:    "00000000-0000-0000-0000-000000000001",
 			IsOperator:     true,
 			Channels: []*hub.Channel{
@@ -232,6 +233,7 @@ func TestGet(t *testing.T) {
 			"package_id": "00000000-0000-0000-0000-000000000001",
 			"name": "Package 1",
 			"normalized_name": "package-1",
+			"category": 1,
 			"logo_image_id": "00000000-0000-0000-0000-000000000001",
 			"is_operator": true,
 			"channels": [
