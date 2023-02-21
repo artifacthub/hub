@@ -135,7 +135,7 @@ func (w *Worker) deliverEmailNotification(ctx context.Context, n *hub.Notificati
 		var err error
 		emailData, err = w.prepareEmailData(ctx, n.Event)
 		if err != nil {
-			return fmt.Errorf("%w: error preparing email data: %v", ErrRetryable, err)
+			return fmt.Errorf("%w: error preparing email data: %w", ErrRetryable, err)
 		}
 		w.cache.SetDefault(cKey, emailData)
 	}
@@ -150,7 +150,7 @@ func (w *Worker) deliverWebhookNotification(ctx context.Context, n *hub.Notifica
 	// Get template data
 	tmplData, err := w.preparePkgNotificationTemplateData(ctx, n.Event)
 	if err != nil {
-		return fmt.Errorf("%w: %v", ErrRetryable, err)
+		return fmt.Errorf("%w: %w", ErrRetryable, err)
 	}
 
 	// Prepare payload

@@ -180,13 +180,13 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid name")
 	}
 	if err := m.validateURL(r); err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 	}
 	if err := m.validateCredentials(r); err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 	}
 	if err := validateData(r); err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 	}
 
 	// Authorize action if the repository will be added to an organization
@@ -300,7 +300,7 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 	}
 	md, err := m.GetMetadata(r, basePath)
 	if err != nil {
-		return fmt.Errorf("%w: error getting repository metadata: %v", hub.ErrInsufficientPrivilege, err)
+		return fmt.Errorf("%w: error getting repository metadata: %w", hub.ErrInsufficientPrivilege, err)
 	}
 
 	// Get requesting user email
@@ -743,13 +743,13 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 	if err := m.validateURL(r); err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 	}
 	if err := m.validateCredentials(r); err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 	}
 	if err := validateData(r); err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 	}
 
 	// Authorize action if the repository is owned by an organization

@@ -129,7 +129,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 	input, err := buildSearchInput(r.URL.Query())
 	if err != nil {
-		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		err = fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "Search").Msg("invalid query")
 		helpers.RenderErrorJSON(w, err)
 		return

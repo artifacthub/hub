@@ -649,7 +649,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 			errs = multierror.Append(errs, fmt.Errorf("%w: invalid images value", errInvalidAnnotation))
 		} else {
 			if err := pkg.ValidateContainersImages(hub.Helm, images); err != nil {
-				errs = multierror.Append(errs, fmt.Errorf("%w: %s", errInvalidAnnotation, err.Error()))
+				errs = multierror.Append(errs, fmt.Errorf("%w: %w", errInvalidAnnotation, err))
 			} else {
 				p.ContainersImages = images
 			}

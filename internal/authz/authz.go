@@ -153,7 +153,7 @@ func (a *Authorizer) listenForPoliciesUpdates() {
 func (a *Authorizer) Authorize(ctx context.Context, input *hub.AuthorizeInput) error {
 	allowedActions, err := a.GetAllowedActions(ctx, input.UserID, input.OrganizationName)
 	if err != nil {
-		return fmt.Errorf("%w: error getting allowed actions: %s", hub.ErrInsufficientPrivilege, err.Error())
+		return fmt.Errorf("%w: error getting allowed actions: %w", hub.ErrInsufficientPrivilege, err)
 	}
 	if !IsActionAllowed(allowedActions, input.Action) {
 		return hub.ErrInsufficientPrivilege
