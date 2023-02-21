@@ -12,7 +12,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.20
+          go-version: "1.20"
       - name: Install TensorFlow C library
         run: |
           FILENAME=libtensorflow-cpu-linux-x86_64-2.11.0.tar.gz
@@ -96,7 +96,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.20
+          go-version: "1.20"
       - name: Install TensorFlow C library
         run: |
           FILENAME=libtensorflow-cpu-linux-x86_64-2.11.0.tar.gz
@@ -168,7 +168,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.20
+          go-version: "1.20"
       - name: Install TensorFlow C library
         run: |
           FILENAME=libtensorflow-cpu-linux-x86_64-2.11.0.tar.gz
