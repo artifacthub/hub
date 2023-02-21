@@ -80,7 +80,7 @@ func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
 	p, err := helpers.GetPagination(r.URL.Query(), helpers.PaginationDefaultLimit, helpers.PaginationMaxLimit)
 	if err != nil {
-		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		err = fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "GetOwnedByOrg").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
@@ -100,7 +100,7 @@ func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
 	p, err := helpers.GetPagination(r.URL.Query(), helpers.PaginationDefaultLimit, helpers.PaginationMaxLimit)
 	if err != nil {
-		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		err = fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "GetOwnedByUser").Send()
 		helpers.RenderErrorJSON(w, err)
 		return

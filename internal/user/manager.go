@@ -636,7 +636,7 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User) error {
 	}
 	if !user.EmailVerified {
 		if err := pwvalidator.Validate(user.Password, PasswordMinEntropyBits); err != nil {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+			return fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 		}
 	}
 
@@ -688,7 +688,7 @@ func (m *Manager) ResetPassword(ctx context.Context, code, newPassword string) e
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "new password not provided")
 	}
 	if err := pwvalidator.Validate(newPassword, PasswordMinEntropyBits); err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 	}
 
 	// Hash new password
@@ -793,7 +793,7 @@ func (m *Manager) UpdatePassword(ctx context.Context, old, new string) error {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "new password not provided")
 	}
 	if err := pwvalidator.Validate(new, PasswordMinEntropyBits); err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
+		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 	}
 
 	// Validate old password

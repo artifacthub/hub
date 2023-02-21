@@ -51,7 +51,7 @@ func (m *Manager) Add(ctx context.Context, orgName string, wh *hub.Webhook) erro
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
 	}
 	if _, err := template.New("").Parse(wh.Template); err != nil {
-		return fmt.Errorf("%w: %s %s", hub.ErrInvalidInput, "invalid template", err)
+		return fmt.Errorf("%w: %s %w", hub.ErrInvalidInput, "invalid template", err)
 	}
 	if len(wh.EventKinds) == 0 {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "no event kinds provided")

@@ -122,7 +122,7 @@ func ValidatePackageMetadata(kind hub.RepositoryKind, md *hub.PackageMetadata) e
 	if md.Version == "" {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "version not provided"))
 	} else if _, err := semver.NewVersion(md.Version); err != nil {
-		errs = multierror.Append(errs, fmt.Errorf("%w: %s: %v", ErrInvalidMetadata, "invalid version (semver expected)", err))
+		errs = multierror.Append(errs, fmt.Errorf("%w: %s: %w", ErrInvalidMetadata, "invalid version (semver expected)", err))
 	}
 	if md.Name == "" {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "name not provided"))
@@ -134,7 +134,7 @@ func ValidatePackageMetadata(kind hub.RepositoryKind, md *hub.PackageMetadata) e
 	}
 	if md.Category != "" {
 		if _, err := hub.PackageCategoryFromName(md.Category); err != nil {
-			errs = multierror.Append(errs, fmt.Errorf("%w: %v", ErrInvalidMetadata, err))
+			errs = multierror.Append(errs, fmt.Errorf("%w: %w", ErrInvalidMetadata, err))
 		}
 	}
 	if md.DisplayName == "" {
@@ -143,7 +143,7 @@ func ValidatePackageMetadata(kind hub.RepositoryKind, md *hub.PackageMetadata) e
 	if md.CreatedAt == "" {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "createdAt not provided"))
 	} else if _, err := time.Parse(time.RFC3339, md.CreatedAt); err != nil {
-		errs = multierror.Append(errs, fmt.Errorf("%w: %s: %v", ErrInvalidMetadata, "invalid createdAt (RFC3339 expected)", err))
+		errs = multierror.Append(errs, fmt.Errorf("%w: %s: %w", ErrInvalidMetadata, "invalid createdAt (RFC3339 expected)", err))
 	}
 	if md.Description == "" {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "description not provided"))
@@ -155,11 +155,11 @@ func ValidatePackageMetadata(kind hub.RepositoryKind, md *hub.PackageMetadata) e
 	}
 	for _, change := range md.Changes {
 		if err := ValidateChange(change); err != nil {
-			errs = multierror.Append(errs, fmt.Errorf("%w: %v", ErrInvalidMetadata, err))
+			errs = multierror.Append(errs, fmt.Errorf("%w: %w", ErrInvalidMetadata, err))
 		}
 	}
 	if err := ValidateContainersImages(kind, md.ContainersImages); err != nil {
-		errs = multierror.Append(errs, fmt.Errorf("%w: %v", ErrInvalidMetadata, err))
+		errs = multierror.Append(errs, fmt.Errorf("%w: %w", ErrInvalidMetadata, err))
 	}
 
 	return errs.ErrorOrNil()
