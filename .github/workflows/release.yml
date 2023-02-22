@@ -53,7 +53,7 @@ jobs:
           token: ${{ secrets.GHT_RELEASE }}
       - name: Extract tag name
         id: extract_tag_name
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       - name: Release Helm chart
         run: |
           mkdir tmp && cd tmp
