@@ -8,23 +8,10 @@ on:
 permissions: read-all
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+  fossa-scan:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-go@v3
+      - uses: fossas/fossa-action@main
         with:
-          go-version: "^1.14.x"
-      - run: go version
-      # Runs a set of commands to initialize and analyze with FOSSA
-      - name: run FOSSA analysis
-        env:
-          # FOSSA Push-Only API Token
-          FOSSA_API_KEY: "5cda1cd0d5036f6f368682c23a5fdfec"
-          BINDIR: /home/runner/work/hub/hub
-        run: |
-          export GOPATH=$HOME/go
-          export PATH=$PATH:$(go env GOPATH)/bin
-          curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | bash -s -- -b $BINDIR
-          $BINDIR/fossa init
-          $BINDIR/fossa analyze
+          api-key: ${{secrets.FOSSA_API_KEY}}
