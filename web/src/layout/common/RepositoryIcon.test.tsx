@@ -135,6 +135,11 @@ describe('RepositoryIcon', () => {
     expect(icon).toHaveProperty('src', 'http://localhost/static/media/backstage-light.svg');
   });
 
+  it('renders empty icon', () => {
+    render(<RepositoryIcon kind={101} type="white" />);
+    expect(() => screen.getByAltText('Icon')).toThrow();
+  });
+
   it('renders Chart icon - default type', () => {
     render(<RepositoryIcon kind={RepositoryKind.Helm} />);
     const icons = screen.getAllByAltText('Icon');
