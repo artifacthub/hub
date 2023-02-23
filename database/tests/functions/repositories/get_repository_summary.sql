@@ -21,6 +21,8 @@ insert into repository (
     name,
     display_name,
     url,
+    official,
+    cncf,
     repository_kind_id,
     user_id
 )
@@ -29,6 +31,8 @@ values (
     'repo1',
     'Repo 1',
     'https://repo1.com',
+    true,
+    true,
     0,
     :'user1ID'
 );
@@ -66,7 +70,8 @@ select is(
         "private": false,
         "kind": 0,
         "verified_publisher": false,
-        "official": false,
+        "official": true,
+        "cncf": true,
         "scanner_disabled": false,
         "user_alias": "user1"
     }'::jsonb,

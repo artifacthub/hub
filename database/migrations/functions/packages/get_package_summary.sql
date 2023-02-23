@@ -24,6 +24,7 @@ begin
         'normalized_name', p.normalized_name,
         'stars', p.stars,
         'official', p.official,
+        'cncf', p.cncf,
         'display_name', s.display_name,
         'description', s.description,
         'logo_image_id', s.logo_image_id,

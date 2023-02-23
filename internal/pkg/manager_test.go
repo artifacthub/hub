@@ -140,6 +140,8 @@ func TestGet(t *testing.T) {
 			Description:    "description",
 			Keywords:       []string{"kw1", "kw2"},
 			HomeURL:        "home_url",
+			Official:       true,
+			CNCF:           true,
 			Readme:         "readme-version-1.0.0",
 			Install:        "install-version-1.0.0",
 			Links: []*hub.Link{
@@ -217,6 +219,7 @@ func TestGet(t *testing.T) {
 				URL:                     "https://repo1.com",
 				VerifiedPublisher:       true,
 				Official:                true,
+				CNCF:                    true,
 				UserAlias:               "user1",
 				OrganizationName:        "org1",
 				OrganizationDisplayName: "Organization 1",
@@ -251,6 +254,8 @@ func TestGet(t *testing.T) {
 			"description": "description",
 			"keywords": ["kw1", "kw2"],
 			"home_url": "home_url",
+			"official": true,
+			"cncf": true,
 			"readme": "readme-version-1.0.0",
 			"install": "install-version-1.0.0",
 			"links": [
@@ -324,6 +329,7 @@ func TestGet(t *testing.T) {
 				"url": "https://repo1.com",
 				"verified_publisher": true,
 				"official": true,
+				"cncf": true,
 				"user_alias": "user1",
 				"organization_name": "org1",
 				"organization_display_name": "Organization 1"

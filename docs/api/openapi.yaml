@@ -4234,6 +4234,9 @@ components:
         official:
           type: boolean
           nullable: false
+        cncf:
+          type: boolean
+          nullable: true
         ts:
           type: integer
           nullable: false
@@ -4465,6 +4468,9 @@ components:
         official:
           type: boolean
           nullable: false
+        cncf:
+          type: boolean
+          nullable: true
         private:
           type: boolean
           nullable: false

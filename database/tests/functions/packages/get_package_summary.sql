@@ -19,12 +19,14 @@ insert into package (
     latest_version,
     stars,
     official,
+    cncf,
     repository_id
 ) values (
     :'package1ID',
     'package1',
     '1.0.0',
     10,
+    true,
     true,
     :'repo1ID'
 );
@@ -70,6 +72,7 @@ select is(
         "normalized_name": "package1",
         "stars": 10,
         "official": true,
+        "cncf": true,
         "display_name": "Package 1",
         "description": "description",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -113,6 +116,7 @@ select is(
         "normalized_name": "package1",
         "stars": 10,
         "official": true,
+        "cncf": true,
         "display_name": "Package 1",
         "description": "description",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",

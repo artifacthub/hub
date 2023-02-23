@@ -230,6 +230,7 @@ type Repository struct {
 	LastTrackingErrors      string          `json:"last_tracking_errors"`
 	VerifiedPublisher       bool            `json:"verified_publisher"`
 	Official                bool            `json:"official"`
+	CNCF                    bool            `json:"cncf"`
 	Disabled                bool            `json:"disabled"`
 	ScannerDisabled         bool            `json:"scanner_disabled"`
 	Data                    json.RawMessage `json:"data,omitempty"`

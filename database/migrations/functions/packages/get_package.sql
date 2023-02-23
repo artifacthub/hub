@@ -32,6 +32,7 @@ begin
         'category', p.package_category_id,
         'is_operator', p.is_operator,
         'official', p.official,
+        'cncf', p.cncf,
         'channels', p.channels,
         'default_channel', p.default_channel,
         'display_name', s.display_name,
