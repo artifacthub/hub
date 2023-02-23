@@ -783,7 +783,8 @@ func TestGetByID(t *testing.T) {
 			"url": "https://repo1.com",
 			"kind": 0,
 			"verified_publisher": true,
-			"official": true
+			"official": true,
+			"cncf": true
 		}
 		`), nil)
 		m := NewManager(cfg, db, nil, nil)
@@ -797,6 +798,7 @@ func TestGetByID(t *testing.T) {
 		assert.Equal(t, hub.Helm, r.Kind)
 		assert.True(t, r.VerifiedPublisher)
 		assert.True(t, r.Official)
+		assert.True(t, r.CNCF)
 		db.AssertExpectations(t)
 	})
 }
@@ -823,6 +825,7 @@ func TestGetByName(t *testing.T) {
 			"kind": 0,
 			"verified_publisher": true,
 			"official": true,
+			"cncf": true,
 			"user_alias": "user",
 			"organization_name": ""
 		}
@@ -838,6 +841,7 @@ func TestGetByName(t *testing.T) {
 		assert.Equal(t, hub.Helm, r.Kind)
 		assert.True(t, r.VerifiedPublisher)
 		assert.True(t, r.Official)
+		assert.True(t, r.CNCF)
 		db.AssertExpectations(t)
 	})
 

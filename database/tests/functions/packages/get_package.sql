@@ -48,6 +48,7 @@ insert into package (
     latest_version,
     is_operator,
     official,
+    cncf,
     channels,
     default_channel,
     package_category_id,
@@ -56,6 +57,7 @@ insert into package (
     :'package1ID',
     'Package 1',
     '1.0.0',
+    true,
     true,
     true,
     '[
@@ -251,6 +253,7 @@ select is(
         "category": 1,
         "is_operator": true,
         "official": true,
+        "cncf": true,
         "channels": [
             {
                 "name": "stable",
@@ -399,6 +402,7 @@ select is(
         "category": 1,
         "is_operator": true,
         "official": true,
+        "cncf": true,
         "channels": [
             {
                 "name": "stable",
@@ -548,6 +552,7 @@ select is(
         "category": 1,
         "is_operator": true,
         "official": true,
+        "cncf": true,
         "channels": [
             {
                 "name": "stable",

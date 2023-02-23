@@ -72,6 +72,7 @@ type Package struct {
 	LogoImageID                    string                 `json:"logo_image_id" hash:"ignore"`
 	IsOperator                     bool                   `json:"is_operator"`
 	Official                       bool                   `json:"official" hash:"ignore"`
+	CNCF                           bool                   `json:"cncf" hash:"ignore"`
 	Channels                       []*Channel             `json:"channels"`
 	DefaultChannel                 string                 `json:"default_channel"`
 	DisplayName                    string                 `json:"display_name"`

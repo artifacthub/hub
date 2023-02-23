@@ -37,8 +37,8 @@ select results_eq(
 insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
-insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id, verified_publisher, official)
-values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID', true, true);
+insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id, verified_publisher, official, cncf)
+values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID', true, true, true);
 insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
 values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org1ID');
 insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
@@ -51,6 +51,7 @@ insert into package (
     stars,
     tsdoc,
     official,
+    cncf,
     package_category_id,
     repository_id
 ) values (
@@ -61,6 +62,7 @@ insert into package (
     10,
     generate_package_tsdoc('package1', null, null, 'description', '{"kw1", "kw1", "kw2"}', '{"repo1"}', '{"user1"}'),
     false,
+    true,
     1,
     :'repo1ID'
 );
@@ -280,6 +282,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -296,6 +299,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -426,6 +430,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -442,6 +447,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -499,6 +505,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -515,6 +522,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -543,6 +551,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -559,6 +568,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -618,6 +628,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -634,6 +645,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -694,6 +706,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -710,6 +723,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -770,6 +784,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -786,6 +801,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -853,6 +869,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -869,6 +886,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -955,6 +973,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -971,6 +990,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -1274,6 +1294,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -1290,6 +1311,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -1323,6 +1345,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -1339,6 +1362,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -1400,6 +1424,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -1416,6 +1441,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -1448,6 +1474,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -1464,6 +1491,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -1527,6 +1555,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -1543,6 +1572,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -1643,6 +1673,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -1659,6 +1690,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -1798,6 +1830,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -1814,6 +1847,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
@@ -1874,6 +1908,7 @@ select results_eq(
                         "category": 1,
                         "stars": 10,
                         "official": false,
+                        "cncf": true,
                         "display_name": "Package 1",
                         "description": "description",
                         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -1890,6 +1925,7 @@ select results_eq(
                             "url": "https://repo1.com",
                             "verified_publisher": true,
                             "official": true,
+                            "cncf": true,
                             "scanner_disabled": false,
                             "user_alias": "user1"
                         }
