@@ -3,21 +3,12 @@ import os
 import shutil
 import tempfile
 import tensorflow as tf
+import time
 from tensorflow import keras
 from keras import layers
 
 # Set TF log level to INFO
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
-
-# Paths configuration
-TRAIN_CSV_PATH = "data/csv/train.csv"
-TEST_CSV_PATH = "data/csv/test.csv"
-TRAIN_DS_PATH = "data/generated/train"
-TEST_DS_PATH = "data/generated/test"
-MODEL_PATH = "model"
-
-# Maximum vocabulary size
-VOCABULARY_SIZE = 2500
 
 # Categories
 CATEGORIES = [
@@ -32,44 +23,69 @@ CATEGORIES = [
     "8-streaming-messaging"
 ]
 
+# Datasets configuration
+TRAIN_CSV_PATH = "data/csv/train.csv"
+TEST_CSV_PATH = "data/csv/test.csv"
+TRAIN_DS_PATH = "data/generated/train"
+TEST_DS_PATH = "data/generated/test"
+MODEL_PATH = "model"
+VOCABULARY_SIZE = 2500
 
-def build_model():
+# Model configuration
+LAYER_SIZE = 32
+LEARNING_RATE = 0.001
+EPOCHS = 20
+
+
+def build_model(use_validation_data=True, save=False):
     """Build and train model"""
 
-    # Load train and test datasets
-    (train_ds, test_ds) = load_datasets()
+    # Load datasets
+    (train_ds, validation_ds, test_ds) = load_datasets(validation_split=use_validation_data)
 
     # Create, train and save model
     model = keras.Sequential([
         keras.Input(shape=(1,), dtype="string"),
         setup_vectorizer(train_ds),
         keras.Input(shape=(VOCABULARY_SIZE,)),
-        layers.Dense(32, activation="relu"),
+        layers.Dense(LAYER_SIZE, activation="relu"),
         layers.Dense(len(CATEGORIES), activation="softmax")
     ])
     model.compile(
-        optimizer="rmsprop",
+        optimizer=keras.optimizers.RMSprop(learning_rate=LEARNING_RATE),
         loss="categorical_crossentropy",
         metrics=["accuracy"]
     )
     model.fit(
-        train_ds.cache(),
-        epochs=30
+        train_ds,
+        validation_data=validation_ds,
+        epochs=EPOCHS
     )
-    model.save(MODEL_PATH)
+    if save:
+        model.save(MODEL_PATH)
 
-    # Evaluate accuracy with test data
+    # Evaluate model accuracy with test data
     print(f"Test accuracy: {model.evaluate(test_ds)[1]:.3f}")
 
 
-def load_datasets():
-    """Load train and test datasets"""
+def load_datasets(validation_split):
+    """Load train, validation and test datasets"""
 
-    # Load train dataset
-    train_ds = keras.utils.text_dataset_from_directory(
-        TRAIN_DS_PATH,
-        label_mode="categorical"
-    )
+    # Load train and validation datasets
+    if validation_split:
+        (train_ds, validation_ds) = keras.utils.text_dataset_from_directory(
+            TRAIN_DS_PATH,
+            label_mode="categorical",
+            validation_split=0.2,
+            subset="both",
+            seed=int(time.time())
+        )
+    else:
+        train_ds = keras.utils.text_dataset_from_directory(
+            TRAIN_DS_PATH,
+            label_mode="categorical"
+        )
+        validation_ds = None
 
     # Load test dataset
     test_ds = keras.utils.text_dataset_from_directory(
@@ -77,7 +93,7 @@ def load_datasets():
         label_mode="categorical"
     )
 
-    return (train_ds, test_ds)
+    return (train_ds, validation_ds, test_ds)
 
 
 def setup_vectorizer(train_ds):
@@ -159,4 +175,4 @@ def predict(raw_text):
 
 if __name__ == "__main__":
     build_data_trees()
-    build_model()
+    build_model(use_validation_data=False, save=False)
