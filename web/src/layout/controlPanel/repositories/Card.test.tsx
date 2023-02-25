@@ -126,7 +126,7 @@ describe('Repository Card - packages section', () => {
         </AppCtx.Provider>
       );
 
-      expect(screen.getAllByText('Verified Publisher')).toHaveLength(2);
+      expect(screen.getByTestId('Verified publisher badge')).toBeInTheDocument();
     });
 
     it('renders Official badge', () => {
@@ -143,7 +143,7 @@ describe('Repository Card - packages section', () => {
         </AppCtx.Provider>
       );
 
-      expect(screen.getAllByText('Official')).toHaveLength(2);
+      expect(screen.getByText('Official')).toBeInTheDocument();
     });
 
     it('renders deletion modal when delete button in dropdown is clicked', async () => {
@@ -226,7 +226,6 @@ describe('Repository Card - packages section', () => {
 
       rerender(component);
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
     });
@@ -253,7 +252,6 @@ describe('Repository Card - packages section', () => {
 
       rerender(component);
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
     });
@@ -277,7 +275,6 @@ describe('Repository Card - packages section', () => {
 
       rerender(component);
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(
         screen.getByText(/It looks like the last tracking of this repository worked fine and no errors were produced./)
       ).toBeInTheDocument();
@@ -311,7 +308,6 @@ describe('Repository Card - packages section', () => {
 
       rerender(component);
 
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(
         screen.getByText(
           /It looks like the last security vulnerabilities scan of this repository worked fine and no errors were produced./

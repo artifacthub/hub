@@ -25,7 +25,6 @@ const defaultProps = {
     official: false,
   },
   deprecated: false,
-  withLabels: true,
 };
 const user = userEvent.setup({ delay: null });
 
@@ -130,17 +129,5 @@ describe('RepositoryInfo', () => {
     expect(await screen.findByRole('complementary')).not.toHaveClass('show');
 
     jest.useRealTimers();
-  });
-
-  it('renders Verified Publisher label', () => {
-    const props = {
-      ...defaultProps,
-      repository: {
-        ...defaultProps.repository,
-        verifiedPublisher: true,
-      },
-    };
-    render(<RepositoryInfo {...props} />);
-    expect(screen.getByText('Verified Publisher')).toBeInTheDocument();
   });
 });

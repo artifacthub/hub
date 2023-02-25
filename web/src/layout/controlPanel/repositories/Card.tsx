@@ -25,13 +25,13 @@ import useOutsideClick from '../../../hooks/useOutsideClick';
 import { AuthorizerAction, Repository } from '../../../types';
 import isFuture from '../../../utils/isFuture';
 import minutesToNearestInterval from '../../../utils/minutesToNearestInterval';
+import Official from '../../common/badges/Official';
+import RepositoryDisabled from '../../common/badges/RepositoryDisabled';
+import SecurityScannerDisabled from '../../common/badges/SecurityScannerDisabled';
+import VerifiedPublisher from '../../common/badges/VerifiedPublisher';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
-import DisabledRepositoryBadge from '../../common/DisabledRepositoryBadge';
 import Modal from '../../common/Modal';
-import OfficialBadge from '../../common/OfficialBadge';
 import RepositoryIconLabel from '../../common/RepositoryIconLabel';
-import ScannerDisabledRepositoryBadge from '../../common/ScannerDisabledRepositoryBadge';
-import VerifiedPublisherBadge from '../../common/VerifiedPublisherBadge';
 import ActionBtn from '../ActionBtn';
 import BadgeModal from './BadgeModal';
 import styles from './Card.module.css';
@@ -315,27 +315,6 @@ const RepositoryCard = (props: Props) => {
               {props.repository.displayName || props.repository.name}
             </div>
 
-            <OfficialBadge
-              official={props.repository.official}
-              className={`ms-3 d-none d-md-inline ${styles.labelWrapper}`}
-              type="repo"
-            />
-
-            <VerifiedPublisherBadge
-              verifiedPublisher={props.repository.verifiedPublisher}
-              className={`ms-3 d-none d-md-inline ${styles.labelWrapper}`}
-            />
-
-            <DisabledRepositoryBadge
-              disabled={props.repository.disabled!}
-              className={`ms-3 d-none d-md-inline ${styles.labelWrapper}`}
-            />
-
-            <ScannerDisabledRepositoryBadge
-              scannerDisabled={props.repository.scannerDisabled!}
-              className={`ms-3 d-none d-md-inline ${styles.labelWrapper}`}
-            />
-
             {transferModalStatus && (
               <TransferRepositoryModal
                 open={true}
@@ -484,10 +463,11 @@ const RepositoryCard = (props: Props) => {
             <small>{getLastScanning()}</small>
           </div>
 
-          <div className="mt-3 m-md-0 d-flex flex-row d-md-none">
-            <OfficialBadge official={props.repository.official} className="me-3" type="repo" />
-            <VerifiedPublisherBadge verifiedPublisher={props.repository.verifiedPublisher} className="me-3" />
-            <DisabledRepositoryBadge disabled={props.repository.disabled!} />
+          <div className="mt-3 d-flex flex-row justify-content-end">
+            {props.repository.disabled && <RepositoryDisabled className="ms-2" />}
+            {props.repository.scannerDisabled && <SecurityScannerDisabled className="ms-2" />}
+            <VerifiedPublisher verifiedPublisher={props.repository.verifiedPublisher} className="ms-2" inRepo />
+            <Official official={props.repository.official || false} className="ms-2" inRepo />
           </div>
         </div>
       </div>

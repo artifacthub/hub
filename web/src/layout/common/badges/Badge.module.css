@@ -1,0 +1,68 @@
+.label {
+  height: 2rem;
+  width: 2rem;
+  line-height: 1.2rem;
+  color: var(--color-black-5);
+  font-size: 1.3rem;
+  background-color: var(--color-white-50);
+}
+
+.small {
+  height: 1.25rem;
+  width: 1.25rem;
+  line-height: 0.7rem;
+  font-size: 0.8rem;
+}
+
+[data-theme='dark'] .label:not(.active) {
+  border-color: var(--color-black-15) !important;
+  color: var(--color-black-15);
+}
+
+.active {
+  color: var(--bs-white);
+  border-color: transparent !important;
+}
+
+.dropdown {
+  width: 350px;
+  font-size: 0.85rem;
+  margin-top: 2.25rem;
+  right: -2rem;
+}
+
+.dropdownStart {
+  right: auto;
+  left: 0;
+}
+
+.content {
+  padding: 0.75rem 1.25rem;
+}
+
+.content p > code,
+.modal p > code {
+  background-color: var(--code-bg-md);
+  border: 1px solid var(--color-1-20);
+  color: var(--bs-dark);
+  padding: 0 0.15rem;
+}
+
+.legend {
+  font-size: 0.8rem;
+}
+
+.btnInBadge {
+  font-size: 0.8rem;
+  margin-top: -1px;
+}
+
+.secondBlock {
+  margin-top: -0.75rem;
+}
+
+@media only screen and (max-width: 575.98px) {
+  .dropdown {
+    display: none !important;
+  }
+}

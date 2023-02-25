@@ -174,34 +174,6 @@ describe('PackageCard', () => {
     });
   });
 
-  describe('Security Rating label', () => {
-    it('renders label', () => {
-      const mockPackage = getMockPackage('12');
-
-      render(
-        <Router>
-          <PackageCard package={mockPackage} />
-        </Router>
-      );
-
-      expect(screen.getByText('Images Security Rating')).toBeInTheDocument();
-    });
-
-    it('does not render label when package is older than 1 year', () => {
-      (calculateDiffInYears as jest.Mock).mockImplementation(() => 1.5);
-
-      const mockPackage = getMockPackage('12');
-
-      render(
-        <Router>
-          <PackageCard package={mockPackage} />
-        </Router>
-      );
-
-      expect(screen.queryByText('Images Security Rating')).toBeNull();
-    });
-  });
-
   describe('when repository has a verified publisher', () => {
     it('renders correct label', () => {
       const mockPackage = getMockPackage('10');
@@ -211,20 +183,7 @@ describe('PackageCard', () => {
           <PackageCard package={mockPackage} />
         </Router>
       );
-      expect(screen.getAllByText('Verified Publisher')).toHaveLength(1);
-    });
-  });
-
-  describe('when repository has repository scanner disabled', () => {
-    it('renders correct label', () => {
-      const mockPackage = getMockPackage('11');
-
-      render(
-        <Router>
-          <PackageCard package={mockPackage} />
-        </Router>
-      );
-      expect(screen.getAllByText('Security scanner disabled')).toHaveLength(1);
+      expect(screen.getByTestId('Verified publisher badge')).toBeInTheDocument();
     });
   });
 });

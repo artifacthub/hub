@@ -103,12 +103,12 @@
   top: -2px;
 }
 
-.labelsWrapper > div:not(:last-child) {
-  margin-right: 0.5rem;
-}
-
 .description {
   font-size: 0.85rem;
+}
+
+.signedIcon {
+  margin-left: 3px;
 }
 
 @media (hover: hover) {
@@ -153,17 +153,6 @@
 @media only screen and (min-width: 576px) {
   .titleWrapper {
     width: 600px;
-  }
-}
-
-@media only screen and (min-width: 992px) {
-  .labelsWrapper > div:not(:first-child) {
-    margin-right: 0;
-    margin-left: 0.5rem;
-  }
-
-  .labelsWrapper > div:first-child {
-    margin-right: 0;
   }
 }
 

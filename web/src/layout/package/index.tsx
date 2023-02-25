@@ -3,7 +3,6 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { AiOutlineStop } from 'react-icons/ai';
 import { FaUser } from 'react-icons/fa';
 import { FiCode, FiPlus } from 'react-icons/fi';
 import { FiPackage } from 'react-icons/fi';
@@ -30,6 +29,7 @@ import {
   PackageViewsStats,
   RepositoryKind,
   SearchFiltersURL,
+  Signature,
   Version,
 } from '../../types';
 import bannerDispatcher from '../../utils/bannerDispatcher';
@@ -40,21 +40,21 @@ import scrollToTop from '../../utils/scrollToTop';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import updateMetaIndex from '../../utils/updateMetaIndex';
 import AnchorHeader from '../common/AnchorHeader';
+import Deprecated from '../common/badges/Deprecated';
+import Official from '../common/badges/Official';
+import Signed from '../common/badges/Signed';
+import VerifiedPublisher from '../common/badges/VerifiedPublisher';
 import BlockCodeButtons from '../common/BlockCodeButtons';
 import ContentDefaultModal from '../common/ContentDefaultModal';
 import ExternalLink from '../common/ExternalLink';
 import Image from '../common/Image';
-import Label from '../common/Label';
 import Loading from '../common/Loading';
 import Modal from '../common/Modal';
 import NoData from '../common/NoData';
-import OfficialBadge from '../common/OfficialBadge';
 import OrganizationInfo from '../common/OrganizationInfo';
 import RepositoryIcon from '../common/RepositoryIcon';
 import RepositoryIconLabel from '../common/RepositoryIconLabel';
 import RepositoryInfo from '../common/RepositoryInfo';
-import SignedBadge from '../common/SignedBadge';
-import VerifiedPublisherBadge from '../common/VerifiedPublisherBadge';
 import Footer from '../navigation/Footer';
 import SubNavbar from '../navigation/SubNavbar';
 import Banner from './Banner';
@@ -72,7 +72,6 @@ import ReadmeWrapper from './readme';
 import RecommendedPackages from './RecommendedPackages';
 import RelatedPackages from './RelatedPackages';
 import ScreenshotsModal from './screenshots/Modal';
-import SignKeyInfo from './SignKeyInfo';
 import StarButton from './StarButton';
 import Stats from './Stats';
 import SubscriptionsButton from './SubscriptionsButton';
@@ -488,47 +487,6 @@ const PackageView = (props: Props) => {
     return resources;
   };
 
-  const getBadges = (withRepoInfo: boolean, extraStyle?: string): JSX.Element => (
-    <>
-      <RepositoryIconLabel
-        kind={detail!.repository.kind}
-        className={`d-none d-md-inline me-3 position-relative ${styles.kindIcon} ${extraStyle}`}
-      />
-      <OfficialBadge official={isPackageOfficial(detail)} className={`d-inline me-3 ${extraStyle}`} type="package" />
-      {withRepoInfo && (
-        <VerifiedPublisherBadge
-          verifiedPublisher={detail!.repository.verifiedPublisher}
-          className={`d-inline me-3 ${extraStyle}`}
-        />
-      )}
-      {detail!.deprecated && (
-        <Label
-          text="Deprecated"
-          icon={<AiOutlineStop />}
-          labelStyle="danger"
-          className={`d-inline me-3 ${extraStyle}`}
-        />
-      )}
-      <SignedBadge
-        repositoryKind={detail!.repository.kind}
-        signed={detail!.signed}
-        signatures={detail!.signatures}
-        className={`d-inline ${extraStyle}`}
-      />
-      <div className="d-none d-lg-inline">
-        <SignKeyInfo
-          visibleKeyInfo={!isUndefined(props.visibleModal) && props.visibleModal === 'key-info'}
-          repoKind={detail!.repository.kind}
-          signatures={detail!.signatures}
-          signed={detail!.signed}
-          signKey={detail!.signKey}
-          searchUrlReferer={props.searchUrlReferer}
-          fromStarredPage={props.fromStarredPage}
-        />
-      </div>
-    </>
-  );
-
   useEffect(() => {
     if (props.hash !== currentHash) {
       setCurrentHash(props.hash);
@@ -823,7 +781,12 @@ const PackageView = (props: Props) => {
                             <div className={`position-relative h3 mb-0 text-nowrap text-truncate ${styles.title}`}>
                               {detail.displayName || detail.name}
                             </div>
-                            <div className="d-none d-md-flex ms-3">{getBadges(false, 'mt-1')}</div>
+                            <div className="d-none d-md-flex ms-3">
+                              <RepositoryIconLabel
+                                kind={detail!.repository.kind}
+                                className={`d-none d-md-inline me-3 position-relative mt-1 ${styles.kindIcon}`}
+                              />
+                            </div>
                           </div>
 
                           <div
@@ -880,7 +843,6 @@ const PackageView = (props: Props) => {
                               deprecated={detail.deprecated}
                               className={`text-truncate d-flex flex-row align-items-baseline ms-2 ${styles.mw50}`}
                               repoLabelClassName={styles.repoLabel}
-                              withLabels
                             />
                           </div>
                         </div>
@@ -889,12 +851,30 @@ const PackageView = (props: Props) => {
 
                     <p className={`mb-0 overflow-hidden text-break ${styles.description}`}>{detail.description}</p>
 
-                    <Stats
-                      packageStats={detail.stats}
-                      productionOrganizationsCount={detail.productionOrganizationsCount}
-                    />
+                    <div className="d-flex flex-row align-items-center">
+                      {detail.deprecated && <Deprecated className="d-inline mt-3" dropdownAlignment="start" />}
 
-                    <div className="d-flex flex-wrap d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
+                      <div className="d-flex flex-row mt-3 me-4">
+                        <Signed
+                          signed={detail.signed}
+                          signatures={[Signature.Cosign, Signature.Prov]}
+                          repoKind={detail.repository.kind}
+                          signKey={detail.signKey}
+                          dropdownAlignment="start"
+                        />
+                        <VerifiedPublisher
+                          verifiedPublisher={detail.repository.verifiedPublisher}
+                          className="ms-2"
+                          dropdownAlignment="start"
+                        />
+                        <Official official={isPackageOfficial(detail)} className="ms-2" dropdownAlignment="start" />
+                      </div>
+
+                      <Stats
+                        packageStats={detail.stats}
+                        productionOrganizationsCount={detail.productionOrganizationsCount}
+                      />
+                    </div>
 
                     <div
                       className={`position-absolute d-flex flex-row align-items-center top-0 end-0 ${styles.optsWrapper}`}

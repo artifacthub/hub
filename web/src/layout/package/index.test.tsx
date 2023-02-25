@@ -252,21 +252,6 @@ describe('Package index', () => {
     });
   });
 
-  describe('Modal', () => {
-    it('renders properly', async () => {
-      const mockPackage = getMockPackage('6');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
-
-      render(
-        <Router>
-          <PackageView {...defaultProps} />
-        </Router>
-      );
-
-      expect(await screen.findByRole('dialog')).toBeInTheDocument();
-    });
-  });
-
   describe('Readme', () => {
     it('does not render it when readme is null and displays no data message', async () => {
       const mockPackage = getMockPackage('7');
@@ -321,7 +306,7 @@ describe('Package index', () => {
 
       expect(await screen.findAllByText('Pretty name')).toHaveLength(2);
 
-      expect(await screen.findAllByText('Verified Publisher')).toHaveLength(2);
+      expect(await screen.findByTestId('Verified publisher badge')).toBeInTheDocument();
     });
   });
 
