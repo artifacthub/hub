@@ -12,7 +12,7 @@
 
 Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
 
-At the moment, the following artifacts kinds are supported *(with plans to support more projects to follow)*:
+At the moment, the following artifacts kinds are supported *(with plans to support more projects to follow)*: 
 
 - [Backstage plugins](https://backstage.io)
 - [Containers images](https://opencontainers.org)
