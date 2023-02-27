@@ -69,6 +69,7 @@ export interface Repository {
   lastScanningErrors?: string | null;
   verifiedPublisher?: boolean;
   official?: boolean;
+  cncf?: boolean;
   private?: boolean;
   authUser?: string | null;
   authPass?: string | null;
@@ -136,6 +137,7 @@ export interface Package {
   prerelease?: boolean;
   recommendations?: Recommendation[];
   official?: boolean;
+  cncf?: boolean;
   stats?: PackageStats;
   allContainersImagesWhitelisted?: boolean;
   signKey?: HelmChartSignKey;

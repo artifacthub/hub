@@ -186,4 +186,17 @@ describe('PackageCard', () => {
       expect(screen.getByTestId('Verified publisher badge')).toBeInTheDocument();
     });
   });
+
+  describe('when repository has been published by a CNCF project', () => {
+    it('renders correct label', () => {
+      const mockPackage = getMockPackage('9');
+
+      render(
+        <Router>
+          <PackageCard package={mockPackage} />
+        </Router>
+      );
+      expect(screen.getByTestId('CNCF badge')).toBeInTheDocument();
+    });
+  });
 });

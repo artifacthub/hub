@@ -25,6 +25,7 @@ import useOutsideClick from '../../../hooks/useOutsideClick';
 import { AuthorizerAction, Repository } from '../../../types';
 import isFuture from '../../../utils/isFuture';
 import minutesToNearestInterval from '../../../utils/minutesToNearestInterval';
+import CNCF from '../../common/badges/CNCF';
 import Official from '../../common/badges/Official';
 import RepositoryDisabled from '../../common/badges/RepositoryDisabled';
 import SecurityScannerDisabled from '../../common/badges/SecurityScannerDisabled';
@@ -466,6 +467,7 @@ const RepositoryCard = (props: Props) => {
           <div className="mt-3 d-flex flex-row justify-content-end">
             {props.repository.disabled && <RepositoryDisabled className="ms-2" />}
             {props.repository.scannerDisabled && <SecurityScannerDisabled className="ms-2" />}
+            {props.repository.cncf && <CNCF className="ms-2" inRepo />}
             <VerifiedPublisher verifiedPublisher={props.repository.verifiedPublisher} className="ms-2" inRepo />
             <Official official={props.repository.official || false} className="ms-2" inRepo />
           </div>

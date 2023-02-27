@@ -40,6 +40,7 @@ import scrollToTop from '../../utils/scrollToTop';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import updateMetaIndex from '../../utils/updateMetaIndex';
 import AnchorHeader from '../common/AnchorHeader';
+import CNCF from '../common/badges/CNCF';
 import Deprecated from '../common/badges/Deprecated';
 import Official from '../common/badges/Official';
 import Signed from '../common/badges/Signed';
@@ -855,10 +856,12 @@ const PackageView = (props: Props) => {
                       {detail.deprecated && <Deprecated className="d-inline mt-3" dropdownAlignment="start" />}
 
                       <div className="d-flex flex-row mt-3 me-4">
+                        {(detail.cncf || detail.repository.cncf) && <CNCF />}
                         <Signed
                           signed={detail.signed}
                           signatures={[Signature.Cosign, Signature.Prov]}
                           repoKind={detail.repository.kind}
+                          className="ms-2"
                           signKey={detail.signKey}
                           dropdownAlignment="start"
                         />
