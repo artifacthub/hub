@@ -9,6 +9,7 @@ interface Props {
   language?: string;
   title?: string;
   filename?: string;
+  btnClassname?: string;
 }
 
 const CommandBlock = (props: Props) => (
@@ -44,7 +45,7 @@ const CommandBlock = (props: Props) => (
       <div>
         <ButtonCopyToClipboard
           text={props.command}
-          className={`btn-primary ${styles.copyBtn}`}
+          className={`btn-primary ${styles.copyBtn} ${props.btnClassname}`}
           label="Copy command to clipboard"
         />
       </div>

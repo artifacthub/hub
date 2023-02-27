@@ -2,30 +2,25 @@ import { throttle } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { AiOutlineStop } from 'react-icons/ai';
 import { FaUser } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 
 import { Package, RepositoryKind, SearchFiltersURL } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
-import calculateDiffInYears from '../../utils/calculateDiffInYears';
 import cutString from '../../utils/cutString';
 import isFuture from '../../utils/isFuture';
 import isPackageOfficial from '../../utils/isPackageOfficial';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import scrollToTop from '../../utils/scrollToTop';
 import Image from '../common/Image';
-import Label from '../common/Label';
-import OfficialBadge from '../common/OfficialBadge';
 import OrganizationInfo from '../common/OrganizationInfo';
-import ProductionBadge from '../common/ProductionBadge';
 import RepositoryIconLabel from '../common/RepositoryIconLabel';
 import RepositoryInfo from '../common/RepositoryInfo';
-import ScannerDisabledRepositoryBadge from '../common/ScannerDisabledRepositoryBadge';
-import SecurityRating from '../common/SecurityRating';
-import SignedBadge from '../common/SignedBadge';
 import StarBadge from '../common/StarBadge';
-import VerifiedPublisherBadge from '../common/VerifiedPublisherBadge';
+import Deprecated from './badges/Deprecated';
+import Official from './badges/Official';
+import Signed from './badges/Signed';
+import VerifiedPublisher from './badges/VerifiedPublisher';
 import styles from './PackageCard.module.css';
 
 interface Props {
@@ -48,7 +43,6 @@ const PackageCard = (props: Props) => {
   const repoInfo = useRef<HTMLDivElement>(null);
   const [infoStyle, setInfoStyle] = useState<(React.CSSProperties | undefined)[]>([]);
   const [fullInfoWidth, setFullInfoWidth] = useState<number[]>([0, 0]);
-  const [isVersionOlderThanOneYear, setIsVersionOlderThanOneYear] = useState<boolean>(false);
 
   const pkgTS = (
     <>
@@ -71,11 +65,6 @@ const PackageCard = (props: Props) => {
       />
     </div>
   );
-
-  useEffect(() => {
-    const diffInYears = calculateDiffInYears(props.package.ts);
-    setIsVersionOlderThanOneYear(diffInYears > 1);
-  }, [props.package]);
 
   const saveInfoWidth = () => {
     setFullInfoWidth([ownerInfo.current?.clientWidth || 0, repoInfo.current?.clientWidth || 0]);
@@ -129,6 +118,7 @@ const PackageCard = (props: Props) => {
     <div className={`py-sm-3 py-2 ${styles.cardWrapper} ${props.cardWrapperClassName}`} role="listitem">
       <div className={`card cardWithHover h-100 mw-100 bg-white ${styles.card} ${props.className}`}>
         <Link
+          role="link"
           className={`text-decoration-none text-reset h-100 bg-transparent ${styles.link}`}
           onClick={() => {
             if (!isUndefined(props.saveScrollPosition)) {
@@ -175,7 +165,6 @@ const PackageCard = (props: Props) => {
                         deprecated={props.package.deprecated}
                         className="d-inline d-md-none text-truncate w-100"
                         repoLabelClassName="d-none"
-                        withLabels={false}
                       />
                     </div>
                   </div>
@@ -242,7 +231,6 @@ const PackageCard = (props: Props) => {
                           deprecated={props.package.deprecated}
                           className={`d-flex flex-row align-items-baseline ms-3 ${styles.truncateWrapper}`}
                           repoLabelClassName="d-none d-lg-inline"
-                          withLabels={false}
                         />
                       </div>
                     </div>
@@ -265,7 +253,9 @@ const PackageCard = (props: Props) => {
             </div>
 
             {!isUndefined(props.package.description) && (
-              <div className={`mb-0 mb-md-1 mt-3 text-muted text-truncate ${styles.description} ${styles.lineClamp} `}>
+              <div
+                className={`mb-0 mb-md-1 mt-3 pt-0 pt-md-2 text-muted text-truncate ${styles.description} ${styles.lineClamp} `}
+              >
                 {props.package.description}
               </div>
             )}
@@ -278,50 +268,19 @@ const PackageCard = (props: Props) => {
             </div>
 
             {(isUndefined(props.noBadges) || !props.noBadges) && (
-              <div
-                className={`d-none d-sm-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto ${styles.labelsWrapper}`}
-              >
-                <OfficialBadge official={isPackageOfficial(props.package)} className="d-inline mt-3" type="package" />
-                <ProductionBadge
-                  productionOrganizationsCount={props.package.productionOrganizationsCount}
-                  className="d-inline mt-3"
+              <div className="d-flex flex-row justify-content-end pt-0 pt-sm-2 mt-0 mt-md-auto">
+                {props.package.deprecated && <Deprecated className="d-inline mt-3 ms-2" />}
+                <Signed
+                  signed={props.package.signed}
+                  signatures={props.package.signatures}
+                  repoKind={props.package.repository.kind}
+                  className="d-inline mt-3 ms-2"
                 />
-                <VerifiedPublisherBadge
+                <VerifiedPublisher
                   verifiedPublisher={props.package.repository.verifiedPublisher}
-                  className="d-inline mt-3"
+                  className="d-inline mt-3 ms-2"
                 />
-                {props.package.deprecated && (
-                  <Label text="Deprecated" icon={<AiOutlineStop />} labelStyle="danger" className="d-inline mt-3" />
-                )}
-                {props.package.signed && (
-                  <SignedBadge
-                    signed={props.package.signed}
-                    signatures={props.package.signatures}
-                    repositoryKind={props.package.repository.kind}
-                    className="d-inline mt-3"
-                  />
-                )}
-                {/* Do not display security rating badge when version is older than 1 year */}
-                {!isVersionOlderThanOneYear && (
-                  <SecurityRating
-                    summary={props.package.securityReportSummary}
-                    className="d-inline mt-3"
-                    onlyBadge={false}
-                    withLink={buildPackageURL(
-                      props.package.normalizedName,
-                      props.package.repository,
-                      props.package.version!
-                    )}
-                  />
-                )}
-                {(props.package.repository.scannerDisabled || props.package.allContainersImagesWhitelisted) && (
-                  <ScannerDisabledRepositoryBadge
-                    className="d-inline mt-3"
-                    scannerDisabled={props.package.repository.scannerDisabled || false}
-                    allContainersImagesWhitelisted={props.package.allContainersImagesWhitelisted || false}
-                    withTooltip
-                  />
-                )}
+                <Official official={isPackageOfficial(props.package)} className="d-inline mt-3 ms-2" />
               </div>
             )}
           </div>

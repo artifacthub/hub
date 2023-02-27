@@ -11,14 +11,12 @@ import AttachedIconToText from './AttachedIconToText';
 import ButtonCopyToClipboard from './ButtonCopyToClipboard';
 import RepositoryIcon from './RepositoryIcon';
 import styles from './RepositoryInfo.module.css';
-import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
 interface Props {
   repository: Repository;
   deprecated?: boolean | null;
   className?: string;
   repoLabelClassName?: string;
-  withLabels: boolean;
 }
 
 const RepositoryInfo = (props: Props) => {
@@ -143,12 +141,6 @@ const RepositoryInfo = (props: Props) => {
           </button>
         </div>
       </div>
-      {props.withLabels && (
-        <VerifiedPublisherBadge
-          verifiedPublisher={props.repository.verifiedPublisher}
-          className={`ms-3 position-relative ${styles.repoLabel} ${props.repoLabelClassName}`}
-        />
-      )}
     </>
   );
 };

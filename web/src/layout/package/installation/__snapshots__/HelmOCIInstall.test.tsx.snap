@@ -41,7 +41,7 @@ exports[`HelmOCIInstall creates snapshot 1`] = `
       >
         <button
           aria-label="Copy command to clipboard"
-          class="btn btn-sm btn-primary copyBtn"
+          class="btn btn-sm btn-primary copyBtn undefined"
           type="button"
         >
           <div
@@ -110,7 +110,7 @@ exports[`HelmOCIInstall creates snapshot 1`] = `
       >
         <button
           aria-label="Copy command to clipboard"
-          class="btn btn-sm btn-primary copyBtn"
+          class="btn btn-sm btn-primary copyBtn undefined"
           type="button"
         >
           <div

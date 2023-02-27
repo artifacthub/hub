@@ -20,7 +20,7 @@ const Stats = (props: Props) => {
       {!isUndefined(props.packageStats) && (
         <>
           {props.packageStats.subscriptions > 0 && (
-            <div data-testid="subscriptions" className="d-flex flex-row align-items-baseline me-3 mt-2">
+            <div data-testid="subscriptions" className="d-flex flex-row align-items-baseline me-3 mt-3">
               <FaUser className={styles.icon} />
               <small className="text-muted text-uppercase mx-1">Subscriptions:</small>
               <span className="fw-bold">{prettifyNumber(props.packageStats.subscriptions)}</span>
@@ -28,7 +28,7 @@ const Stats = (props: Props) => {
           )}
 
           {props.packageStats.webhooks > 0 && (
-            <div data-testid="webhooks" className="d-flex flex-row align-items-baseline me-3 mt-2">
+            <div data-testid="webhooks" className="d-flex flex-row align-items-baseline me-3 mt-3">
               <GrConnect className={styles.icon} />
               <small className="text-muted text-uppercase mx-1">Webhooks:</small>
               <span className="fw-bold">{prettifyNumber(props.packageStats.webhooks)}</span>
@@ -38,7 +38,7 @@ const Stats = (props: Props) => {
       )}
 
       {!isUndefined(props.productionOrganizationsCount) && props.productionOrganizationsCount > 0 && (
-        <div data-testid="productionUsers" className="d-none d-md-flex flex-row align-items-baseline mt-2">
+        <div data-testid="productionUsers" className="d-none d-md-flex flex-row align-items-baseline mt-3">
           <MdBusiness className={styles.icon} />
           <small className="text-muted text-uppercase mx-1">Production users:</small>
           <span className="fw-bold">{prettifyNumber(props.productionOrganizationsCount)}</span>

@@ -12,10 +12,12 @@ import { Package } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import isPackageOfficial from '../../utils/isPackageOfficial';
 import { prepareQueryString } from '../../utils/prepareQueryString';
+import Official from './badges/Official';
+import Signed from './badges/Signed';
+import VerifiedPublisher from './badges/VerifiedPublisher';
 import HoverableItem from './HoverableItem';
 import Image from './Image';
 import Loading from './Loading';
-import OfficialBadge from './OfficialBadge';
 import RepositoryIconLabel from './RepositoryIconLabel';
 import styles from './SearchBar.module.css';
 import StarBadge from './StarBadge';
@@ -369,11 +371,24 @@ const SearchBar = (props: Props) => {
                             </div>
 
                             <div className="ms-auto d-flex flex-nowrap ps-2">
-                              <OfficialBadge
+                              <Signed
+                                signed={pkg.signed}
+                                repoKind={pkg.repository.kind}
+                                className="d-inline ms-1"
+                                noDropdown
+                                smallSize
+                              />
+                              <VerifiedPublisher
+                                verifiedPublisher={pkg.repository.verifiedPublisher}
+                                className="d-inline ms-1"
+                                noDropdown
+                                smallSize
+                              />
+                              <Official
                                 official={isPackageOfficial(pkg)}
-                                className="d-inline"
-                                type="package"
-                                withoutTooltip
+                                className="d-inline ms-1"
+                                noDropdown
+                                smallSize
                               />
                             </div>
                           </div>

@@ -50,6 +50,10 @@
   -webkit-box-orient: vertical;
 }
 
+.badges > div {
+  margin-right: 0.5rem;
+}
+
 .rightColumnWrapper code,
 .codeWrapper code {
   word-wrap: normal !important;

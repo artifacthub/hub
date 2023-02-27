@@ -12,7 +12,6 @@ import calculateDiffInYears from '../../../utils/calculateDiffInYears';
 import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';
 import prettifyNumber from '../../../utils/prettifyNumber';
 import sumObjectValues from '../../../utils/sumObjectValues';
-import ScannerDisabledRepositoryBadge from '../../common/ScannerDisabledRepositoryBadge';
 import SecurityRating from '../../common/SecurityRating';
 import SmallTitle from '../../common/SmallTitle';
 import SecurityModal from './Modal';
@@ -81,10 +80,6 @@ const SecurityReport = (props: Props) => {
       <div className="mb-3">
         {props.disabledReport || props.allContainersImagesWhitelisted ? (
           <div className={styles.disabledBadgeWrapper}>
-            <ScannerDisabledRepositoryBadge
-              scannerDisabled={props.disabledReport}
-              allContainersImagesWhitelisted={props.allContainersImagesWhitelisted}
-            />
             <div className={`text-muted mt-2 ${styles.legend}`}>
               Security scanning of this package has been disabled by the publisher.
             </div>

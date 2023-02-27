@@ -90,7 +90,7 @@ EOF
       >
         <button
           aria-label="Copy command to clipboard"
-          class="btn btn-sm btn-primary copyBtn"
+          class="btn btn-sm btn-primary copyBtn undefined"
           type="button"
         >
           <div
@@ -168,7 +168,7 @@ EOF
       >
         <button
           aria-label="Copy command to clipboard"
-          class="btn btn-sm btn-primary copyBtn"
+          class="btn btn-sm btn-primary copyBtn undefined"
           type="button"
         >
           <div

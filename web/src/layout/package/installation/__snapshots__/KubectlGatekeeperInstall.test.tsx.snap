@@ -75,7 +75,7 @@ kubectl apply -f samples/container-must-meet-ratio/constraint.yaml
         >
           <button
             aria-label="Copy command to clipboard"
-            class="btn btn-sm btn-primary copyBtn"
+            class="btn btn-sm btn-primary copyBtn undefined"
             type="button"
           >
             <div

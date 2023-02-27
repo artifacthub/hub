@@ -1,0 +1,57 @@
+import { isNull, isUndefined } from 'lodash';
+import { MdStars } from 'react-icons/md';
+
+import ExternalLink from '../ExternalLink';
+import Badge from './Badge';
+import styles from './Badge.module.css';
+
+interface Props {
+  official: boolean;
+  className?: string;
+  dropdownAlignment?: 'start' | 'end';
+  noDropdown?: boolean;
+  smallSize?: boolean;
+  inRepo?: boolean;
+}
+
+const Official = (props: Props) => {
+  const isOfficial = !isNull(props.official) && !isUndefined(props.official) && props.official;
+
+  return (
+    <Badge
+      title="Official"
+      bgColor="#54B435"
+      icon={<MdStars />}
+      active={isOfficial}
+      className={props.className}
+      dropdownAlignment={props.dropdownAlignment}
+      noDropdown={props.noDropdown}
+      smallSize={props.smallSize}
+      popoverContent={
+        <>
+          <div className="fs-6 fw-semibold border-bottom mb-3 pb-1">Official</div>
+
+          <p>
+            This {!isUndefined(props.inRepo) && props.inRepo ? 'repository' : 'package'} is {isOfficial ? '' : 'not'}{' '}
+            marked as <span className="fw-bold">official</span>.
+          </p>
+          <p className={`mb-0 text-muted ${styles.legend}`}>
+            In Artifact Hub, the <code>official</code> status means that the publisher{' '}
+            <span className="fw-bold">owns the software deployed</span> by a package. For more information, please see
+            the{' '}
+            <ExternalLink
+              btnType
+              className={`text-decoration-underline text-reset ${styles.btnInBadge}`}
+              href="https://artifacthub.io/docs/topics/repositories/#official"
+            >
+              repositories guide
+            </ExternalLink>
+            .
+          </p>
+        </>
+      }
+    />
+  );
+};
+
+export default Official;

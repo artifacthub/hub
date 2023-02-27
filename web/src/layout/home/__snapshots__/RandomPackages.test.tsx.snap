@@ -35,6 +35,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                 <a
                   class="text-decoration-none text-reset h-100 bg-transparent link"
                   href="/packages/helm/halkeye/undefined"
+                  role="link"
                 >
                   <div
                     class="card-body d-flex flex-column h-100 body"
@@ -574,6 +575,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                 <a
                   class="text-decoration-none text-reset h-100 bg-transparent link"
                   href="/packages/helm/halkeye/undefined"
+                  role="link"
                 >
                   <div
                     class="card-body d-flex flex-column h-100 body"
@@ -1113,6 +1115,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                 <a
                   class="text-decoration-none text-reset h-100 bg-transparent link"
                   href="/packages/helm/gabibbo97/undefined"
+                  role="link"
                 >
                   <div
                     class="card-body d-flex flex-column h-100 body"
@@ -1652,6 +1655,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                 <a
                   class="text-decoration-none text-reset h-100 bg-transparent link"
                   href="/packages/helm/halkeye/undefined"
+                  role="link"
                 >
                   <div
                     class="card-body d-flex flex-column h-100 body"
@@ -2191,6 +2195,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                 <a
                   class="text-decoration-none text-reset h-100 bg-transparent link"
                   href="/packages/helm/billimek/undefined"
+                  role="link"
                 >
                   <div
                     class="card-body d-flex flex-column h-100 body"

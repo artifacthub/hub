@@ -59,7 +59,6 @@ const BigRelatedPackageCard = (props: Props) => {
                         repository={props.package.repository}
                         className={`d-flex flex-row align-items-baseline ${styles.truncateWrapper}`}
                         repoLabelClassName="d-none d-lg-inline"
-                        withLabels={false}
                       />
                     </div>
                   </div>

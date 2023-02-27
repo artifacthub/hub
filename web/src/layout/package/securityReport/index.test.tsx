@@ -114,7 +114,7 @@ describe('SecurityReport', () => {
       expect(screen.getByText(/vulnerabilities found/)).toBeInTheDocument();
     });
 
-    it('renders scanner disabled repository security badge', () => {
+    it('renders scanner disabled repository security text', () => {
       render(
         <SecurityReport
           summary={null}
@@ -129,13 +129,12 @@ describe('SecurityReport', () => {
         />
       );
 
-      expect(screen.getByText('Security scanner disabled')).toBeInTheDocument();
       expect(
         screen.getByText('Security scanning of this package has been disabled by the publisher.')
       ).toBeInTheDocument();
     });
 
-    it('renders scanner disabled repository security badge when all containers are whitelisted', () => {
+    it('renders scanner disabled repository security text when all containers are whitelisted', () => {
       render(
         <SecurityReport
           summary={{}}
@@ -161,7 +160,6 @@ describe('SecurityReport', () => {
         />
       );
 
-      expect(screen.getByText('Security scanner disabled')).toBeInTheDocument();
       expect(
         screen.getByText('Security scanning of this package has been disabled by the publisher.')
       ).toBeInTheDocument();
