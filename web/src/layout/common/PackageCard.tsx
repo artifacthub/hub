@@ -23,6 +23,7 @@ import Official from './badges/Official';
 import Signed from './badges/Signed';
 import VerifiedPublisher from './badges/VerifiedPublisher';
 import styles from './PackageCard.module.css';
+import PackageCategoryLabel from './PackageCategoryLabel';
 
 interface Props {
   package: Package;
@@ -252,7 +253,6 @@ const PackageCard = (props: Props) => {
                 </div>
               </div>
             </div>
-
             {!isUndefined(props.package.description) && (
               <div
                 className={`mb-0 mb-md-1 mt-3 pt-0 pt-md-2 text-muted text-truncate ${styles.description} ${styles.lineClamp} `}
@@ -260,29 +260,32 @@ const PackageCard = (props: Props) => {
                 {props.package.description}
               </div>
             )}
-
             <div
               className={`d-flex d-lg-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-3 pt-lg-0 mt-1 mt-lg-0 mt-xxl-1 mt-xxxl-0`}
             >
               {pkgTS}
               <span>{starsAndKindInfo}</span>
             </div>
-
             {(isUndefined(props.noBadges) || !props.noBadges) && (
-              <div className="d-flex flex-row justify-content-end pt-0 pt-sm-2 mt-0 mt-md-auto">
-                {(props.package.cncf || props.package.repository.cncf) && <CNCF className="d-inline mt-3 ms-2" />}
-                {props.package.deprecated && <Deprecated className="d-inline mt-3 ms-2" />}
-                <Signed
-                  signed={props.package.signed}
-                  signatures={props.package.signatures}
-                  repoKind={props.package.repository.kind}
-                  className="d-inline mt-3 ms-2"
-                />
-                <VerifiedPublisher
-                  verifiedPublisher={props.package.repository.verifiedPublisher}
-                  className="d-inline mt-3 ms-2"
-                />
-                <Official official={isPackageOfficial(props.package)} className="d-inline mt-3 ms-2" />
+              <div className="d-flex flex-row justify-content-between align-items-end pt-0 pt-sm-2 mt-0 mt-md-auto">
+                <div>
+                  <PackageCategoryLabel category={props.package.category} />
+                </div>
+                <div className="d-flex flex-row ms-auto">
+                  {props.package.deprecated && <Deprecated className="d-inline mt-3 ms-2" />}
+                  {(props.package.cncf || props.package.repository.cncf) && <CNCF className="d-inline mt-3 ms-2" />}
+                  <Signed
+                    signed={props.package.signed}
+                    signatures={props.package.signatures}
+                    repoKind={props.package.repository.kind}
+                    className="d-inline mt-3 ms-2"
+                  />
+                  <VerifiedPublisher
+                    verifiedPublisher={props.package.repository.verifiedPublisher}
+                    className="d-inline mt-3 ms-2"
+                  />
+                  <Official official={isPackageOfficial(props.package)} className="d-inline mt-3 ms-2" />
+                </div>
               </div>
             )}
           </div>

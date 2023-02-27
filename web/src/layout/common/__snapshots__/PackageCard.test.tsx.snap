@@ -738,153 +738,158 @@ exports[`PackageCard creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="d-flex flex-row justify-content-end pt-0 pt-sm-2 mt-0 mt-md-auto"
+            class="d-flex flex-row justify-content-between align-items-end pt-0 pt-sm-2 mt-0 mt-md-auto"
           >
+            <div />
             <div
-              data-testid="Signed badge"
+              class="d-flex flex-row ms-auto"
             >
               <div
-                class="d-none d-md-block position-relative d-inline mt-3 ms-2"
+                data-testid="Signed badge"
               >
                 <div
-                  class="position-absolute"
+                  class="d-none d-md-block position-relative d-inline mt-3 ms-2"
                 >
                   <div
-                    class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
-                    role="complementary"
+                    class="position-absolute"
                   >
                     <div
-                      class="content"
+                      class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
+                      role="complementary"
                     >
                       <div
-                        class="fs-6 fw-semibold border-bottom mb-3 pb-1"
-                      >
-                        Signed
-                      </div>
-                      <p
-                        class="mb-0"
-                      >
-                        This package has not been 
-                        <span
-                          class="fw-bold"
-                        >
-                          signed
-                        </span>
-                        .
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="border label"
-                >
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                  >
-                    <div
-                      class="icon"
-                    >
-                      <svg
-                        class="signedIcon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 576 512"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M218.17 424.14c-2.95-5.92-8.09-6.52-10.17-6.52s-7.22.59-10.02 6.19l-7.67 15.34c-6.37 12.78-25.03 11.37-29.48-2.09L144 386.59l-10.61 31.88c-5.89 17.66-22.38 29.53-41 29.53H80c-8.84 0-16-7.16-16-16s7.16-16 16-16h12.39c4.83 0 9.11-3.08 10.64-7.66l18.19-54.64c3.3-9.81 12.44-16.41 22.78-16.41s19.48 6.59 22.77 16.41l13.88 41.64c19.75-16.19 54.06-9.7 66 14.16 1.89 3.78 5.49 5.95 9.36 6.26v-82.12l128-127.09V160H248c-13.2 0-24-10.8-24-24V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24v-40l-128-.11c-16.12-.31-30.58-9.28-37.83-23.75zM384 121.9c0-6.3-2.5-12.4-7-16.9L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1zm-96 225.06V416h68.99l161.68-162.78-67.88-67.88L288 346.96zm280.54-179.63l-31.87-31.87c-9.94-9.94-26.07-9.94-36.01 0l-27.25 27.25 67.88 67.88 27.25-27.25c9.95-9.94 9.95-26.07 0-36.01z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="d-block d-md-none d-inline mt-3 ms-2"
-              >
-                <div
-                  class="border label"
-                  role="button"
-                >
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                  >
-                    <div
-                      class="icon"
-                    >
-                      <svg
-                        class="signedIcon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 576 512"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M218.17 424.14c-2.95-5.92-8.09-6.52-10.17-6.52s-7.22.59-10.02 6.19l-7.67 15.34c-6.37 12.78-25.03 11.37-29.48-2.09L144 386.59l-10.61 31.88c-5.89 17.66-22.38 29.53-41 29.53H80c-8.84 0-16-7.16-16-16s7.16-16 16-16h12.39c4.83 0 9.11-3.08 10.64-7.66l18.19-54.64c3.3-9.81 12.44-16.41 22.78-16.41s19.48 6.59 22.77 16.41l13.88 41.64c19.75-16.19 54.06-9.7 66 14.16 1.89 3.78 5.49 5.95 9.36 6.26v-82.12l128-127.09V160H248c-13.2 0-24-10.8-24-24V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24v-40l-128-.11c-16.12-.31-30.58-9.28-37.83-23.75zM384 121.9c0-6.3-2.5-12.4-7-16.9L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1zm-96 225.06V416h68.99l161.68-162.78-67.88-67.88L288 346.96zm280.54-179.63l-31.87-31.87c-9.94-9.94-26.07-9.94-36.01 0l-27.25 27.25 67.88 67.88 27.25-27.25c9.95-9.94 9.95-26.07 0-36.01z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div
-                    aria-modal="false"
-                    class="modal modal"
-                    role="dialog"
-                  >
-                    <div
-                      class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
-                    >
-                      <div
-                        class="modal-content border border-3 mx-auto content"
+                        class="content"
                       >
                         <div
-                          class="modal-body p-4 h-100 d-flex flex-column"
+                          class="fs-6 fw-semibold border-bottom mb-3 pb-1"
                         >
-                          <div>
-                            <div
-                              class="overflow-hidden alertWrapper"
-                              data-testid="alertWrapper"
-                            />
-                          </div>
+                          Signed
                         </div>
+                        <p
+                          class="mb-0"
+                        >
+                          This package has not been 
+                          <span
+                            class="fw-bold"
+                          >
+                            signed
+                          </span>
+                          .
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="border label"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                    >
+                      <div
+                        class="icon"
+                      >
+                        <svg
+                          class="signedIcon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 576 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M218.17 424.14c-2.95-5.92-8.09-6.52-10.17-6.52s-7.22.59-10.02 6.19l-7.67 15.34c-6.37 12.78-25.03 11.37-29.48-2.09L144 386.59l-10.61 31.88c-5.89 17.66-22.38 29.53-41 29.53H80c-8.84 0-16-7.16-16-16s7.16-16 16-16h12.39c4.83 0 9.11-3.08 10.64-7.66l18.19-54.64c3.3-9.81 12.44-16.41 22.78-16.41s19.48 6.59 22.77 16.41l13.88 41.64c19.75-16.19 54.06-9.7 66 14.16 1.89 3.78 5.49 5.95 9.36 6.26v-82.12l128-127.09V160H248c-13.2 0-24-10.8-24-24V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24v-40l-128-.11c-16.12-.31-30.58-9.28-37.83-23.75zM384 121.9c0-6.3-2.5-12.4-7-16.9L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1zm-96 225.06V416h68.99l161.68-162.78-67.88-67.88L288 346.96zm280.54-179.63l-31.87-31.87c-9.94-9.94-26.07-9.94-36.01 0l-27.25 27.25 67.88 67.88 27.25-27.25c9.95-9.94 9.95-26.07 0-36.01z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="d-block d-md-none d-inline mt-3 ms-2"
+                >
+                  <div
+                    class="border label"
+                    role="button"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                    >
+                      <div
+                        class="icon"
+                      >
+                        <svg
+                          class="signedIcon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 576 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M218.17 424.14c-2.95-5.92-8.09-6.52-10.17-6.52s-7.22.59-10.02 6.19l-7.67 15.34c-6.37 12.78-25.03 11.37-29.48-2.09L144 386.59l-10.61 31.88c-5.89 17.66-22.38 29.53-41 29.53H80c-8.84 0-16-7.16-16-16s7.16-16 16-16h12.39c4.83 0 9.11-3.08 10.64-7.66l18.19-54.64c3.3-9.81 12.44-16.41 22.78-16.41s19.48 6.59 22.77 16.41l13.88 41.64c19.75-16.19 54.06-9.7 66 14.16 1.89 3.78 5.49 5.95 9.36 6.26v-82.12l128-127.09V160H248c-13.2 0-24-10.8-24-24V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24v-40l-128-.11c-16.12-.31-30.58-9.28-37.83-23.75zM384 121.9c0-6.3-2.5-12.4-7-16.9L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1zm-96 225.06V416h68.99l161.68-162.78-67.88-67.88L288 346.96zm280.54-179.63l-31.87-31.87c-9.94-9.94-26.07-9.94-36.01 0l-27.25 27.25 67.88 67.88 27.25-27.25c9.95-9.94 9.95-26.07 0-36.01z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      aria-modal="false"
+                      class="modal modal"
+                      role="dialog"
+                    >
+                      <div
+                        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+                      >
                         <div
-                          class="modal-footer p-3 undefined"
+                          class="modal-content border border-3 mx-auto content"
                         >
                           <div
-                            aria-label="Close modal"
-                            class="btn btn-sm btn-outline-secondary text-uppercase"
-                            role="button"
+                            class="modal-body p-4 h-100 d-flex flex-column"
+                          >
+                            <div>
+                              <div
+                                class="overflow-hidden alertWrapper"
+                                data-testid="alertWrapper"
+                              />
+                            </div>
+                          </div>
+                          <div
+                            class="modal-footer p-3 undefined"
                           >
                             <div
-                              class="d-flex flex-row align-items-center"
+                              aria-label="Close modal"
+                              class="btn btn-sm btn-outline-secondary text-uppercase"
+                              role="button"
                             >
-                              <svg
-                                class="me-2"
-                                fill="currentColor"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 24 24"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
+                              <div
+                                class="d-flex flex-row align-items-center"
                               >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                />
-                              </svg>
-                              <div>
-                                Close
+                                <svg
+                                  class="me-2"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 24 24"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                  />
+                                  <path
+                                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  />
+                                </svg>
+                                <div>
+                                  Close
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -894,180 +899,180 @@ exports[`PackageCard creates snapshot 1`] = `
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              data-testid="Verified publisher badge"
-            >
               <div
-                class="d-none d-md-block position-relative d-inline mt-3 ms-2"
+                data-testid="Verified publisher badge"
               >
                 <div
-                  class="position-absolute"
+                  class="d-none d-md-block position-relative d-inline mt-3 ms-2"
                 >
                   <div
-                    class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
-                    role="complementary"
+                    class="position-absolute"
                   >
                     <div
-                      class="content"
+                      class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
+                      role="complementary"
                     >
                       <div
-                        class="fs-6 fw-semibold border-bottom mb-3 pb-1"
-                      >
-                        Verified publisher
-                      </div>
-                      <p>
-                        This package does not come from a 
-                        <span
-                          class="fw-bold"
-                        >
-                          verified publisher
-                        </span>
-                        .
-                      </p>
-                      <p
-                        class="mb-0 text-muted legend"
-                      >
-                        The 
-                        <code>
-                          verified publisher
-                        </code>
-                         status indicates if the publisher of this package 
-                        <span
-                          class="fw-italic"
-                        >
-                          owns or has control
-                        </span>
-                         over the source repository. For more information, please see the 
-                        <button
-                          aria-label="Open external link"
-                          class="btn p-0 link text-decoration-underline text-reset btnInBadge"
-                          tabindex="-1"
-                          type="button"
-                        >
-                          repositories guide
-                        </button>
-                        .
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="border label"
-                >
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                  >
-                    <div
-                      class="icon"
-                    >
-                      <svg
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="d-block d-md-none d-inline mt-3 ms-2"
-              >
-                <div
-                  class="border label"
-                  role="button"
-                >
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                  >
-                    <div
-                      class="icon"
-                    >
-                      <svg
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div
-                    aria-modal="false"
-                    class="modal modal"
-                    role="dialog"
-                  >
-                    <div
-                      class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
-                    >
-                      <div
-                        class="modal-content border border-3 mx-auto content"
+                        class="content"
                       >
                         <div
-                          class="modal-body p-4 h-100 d-flex flex-column"
+                          class="fs-6 fw-semibold border-bottom mb-3 pb-1"
                         >
-                          <div>
-                            <div
-                              class="overflow-hidden alertWrapper"
-                              data-testid="alertWrapper"
-                            />
-                          </div>
+                          Verified publisher
                         </div>
+                        <p>
+                          This package does not come from a 
+                          <span
+                            class="fw-bold"
+                          >
+                            verified publisher
+                          </span>
+                          .
+                        </p>
+                        <p
+                          class="mb-0 text-muted legend"
+                        >
+                          The 
+                          <code>
+                            verified publisher
+                          </code>
+                           status indicates if the publisher of this package 
+                          <span
+                            class="fw-italic"
+                          >
+                            owns or has control
+                          </span>
+                           over the source repository. For more information, please see the 
+                          <button
+                            aria-label="Open external link"
+                            class="btn p-0 link text-decoration-underline text-reset btnInBadge"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            repositories guide
+                          </button>
+                          .
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="border label"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                    >
+                      <div
+                        class="icon"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="d-block d-md-none d-inline mt-3 ms-2"
+                >
+                  <div
+                    class="border label"
+                    role="button"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                    >
+                      <div
+                        class="icon"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      aria-modal="false"
+                      class="modal modal"
+                      role="dialog"
+                    >
+                      <div
+                        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+                      >
                         <div
-                          class="modal-footer p-3 undefined"
+                          class="modal-content border border-3 mx-auto content"
                         >
                           <div
-                            aria-label="Close modal"
-                            class="btn btn-sm btn-outline-secondary text-uppercase"
-                            role="button"
+                            class="modal-body p-4 h-100 d-flex flex-column"
+                          >
+                            <div>
+                              <div
+                                class="overflow-hidden alertWrapper"
+                                data-testid="alertWrapper"
+                              />
+                            </div>
+                          </div>
+                          <div
+                            class="modal-footer p-3 undefined"
                           >
                             <div
-                              class="d-flex flex-row align-items-center"
+                              aria-label="Close modal"
+                              class="btn btn-sm btn-outline-secondary text-uppercase"
+                              role="button"
                             >
-                              <svg
-                                class="me-2"
-                                fill="currentColor"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 24 24"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
+                              <div
+                                class="d-flex flex-row align-items-center"
                               >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                />
-                              </svg>
-                              <div>
-                                Close
+                                <svg
+                                  class="me-2"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 24 24"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                  />
+                                  <path
+                                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  />
+                                </svg>
+                                <div>
+                                  Close
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -1077,180 +1082,180 @@ exports[`PackageCard creates snapshot 1`] = `
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              data-testid="Official badge"
-            >
               <div
-                class="d-none d-md-block position-relative d-inline mt-3 ms-2"
+                data-testid="Official badge"
               >
                 <div
-                  class="position-absolute"
+                  class="d-none d-md-block position-relative d-inline mt-3 ms-2"
                 >
                   <div
-                    class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
-                    role="complementary"
+                    class="position-absolute"
                   >
                     <div
-                      class="content"
+                      class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
+                      role="complementary"
                     >
                       <div
-                        class="fs-6 fw-semibold border-bottom mb-3 pb-1"
-                      >
-                        Official
-                      </div>
-                      <p>
-                        This package is not marked as 
-                        <span
-                          class="fw-bold"
-                        >
-                          official
-                        </span>
-                        .
-                      </p>
-                      <p
-                        class="mb-0 text-muted legend"
-                      >
-                        In Artifact Hub, the 
-                        <code>
-                          official
-                        </code>
-                         status means that the publisher 
-                        <span
-                          class="fw-bold"
-                        >
-                          owns the software deployed
-                        </span>
-                         by a package. For more information, please see the 
-                        <button
-                          aria-label="Open external link"
-                          class="btn p-0 link text-decoration-underline text-reset btnInBadge"
-                          tabindex="-1"
-                          type="button"
-                        >
-                          repositories guide
-                        </button>
-                        .
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="border label"
-                >
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                  >
-                    <div
-                      class="icon"
-                    >
-                      <svg
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="d-block d-md-none d-inline mt-3 ms-2"
-              >
-                <div
-                  class="border label"
-                  role="button"
-                >
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                  >
-                    <div
-                      class="icon"
-                    >
-                      <svg
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div
-                    aria-modal="false"
-                    class="modal modal"
-                    role="dialog"
-                  >
-                    <div
-                      class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
-                    >
-                      <div
-                        class="modal-content border border-3 mx-auto content"
+                        class="content"
                       >
                         <div
-                          class="modal-body p-4 h-100 d-flex flex-column"
+                          class="fs-6 fw-semibold border-bottom mb-3 pb-1"
                         >
-                          <div>
-                            <div
-                              class="overflow-hidden alertWrapper"
-                              data-testid="alertWrapper"
-                            />
-                          </div>
+                          Official
                         </div>
+                        <p>
+                          This package is not marked as 
+                          <span
+                            class="fw-bold"
+                          >
+                            official
+                          </span>
+                          .
+                        </p>
+                        <p
+                          class="mb-0 text-muted legend"
+                        >
+                          In Artifact Hub, the 
+                          <code>
+                            official
+                          </code>
+                           status means that the publisher 
+                          <span
+                            class="fw-bold"
+                          >
+                            owns the software deployed
+                          </span>
+                           by a package. For more information, please see the 
+                          <button
+                            aria-label="Open external link"
+                            class="btn p-0 link text-decoration-underline text-reset btnInBadge"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            repositories guide
+                          </button>
+                          .
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="border label"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                    >
+                      <div
+                        class="icon"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="d-block d-md-none d-inline mt-3 ms-2"
+                >
+                  <div
+                    class="border label"
+                    role="button"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                    >
+                      <div
+                        class="icon"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      aria-modal="false"
+                      class="modal modal"
+                      role="dialog"
+                    >
+                      <div
+                        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+                      >
                         <div
-                          class="modal-footer p-3 undefined"
+                          class="modal-content border border-3 mx-auto content"
                         >
                           <div
-                            aria-label="Close modal"
-                            class="btn btn-sm btn-outline-secondary text-uppercase"
-                            role="button"
+                            class="modal-body p-4 h-100 d-flex flex-column"
+                          >
+                            <div>
+                              <div
+                                class="overflow-hidden alertWrapper"
+                                data-testid="alertWrapper"
+                              />
+                            </div>
+                          </div>
+                          <div
+                            class="modal-footer p-3 undefined"
                           >
                             <div
-                              class="d-flex flex-row align-items-center"
+                              aria-label="Close modal"
+                              class="btn btn-sm btn-outline-secondary text-uppercase"
+                              role="button"
                             >
-                              <svg
-                                class="me-2"
-                                fill="currentColor"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 24 24"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
+                              <div
+                                class="d-flex flex-row align-items-center"
                               >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                />
-                              </svg>
-                              <div>
-                                Close
+                                <svg
+                                  class="me-2"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 24 24"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                  />
+                                  <path
+                                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  />
+                                </svg>
+                                <div>
+                                  Close
+                                </div>
                               </div>
                             </div>
                           </div>
