@@ -863,12 +863,12 @@ const PackageView = (props: Props) => {
                       </div>
                     </div>
 
-                    <p className={`mb-1 overflow-hidden text-break ${styles.description}`}>{detail.description}</p>
+                    <p className={`mb-2 overflow-hidden text-break ${styles.description}`}>{detail.description}</p>
 
                     <div className="d-flex flex-row align-items-center">
                       <div className="d-flex flex-row mt-3 me-4">
                         {detail.deprecated && <Deprecated className="me-2" dropdownAlignment="start" />}
-                        {(detail.cncf || detail.repository.cncf) && <CNCF />}
+                        {(detail.cncf || detail.repository.cncf) && <CNCF className="me-2" dropdownAlignment="start" />}
                         <Signed
                           signed={detail.signed}
                           signatures={[Signature.Cosign, Signature.Prov]}
