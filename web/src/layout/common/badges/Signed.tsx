@@ -24,9 +24,13 @@ const SIGNATURE_NAME = {
 };
 
 const Signed = (props: Props) => {
-  const notSupported = ![RepositoryKind.Helm, RepositoryKind.Container, RepositoryKind.Kubewarden].includes(
-    props.repoKind
-  );
+  const notSupported = ![
+    RepositoryKind.Helm,
+    RepositoryKind.Container,
+    RepositoryKind.Kubewarden,
+    RepositoryKind.TektonPipeline,
+    RepositoryKind.TektonTask,
+  ].includes(props.repoKind);
 
   return (
     <Badge

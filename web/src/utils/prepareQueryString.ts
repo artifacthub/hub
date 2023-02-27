@@ -29,6 +29,9 @@ export const getURLSearchParams = (query: BasicQuery): URLSearchParams => {
   if (!isUndefined(query.official) && query.official) {
     q.set('official', 'true');
   }
+  if (!isUndefined(query.cncf) && query.cncf) {
+    q.set('cncf', 'true');
+  }
   return q;
 };
 

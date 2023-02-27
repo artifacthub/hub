@@ -102,6 +102,7 @@ const onChangeMock = jest.fn();
 const onFacetExpandableChangeMock = jest.fn();
 const onVerifiedPublisherChangeMock = jest.fn();
 const onOfficialChangeMock = jest.fn();
+const onCNCFChangeMock = jest.fn();
 
 const defaultProps = {
   forceCollapseList: false,
@@ -115,6 +116,7 @@ const defaultProps = {
   onOperatorsChange: jest.fn(),
   onVerifiedPublisherChange: onVerifiedPublisherChangeMock,
   onOfficialChange: onOfficialChangeMock,
+  onCNCFChange: onCNCFChangeMock,
   onResetFilters: onResetFiltersMock,
   onFacetExpandableChange: onFacetExpandableChangeMock,
   deprecated: false,
@@ -272,9 +274,10 @@ describe('Filters', () => {
     it('renders component', () => {
       render(<Filters {...defaultProps} />);
 
-      expect(screen.getAllByRole('checkbox')).toHaveLength(17);
+      expect(screen.getAllByRole('checkbox')).toHaveLength(18);
       expect(screen.getByLabelText('Official')).toBeInTheDocument();
       expect(screen.getByLabelText('Verified publishers')).toBeInTheDocument();
+      expect(screen.getByLabelText('CNCF')).toBeInTheDocument();
       expect(screen.getByLabelText('Include deprecated')).toBeInTheDocument();
     });
 
@@ -329,6 +332,16 @@ describe('Filters', () => {
       await userEvent.click(opt);
 
       await waitFor(() => expect(onOfficialChangeMock).toHaveBeenCalledTimes(1));
+    });
+
+    it('calls CNCFChange mock when CNCF checkbox is clicked', async () => {
+      render(<Filters {...defaultProps} />);
+
+      const opt = screen.getByLabelText('CNCF');
+      expect(opt).toBeInTheDocument();
+      await userEvent.click(opt);
+
+      await waitFor(() => expect(onCNCFChangeMock).toHaveBeenCalledTimes(1));
     });
 
     it('calls onchange mock when any checkbox is clicked', async () => {
@@ -427,7 +440,7 @@ describe('Filters', () => {
         const labels = screen.getAllByTestId('checkboxLabel');
 
         for (let j = 0; j < capabitiesTests[i].output.length; j++) {
-          expect(labels[2 + j]).toHaveTextContent(capabitiesTests[i].output[j]);
+          expect(labels[3 + j]).toHaveTextContent(capabitiesTests[i].output[j]);
         }
       });
     }

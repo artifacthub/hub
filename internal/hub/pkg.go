@@ -316,6 +316,7 @@ type SearchPackageInput struct {
 	Categories        []PackageCategory `json:"categories,omitempty"`
 	VerifiedPublisher bool              `json:"verified_publisher"`
 	Official          bool              `json:"official"`
+	CNCF              bool              `json:"cncf"`
 	Operators         bool              `json:"operators"`
 	Deprecated        bool              `json:"deprecated"`
 	Licenses          []string          `json:"licenses,omitempty"`

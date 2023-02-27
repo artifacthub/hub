@@ -128,6 +128,67 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
+      class="d-flex flex-row align-items-baseline"
+    >
+      <div
+        class="form-check me-sm-2 mb-2 checkbox"
+      >
+        <input
+          aria-checked="false"
+          class="form-check-input input"
+          id="desktop-cncf-cncf"
+          name="cncf"
+          tabindex="0"
+          type="checkbox"
+          value="cncf"
+        />
+        <label
+          class="form-check-label label mw-100 text-muted"
+          data-testid="checkboxLabel"
+          for="desktop-cncf-cncf"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              CNCF
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="d-none d-md-block"
+      >
+        <div
+          class="position-relative tooltipIcon"
+        >
+          <div
+            data-testid="elementWithTooltip"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0V0z"
+                fill="none"
+              />
+              <path
+                d="M11 7h2v2h-2V7zm0 4h2v6h-2v-6zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
       class="mt-1 mt-sm-2 pt-1 facet"
       role="menuitem"
     >

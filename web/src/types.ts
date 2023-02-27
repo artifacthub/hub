@@ -284,6 +284,7 @@ export interface BasicQuery {
   operators?: boolean | null;
   verifiedPublisher?: boolean | null;
   official?: boolean | null;
+  cncf?: boolean | null;
   total?: number;
 }
 

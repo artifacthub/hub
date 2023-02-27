@@ -26,11 +26,13 @@ interface Props {
   onDeprecatedChange: () => void;
   onOperatorsChange: () => void;
   onVerifiedPublisherChange: () => void;
+  onCNCFChange: () => void;
   onOfficialChange: () => void;
   onResetFilters: () => void;
   deprecated?: boolean | null;
   operators?: boolean | null;
   verifiedPublisher?: boolean | null;
+  cncf?: boolean | null;
   official?: boolean | null;
   device: string;
 }
@@ -225,6 +227,7 @@ const Filters = (props: Props) => {
             props.deprecated ||
             props.operators ||
             props.verifiedPublisher ||
+            props.cncf ||
             props.official) && (
             <div className={`d-flex align-items-center ${styles.resetBtnWrapper}`}>
               <IoMdCloseCircleOutline className={`text-dark ${styles.resetBtnDecorator}`} />
@@ -282,6 +285,30 @@ const Filters = (props: Props) => {
             className={styles.tooltipIcon}
             element={<MdInfoOutline />}
             tooltipMessage="The publisher owns the repository"
+            visibleTooltip
+            active
+          />
+        </div>
+      </div>
+
+      <div className="d-flex flex-row align-items-baseline">
+        <CheckBox
+          name="cncf"
+          value="cncf"
+          device={props.device}
+          className={styles.checkbox}
+          labelClassName="mw-100 text-muted"
+          label="CNCF"
+          checked={props.cncf || false}
+          onChange={props.onCNCFChange}
+        />
+
+        <div className="d-none d-md-block">
+          <ElementWithTooltip
+            tooltipClassName={styles.tooltipMessage}
+            className={styles.tooltipIcon}
+            element={<MdInfoOutline />}
+            tooltipMessage="This package has been published by a CNCF project"
             visibleTooltip
             active
           />
