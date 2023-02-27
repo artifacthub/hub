@@ -308,7 +308,7 @@ const Filters = (props: Props) => {
             tooltipClassName={styles.tooltipMessage}
             className={styles.tooltipIcon}
             element={<MdInfoOutline />}
-            tooltipMessage="This package has been published by a CNCF project"
+            tooltipMessage="The package has been published by a CNCF project"
             visibleTooltip
             active
           />

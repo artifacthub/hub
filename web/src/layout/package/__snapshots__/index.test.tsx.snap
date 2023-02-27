@@ -476,7 +476,7 @@ exports[`Package index creates snapshot 1`] = `
           </div>
         </div>
         <p
-          class="mb-1 overflow-hidden text-break description"
+          class="mb-2 overflow-hidden text-break description"
         >
           desc
         </p>
