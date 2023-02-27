@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { isArray } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
@@ -53,6 +54,7 @@ import Loading from '../common/Loading';
 import Modal from '../common/Modal';
 import NoData from '../common/NoData';
 import OrganizationInfo from '../common/OrganizationInfo';
+import PackageCategoryLabel from '../common/PackageCategoryLabel';
 import RepositoryIcon from '../common/RepositoryIcon';
 import RepositoryIconLabel from '../common/RepositoryIconLabel';
 import RepositoryInfo from '../common/RepositoryInfo';
@@ -785,7 +787,18 @@ const PackageView = (props: Props) => {
                             <div className="d-none d-md-flex ms-3">
                               <RepositoryIconLabel
                                 kind={detail!.repository.kind}
-                                className={`d-none d-md-inline me-3 position-relative mt-1 ${styles.kindIcon}`}
+                                className={classNames(
+                                  'd-none d-md-inline position-relative mt-1',
+                                  styles.kindIcon,
+                                  { 'me-3': isUndefined(detail.category) },
+                                  { 'me-2': !isUndefined(detail.category) }
+                                )}
+                                deprecated={detail.deprecated}
+                              />
+                              <PackageCategoryLabel
+                                category={detail.category}
+                                deprecated={detail.deprecated}
+                                className="d-none d-md-inline me-3 position-relative mt-1"
                               />
                             </div>
                           </div>
@@ -850,27 +863,26 @@ const PackageView = (props: Props) => {
                       </div>
                     </div>
 
-                    <p className={`mb-0 overflow-hidden text-break ${styles.description}`}>{detail.description}</p>
+                    <p className={`mb-1 overflow-hidden text-break ${styles.description}`}>{detail.description}</p>
 
                     <div className="d-flex flex-row align-items-center">
-                      {detail.deprecated && <Deprecated className="d-inline mt-3" dropdownAlignment="start" />}
-
                       <div className="d-flex flex-row mt-3 me-4">
+                        {detail.deprecated && <Deprecated className="me-2" dropdownAlignment="start" />}
                         {(detail.cncf || detail.repository.cncf) && <CNCF />}
                         <Signed
                           signed={detail.signed}
                           signatures={[Signature.Cosign, Signature.Prov]}
                           repoKind={detail.repository.kind}
-                          className="ms-2"
+                          className="me-2"
                           signKey={detail.signKey}
                           dropdownAlignment="start"
                         />
                         <VerifiedPublisher
                           verifiedPublisher={detail.repository.verifiedPublisher}
-                          className="ms-2"
+                          className="me-2"
                           dropdownAlignment="start"
                         />
-                        <Official official={isPackageOfficial(detail)} className="ms-2" dropdownAlignment="start" />
+                        <Official official={isPackageOfficial(detail)} className="me-2" dropdownAlignment="start" />
                       </div>
 
                       <Stats

@@ -521,7 +521,7 @@ const SearchView = (props: Props) => {
         <main role="main" className="container-lg px-sm-4 px-lg-0 d-flex flex-row align-items-start">
           {!isEmptyFacets() && (
             <aside
-              className={`bg-white border d-none d-md-block position-relative ${styles.sidebar}`}
+              className={`bg-white border d-none d-md-block position-relative mb-4 ${styles.sidebar}`}
               aria-label="Filters"
             >
               <div role="menu">

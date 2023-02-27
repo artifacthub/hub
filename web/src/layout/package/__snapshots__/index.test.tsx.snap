@@ -50,7 +50,7 @@ exports[`Package index creates snapshot 1`] = `
                       class="d-flex fs-6"
                     >
                       <span
-                        class="badge bg-light text-dark border bg badge d-none d-md-inline me-3 position-relative mt-1 kindIcon"
+                        class="badge bg-light text-dark border bg badge d-none d-md-inline position-relative mt-1 kindIcon me-3"
                       >
                         <div
                           class="d-flex flex-row align-items-center"
@@ -83,7 +83,7 @@ exports[`Package index creates snapshot 1`] = `
                     class="d-flex d-md-none fs-6"
                   >
                     <span
-                      class="badge bg-light text-dark border bg badge d-none d-md-inline me-3 position-relative mt-1 kindIcon"
+                      class="badge bg-light text-dark border bg badge d-none d-md-inline position-relative mt-1 kindIcon me-3"
                     >
                       <div
                         class="d-flex flex-row align-items-center"
@@ -476,7 +476,7 @@ exports[`Package index creates snapshot 1`] = `
           </div>
         </div>
         <p
-          class="mb-0 overflow-hidden text-break description"
+          class="mb-1 overflow-hidden text-break description"
         >
           desc
         </p>
@@ -490,7 +490,7 @@ exports[`Package index creates snapshot 1`] = `
               data-testid="Signed badge"
             >
               <div
-                class="d-none d-md-block position-relative ms-2"
+                class="d-none d-md-block position-relative me-2"
               >
                 <div
                   class="position-absolute"
@@ -549,7 +549,7 @@ exports[`Package index creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="d-block d-md-none ms-2"
+                class="d-block d-md-none me-2"
               >
                 <div
                   class="border label"
@@ -645,7 +645,7 @@ exports[`Package index creates snapshot 1`] = `
               data-testid="Verified publisher badge"
             >
               <div
-                class="d-none d-md-block position-relative ms-2"
+                class="d-none d-md-block position-relative me-2"
               >
                 <div
                   class="position-absolute"
@@ -729,7 +729,7 @@ exports[`Package index creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="d-block d-md-none ms-2"
+                class="d-block d-md-none me-2"
               >
                 <div
                   class="border label"
@@ -828,7 +828,7 @@ exports[`Package index creates snapshot 1`] = `
               data-testid="Official badge"
             >
               <div
-                class="d-none d-md-block position-relative ms-2"
+                class="d-none d-md-block position-relative me-2"
               >
                 <div
                   class="position-absolute"
@@ -912,7 +912,7 @@ exports[`Package index creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="d-block d-md-none ms-2"
+                class="d-block d-md-none me-2"
               >
                 <div
                   class="border label"

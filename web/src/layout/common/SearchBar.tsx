@@ -356,7 +356,7 @@ const SearchBar = (props: Props) => {
                           </div>
 
                           <div className="d-flex flex-row align-items-center mt-2">
-                            <div className={`text-truncate ${styles.smallText}`}>
+                            <div className={`text-truncate text-start ${styles.smallText}`}>
                               <small className="text-muted text-uppercase">
                                 {pkg.repository.userAlias ? 'User' : 'Org'}:
                               </small>
