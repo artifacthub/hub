@@ -17,6 +17,7 @@ import OrganizationInfo from '../common/OrganizationInfo';
 import RepositoryIconLabel from '../common/RepositoryIconLabel';
 import RepositoryInfo from '../common/RepositoryInfo';
 import StarBadge from '../common/StarBadge';
+import CNCF from './badges/CNCF';
 import Deprecated from './badges/Deprecated';
 import Official from './badges/Official';
 import Signed from './badges/Signed';
@@ -269,6 +270,7 @@ const PackageCard = (props: Props) => {
 
             {(isUndefined(props.noBadges) || !props.noBadges) && (
               <div className="d-flex flex-row justify-content-end pt-0 pt-sm-2 mt-0 mt-md-auto">
+                {(props.package.cncf || props.package.repository.cncf) && <CNCF className="d-inline mt-3 ms-2" />}
                 {props.package.deprecated && <Deprecated className="d-inline mt-3 ms-2" />}
                 <Signed
                   signed={props.package.signed}

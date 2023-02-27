@@ -11,6 +11,7 @@
     "kind": 0,
     "name": "test",
     "url": "repoUrl",
+    "cncf": true,
     "userAlias": "user"
   }
 }

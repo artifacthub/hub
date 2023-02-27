@@ -490,7 +490,7 @@ exports[`Package index creates snapshot 1`] = `
               data-testid="Signed badge"
             >
               <div
-                class="d-none d-md-block position-relative undefined"
+                class="d-none d-md-block position-relative ms-2"
               >
                 <div
                   class="position-absolute"
@@ -549,7 +549,7 @@ exports[`Package index creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="d-block d-md-none undefined"
+                class="d-block d-md-none ms-2"
               >
                 <div
                   class="border label"

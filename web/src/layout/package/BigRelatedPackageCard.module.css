@@ -70,8 +70,8 @@
   }
 
   .card:hover {
-    border-color: var(--color-black-25);
-    box-shadow: 0 0 0 2px var(--color-black-25);
+    border-color: var(--color-black-50);
+    box-shadow: 0 0.125rem 0.25rem var(--color-black-25);
   }
 }
 
