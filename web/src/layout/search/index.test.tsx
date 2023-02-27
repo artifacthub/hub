@@ -189,7 +189,7 @@ describe('Search index', () => {
 
       // Desktop + mobile (sidebar)
       expect(facets).toHaveLength(2 * 2);
-      expect(options).toHaveLength(5 * 2);
+      expect(options).toHaveLength(6 * 2);
     });
 
     it('calls history push on filters change', async () => {
@@ -477,7 +477,7 @@ describe('Search index', () => {
 
       expect(main).toBeInTheDocument();
       const checks = await screen.findAllByRole('checkbox');
-      expect(checks).toHaveLength(18);
+      expect(checks).toHaveLength(20);
 
       rerender(
         <Router>
@@ -502,7 +502,7 @@ describe('Search index', () => {
       expect(noData).toHaveTextContent(
         `We're sorry! We can't seem to find any packages that match your search for "test1"`
       );
-      expect(checks).toHaveLength(18);
+      expect(checks).toHaveLength(20);
     });
   });
 
@@ -698,7 +698,7 @@ describe('Search index', () => {
 
       render(
         <Router>
-          <SearchView {...defaultProps} official verifiedPublisher />
+          <SearchView {...defaultProps} official verifiedPublisher cncf />
         </Router>
       );
 
@@ -706,8 +706,9 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      expect(await screen.findByRole('button', { name: 'Remove filter: Only official' })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Remove filter: Only verified publishers' })).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: 'Remove filter: Official' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Remove filter: Verified publisher' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Remove filter: CNCF' })).toBeInTheDocument();
     });
 
     it('calls history push on filters change', async () => {
@@ -724,7 +725,7 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      await userEvent.click(screen.getByRole('button', { name: 'Remove filter: Only official' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Remove filter: Official' }));
 
       await waitFor(() => {
         expect(mockHistoryPush).toHaveBeenCalledTimes(1);

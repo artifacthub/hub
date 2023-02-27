@@ -675,13 +675,23 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		}
 	}
 
-	// Only display content from official repositories
+	// Only display official packages
 	var official bool
 	if qs.Get("official") != "" {
 		var err error
 		official, err = strconv.ParseBool(qs.Get("official"))
 		if err != nil {
 			return nil, fmt.Errorf("invalid official: %s", qs.Get("official"))
+		}
+	}
+
+	// Only display packages published by CNCF projects
+	var cncf bool
+	if qs.Get("cncf") != "" {
+		var err error
+		cncf, err = strconv.ParseBool(qs.Get("cncf"))
+		if err != nil {
+			return nil, fmt.Errorf("invalid cncf: %s", qs.Get("cncf"))
 		}
 	}
 
@@ -718,6 +728,7 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		Categories:        categories,
 		VerifiedPublisher: verifiedPublisher,
 		Official:          official,
+		CNCF:              cncf,
 		Operators:         operators,
 		Deprecated:        deprecated,
 		Licenses:          qs["license"],

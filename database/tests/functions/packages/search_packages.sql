@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(29);
+select plan(30);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -656,6 +656,52 @@ select results_eq(
         )
     $$,
     'Official: true Deprecated: true | Packages 1 and 2 expected - No facets expected'
+);
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "cncf": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "category": 1,
+                        "stars": 10,
+                        "official": false,
+                        "cncf": true,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "production_organizations_count": 1,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "cncf": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            1
+        )
+    $$,
+    'CNCF: true | Packages 1 expected - No facets expected'
 );
 select results_eq(
     $$

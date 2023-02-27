@@ -48,6 +48,7 @@ interface Props {
   operators?: boolean | null;
   verifiedPublisher?: boolean | null;
   official?: boolean | null;
+  cncf?: boolean | null;
   fromDetail: boolean;
   visibleModal?: string;
   sort?: string | null;
@@ -158,6 +159,7 @@ const SearchView = (props: Props) => {
       operators: props.operators,
       verifiedPublisher: props.verifiedPublisher,
       official: props.official,
+      cncf: props.cncf,
       sort: props.sort,
     };
   };
@@ -215,6 +217,12 @@ const SearchView = (props: Props) => {
     updateCurrentPage({
       verifiedPublisher:
         !isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) ? !props.verifiedPublisher : true,
+    });
+  };
+
+  const onCNCFChange = (): void => {
+    updateCurrentPage({
+      cncf: !isUndefined(props.cncf) && !isNull(props.cncf) ? !props.cncf : true,
     });
   };
 
@@ -276,6 +284,7 @@ const SearchView = (props: Props) => {
         operators: props.operators,
         verifiedPublisher: props.verifiedPublisher,
         official: props.official,
+        cncf: props.cncf,
         sort: props.sort || DEFAULT_SORT,
       };
 
@@ -330,13 +339,19 @@ const SearchView = (props: Props) => {
     props.operators,
     props.verifiedPublisher,
     props.official,
+    props.cncf,
     ctx.prefs.search.limit,
     props.sort,
   ]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
   const activeFilters =
-    props.deprecated || props.operators || props.verifiedPublisher || props.official || !isEmpty(props.filters);
+    props.deprecated ||
+    props.operators ||
+    props.verifiedPublisher ||
+    props.official ||
+    props.cncf ||
+    !isEmpty(props.filters);
 
   return (
     <>
@@ -395,9 +410,11 @@ const SearchView = (props: Props) => {
                           operators={props.operators}
                           verifiedPublisher={props.verifiedPublisher}
                           official={props.official}
+                          cncf={props.cncf}
                           onDeprecatedChange={onDeprecatedChange}
                           onOperatorsChange={onOperatorsChange}
                           onVerifiedPublisherChange={onVerifiedPublisherChange}
+                          onCNCFChange={onCNCFChange}
                           onOfficialChange={onOfficialChange}
                           onResetFilters={onResetFilters}
                           visibleTitle={false}
@@ -462,10 +479,11 @@ const SearchView = (props: Props) => {
             <div className="d-none d-lg-inline">
               <div className="d-flex flex-row flex-wrap align-items-center pt-2">
                 <span className="me-2 pe-1 mb-2">Filters:</span>
-                {props.official && <FilterBadge name="Only official" onClick={onOfficialChange} />}
+                {props.official && <FilterBadge name="Official" onClick={onOfficialChange} />}
                 {props.verifiedPublisher && (
-                  <FilterBadge name="Only verified publishers" onClick={onVerifiedPublisherChange} />
+                  <FilterBadge name="Verified publisher" onClick={onVerifiedPublisherChange} />
                 )}
+                {props.cncf && <FilterBadge name="CNCF" onClick={onCNCFChange} />}
                 {!isUndefined(props.filters) && (
                   <>
                     {Object.keys(props.filters).map((type: string) => {
@@ -517,9 +535,11 @@ const SearchView = (props: Props) => {
                   operators={props.operators}
                   verifiedPublisher={props.verifiedPublisher}
                   official={props.official}
+                  cncf={props.cncf}
                   onDeprecatedChange={onDeprecatedChange}
                   onOperatorsChange={onOperatorsChange}
                   onVerifiedPublisherChange={onVerifiedPublisherChange}
+                  onCNCFChange={onCNCFChange}
                   onOfficialChange={onOfficialChange}
                   onResetFilters={onResetFilters}
                   visibleTitle
@@ -609,6 +629,7 @@ const SearchView = (props: Props) => {
                               operators: props.operators,
                               verifiedPublisher: props.verifiedPublisher,
                               official: props.official,
+                              cncf: props.cncf,
                               sort: props.sort,
                             }}
                             saveScrollPosition={saveScrollPosition}

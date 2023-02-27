@@ -35,6 +35,7 @@ const buildSearchParams = (query: string): SearchFiltersURL => {
     deprecated: p.has('deprecated') ? p.get('deprecated') === 'true' : false,
     operators: p.has('operators') ? p.get('operators') === 'true' : undefined,
     verifiedPublisher: p.has('verified_publisher') ? p.get('verified_publisher') === 'true' : undefined,
+    cncf: p.has('cncf') ? p.get('cncf') === 'true' : undefined,
     official: p.has('official') ? p.get('official') === 'true' : undefined,
     sort: p.has('sort') ? p.get('sort') : undefined,
   };

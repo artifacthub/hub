@@ -1395,6 +1395,7 @@ func TestSearch(t *testing.T) {
 			{"invalid kind (one of them)", "kind=0&kind=z"},
 			{"invalid verified publisher", "verified_publisher=z"},
 			{"invalid official", "official=z"},
+			{"invalid cncf", "cncf=z"},
 			{"invalid operators", "operators=z"},
 			{"invalid deprecated", "deprecated=z"},
 		}

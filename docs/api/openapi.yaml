@@ -951,6 +951,7 @@ paths:
         - $ref: "#/components/parameters/OperatorsParam"
         - $ref: "#/components/parameters/VerifiedPublisherParam"
         - $ref: "#/components/parameters/OfficialParam"
+        - $ref: "#/components/parameters/CNCFParam"
         - $ref: "#/components/parameters/SortParam"
       responses:
         "200":
@@ -4807,6 +4808,13 @@ components:
         type: boolean
       required: false
       description: Whether to get only verified publisher
+    CNCFParam:
+      in: query
+      name: cncf
+      schema:
+        type: boolean
+      required: false
+      description: Whether to get only pacakges published by CNCF projects
     OfficialParam:
       in: query
       name: official

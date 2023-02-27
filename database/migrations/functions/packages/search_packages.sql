@@ -126,6 +126,12 @@ begin
                 true
             end
         and
+            case when p_input ? 'cncf' and (p_input->>'cncf')::boolean = true then
+                (r.cncf = true or p.cncf = true)
+            else
+                true
+            end
+        and
             case when p_input ? 'operators' and (p_input->>'operators')::boolean = true then
                 p.is_operator = true
             else
