@@ -121,10 +121,9 @@ const Wrapper = styled.div<WrapperProps>`
           --color-ah-black-25: rgba(255, 255, 255, 0.25);
           --color-ah-black-75: rgba(255, 255, 255, 0.75);
           --light-gray: #131216;
-          --info: #131216;
-          --success: #131216;
-          --icon-color: #a3a3a6;
+          --icon-color: #222529;
           --dark: #a3a3a6;
+          --muted: #a0a0a0;
         `
       : css`
           --color-ah-primary: #417598;
@@ -138,11 +137,10 @@ const Wrapper = styled.div<WrapperProps>`
           --color-ah-black-25: rgba(0, 0, 0, 0.25);
           --color-ah-black-75: rgba(0, 0, 0, 0.75);
           --light-gray: #e9ecef;
-          --info: #417598;
-          --success: #28a745;
           --icon-color: #fff;
           --color-ah-black-25: rgba(0, 0, 0, 0.25);
           --dark: #343a40;
+          --muted: #636a6e;
         `}
   --color-ah-primary: ${(props) => (props.color && props.color !== DEFAULT_COLOR ? 'inherit' : props.color)};
   margin: 0.75rem;
@@ -208,7 +206,7 @@ const CardBody = styled.div<CardBodyProps>`
   flex-direction: column;
 
   &.groupedItem {
-    height: ${(p: CardBodyProps) => (p.withBadges ? '260px' : '225px')};
+    height: ${(p: CardBodyProps) => (p.withBadges ? '255px' : '225px')};
   }
 `;
 
@@ -276,7 +274,8 @@ const StarsNumber = styled('div')`
 const BadgesWrapper = styled('div')`
   display: flex;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: auto;
+  margin-bottom: 0.75rem;
 
   & > * {
     margin-right: 0.5rem;
@@ -285,7 +284,8 @@ const BadgesWrapper = styled('div')`
 
 const Description = styled('div')`
   overflow: hidden;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  color: var(--muted);
   line-height: 1.5;
   margin-bottom: 1rem;
   display: -webkit-box;
@@ -294,7 +294,7 @@ const Description = styled('div')`
 
   .groupedItem & {
     -webkit-line-clamp: 3;
-    height: 62px;
+    height: 57px;
   }
 `;
 
@@ -450,26 +450,28 @@ export default function Widget(props: Props) {
 
                 <Description>{packageSummary.description || ''}</Description>
 
+                {(packageSummary.official ||
+                  packageSummary.repository.official ||
+                  packageSummary.repository.verifiedPublisher) && (
+                  <BadgesWrapper>
+                    {packageSummary.deprecated && <Label type="deprecated" />}
+
+                    {(packageSummary.cncf || packageSummary.repository.cncf) && <Label type="cncf" />}
+
+                    {packageSummary.signed && <Label type="signed" />}
+
+                    {packageSummary.repository.verifiedPublisher && <Label type="verified" />}
+
+                    {(packageSummary.official || packageSummary.repository.official) && <Label type="official" />}
+                  </BadgesWrapper>
+                )}
+
                 <PublishedBy>
                   <Legend>Published by:</Legend>
                   {packageSummary.repository.userAlias ||
                     packageSummary.repository.organizationDisplayName ||
                     packageSummary.repository.organizationName}
                 </PublishedBy>
-
-                {(packageSummary.official ||
-                  packageSummary.repository.official ||
-                  packageSummary.repository.verifiedPublisher) && (
-                  <BadgesWrapper>
-                    {(packageSummary.official || packageSummary.repository.official) && (
-                      <Label text="Official" type="success" icon={<SVGIcons name="official" />} />
-                    )}
-
-                    {packageSummary.repository.verifiedPublisher && (
-                      <Label text="Verified Publisher" icon={<SVGIcons name="verified" />} />
-                    )}
-                  </BadgesWrapper>
-                )}
               </>
             )}
           </CardBody>

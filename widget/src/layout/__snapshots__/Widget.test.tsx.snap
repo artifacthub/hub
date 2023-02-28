@@ -3,25 +3,25 @@
 exports[`Widget creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="sc-jrcTuL iiQnje"
+    class="sc-ftTHYK iIaFRK"
     data-testid="mainWrapper"
   >
     <div
-      class="sc-kDvujY yeSOt"
+      class="sc-pyfCe kpLLLX"
       data-testid="cardWrapper"
     >
       <a
-        class="sc-ipEyDJ hAVogE"
+        class="sc-jrcTuL hIIUyl"
         href="https://localhost:8000/packages/helm/artifact-hub/artifact-hub"
         rel="noopener noreferrer"
         target="_blank"
       >
         <div
-          class="sc-csuSiG bRItLt"
+          class="sc-kDvujY oOGDC"
         >
           <div
             aria-hidden="true"
-            class="sc-gKPRtg jhkLlT sc-bqWxrE ePXKDS"
+            class="sc-gswNZR bWZBRv sc-csuSiG dPztAR"
             data-testid="iconWrapper"
           >
             <svg
@@ -113,14 +113,14 @@ exports[`Widget creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="sc-eDWCr jzijzz"
+          class="sc-ipEyDJ bqjCZv"
           data-testid="cardBody"
         >
           <div
-            class="sc-fnGiBr gEjgmO"
+            class="sc-ksBlkl dEgvOV"
           >
             <div
-              class="sc-ksBlkl cPnDlr"
+              class="sc-eDWCr dGMFxV"
             >
               <img
                 alt="Logo artifact-hub"
@@ -130,25 +130,25 @@ exports[`Widget creates snapshot 1`] = `
               />
             </div>
             <div
-              class="sc-hBxehG jfBWaG"
+              class="sc-bqWxrE iGOkTp"
             >
               <div
-                class="sc-fEXmlR dLijrL"
+                class="sc-hBxehG btRrwr"
               >
                 <div
-                  class="sc-bjfHbI sc-idXgbr hJtBOW gmgTVb"
+                  class="sc-fnGiBr sc-fEXmlR eRWBfh hlXMVl"
                 >
                   artifact-hub
                 </div>
                 <div
-                  class="sc-iJnaPW hUGsgM"
+                  class="sc-cwSeag cAPytv"
                 >
                   <div
-                    class="sc-dIfARi cvVvOe"
+                    class="sc-bjfHbI dMnhmO"
                   >
                     <div
                       aria-hidden="true"
-                      class="sc-gKPRtg jhkLlT"
+                      class="sc-gswNZR bWZBRv"
                       data-testid="iconWrapper"
                     >
                       <svg
@@ -170,7 +170,7 @@ exports[`Widget creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="sc-hHTYSt qsEGy"
+                    class="sc-idXgbr fqHjEO"
                   >
                     26
                   </div>
@@ -178,10 +178,10 @@ exports[`Widget creates snapshot 1`] = `
               </div>
               <div>
                 <div
-                  class="sc-bjfHbI sc-iveFHk hJtBOW kwHIOP"
+                  class="sc-fnGiBr sc-fLcnxK eRWBfh jagQms"
                 >
                   <span
-                    class="sc-fLcnxK gQxukn"
+                    class="sc-dmctIk cMrpBX"
                   >
                     Version:
                   </span>
@@ -191,19 +191,19 @@ exports[`Widget creates snapshot 1`] = `
             </div>
           </div>
           <div
-            class="sc-bBABsx lcDDfq"
+            class="sc-kgTSHT hHmPiR"
           >
             <span
-              class="sc-iBYQkv jbIloF"
+              class="sc-jSUZER dflhLe"
             >
               <div>
                 <div
-                  class="sc-pyfCe DpEAo"
+                  class="sc-iBYQkv khMCgP"
                   data-testid="repoIcon"
                 >
                   <div
                     aria-hidden="true"
-                    class="sc-gKPRtg jhkLlT"
+                    class="sc-gswNZR bWZBRv"
                     data-testid="iconWrapper"
                   >
                     <svg
@@ -227,107 +227,87 @@ exports[`Widget creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="sc-ftTHYK jTbcbA"
+                class="sc-gKPRtg SKwjB"
               >
                 Helm chart
               </div>
             </span>
             <small
-              class="sc-lllmON liPJPA"
+              class="sc-iveFHk ilDaqH"
             >
               Updated 3 hours ago
             </small>
           </div>
           <div
-            class="sc-kgTSHT ccKOJV"
+            class="sc-hHTYSt dPphGE"
           >
             Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
           </div>
           <div
-            class="sc-bjfHbI sc-cwSeag hJtBOW fSDnrJ"
+            class="sc-dIfARi gEVloX"
+          >
+            <div
+              class="sc-dkrFOg jFKXAn verified"
+            >
+              <div
+                aria-hidden="true"
+                class="sc-gswNZR bWZBRv"
+                data-testid="iconWrapper"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    verified
+                  </title>
+                  <path
+                    d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              class="sc-dkrFOg jFKXAn official"
+            >
+              <div
+                aria-hidden="true"
+                class="sc-gswNZR bWZBRv"
+                data-testid="iconWrapper"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    official
+                  </title>
+                  <path
+                    d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            class="sc-fnGiBr sc-bBABsx eRWBfh dBSlLx"
           >
             <span
-              class="sc-fLcnxK gQxukn"
+              class="sc-dmctIk cMrpBX"
             >
               Published by:
             </span>
             Artifact Hub
-          </div>
-          <div
-            class="sc-dmctIk jGpqBf"
-          >
-            <div
-              class="sc-gswNZR cZvnHI"
-            >
-              <div
-                class="sc-hLBbgP hWkYBj success"
-              >
-                <div
-                  aria-hidden="true"
-                  class="sc-gKPRtg jhkLlT"
-                  data-testid="iconWrapper"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 20 20"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>
-                      official
-                    </title>
-                    <path
-                      clip-rule="evenodd"
-                      d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </div>
-              <div
-                class="sc-dkrFOg fjwaaA"
-              >
-                Official
-              </div>
-            </div>
-            <div
-              class="sc-gswNZR cZvnHI"
-            >
-              <div
-                class="sc-hLBbgP hWkYBj"
-              >
-                <div
-                  aria-hidden="true"
-                  class="sc-gKPRtg jhkLlT"
-                  data-testid="iconWrapper"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>
-                      verified
-                    </title>
-                    <path
-                      d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"
-                    />
-                  </svg>
-                </div>
-              </div>
-              <div
-                class="sc-dkrFOg fjwaaA"
-              >
-                Verified Publisher
-              </div>
-            </div>
           </div>
         </div>
       </a>

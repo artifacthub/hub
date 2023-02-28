@@ -80,9 +80,7 @@ describe('Widget', () => {
     expect(screen.getByTitle('helm')).toBeInTheDocument();
     expect(screen.getByText('Helm chart')).toBeInTheDocument();
     expect(screen.getByTitle('official')).toBeInTheDocument();
-    expect(screen.getByText('Official')).toBeInTheDocument();
     expect(screen.getByTitle('verified')).toBeInTheDocument();
-    expect(screen.getByText('Verified Publisher')).toBeInTheDocument();
     expect(screen.getByText('Updated 3 hours ago')).toBeInTheDocument();
 
     const image = screen.getByAltText('Logo artifact-hub');
@@ -163,9 +161,7 @@ describe('Widget', () => {
     expect(screen.getByTitle('helm')).toBeInTheDocument();
     expect(screen.getByText('Helm chart')).toBeInTheDocument();
     expect(screen.getByTitle('official')).toBeInTheDocument();
-    expect(screen.getByText('Official')).toBeInTheDocument();
     expect(screen.getByTitle('verified')).toBeInTheDocument();
-    expect(screen.getByText('Verified Publisher')).toBeInTheDocument();
     expect(screen.getByText('Updated 3 hours ago')).toBeInTheDocument();
 
     const image = screen.getByAltText('Logo artifact-hub');
@@ -257,7 +253,7 @@ describe('Widget', () => {
     const cardBody = screen.getByTestId('cardBody');
     expect(cardBody).toBeInTheDocument();
     expect(cardBody).toHaveClass('groupedItem');
-    expect(cardBody).toHaveStyle('height: 260px');
+    expect(cardBody).toHaveStyle('height: 255px');
   });
 
   describe('renders different pkg cards', () => {
@@ -292,7 +288,7 @@ describe('Widget', () => {
     const cardBody = screen.getByTestId('cardBody');
     expect(cardBody).toBeInTheDocument();
     expect(cardBody).toHaveClass('groupedItem');
-    expect(cardBody).toHaveStyle('height: 260px');
+    expect(cardBody).toHaveStyle('height: 255px');
   });
 
   describe('does not render component', () => {

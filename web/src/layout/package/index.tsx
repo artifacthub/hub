@@ -784,16 +784,17 @@ const PackageView = (props: Props) => {
                             <div className={`position-relative h3 mb-0 text-nowrap text-truncate ${styles.title}`}>
                               {detail.displayName || detail.name}
                             </div>
-                            <div className="d-none d-md-flex align-items-baseline ms-3">
+                            <div className="d-none d-md-flex align-items-center ms-4">
                               <RepositoryIconLabel
                                 kind={detail!.repository.kind}
                                 className={classNames(
-                                  'd-none d-md-inline position-relative mt-1',
+                                  'd-none d-md-inline-block position-relative mt-1',
                                   styles.kindIcon,
                                   { 'me-3': isUndefined(detail.category) },
                                   { 'me-2': !isUndefined(detail.category) }
                                 )}
                                 deprecated={detail.deprecated}
+                                clickable
                               />
                               <PackageCategoryLabel
                                 category={detail.category}
@@ -885,10 +886,12 @@ const PackageView = (props: Props) => {
                         <Official official={isPackageOfficial(detail)} className="me-2" dropdownAlignment="start" />
                       </div>
 
-                      <Stats
-                        packageStats={detail.stats}
-                        productionOrganizationsCount={detail.productionOrganizationsCount}
-                      />
+                      <div className="d-none d-md-flex">
+                        <Stats
+                          packageStats={detail.stats}
+                          productionOrganizationsCount={detail.productionOrganizationsCount}
+                        />
+                      </div>
                     </div>
 
                     <div
