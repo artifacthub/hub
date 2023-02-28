@@ -19,7 +19,7 @@ const PackageCategoryLabel = (props: Props) => {
   if (isUndefined(props.category)) return null;
 
   return (
-    <div className="d-inline-block">
+    <div className="d-none d-md-inline-block">
       <button
         onClick={(e) => {
           e.preventDefault();
