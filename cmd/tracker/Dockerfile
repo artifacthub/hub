@@ -13,8 +13,12 @@ WORKDIR /go/src/github.com/artifacthub/hub/cmd/tracker
 RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o /tracker .
 
 # OPM installer
-FROM golang:1.17-bullseye AS opm-installer
-RUN GO111MODULE=on go get github.com/operator-framework/operator-registry/cmd/opm@v1.26.4
+FROM golang:1.19-bullseye AS opm-installer
+WORKDIR /tmp
+RUN git clone https://github.com/operator-framework/operator-registry
+WORKDIR /tmp/operator-registry/cmd/opm
+RUN git checkout v1.26.4
+RUN go install
 
 # Final stage
 FROM debian:bullseye-slim
