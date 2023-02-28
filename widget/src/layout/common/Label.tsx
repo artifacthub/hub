@@ -1,45 +1,48 @@
 import styled from 'styled-components';
 
+import SVGIcons from './SVGIcons';
+
 const LabelWrapper = styled('div')`
-  font-size: 0.72rem;
   display: flex;
-  align-items: center;
-`;
+  justify-content: center;
+  height: 1.6rem;
+  width: 1.6rem;
+  line-height: 1.2rem;
+  color: var(--icon-color);
+  font-size: 1.2rem;
 
-const LabelText = styled('div')`
-  background-color: var(--bg-badge);
-  line-height: 18px;
-  padding: 0 5px 0 10px;
-  font-weight: 700;
-  border: 1px solid var(--color-ah-black-15);
-`;
+  &.official {
+    background-color: #54b435;
+  }
 
-const IconWrapper = styled('div')`
-  position: relative;
-  border: 1px solid var(--color-ah-black-15);
-  height: 20px;
-  color: var(--dark);
-  padding-left: 3px;
-  margin-right: -1px;
-  width: 20px;
-  background-color: var(--light-gray);
+  &.verified {
+    background-color: #2192ff;
+  }
 
-  &.success {
-    background-color: var(--success);
-    color: var(--icon-color);
+  &.signed {
+    background-color: #645cbb;
+  }
+
+  &.cncf {
+    background-color: transparent;
+
+    svg {
+      height: 100%;
+    }
+  }
+
+  &.deprecated {
+    background-color: #c74b50;
   }
 `;
 
 interface Props {
-  icon: JSX.Element;
-  text: string;
-  type?: string;
+  type: string;
 }
 
 const Label = (props: Props) => (
-  <LabelWrapper>
-    <IconWrapper className={props.type}>{props.icon}</IconWrapper>
-    <LabelText>{props.text}</LabelText>
+  <LabelWrapper className={props.type}>
+    <SVGIcons name={props.type} />
   </LabelWrapper>
 );
 

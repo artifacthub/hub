@@ -10,6 +10,9 @@ export interface PackageSummary {
   stars?: number | null;
   ts: number;
   official?: boolean;
+  cncf?: boolean;
+  signed?: boolean;
+  deprecated?: boolean;
 }
 
 export interface Repository {
@@ -17,6 +20,7 @@ export interface Repository {
   name: string;
   verifiedPublisher?: boolean;
   official?: boolean;
+  cncf?: boolean;
   organizationName?: string;
   organizationDisplayName?: string;
   userAlias?: string;
