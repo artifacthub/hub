@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.12.1-7
-appVersion: 1.12.0
+version: 1.13.0
+appVersion: 1.13.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -40,65 +40,57 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Experimental support for Kyverno policies
+      description: Support for Knative client plugins
     - kind: added
-      description: URL filter to repository search API endpoint
+      description: Support for Backstage plugins
     - kind: added
-      description: Allow specifying charts containers images platforms
+      description: Category classifier based on ML model
     - kind: added
-      description: Package alternative name to improve search results
+      description: Allow publishers to provide packages' category manually
     - kind: added
-      description: CNCF banners to homepage
+      description: Display category label in cards and package view
     - kind: added
-      description: Option to disable default backend for ingress
+      description: Filter for artifacts published by CNCF projects
     - kind: added
-      description: Option to set security context from chart
+      description: Display badge on artifacts published by CNCF projects
+    - kind: added
+      description: Auto-focus search form input field
+    - kind: added
+      description: Chart option to disable sign up
+    - kind: added
+      description: Chart option to set ttlSecondsAfterFinished on dbMigrator job
+    - kind: added
+      description: Link to Linux Foundation Privacy Policy
     - kind: changed
-      description: Refresh UI design
+      description: Redesign and reorganize badges
     - kind: changed
-      description: OLM community operators install instructions
+      description: Category filter now uses the new category field
     - kind: changed
-      description: Set auto generated digest in OLM operators pkgs
+      description: Sample search queries
     - kind: changed
-      description: Highlight current month and day in usage graphs
+      description: Bump Go to 1.20.1
     - kind: changed
-      description: Keep views tracked when a pkg or repo is removed
+      description: Bump Trivy to 0.37.3
     - kind: changed
-      description: Hide security report in pkgs older than 1 year
-    - kind: changed
-      description: Use credentials when listing repository tags
-    - kind: changed
-      description: Strip markdown from changes entries
-    - kind: changed
-      description: Update container images repositories document
-    - kind: changed
-      description: Adjust packages text search doc weights
-    - kind: changed
-      description: Bump Alpine to 3.17.1
-    - kind: changed
-      description: Bump Go to 1.19.5
-    - kind: changed
-      description: Bump Trivy to 0.36.1
+      description: Bump OPM to 1.26.4
     - kind: changed
       description: Upgrade backend and frontend dependencies
+    - kind: removed
+      description: Publisher and repository from filters column
     - kind: fixed
-      description: Issue setting default channel in OLM operators
-    - kind: fixed
-      description: Include targets with no vulns in security report
-    - kind: fixed
-      description: Scroll issue in search page
+      description: Harcoded image pull policy in hub deployment
     - kind: fixed
       description: Some other minor bugs and improvements
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.12.0
+      image: artifacthub/db-migrator:v1.13.0
     - name: hub
-      image: artifacthub/hub:v1.12.0
+      image: artifacthub/hub:v1.13.0
     - name: tracker
-      image: artifacthub/tracker:v1.12.0
+      image: artifacthub/tracker:v1.13.0
     - name: scanner
-      image: artifacthub/scanner:v1.12.0
+      image: artifacthub/scanner:v1.13.0
     - name: trivy
       image: aquasec/trivy:0.37.3
   artifacthub.io/links: |
