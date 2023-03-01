@@ -784,7 +784,7 @@ const PackageView = (props: Props) => {
                             <div className={`position-relative h3 mb-0 text-nowrap text-truncate ${styles.title}`}>
                               {detail.displayName || detail.name}
                             </div>
-                            <div className="d-none d-md-flex align-items-center ms-4">
+                            <div className={`d-none d-md-flex align-items-center ${styles.labels}`}>
                               <RepositoryIconLabel
                                 kind={detail!.repository.kind}
                                 className={classNames(

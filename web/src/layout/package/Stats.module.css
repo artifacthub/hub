@@ -10,3 +10,9 @@
 .icon path {
   stroke: inherit;
 }
+
+@media only screen and (max-width: 991.98px) {
+  .wrapper {
+    font-size: 0.85rem;
+  }
+}

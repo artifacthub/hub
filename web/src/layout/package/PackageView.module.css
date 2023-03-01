@@ -38,6 +38,10 @@
   line-height: 1rem;
 }
 
+.labels {
+  margin-left: 1.25rem;
+}
+
 .repoLabel {
   top: -2px;
 }
