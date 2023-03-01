@@ -13,7 +13,12 @@ interface Props {
 }
 
 const Stats = (props: Props) => {
-  if (isUndefined(props.packageStats) && isUndefined(props.productionOrganizationsCount)) return null;
+  if (
+    (isUndefined(props.packageStats) ||
+      (props.packageStats.subscriptions === 0 && props.packageStats.webhooks === 0)) &&
+    (isUndefined(props.productionOrganizationsCount) || props.productionOrganizationsCount === 0)
+  )
+    return null;
 
   return (
     <div className={`d-flex flex-row flex-wrap align-items-center border mt-3 px-2 ${styles.wrapper}`}>

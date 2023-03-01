@@ -41,7 +41,7 @@ exports[`Package index creates snapshot 1`] = `
                   Pretty name
                 </div>
                 <div
-                  class="d-none d-md-flex align-items-center ms-4"
+                  class="d-none d-md-flex align-items-center labels"
                 >
                   <div
                     class="d-none d-md-inline-block"
