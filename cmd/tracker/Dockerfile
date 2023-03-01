@@ -13,7 +13,7 @@ WORKDIR /go/src/github.com/artifacthub/hub/cmd/tracker
 RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o /tracker .
 
 # OPM installer
-FROM golang:1.19-bullseye AS opm-installer
+FROM golang:1.20-bullseye AS opm-installer
 WORKDIR /tmp
 RUN git clone https://github.com/operator-framework/operator-registry
 WORKDIR /tmp/operator-registry/cmd/opm
