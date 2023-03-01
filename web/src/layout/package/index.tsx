@@ -30,7 +30,6 @@ import {
   PackageViewsStats,
   RepositoryKind,
   SearchFiltersURL,
-  Signature,
   Version,
 } from '../../types';
 import bannerDispatcher from '../../utils/bannerDispatcher';
@@ -872,7 +871,7 @@ const PackageView = (props: Props) => {
                         {(detail.cncf || detail.repository.cncf) && <CNCF className="me-2" dropdownAlignment="start" />}
                         <Signed
                           signed={detail.signed}
-                          signatures={[Signature.Cosign, Signature.Prov]}
+                          signatures={detail.signatures}
                           repoKind={detail.repository.kind}
                           className="me-2"
                           signKey={detail.signKey}
