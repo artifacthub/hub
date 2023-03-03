@@ -111,6 +111,7 @@ dockers:
       - go.sum
       - cmd/tracker
       - internal
+      - ml
 
 brews:
   - description: Artifact Hub command line tool
