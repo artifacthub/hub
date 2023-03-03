@@ -58,6 +58,18 @@ describe('Keywords', () => {
       expect(keywords).toHaveLength(3);
     });
 
+    it('renders only uniq keywords (ignoring case)', () => {
+      render(
+        <Router>
+          <Keywords keywords={['key1', 'key2', 'key3', 'Key1']} deprecated={false} />
+        </Router>
+      );
+
+      expect(screen.getByTestId('keywords')).toBeInTheDocument();
+      const keywords = screen.getAllByRole('listitem', { name: /Filter by/ });
+      expect(keywords).toHaveLength(3);
+    });
+
     it('calls history push to click keyword button', async () => {
       render(
         <Router>
