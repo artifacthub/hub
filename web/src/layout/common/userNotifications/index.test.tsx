@@ -38,7 +38,6 @@ describe('UserNotificationsController', () => {
     mockMath.random = () => 0;
     global.Math = mockMath;
 
-    global.window = Object.create(window);
     Object.defineProperty(window, 'location', {
       value: {
         href: 'http://test.com',

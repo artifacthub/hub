@@ -1,7 +1,6 @@
-import { compact } from 'lodash';
+import { compact, uniqWith } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import uniq from 'lodash/uniq';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -21,7 +20,7 @@ const Keywords = (props: Props) => {
     let keywords: string[] = [];
 
     if (!isUndefined(props.keywords) && !isNull(props.keywords)) {
-      keywords = uniq(compact(props.keywords));
+      keywords = uniqWith(compact(props.keywords), (a: string, b: string) => a.toLowerCase() === b.toLowerCase());
     }
 
     return keywords;
