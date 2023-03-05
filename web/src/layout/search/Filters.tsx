@@ -260,7 +260,7 @@ const Filters = (props: Props) => {
             tooltipClassName={styles.tooltipMessage}
             className={`position-relative ${styles.tooltipIcon}`}
             element={<MdInfoOutline />}
-            tooltipMessage="The publisher owns the software deployed by the packages"
+            tooltipMessage="The publisher owns the software a package primarily focuses on"
             visibleTooltip
             active
           />

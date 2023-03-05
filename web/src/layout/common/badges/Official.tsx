@@ -37,8 +37,8 @@ const Official = (props: Props) => {
           </p>
           <p className={`mb-0 text-muted ${styles.legend}`}>
             In Artifact Hub, the <code>official</code> status means that the publisher{' '}
-            <span className="fw-bold">owns the software deployed</span> by a package. For more information, please see
-            the{' '}
+            <span className="fw-bold">owns the software</span> a package primarily focuses on. For more information,
+            please see the{' '}
             <ExternalLink
               btnType
               className={`text-decoration-underline text-reset ${styles.btnInBadge}`}

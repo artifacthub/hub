@@ -511,9 +511,9 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                       <span
                         class="fw-bold"
                       >
-                        owns the software deployed
+                        owns the software
                       </span>
-                       by a package. For more information, please see the 
+                       a package primarily focuses on. For more information, please see the 
                       <button
                         aria-label="Open external link"
                         class="btn p-0 link text-decoration-underline text-reset btnInBadge"
