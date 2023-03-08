@@ -8,7 +8,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-shadow": "^20.0.0",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.8"
   },
   "devDependencies": {
     "@craco/craco": "^7.0.0",
