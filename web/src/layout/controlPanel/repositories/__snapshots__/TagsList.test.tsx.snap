@@ -15,6 +15,7 @@ exports[`TagsList creates snapshot 1`] = `
         type="button"
       >
         <svg
+          aria-hidden="true"
           fill="currentColor"
           height="1em"
           stroke="currentColor"

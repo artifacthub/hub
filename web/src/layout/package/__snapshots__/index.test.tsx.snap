@@ -1091,6 +1091,7 @@ exports[`Package index creates snapshot 1`] = `
               type="button"
             >
               <svg
+                aria-hidden="true"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -1368,11 +1369,35 @@ exports[`Package index creates snapshot 1`] = `
                       width="1em"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path
-                        d="M14 3v1H2V3h12zm-1 3v1H6V6h7zm0 3v1H5V9h8zm0 3v1H5v-1h8z"
+                      <rect
+                        height="1"
+                        width="9"
+                        x="4"
+                        y="9"
                       />
-                      <path
-                        d="M5 4h1v9H5z"
+                      <rect
+                        height="1"
+                        width="7"
+                        x="4"
+                        y="12"
+                      />
+                      <rect
+                        height="1"
+                        width="10"
+                        x="4"
+                        y="6"
+                      />
+                      <rect
+                        height="1"
+                        width="11"
+                        x="1"
+                        y="3"
+                      />
+                      <rect
+                        height="9"
+                        width="1"
+                        x="4"
+                        y="4"
                       />
                     </svg>
                     <span
@@ -1597,6 +1622,7 @@ exports[`Package index creates snapshot 1`] = `
                                   class="d-flex flex-row align-items-center text-nowrap"
                                 >
                                   <svg
+                                    aria-hidden="true"
                                     class="me-1"
                                     fill="currentColor"
                                     height="1em"

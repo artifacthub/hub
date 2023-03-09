@@ -71,6 +71,7 @@ exports[`Last30DaysViews creates snapshot 1`] = `
                 class="d-flex flex-row align-items-center text-nowrap"
               >
                 <svg
+                  aria-hidden="true"
                   class="me-1"
                   fill="currentColor"
                   height="1em"

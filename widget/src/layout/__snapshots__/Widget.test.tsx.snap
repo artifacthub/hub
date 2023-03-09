@@ -3,25 +3,25 @@
 exports[`Widget creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="sc-ftTHYK iIaFRK"
+    class="sc-fsYeqs fpFAqj"
     data-testid="mainWrapper"
   >
     <div
-      class="sc-pyfCe kpLLLX"
+      class="sc-qZqnM jnRkRF"
       data-testid="cardWrapper"
     >
       <a
-        class="sc-jrcTuL hIIUyl"
+        class="sc-jsEegt fQNxWj"
         href="https://localhost:8000/packages/helm/artifact-hub/artifact-hub"
         rel="noopener noreferrer"
         target="_blank"
       >
         <div
-          class="sc-kDvujY oOGDC"
+          class="sc-kFCsca bdeJVs"
         >
           <div
             aria-hidden="true"
-            class="sc-gswNZR bWZBRv sc-csuSiG dPztAR"
+            class="sc-guDLRT eyrEoE sc-csKIKE bVQYkb"
             data-testid="iconWrapper"
           >
             <svg
@@ -113,42 +113,42 @@ exports[`Widget creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="sc-ipEyDJ bqjCZv"
+          class="sc-irLwvL fYeTdc"
           data-testid="cardBody"
         >
           <div
-            class="sc-ksBlkl dEgvOV"
+            class="sc-ktwOSD gELXPS"
           >
             <div
-              class="sc-eDWCr dGMFxV"
+              class="sc-eTNep euxnSO"
             >
               <img
                 alt="Logo artifact-hub"
-                class="sc-bcXHqe ccpfWE"
+                class="sc-beySbM fZAyPZ"
                 src="https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111"
                 srcset="https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111@1x 1x, https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111@2x 2x, https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111@3x 3x, https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111@4x 4x"
               />
             </div>
             <div
-              class="sc-bqWxrE iGOkTp"
+              class="sc-brSaZW bIwcLv"
             >
               <div
-                class="sc-hBxehG btRrwr"
+                class="sc-hABAzo gFJyLS"
               >
                 <div
-                  class="sc-fnGiBr sc-fEXmlR eRWBfh hlXMVl"
+                  class="sc-fmKESZ sc-fHekdT hQjNZd fEDePn"
                 >
                   artifact-hub
                 </div>
                 <div
-                  class="sc-cwSeag cAPytv"
+                  class="sc-cyZbSi iTQuut"
                 >
                   <div
-                    class="sc-bjfHbI dMnhmO"
+                    class="sc-blmETK bdGwWY"
                   >
                     <div
                       aria-hidden="true"
-                      class="sc-gswNZR bWZBRv"
+                      class="sc-guDLRT eyrEoE"
                       data-testid="iconWrapper"
                     >
                       <svg
@@ -170,7 +170,7 @@ exports[`Widget creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="sc-idXgbr fqHjEO"
+                    class="sc-ifyqMZ bNygtW"
                   >
                     26
                   </div>
@@ -178,10 +178,10 @@ exports[`Widget creates snapshot 1`] = `
               </div>
               <div>
                 <div
-                  class="sc-fnGiBr sc-fLcnxK eRWBfh jagQms"
+                  class="sc-fmKESZ sc-fLsdZI hQjNZd iGGFPs"
                 >
                   <span
-                    class="sc-dmctIk cMrpBX"
+                    class="sc-dmXXqC ifqrPq"
                   >
                     Version:
                   </span>
@@ -191,19 +191,19 @@ exports[`Widget creates snapshot 1`] = `
             </div>
           </div>
           <div
-            class="sc-kgTSHT hHmPiR"
+            class="sc-khjJjR hfOOXL"
           >
             <span
-              class="sc-jSUZER dflhLe"
+              class="sc-jTQDnj idbQDu"
             >
               <div>
                 <div
-                  class="sc-iBYQkv khMCgP"
+                  class="sc-iBdmCd excCK"
                   data-testid="repoIcon"
                 >
                   <div
                     aria-hidden="true"
-                    class="sc-gswNZR bWZBRv"
+                    class="sc-guDLRT eyrEoE"
                     data-testid="iconWrapper"
                   >
                     <svg
@@ -227,31 +227,31 @@ exports[`Widget creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="sc-gKPRtg SKwjB"
+                class="sc-gLLvby cWutMo"
               >
                 Helm chart
               </div>
             </span>
             <small
-              class="sc-iveFHk ilDaqH"
+              class="sc-iuOPfm eZKmcq"
             >
               Updated 3 hours ago
             </small>
           </div>
           <div
-            class="sc-hHTYSt dPphGE"
+            class="sc-hIPCAL iDbFJj"
           >
             Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
           </div>
           <div
-            class="sc-dIfARi gEVloX"
+            class="sc-dJGLCQ cEKPRL"
           >
             <div
-              class="sc-dkrFOg jFKXAn verified"
+              class="sc-dmyDGi jkbjBw verified"
             >
               <div
                 aria-hidden="true"
-                class="sc-gswNZR bWZBRv"
+                class="sc-guDLRT eyrEoE"
                 data-testid="iconWrapper"
               >
                 <svg
@@ -273,11 +273,11 @@ exports[`Widget creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="sc-dkrFOg jFKXAn official"
+              class="sc-dmyDGi jkbjBw official"
             >
               <div
                 aria-hidden="true"
-                class="sc-gswNZR bWZBRv"
+                class="sc-guDLRT eyrEoE"
                 data-testid="iconWrapper"
               >
                 <svg
@@ -300,10 +300,10 @@ exports[`Widget creates snapshot 1`] = `
             </div>
           </div>
           <div
-            class="sc-fnGiBr sc-bBABsx eRWBfh dBSlLx"
+            class="sc-fmKESZ sc-bBkKQz hQjNZd cMUobs"
           >
             <span
-              class="sc-dmctIk cMrpBX"
+              class="sc-dmXXqC ifqrPq"
             >
               Published by:
             </span>
