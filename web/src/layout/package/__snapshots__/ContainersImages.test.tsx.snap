@@ -647,6 +647,7 @@ exports[`ContainersImages creates snapshot 1`] = `
           class="d-flex flex-row align-items-center"
         >
           <svg
+            aria-hidden="true"
             class="me-1"
             fill="currentColor"
             height="1em"

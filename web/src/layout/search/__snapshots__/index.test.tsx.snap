@@ -95,6 +95,7 @@ exports[`Search index creates snapshot 1`] = `
                   type="button"
                 >
                   <svg
+                    aria-hidden="true"
                     class="position-relative icon"
                     fill="currentColor"
                     height="1em"

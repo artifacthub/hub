@@ -193,6 +193,7 @@ exports[`SecurityReport creates snapshot 1`] = `
               class="d-flex flex-row align-items-center text-uppercase"
             >
               <svg
+                aria-hidden="true"
                 class="me-2"
                 fill="currentColor"
                 height="1em"
