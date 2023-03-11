@@ -3,7 +3,7 @@ import isNull from 'lodash/isNull';
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FaRegQuestionCircle } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import API from '../../api';
 import useBreakpointDetect from '../../hooks/useBreakpointDetect';
@@ -36,7 +36,7 @@ const SEARCH_DELAY = 3 * 100; // 300ms
 const MIN_CHARACTERS_SEARCH = 2;
 
 const SearchBar = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const [value, setValue] = useState(props.tsQueryWeb || '');
   const inputEl = useRef<HTMLInputElement>(null);
@@ -77,7 +77,7 @@ const SearchBar = (props: Props) => {
     forceBlur();
     cleanSearch();
 
-    history.push({
+    navigate({
       pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: 1,
@@ -155,7 +155,7 @@ const SearchBar = (props: Props) => {
     forceBlur();
     setValue('');
     cleanSearch();
-    history.push({
+    navigate({
       pathname: buildPackageURL(selectedPackage.normalizedName, selectedPackage.repository, selectedPackage.version!),
     });
   };

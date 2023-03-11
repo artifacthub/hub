@@ -3,15 +3,23 @@ import every from 'lodash/every';
 import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import { Dispatch, Fragment, SetStateAction, useContext, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx, updateLimit } from '../../context/AppCtx';
-import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
-import { FacetOption, Facets, Package, RepositoryKind, SearchFiltersURL, SearchResults } from '../../types';
+import {
+  FacetOption,
+  Facets,
+  OutletContext,
+  Package,
+  RepositoryKind,
+  SearchFiltersURL,
+  SearchResults,
+} from '../../types';
+import buildSearchParams from '../../utils/buildSearchParams';
 import getSampleQueries from '../../utils/getSampleQueries';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import scrollToTop from '../../utils/scrollToTop';
@@ -21,7 +29,6 @@ import PackageCard from '../common/PackageCard';
 import Pagination from '../common/Pagination';
 import SampleQueries from '../common/SampleQueries';
 import Sidebar from '../common/Sidebar';
-import Footer from '../navigation/Footer';
 import SubNavbar from '../navigation/SubNavbar';
 import FilterBadge from './FilterBadge';
 import Filters from './Filters';
@@ -34,26 +41,6 @@ interface FiltersProp {
   [key: string]: string[];
 }
 
-interface Props {
-  isSearching: boolean;
-  setIsSearching: Dispatch<SetStateAction<boolean>>;
-  scrollPosition?: number;
-  setScrollPosition: Dispatch<SetStateAction<number | undefined>>;
-  viewedPackage?: string;
-  setViewedPackage: Dispatch<SetStateAction<string | undefined>>;
-  tsQueryWeb?: string;
-  pageNumber: number;
-  filters?: FiltersProp;
-  deprecated?: boolean | null;
-  operators?: boolean | null;
-  verifiedPublisher?: boolean | null;
-  official?: boolean | null;
-  cncf?: boolean | null;
-  fromDetail: boolean;
-  visibleModal?: string;
-  sort?: string | null;
-}
-
 const DEFAULT_SORT = 'relevance';
 
 interface FilterLabel {
@@ -61,21 +48,26 @@ interface FilterLabel {
   name: string;
 }
 
-const SearchView = (props: Props) => {
+const SearchView = () => {
   const { ctx, dispatch } = useContext(AppCtx);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { tsQueryWeb, filters, pageNumber, deprecated, operators, verifiedPublisher, cncf, official, sort } =
+    buildSearchParams(location.search);
   const sampleQueries = getSampleQueries();
   const [searchResults, setSearchResults] = useState<SearchResults>({
     facets: null,
     packages: null,
     paginationTotalCount: '0',
   });
-  const { isSearching, setIsSearching, scrollPosition, setScrollPosition, viewedPackage, setViewedPackage } = props;
+  const { isSearching, setIsSearching, scrollPosition, setScrollPosition, viewedPackage, setViewedPackage } =
+    useOutletContext() as OutletContext;
   const [apiError, setApiError] = useState<string | null>(null);
-  const [currentTsQueryWeb, setCurrentTsQueryWeb] = useState(props.tsQueryWeb);
+  const [currentTsQueryWeb, setCurrentTsQueryWeb] = useState(tsQueryWeb);
+  const fromDetail = location.state && location.state.fromDetail;
 
   const calculateOffset = (): number => {
-    return props.pageNumber && ctx.prefs.search.limit ? (props.pageNumber - 1) * ctx.prefs.search.limit : 0;
+    return pageNumber && ctx.prefs.search.limit ? (pageNumber - 1) * ctx.prefs.search.limit : 0;
   };
 
   const [offset, setOffset] = useState<number>(calculateOffset());
@@ -116,8 +108,6 @@ const SearchView = (props: Props) => {
     }
   };
 
-  useScrollRestorationFix();
-
   const saveScrollPosition = () => {
     setScrollPosition(window.scrollY);
   };
@@ -152,21 +142,21 @@ const SearchView = (props: Props) => {
 
   const getCurrentFilters = (): SearchFiltersURL => {
     return {
-      pageNumber: props.pageNumber,
-      tsQueryWeb: props.tsQueryWeb,
-      filters: props.filters,
-      deprecated: props.deprecated,
-      operators: props.operators,
-      verifiedPublisher: props.verifiedPublisher,
-      official: props.official,
-      cncf: props.cncf,
-      sort: props.sort,
+      pageNumber: pageNumber,
+      tsQueryWeb: tsQueryWeb,
+      filters: filters,
+      deprecated: deprecated,
+      operators: operators,
+      verifiedPublisher: verifiedPublisher,
+      official: official,
+      cncf: cncf,
+      sort: sort,
     };
   };
 
   const updateCurrentPage = (searchChanges: any) => {
     // cleanPrevSearch();
-    history.push({
+    navigate({
       pathname: '/packages/search',
       search: prepareQueryString({
         ...getCurrentFilters(),
@@ -177,7 +167,7 @@ const SearchView = (props: Props) => {
   };
 
   const onFiltersChange = (name: string, value: string, checked: boolean): void => {
-    const currentFilters = props.filters || {};
+    const currentFilters = filters || {};
     let newFilters = isUndefined(currentFilters[name]) ? [] : currentFilters[name].slice();
     if (checked) {
       newFilters.push(value);
@@ -197,47 +187,46 @@ const SearchView = (props: Props) => {
     });
 
     updateCurrentPage({
-      filters: { ...props.filters, ...newFilters },
+      filters: { ...filters, ...newFilters },
     });
   };
 
   const onDeprecatedChange = (): void => {
     updateCurrentPage({
-      deprecated: !isUndefined(props.deprecated) && !isNull(props.deprecated) ? !props.deprecated : true,
+      deprecated: !isUndefined(deprecated) && !isNull(deprecated) ? !deprecated : true,
     });
   };
 
   const onOperatorsChange = (): void => {
     updateCurrentPage({
-      operators: !isUndefined(props.operators) && !isNull(props.operators) ? !props.operators : true,
+      operators: !isUndefined(operators) && !isNull(operators) ? !operators : true,
     });
   };
 
   const onVerifiedPublisherChange = (): void => {
     updateCurrentPage({
-      verifiedPublisher:
-        !isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) ? !props.verifiedPublisher : true,
+      verifiedPublisher: !isUndefined(verifiedPublisher) && !isNull(verifiedPublisher) ? !verifiedPublisher : true,
     });
   };
 
   const onCNCFChange = (): void => {
     updateCurrentPage({
-      cncf: !isUndefined(props.cncf) && !isNull(props.cncf) ? !props.cncf : true,
+      cncf: !isUndefined(cncf) && !isNull(cncf) ? !cncf : true,
     });
   };
 
   const onOfficialChange = (): void => {
     updateCurrentPage({
-      official: !isUndefined(props.official) && !isNull(props.official) ? !props.official : true,
+      official: !isUndefined(official) && !isNull(official) ? !official : true,
     });
   };
 
   const onResetFilters = (): void => {
-    history.push({
+    navigate({
       pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: 1,
-        tsQueryWeb: props.tsQueryWeb,
+        tsQueryWeb: tsQueryWeb,
         filters: {},
         sort: DEFAULT_SORT,
       }),
@@ -251,24 +240,30 @@ const SearchView = (props: Props) => {
   };
 
   const onSortChange = (sort: string): void => {
-    history.replace({
-      pathname: '/packages/search',
-      search: prepareQueryString({
-        ...getCurrentFilters(),
-        sort: sort,
-        pageNumber: 1,
-      }),
-    });
+    navigate(
+      {
+        pathname: '/packages/search',
+        search: prepareQueryString({
+          ...getCurrentFilters(),
+          sort: sort,
+          pageNumber: 1,
+        }),
+      },
+      { replace: true }
+    );
   };
 
   const onPaginationLimitChange = (newLimit: number): void => {
-    history.replace({
-      pathname: '/packages/search',
-      search: prepareQueryString({
-        ...getCurrentFilters(),
-        pageNumber: 1,
-      }),
-    });
+    navigate(
+      {
+        pathname: '/packages/search',
+        search: prepareQueryString({
+          ...getCurrentFilters(),
+          pageNumber: 1,
+        }),
+      },
+      { replace: true }
+    );
     dispatch(updateLimit(newLimit));
   };
 
@@ -276,16 +271,16 @@ const SearchView = (props: Props) => {
     async function fetchSearchResults() {
       setIsSearching(true);
       const query = {
-        tsQueryWeb: props.tsQueryWeb,
-        filters: props.filters,
+        tsQueryWeb: tsQueryWeb,
+        filters: filters,
         offset: calculateOffset(),
         limit: ctx.prefs.search.limit,
-        deprecated: props.deprecated,
-        operators: props.operators,
-        verifiedPublisher: props.verifiedPublisher,
-        official: props.official,
-        cncf: props.cncf,
-        sort: props.sort || DEFAULT_SORT,
+        deprecated: deprecated,
+        operators: operators,
+        verifiedPublisher: verifiedPublisher,
+        official: official,
+        cncf: cncf,
+        sort: sort || DEFAULT_SORT,
       };
 
       try {
@@ -294,7 +289,7 @@ const SearchView = (props: Props) => {
           newSearchResults.paginationTotalCount === '0' &&
           searchResults.facets &&
           !isEmpty(searchResults.facets) &&
-          currentTsQueryWeb === props.tsQueryWeb // When some filters have changed, but not ts_query_web
+          currentTsQueryWeb === tsQueryWeb // When some filters have changed, but not ts_query_web
         ) {
           newSearchResults = {
             ...newSearchResults,
@@ -303,7 +298,7 @@ const SearchView = (props: Props) => {
         }
         setSearchResults(newSearchResults);
         setOffset(query.offset);
-        setCurrentTsQueryWeb(props.tsQueryWeb);
+        setCurrentTsQueryWeb(tsQueryWeb);
         setApiError(null);
       } catch {
         setSearchResults({
@@ -315,7 +310,8 @@ const SearchView = (props: Props) => {
       } finally {
         setIsSearching(false);
         if (
-          (history.action === 'POP' || props.fromDetail) &&
+          // TODO - location.action === 'POP' ||
+          fromDetail &&
           !isUndefined(viewedPackage) &&
           !isUndefined(scrollPosition)
         ) {
@@ -332,26 +328,20 @@ const SearchView = (props: Props) => {
     // prettier-ignore
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [
-    props.tsQueryWeb,
-    props.pageNumber,
-    JSON.stringify(props.filters), // https://twitter.com/dan_abramov/status/1104414272753487872
-    props.deprecated,
-    props.operators,
-    props.verifiedPublisher,
-    props.official,
-    props.cncf,
+    tsQueryWeb,
+    pageNumber,
+    JSON.stringify(filters), // https://twitter.com/dan_abramov/status/1104414272753487872
+    deprecated,
+    operators,
+    verifiedPublisher,
+    official,
+    cncf,
     ctx.prefs.search.limit,
-    props.sort,
+    sort,
   ]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  const activeFilters =
-    props.deprecated ||
-    props.operators ||
-    props.verifiedPublisher ||
-    props.official ||
-    props.cncf ||
-    !isEmpty(props.filters);
+  const activeFilters = deprecated || operators || verifiedPublisher || official || cncf || !isEmpty(filters);
 
   return (
     <>
@@ -401,16 +391,16 @@ const SearchView = (props: Props) => {
                     >
                       <div role="menu">
                         <Filters
-                          forceCollapseList={props.tsQueryWeb !== currentTsQueryWeb}
+                          forceCollapseList={tsQueryWeb !== currentTsQueryWeb}
                           facets={searchResults.facets}
-                          activeFilters={props.filters || {}}
+                          activeFilters={filters || {}}
                           onChange={onFiltersChange}
                           onResetSomeFilters={onResetSomeFilters}
-                          deprecated={props.deprecated}
-                          operators={props.operators}
-                          verifiedPublisher={props.verifiedPublisher}
-                          official={props.official}
-                          cncf={props.cncf}
+                          deprecated={deprecated}
+                          operators={operators}
+                          verifiedPublisher={verifiedPublisher}
+                          official={official}
+                          cncf={cncf}
                           onDeprecatedChange={onDeprecatedChange}
                           onOperatorsChange={onOperatorsChange}
                           onVerifiedPublisherChange={onVerifiedPublisherChange}
@@ -430,17 +420,17 @@ const SearchView = (props: Props) => {
                         {parseInt(searchResults.paginationTotalCount) > 0 && (
                           <span className="pe-1">
                             {offset + 1} -{' '}
-                            {parseInt(searchResults.paginationTotalCount) < ctx.prefs.search.limit * props.pageNumber
+                            {parseInt(searchResults.paginationTotalCount) < ctx.prefs.search.limit * pageNumber
                               ? searchResults.paginationTotalCount
-                              : ctx.prefs.search.limit * props.pageNumber}{' '}
+                              : ctx.prefs.search.limit * pageNumber}{' '}
                             <span className="ms-1">of</span>{' '}
                           </span>
                         )}
                         {searchResults.paginationTotalCount}
                         <span className="ps-1"> results </span>
-                        {props.tsQueryWeb && props.tsQueryWeb !== '' && (
+                        {tsQueryWeb && tsQueryWeb !== '' && (
                           <span className="d-none d-sm-inline ps-1">
-                            for "<span className="fw-semibold">{props.tsQueryWeb}</span>"
+                            for "<span className="fw-semibold">{tsQueryWeb}</span>"
                           </span>
                         )}
                         {activeFilters && (
@@ -456,9 +446,9 @@ const SearchView = (props: Props) => {
             <div className="ms-3">
               <div className="d-flex flex-row">
                 {/* Only display sort options when ts_query_web is defined */}
-                {props.tsQueryWeb && props.tsQueryWeb !== '' && (
+                {tsQueryWeb && tsQueryWeb !== '' && (
                   <SortOptions
-                    activeSort={props.sort || DEFAULT_SORT}
+                    activeSort={sort || DEFAULT_SORT}
                     updateSort={onSortChange}
                     disabled={isNull(searchResults.packages) || searchResults.packages.length === 0}
                   />
@@ -479,15 +469,13 @@ const SearchView = (props: Props) => {
             <div className="d-none d-lg-inline">
               <div className="d-flex flex-row flex-wrap align-items-center pt-2">
                 <span className="me-2 pe-1 mb-2">Filters:</span>
-                {props.official && <FilterBadge name="Official" onClick={onOfficialChange} />}
-                {props.verifiedPublisher && (
-                  <FilterBadge name="Verified publisher" onClick={onVerifiedPublisherChange} />
-                )}
-                {props.cncf && <FilterBadge name="CNCF" onClick={onCNCFChange} />}
-                {!isUndefined(props.filters) && (
+                {official && <FilterBadge name="Official" onClick={onOfficialChange} />}
+                {verifiedPublisher && <FilterBadge name="Verified publisher" onClick={onVerifiedPublisherChange} />}
+                {cncf && <FilterBadge name="CNCF" onClick={onCNCFChange} />}
+                {!isUndefined(filters) && (
                   <>
-                    {Object.keys(props.filters).map((type: string) => {
-                      const opts = props.filters![type];
+                    {Object.keys(filters).map((type: string) => {
+                      const opts = filters![type];
                       return (
                         <Fragment key={`opts_${type}`}>
                           {opts.map((opt: string) => {
@@ -507,8 +495,8 @@ const SearchView = (props: Props) => {
                     })}
                   </>
                 )}
-                {props.operators && <FilterBadge name="Only operators" onClick={onOperatorsChange} />}
-                {props.deprecated && <FilterBadge name="Include deprecated" onClick={onDeprecatedChange} />}
+                {operators && <FilterBadge name="Only operators" onClick={onOperatorsChange} />}
+                {deprecated && <FilterBadge name="Include deprecated" onClick={onDeprecatedChange} />}
               </div>
             </div>
           )}
@@ -526,16 +514,16 @@ const SearchView = (props: Props) => {
             >
               <div role="menu">
                 <Filters
-                  forceCollapseList={props.tsQueryWeb !== currentTsQueryWeb}
+                  forceCollapseList={tsQueryWeb !== currentTsQueryWeb}
                   facets={searchResults.facets}
-                  activeFilters={props.filters || {}}
+                  activeFilters={filters || {}}
                   onChange={onFiltersChange}
                   onResetSomeFilters={onResetSomeFilters}
-                  deprecated={props.deprecated}
-                  operators={props.operators}
-                  verifiedPublisher={props.verifiedPublisher}
-                  official={props.official}
-                  cncf={props.cncf}
+                  deprecated={deprecated}
+                  operators={operators}
+                  verifiedPublisher={verifiedPublisher}
+                  official={official}
+                  cncf={cncf}
                   onDeprecatedChange={onDeprecatedChange}
                   onOperatorsChange={onOperatorsChange}
                   onVerifiedPublisherChange={onVerifiedPublisherChange}
@@ -563,16 +551,16 @@ const SearchView = (props: Props) => {
                         We're sorry!
                         <p className="h6 mb-0 mt-3 lh-base">
                           <span> We can't seem to find any packages that match your search </span>
-                          {props.tsQueryWeb && (
+                          {tsQueryWeb && (
                             <span className="ps-1">
-                              for "<span className="fw-semibold">{props.tsQueryWeb}</span>"
+                              for "<span className="fw-semibold">{tsQueryWeb}</span>"
                             </span>
                           )}
-                          {!isEmpty(props.filters) && <span className="ps-1">with the selected filters</span>}
+                          {!isEmpty(filters) && <span className="ps-1">with the selected filters</span>}
                         </p>
                         <p className="h6 mb-0 mt-5 lh-base">
                           You can{' '}
-                          {!isEmpty(props.filters) ? (
+                          {!isEmpty(filters) ? (
                             <button
                               className="btn btn-link text-dark fw-semibold py-0 pb-1 px-0"
                               onClick={onResetFilters}
@@ -584,7 +572,7 @@ const SearchView = (props: Props) => {
                             <button
                               className="btn btn-link text-dark fw-semibold py-0 pb-1 px-0"
                               onClick={() => {
-                                history.push({
+                                navigate({
                                   pathname: '/packages/search',
                                   search: prepareQueryString({
                                     pageNumber: 1,
@@ -622,19 +610,19 @@ const SearchView = (props: Props) => {
                             cardWrapperClassName="col-12 col-xxxl-6"
                             package={item}
                             searchUrlReferer={{
-                              tsQueryWeb: props.tsQueryWeb,
-                              pageNumber: props.pageNumber,
-                              filters: props.filters,
-                              deprecated: props.deprecated,
-                              operators: props.operators,
-                              verifiedPublisher: props.verifiedPublisher,
-                              official: props.official,
-                              cncf: props.cncf,
-                              sort: props.sort,
+                              tsQueryWeb: tsQueryWeb,
+                              pageNumber: pageNumber,
+                              filters: filters,
+                              deprecated: deprecated,
+                              operators: operators,
+                              verifiedPublisher: verifiedPublisher,
+                              official: official,
+                              cncf: cncf,
+                              sort: sort,
                             }}
                             saveScrollPosition={saveScrollPosition}
                             scrollPosition={scrollPosition}
-                            viewedPackage={props.fromDetail ? viewedPackage : undefined} // coming from pkg detail to prev viewed pkg in search list
+                            viewedPackage={fromDetail ? viewedPackage : undefined} // coming from pkg detail to prev viewed pkg in search list
                             saveViewedPackage={saveViewedPackage}
                           />
                         ))}
@@ -645,7 +633,7 @@ const SearchView = (props: Props) => {
                       limit={ctx.prefs.search.limit}
                       offset={offset}
                       total={parseInt(searchResults.paginationTotalCount)}
-                      active={props.pageNumber}
+                      active={pageNumber}
                       className="my-5"
                       onChange={onPageNumberChange}
                     />
@@ -656,8 +644,6 @@ const SearchView = (props: Props) => {
           </div>
         </main>
       </div>
-
-      <Footer isHidden={isSearching || isNull(searchResults.packages)} />
     </>
   );
 };

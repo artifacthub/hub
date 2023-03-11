@@ -848,3 +848,14 @@ export interface Banner {
     'dark-theme': string;
   };
 }
+
+export interface OutletContext {
+  isSearching: boolean;
+  setIsSearching: (value: boolean) => void;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
+  scrollPosition?: number;
+  setScrollPosition: (value?: number) => void;
+  viewedPackage?: string;
+  setViewedPackage: (value?: string) => void;
+}

@@ -7,9 +7,9 @@ import { FaLink, FaTrash, FaWrench } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 import { RiTimerFill } from 'react-icons/ri';
 import { TiArrowSync, TiPlus } from 'react-icons/ti';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import { Change, ChangeKind, ChangeLog, PackageLink, Repository, SearchFiltersURL } from '../../../types';
+import { Change, ChangeKind, ChangeLog, PackageLink, Repository } from '../../../types';
 import buildPackageURL from '../../../utils/buildPackageURL';
 import findClosestNumberIndex from '../../../utils/findClosestNumberIndex';
 import isFuture from '../../../utils/isFuture';
@@ -24,22 +24,25 @@ interface Props {
   activeVersionIndex: number;
   setActiveVersionIndex: Dispatch<SetStateAction<number | undefined>>;
   repository: Repository;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
+  state: any;
 }
 
 const Content = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const wrapper = useRef<HTMLDivElement>(null);
   const versionsRef = useRef<Array<HTMLDivElement | null>>([]);
   const [currentOffsets, setCurrentOffsets] = useState<number[]>([]);
 
   const openPackagePage = (newVersion: string) => {
     props.onCloseModal(false);
-    history.push({
-      pathname: buildPackageURL(props.normalizedName, props.repository, newVersion, true),
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    navigate(
+      {
+        pathname: buildPackageURL(props.normalizedName, props.repository, newVersion, true),
+      },
+      {
+        state: props.state,
+      }
+    );
   };
 
   useLayoutEffect(() => {

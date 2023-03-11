@@ -3,11 +3,11 @@ import { isEmpty, isEqual, isNull, isUndefined } from 'lodash';
 import { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { FiCode } from 'react-icons/fi';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import { GatekeeperCase, GatekeeperExample, SearchFiltersURL } from '../../types';
+import { GatekeeperCase, GatekeeperExample } from '../../types';
 import isVisibleItemInContainer from '../../utils/isVisibleItemInContainer';
 import BlockCodeButtons from '../common/BlockCodeButtons';
 import Loading from '../common/Loading';
@@ -17,17 +17,16 @@ import styles from './GatekeeperExamplesModal.module.css';
 interface Props {
   packageId: string;
   visibleModal: boolean;
-  visibleExample?: string;
-  visibleFile?: string;
+  visibleExample?: string | null;
+  visibleFile?: string | null;
   normalizedName: string;
   examples?: GatekeeperExample[];
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
 }
 
 const GatekeeperExamplesModal = (props: Props) => {
   const contentListWrapper = useRef<HTMLDivElement>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const anchor = useRef<HTMLDivElement>(null);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<GatekeeperCase | null>(null);
@@ -117,18 +116,23 @@ const GatekeeperExamplesModal = (props: Props) => {
   }, [inputValue]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const updateUrl = (example?: string, fileName?: string) => {
-    history.replace({
-      search: `?modal=examples${example ? `&example=${example.toLowerCase()}` : ''}${
-        fileName ? `&file=${fileName.toLowerCase()}` : ''
-      }`,
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    navigate(
+      {
+        search: `?modal=examples${example ? `&example=${example.toLowerCase()}` : ''}${
+          fileName ? `&file=${fileName.toLowerCase()}` : ''
+        }`,
+      },
+      {
+        state: location.state,
+        replace: true,
+      }
+    );
   };
 
   const cleanUrl = () => {
-    history.replace({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    navigate('', {
+      state: location.state,
+      replace: true,
     });
   };
 

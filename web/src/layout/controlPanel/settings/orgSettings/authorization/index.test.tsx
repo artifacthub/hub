@@ -1,13 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mocked } from 'jest-mock';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import API from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
 import { ErrorKind, OrganizationPolicy } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import AuthorizationSection from './index';
+
 jest.mock('../../../../../utils/alertDispatcher');
 jest.mock('../../../../common/Alert', () => (props: any) => <div>{props.message}</div>);
 
@@ -87,6 +88,13 @@ const mockNotSelectedOrgCtx = {
   },
 };
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <AuthorizationSection {...defaultProps} />,
+  },
+]);
+
 describe('Authorization settings index', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -100,9 +108,7 @@ describe('Authorization settings index', () => {
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-        <Router>
-          <AuthorizationSection {...defaultProps} />
-        </Router>
+        <RouterProvider router={router} />
       </AppCtx.Provider>
     );
 
@@ -124,9 +130,7 @@ describe('Authorization settings index', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <AuthorizationSection {...defaultProps} />
-          </Router>
+          <RouterProvider router={router} />
         </AppCtx.Provider>
       );
 
@@ -163,9 +167,7 @@ describe('Authorization settings index', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <AuthorizationSection {...defaultProps} />
-          </Router>
+          <RouterProvider router={router} />
         </AppCtx.Provider>
       );
 
@@ -203,9 +205,7 @@ describe('Authorization settings index', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <AuthorizationSection {...defaultProps} />
-          </Router>
+          <RouterProvider router={router} />
         </AppCtx.Provider>
       );
 
@@ -236,9 +236,7 @@ describe('Authorization settings index', () => {
     it('when not selected org in context', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockNotSelectedOrgCtx, dispatch: jest.fn() }}>
-          <Router>
-            <AuthorizationSection {...defaultProps} />
-          </Router>
+          <RouterProvider router={router} />
         </AppCtx.Provider>
       );
 
@@ -258,9 +256,7 @@ describe('Authorization settings index', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <AuthorizationSection {...defaultProps} />
-          </Router>
+          <RouterProvider router={router} />
         </AppCtx.Provider>
       );
 
@@ -283,9 +279,7 @@ describe('Authorization settings index', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <AuthorizationSection {...defaultProps} />
-          </Router>
+          <RouterProvider router={router} />
         </AppCtx.Provider>
       );
 
@@ -308,9 +302,7 @@ describe('Authorization settings index', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <AuthorizationSection {...defaultProps} />
-          </Router>
+          <RouterProvider router={router} />
         </AppCtx.Provider>
       );
 
@@ -339,9 +331,7 @@ describe('Authorization settings index', () => {
 
       const component = (
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <AuthorizationSection {...defaultProps} />
-          </Router>
+          <RouterProvider router={router} />
         </AppCtx.Provider>
       );
 
@@ -396,9 +386,7 @@ describe('Authorization settings index', () => {
 
         const component = (
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <AuthorizationSection {...defaultProps} />
-            </Router>
+            <RouterProvider router={router} />
           </AppCtx.Provider>
         );
 
@@ -445,9 +433,7 @@ describe('Authorization settings index', () => {
 
         const component = (
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <AuthorizationSection {...defaultProps} />
-            </Router>
+            <RouterProvider router={router} />
           </AppCtx.Provider>
         );
 
@@ -495,9 +481,7 @@ describe('Authorization settings index', () => {
 
         const component = (
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <AuthorizationSection {...defaultProps} />
-            </Router>
+            <RouterProvider router={router} />
           </AppCtx.Provider>
         );
 
@@ -546,9 +530,7 @@ describe('Authorization settings index', () => {
 
         const component = (
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <AuthorizationSection {...defaultProps} />
-            </Router>
+            <RouterProvider router={router} />
           </AppCtx.Provider>
         );
 
@@ -596,9 +578,7 @@ describe('Authorization settings index', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <AuthorizationSection {...defaultProps} />
-          </Router>
+          <RouterProvider router={router} />
         </AppCtx.Provider>
       );
 
@@ -638,9 +618,7 @@ describe('Authorization settings index', () => {
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <AuthorizationSection {...defaultProps} />
-          </Router>
+          <RouterProvider router={router} />
         </AppCtx.Provider>
       );
 

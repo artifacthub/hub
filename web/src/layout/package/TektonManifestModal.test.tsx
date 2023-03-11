@@ -1,15 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import TektonManifestModal from './TektonManifestModal';
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 jest.mock('react-syntax-highlighter', () => () => <div>content</div>);
@@ -27,25 +26,41 @@ describe('TektonManifestModal', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<TektonManifestModal {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <TektonManifestModal {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders properly', () => {
-      render(<TektonManifestModal {...defaultProps} />);
+      render(
+        <Router>
+          <TektonManifestModal {...defaultProps} />
+        </Router>
+      );
 
       expect(screen.getByRole('button', { name: 'Open Manifest' })).toBeInTheDocument();
       expect(screen.getByText('Manifest')).toBeInTheDocument();
     });
 
     it('does not render component when manifest is undefined', () => {
-      const { container } = render(<TektonManifestModal normalizedName="task-name" visibleManifest={false} />);
+      const { container } = render(
+        <Router>
+          <TektonManifestModal normalizedName="task-name" visibleManifest={false} />
+        </Router>
+      );
       expect(container).toBeEmptyDOMElement();
     });
 
     it('opens manifest modal', async () => {
-      render(<TektonManifestModal {...defaultProps} />);
+      render(
+        <Router>
+          <TektonManifestModal {...defaultProps} />
+        </Router>
+      );
 
       expect(screen.queryByRole('dialog')).toBeNull();
 
@@ -60,21 +75,26 @@ describe('TektonManifestModal', () => {
     });
 
     it('renders open modal', async () => {
-      render(<TektonManifestModal {...defaultProps} visibleManifest />);
+      render(
+        <Router>
+          <TektonManifestModal {...defaultProps} visibleManifest />
+        </Router>
+      );
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
       await waitFor(() => {
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({
-          search: '?modal=manifest',
-          state: { fromStarredPage: undefined, searchUrlReferer: undefined },
-        });
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith('?modal=manifest', { replace: true, state: null });
       });
     });
 
     it('closes modal', async () => {
-      render(<TektonManifestModal {...defaultProps} visibleManifest />);
+      render(
+        <Router>
+          <TektonManifestModal {...defaultProps} visibleManifest />
+        </Router>
+      );
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
@@ -82,11 +102,8 @@ describe('TektonManifestModal', () => {
       await userEvent.click(btn);
 
       await waitFor(() => {
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
-        expect(mockHistoryReplace).toHaveBeenLastCalledWith({
-          search: '',
-          state: { fromStarredPage: undefined, searchUrlReferer: undefined },
-        });
+        expect(mockUseNavigate).toHaveBeenCalledTimes(2);
+        expect(mockUseNavigate).toHaveBeenLastCalledWith('', { replace: true, state: null });
       });
     });
   });

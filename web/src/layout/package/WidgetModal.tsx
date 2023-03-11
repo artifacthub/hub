@@ -1,10 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FiMoon, FiSun } from 'react-icons/fi';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import { SearchFiltersURL } from '../../types';
 import getMetaTag from '../../utils/getMetaTag';
 import isWhiteLabel from '../../utils/isWhiteLabel';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
@@ -16,8 +15,6 @@ interface Props {
   packageName: string;
   packageDescription: string;
   visibleWidget: boolean;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
   setOpenStatus: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -36,7 +33,8 @@ const THEMES: WidgetTheme[] = [
 ];
 
 const WidgetModal = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const whiteLabel = isWhiteLabel();
   const siteName = getMetaTag('siteName');
   const [theme, setTheme] = useState<string>(DEFAULT_THEME);
@@ -71,9 +69,9 @@ const WidgetModal = (props: Props) => {
   const onCloseModal = () => {
     props.setOpenStatus(false);
     resetValues();
-    history.replace({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    navigate('', {
+      state: location.state,
+      replace: true,
     });
   };
 
@@ -85,9 +83,9 @@ const WidgetModal = (props: Props) => {
 
   useEffect(() => {
     if (props.visibleWidget) {
-      history.replace({
-        search: '?modal=widget',
-        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+      navigate('?modal=widget', {
+        state: location.state,
+        replace: true,
       });
     }
   }, [props.visibleWidget]); /* eslint-disable-line react-hooks/exhaustive-deps */

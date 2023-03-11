@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mocked } from 'jest-mock';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
 import { SearchResults } from '../../types';
@@ -8,13 +9,11 @@ import { prepareQueryString } from '../../utils/prepareQueryString';
 import SearchBar from './SearchBar';
 jest.mock('../../api');
 
-const mockHistoryPush = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const getMockSearch = (fixtureId: string): SearchResults => {
@@ -34,17 +33,29 @@ describe('SearchBar', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<SearchBar {...defaultProps} isSearching={false} />);
+    const { asFragment } = render(
+      <Router>
+        <SearchBar {...defaultProps} isSearching={false} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders loading when is searching', () => {
-    render(<SearchBar {...defaultProps} isSearching />);
+    render(
+      <Router>
+        <SearchBar {...defaultProps} isSearching />
+      </Router>
+    );
     expect(screen.getByTestId('searchBarSpinning')).toBeInTheDocument();
   });
 
   it('renders loading when is searching', () => {
-    render(<SearchBar {...defaultProps} isSearching />);
+    render(
+      <Router>
+        <SearchBar {...defaultProps} isSearching />
+      </Router>
+    );
 
     const spinning = screen.getByTestId('searchBarSpinning');
     const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
@@ -54,7 +65,11 @@ describe('SearchBar', () => {
   });
 
   it('focuses input when clean button is clicked', async () => {
-    render(<SearchBar {...defaultProps} isSearching={false} />);
+    render(
+      <Router>
+        <SearchBar {...defaultProps} isSearching={false} />
+      </Router>
+    );
 
     const cleanBtn = screen.getByRole('button', { name: 'Close' });
     const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
@@ -66,7 +81,11 @@ describe('SearchBar', () => {
   });
 
   it('updates value on change input', async () => {
-    render(<SearchBar {...defaultProps} isSearching={false} />);
+    render(
+      <Router>
+        <SearchBar {...defaultProps} isSearching={false} />
+      </Router>
+    );
 
     const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
 
@@ -84,7 +103,11 @@ describe('SearchBar', () => {
       const mockSearch = getMockSearch('1');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      render(<SearchBar {...defaultProps} isSearching={false} />);
+      render(
+        <Router>
+          <SearchBar {...defaultProps} isSearching={false} />
+        </Router>
+      );
 
       const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
 
@@ -104,7 +127,11 @@ describe('SearchBar', () => {
       const mockSearch = getMockSearch('2');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      render(<SearchBar {...defaultProps} isSearching={false} />);
+      render(
+        <Router>
+          <SearchBar {...defaultProps} isSearching={false} />
+        </Router>
+      );
 
       const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
 
@@ -126,13 +153,17 @@ describe('SearchBar', () => {
 
   describe('History push', () => {
     it('calls on Enter key press', async () => {
-      render(<SearchBar {...defaultProps} isSearching={false} />);
+      render(
+        <Router>
+          <SearchBar {...defaultProps} isSearching={false} />
+        </Router>
+      );
 
       const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
       await userEvent.type(input, 'ing{enter}');
       expect(input).not.toBe(document.activeElement);
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQueryString({
           tsQueryWeb: 'testing',
@@ -141,13 +172,17 @@ describe('SearchBar', () => {
       });
     });
 
-    it('calls history push on Enter key press when text is empty with undefined text', async () => {
-      render(<SearchBar {...defaultProps} tsQueryWeb={undefined} isSearching={false} />);
+    it('calls navigate on Enter key press when text is empty with undefined text', async () => {
+      render(
+        <Router>
+          <SearchBar {...defaultProps} tsQueryWeb={undefined} isSearching={false} />
+        </Router>
+      );
 
       const input = screen.getByPlaceholderText('Search packages') as HTMLInputElement;
       await userEvent.type(input, '{enter}');
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQueryString({
           tsQueryWeb: undefined,
@@ -157,7 +192,11 @@ describe('SearchBar', () => {
     });
 
     it('forces focus to click search bar icon', async () => {
-      render(<SearchBar {...defaultProps} tsQueryWeb={undefined} isSearching={false} />);
+      render(
+        <Router>
+          <SearchBar {...defaultProps} tsQueryWeb={undefined} isSearching={false} />
+        </Router>
+      );
 
       const icon = screen.getByTestId('searchBarIcon');
       await userEvent.click(icon);

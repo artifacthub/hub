@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useContext, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { AppCtx, signOut, unselectOrg, updateOrg } from '../../context/AppCtx';
 import { Section } from '../../types';
@@ -17,28 +17,24 @@ import RepositoriesSection from './repositories';
 import SettingsSection from './settings';
 import UserContext from './UserContext';
 
-interface Props {
-  section?: string;
-  subsection?: string;
-  userAlias?: string;
-  organizationName?: string;
-  repoName?: string;
-  visibleModal?: string;
-  activePage?: string;
-}
-
 const DEFAULT_SECTION = 'repositories';
 
-const ControlPanelView = (props: Props) => {
-  const history = useHistory();
+const ControlPanelView = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { ctx, dispatch } = useContext(AppCtx);
-  const [activeSection, setActiveSection] = useState<string>(props.section || DEFAULT_SECTION);
-  const [activeSubsection, setActiveSubsection] = useState<string | null>(props.subsection || null);
+  const { section, subsection } = useParams();
+  const [activeSection, setActiveSection] = useState<string>(section || DEFAULT_SECTION);
+  const [activeSubsection, setActiveSubsection] = useState<string | null>(subsection || null);
   const [context, setContext] = useState<'user' | 'org' | null>(
     isUndefined(ctx.user) || isNull(ctx.user) ? null : isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org'
   );
   const isLoggedIn = !isUndefined(ctx.user) && !isNull(ctx.user);
   const [lastSelectedOrg, setLastSelectedOrg] = useState<string | undefined>(ctx.prefs.controlPanel.selectedOrg);
+  const userAlias = searchParams.get('user-alias');
+  const organizationName = searchParams.get('org-name');
+  const repoName = searchParams.get('repo-name');
+  const activePageParam = searchParams.get('page');
 
   const onAuthError = (): void => {
     alertDispatcher.postAlert({
@@ -46,7 +42,7 @@ const ControlPanelView = (props: Props) => {
       message: 'Sorry, you are not authorized to complete this action, please make sure you are signed in',
     });
     dispatch(signOut());
-    history.push(
+    navigate(
       `/?modal=login&redirect=/control-panel/${activeSection}${!isNull(activeSubsection) ? `/${activeSubsection}` : ''}`
     );
   };
@@ -54,8 +50,8 @@ const ControlPanelView = (props: Props) => {
   const checkIfAuthorizationIsActive = (newCtx: string): boolean => {
     if (
       newCtx === 'user' &&
-      props.subsection === 'authorization' &&
-      !isControlPanelSectionAvailable(newCtx, props.section, props.subsection) &&
+      subsection === 'authorization' &&
+      !isControlPanelSectionAvailable(newCtx, section, subsection) &&
       !isUndefined(lastSelectedOrg)
     ) {
       return true;
@@ -72,26 +68,29 @@ const ControlPanelView = (props: Props) => {
     if (ctx.user) {
       let context: 'user' | 'org' = isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org';
       if (
-        ctx.user.alias === props.userAlias &&
-        !isUndefined(props.userAlias) &&
-        props.userAlias !== '' &&
+        ctx.user.alias === userAlias &&
+        !isNull(userAlias) &&
+        userAlias !== '' &&
         !isUndefined(ctx.prefs.controlPanel.selectedOrg)
       ) {
         dispatch(unselectOrg());
         context = 'user';
       } else if (
-        !isUndefined(props.organizationName) &&
-        props.organizationName !== '' &&
-        ctx.prefs.controlPanel.selectedOrg !== props.organizationName
+        !isNull(organizationName) &&
+        organizationName !== '' &&
+        ctx.prefs.controlPanel.selectedOrg !== organizationName
       ) {
-        dispatch(updateOrg(props.organizationName));
+        dispatch(updateOrg(organizationName));
         context = 'org';
       }
 
-      if (isUndefined(props.repoName) && (!isUndefined(props.userAlias) || !isUndefined(props.organizationName))) {
-        history.replace({
-          search: '',
-        });
+      if (isNull(repoName) && (!isNull(userAlias) || !isNull(organizationName))) {
+        navigate(
+          {
+            search: '',
+          },
+          { replace: true }
+        );
       }
 
       if (ctx.prefs.controlPanel.selectedOrg) {
@@ -109,27 +108,27 @@ const ControlPanelView = (props: Props) => {
 
   useEffect(() => {
     if (ctx.user && !isNull(context)) {
-      if (isControlPanelSectionAvailable(context, props.section, props.subsection)) {
-        if (!isUndefined(props.section)) {
-          setActiveSection(props.section);
+      if (isControlPanelSectionAvailable(context, section, subsection)) {
+        if (!isUndefined(section)) {
+          setActiveSection(section);
         }
-        if (!isUndefined(props.subsection)) {
-          setActiveSubsection(props.subsection);
+        if (!isUndefined(subsection)) {
+          setActiveSubsection(subsection);
         }
       } else {
-        if (props.subsection !== 'authorization') {
-          history.replace(`/control-panel/${DEFAULT_SECTION}`);
+        if (subsection !== 'authorization') {
+          navigate(`/control-panel/${DEFAULT_SECTION}`, { replace: true });
         } else {
           if (isUndefined(lastSelectedOrg)) {
-            history.replace(`/control-panel/${DEFAULT_SECTION}`);
+            navigate(`/control-panel/${DEFAULT_SECTION}`, { replace: true });
           }
         }
       }
     }
-  }, [props.section, props.subsection, context]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [section, subsection, context]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   if (!isUndefined(ctx.user) && isNull(ctx.user)) {
-    history.push('/');
+    navigate('/');
   }
 
   if (isNull(context)) return null;
@@ -176,17 +175,24 @@ const ControlPanelView = (props: Props) => {
             {(() => {
               switch (activeSection) {
                 case 'repositories':
-                  return <RepositoriesSection {...props} onAuthError={onAuthError} />;
+                  return (
+                    <RepositoriesSection
+                      repoName={repoName}
+                      activePage={activePageParam}
+                      visibleModal={searchParams.get('modal')}
+                      onAuthError={onAuthError}
+                    />
+                  );
                 case 'organizations':
-                  return <OrganizationsSection {...props} onAuthError={onAuthError} />;
+                  return <OrganizationsSection activePage={activePageParam} onAuthError={onAuthError} />;
                 case 'members':
-                  return <MembersSection {...props} onAuthError={onAuthError} />;
+                  return <MembersSection activePage={activePageParam} onAuthError={onAuthError} />;
                 case 'settings':
                   return (
                     <SettingsSection
-                      {...props}
                       context={context}
                       activeSection={activeSection}
+                      subsection={subsection}
                       onAuthError={onAuthError}
                     />
                   );

@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { RepositoryKind } from '../../../types';
 import Modal from './Modal';
@@ -7,13 +8,11 @@ jest.mock('react-markdown', () => (props: any) => {
 });
 jest.mock('remark-gfm', () => () => <div />);
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const defaultProps = {
@@ -54,13 +53,21 @@ describe('HelmInstall', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<Modal {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <Modal {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders pre-release message', () => {
-      render(<Modal {...defaultProps} />);
+      render(
+        <Router>
+          <Modal {...defaultProps} />
+        </Router>
+      );
 
       const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
@@ -69,30 +76,37 @@ describe('HelmInstall', () => {
 
     it('calls replace when install instructions are empty', () => {
       render(
-        <Modal
-          {...defaultProps}
-          package={{
-            ...defaultProps.package,
-            repository: { ...defaultProps.package.repository, kind: RepositoryKind.KedaScaler },
-          }}
-        />
+        <Router>
+          <Modal
+            {...defaultProps}
+            package={{
+              ...defaultProps.package,
+              repository: { ...defaultProps.package.repository, kind: RepositoryKind.KedaScaler },
+            }}
+          />
+        </Router>
       );
 
       expect(screen.getByRole('button', { name: 'Open installation modal' })).toBeInTheDocument();
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({
-        search: '',
-        state: { fromStarredPage: undefined, searchUrlReferer: undefined },
-      });
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith('', { replace: true, state: null });
     });
 
     it('closes modal when a new pkg is open', async () => {
-      const { rerender } = render(<Modal {...defaultProps} />);
+      const { rerender } = render(
+        <Router>
+          <Modal {...defaultProps} />
+        </Router>
+      );
 
       expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
 
-      rerender(<Modal package={{ ...defaultProps.package, packageId: 'id2' }} visibleInstallationModal />);
+      rerender(
+        <Router>
+          <Modal package={{ ...defaultProps.package, packageId: 'id2' }} visibleInstallationModal />
+        </Router>
+      );
 
       expect(await screen.findByRole('dialog')).not.toHaveClass('active d-block');
     });

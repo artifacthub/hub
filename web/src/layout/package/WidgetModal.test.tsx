@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import WidgetModal from './WidgetModal';
 
@@ -9,13 +10,11 @@ jest.mock('react-color', () => ({
 
 const setOpenStatusMock = jest.fn();
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 jest.mock('react-syntax-highlighter', () => (props: any) => <div>{props.children}</div>);
@@ -34,13 +33,21 @@ describe('WidgetModal', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<WidgetModal {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <WidgetModal {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      render(<WidgetModal {...defaultProps} />);
+      render(
+        <Router>
+          <WidgetModal {...defaultProps} />
+        </Router>
+      );
 
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(screen.getByText('Theme')).toBeInTheDocument();
@@ -66,10 +73,10 @@ describe('WidgetModal', () => {
 
     it('when not white label', () => {
       render(
-        <>
+        <Router>
           <meta name="artifacthub:siteName" content="artifact hub" />
           <WidgetModal {...defaultProps} />
-        </>
+        </Router>
       );
 
       expect(screen.getByText('Header')).toBeInTheDocument();
@@ -78,7 +85,11 @@ describe('WidgetModal', () => {
     });
 
     it('updates block content to change different options', async () => {
-      render(<WidgetModal {...defaultProps} />);
+      render(
+        <Router>
+          <WidgetModal {...defaultProps} />
+        </Router>
+      );
 
       expect(screen.getByTestId('block-content')).toHaveTextContent(
         '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="light" data-header="true" data-stars="true" data-responsive="false"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'

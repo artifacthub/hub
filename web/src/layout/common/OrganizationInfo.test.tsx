@@ -13,14 +13,13 @@ const defaultProps = {
   visibleLegend: false,
 };
 
-const mockHistoryPush = jest.fn();
 const user = userEvent.setup({ delay: null });
+
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const getMockOrganization = (fixtureId: string): Organization => {
@@ -43,12 +42,12 @@ describe('OrganizationInfo', () => {
     expect(screen.getByLabelText('Organization info')).toBeInTheDocument();
   });
 
-  it('calls history push to click org link', async () => {
+  it('calls navigate to click org link', async () => {
     render(<OrganizationInfo {...defaultProps} />);
     await userEvent.click(screen.getByLabelText('Organization info'));
 
-    await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledTimes(1));
-    expect(mockHistoryPush).toHaveBeenCalledWith({
+    await waitFor(() => expect(mockUseNavigate).toHaveBeenCalledTimes(1));
+    expect(mockUseNavigate).toHaveBeenCalledWith({
       pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: 1,

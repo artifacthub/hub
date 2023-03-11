@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { FixableVulnerabilitiesInReport, SecurityReport } from '../../../types';
 import SummaryTable from './SummaryTable';
@@ -18,12 +19,14 @@ describe('SummaryTable', () => {
 
   it('creates snapshot', () => {
     const { asFragment } = render(
-      <SummaryTable
-        report={getMockSecurityReport('1')}
-        fixableVulnerabilities={getMockFixableSecurityReport('1')}
-        hasWhitelistedContainers={false}
-        allVulnerabilitiesAreFixable={false}
-      />
+      <Router>
+        <SummaryTable
+          report={getMockSecurityReport('1')}
+          fixableVulnerabilities={getMockFixableSecurityReport('1')}
+          hasWhitelistedContainers={false}
+          allVulnerabilitiesAreFixable={false}
+        />
+      </Router>
     );
     expect(asFragment()).toMatchSnapshot();
   });
@@ -31,12 +34,14 @@ describe('SummaryTable', () => {
   describe('Render', () => {
     it('renders component', () => {
       render(
-        <SummaryTable
-          report={getMockSecurityReport('2')}
-          fixableVulnerabilities={getMockFixableSecurityReport('2')}
-          hasWhitelistedContainers={false}
-          allVulnerabilitiesAreFixable={false}
-        />
+        <Router>
+          <SummaryTable
+            report={getMockSecurityReport('2')}
+            fixableVulnerabilities={getMockFixableSecurityReport('2')}
+            hasWhitelistedContainers={false}
+            allVulnerabilitiesAreFixable={false}
+          />
+        </Router>
       );
       expect(screen.getByText('Image')).toBeInTheDocument();
       expect(screen.getByText('Fixable')).toBeInTheDocument();
@@ -60,12 +65,14 @@ describe('SummaryTable', () => {
 
     it('renders table with more than one image', () => {
       render(
-        <SummaryTable
-          report={getMockSecurityReport('3')}
-          fixableVulnerabilities={getMockFixableSecurityReport('3')}
-          hasWhitelistedContainers={false}
-          allVulnerabilitiesAreFixable={false}
-        />
+        <Router>
+          <SummaryTable
+            report={getMockSecurityReport('3')}
+            fixableVulnerabilities={getMockFixableSecurityReport('3')}
+            hasWhitelistedContainers={false}
+            allVulnerabilitiesAreFixable={false}
+          />
+        </Router>
       );
       expect(screen.getByText('Image')).toBeInTheDocument();
       expect(screen.getByText('Rating')).toBeInTheDocument();

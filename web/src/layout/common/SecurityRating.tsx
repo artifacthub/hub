@@ -1,6 +1,6 @@
 import { isNull, isUndefined } from 'lodash';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { SecurityReportSummary, SeverityRating as SRating, VulnerabilitySeverity } from '../../types';
 import { SEVERITY_RATING } from '../../utils/data';
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const SecurityRating = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [severity, setSeverity] = useState<SRating | undefined>();
 
   useEffect(() => {
@@ -161,7 +161,7 @@ const SecurityRating = (props: Props) => {
             className={`btn btn-link text-reset p-0 position-relative ${styles.link}`}
             onClick={(e) => {
               e.preventDefault();
-              history.push({
+              navigate({
                 pathname: props.withLink,
                 search: '?modal=security-report',
               });

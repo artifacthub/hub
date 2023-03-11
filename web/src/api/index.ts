@@ -877,10 +877,14 @@ class API_CLASS {
     return this.apiFetch({ url: `${this.API_BASE_URL}/orgs/${orgName}/user-allowed-actions` });
   }
 
-  public getSnapshotSecurityReport(packageId: string, version: string, eventId?: string): Promise<SecurityReport> {
+  public getSnapshotSecurityReport(
+    packageId: string,
+    version: string,
+    eventId?: string | null
+  ): Promise<SecurityReport> {
     return this.apiFetch({
       url: `${this.API_BASE_URL}/packages/${packageId}/${version}/security-report${
-        !isUndefined(eventId) ? `?event-id=${eventId}` : ''
+        eventId ? `?event-id=${eventId}` : ''
       }`,
       skipCamelConversion: true,
     }).then((report: SecurityReportRaw) => {

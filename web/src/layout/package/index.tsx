@@ -9,13 +9,12 @@ import { FiCode, FiPlus } from 'react-icons/fi';
 import { FiPackage } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoDocumentTextOutline } from 'react-icons/io5';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useOutletContext, useParams, useSearchParams } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import API from '../../api';
 import useBreakpointDetect from '../../hooks/useBreakpointDetect';
-import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import {
   Banner as IBanner,
   ContentDefaultModalItem,
@@ -25,11 +24,11 @@ import {
   ErrorKind,
   FalcoRules,
   GatekeeperExample,
+  OutletContext,
   Package,
   PackageLink,
   PackageViewsStats,
   RepositoryKind,
-  SearchFiltersURL,
   Version,
 } from '../../types';
 import bannerDispatcher from '../../utils/bannerDispatcher';
@@ -57,7 +56,6 @@ import PackageCategoryLabel from '../common/PackageCategoryLabel';
 import RepositoryIcon from '../common/RepositoryIcon';
 import RepositoryIconLabel from '../common/RepositoryIconLabel';
 import RepositoryInfo from '../common/RepositoryInfo';
-import Footer from '../navigation/Footer';
 import SubNavbar from '../navigation/SubNavbar';
 import Banner from './Banner';
 import ChangelogModal from './changelog/Modal';
@@ -81,52 +79,28 @@ import TektonManifestModal from './TektonManifestModal';
 import Values from './values';
 import ValuesSchema from './valuesSchema';
 
-interface Props {
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
-  packageName: string;
-  version?: string;
-  repositoryKind: string;
-  repositoryName: string;
-  hash?: string;
-  visibleModal?: string;
-  visibleValuesPath?: string;
-  visibleImage?: string;
-  visibleTarget?: string;
-  visibleSection?: string;
-  eventId?: string;
-  visibleTemplate?: string;
-  compareVersionTo?: string;
-  visibleFile?: string;
-  visibleExample?: string;
-  visibleLine?: string;
-  visibleVersion?: string;
-}
-
 const RELATED_PKGS_GAP = 400;
 
-const PackageView = (props: Props) => {
-  const history = useHistory();
+const PackageView = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const { repositoryKind, repositoryName, packageName, version } = useParams();
+  const visibleModal = searchParams.get('modal');
   const point = useBreakpointDetect();
   const contentWrapper = useRef<HTMLDivElement | null>(null);
   const [isLoadingPackage, setIsLoadingPackage] = useState(false);
-  const [packageName, setPackageName] = useState(props.packageName);
-  const [repositoryKind, setRepositoryKind] = useState(props.repositoryKind);
-  const [repositoryName, setRepositoryName] = useState(props.repositoryName);
-  const [version, setVersion] = useState(props.version);
   const [detail, setDetail] = useState<Package | null | undefined>(undefined);
-  const { tsQueryWeb, pageNumber, filters, deprecated, operators, verifiedPublisher, official, sort } =
-    props.searchUrlReferer || {};
   const [apiError, setApiError] = useState<null | string | JSX.Element>(null);
-  const [currentHash, setCurrentHash] = useState<string | undefined>(props.hash);
+  const [currentHash, setCurrentHash] = useState<string | undefined>(location.hash);
   const columnWrapper = useRef<HTMLDivElement | null>(null);
   const [relatedPosition, setRelatedPosition] = useState<'column' | 'content' | undefined | null>(null);
   const [currentPkgId, setCurrentPkgId] = useState<null | string>(null);
   const [relatedPackages, setRelatedPackages] = useState<Package[] | undefined>(undefined);
   const [viewsStats, setViewsStats] = useState<PackageViewsStats | undefined>();
   const [banner, setBanner] = useState<IBanner | null>(null);
-
-  useScrollRestorationFix();
+  const fromStarredPage = location.state && location.state.fromStarredPage;
+  const { setIsLoading } = useOutletContext() as OutletContext;
 
   useLayoutEffect(() => {
     const updateRelatedPosition = () => {
@@ -147,15 +121,6 @@ const PackageView = (props: Props) => {
       updateRelatedPosition();
     }
   }, [relatedPosition]); /* eslint-disable-line react-hooks/exhaustive-deps */
-
-  useEffect(() => {
-    if (!isUndefined(props.packageName) && !isLoadingPackage) {
-      setPackageName(props.packageName);
-      setVersion(props.version);
-      setRepositoryKind(props.repositoryKind);
-      setRepositoryName(props.repositoryName);
-    }
-  }, [props, isLoadingPackage]);
 
   useEffect(() => {
     async function fetchRelatedPackages(pkgDetail: Package) {
@@ -219,6 +184,7 @@ const PackageView = (props: Props) => {
 
   const stopPkgLoading = useCallback(() => {
     setIsLoadingPackage(false);
+    setIsLoading(false);
     // Force check related packages position after rendering readme
     setRelatedPosition(undefined);
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
@@ -227,10 +193,10 @@ const PackageView = (props: Props) => {
     try {
       setRelatedPosition(null);
       const detailPkg = await API.getPackage({
-        packageName: packageName,
+        packageName: packageName!,
         version: version,
-        repositoryKind: repositoryKind,
-        repositoryName: repositoryName,
+        repositoryKind: repositoryKind!,
+        repositoryName: repositoryName!,
       });
       let metaTitle = `${detailPkg.normalizedName} ${detailPkg.version} · ${
         detailPkg.repository.userAlias || detailPkg.repository.organizationName
@@ -296,6 +262,7 @@ const PackageView = (props: Props) => {
 
   useEffect(() => {
     setIsLoadingPackage(true);
+    setIsLoading(true);
     fetchPackageDetail();
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [packageName, version, repositoryName, repositoryKind]);
@@ -342,9 +309,7 @@ const PackageView = (props: Props) => {
     <div className={wrapperClassName}>
       <InstallationModal
         package={detail}
-        visibleInstallationModal={!isUndefined(props.visibleModal) && props.visibleModal === 'install'}
-        searchUrlReferer={props.searchUrlReferer}
-        fromStarredPage={props.fromStarredPage}
+        visibleInstallationModal={!isNull(visibleModal) && visibleModal === 'install'}
       />
     </div>
   );
@@ -504,19 +469,19 @@ const PackageView = (props: Props) => {
   };
 
   useEffect(() => {
-    if (props.hash !== currentHash) {
-      setCurrentHash(props.hash);
-      if (isUndefined(props.hash) || props.hash === '') {
+    if (location.hash !== currentHash) {
+      setCurrentHash(location.hash);
+      if (isUndefined(location.hash) || location.hash === '') {
         scrollToTop();
       } else {
         scrollIntoView();
       }
     }
-  }, [props.hash]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [location.hash]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const scrollIntoView = useCallback(
     (id?: string) => {
-      const elId = id || props.hash;
+      const elId = id || location.hash;
       if (isUndefined(elId) || elId === '') return;
 
       try {
@@ -525,22 +490,20 @@ const PackageView = (props: Props) => {
           element.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
 
           if (isUndefined(id)) {
-            history.replace({
-              pathname: history.location.pathname,
-              hash: elId,
-              state: {
-                searchUrlReferer: props.searchUrlReferer,
-                fromStarredPage: props.fromStarredPage,
+            navigate(
+              {
+                pathname: location.pathname,
+                hash: elId,
               },
-            });
-          } else if (props.hash !== elId) {
-            history.push({
-              pathname: history.location.pathname,
+              {
+                state: location.state,
+                replace: true,
+              }
+            );
+          } else if (location.hash !== elId) {
+            navigate({
+              pathname: location.pathname,
               hash: elId,
-              state: {
-                searchUrlReferer: props.searchUrlReferer,
-                fromStarredPage: props.fromStarredPage,
-              },
             });
           }
         }
@@ -548,7 +511,9 @@ const PackageView = (props: Props) => {
         return;
       }
     },
-    [props.hash, props.searchUrlReferer, props.fromStarredPage, history]
+    /* eslint-disable react-hooks/exhaustive-deps */
+    [location.hash, fromStarredPage]
+    /* eslint-enable react-hooks/exhaustive-deps */
   );
 
   const getSupportLink = (): string | undefined => {
@@ -755,32 +720,30 @@ const PackageView = (props: Props) => {
 
   return (
     <>
-      {!isUndefined(props.searchUrlReferer) && (
+      {location.state && location.state.searchUrlReferer && (
         <SubNavbar>
           <button
             className={`btn btn-link btn-sm ps-0 d-flex align-items-center ${styles.link}`}
             onClick={() => {
-              history.push({
-                pathname: '/packages/search',
-                search: prepareQueryString({
-                  pageNumber: pageNumber || 1,
-                  tsQueryWeb: tsQueryWeb,
-                  filters: filters,
-                  deprecated: deprecated,
-                  operators: operators,
-                  verifiedPublisher: verifiedPublisher,
-                  official: official,
-                  sort: sort,
-                }),
-                state: { 'from-detail': true },
-              });
+              navigate(
+                {
+                  pathname: '/packages/search',
+                  search: prepareQueryString({
+                    ...location.state.searchUrlReferer,
+                    pageNumber: location.state.searchUrlReferer.pageNumber || 1,
+                  }),
+                },
+                {
+                  state: { 'from-detail': true },
+                }
+              );
             }}
             aria-label="Back to results"
           >
             <IoIosArrowBack className="me-2" />
-            {tsQueryWeb ? (
+            {location.state.searchUrlReferer.tsQueryWeb ? (
               <>
-                Back to "<span className="fw-bold">{tsQueryWeb}</span>" results
+                Back to "<span className="fw-bold">{location.state.searchUrlReferer.tsQueryWeb}</span>" results
               </>
             ) : (
               <>
@@ -792,15 +755,19 @@ const PackageView = (props: Props) => {
         </SubNavbar>
       )}
 
-      {!isUndefined(props.fromStarredPage) && props.fromStarredPage && (
+      {!isUndefined(fromStarredPage) && fromStarredPage && (
         <SubNavbar>
           <button
             className={`btn btn-link btn-sm ps-0 d-flex align-items-center ${styles.link}`}
             onClick={() => {
-              history.push({
-                pathname: '/packages/starred',
-                state: { 'from-detail': true },
-              });
+              navigate(
+                {
+                  pathname: '/packages/starred',
+                },
+                {
+                  state: { 'from-detail': true },
+                }
+              );
             }}
             aria-label="Back to starred packages"
           >
@@ -964,9 +931,7 @@ const PackageView = (props: Props) => {
                         packageId={detail.packageId}
                         packageName={detail.displayName || detail.name}
                         packageDescription={detail.description}
-                        visibleWidget={!isUndefined(props.visibleModal) && props.visibleModal === 'widget'}
-                        searchUrlReferer={props.searchUrlReferer}
-                        fromStarredPage={props.fromStarredPage}
+                        visibleWidget={!isNull(visibleModal) && visibleModal === 'widget'}
                       />
                     </div>
 
@@ -994,9 +959,7 @@ const PackageView = (props: Props) => {
                           sortedVersions={sortedVersions}
                           channels={detail.channels}
                           viewsStats={viewsStats}
-                          version={props.version}
-                          searchUrlReferer={props.searchUrlReferer}
-                          fromStarredPage={props.fromStarredPage}
+                          version={version}
                           visibleSecurityReport={false}
                         />
                       </Modal>
@@ -1010,15 +973,13 @@ const PackageView = (props: Props) => {
                             normalizedName={detail.normalizedName}
                             repository={detail.repository}
                             hasChangelog={detail.hasChangelog!}
-                            currentVersion={props.version}
-                            visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
+                            currentVersion={version}
+                            visibleChangelog={!isNull(visibleModal) && visibleModal === 'changelog'}
                             visibleVersion={
-                              !isUndefined(props.visibleModal) && props.visibleModal === 'changelog'
-                                ? props.visibleVersion
+                              !isNull(visibleModal) && visibleModal === 'changelog'
+                                ? searchParams.get('version')
                                 : undefined
                             }
-                            searchUrlReferer={props.searchUrlReferer}
-                            fromStarredPage={props.fromStarredPage}
                           />
                         </div>
                       )}
@@ -1056,26 +1017,22 @@ const PackageView = (props: Props) => {
                               version={detail.version!}
                               sortedVersions={sortedVersions}
                               repoKind={detail.repository.kind}
-                              visibleChartTemplates={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'template'
-                              }
+                              visibleChartTemplates={!isNull(visibleModal) && visibleModal === 'template'}
                               visibleTemplate={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'template'
-                                  ? props.visibleTemplate
+                                !isNull(visibleModal) && visibleModal === 'template'
+                                  ? searchParams.get('template')
                                   : undefined
                               }
                               visibleLine={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'template'
-                                  ? props.visibleLine
+                                !isNull(visibleModal) && visibleModal === 'template'
+                                  ? searchParams.get('line')
                                   : undefined
                               }
                               compareVersionTo={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'template'
-                                  ? props.compareVersionTo
+                                !isNull(visibleModal) && visibleModal === 'template'
+                                  ? searchParams.get('compare-to')
                                   : undefined
                               }
-                              searchUrlReferer={props.searchUrlReferer}
-                              fromStarredPage={props.fromStarredPage}
                             />
                           </div>
 
@@ -1085,11 +1042,9 @@ const PackageView = (props: Props) => {
                               packageId={detail.packageId}
                               modalName="crds"
                               language="yaml"
-                              visibleModal={!isUndefined(props.visibleModal) && props.visibleModal === 'crds'}
+                              visibleModal={!isNull(visibleModal) && visibleModal === 'crds'}
                               visibleFile={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'crds'
-                                  ? props.visibleFile
-                                  : undefined
+                                !isNull(visibleModal) && visibleModal === 'crds' ? searchParams.get('file') : undefined
                               }
                               btnModalContent={
                                 <div className="d-flex flex-row align-items-center justify-content-center">
@@ -1100,8 +1055,6 @@ const PackageView = (props: Props) => {
                               normalizedName={detail.normalizedName}
                               title="Custom Resources Definition"
                               files={getCRDs() as any}
-                              searchUrlReferer={props.searchUrlReferer}
-                              fromStarredPage={props.fromStarredPage}
                             />
                           </div>
 
@@ -1117,12 +1070,10 @@ const PackageView = (props: Props) => {
                                         packageId={detail.packageId}
                                         modalName="examples"
                                         language="yaml"
-                                        visibleModal={
-                                          !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
-                                        }
+                                        visibleModal={!isNull(visibleModal) && visibleModal === 'examples'}
                                         visibleFile={
-                                          !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
-                                            ? props.visibleFile
+                                          !isNull(visibleModal) && visibleModal === 'examples'
+                                            ? searchParams.get('file')
                                             : undefined
                                         }
                                         btnModalContent={
@@ -1134,18 +1085,12 @@ const PackageView = (props: Props) => {
                                         normalizedName={detail.normalizedName}
                                         title="Examples"
                                         files={getTektonExamples() as any}
-                                        searchUrlReferer={props.searchUrlReferer}
-                                        fromStarredPage={props.fromStarredPage}
                                       />
                                     </div>
                                     <TektonManifestModal
                                       normalizedName={detail.normalizedName}
                                       manifestRaw={getManifestRaw()}
-                                      searchUrlReferer={props.searchUrlReferer}
-                                      fromStarredPage={props.fromStarredPage}
-                                      visibleManifest={
-                                        !isUndefined(props.visibleModal) && props.visibleModal === 'manifest'
-                                      }
+                                      visibleManifest={!isNull(visibleModal) && visibleModal === 'manifest'}
                                     />
                                   </>
                                 );
@@ -1159,19 +1104,15 @@ const PackageView = (props: Props) => {
                                         version={detail.version!}
                                         normalizedName={detail.normalizedName}
                                         sortedVersions={sortedVersions}
-                                        searchUrlReferer={props.searchUrlReferer}
-                                        fromStarredPage={props.fromStarredPage}
-                                        visibleValues={
-                                          !isUndefined(props.visibleModal) && props.visibleModal === 'values'
-                                        }
+                                        visibleValues={!isNull(visibleModal) && visibleModal === 'values'}
                                         visibleValuesPath={
-                                          !isUndefined(props.visibleModal) && props.visibleModal === 'values'
-                                            ? props.visibleValuesPath
+                                          !isNull(visibleModal) && visibleModal === 'values'
+                                            ? searchParams.get('path')
                                             : undefined
                                         }
                                         compareVersionTo={
-                                          !isUndefined(props.visibleModal) && props.visibleModal === 'values'
-                                            ? props.compareVersionTo
+                                          !isNull(visibleModal) && visibleModal === 'values'
+                                            ? searchParams.get('compare-to')
                                             : undefined
                                         }
                                       />
@@ -1182,14 +1123,12 @@ const PackageView = (props: Props) => {
                                           packageId={detail.packageId}
                                           version={detail.version!}
                                           normalizedName={detail.normalizedName}
-                                          searchUrlReferer={props.searchUrlReferer}
-                                          fromStarredPage={props.fromStarredPage}
                                           visibleValuesSchema={
-                                            !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                                            !isNull(visibleModal) && visibleModal === 'values-schema'
                                           }
                                           visibleValuesSchemaPath={
-                                            !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
-                                              ? props.visibleValuesPath
+                                            !isNull(visibleModal) && visibleModal === 'values-schema'
+                                              ? searchParams.get('path')
                                               : undefined
                                           }
                                         />
@@ -1203,23 +1142,19 @@ const PackageView = (props: Props) => {
                                   <div className="d-none d-lg-block">
                                     <GatekeeperExamplesModal
                                       packageId={detail.packageId}
-                                      visibleModal={
-                                        !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
-                                      }
+                                      visibleModal={!isNull(visibleModal) && visibleModal === 'examples'}
                                       visibleExample={
-                                        !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
-                                          ? props.visibleExample
+                                        !isNull(visibleModal) && visibleModal === 'examples'
+                                          ? searchParams.get('example')
                                           : undefined
                                       }
                                       visibleFile={
-                                        !isUndefined(props.visibleModal) && props.visibleModal === 'examples'
-                                          ? props.visibleFile
+                                        !isNull(visibleModal) && visibleModal === 'examples'
+                                          ? searchParams.get('file')
                                           : undefined
                                       }
                                       normalizedName={detail.normalizedName}
                                       examples={getGatekeeperExamples()}
-                                      searchUrlReferer={props.searchUrlReferer}
-                                      fromStarredPage={props.fromStarredPage}
                                     />
                                   </div>
                                 );
@@ -1232,12 +1167,10 @@ const PackageView = (props: Props) => {
                                       packageId={detail.packageId}
                                       modalName="policies"
                                       language="text"
-                                      visibleModal={
-                                        !isUndefined(props.visibleModal) && props.visibleModal === 'policies'
-                                      }
+                                      visibleModal={!isNull(visibleModal) && visibleModal === 'policies'}
                                       visibleFile={
-                                        !isUndefined(props.visibleModal) && props.visibleModal === 'policies'
-                                          ? props.visibleFile
+                                        !isNull(visibleModal) && visibleModal === 'policies'
+                                          ? searchParams.get('file')
                                           : undefined
                                       }
                                       btnModalContent={
@@ -1249,8 +1182,6 @@ const PackageView = (props: Props) => {
                                       normalizedName={detail.normalizedName}
                                       title="Policies"
                                       files={getOPAPolicies() as any}
-                                      searchUrlReferer={props.searchUrlReferer}
-                                      fromStarredPage={props.fromStarredPage}
                                     />
                                   </div>
                                 );
@@ -1263,10 +1194,10 @@ const PackageView = (props: Props) => {
                                       packageId={detail.packageId}
                                       modalName="rules"
                                       language="yaml"
-                                      visibleModal={!isUndefined(props.visibleModal) && props.visibleModal === 'rules'}
+                                      visibleModal={!isNull(visibleModal) && visibleModal === 'rules'}
                                       visibleFile={
-                                        !isUndefined(props.visibleModal) && props.visibleModal === 'rules'
-                                          ? props.visibleFile
+                                        !isNull(visibleModal) && visibleModal === 'rules'
+                                          ? searchParams.get('file')
                                           : undefined
                                       }
                                       btnModalContent={
@@ -1278,8 +1209,6 @@ const PackageView = (props: Props) => {
                                       normalizedName={detail.normalizedName}
                                       title="Rules"
                                       files={getFalcoRules() as any}
-                                      searchUrlReferer={props.searchUrlReferer}
-                                      fromStarredPage={props.fromStarredPage}
                                     />
                                   </div>
                                 );
@@ -1295,17 +1224,13 @@ const PackageView = (props: Props) => {
                                 normalizedName={detail.normalizedName}
                                 repository={detail.repository}
                                 hasChangelog={detail.hasChangelog!}
-                                currentVersion={props.version}
-                                visibleChangelog={
-                                  !isUndefined(props.visibleModal) && props.visibleModal === 'changelog'
-                                }
+                                currentVersion={version}
+                                visibleChangelog={!isNull(visibleModal) && visibleModal === 'changelog'}
                                 visibleVersion={
-                                  !isUndefined(props.visibleModal) && props.visibleModal === 'changelog'
-                                    ? props.visibleVersion
+                                  !isNull(visibleModal) && visibleModal === 'changelog'
+                                    ? searchParams.get('version')
                                     : undefined
                                 }
-                                searchUrlReferer={props.searchUrlReferer}
-                                fromStarredPage={props.fromStarredPage}
                               />
                             </div>
                           )}
@@ -1314,11 +1239,7 @@ const PackageView = (props: Props) => {
                             <div className="mb-2">
                               <ScreenshotsModal
                                 screenshots={detail.screenshots}
-                                visibleScreenshotsModal={
-                                  !isUndefined(props.visibleModal) && props.visibleModal === 'screenshots'
-                                }
-                                searchUrlReferer={props.searchUrlReferer}
-                                fromStarredPage={props.fromStarredPage}
+                                visibleScreenshotsModal={!isNull(visibleModal) && visibleModal === 'screenshots'}
                               />
                             </div>
                           )}
@@ -1338,19 +1259,15 @@ const PackageView = (props: Props) => {
                                 package={detail}
                                 sortedVersions={sortedVersions}
                                 channels={detail.channels}
-                                searchUrlReferer={props.searchUrlReferer}
-                                fromStarredPage={props.fromStarredPage}
-                                visibleSecurityReport={
-                                  !isUndefined(props.visibleModal) && props.visibleModal === 'security-report'
-                                }
-                                visibleImage={props.visibleImage}
-                                visibleTarget={props.visibleTarget}
-                                visibleSection={props.visibleSection}
+                                visibleSecurityReport={!isNull(visibleModal) && visibleModal === 'security-report'}
+                                visibleImage={searchParams.get('image')}
+                                visibleTarget={searchParams.get('target')}
+                                visibleSection={searchParams.get('section')}
                                 viewsStats={viewsStats}
-                                version={props.version}
+                                version={version}
                                 eventId={
-                                  !isUndefined(props.visibleModal) && props.visibleModal === 'security-report'
-                                    ? props.eventId
+                                  !isNull(visibleModal) && visibleModal === 'security-report'
+                                    ? searchParams.get('event-id')
                                     : undefined
                                 }
                               />
@@ -1403,7 +1320,7 @@ const PackageView = (props: Props) => {
 
                         <PackagesViewsStats
                           stats={viewsStats}
-                          version={props.version}
+                          version={version}
                           repoKind={detail.repository.kind}
                           title={
                             <AnchorHeader
@@ -1432,8 +1349,6 @@ const PackageView = (props: Props) => {
           </>
         )}
       </div>
-
-      <Footer isHidden={isLoadingPackage || isUndefined(detail)} />
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { isUndefined } from 'lodash';
 import { MdOutlineCategory } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { PackageCategory } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const PackageCategoryLabel = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   if (isUndefined(props.category)) return null;
 
@@ -23,7 +23,7 @@ const PackageCategoryLabel = (props: Props) => {
       <button
         onClick={(e) => {
           e.preventDefault();
-          history.push({
+          navigate({
             pathname: '/packages/search',
             search: prepareQueryString({
               pageNumber: 1,

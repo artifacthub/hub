@@ -760,3 +760,12 @@ export const OCI_PREFIX = 'oci://';
 
 export const PKG_DETAIL_PATH =
   /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|container)\//;
+
+export const HOME_ROUTES = [
+  '/verify-email',
+  '/login',
+  '/accept-invitation',
+  '/oauth-failed',
+  '/reset-password',
+  '/delete-user',
+];

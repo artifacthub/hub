@@ -3,7 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 import { useContext, useEffect, useState } from 'react';
 import { CgUserRemove } from 'react-icons/cg';
 import { MdClose } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
@@ -13,13 +13,13 @@ import Modal from '../common/Modal';
 import styles from './AccountDeletion.module.css';
 
 interface Props {
-  code?: string;
+  code?: string | null;
 }
 
 const AccountDeletion = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { ctx, dispatch } = useContext(AppCtx);
-  const [code, setCode] = useState<string | undefined>(props.code);
+  const [code, setCode] = useState<string | undefined | null>(props.code);
   const [deleting, setDeleting] = useState<boolean>(false);
   const [validCode, setValidCode] = useState<boolean | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -39,11 +39,14 @@ const AccountDeletion = (props: Props) => {
       }
     }
 
-    if (!isUndefined(ctx.user) && !isUndefined(code)) {
-      history.replace({
-        pathname: '/',
-        search: '',
-      });
+    if (!isUndefined(ctx.user) && code) {
+      navigate(
+        {
+          pathname: '/',
+          search: '',
+        },
+        { replace: true }
+      );
       if (isNull(ctx.user)) {
         setCode(undefined);
         alertDispatcher.postAlert({
@@ -56,7 +59,7 @@ const AccountDeletion = (props: Props) => {
     }
   }, [ctx]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if (isUndefined(code) || isUndefined(ctx.user)) return null;
+  if (isUndefined(code) || isNull(code) || isUndefined(ctx.user)) return null;
 
   return (
     <Modal
@@ -64,12 +67,12 @@ const AccountDeletion = (props: Props) => {
       header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Account deletion</div>}
       disabledClose={deleting}
       modalClassName={styles.modal}
-      open={!isUndefined(code)}
+      open
       onClose={() => {
         setCode(undefined);
         if (validCode) {
           dispatch(signOut());
-          history.push('/');
+          navigate('/');
         }
       }}
     >

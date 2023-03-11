@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
 import { MouseEvent as ReactMouseEvent, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { AuthorizerAction, Section } from '../../types';
 import ActionBtn from '../controlPanel/ActionBtn';
@@ -18,7 +18,7 @@ interface Props {
 }
 
 const SectionPanel = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<string>(props.activeSection || props.defaultSection);
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const SectionPanel = (props: Props) => {
                             contentClassName="flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100"
                             onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
                               e.preventDefault();
-                              history.push(`${props.pathPrefix || ''}/${section.name}`);
+                              navigate(`${props.pathPrefix || ''}/${section.name}`);
                             }}
                             action={AuthorizerAction.GetAuthorizationPolicy}
                             label="Open section"
@@ -86,7 +86,7 @@ const SectionPanel = (props: Props) => {
                             className={`btn btn-link text-reset ${styles.link} ${className}`}
                             disabled={section.disabled}
                             onClick={() => {
-                              history.push(`${props.pathPrefix || ''}/${section.name}`);
+                              navigate(`${props.pathPrefix || ''}/${section.name}`);
                             }}
                             aria-label={`Go to section ${section.name}`}
                           >

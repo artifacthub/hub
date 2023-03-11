@@ -210,7 +210,9 @@ describe('SubscriptionsButton', () => {
         act(() => {
           rerender(
             <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-              <SubscriptionsButton packageId="id2" />
+              <Router>
+                <SubscriptionsButton packageId="id2" />
+              </Router>
             </AppCtx.Provider>
           );
         });

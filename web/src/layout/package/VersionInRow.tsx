@@ -1,7 +1,7 @@
 import moment from 'moment';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Repository, SearchFiltersURL } from '../../types';
+import { Repository } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import styles from './VersionInRow.module.css';
 
@@ -14,18 +14,19 @@ interface Props {
   ts: number;
   normalizedName: string;
   repository: Repository;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
 }
 
 const VersionInRow = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const openPackagePage = () => {
-    history.push({
-      pathname: buildPackageURL(props.normalizedName, props.repository, props.version, true),
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    navigate(
+      {
+        pathname: buildPackageURL(props.normalizedName, props.repository, props.version, true),
+      },
+      { state: location.state }
+    );
   };
 
   const formattedDate = moment.unix(props.ts!).format('D MMM, YYYY');

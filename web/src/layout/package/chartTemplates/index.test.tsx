@@ -18,13 +18,11 @@ const getMockChartTemplates = (fixtureId: string): ChartTemplatesData => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as ChartTemplatesData;
 };
 
-const mockHistoryPush = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const itemScrollMock = jest.fn();
@@ -128,14 +126,13 @@ describe('ChartTemplatesModal', () => {
       await waitFor(() => {
         expect(API.getChartTemplates).toHaveBeenCalledTimes(1);
         expect(API.getChartTemplates).toHaveBeenCalledWith('id', '1.1.1');
-        expect(mockHistoryPush).toHaveBeenCalledTimes(2);
-        expect(mockHistoryPush).toHaveBeenCalledWith({
-          search: '?modal=template&template=db_migrator_install_job.yaml',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
-          },
-        });
+        expect(mockUseNavigate).toHaveBeenCalledTimes(2);
+        expect(mockUseNavigate).toHaveBeenCalledWith(
+          { search: '?modal=template&template=db_migrator_install_job.yaml' },
+          {
+            state: null,
+          }
+        );
       });
     });
 
@@ -152,14 +149,8 @@ describe('ChartTemplatesModal', () => {
       await waitFor(() => {
         expect(API.getChartTemplates).toHaveBeenCalledTimes(1);
         expect(API.getChartTemplates).toHaveBeenCalledWith('id', '1.1.1');
-        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-        expect(mockHistoryPush).toHaveBeenCalledWith({
-          search: '',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
-          },
-        });
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith('', { state: null });
       });
     });
 
@@ -190,14 +181,13 @@ describe('ChartTemplatesModal', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
       await waitFor(() => {
-        expect(mockHistoryPush).toHaveBeenCalledTimes(5);
-        expect(mockHistoryPush).toHaveBeenLastCalledWith({
-          search: '?modal=template&template=db_migrator_install_job.yaml',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
-          },
-        });
+        expect(mockUseNavigate).toHaveBeenCalledTimes(5);
+        expect(mockUseNavigate).toHaveBeenLastCalledWith(
+          { search: '?modal=template&template=db_migrator_install_job.yaml' },
+          {
+            state: null,
+          }
+        );
       });
     });
   });
@@ -303,13 +293,9 @@ describe('ChartTemplatesModal', () => {
       );
 
       expect(container).toBeEmptyDOMElement();
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        search: '',
-        state: {
-          fromStarredPage: undefined,
-          searchUrlReferer: undefined,
-        },
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith('', {
+        state: null,
       });
     });
   });

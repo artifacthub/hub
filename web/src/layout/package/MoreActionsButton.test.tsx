@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import MoreActionsButton from './MoreActionsButton';
 
@@ -10,13 +11,11 @@ const defaultProps = {
   visibleWidget: false,
 };
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const openMock = jest.fn();
@@ -28,20 +27,32 @@ describe('MoreActionsButton', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<MoreActionsButton {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <MoreActionsButton {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      render(<MoreActionsButton {...defaultProps} />);
+      render(
+        <Router>
+          <MoreActionsButton {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: 'Open menu' });
       expect(btn).toBeInTheDocument();
     });
 
     it('displays dropdown', async () => {
-      render(<MoreActionsButton {...defaultProps} />);
+      render(
+        <Router>
+          <MoreActionsButton {...defaultProps} />
+        </Router>
+      );
 
       const dropdown = screen.getByRole('menu');
       expect(dropdown).toBeInTheDocument();
@@ -57,7 +68,11 @@ describe('MoreActionsButton', () => {
     });
 
     it('opens modal', async () => {
-      render(<MoreActionsButton {...defaultProps} />);
+      render(
+        <Router>
+          <MoreActionsButton {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: 'Open menu' });
       expect(btn).toBeInTheDocument();
@@ -71,14 +86,8 @@ describe('MoreActionsButton', () => {
 
       expect(screen.getByRole('dialog')).toBeInTheDocument();
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({
-        search: '?modal=widget',
-        state: {
-          fromStarredPage: undefined,
-          searchUrlReferer: undefined,
-        },
-      });
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith('?modal=widget', { replace: true, state: null });
     });
 
     describe('report abuse', () => {
@@ -97,7 +106,11 @@ describe('MoreActionsButton', () => {
           writable: true,
         });
 
-        render(<MoreActionsButton {...defaultProps} />);
+        render(
+          <Router>
+            <MoreActionsButton {...defaultProps} />
+          </Router>
+        );
 
         const dropdown = screen.getByRole('menu');
         expect(dropdown).toBeInTheDocument();
@@ -134,7 +147,11 @@ describe('MoreActionsButton', () => {
           writable: true,
         });
 
-        render(<MoreActionsButton {...defaultProps} />);
+        render(
+          <Router>
+            <MoreActionsButton {...defaultProps} />
+          </Router>
+        );
 
         const dropdown = screen.getByRole('menu');
         expect(dropdown).toBeInTheDocument();
@@ -165,7 +182,11 @@ describe('MoreActionsButton', () => {
         writable: true,
       });
 
-      render(<MoreActionsButton {...defaultProps} />);
+      render(
+        <Router>
+          <MoreActionsButton {...defaultProps} />
+        </Router>
+      );
 
       const dropdown = screen.getByRole('menu');
       expect(dropdown).toBeInTheDocument();

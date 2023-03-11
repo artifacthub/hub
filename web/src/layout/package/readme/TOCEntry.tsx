@@ -1,10 +1,9 @@
 import { Dispatch, MouseEvent as ReactMouseEvent, SetStateAction } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { TOCEntryItem } from '../../../types';
 import cleanTOCEntry from '../../../utils/cleanTOCEntry';
 import getAnchorValue from '../../../utils/getAnchorValue';
-import browserHistory from '../../../utils/history';
 import styles from './TOCEntry.module.css';
 
 interface Props {
@@ -15,6 +14,8 @@ interface Props {
 }
 
 const TOCEntry = (props: Props) => {
+  const location = useLocation();
+
   if (props.entry.value === '') return null;
 
   const link = getAnchorValue(props.entry.value);
@@ -23,7 +24,7 @@ const TOCEntry = (props: Props) => {
   return (
     <div className={`${styles.dropdownItem} dropdownItem`}>
       <Link
-        to={{ pathname: browserHistory.location.pathname, hash: link }}
+        to={{ pathname: location.pathname, hash: link }}
         className={`btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start ${styles.btn} ${
           styles[`level${props.level}`]
         }`}

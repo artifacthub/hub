@@ -13,7 +13,6 @@ import {
   Package,
   PackageViewsStats,
   RepositoryKind,
-  SearchFiltersURL,
   Version as VersionData,
 } from '../../types';
 import RSSLinkTitle from '../common/RSSLinkTitle';
@@ -40,14 +39,12 @@ import VersionInRow from './VersionInRow';
 interface Props {
   package: Package;
   sortedVersions: VersionData[];
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
   visibleSecurityReport: boolean;
-  visibleImage?: string;
-  visibleTarget?: string;
-  visibleSection?: string;
+  visibleImage?: string | null;
+  visibleTarget?: string | null;
+  visibleSection?: string | null;
   channels?: Channel[] | null;
-  eventId?: string;
+  eventId?: string | null;
   viewsStats?: PackageViewsStats;
   version?: string;
 }
@@ -108,8 +105,6 @@ const Details = (props: Props) => {
           linkedChannels={linkedChannels}
           normalizedName={props.package.normalizedName}
           repository={props.package.repository}
-          searchUrlReferer={props.searchUrlReferer}
-          fromStarredPage={props.fromStarredPage}
         />
       );
 
@@ -121,8 +116,6 @@ const Details = (props: Props) => {
           linkedChannels={linkedChannels}
           normalizedName={props.package.normalizedName}
           repository={props.package.repository}
-          searchUrlReferer={props.searchUrlReferer}
-          fromStarredPage={props.fromStarredPage}
         />
       );
     });
@@ -147,14 +140,13 @@ const Details = (props: Props) => {
     };
   }, [
     props.channels,
-    props.fromStarredPage,
     props.package.normalizedName,
     props.package.repository,
     props.package.version,
-    props.searchUrlReferer,
     props.sortedVersions,
     props.package.defaultChannel,
   ]);
+
   const [versions, setVersions] = useState<VersionsProps>(getAllVersions());
 
   useEffect(() => {
@@ -239,13 +231,7 @@ const Details = (props: Props) => {
       </div>
 
       <div>
-        <Last30DaysViews
-          repoKind={props.package.repository.kind}
-          stats={props.viewsStats}
-          version={props.version}
-          searchUrlReferer={props.searchUrlReferer}
-          fromStarredPage={props.fromStarredPage}
-        />
+        <Last30DaysViews repoKind={props.package.repository.kind} stats={props.viewsStats} version={props.version} />
       </div>
 
       {(() => {
@@ -467,8 +453,6 @@ const Details = (props: Props) => {
         visibleTarget={props.visibleTarget}
         visibleSection={props.visibleSection}
         eventId={props.eventId}
-        searchUrlReferer={props.searchUrlReferer}
-        fromStarredPage={props.fromStarredPage}
         containers={props.package.containersImages || []}
       />
 

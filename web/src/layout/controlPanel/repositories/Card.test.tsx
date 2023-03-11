@@ -10,13 +10,11 @@ jest.mock('../../../utils/alertDispatcher');
 jest.mock('../../../utils/minutesToNearestInterval', () => () => 3);
 jest.mock('./TransferModal', () => () => <div>Transfer repository</div>);
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const repoMock: Repository = {
@@ -226,8 +224,8 @@ describe('Repository Card - packages section', () => {
 
       rerender(component);
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith('', { replace: true });
     });
 
     it('opens logs modal when visibleModal is scanning and repo has errors', () => {
@@ -252,8 +250,8 @@ describe('Repository Card - packages section', () => {
 
       rerender(component);
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith('', { replace: true });
     });
 
     it('opens empty errors modal with default message when visibleModal is tracking and repo has not errors', () => {
@@ -284,8 +282,8 @@ describe('Repository Card - packages section', () => {
         )
       ).toBeInTheDocument();
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith('', { replace: true });
     });
 
     it('opens empty errors modal with default message when visibleModal is scanning and repo has not errors', () => {
@@ -319,8 +317,8 @@ describe('Repository Card - packages section', () => {
         )
       ).toBeInTheDocument();
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith('', { replace: true });
     });
   });
 });

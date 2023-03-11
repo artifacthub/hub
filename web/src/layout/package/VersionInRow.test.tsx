@@ -4,13 +4,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import VersionInRow from './VersionInRow';
 
-const mockHistoryPush = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const defaultProps = {
@@ -77,7 +75,7 @@ describe('VersionInRow', () => {
       expect(screen.queryByRole('button', { name: /Open version/ })).toBeNull();
     });
 
-    it('calls history push to click version', async () => {
+    it('calls navigate to click version', async () => {
       render(
         <Router>
           <table>
@@ -92,11 +90,8 @@ describe('VersionInRow', () => {
       await userEvent.click(versionLink);
 
       await waitFor(() => {
-        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-        expect(mockHistoryPush).toHaveBeenCalledWith({
-          pathname: '/packages/helm/repo/pr/1.0.1',
-          state: { searchUrlReferer: undefined, fromStarred: undefined },
-        });
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith({ pathname: '/packages/helm/repo/pr/1.0.1' }, { state: null });
       });
     });
 

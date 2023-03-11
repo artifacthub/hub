@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { RepositoryKind } from '../../types';
 import { RepoKindDef, REPOSITORY_KINDS } from '../../utils/data';
@@ -19,7 +19,7 @@ interface Props {
 }
 
 const RepositoryIconLabel = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const repo = REPOSITORY_KINDS.find((repoKind: RepoKindDef) => repoKind.kind === props.kind);
 
   if (isUndefined(repo)) return null;
@@ -55,7 +55,7 @@ const RepositoryIconLabel = (props: Props) => {
               className={`btn btn-link m-0 p-0 border-0 ${styles.btn} ${props.btnClassName}`}
               onClick={(e) => {
                 e.preventDefault();
-                history.push({
+                navigate({
                   pathname: '/packages/search',
                   search: prepareQueryString({
                     pageNumber: 1,

@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { SecurityReportResult } from '../../../types';
 import SecurityTable from './Table';
@@ -44,7 +45,9 @@ describe('SecurityTable', () => {
     const mockFixableReports = getMockFixableSecurityReport('1');
 
     const { asFragment } = render(
-      <SecurityTable {...defaultProps} reports={mockReports} fixableReports={mockFixableReports} />
+      <Router>
+        <SecurityTable {...defaultProps} reports={mockReports} fixableReports={mockFixableReports} />
+      </Router>
     );
     expect(asFragment()).toMatchSnapshot();
   });
@@ -54,7 +57,11 @@ describe('SecurityTable', () => {
       const mockReports = getMockSecurityReport('2');
       const mockFixableReports = getMockFixableSecurityReport('2');
 
-      render(<SecurityTable {...defaultProps} reports={mockReports} fixableReports={mockFixableReports} />);
+      render(
+        <Router>
+          <SecurityTable {...defaultProps} reports={mockReports} fixableReports={mockFixableReports} />
+        </Router>
+      );
 
       const targets = screen.getAllByTestId('targetTitle');
       expect(targets).toHaveLength(2);
@@ -66,7 +73,11 @@ describe('SecurityTable', () => {
       const mockReports = getMockSecurityReport('3');
       const mockFixableReports = getMockFixableSecurityReport('3');
 
-      render(<SecurityTable {...defaultProps} reports={mockReports} fixableReports={mockFixableReports} />);
+      render(
+        <Router>
+          <SecurityTable {...defaultProps} reports={mockReports} fixableReports={mockFixableReports} />
+        </Router>
+      );
 
       expect(screen.queryByTestId('btnExpand')).toBeNull();
     });
@@ -76,12 +87,14 @@ describe('SecurityTable', () => {
       const mockFixableReports = getMockFixableSecurityReport('4');
 
       render(
-        <SecurityTable
-          {...defaultProps}
-          reports={mockReports}
-          fixableReports={mockFixableReports}
-          expandedTarget="imgName_usr/share/ceph/mgr/dashboard/frontend/package-lock.json"
-        />
+        <Router>
+          <SecurityTable
+            {...defaultProps}
+            reports={mockReports}
+            fixableReports={mockFixableReports}
+            expandedTarget="imgName_usr/share/ceph/mgr/dashboard/frontend/package-lock.json"
+          />
+        </Router>
       );
 
       expect(screen.getByTestId('securityReportInfo')).toBeInTheDocument();
@@ -99,12 +112,14 @@ describe('SecurityTable', () => {
       const mockFixableReports = getMockFixableSecurityReport('5');
 
       render(
-        <SecurityTable
-          {...defaultProps}
-          reports={mockReports}
-          fixableReports={mockFixableReports}
-          expandedTarget="imgName_rook/ceph:v1.1.1 (centos 7.7.1908)"
-        />
+        <Router>
+          <SecurityTable
+            {...defaultProps}
+            reports={mockReports}
+            fixableReports={mockFixableReports}
+            expandedTarget="imgName_rook/ceph:v1.1.1 (centos 7.7.1908)"
+          />
+        </Router>
       );
 
       const reportBtn = screen.getByRole('button', { name: 'Close target image vulnerabilities' });

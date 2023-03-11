@@ -1,7 +1,7 @@
 import isUndefined from 'lodash/isUndefined';
 import { useContext, useState } from 'react';
 import { FaSignOutAlt } from 'react-icons/fa';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
@@ -15,7 +15,7 @@ interface Props {
 
 const LogOut = (props: Props) => {
   const { dispatch } = useContext(AppCtx);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const logoutUser = async () => {
@@ -28,7 +28,7 @@ const LogOut = (props: Props) => {
       }
       dispatch(signOut());
       if (!isUndefined(props.privateRoute) && props.privateRoute) {
-        history.push('/');
+        navigate('/');
       }
     } catch (err: any) {
       let error = 'An error occurred, please try again later.';

@@ -1,7 +1,7 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
@@ -12,20 +12,17 @@ import PackageCard from '../common/PackageCard';
 import Pagination from '../common/Pagination';
 import styles from './StarredPackagesView.module.css';
 
-interface Props {
-  activePage?: string;
-}
-
 const DEFAULT_LIMIT = 10;
 
-const StarredPackagesView = (props: Props) => {
-  const history = useHistory();
+const StarredPackagesView = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const activePageParam = searchParams.get('page');
   const { dispatch } = useContext(AppCtx);
   const [isLoading, setIsLoading] = useState(false);
   const [packages, setPackages] = useState<Package[] | undefined>(undefined);
   const [apiError, setApiError] = useState<string | JSX.Element | null>(null);
-
-  const [activePage, setActivePage] = useState<number>(props.activePage ? parseInt(props.activePage) : 1);
+  const [activePage, setActivePage] = useState<number>(activePageParam ? parseInt(activePageParam) : 1);
 
   const calculateOffset = (pageNumber?: number): number => {
     return DEFAULT_LIMIT * ((pageNumber || activePage) - 1);
@@ -40,14 +37,12 @@ const StarredPackagesView = (props: Props) => {
   };
 
   const updatePageNumber = () => {
-    history.replace({
-      search: `?page=${activePage}`,
-    });
+    navigate(`?page=${activePage}`, { replace: true });
   };
 
   const onAuthError = (): void => {
     dispatch(signOut());
-    history.push('/?modal=login&redirect=/packages/starred');
+    navigate('/?modal=login&redirect=/packages/starred');
   };
 
   async function fetchStarredPackages() {
@@ -83,7 +78,7 @@ const StarredPackagesView = (props: Props) => {
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    if (props.activePage && activePage !== parseInt(props.activePage)) {
+    if (activePageParam && activePage !== parseInt(activePageParam)) {
       fetchStarredPackages();
     }
   }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */

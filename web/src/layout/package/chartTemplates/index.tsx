@@ -1,10 +1,10 @@
 import classnames from 'classnames';
-import { isUndefined } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { GoCheck } from 'react-icons/go';
 import { ImInsertTemplate } from 'react-icons/im';
 import { MdClose } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import API from '../../../api';
 import useOutsideClick from '../../../hooks/useOutsideClick';
@@ -14,7 +14,6 @@ import {
   DefinedTemplatesList,
   ErrorKind,
   RepositoryKind,
-  SearchFiltersURL,
   TemplatesQuery,
   Version as VersionData,
 } from '../../../types';
@@ -33,11 +32,9 @@ interface Props {
   sortedVersions: VersionData[];
   repoKind: RepositoryKind;
   visibleChartTemplates: boolean;
-  visibleTemplate?: string;
-  visibleLine?: string;
-  compareVersionTo?: string;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
+  visibleTemplate?: string | null;
+  visibleLine?: string | null;
+  compareVersionTo?: string | null;
 }
 
 const HELPER_TEMPLATE_NAME = /define "(.*?)"/;
@@ -71,7 +68,8 @@ const readLines = (template: ChartTemplate): DefinedTemplatesList => {
 };
 
 const ChartTemplatesModal = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [templates, setTemplates] = useState<ChartTemplate[] | null | undefined>();
   const [templatesInHelpers, setTemplatesInHelpers] = useState<DefinedTemplatesList>({});
@@ -79,7 +77,9 @@ const ChartTemplatesModal = (props: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
   const [currentVersion, setCurrentVersion] = useState<string>(props.version);
-  const [enabledDiff, setEnabledDiff] = useState<boolean>(!isUndefined(props.compareVersionTo));
+  const [enabledDiff, setEnabledDiff] = useState<boolean>(
+    !isUndefined(props.compareVersionTo) && !isNull(props.compareVersionTo)
+  );
   const [comparedVersion, setComparedVersion] = useState<string>(props.compareVersionTo || '');
   const [visibleDropdown, setVisibleDropdown] = useState<boolean>(false);
   const ref = useRef(null);
@@ -87,24 +87,29 @@ const ChartTemplatesModal = (props: Props) => {
   useOutsideClick([ref], visibleDropdown, () => setVisibleDropdown(false));
 
   const cleanUrl = () => {
-    history.push({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    navigate('', {
+      state: location.state,
     });
   };
 
   const updateUrl = (q: TemplatesQuery) => {
-    history.push({
-      search: `?modal=template${q.template ? `&template=${q.template}` : ''}${q.line ? `&line=${q.line}` : ''}${
-        q.compareTo ? `&compare-to=${q.compareTo}` : ''
-      }`,
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    navigate(
+      {
+        search: `?modal=template${q.template ? `&template=${q.template}` : ''}${q.line ? `&line=${q.line}` : ''}${
+          q.compareTo ? `&compare-to=${q.compareTo}` : ''
+        }`,
+      },
+      {
+        state: location.state,
+      }
+    );
   };
 
   const onVersionChange = (version: string) => {
     setComparedVersion(version);
-    updateUrl({ template: props.visibleTemplate, compareTo: version });
+    if (props.visibleTemplate) {
+      updateUrl({ template: props.visibleTemplate, compareTo: version });
+    }
     setVisibleDropdown(false);
     setEnabledDiff(true);
   };
@@ -192,9 +197,8 @@ const ChartTemplatesModal = (props: Props) => {
     setOpenStatus(false);
     setEnabledDiff(false);
     setComparedVersion('');
-    history.push({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    navigate('', {
+      state: location.state,
     });
   };
 

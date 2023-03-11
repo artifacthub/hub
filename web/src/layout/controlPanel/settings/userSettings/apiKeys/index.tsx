@@ -2,7 +2,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import API from '../../../../../api';
 import { APIKey, ErrorKind } from '../../../../../types';
@@ -26,7 +26,7 @@ interface ModalStatus {
 const DEFAULT_LIMIT = 10;
 
 const APIKeysSection = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [apiKeysList, setApiKeysList] = useState<APIKey[] | undefined>(undefined);
   const [apiError, setApiError] = useState<string | JSX.Element | null>(null);
@@ -48,9 +48,7 @@ const APIKeysSection = (props: Props) => {
   };
 
   const updatePageNumber = () => {
-    history.replace({
-      search: `?page=${activePage}`,
-    });
+    navigate(`?page=${activePage}`, { replace: true });
   };
 
   async function getAPIKeys() {

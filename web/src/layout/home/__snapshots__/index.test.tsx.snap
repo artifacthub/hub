@@ -71,7 +71,6 @@ exports[`Home index creates snapshot 1`] = `
               autocomplete="off"
               autocorrect="off"
               class="flex-grow-1 ps-2 ps-md-0 border-0 shadow-none bg-transparent input"
-              disabled=""
               placeholder="Search packages"
               spellcheck="false"
               type="text"
@@ -84,21 +83,6 @@ exports[`Home index creates snapshot 1`] = `
               <div
                 aria-live="polite"
               />
-            </div>
-            <div
-              class="position-absolute text-secondary loading bigLoading"
-              data-testid="searchBarSpinning"
-            >
-              <div
-                class="wave miniWave"
-                role="status"
-              >
-                <span
-                  class="visually-hidden"
-                >
-                  Loading...
-                </span>
-              </div>
             </div>
             <button
               aria-label="Close"

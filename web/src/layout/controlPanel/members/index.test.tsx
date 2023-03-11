@@ -23,6 +23,7 @@ const onAuthErrorMock = jest.fn();
 
 const defaultProps = {
   onAuthError: onAuthErrorMock,
+  activePage: null,
 };
 
 const mockCtx = {

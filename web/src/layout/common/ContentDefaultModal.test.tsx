@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { ContentDefaultModalKind } from '../../types';
 import ContentDefaultModal from './ContentDefaultModal';
@@ -8,12 +9,13 @@ const isVisibleItemInContainer = require('../../utils/isVisibleItemInContainer')
 
 jest.mock('../../utils/isVisibleItemInContainer', () => jest.fn());
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
+  useNavigate: () => mockUseNavigate,
+  useLocation: () => ({
+    state: null,
   }),
 }));
 
@@ -123,7 +125,11 @@ describe('Content default modal', () => {
   });
 
   it('creates snapshot', async () => {
-    const { asFragment } = render(<ContentDefaultModal {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <ContentDefaultModal {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -135,21 +141,25 @@ describe('Content default modal', () => {
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
 
-    expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-    expect(mockHistoryReplace).toHaveBeenCalledWith({
-      search: '?modal=crds&file=aquacsps.operator.aquasec.com',
-      state: {
-        fromStarredPage: undefined,
-        searchUrlReferer: undefined,
-      },
-    });
+    expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+    expect(mockUseNavigate).toHaveBeenCalledWith(
+      { pathname: undefined, search: '?modal=crds&file=aquacsps.operator.aquasec.com' },
+      {
+        state: null,
+        replace: true,
+      }
+    );
 
     expect(screen.getByText(/This package version contains/)).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /Show CRDs/ })).toHaveLength(3);
   });
 
   it('filters file', async () => {
-    render(<ContentDefaultModal {...defaultProps} visibleModal />);
+    render(
+      <Router>
+        <ContentDefaultModal {...defaultProps} visibleModal />
+      </Router>
+    );
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
     expect(screen.getAllByRole('button', { name: /Show CRDs/ })).toHaveLength(3);
@@ -162,7 +172,11 @@ describe('Content default modal', () => {
   });
 
   it('displays warning message when no matches', async () => {
-    render(<ContentDefaultModal {...defaultProps} visibleModal />);
+    render(
+      <Router>
+        <ContentDefaultModal {...defaultProps} visibleModal />
+      </Router>
+    );
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
     expect(screen.getAllByRole('button', { name: /Show CRDs/ })).toHaveLength(3);
@@ -175,7 +189,11 @@ describe('Content default modal', () => {
   });
 
   it('renders message when not example provided', async () => {
-    render(<ContentDefaultModal {...defaultProps} visibleModal />);
+    render(
+      <Router>
+        <ContentDefaultModal {...defaultProps} visibleModal />
+      </Router>
+    );
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
     expect(screen.getAllByRole('button', { name: /Show CRDs/ })).toHaveLength(3);
@@ -188,7 +206,11 @@ describe('Content default modal', () => {
   it('scrolls to active file when is not visible', async () => {
     isVisibleItemInContainer.mockImplementation(() => false);
 
-    render(<ContentDefaultModal visibleFile="aquadatabases.operator.aquasec.com" {...defaultProps} visibleModal />);
+    render(
+      <Router>
+        <ContentDefaultModal visibleFile="aquadatabases.operator.aquasec.com" {...defaultProps} visibleModal />
+      </Router>
+    );
 
     await waitFor(() => {
       expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
@@ -197,12 +219,20 @@ describe('Content default modal', () => {
 
   describe('does not render component', () => {
     it('when files array is empty', () => {
-      const { container } = render(<ContentDefaultModal {...defaultProps} visibleModal files={[]} />);
+      const { container } = render(
+        <Router>
+          <ContentDefaultModal {...defaultProps} visibleModal files={[]} />
+        </Router>
+      );
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when files is undefined', () => {
-      const { container } = render(<ContentDefaultModal {...defaultProps} visibleModal files={undefined} />);
+      const { container } = render(
+        <Router>
+          <ContentDefaultModal {...defaultProps} visibleModal files={undefined} />
+        </Router>
+      );
       expect(container).toBeEmptyDOMElement();
     });
   });

@@ -2,12 +2,12 @@ import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
 import { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { stringify } from 'yaml';
 
-import { ContentDefaultModalKind, CustomResourcesDefinition, SearchFiltersURL } from '../../types';
+import { ContentDefaultModalKind, CustomResourcesDefinition } from '../../types';
 import isVisibleItemInContainer from '../../utils/isVisibleItemInContainer';
 import BlockCodeButtons from './BlockCodeButtons';
 import styles from './ContentDefaultModal.module.css';
@@ -20,13 +20,11 @@ interface Props {
   language: string;
   modalName: string;
   visibleModal: boolean;
-  visibleFile?: string;
+  visibleFile?: string | null;
   btnModalContent: JSX.Element;
   normalizedName: string;
   title: string;
   files?: any[];
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
 }
 
 const FILE_TYPE = {
@@ -50,7 +48,8 @@ const FILE_TYPE = {
 
 const ContentDefaultModal = (props: Props) => {
   const contentListWrapper = useRef<HTMLDivElement>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const anchor = useRef<HTMLDivElement>(null);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<any | null>(null);
@@ -140,17 +139,23 @@ const ContentDefaultModal = (props: Props) => {
   }, [inputValue]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const updateUrl = (fileName?: string) => {
-    history.replace({
-      search: `?modal=${props.modalName}${fileName ? `&file=${fileName}` : ''}`,
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    navigate(
+      { pathname: location.pathname, search: `?modal=${props.modalName}${fileName ? `&file=${fileName}` : ''}` },
+      {
+        state: location.state,
+        replace: true,
+      }
+    );
   };
 
   const cleanUrl = () => {
-    history.replace({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    navigate(
+      { pathname: '' },
+      {
+        state: location.state,
+        replace: true,
+      }
+    );
   };
 
   useEffect(() => {

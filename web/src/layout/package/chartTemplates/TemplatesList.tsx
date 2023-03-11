@@ -10,7 +10,7 @@ import styles from './TemplatesList.module.css';
 
 interface Props {
   templates: ChartTemplate[] | null;
-  activeTemplateName?: string;
+  activeTemplateName?: string | null;
   onTemplateChange: (template: ChartTemplate | null) => void;
 }
 
