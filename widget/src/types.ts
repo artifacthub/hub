@@ -45,6 +45,7 @@ export enum RepositoryKind {
   Kyverno,
   KnativeClientPlugin,
   Backstage,
+  ArgoTemplate,
 }
 
 export interface SearchResults {

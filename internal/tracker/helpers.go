@@ -113,6 +113,7 @@ func SetupSource(i *hub.TrackerSourceInput) hub.TrackerSource {
 	case hub.OLM:
 		source = olm.NewTrackerSource(i)
 	case
+		hub.ArgoTemplate,
 		hub.Backstage,
 		hub.CoreDNS,
 		hub.Gatekeeper,

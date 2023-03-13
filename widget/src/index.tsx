@@ -1,6 +1,6 @@
 import { isUndefined } from 'lodash';
 import { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import root from 'react-shadow/styled-components';
 
 import Group from './layout/Group';
@@ -8,7 +8,9 @@ import Widget from './layout/Widget';
 
 const renderWidget = (element: HTMLElement) => {
   const { url, theme, responsive, header, stars } = element.dataset;
-  ReactDOM.render(
+  const rootEl = createRoot(element!);
+
+  rootEl.render(
     <StrictMode>
       <root.section>
         <div style={{ all: 'initial' }}>
@@ -22,8 +24,7 @@ const renderWidget = (element: HTMLElement) => {
           />
         </div>
       </root.section>
-    </StrictMode>,
-    element
+    </StrictMode>
   );
 };
 
@@ -44,7 +45,9 @@ Widgets.forEach((div: Element) => {
 
 const renderGroup = (element: HTMLElement) => {
   const { url, loading, theme, color, responsive, width, header, stars } = element.dataset;
-  ReactDOM.render(
+  const rootEl = createRoot(element!);
+
+  rootEl.render(
     <StrictMode>
       <root.section>
         <div style={{ all: 'initial' }}>
@@ -60,8 +63,7 @@ const renderGroup = (element: HTMLElement) => {
           />
         </div>
       </root.section>
-    </StrictMode>,
-    element
+    </StrictMode>
   );
 };
 

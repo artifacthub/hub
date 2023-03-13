@@ -19,6 +19,7 @@ export enum RepositoryKind {
   Kyverno,
   KnativeClientPlugin,
   Backstage,
+  ArgoTemplate,
 }
 
 export enum PackageCategory {
@@ -52,6 +53,10 @@ export enum KyvernoData {
 export enum HelmChartType {
   Library = 'library',
   Application = 'application',
+}
+
+export enum ArgoTemplateData {
+  Version = 'argoVersion',
 }
 
 export enum Signature {
@@ -248,6 +253,7 @@ export interface PackageData {
   [KyvernoData.Version]?: string;
   [KyvernoData.Category]?: string;
   [KyvernoData.KubernetesVersion]?: string;
+  [ArgoTemplateData.Version]?: string;
   tasks?: TektonTaskInPipeline[];
   alternativeLocations?: string[];
 }

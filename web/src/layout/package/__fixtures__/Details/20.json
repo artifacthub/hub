@@ -1,0 +1,76 @@
+{
+  "packageId": "5646cb44-851f-46e2-819b-bce220a1a4b4",
+  "name": "argocd-sync-and-wait",
+  "normalizedName": "argocd-sync-and-wait",
+  "category": 3,
+  "isOperator": false,
+  "displayName": "Argo CD sync and wait",
+  "description": "This task syncs (deploys) an Argo CD application and waits for it to be healthy",
+  "keywords": ["argo", "workflow", "argocd"],
+  "homeUrl": "https://github.com/argoproj-labs/argo-workflows-catalog/tree/master/templates/argocd-sync-and-wait",
+  "readme": "This task syncs (deploys) an Argo CD application and waits for it to be healthy.\n\nTo do so, it requires the address of the Argo CD server and some form of\nauthentication either a username/password or an authentication token.",
+  "install": "### Install using `kubectl`\n\n```shell\nkubectl apply -f https://raw.githubusercontent.com/argoproj-labs/argo-workflows-catalog/master/templates/argocd-sync-and-wait/manifests.yaml\n```",
+  "links": [
+    {
+      "url": "https://github.com/argoproj-labs/argo-workflows-catalog/tree/master/templates/argocd-sync-and-wait",
+      "name": "Source"
+    }
+  ],
+  "data": {
+    "template": "apiVersion: argoproj.io/v1alpha1\nkind: WorkflowTemplate\nmetadata:\n  name: argocd-sync-and-wait\n  annotations:\n    workflows.argoproj.io/description: >-\n      This task syncs (deploys) an Argo CD application and waits for it to be healthy.\n\n      To do so, it requires the address of the Argo CD server and some form of\n      authentication either a username/password or an authentication token.\n    workflows.argoproj.io/maintainer: '@dcherman'\n    workflows.argoproj.io/tags: argocd\n    workflows.argoproj.io/version: '>= 2.9.0'\nspec:\n  entrypoint: argocd-sync-and-wait\n  templates:\n  - name: argocd-sync-and-wait\n    inputs:\n      parameters:\n      - name: argocd-version\n        value: v1.6.0\n      - name: application-name\n      - name: revision\n        value: HEAD\n      - name: flags\n        value: --\n      - name: argocd-server-address\n      - name: argocd-credentials-secret\n    script:\n      image: argoproj/argocd:{{inputs.parameters.argocd-version}}\n      command: [bash]\n      env:\n        - name: ARGOCD_AUTH_TOKEN\n          valueFrom:\n            secretKeyRef:\n              name: \"{{inputs.parameters.argocd-credentials-secret}}\"\n              key: token\n              optional: true\n        - name: ARGOCD_USERNAME\n          valueFrom:\n            secretKeyRef:\n              name: \"{{inputs.parameters.argocd-credentials-secret}}\"\n              key: username\n              optional: true\n        - name: ARGOCD_PASSWORD\n          valueFrom:\n            secretKeyRef:\n              name: \"{{inputs.parameters.argocd-credentials-secret}}\"\n              key: password\n              optional: true\n        - name: ARGOCD_SERVER\n          value: \"{{inputs.parameters.argocd-server-address}}\"\n      source: |\n        #!/bin/bash\n\n        set -euo pipefail\n\n        if [[ -z $ARGOCD_AUTH_TOKEN ]] && [[ -z \"$ARGOCD_USERNAME\" || -z \"$ARGOCD_PASSWORD\" ]]; then\n          echo \"Either the ARGOCD_AUTH_TOKEN must be specified, or the ARGOCD_USERNAME/ARGOCD_PASSWORD must be specified.\"\n          exit 1\n        fi \n\n        if [ -z $ARGOCD_AUTH_TOKEN ]; then\n          yes | argocd login \"$ARGOCD_SERVER\" --username=$ARGOCD_USERNAME --password=$ARGOCD_PASSWORD {{inputs.parameters.flags}}\n        fi\n\n        echo \"Running as ArgoCD User:\"\n        argocd account get-user-info {{inputs.parameters.flags}}\n        \n        argocd app sync {{inputs.parameters.application-name}} --revision {{inputs.parameters.revision}} {{inputs.parameters.flags}}\n        argocd app wait {{inputs.parameters.application-name}} --health {{inputs.parameters.flags}}\n",
+    "argoVersion": ">= 2.9.0"
+  },
+  "version": "0.1.0",
+  "availableVersions": [
+    {
+      "version": "0.1.0",
+      "containsSecurityUpdates": false,
+      "prerelease": false,
+      "ts": 1601424000
+    }
+  ],
+  "deprecated": false,
+  "containsSecurityUpdates": false,
+  "prerelease": false,
+  "license": "Apache-2.0",
+  "signed": false,
+  "provider": "Argo community",
+  "hasValuesSchema": false,
+  "hasChangelog": true,
+  "changes": [
+    {
+      "kind": "added",
+      "description": "Some new cool feature"
+    },
+    {
+      "kind": "fixed",
+      "description": "A hard to reproduce annoying issue"
+    }
+  ],
+  "ts": 1601424000,
+  "recommendations": [
+    {
+      "url": "https://artifacthub.io/packages/helm/argo/argo-cd"
+    },
+    {
+      "url": "https://artifacthub.io/packages/helm/argo/argo-workflows"
+    }
+  ],
+  "repository": {
+    "repositoryId": "d9ddf254-fbbf-41d1-a7e4-1336bcc9c72f",
+    "name": "argo-tmpl",
+    "url": "https://github.com/tegioz/argo-workflows-catalog",
+    "private": false,
+    "kind": 18,
+    "verifiedPublisher": false,
+    "official": false,
+    "scannerDisabled": false,
+    "userAlias": "cynthia-sg"
+  },
+  "stats": {
+    "subscriptions": 0,
+    "webhooks": 0
+  },
+  "productionOrganizationsCount": 0,
+  "relativePath": "/templates/argocd-sync-and-wait"
+}

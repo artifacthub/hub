@@ -17,6 +17,10 @@ import (
 )
 
 const (
+	// ArgoTemplateKey represents the key used in the package's data field that
+	// contains the template.
+	ArgoTemplateKey = "template"
+
 	// FalcoRulesKey represents the key used in the package's data field that
 	// contains the raw rules.
 	FalcoRulesKey = "rules"
@@ -36,6 +40,10 @@ const (
 	// OPAPoliciesKey represents the key used in the package's data field that
 	// contains the raw policies.
 	OPAPoliciesKey = "policies"
+
+	// argoTemplateManifests represents the filename that contains the Argo
+	// template manifests.
+	argoTemplateManifests = "manifests.yaml"
 
 	// falcoRulesSuffix is the suffix that each of the rules files in the
 	// package must use.
@@ -191,6 +199,8 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 	ignorer := ignore.CompileIgnoreLines(md.Ignore...)
 	var kindData map[string]interface{}
 	switch r.Kind {
+	case hub.ArgoTemplate:
+		kindData, err = prepareArgoTemplateData(pkgPath)
 	case hub.Falco:
 		kindData, err = prepareFalcoData(pkgPath, ignorer)
 	case hub.Gatekeeper:
@@ -214,6 +224,22 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 	}
 
 	return p, nil
+}
+
+// prepareArgoTemplateData reads and formats Argo templates specific data
+// available in the path provided, returning the resulting data structure.
+func prepareArgoTemplateData(pkgPath string) (map[string]interface{}, error) {
+	// Read manifests file
+	manifestsPath := path.Join(pkgPath, argoTemplateManifests)
+	template, err := os.ReadFile(manifestsPath)
+	if err != nil {
+		return nil, fmt.Errorf("error reading argo template manifests: %w", err)
+	}
+
+	// Return package data field
+	return map[string]interface{}{
+		ArgoTemplateKey: string(template),
+	}, nil
 }
 
 // prepareFalcoData reads and formats Falco specific data available in the path

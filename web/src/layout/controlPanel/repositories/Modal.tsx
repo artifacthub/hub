@@ -442,6 +442,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.ArgoTemplate:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/argo-templates"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Argo templates
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -467,6 +478,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.Kyverno:
               case RepositoryKind.KnativeClientPlugin:
               case RepositoryKind.Backstage:
+              case RepositoryKind.ArgoTemplate:
                 return (
                   <>
                     <p
@@ -856,6 +868,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Kyverno,
               RepositoryKind.KnativeClientPlugin,
               RepositoryKind.Backstage,
+              RepositoryKind.ArgoTemplate,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -998,6 +1011,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Kyverno,
               RepositoryKind.KnativeClientPlugin,
               RepositoryKind.Backstage,
+              RepositoryKind.ArgoTemplate,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

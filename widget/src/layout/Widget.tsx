@@ -85,6 +85,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'knative-client-plugin';
     case RepositoryKind.Backstage:
       return 'backstage';
+    case RepositoryKind.ArgoTemplate:
+      return 'argo-template';
     default:
       return null;
   }

@@ -60,6 +60,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     required=""
                   >
                     <option
+                      value="18"
+                    >
+                      Argo templates
+                    </option>
+                    <option
                       value="17"
                     >
                       Backstage plugins

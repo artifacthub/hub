@@ -90,7 +90,7 @@ func newLintCmd() *cobra.Command {
 			return lint(opts, &output{cmd.OutOrStdout()})
 		},
 	}
-	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: backstage, coredns, falco, gatekeeper, helm, helm-plugin, keda-scaler, keptn, knative-client-plugin, krew, kubewarden, kyverno, olm, opa, tbaction, tekton-task, tekton-pipeline")
+	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: argo-template, backstage, coredns, falco, gatekeeper, helm, helm-plugin, keda-scaler, keptn, knative-client-plugin, krew, kubewarden, kyverno, olm, opa, tbaction, tekton-task, tekton-pipeline")
 	lintCmd.Flags().StringVarP(&opts.path, "path", "p", ".", "repository's packages path")
 	return lintCmd
 }
@@ -109,6 +109,7 @@ func lint(opts *lintOptions, out *output) error {
 	var report *lintReport
 	switch kind {
 	case
+		hub.ArgoTemplate,
 		hub.Backstage,
 		hub.CoreDNS,
 		hub.Falco,
@@ -609,6 +610,7 @@ func (out *output) printPkgDetails(pkg *hub.Package) {
 	// Values specific to a repository kind
 	switch pkg.Repository.Kind {
 	case
+		hub.ArgoTemplate,
 		hub.Backstage,
 		hub.CoreDNS,
 		hub.Falco,

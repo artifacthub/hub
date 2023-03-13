@@ -100,11 +100,16 @@ const (
 
 	// Backstage represents a repository with Backstage plugins.
 	Backstage RepositoryKind = 17
+
+	// ArgoTemplate represents a repository with Argo templates.
+	ArgoTemplate RepositoryKind = 18
 )
 
 // GetKindName returns the name of the provided repository kind.
 func GetKindName(kind RepositoryKind) string {
 	switch kind {
+	case ArgoTemplate:
+		return "argo-template"
 	case Backstage:
 		return "backstage"
 	case Container:
@@ -150,6 +155,8 @@ func GetKindName(kind RepositoryKind) string {
 // provided.
 func GetKindFromName(kind string) (RepositoryKind, error) {
 	switch kind {
+	case "argo-template":
+		return ArgoTemplate, nil
 	case "backstage":
 		return Backstage, nil
 	case "container":

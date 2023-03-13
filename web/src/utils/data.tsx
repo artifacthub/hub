@@ -88,6 +88,15 @@ export interface RepoKindDef {
 // Sorted alphabetically
 export const REPOSITORY_KINDS: RepoKindDef[] = [
   {
+    kind: RepositoryKind.ArgoTemplate,
+    label: 'argo-template',
+    name: 'Argo templates',
+    singular: 'Argo templates',
+    plural: 'Argo templates',
+    icon: <RepositoryIcon kind={RepositoryKind.ArgoTemplate} className="mw-100 mh-100" />,
+    active: true,
+  },
+  {
     kind: RepositoryKind.Backstage,
     label: 'backstage',
     name: 'Backstage plugins',
@@ -750,4 +759,4 @@ export const CVSS_V3_VECTORS: { [key: string]: CVSSVectorMetric[] } = {
 export const OCI_PREFIX = 'oci://';
 
 export const PKG_DETAIL_PATH =
-  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|container)\//;
+  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|container)\//;

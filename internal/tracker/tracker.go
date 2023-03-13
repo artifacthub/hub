@@ -184,6 +184,7 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 			tmpDir, packagesPath, err = t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
 		}
 	case
+		hub.ArgoTemplate,
 		hub.Backstage,
 		hub.CoreDNS,
 		hub.Falco,

@@ -131,7 +131,7 @@ describe('Home index', () => {
       await waitFor(() => expect(API.getStats).toHaveBeenCalledTimes(1));
 
       const links = await screen.findAllByRole('button');
-      expect(links).toHaveLength(22);
+      expect(links).toHaveLength(23);
 
       expect(links[2]).toHaveProperty('href', 'https://github.com/artifacthub/hub');
       expect(links[3]).toHaveProperty('href', 'https://cloud-native.slack.com/channels/artifact-hub');
@@ -156,8 +156,9 @@ describe('Home index', () => {
       expect(links[18]).toHaveProperty('href', 'https://www.kyverno.io/');
       expect(links[19]).toHaveProperty('href', 'https://github.com/knative/client');
       expect(links[20]).toHaveProperty('href', 'https://backstage.io/plugins');
+      expect(links[21]).toHaveProperty('href', 'https://argoproj.github.io/argo-workflows/');
 
-      expect(links[21]).toHaveProperty('href', 'https://www.cncf.io/sandbox-projects/');
+      expect(links[22]).toHaveProperty('href', 'https://www.cncf.io/sandbox-projects/');
     });
   });
 });
