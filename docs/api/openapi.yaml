@@ -1115,6 +1115,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/argo-template/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getArgoTemplatesDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArgoTemplate"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/backstage/{repoName}/{packageName}":
     get:
       tags:
@@ -1523,6 +1546,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TektonTaskPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/argo-template/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getArgoTemplatesVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArgoTemplate"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -3479,6 +3526,32 @@ components:
             name: user1
             total: 3
             filter_key: user
+    ArgoTemplate:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              nullable: false
+              properties:
+                template:
+                  type: string
+                  nullable: false
+                  example: >-
+                    apiVersion: argoproj.io/v1alpha1
+                    kind: WorkflowTemplate
+                    metadata:
+                      annotations:
+                        workflows.argoproj.io/description: This is a basic catalog example that simply
+                          prints "hello argo!".
+                        workflows.argoproj.io/maintainer: '@alexec'
+                        workflows.argoproj.io/tags: example
+                        workflows.argoproj.io/version: '>= 2.9.0'
+                      name: hello-world
+                argo/version:
+                  type: string
+                  example: "1.5.0"
     BackstagePlugin:
       $ref: "#/components/schemas/Package"
     ContainerImage:
@@ -4393,6 +4466,7 @@ components:
           * `15` - Kyverno policies
           * `16` - Knative client plugins
           * `17` - Backstage plugins
+          * `18` - Argo templates
     RepositoryKindParam:
       type: string
       enum:
@@ -4414,6 +4488,7 @@ components:
         - kyverno
         - knative-client-plugin
         - backstage
+        - argo-template
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4434,6 +4509,7 @@ components:
         * `kyverno` - Kyverno policies
         * `knative-client-plugin` - Knative client plugins
         * `backstage` - Backstage plugins
+        * `argo-template` - Argo templates
     RepositorySummary:
       type: object
       required:
@@ -4971,6 +5047,7 @@ components:
           * `15` - Kyverno policies
           * `16` - Knative client plugins
           * `17` - Backstage plugins
+          * `18` - Argo templates
     PackageNameParam:
       in: path
       name: packageName

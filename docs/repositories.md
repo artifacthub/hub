@@ -4,6 +4,7 @@ Artifact Hub allows publishers to list their content in an automated way. Publis
 
 The following repositories kinds are supported at the moment:
 
+- [Argo templates repositories](https://github.com/artifacthub/hub/blob/master/docs/argo_templates_repositories.md)
 - [Backstage plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/backstage_plugins_repositories.md)
 - [Containers images repositories](https://github.com/artifacthub/hub/blob/master/docs/container_images_repositories.md)
 - [CoreDNS plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/coredns_plugins_repositories.md)

@@ -81,6 +81,10 @@ const ICONS = {
     default: '/static/media/backstage.svg',
     white: '/static/media/backstage-light.svg',
   },
+  [RepositoryKind.ArgoTemplate]: {
+    default: '/static/media/argo.svg',
+    white: '/static/media/argo-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

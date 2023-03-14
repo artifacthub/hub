@@ -6,6 +6,7 @@ cat docs/www/headers/dev docs/dev.md > docs/www/content/topics/dev.md
 cat docs/www/headers/infrastructure docs/infrastructure.md > docs/www/content/topics/infrastructure.md
 mkdir -p docs/www/content/topics/repositories
 cat docs/www/headers/repositories docs/repositories.md > docs/www/content/topics/repositories/_index.md
+cat docs/www/headers/argo_templates_repositories docs/argo_templates_repositories.md > docs/www/content/topics/repositories/argo-templates.md
 cat docs/www/headers/backstage_plugins_repositories docs/backstage_plugins_repositories.md > docs/www/content/topics/repositories/backstage-plugins.md
 cat docs/www/headers/container_images_repositories docs/container_images_repositories.md > docs/www/content/topics/repositories/container-images.md
 cat docs/www/headers/coredns_plugins_repositories docs/coredns_plugins_repositories.md > docs/www/content/topics/repositories/coredns-plugins.md
@@ -26,6 +27,7 @@ cat docs/www/headers/tekton_tasks_repositories docs/tekton_tasks_repositories.md
 cat docs/www/headers/tinkerbell_actions_repositories docs/tinkerbell_actions_repositories.md > docs/www/content/topics/repositories/tinkerbell-actions.md
 cat docs/www/headers/security_report docs/security_report.md > docs/www/content/topics/security_report.md
 cat docs/www/headers/cli docs/cli.md > docs/www/content/topics/cli.md
+cat docs/www/headers/argo_annotations docs/argo_annotations.md > docs/www/content/topics/annotations/argo.md
 cat docs/www/headers/helm_annotations docs/helm_annotations.md > docs/www/content/topics/annotations/helm.md
 cat docs/www/headers/keptn_annotations docs/keptn_annotations.md > docs/www/content/topics/annotations/keptn.md
 cat docs/www/headers/krew_annotations docs/krew_annotations.md > docs/www/content/topics/annotations/krew.md

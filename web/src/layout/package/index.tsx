@@ -461,6 +461,20 @@ const PackageView = (props: Props) => {
     return policy;
   };
 
+  const getArgoTemplate = (): string | undefined => {
+    let template: string | undefined;
+    if (
+      !isUndefined(detail) &&
+      !isNull(detail) &&
+      !isNull(detail.data) &&
+      !isUndefined(detail.data) &&
+      !isUndefined(detail.data.template)
+    ) {
+      template = detail.data.template as string;
+    }
+    return template;
+  };
+
   const getGatekeeperTemplate = (): string | undefined => {
     let manifest: string | undefined;
     if (
@@ -676,6 +690,48 @@ const PackageView = (props: Props) => {
                           showLineNumbers
                         >
                           {policy}
+                        </SyntaxHighlighter>
+                      </div>
+                    </div>
+                  )}
+                </>
+              );
+
+            case RepositoryKind.ArgoTemplate:
+              let argoTpml: string | undefined = getArgoTemplate();
+              if (!isUndefined(argoTpml)) {
+                additionalTitles += '# Template\n';
+              }
+              return (
+                <>
+                  {!isUndefined(argoTpml) && (
+                    <div className={`mb-5 ${styles.codeWrapper}`}>
+                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Template" />
+
+                      <div
+                        className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border ${styles.manifestWrapper}`}
+                      >
+                        <BlockCodeButtons content={argoTpml} filename={`${detail.normalizedName}-template.yaml`} />
+                        <SyntaxHighlighter
+                          language="yaml"
+                          style={docco}
+                          customStyle={{
+                            backgroundColor: 'transparent',
+                            padding: '1.5rem',
+                            lineHeight: '1.25rem',
+                            marginBottom: '0',
+                            height: '100%',
+                            fontSize: '80%',
+                            color: '#636a6e',
+                          }}
+                          lineNumberStyle={{
+                            color: 'var(--color-black-25)',
+                            marginRight: '5px',
+                            fontSize: '0.8rem',
+                          }}
+                          showLineNumbers
+                        >
+                          {argoTpml}
                         </SyntaxHighlighter>
                       </div>
                     </div>

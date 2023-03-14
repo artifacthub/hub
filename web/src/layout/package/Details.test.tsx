@@ -365,4 +365,15 @@ describe('Details', () => {
       expect(screen.getByText('pipeline')).toBeInTheDocument();
     });
   });
+
+  describe('Argo template', () => {
+    it('renders component', () => {
+      const mockPackage = getMockPackage('20');
+      render(<Details package={mockPackage} {...defaultProps} />);
+
+      expect(screen.getByText('Versions')).toBeInTheDocument();
+      expect(screen.getByText('Workflows version')).toBeInTheDocument();
+      expect(screen.getByTestId('argoVersion')).toBeInTheDocument();
+    });
+  });
 });

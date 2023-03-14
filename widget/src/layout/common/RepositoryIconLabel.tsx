@@ -88,6 +88,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.Backstage,
     name: 'Backstage plugin',
   },
+  {
+    kind: RepositoryKind.ArgoTemplate,
+    name: 'Argo templates',
+  },
 ];
 
 const Wrapper = styled('span')`

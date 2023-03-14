@@ -4,6 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import { useCallback, useEffect, useState } from 'react';
 
 import {
+  ArgoTemplateData,
   Channel,
   HelmChartType,
   KeptnData,
@@ -428,6 +429,20 @@ const Details = (props: Props) => {
                 {props.package.data && !isUndefined(props.package.data[KubewardenData.Mutation]) && (
                   <div className="mb-3 text-muted">
                     <small>{`Validation ${isMutationTrue ? '+ Mutation ' : ''}policy`}</small>
+                  </div>
+                )}
+              </>
+            );
+
+          case RepositoryKind.ArgoTemplate:
+            return (
+              <>
+                {props.package.data && props.package.data[ArgoTemplateData.Version] && (
+                  <div>
+                    <SmallTitle text="Workflows version" />
+                    <p data-testid="argoVersion" className={`text-truncate ${styles.text}`}>
+                      {props.package.data[ArgoTemplateData.Version]}
+                    </p>
                   </div>
                 )}
               </>
