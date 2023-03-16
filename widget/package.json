@@ -8,17 +8,17 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-shadow": "^20.0.0",
-    "styled-components": "^5.3.8"
+    "styled-components": "^5.3.9"
   },
   "devDependencies": {
-    "@craco/craco": "^7.0.0",
+    "@craco/craco": "^7.1.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/react-hooks": "^8.0.0",
     "@testing-library/user-event": "^14.4.3",
-    "@types/jest": "^29.4.0",
+    "@types/jest": "^29.4.4",
     "@types/lodash": "^4.14.191",
-    "@types/node": "^18.14.2",
+    "@types/node": "^18.15.3",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.25",
