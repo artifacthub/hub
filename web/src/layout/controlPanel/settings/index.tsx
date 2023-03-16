@@ -2,6 +2,7 @@ import OrganizationSettingsSection from './orgSettings';
 import UserSettingsSection from './userSettings';
 
 interface Props {
+  activePage: string | null;
   context: 'user' | 'org';
   subsection?: string;
   activeSection?: string;

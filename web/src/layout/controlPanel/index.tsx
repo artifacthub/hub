@@ -190,6 +190,7 @@ const ControlPanelView = () => {
                 case 'settings':
                   return (
                     <SettingsSection
+                      activePage={activePageParam}
                       context={context}
                       activeSection={activeSection}
                       subsection={subsection}

@@ -15,7 +15,7 @@ import WebhookForm from './Form';
 import styles from './WebhooksSection.module.css';
 
 interface Props {
-  activePage?: string;
+  activePage: string | null;
   onAuthError: () => void;
 }
 

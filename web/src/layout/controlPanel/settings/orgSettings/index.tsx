@@ -8,6 +8,7 @@ import AuthorizationSection from './authorization';
 import ProfileSection from './profile';
 
 interface Props {
+  activePage: string | null;
   activeSection?: string;
   subsection?: string;
   onAuthError: () => void;

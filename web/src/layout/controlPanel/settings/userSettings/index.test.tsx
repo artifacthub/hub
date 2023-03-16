@@ -5,6 +5,7 @@ import UserSettingsSection from './index';
 jest.mock('../../../common/SectionPanel', () => (props: any) => <div>{props.defaultSection}</div>);
 
 const defaultProps = {
+  activePage: null,
   activeSection: 'user',
   onAuthError: jest.fn(),
 };
