@@ -14,7 +14,7 @@ import APIKeyCard from './Card';
 import APIKeyModal from './Modal';
 
 interface Props {
-  activePage?: string;
+  activePage: string | null;
   onAuthError: () => void;
 }
 

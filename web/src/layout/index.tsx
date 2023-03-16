@@ -67,26 +67,28 @@ const Layout = () => {
         <AlertController />
         <BannerMOTD />
         <UserNotificationsController />
-        <Navbar
-          isSearching={isSearching}
-          privateRoute={!isNull(matchesWithPrivateRoutes)}
-          inHome={homeRoutes.includes(location.pathname)}
-        />
         <div className="d-flex flex-column flex-grow-1">
-          <Outlet
-            context={{
-              isSearching,
-              setIsSearching,
-              isLoading,
-              setIsLoading,
-              scrollPosition,
-              setScrollPosition,
-              viewedPackage,
-              setViewedPackage,
-            }}
+          <Navbar
+            isSearching={isSearching}
+            privateRoute={!isNull(matchesWithPrivateRoutes)}
+            inHome={homeRoutes.includes(location.pathname)}
           />
+          <div className="d-flex flex-column flex-grow-1">
+            <Outlet
+              context={{
+                isSearching,
+                setIsSearching,
+                isLoading,
+                setIsLoading,
+                scrollPosition,
+                setScrollPosition,
+                viewedPackage,
+                setViewedPackage,
+              }}
+            />
+          </div>
+          <Footer isHidden={isSearching || isLoading} />
         </div>
-        <Footer isHidden={isSearching || isLoading} />
       </div>
     </AppCtxProvider>
   );

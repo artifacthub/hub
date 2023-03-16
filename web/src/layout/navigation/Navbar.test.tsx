@@ -13,7 +13,7 @@ jest.mock('react-router-dom', () => ({
 
 const defaultProps = {
   isSearching: false,
-  fromHome: true,
+  inHome: true,
 };
 
 const mockCtxLoggedIn = {

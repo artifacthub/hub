@@ -9,6 +9,7 @@ import ProfileSection from './profile';
 import SubscriptionsSection from './subscriptions';
 
 interface Props {
+  activePage: string | null;
   activeSection?: string;
   subsection?: string;
   onAuthError: () => void;

@@ -16,6 +16,7 @@ const getMockAPIKeys = (fixtureId: string) => {
 const onAuthErrorMock = jest.fn();
 
 const defaultProps = {
+  activePage: null,
   onAuthError: onAuthErrorMock,
 };
 

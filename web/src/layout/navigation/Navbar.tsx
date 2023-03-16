@@ -18,7 +18,7 @@ import UserAuthDropdown from './UserAuthDropdown';
 
 interface Props {
   isSearching: boolean;
-  inHome?: boolean;
+  inHome: boolean;
   privateRoute?: boolean;
 }
 
@@ -63,7 +63,7 @@ const Navbar = (props: Props) => {
             />
           </div>
 
-          {isUndefined(props.inHome) && (
+          {!props.inHome && (
             <SearchBar
               size="normal"
               formClassName={`mx-2 me-md-auto my-3 my-md-0 flex-grow-1 pe-0 pe-sm-4 ${styles.search}`}
@@ -163,7 +163,7 @@ const Navbar = (props: Props) => {
         <LogIn openLogIn={openLogIn} setOpenLogIn={setOpenLogIn} redirect={redirect} visibleModal={visibleModal} />
       )}
 
-      {isUndefined(props.inHome) && <SearchTipsModal size="normal" openTips={openTips} setOpenTips={setOpenTips} />}
+      {!props.inHome && <SearchTipsModal size="normal" openTips={openTips} setOpenTips={setOpenTips} />}
     </>
   );
 };

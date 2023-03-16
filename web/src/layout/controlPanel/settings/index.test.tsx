@@ -6,6 +6,7 @@ jest.mock('./userSettings', () => () => <div>user</div>);
 jest.mock('./orgSettings', () => () => <div>org</div>);
 
 const defaultProps = {
+  activePage: '1',
   onAuthError: jest.fn(),
 };
 

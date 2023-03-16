@@ -16,6 +16,7 @@ const getMockWebhooks = (fixtureId: string) => {
 const mockOnAuthError = jest.fn();
 
 const defaultProps = {
+  activePage: null,
   onAuthError: mockOnAuthError,
 };
 
