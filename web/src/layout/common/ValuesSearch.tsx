@@ -9,7 +9,7 @@ import styles from './ValuesSearch.module.css';
 interface Props {
   paths?: string[];
   pathsObj?: { [key: number]: string };
-  activePath?: string;
+  activePath?: string | null;
   wrapperClassName?: string;
   onSearch: (selectedPath?: string) => void;
 }

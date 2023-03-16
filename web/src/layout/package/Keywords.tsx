@@ -2,7 +2,7 @@ import { compact, uniqWith } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import SmallTitle from '../common/SmallTitle';
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Keywords = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const cleanKeywords = (): string[] => {
     let keywords: string[] = [];
@@ -44,7 +44,7 @@ const Keywords = (props: Props) => {
               className={`btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 ${styles.badge}`}
               key={keyword}
               onClick={() => {
-                history.push({
+                navigate({
                   pathname: '/packages/search',
                   search: prepareQueryString({
                     tsQueryWeb: keyword,

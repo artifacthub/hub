@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Package, PackageLink, Version } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
@@ -10,15 +11,14 @@ const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/Details/${fixtureId}.json`) as Package;
 };
 
-const mockHistoryPush = jest.fn();
+const mockUseNavigate = jest.fn();
 
-jest.mock('react-markdown', () => () => <div />);
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
+
+jest.mock('react-markdown', () => () => <div />);
 
 const defaultProps = {
   visibleSecurityReport: true,
@@ -50,15 +50,9 @@ describe('Details', () => {
   it('renders correctly', () => {
     const mockPackage = getMockPackage('1');
     const { asFragment } = render(
-      <Details
-        {...defaultProps}
-        package={mockPackage}
-        searchUrlReferer={{
-          tsQueryWeb: 'test',
-          pageNumber: 1,
-          filters: {},
-        }}
-      />
+      <Router>
+        <Details {...defaultProps} package={mockPackage} />
+      </Router>
     );
     expect(asFragment()).toMatchSnapshot();
   });
@@ -68,15 +62,9 @@ describe('Details', () => {
       const mockPackage = getMockPackage('2');
 
       render(
-        <Details
-          {...defaultProps}
-          package={mockPackage}
-          searchUrlReferer={{
-            tsQueryWeb: 'test',
-            pageNumber: 1,
-            filters: {},
-          }}
-        />
+        <Router>
+          <Details {...defaultProps} package={mockPackage} />
+        </Router>
       );
 
       expect(screen.getByText('Application version')).toBeInTheDocument();
@@ -100,13 +88,21 @@ describe('Details', () => {
     describe('Application version', () => {
       it('renders correct app version', () => {
         const mockPackage = getMockPackage('3');
-        render(<Details {...defaultProps} package={mockPackage} />);
+        render(
+          <Router>
+            <Details {...defaultProps} package={mockPackage} />
+          </Router>
+        );
         expect(screen.getByText(mockPackage.appVersion!)).toBeInTheDocument();
       });
 
       it("does not render app version when package hasn't", () => {
         const mockPackage = getMockPackage('4');
-        render(<Details {...defaultProps} package={mockPackage} />);
+        render(
+          <Router>
+            <Details {...defaultProps} package={mockPackage} />
+          </Router>
+        );
 
         const appVersion = screen.queryByTestId('appVersion');
         expect(appVersion).toBeNull();
@@ -116,24 +112,32 @@ describe('Details', () => {
     describe('Keywords', () => {
       it('renders 3 keywords', () => {
         const mockPackage = getMockPackage('5');
-        render(<Details {...defaultProps} package={mockPackage} />);
+        render(
+          <Router>
+            <Details {...defaultProps} package={mockPackage} />
+          </Router>
+        );
 
         const keywords = screen.getByTestId('keywords');
         expect(keywords!.children).toHaveLength(mockPackage.keywords!.length);
         expect(keywords!.children[0]).toHaveTextContent(mockPackage.keywords![0]);
       });
 
-      it('calls history push on keyword click', async () => {
+      it('calls navigate on keyword click', async () => {
         const mockPackage = getMockPackage('7');
-        render(<Details {...defaultProps} package={mockPackage} />);
+        render(
+          <Router>
+            <Details {...defaultProps} package={mockPackage} />
+          </Router>
+        );
 
         const keywordBtn = screen.getByText(mockPackage.keywords![0])!.closest('button');
         expect(keywordBtn).toBeInTheDocument();
         await userEvent.click(keywordBtn!);
 
         await waitFor(() => {
-          expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-          expect(mockHistoryPush).toHaveBeenCalledWith({
+          expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+          expect(mockUseNavigate).toHaveBeenCalledWith({
             pathname: '/packages/search',
             search: prepareQueryString({
               tsQueryWeb: mockPackage.keywords![0],
@@ -147,7 +151,11 @@ describe('Details', () => {
     describe('Maintainers', () => {
       it('renders 2 maintainers', () => {
         const mockPackage = getMockPackage('8');
-        render(<Details {...defaultProps} package={mockPackage} />);
+        render(
+          <Router>
+            <Details {...defaultProps} package={mockPackage} />
+          </Router>
+        );
 
         const maintainers = screen.getByTestId('maintainers');
         expect(maintainers.children).toHaveLength(2);
@@ -158,7 +166,11 @@ describe('Details', () => {
 
       it('does not render maintaners when no maintainers', () => {
         const mockPackage = getMockPackage('9');
-        render(<Details {...defaultProps} package={mockPackage} />);
+        render(
+          <Router>
+            <Details {...defaultProps} package={mockPackage} />
+          </Router>
+        );
 
         const maintainers = screen.queryByTestId('maintainers');
         expect(maintainers).toBeNull();
@@ -168,7 +180,11 @@ describe('Details', () => {
     describe('Home url', () => {
       it('renders correctly', () => {
         const mockPackage = getMockPackage('10');
-        render(<Details {...defaultProps} package={mockPackage} />);
+        render(
+          <Router>
+            <Details {...defaultProps} package={mockPackage} />
+          </Router>
+        );
         const homeUrl = screen.getByText('Homepage');
         expect(homeUrl).toBeInTheDocument();
         expect(homeUrl.closest('a')).toHaveAttribute('href', mockPackage.homeUrl);
@@ -179,11 +195,13 @@ describe('Details', () => {
       it('renders correctly', () => {
         const mockPackage = getMockPackage('11');
         render(
-          <Details
-            {...defaultProps}
-            sortedVersions={sortPackageVersions(mockPackage.availableVersions!)}
-            package={mockPackage}
-          />
+          <Router>
+            <Details
+              {...defaultProps}
+              sortedVersions={sortPackageVersions(mockPackage.availableVersions!)}
+              package={mockPackage}
+            />
+          </Router>
         );
 
         const versions = screen.getByTestId('versions');
@@ -195,11 +213,13 @@ describe('Details', () => {
       it('renders placeholder when no versions', () => {
         const mockPackage = getMockPackage('12');
         render(
-          <Details
-            {...defaultProps}
-            sortedVersions={sortPackageVersions(mockPackage.availableVersions!)}
-            package={mockPackage}
-          />
+          <Router>
+            <Details
+              {...defaultProps}
+              sortedVersions={sortPackageVersions(mockPackage.availableVersions!)}
+              package={mockPackage}
+            />
+          </Router>
         );
 
         const versions = screen.getByTestId(/versions/i);
@@ -211,7 +231,11 @@ describe('Details', () => {
     describe('Not chart package renders', () => {
       it('renders correctly', () => {
         const mockPackage = getMockPackage('13');
-        render(<Details {...defaultProps} package={mockPackage} />);
+        render(
+          <Router>
+            <Details {...defaultProps} package={mockPackage} />
+          </Router>
+        );
 
         expect(screen.getByText('Versions')).toBeInTheDocument();
         expect(screen.getByText('Keywords')).toBeInTheDocument();
@@ -227,20 +251,22 @@ describe('Details', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('14');
       render(
-        <Details
-          package={mockPackage}
-          {...defaultProps}
-          sortedVersions={[
-            {
-              version: '1.0.0',
-              ts: 0,
-              containsSecurityUpdates: false,
-              prerelease: false,
-            },
-            { version: '0.2.0', ts: 0, containsSecurityUpdates: false, prerelease: false },
-            { version: '0.2.3', ts: 0, containsSecurityUpdates: false, prerelease: false },
-          ]}
-        />
+        <Router>
+          <Details
+            package={mockPackage}
+            {...defaultProps}
+            sortedVersions={[
+              {
+                version: '1.0.0',
+                ts: 0,
+                containsSecurityUpdates: false,
+                prerelease: false,
+              },
+              { version: '0.2.0', ts: 0, containsSecurityUpdates: false, prerelease: false },
+              { version: '0.2.3', ts: 0, containsSecurityUpdates: false, prerelease: false },
+            ]}
+          />
+        </Router>
       );
 
       expect(screen.getByText('Versions')).toBeInTheDocument();
@@ -288,7 +314,11 @@ describe('Details', () => {
   describe('OPA policy', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('16');
-      render(<Details package={mockPackage} {...defaultProps} />);
+      render(
+        <Router>
+          <Details package={mockPackage} {...defaultProps} />
+        </Router>
+      );
 
       expect(screen.getByText('Versions')).toBeInTheDocument();
       expect(screen.getByText('1.0.0')).toBeInTheDocument();
@@ -322,7 +352,11 @@ describe('Details', () => {
   describe('Falco rule', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('17');
-      render(<Details package={mockPackage} {...defaultProps} />);
+      render(
+        <Router>
+          <Details package={mockPackage} {...defaultProps} />
+        </Router>
+      );
 
       expect(screen.getByText('Versions')).toBeInTheDocument();
       expect(screen.getByText('License')).toBeInTheDocument();
@@ -338,7 +372,11 @@ describe('Details', () => {
   describe('Tekton task', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('18');
-      render(<Details package={mockPackage} {...defaultProps} />);
+      render(
+        <Router>
+          <Details package={mockPackage} {...defaultProps} />
+        </Router>
+      );
 
       expect(screen.getByText('Versions')).toBeInTheDocument();
       expect(screen.getByText('Pipeline minimal version')).toBeInTheDocument();
@@ -353,7 +391,11 @@ describe('Details', () => {
   describe('Tekton pipeline', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('19');
-      render(<Details package={mockPackage} {...defaultProps} />);
+      render(
+        <Router>
+          <Details package={mockPackage} {...defaultProps} />
+        </Router>
+      );
 
       expect(screen.getByText('Versions')).toBeInTheDocument();
       expect(screen.getByText('Pipeline minimal version')).toBeInTheDocument();
@@ -369,7 +411,11 @@ describe('Details', () => {
   describe('Argo template', () => {
     it('renders component', () => {
       const mockPackage = getMockPackage('20');
-      render(<Details package={mockPackage} {...defaultProps} />);
+      render(
+        <Router>
+          <Details package={mockPackage} {...defaultProps} />
+        </Router>
+      );
 
       expect(screen.getByText('Versions')).toBeInTheDocument();
       expect(screen.getByText('Workflows version')).toBeInTheDocument();

@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import GatekeeperExamplesModal from './GatekeeperExamplesModal';
 
@@ -7,13 +8,11 @@ const isVisibleItemInContainer = require('../../utils/isVisibleItemInContainer')
 
 jest.mock('../../utils/isVisibleItemInContainer', () => jest.fn());
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const scrollIntoViewMock = jest.fn();
@@ -71,7 +70,6 @@ const defaultProps = {
       ],
     },
   ],
-  searchUrlReferer: { pageNumber: 1, filters: { kind: ['14'] }, deprecated: false, sort: 'relevance' },
 };
 
 describe('Gatekeeper examples modal', () => {
@@ -84,40 +82,47 @@ describe('Gatekeeper examples modal', () => {
   });
 
   it('creates snapshot', async () => {
-    const { asFragment } = render(<GatekeeperExamplesModal {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <GatekeeperExamplesModal {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('opens modal', async () => {
-    render(<GatekeeperExamplesModal {...defaultProps} />);
+    render(
+      <Router>
+        <GatekeeperExamplesModal {...defaultProps} />
+      </Router>
+    );
 
     const btn = screen.getByRole('button', { name: 'Open examples modal' });
     await userEvent.click(btn);
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
 
-    expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-    expect(mockHistoryReplace).toHaveBeenCalledWith({
-      search: '?modal=examples&example=memory-ratio-only&file=constraint',
-      state: {
-        fromStarredPage: undefined,
-        searchUrlReferer: {
-          deprecated: false,
-          filters: {
-            kind: ['14'],
-          },
-          pageNumber: 1,
-          sort: 'relevance',
-        },
+    expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+    expect(mockUseNavigate).toHaveBeenCalledWith(
+      {
+        search: '?modal=examples&example=memory-ratio-only&file=constraint',
       },
-    });
+      {
+        state: null,
+        replace: true,
+      }
+    );
 
     expect(screen.getByText(/This package version contains/)).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /Show case/ })).toHaveLength(6);
   });
 
   it('filters examples', async () => {
-    render(<GatekeeperExamplesModal {...defaultProps} visibleModal />);
+    render(
+      <Router>
+        <GatekeeperExamplesModal {...defaultProps} visibleModal />
+      </Router>
+    );
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
     expect(screen.getAllByRole('button', { name: /Show case/ })).toHaveLength(6);
@@ -130,7 +135,11 @@ describe('Gatekeeper examples modal', () => {
   });
 
   it('displays warning message when no matches', async () => {
-    render(<GatekeeperExamplesModal {...defaultProps} visibleModal />);
+    render(
+      <Router>
+        <GatekeeperExamplesModal {...defaultProps} visibleModal />
+      </Router>
+    );
 
     expect(screen.getByRole('dialog')).toHaveClass('d-block');
     expect(screen.getAllByRole('button', { name: /Show case/ })).toHaveLength(6);
@@ -146,12 +155,14 @@ describe('Gatekeeper examples modal', () => {
     isVisibleItemInContainer.mockImplementation(() => false);
 
     render(
-      <GatekeeperExamplesModal
-        visibleExample="memory-and-cpu-ratios"
-        visibleFile="example-disallowed"
-        {...defaultProps}
-        visibleModal
-      />
+      <Router>
+        <GatekeeperExamplesModal
+          visibleExample="memory-and-cpu-ratios"
+          visibleFile="example-disallowed"
+          {...defaultProps}
+          visibleModal
+        />
+      </Router>
     );
 
     await waitFor(() => {
@@ -161,12 +172,20 @@ describe('Gatekeeper examples modal', () => {
 
   describe('does not render component', () => {
     it('when examples array is empty', () => {
-      const { container } = render(<GatekeeperExamplesModal {...defaultProps} visibleModal examples={[]} />);
+      const { container } = render(
+        <Router>
+          <GatekeeperExamplesModal {...defaultProps} visibleModal examples={[]} />
+        </Router>
+      );
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when examples is undefined', () => {
-      const { container } = render(<GatekeeperExamplesModal {...defaultProps} visibleModal examples={undefined} />);
+      const { container } = render(
+        <Router>
+          <GatekeeperExamplesModal {...defaultProps} visibleModal examples={undefined} />
+        </Router>
+      );
       expect(container).toBeEmptyDOMElement();
     });
   });

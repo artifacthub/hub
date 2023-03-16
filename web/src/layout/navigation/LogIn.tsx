@@ -5,7 +5,7 @@ import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useRef, useState } from 'react';
 import { FaSignInAlt } from 'react-icons/fa';
 import { IoIosArrowBack } from 'react-icons/io';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx, refreshUserProfile, signOut } from '../../context/AppCtx';
@@ -31,13 +31,14 @@ interface Loading {
 interface Props {
   openLogIn: boolean;
   setOpenLogIn: Dispatch<SetStateAction<boolean>>;
-  redirect?: string;
-  visibleModal?: string;
+  redirect: string | null;
+  visibleModal: string | null;
 }
 
 const LogIn = (props: Props) => {
   const { dispatch } = useContext(AppCtx);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const loginForm = useRef<HTMLFormElement>(null);
   const emailInput = useRef<RefInputField>(null);
   const passwordInput = useRef<RefInputField>(null);
@@ -66,13 +67,16 @@ const LogIn = (props: Props) => {
   };
 
   const onCloseModal = () => {
-    if (!isUndefined(props.redirect) || !isUndefined(props.visibleModal)) {
+    if (!isNull(props.redirect) || !isNull(props.visibleModal)) {
       // If redirect option is defined and user closes login modal,
       // querystring with login parameters is cleaned to avoid open modal again on refresh
-      history.replace({
-        pathname: window.location.pathname,
-        search: cleanLoginUrlParams(window.location.search),
-      });
+      navigate(
+        {
+          pathname: location.pathname,
+          search: cleanLoginUrlParams(location.search),
+        },
+        { replace: true }
+      );
     }
     setVisibleResetPassword(false);
     props.setOpenLogIn(false);

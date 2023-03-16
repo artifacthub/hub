@@ -1,13 +1,7 @@
 import { isEmpty, isNull, isUndefined } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 
-import {
-  ContainerImage,
-  RepositoryKind,
-  SearchFiltersURL,
-  SecurityReportSummary,
-  VulnerabilitySeverity,
-} from '../../../types';
+import { ContainerImage, RepositoryKind, SecurityReportSummary, VulnerabilitySeverity } from '../../../types';
 import calculateDiffInYears from '../../../utils/calculateDiffInYears';
 import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';
 import prettifyNumber from '../../../utils/prettifyNumber';
@@ -29,12 +23,10 @@ interface Props {
   version: string;
   createdAt?: number;
   visibleSecurityReport: boolean;
-  visibleImage?: string;
-  visibleTarget?: string;
-  visibleSection?: string;
-  eventId?: string;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
+  visibleImage?: string | null;
+  visibleTarget?: string | null;
+  visibleSection?: string | null;
+  eventId?: string | null;
 }
 
 const SecurityReport = (props: Props) => {
@@ -155,8 +147,6 @@ const SecurityReport = (props: Props) => {
                 visibleTarget={props.visibleTarget}
                 visibleSection={props.visibleSection}
                 eventId={props.eventId}
-                searchUrlReferer={props.searchUrlReferer}
-                fromStarredPage={props.fromStarredPage}
                 hasWhitelistedContainers={hasWhitelistedContainers}
               />
             </div>

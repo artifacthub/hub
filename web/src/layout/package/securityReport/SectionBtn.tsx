@@ -10,7 +10,7 @@ interface Props {
   className?: string;
   rightElement?: JSX.Element;
   onClick: () => void;
-  visibleSection?: string;
+  visibleSection?: string | null;
 }
 
 const SectionBtn = (props: Props) => {

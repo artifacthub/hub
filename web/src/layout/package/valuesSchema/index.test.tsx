@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mocked } from 'jest-mock';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../../api';
 import { JSONSchema } from '../../../jsonschema';
@@ -14,13 +15,15 @@ const getMockValuesSchema = (fixtureId: string): JSONSchema => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as JSONSchema;
 };
 
-const mockHistoryReplace = jest.fn();
+const mockOutletContextData: any = {
+  isSearching: false,
+};
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
-  }),
+  ...jest.requireActual('react-router-dom'),
+  useOutletContext: () => mockOutletContextData,
+  useNavigate: () => mockUseNavigate,
 }));
 
 const defaultProps = {
@@ -39,7 +42,11 @@ describe('ValuesSchema', () => {
     const mockValuesSchema = getMockValuesSchema('1');
     mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-    const { asFragment } = render(<ValuesSchema {...defaultProps} visibleValuesSchema />);
+    const { asFragment } = render(
+      <Router>
+        <ValuesSchema {...defaultProps} visibleValuesSchema />
+      </Router>
+    );
 
     await waitFor(() => {
       expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
@@ -54,7 +61,11 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('2');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      render(<ValuesSchema {...defaultProps} />);
+      render(
+        <Router>
+          <ValuesSchema {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open values schema modal/ });
       expect(btn).toBeInTheDocument();
@@ -72,21 +83,19 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('3');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      render(<ValuesSchema {...defaultProps} />);
+      render(
+        <Router>
+          <ValuesSchema {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open values schema modal/ });
       await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({
-          search: '?modal=values-schema',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
-          },
-        });
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith('?modal=values-schema', { replace: true, state: null });
       });
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
@@ -97,7 +106,11 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('4');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      render(<ValuesSchema {...defaultProps} visibleValuesSchema />);
+      render(
+        <Router>
+          <ValuesSchema {...defaultProps} visibleValuesSchema />
+        </Router>
+      );
 
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
@@ -113,14 +126,8 @@ describe('ValuesSchema', () => {
       });
 
       await waitFor(() => {
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
-        expect(mockHistoryReplace).toHaveBeenLastCalledWith({
-          search: '',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
-          },
-        });
+        expect(mockUseNavigate).toHaveBeenCalledTimes(2);
+        expect(mockUseNavigate).toHaveBeenLastCalledWith('', { replace: true, state: null });
       });
     });
 
@@ -128,7 +135,11 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('5');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { rerender } = render(<ValuesSchema {...defaultProps} />);
+      const { rerender } = render(
+        <Router>
+          <ValuesSchema {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open values schema modal/ });
       await userEvent.click(btn);
@@ -143,7 +154,11 @@ describe('ValuesSchema', () => {
       const close = screen.getByText('Close');
       await userEvent.click(close);
 
-      rerender(<ValuesSchema {...defaultProps} version="1.0.0" />);
+      rerender(
+        <Router>
+          <ValuesSchema {...defaultProps} version="1.0.0" />
+        </Router>
+      );
 
       await userEvent.click(btn);
 
@@ -159,7 +174,11 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('6');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { rerender } = render(<ValuesSchema {...defaultProps} />);
+      const { rerender } = render(
+        <Router>
+          <ValuesSchema {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open values schema modal/ });
       await userEvent.click(btn);
@@ -174,7 +193,11 @@ describe('ValuesSchema', () => {
       const close = screen.getByText('Close');
       await userEvent.click(close);
 
-      rerender(<ValuesSchema {...defaultProps} packageId="id2" />);
+      rerender(
+        <Router>
+          <ValuesSchema {...defaultProps} packageId="id2" />
+        </Router>
+      );
 
       await userEvent.click(btn);
 
@@ -190,7 +213,11 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('8');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      render(<ValuesSchema {...defaultProps} />);
+      render(
+        <Router>
+          <ValuesSchema {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open values schema modal/ });
       await userEvent.click(btn);
@@ -213,7 +240,11 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('9');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      render(<ValuesSchema {...defaultProps} />);
+      render(
+        <Router>
+          <ValuesSchema {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open values schema modal/ });
       await userEvent.click(btn);
@@ -331,7 +362,11 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('11');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      render(<ValuesSchema {...defaultProps} />);
+      render(
+        <Router>
+          <ValuesSchema {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open values schema modal/ });
       await userEvent.click(btn);
@@ -393,17 +428,26 @@ describe('ValuesSchema', () => {
       const mockValuesSchema = getMockValuesSchema('10');
       mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
-      const { rerender } = render(<ValuesSchema {...defaultProps} />);
+      const { rerender } = render(
+        <Router>
+          <ValuesSchema {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open values schema modal/ });
       await userEvent.click(btn);
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
       });
 
-      rerender(<ValuesSchema {...defaultProps} packageId="id2" />);
+      rerender(
+        <Router>
+          <ValuesSchema {...defaultProps} packageId="id2" />
+        </Router>
+      );
 
       expect(screen.queryByRole('dialog')).toBeNull();
     });
@@ -411,7 +455,11 @@ describe('ValuesSchema', () => {
     it('when fails', async () => {
       mocked(API).getValuesSchema.mockRejectedValue({ kind: ErrorKind.Other });
 
-      render(<ValuesSchema {...defaultProps} />);
+      render(
+        <Router>
+          <ValuesSchema {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open values schema modal/ });
       await userEvent.click(btn);
@@ -429,14 +477,8 @@ describe('ValuesSchema', () => {
       });
 
       await waitFor(() => {
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
-        expect(mockHistoryReplace).toHaveBeenLastCalledWith({
-          search: '',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
-          },
-        });
+        expect(mockUseNavigate).toHaveBeenCalledTimes(2);
+        expect(mockUseNavigate).toHaveBeenLastCalledWith('', { replace: true, state: null });
       });
     });
   });

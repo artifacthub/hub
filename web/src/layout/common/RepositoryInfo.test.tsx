@@ -4,13 +4,11 @@ import userEvent from '@testing-library/user-event';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import RepositoryInfo from './RepositoryInfo';
 
-const mockHistoryPush = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const defaultProps = {
@@ -44,12 +42,12 @@ describe('RepositoryInfo', () => {
     expect(screen.getByTestId('repoLink')).toBeInTheDocument();
   });
 
-  it('calls history push to click repo link', async () => {
+  it('calls navigate to click repo link', async () => {
     render(<RepositoryInfo {...defaultProps} />);
     await userEvent.click(screen.getByTestId('repoLink'));
 
-    await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledTimes(1));
-    expect(mockHistoryPush).toHaveBeenCalledWith({
+    await waitFor(() => expect(mockUseNavigate).toHaveBeenCalledTimes(1));
+    expect(mockUseNavigate).toHaveBeenCalledWith({
       pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: 1,
@@ -65,8 +63,8 @@ describe('RepositoryInfo', () => {
     render(<RepositoryInfo {...defaultProps} deprecated />);
     await userEvent.click(screen.getByTestId('repoLink'));
 
-    await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledTimes(1));
-    expect(mockHistoryPush).toHaveBeenCalledWith({
+    await waitFor(() => expect(mockUseNavigate).toHaveBeenCalledTimes(1));
+    expect(mockUseNavigate).toHaveBeenCalledWith({
       pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: 1,

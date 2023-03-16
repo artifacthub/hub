@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { RepositoryKind, Signature } from '../../types';
 import SignKeyInfo from './SignKeyInfo';
@@ -14,12 +15,14 @@ const defaultProps = {
   visibleKeyInfo: false,
 };
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
+  useNavigate: () => mockUseNavigate,
+  useLocation: () => ({
+    pathname: 'test',
+    state: null,
   }),
 }));
 
@@ -29,30 +32,36 @@ describe('SignKeyInfo', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<SignKeyInfo {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <SignKeyInfo {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      render(<SignKeyInfo {...defaultProps} />);
+      render(
+        <Router>
+          <SignKeyInfo {...defaultProps} />
+        </Router>
+      );
       expect(screen.getByText('View key info')).toBeInTheDocument();
     });
 
     it('opens modal', async () => {
-      render(<SignKeyInfo {...defaultProps} />);
+      render(
+        <Router>
+          <SignKeyInfo {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByText('View key info');
       await userEvent.click(btn);
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({
-        search: '?modal=key-info',
-        state: {
-          fromStarredPage: undefined,
-          searchUrlReferer: undefined,
-        },
-      });
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith('?modal=key-info', { replace: true, state: null });
 
       expect(screen.getByText('Sign key information'));
       expect(screen.getByText('Fingerprint')).toBeInTheDocument();
@@ -64,14 +73,22 @@ describe('SignKeyInfo', () => {
     });
 
     it('opens modal when visibleKeyInfo is true', () => {
-      render(<SignKeyInfo {...defaultProps} visibleKeyInfo />);
+      render(
+        <Router>
+          <SignKeyInfo {...defaultProps} visibleKeyInfo />
+        </Router>
+      );
       expect(screen.getByRole('dialog')).toHaveClass('d-block');
     });
   });
 
   describe('renders disabled button', () => {
     it('when signed is true and signKey is undefined', async () => {
-      render(<SignKeyInfo signed repoKind={RepositoryKind.Helm} visibleKeyInfo={false} />);
+      render(
+        <Router>
+          <SignKeyInfo signed repoKind={RepositoryKind.Helm} visibleKeyInfo={false} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: 'Open sign key modal' });
       expect(btn).toHaveClass('disabled');
@@ -85,27 +102,37 @@ describe('SignKeyInfo', () => {
 
   describe('does not render button', () => {
     it('when signed is null', () => {
-      const { container } = render(<SignKeyInfo signed={null} repoKind={RepositoryKind.Helm} visibleKeyInfo={false} />);
+      const { container } = render(
+        <Router>
+          <SignKeyInfo signed={null} repoKind={RepositoryKind.Helm} visibleKeyInfo={false} />
+        </Router>
+      );
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when signed is false', () => {
       const { container } = render(
-        <SignKeyInfo signed={false} repoKind={RepositoryKind.Helm} visibleKeyInfo={false} />
+        <Router>
+          <SignKeyInfo signed={false} repoKind={RepositoryKind.Helm} visibleKeyInfo={false} />
+        </Router>
       );
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when repoKind is not Helm', () => {
       const { container } = render(
-        <SignKeyInfo {...defaultProps} repoKind={RepositoryKind.OLM} visibleKeyInfo={false} />
+        <Router>
+          <SignKeyInfo {...defaultProps} repoKind={RepositoryKind.OLM} visibleKeyInfo={false} />
+        </Router>
       );
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when signature is only Cosign and signKey is undefined', () => {
       const { container } = render(
-        <SignKeyInfo {...defaultProps} signKey={undefined} signatures={[Signature.Cosign]} visibleKeyInfo={false} />
+        <Router>
+          <SignKeyInfo {...defaultProps} signKey={undefined} signatures={[Signature.Cosign]} visibleKeyInfo={false} />
+        </Router>
       );
       expect(container).toBeEmptyDOMElement();
     });

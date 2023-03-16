@@ -3,9 +3,9 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { HiPlusCircle } from 'react-icons/hi';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { PackageViewsStats, RepositoryKind, SearchFiltersURL } from '../../types';
+import { PackageViewsStats, RepositoryKind } from '../../types';
 import { getSeriesDataPerPkgVersionViewsWithTimestamp, sumViewsPerVersionsWithTimestamp } from '../../utils/viewsStats';
 import SmallTitle from '../common/SmallTitle';
 import styles from './Last30DaysViews.module.css';
@@ -14,8 +14,6 @@ interface Props {
   repoKind: RepositoryKind;
   stats?: PackageViewsStats;
   version?: string;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
 }
 
 interface Series {
@@ -36,7 +34,9 @@ const prepareSeries = (stats: PackageViewsStats, version?: string): Series[] => 
 };
 
 const Last30DaysViews = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [series, setSeries] = useState<any[]>([]);
 
   const getLegend = (): string => {
@@ -186,14 +186,15 @@ const Last30DaysViews = (props: Props) => {
               <div className="d-none d-md-block">
                 <button
                   onClick={() => {
-                    history.push({
-                      pathname: history.location.pathname,
-                      hash: 'views',
-                      state: {
-                        searchUrlReferer: props.searchUrlReferer,
-                        fromStarredPage: props.fromStarredPage,
+                    navigate(
+                      {
+                        pathname: location.pathname,
+                        hash: 'views',
                       },
-                    });
+                      {
+                        state: location.state,
+                      }
+                    );
                   }}
                   className={`btn btn-link ps-0 position-relative text-primary ${styles.btn}`}
                   disabled={series.length === 0}

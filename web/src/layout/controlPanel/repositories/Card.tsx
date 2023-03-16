@@ -16,7 +16,7 @@ import { FaCheck, FaExclamation, FaPencilAlt, FaTrashAlt } from 'react-icons/fa'
 import { HiExclamation } from 'react-icons/hi';
 import { MdLabel } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
@@ -54,7 +54,7 @@ interface Props {
 }
 
 const RepositoryCard = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { ctx } = useContext(AppCtx);
   const [dropdownMenuStatus, setDropdownMenuStatus] = useState<boolean>(false);
   const [transferModalStatus, setTransferModalStatus] = useState<boolean>(false);
@@ -81,9 +81,7 @@ const RepositoryCard = (props: Props) => {
       } else {
         setOpenErrorsModal(true);
       }
-      history.replace({
-        search: '',
-      });
+      navigate('', { replace: true });
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 

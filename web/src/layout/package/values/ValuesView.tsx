@@ -5,7 +5,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { SearchFiltersURL, ValuesQuery } from '../../../types';
+import { ValuesQuery } from '../../../types';
 import BlockCodeButtons from '../../common/BlockCodeButtons';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import ValuesSearch from '../../common/ValuesSearch';
@@ -16,9 +16,7 @@ interface Props {
   lines?: Lines;
   normalizedName: string;
   updateUrl: (q: ValuesQuery) => void;
-  visibleValuesPath?: string;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
+  visibleValuesPath?: string | null;
 }
 
 interface Lines {
@@ -73,7 +71,7 @@ const ValuesView = (props: Props) => {
   }, []);
 
   useLayoutEffect(() => {
-    if (isUndefined(activeLine) && !isUndefined(props.visibleValuesPath) && !isUndefined(props.lines)) {
+    if (isUndefined(activeLine) && props.visibleValuesPath && !isUndefined(props.lines)) {
       const selectedLine = Object.keys(props.lines).find(
         (line: string) => props.lines![parseInt(line)] === props.visibleValuesPath!
       );

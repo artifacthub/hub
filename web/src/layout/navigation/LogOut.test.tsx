@@ -10,12 +10,11 @@ import LogOut from './LogOut';
 jest.mock('../../api');
 jest.mock('../../utils/alertDispatcher');
 
-const mockHistoryPush = jest.fn();
+const mockUseNavigate = jest.fn();
+
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const mockOnSuccess = jest.fn();
@@ -67,7 +66,7 @@ describe('LogOut', () => {
       });
     });
 
-    it('calls history push to homepage when route is private', async () => {
+    it('calls navigate to homepage when route is private', async () => {
       render(
         <Router>
           <LogOut {...defaultProps} privateRoute />
@@ -78,8 +77,8 @@ describe('LogOut', () => {
       await userEvent.click(btn);
 
       await waitFor(() => {
-        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-        expect(mockHistoryPush).toHaveBeenCalledWith('/');
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith('/');
       });
     });
 

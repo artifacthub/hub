@@ -3,16 +3,10 @@ import { isEmpty, isNull, isUndefined } from 'lodash';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import API from '../../../api';
-import {
-  FixableVulnerabilitiesInReport,
-  RepositoryKind,
-  SearchFiltersURL,
-  SecurityReport,
-  SecurityReportSummary,
-} from '../../../types';
+import { FixableVulnerabilitiesInReport, RepositoryKind, SecurityReport, SecurityReportSummary } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import isFuture from '../../../utils/isFuture';
 import { filterFixableVulnerabilities, prepareFixableSummary } from '../../../utils/vulnerabilities';
@@ -32,17 +26,16 @@ interface Props {
   version: string;
   createdAt?: number;
   visibleSecurityReport: boolean;
-  visibleImage?: string;
-  visibleTarget?: string;
-  visibleSection?: string;
-  eventId?: string;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
+  visibleImage?: string | null;
+  visibleTarget?: string | null;
+  visibleSection?: string | null;
+  eventId?: string | null;
   hasWhitelistedContainers: boolean;
 }
 
 const SecurityModal = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const contentWrapper = useRef<HTMLDivElement>(null);
   const [currentPkgId, setCurrentPkgId] = useState<string | undefined>(undefined);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
@@ -77,7 +70,7 @@ const SecurityModal = (props: Props) => {
     }
   };
 
-  async function getSecurityReports(eventId?: string) {
+  async function getSecurityReports(eventId?: string | null) {
     try {
       setIsLoading(true);
       const currentReport = await API.getSnapshotSecurityReport(props.packageId, props.version, eventId);
@@ -114,21 +107,26 @@ const SecurityModal = (props: Props) => {
     setVisibleSection(null);
     setExpandedTarget(null);
     setShowOnlyFixableVulnerabilities(false);
-    history.replace({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    navigate('', {
+      state: location.state,
+      replace: true,
     });
   };
 
   const updateUrl = () => {
-    history.replace({
-      search: `?modal=security-report${
-        !isNull(visibleSection) ? `&section=${encodeURIComponent(visibleSection)}` : ''
-      }${!isNull(visibleImage) ? `&image=${encodeURIComponent(visibleImage)}` : ''}${
-        !isNull(visibleTarget) ? `&target=${encodeURIComponent(visibleTarget)}` : ''
-      }`,
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    navigate(
+      {
+        search: `?modal=security-report${
+          !isNull(visibleSection) ? `&section=${encodeURIComponent(visibleSection)}` : ''
+        }${!isNull(visibleImage) ? `&image=${encodeURIComponent(visibleImage)}` : ''}${
+          !isNull(visibleTarget) ? `&target=${encodeURIComponent(visibleTarget)}` : ''
+        }`,
+      },
+      {
+        state: location.state,
+        replace: true,
+      }
+    );
   };
 
   const onClickSection = (name: string) => {

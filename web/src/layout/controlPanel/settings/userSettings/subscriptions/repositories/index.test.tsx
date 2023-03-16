@@ -149,7 +149,7 @@ describe('RepositoriesSection', () => {
       });
     });
 
-    it('calls history push to load login modal when user is not signed in', async () => {
+    it('calls navigate to load login modal when user is not signed in', async () => {
       mocked(API).getAllOptOut.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });

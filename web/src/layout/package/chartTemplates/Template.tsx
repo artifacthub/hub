@@ -12,7 +12,7 @@ import styles from './Template.module.css';
 
 interface Props {
   template: ChartTemplate;
-  visibleLine?: string;
+  visibleLine?: string | null;
   templatesInHelpers: DefinedTemplatesList;
   onDefinedTemplateClick: (templateName: string, line: string, lineNumber: string) => void;
   setIsChangingTemplate: Dispatch<SetStateAction<boolean>>;

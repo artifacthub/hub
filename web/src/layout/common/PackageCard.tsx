@@ -3,7 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Package, RepositoryKind, SearchFiltersURL } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
@@ -39,7 +39,7 @@ interface Props {
 }
 
 const PackageCard = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const infoSection = useRef<HTMLDivElement>(null);
   const ownerInfo = useRef<HTMLDivElement>(null);
   const repoInfo = useRef<HTMLDivElement>(null);
@@ -132,8 +132,8 @@ const PackageCard = (props: Props) => {
           }}
           to={{
             pathname: buildPackageURL(props.package.normalizedName, props.package.repository, props.package.version!),
-            state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
           }}
+          state={{ searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage }}
         >
           <div className={`card-body d-flex flex-column h-100 ${styles.body}`}>
             <div className="d-flex align-items-start justify-content-between mw-100">
@@ -207,7 +207,7 @@ const PackageCard = (props: Props) => {
                               className={`p-0 border-0 text-truncate text-muted mw-100 bg-transparent ${styles.link}`}
                               onClick={(e) => {
                                 e.preventDefault();
-                                history.push({
+                                navigate({
                                   pathname: '/packages/search',
                                   search: prepareQueryString({
                                     pageNumber: 1,

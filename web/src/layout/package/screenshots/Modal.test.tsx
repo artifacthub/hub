@@ -4,13 +4,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import ScreenshotsModal from './Modal';
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const defaultProps = {

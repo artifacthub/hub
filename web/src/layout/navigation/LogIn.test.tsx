@@ -8,12 +8,11 @@ import { ErrorKind } from '../../types';
 import LogIn from './LogIn';
 jest.mock('../../api');
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
+
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const scrollIntoViewMock = jest.fn();
@@ -23,6 +22,8 @@ window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 const defaultProps = {
   openLogIn: true,
   setOpenLogIn: jest.fn(),
+  redirect: null,
+  visibleModal: null,
 };
 
 describe('LogIn', () => {
@@ -189,7 +190,7 @@ describe('LogIn', () => {
       expect(await screen.findByText('An error occurred signing in, please try again later.')).toBeInTheDocument();
     });
 
-    it('calls history replace on close modal when redirect is not undefined', async () => {
+    it('calls navigate on close modal when redirect is not undefined', async () => {
       render(
         <Router>
           <LogIn {...defaultProps} redirect="/control-panel" />
@@ -201,8 +202,8 @@ describe('LogIn', () => {
       await userEvent.click(btn);
 
       await waitFor(() => {
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({ pathname: '/', search: '' });
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith({ pathname: '/', search: '' }, { replace: true });
       });
     });
 

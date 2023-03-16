@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { BiImages, BiUnlink } from 'react-icons/bi';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import { GoPrimitiveDot } from 'react-icons/go';
-import { useHistory } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { Screenshot, SearchFiltersURL } from '../../../types';
+import { Screenshot } from '../../../types';
 import ExternalLink from '../../common/ExternalLink';
 import FullScreenModal from '../../common/FullScreenModal';
 import Loading from '../../common/Loading';
@@ -16,12 +16,11 @@ import styles from './Modal.module.css';
 interface Props {
   visibleScreenshotsModal: boolean;
   screenshots: Screenshot[];
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
 }
 
 const ScreenshotsModal = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const img = useRef<HTMLImageElement>(null);
   const fullSizeImage = useRef<HTMLImageElement>(null);
   const imgWrapper = useRef<HTMLDivElement>(null);
@@ -41,9 +40,9 @@ const ScreenshotsModal = (props: Props) => {
 
   const onOpenModal = () => {
     setOpenStatus(true);
-    history.replace({
-      search: '?modal=screenshots',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    navigate('?modal=screenshots', {
+      state: location.state,
+      replace: true,
     });
   };
 
@@ -53,9 +52,9 @@ const ScreenshotsModal = (props: Props) => {
     setActiveScreenshot(0);
     setError(false);
     setOpenStatus(false);
-    history.replace({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    navigate('', {
+      state: location.state,
+      replace: true,
     });
   };
 

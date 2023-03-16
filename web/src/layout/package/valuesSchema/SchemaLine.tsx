@@ -20,7 +20,7 @@ interface Props {
   isRequired: boolean;
   className?: string;
   path?: string;
-  activePath?: string;
+  activePath?: string | null;
   onActivePathChange: (path?: string) => void;
   saveSelectedOption: (path: string, index: number) => void;
   hasDecorator?: boolean;
@@ -176,7 +176,7 @@ const SchemaLine = (props: Props) => {
   }
 
   const currentPath = getJMESPathForValuesSchema(isArrayParent ? `${props.name}[0]` : props.name, props.path);
-  const isExpanded = !isUndefined(props.activePath) && props.activePath === currentPath;
+  const isExpanded = !isUndefined(props.activePath) && !isNull(props.activePath) && props.activePath === currentPath;
 
   const onChangeSelectedValue = (newValue: ActiveJSONSchemaValue) => {
     setValue(newValue);

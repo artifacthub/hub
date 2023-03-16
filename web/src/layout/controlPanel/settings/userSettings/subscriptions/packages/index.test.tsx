@@ -152,7 +152,7 @@ describe('PackagesSection', () => {
       });
     });
 
-    it('calls history push to load login modal when user is not signed in', async () => {
+    it('calls navigate to load login modal when user is not signed in', async () => {
       mocked(API).getUserSubscriptions.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });

@@ -1,7 +1,8 @@
+import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { MdClose, MdDone } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import API from '../../api';
 import getMetaTag from '../../utils/getMetaTag';
@@ -10,7 +11,7 @@ import Modal from '../common/Modal';
 import styles from './UserConfirmation.module.css';
 
 interface Props {
-  emailCode?: string;
+  emailCode?: string | null;
 }
 
 const UserConfirmation = (props: Props) => {
@@ -18,7 +19,7 @@ const UserConfirmation = (props: Props) => {
   const [verifying, setVerifying] = useState(false);
   const [validEmail, setValidEmail] = useState<boolean | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
   const siteName = getMetaTag('siteName');
 
   useEffect(() => {
@@ -39,16 +40,19 @@ const UserConfirmation = (props: Props) => {
       }
     }
 
-    if (!isUndefined(emailCode)) {
-      history.replace({
-        pathname: '/',
-        search: '',
-      });
+    if (emailCode) {
+      navigate(
+        {
+          pathname: '/',
+          search: '',
+        },
+        { replace: true }
+      );
       fetchEmailConfirmation();
     }
-  }, [emailCode, history]);
+  }, [emailCode]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if (isUndefined(emailCode)) return null;
+  if (isUndefined(emailCode) || isNull(emailCode)) return null;
 
   return (
     <Modal
@@ -56,7 +60,7 @@ const UserConfirmation = (props: Props) => {
       header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Email confirmation</div>}
       disabledClose={verifying}
       modalClassName={styles.modal}
-      open={!isUndefined(emailCode)}
+      open
     >
       <div
         className={`d-flex flex-column h-100 w-100 px-3 align-items-center justify-content-center text-center position-relative ${styles.content}`}

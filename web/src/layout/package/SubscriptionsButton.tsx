@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 import { MdNotificationsActive, MdNotificationsOff } from 'react-icons/md';
-import { useHistory } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import API from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
@@ -22,7 +22,8 @@ interface Props {
 
 const SubscriptionsButton = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [openStatus, setOpenStatus] = useState(false);
   const [activeSubscriptions, setActiveSubscriptions] = useState<Subscription[] | undefined | null>(undefined);
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
@@ -86,7 +87,7 @@ const SubscriptionsButton = (props: Props) => {
           }
         } else {
           dispatch(signOut());
-          history.push(`${window.location.pathname}?modal=login&redirect=${window.location.pathname}`);
+          navigate(`${location.pathname}?modal=login&redirect=${location.pathname}`);
         }
       }
     }

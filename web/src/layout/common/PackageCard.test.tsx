@@ -12,13 +12,11 @@ const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/PackageCard/${fixtureId}.json`) as Package;
 };
 
-const mockHistoryPush = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 describe('PackageCard', () => {
@@ -108,8 +106,8 @@ describe('PackageCard', () => {
       await userEvent.click(buttons[0]!);
 
       await waitFor(() => {
-        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-        expect(mockHistoryPush).toHaveBeenCalledWith({
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith({
           pathname: '/packages/search',
           search: prepareQueryString({
             pageNumber: 1,
@@ -134,8 +132,8 @@ describe('PackageCard', () => {
       await userEvent.click(button);
 
       await waitFor(() => {
-        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-        expect(mockHistoryPush).toHaveBeenCalledWith({
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith({
           pathname: '/packages/search',
           search: prepareQueryString({
             pageNumber: 1,
@@ -160,8 +158,8 @@ describe('PackageCard', () => {
       await userEvent.click(buttons[0]);
 
       await waitFor(() => {
-        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-        expect(mockHistoryPush).toHaveBeenCalledWith({
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith({
           pathname: '/packages/search',
           search: prepareQueryString({
             pageNumber: 1,

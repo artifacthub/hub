@@ -1,15 +1,15 @@
 import classnames from 'classnames';
-import { isUndefined } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { GoCheck } from 'react-icons/go';
 import { MdClose } from 'react-icons/md';
 import { VscListTree } from 'react-icons/vsc';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { isDocument, isMap, isSeq, LineCounter, parseDocument } from 'yaml';
 
 import API from '../../../api';
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { ErrorKind, SearchFiltersURL, ValuesQuery, Version as VersionData } from '../../../types';
+import { ErrorKind, ValuesQuery, Version as VersionData } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import getJMESPathForValuesSchema from '../../../utils/getJMESPathForValuesSchema';
 import ElementWithTooltip from '../../common/ElementWithTooltip';
@@ -24,10 +24,8 @@ interface Props {
   sortedVersions: VersionData[];
   normalizedName: string;
   visibleValues: boolean;
-  compareVersionTo?: string;
-  visibleValuesPath?: string;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
+  compareVersionTo?: string | null;
+  visibleValuesPath?: string | null;
 }
 
 interface Lines {
@@ -63,13 +61,16 @@ const getPathsPerLine = (values: any): Lines => {
 };
 
 const Values = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [values, setValues] = useState<string | undefined | null>();
   const [currentPkgId, setCurrentPkgId] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [lines, setLines] = useState<Lines | undefined>();
-  const [enabledDiff, setEnabledDiff] = useState<boolean>(!isUndefined(props.compareVersionTo));
+  const [enabledDiff, setEnabledDiff] = useState<boolean>(
+    !isUndefined(props.compareVersionTo) && !isNull(props.compareVersionTo)
+  );
   const [comparedVersion, setComparedVersion] = useState<string>(props.compareVersionTo || '');
   const [visibleDropdown, setVisibleDropdown] = useState<boolean>(false);
   const ref = useRef(null);
@@ -77,9 +78,9 @@ const Values = (props: Props) => {
   useOutsideClick([ref], visibleDropdown, () => setVisibleDropdown(false));
 
   const cleanUrl = () => {
-    history.replace({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    navigate('', {
+      state: location.state,
+      replace: true,
     });
   };
 
@@ -88,12 +89,17 @@ const Values = (props: Props) => {
     if (!isUndefined(q.selectedLine) && !isUndefined(lines)) {
       selectedPath = lines[parseInt(q.selectedLine)];
     }
-    history.replace({
-      search: `?modal=values${selectedPath ? `&path=${selectedPath}` : ''}${
-        q.template ? `&template=${q.template}` : ''
-      }${q.compareTo ? `&compare-to=${q.compareTo}` : ''}`,
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-    });
+    navigate(
+      {
+        search: `?modal=values${selectedPath ? `&path=${selectedPath}` : ''}${
+          q.template ? `&template=${q.template}` : ''
+        }${q.compareTo ? `&compare-to=${q.compareTo}` : ''}`,
+      },
+      {
+        state: location.state,
+        replace: true,
+      }
+    );
   };
 
   async function getValues() {
@@ -304,8 +310,6 @@ const Values = (props: Props) => {
                     normalizedName={props.normalizedName}
                     updateUrl={updateUrl}
                     visibleValuesPath={props.visibleValuesPath}
-                    searchUrlReferer={props.searchUrlReferer}
-                    fromStarredPage={props.fromStarredPage}
                   />
                 )}
               </>

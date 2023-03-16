@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import SecurityRating from './SecurityRating';
 
@@ -20,12 +21,20 @@ describe('SecurityRating', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<SecurityRating {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <SecurityRating {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders label', async () => {
-    render(<SecurityRating {...defaultProps} />);
+    render(
+      <Router>
+        <SecurityRating {...defaultProps} />
+      </Router>
+    );
     expect(screen.getByText('Images Security Rating')).toBeInTheDocument();
     expect(screen.getByText('F')).toBeInTheDocument();
 
@@ -40,107 +49,127 @@ describe('SecurityRating', () => {
 
   it('renders A label', () => {
     render(
-      <SecurityRating
-        summary={{
-          low: 0,
-          high: 0,
-          medium: 0,
-          unknown: 0,
-          critical: 0,
-        }}
-        onlyBadge
-      />
+      <Router>
+        <SecurityRating
+          summary={{
+            low: 0,
+            high: 0,
+            medium: 0,
+            unknown: 0,
+            critical: 0,
+          }}
+          onlyBadge
+        />
+      </Router>
     );
     expect(screen.getByText('A')).toBeInTheDocument();
   });
 
   it('renders B label', () => {
     render(
-      <SecurityRating
-        summary={{
-          low: 8,
-          high: 0,
-          medium: 0,
-          unknown: 0,
-          critical: 0,
-        }}
-        onlyBadge
-      />
+      <Router>
+        <SecurityRating
+          summary={{
+            low: 8,
+            high: 0,
+            medium: 0,
+            unknown: 0,
+            critical: 0,
+          }}
+          onlyBadge
+        />
+      </Router>
     );
     expect(screen.getByText('B')).toBeInTheDocument();
   });
 
   it('renders C label', () => {
     render(
-      <SecurityRating
-        summary={{
-          low: 8,
-          high: 0,
-          medium: 3,
-          unknown: 0,
-          critical: 0,
-        }}
-        onlyBadge
-      />
+      <Router>
+        <SecurityRating
+          summary={{
+            low: 8,
+            high: 0,
+            medium: 3,
+            unknown: 0,
+            critical: 0,
+          }}
+          onlyBadge
+        />
+      </Router>
     );
     expect(screen.getByText('C')).toBeInTheDocument();
   });
 
   it('renders D label', () => {
     render(
-      <SecurityRating
-        summary={{
-          low: 8,
-          high: 9,
-          medium: 3,
-          unknown: 0,
-          critical: 0,
-        }}
-        onlyBadge
-      />
+      <Router>
+        <SecurityRating
+          summary={{
+            low: 8,
+            high: 9,
+            medium: 3,
+            unknown: 0,
+            critical: 0,
+          }}
+          onlyBadge
+        />
+      </Router>
     );
     expect(screen.getByText('D')).toBeInTheDocument();
   });
 
   it('renders F label', () => {
     render(
-      <SecurityRating
-        summary={{
-          low: 8,
-          high: 9,
-          medium: 3,
-          unknown: 0,
-          critical: 1,
-        }}
-        onlyBadge
-      />
+      <Router>
+        <SecurityRating
+          summary={{
+            low: 8,
+            high: 9,
+            medium: 3,
+            unknown: 0,
+            critical: 1,
+          }}
+          onlyBadge
+        />
+      </Router>
     );
     expect(screen.getByText('F')).toBeInTheDocument();
   });
 
   it('renders - label', () => {
     render(
-      <SecurityRating
-        summary={{
-          low: 0,
-          high: 0,
-          medium: 0,
-          unknown: 3,
-          critical: 0,
-        }}
-        onlyBadge
-      />
+      <Router>
+        <SecurityRating
+          summary={{
+            low: 0,
+            high: 0,
+            medium: 0,
+            unknown: 3,
+            critical: 0,
+          }}
+          onlyBadge
+        />
+      </Router>
     );
     expect(screen.getByText('-')).toBeInTheDocument();
   });
 
   it('does not full label when onlyBadge is true', () => {
-    render(<SecurityRating {...defaultProps} onlyBadge />);
+    render(
+      <Router>
+        <SecurityRating {...defaultProps} onlyBadge />
+      </Router>
+    );
     expect(screen.queryByText('Images Security Rating')).toBeNull();
   });
 
   it('does not render label', () => {
-    const { container } = render(<SecurityRating summary={null} onlyBadge />);
+    const { container } = render(
+      <Router>
+        <SecurityRating summary={null} onlyBadge />
+      </Router>
+    );
     expect(container).toBeEmptyDOMElement();
   });
 });

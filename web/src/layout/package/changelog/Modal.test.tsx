@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mocked } from 'jest-mock';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../../api';
 import { ChangeLog } from '../../../types';
@@ -18,12 +19,11 @@ jest.mock('moment', () => ({
   }),
 }));
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
+
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const scrollIntoViewMock = jest.fn();
@@ -77,7 +77,11 @@ describe('ChangelogModal', () => {
     const mockChangelog = getMockChangelog('1');
     mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-    const { asFragment } = render(<ChangelogModal {...defaultProps} visibleChangelog />);
+    const { asFragment } = render(
+      <Router>
+        <ChangelogModal {...defaultProps} visibleChangelog />
+      </Router>
+    );
 
     await waitFor(() => {
       expect(API.getChangelog).toHaveBeenCalledTimes(1);
@@ -92,7 +96,11 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('2');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      render(<ChangelogModal {...defaultProps} />);
+      render(
+        <Router>
+          <ChangelogModal {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: 'Open Changelog modal' });
       expect(btn).toBeInTheDocument();
@@ -115,12 +123,20 @@ describe('ChangelogModal', () => {
           kind: 5,
         },
       };
-      const { container } = render(<ChangelogModal {...props} />);
+      const { container } = render(
+        <Router>
+          <ChangelogModal {...props} />
+        </Router>
+      );
       expect(container).toBeEmptyDOMElement();
     });
 
     it('renders disabled button when package has not changelog and does not call getChangelog', async () => {
-      render(<ChangelogModal {...defaultProps} hasChangelog={false} />);
+      render(
+        <Router>
+          <ChangelogModal {...defaultProps} hasChangelog={false} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: 'Open Changelog modal' });
       expect(btn).toHaveClass('disabled');
@@ -130,7 +146,11 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('3');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      render(<ChangelogModal {...defaultProps} />);
+      render(
+        <Router>
+          <ChangelogModal {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: 'Open Changelog modal' });
       await userEvent.click(btn);
@@ -150,7 +170,11 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('10');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      render(<ChangelogModal {...defaultProps} currentVersion="0.3.0" />);
+      render(
+        <Router>
+          <ChangelogModal {...defaultProps} currentVersion="0.3.0" />
+        </Router>
+      );
 
       const btn = screen.getByText('Changelog');
       await userEvent.click(btn);
@@ -171,7 +195,11 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('4');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      render(<ChangelogModal {...defaultProps} visibleChangelog />);
+      render(
+        <Router>
+          <ChangelogModal {...defaultProps} visibleChangelog />
+        </Router>
+      );
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
@@ -189,7 +217,11 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('10');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      render(<ChangelogModal {...defaultProps} visibleChangelog visibleVersion="1.0.0" />);
+      render(
+        <Router>
+          <ChangelogModal {...defaultProps} visibleChangelog visibleVersion="1.0.0" />
+        </Router>
+      );
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
@@ -206,7 +238,11 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('5');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      render(<ChangelogModal {...defaultProps} visibleChangelog />);
+      render(
+        <Router>
+          <ChangelogModal {...defaultProps} visibleChangelog />
+        </Router>
+      );
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
@@ -221,7 +257,11 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('6');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const { rerender } = render(<ChangelogModal {...defaultProps} />);
+      const { rerender } = render(
+        <Router>
+          <ChangelogModal {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByText('Changelog');
       await userEvent.click(btn);
@@ -231,7 +271,11 @@ describe('ChangelogModal', () => {
         expect(API.getChangelog).toHaveBeenCalledWith('id');
       });
 
-      rerender(<ChangelogModal {...defaultProps} packageId="id2" />);
+      rerender(
+        <Router>
+          <ChangelogModal {...defaultProps} packageId="id2" />
+        </Router>
+      );
 
       await userEvent.click(btn);
 
@@ -245,7 +289,11 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('7');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      render(<ChangelogModal {...defaultProps} />);
+      render(
+        <Router>
+          <ChangelogModal {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByText('Changelog');
       await userEvent.click(btn);
@@ -261,7 +309,11 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('8');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      render(<ChangelogModal {...defaultProps} />);
+      render(
+        <Router>
+          <ChangelogModal {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByText('Changelog');
       await userEvent.click(btn);
@@ -277,7 +329,11 @@ describe('ChangelogModal', () => {
       const mockChangelog = getMockChangelog('9');
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
-      const { rerender } = render(<ChangelogModal {...defaultProps} visibleVersion="0.4.0" visibleChangelog />);
+      const { rerender } = render(
+        <Router>
+          <ChangelogModal {...defaultProps} visibleVersion="0.4.0" visibleChangelog />
+        </Router>
+      );
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
@@ -285,7 +341,11 @@ describe('ChangelogModal', () => {
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
-      rerender(<ChangelogModal {...defaultProps} currentVersion="0.6.0" visibleChangelog />);
+      rerender(
+        <Router>
+          <ChangelogModal {...defaultProps} currentVersion="0.6.0" visibleChangelog />
+        </Router>
+      );
 
       await waitFor(() => {
         expect(API.getChangelog).toHaveBeenCalledTimes(2);
@@ -299,7 +359,11 @@ describe('ChangelogModal', () => {
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
       mocked(API).getChangelogMD.mockResolvedValue(markdownMock);
 
-      render(<ChangelogModal {...defaultProps} />);
+      render(
+        <Router>
+          <ChangelogModal {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByText('Changelog');
       await userEvent.click(btn);
@@ -326,7 +390,11 @@ describe('ChangelogModal', () => {
       mocked(API).getChangelog.mockResolvedValue(mockChangelog);
       mocked(API).getChangelogMD.mockRejectedValue('');
 
-      render(<ChangelogModal {...defaultProps} />);
+      render(
+        <Router>
+          <ChangelogModal {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByText('Changelog');
       await userEvent.click(btn);

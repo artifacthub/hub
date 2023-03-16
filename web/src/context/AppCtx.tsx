@@ -7,7 +7,7 @@ import useSystemThemeMode from '../hooks/useSystemThemeMode';
 import { Prefs, Profile, ThemePrefs, UserFullName } from '../types';
 import cleanLoginUrlParams from '../utils/cleanLoginUrlParams';
 import detectActiveThemeMode from '../utils/detectActiveThemeMode';
-import browserHistory from '../utils/history';
+import { history } from '../utils/history';
 import isControlPanelSectionAvailable from '../utils/isControlPanelSectionAvailable';
 import lsPreferences from '../utils/localStoragePreferences';
 import lsStorage from '../utils/localStoragePreferences';
@@ -83,20 +83,20 @@ export function addNewDisplayedNotification(id: string) {
   return { type: 'addNewDisplayedNotification', id };
 }
 
-export async function refreshUserProfile(dispatch: Dispatch<any>, redirectUrl?: string) {
+export async function refreshUserProfile(dispatch: Dispatch<any>, redirectUrl?: string | null) {
   try {
     const profile: Profile = await API.getUserProfile();
     dispatch({ type: 'signIn', profile });
     const currentUrl = `${window.location.pathname}${
       window.location.search !== '' ? `?${cleanLoginUrlParams(window.location.search)}` : ''
     }`;
-    if (!isUndefined(redirectUrl)) {
+    if (redirectUrl && history.navigate) {
       if (redirectUrl === currentUrl) {
-        browserHistory.replace(redirectUrl);
+        history.navigate(redirectUrl, { replace: true });
       } else {
         const redirection = redirectUrl.split('?');
         // Redirect to correct route when necessary
-        browserHistory.push({
+        history.navigate({
           pathname: redirection[0],
           search: !isUndefined(redirection[1]) ? `?${redirection[1]}` : '',
         });
@@ -104,10 +104,10 @@ export async function refreshUserProfile(dispatch: Dispatch<any>, redirectUrl?: 
     }
   } catch (err: any) {
     dispatch({ type: 'signOut' });
-    if (err.message === 'invalid session') {
-      browserHistory.push(
-        `${window.location.pathname}${
-          window.location.search === '' ? '?' : `${window.location.search}&`
+    if (err.message === 'invalid session' && history.navigate && history.location) {
+      history.navigate(
+        `${history.location.pathname}${
+          history.location.search === '' ? '?' : `${history.location.search}&`
         }modal=login&redirect=${encodeURIComponent(`${window.location.pathname}${window.location.search}`)}`
       );
     }
@@ -115,10 +115,10 @@ export async function refreshUserProfile(dispatch: Dispatch<any>, redirectUrl?: 
 }
 
 function redirectToControlPanel(context: 'user' | 'org') {
-  if (browserHistory.location.pathname.startsWith('/control-panel')) {
-    const sections = browserHistory.location.pathname.split('/');
-    if (!isControlPanelSectionAvailable(context, sections[2], sections[3])) {
-      browserHistory.push('/control-panel/repositories');
+  if (history.location && history.location.pathname.startsWith('/control-panel')) {
+    const sections = history.location.pathname.split('/');
+    if (!isControlPanelSectionAvailable(context, sections[2], sections[3]) && history.navigate) {
+      history.navigate('/control-panel/repositories');
     }
   }
 }

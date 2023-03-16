@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
 import getMetaTag from '../../utils/getMetaTag';
@@ -18,26 +18,24 @@ import UserAuthDropdown from './UserAuthDropdown';
 
 interface Props {
   isSearching: boolean;
-  fromHome?: boolean;
-  searchText?: string;
-  redirect?: string;
+  inHome?: boolean;
   privateRoute?: boolean;
-  visibleModal?: string;
 }
 
 const Navbar = (props: Props) => {
   const { ctx } = useContext(AppCtx);
-  const openLogInModal =
-    (!isUndefined(props.redirect) && isNull(ctx.user)) ||
-    (!isUndefined(props.visibleModal) && props.visibleModal === 'login');
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get('redirect');
+  const visibleModal = searchParams.get('modal');
+  const openLogInModal = (!isNull(redirect) && isNull(ctx.user)) || (!isNull(visibleModal) && visibleModal === 'login');
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
   const [openLogIn, setOpenLogIn] = useState<boolean>(openLogInModal);
   const [openTips, setOpenTips] = useState<boolean>(false);
   useEffect(() => {
-    if (!isUndefined(props.redirect) && isNull(ctx.user)) {
+    if (!isNull(redirect) && isNull(ctx.user)) {
       setOpenLogIn(true);
     }
-  }, [props.redirect]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [redirect]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const logo = getMetaTag('websiteLogo');
   const siteName = getMetaTag('siteName');
@@ -47,7 +45,7 @@ const Navbar = (props: Props) => {
     <>
       <nav
         className={classnames('navbar navbar-top navbar-expand-lg navbar-dark border-top-0 p-2 p-sm-3', styles.navbar, {
-          [`bg-transparent w-100 position-absolute ${styles.homeNavbar}`]: props.fromHome,
+          [`bg-transparent w-100 position-absolute ${styles.homeNavbar}`]: props.inHome,
         })}
       >
         <div className="container-lg px-0 px-sm-4 px-lg-0">
@@ -65,12 +63,11 @@ const Navbar = (props: Props) => {
             />
           </div>
 
-          {isUndefined(props.fromHome) && (
+          {isUndefined(props.inHome) && (
             <SearchBar
               size="normal"
               formClassName={`mx-2 me-md-auto my-3 my-md-0 flex-grow-1 pe-0 pe-sm-4 ${styles.search}`}
               isSearching={props.isSearching}
-              tsQueryWeb={props.searchText}
               openTips={openTips}
               setOpenTips={setOpenTips}
             />
@@ -163,15 +160,10 @@ const Navbar = (props: Props) => {
       {openSignUp && <SignUp openSignUp={openSignUp} setOpenSignUp={setOpenSignUp} />}
 
       {openLogIn && (
-        <LogIn
-          openLogIn={openLogIn}
-          setOpenLogIn={setOpenLogIn}
-          redirect={props.redirect}
-          visibleModal={props.visibleModal}
-        />
+        <LogIn openLogIn={openLogIn} setOpenLogIn={setOpenLogIn} redirect={redirect} visibleModal={visibleModal} />
       )}
 
-      {isUndefined(props.fromHome) && <SearchTipsModal size="normal" openTips={openTips} setOpenTips={setOpenTips} />}
+      {isUndefined(props.inHome) && <SearchTipsModal size="normal" openTips={openTips} setOpenTips={setOpenTips} />}
     </>
   );
 };

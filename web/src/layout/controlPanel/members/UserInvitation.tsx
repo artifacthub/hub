@@ -1,7 +1,8 @@
+import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { MdClose, MdDone } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import API from '../../../api';
 import { ErrorKind } from '../../../types';
@@ -10,7 +11,7 @@ import Modal from '../../common/Modal';
 import styles from './UserInvitation.module.css';
 
 interface Props {
-  orgToConfirm?: string;
+  orgToConfirm?: string | null;
 }
 
 const UserInvitation = (props: Props) => {
@@ -18,7 +19,7 @@ const UserInvitation = (props: Props) => {
   const [isAccepting, setIsAccepting] = useState(false);
   const [validInvitation, setValidInvitation] = useState<boolean | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function confirmOrganizationMembership() {
@@ -41,23 +42,26 @@ const UserInvitation = (props: Props) => {
       }
     }
 
-    if (!isUndefined(orgToConfirm)) {
-      history.replace({
-        pathname: '/',
-        search: '',
-      });
+    if (props.orgToConfirm) {
+      navigate(
+        {
+          pathname: '/',
+          search: '',
+        },
+        { replace: true }
+      );
       confirmOrganizationMembership();
     }
-  }, [orgToConfirm, history]);
+  }, [orgToConfirm]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if (isUndefined(orgToConfirm)) return null;
+  if (isUndefined(orgToConfirm) || isNull(props.orgToConfirm)) return null;
 
   return (
     <Modal
       data-testid="userInvitationModal"
       header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Membership confirmation</div>}
       disabledClose={isAccepting}
-      open={!isUndefined(orgToConfirm)}
+      open
     >
       <div
         className={`d-flex flex-column h-100 w-100 px-3 align-items-center justify-content-center text-center position-relative ${styles.content}`}

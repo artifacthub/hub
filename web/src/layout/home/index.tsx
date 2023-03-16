@@ -1,11 +1,11 @@
 import isNull from 'lodash/isNull';
 import { useEffect, useState } from 'react';
 import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useOutletContext, useSearchParams } from 'react-router-dom';
 
 import API from '../../api';
 import useBreakpointDetect from '../../hooks/useBreakpointDetect';
-import { Banner as IBanner, RepositoryKind, Stats } from '../../types';
+import { Banner as IBanner, OutletContext, RepositoryKind, Stats } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import bannerDispatcher from '../../utils/bannerDispatcher';
 import getSampleQueries from '../../utils/getSampleQueries';
@@ -26,24 +26,17 @@ import ResetPasswordModal from './ResetPasswordModal';
 import SearchTip from './SearchTip';
 import UserConfirmation from './UserConfirmation';
 
-interface Props {
-  isSearching: boolean;
-  emailCode?: string;
-  deleteCode?: string;
-  resetPwdCode?: string;
-  orgToConfirm?: string;
-  onOauthFailed: boolean;
-}
-
-const HomeView = (props: Props) => {
+const HomeView = () => {
   const point = useBreakpointDetect();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const sampleQueries = getSampleQueries();
   const [isLoadingStats, setIsLoadingStats] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
   const [openTips, setOpenTips] = useState<boolean>(false);
   const [banner, setBanner] = useState<IBanner | null>(null);
+  const { isSearching } = useOutletContext() as OutletContext;
 
   const whiteLabel = isWhiteLabel();
 
@@ -74,18 +67,21 @@ const HomeView = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    if (props.onOauthFailed) {
-      history.replace({
-        pathname: '/',
-        search: '',
-      });
+    if (location.pathname === '/oauth-failed') {
+      navigate(
+        {
+          pathname: '/',
+          search: '',
+        },
+        { replace: true }
+      );
       alertDispatcher.postAlert({
         type: 'danger',
         message: 'Authentication process failed. Please try again later.',
         autoClose: false,
       });
     }
-  }, [props.onOauthFailed, history]);
+  }, [location]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <div className="d-flex flex-column flex-grow-1 bg-white home">
@@ -106,7 +102,7 @@ const HomeView = (props: Props) => {
           <SearchBar
             formClassName={`m-auto w-50 ${styles.search}`}
             size="big"
-            isSearching={props.isSearching}
+            isSearching={isSearching}
             openTips={openTips}
             setOpenTips={setOpenTips}
             autoFocus={location.pathname === '/' && location.search === ''}
@@ -454,10 +450,10 @@ const HomeView = (props: Props) => {
         </>
       )}
 
-      <UserConfirmation emailCode={props.emailCode} />
-      <AccountDeletion code={props.deleteCode} />
-      <UserInvitation orgToConfirm={props.orgToConfirm} />
-      <ResetPasswordModal code={props.resetPwdCode} />
+      <UserConfirmation emailCode={location.pathname === '/verify-email' ? searchParams.get('code') : undefined} />
+      <AccountDeletion code={location.pathname === '/delete-user' ? searchParams.get('code') : undefined} />
+      <UserInvitation orgToConfirm={location.pathname === '/accept-invitation' ? searchParams.get('org') : undefined} />
+      <ResetPasswordModal code={location.pathname === '/reset-password' ? searchParams.get('code') : undefined} />
     </div>
   );
 };

@@ -6,15 +6,14 @@ import { RepositoryKind } from '../../types';
 import Last30DaysViews from './Last30DaysViews';
 jest.mock('react-apexcharts', () => () => <div>Chart</div>);
 
-const mockHistoryPush = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    push: mockHistoryPush,
-    location: {
-      pathname: 'test',
-    },
+  useNavigate: () => mockUseNavigate,
+  useLocation: () => ({
+    pathname: 'test',
+    state: null,
   }),
 }));
 
@@ -114,13 +113,21 @@ describe('Last30DaysViews', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<Last30DaysViews {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <Last30DaysViews {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      render(<Last30DaysViews {...defaultProps} />);
+      render(
+        <Router>
+          <Last30DaysViews {...defaultProps} />
+        </Router>
+      );
 
       expect(screen.getByText('Last 30 days views')).toBeInTheDocument();
       expect(screen.getByText('Chart')).toBeInTheDocument();
@@ -130,14 +137,22 @@ describe('Last30DaysViews', () => {
     });
 
     it('displays correct legend', () => {
-      render(<Last30DaysViews {...defaultProps} repoKind={RepositoryKind.Container} />);
+      render(
+        <Router>
+          <Last30DaysViews {...defaultProps} repoKind={RepositoryKind.Container} />
+        </Router>
+      );
 
       expect(screen.getByText('(all tags)')).toBeInTheDocument();
       expect(screen.queryByText('(all versions)')).toBeNull();
     });
 
     it('renders component when version is defined', () => {
-      render(<Last30DaysViews {...defaultProps} version="21.0.4" />);
+      render(
+        <Router>
+          <Last30DaysViews {...defaultProps} version="21.0.4" />
+        </Router>
+      );
 
       expect(screen.getByText('Last 30 days views')).toBeInTheDocument();
       expect(screen.getByText('Chart')).toBeInTheDocument();
@@ -156,22 +171,31 @@ describe('Last30DaysViews', () => {
       const btn = screen.getByRole('button', { name: 'See views chart' });
       await userEvent.click(btn);
 
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        hash: 'views',
-        pathname: 'test',
-        state: {
-          fromStarredPage: undefined,
-          searchUrlReferer: undefined,
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith(
+        {
+          hash: 'views',
+          pathname: 'test',
         },
-      });
+        {
+          state: null,
+        }
+      );
     });
 
     it('when stats are empty', () => {
-      const { rerender } = render(<Last30DaysViews repoKind={RepositoryKind.Helm} />);
+      const { rerender } = render(
+        <Router>
+          <Last30DaysViews repoKind={RepositoryKind.Helm} />
+        </Router>
+      );
       expect(screen.getByText('Loading...')).toBeInTheDocument();
 
-      rerender(<Last30DaysViews repoKind={RepositoryKind.Helm} stats={{}} />);
+      rerender(
+        <Router>
+          <Last30DaysViews repoKind={RepositoryKind.Helm} stats={{}} />
+        </Router>
+      );
       expect(screen.getByText('Last 30 days views')).toBeInTheDocument();
       expect(screen.getByText('No views yet')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'See views chart' })).toBeDisabled();

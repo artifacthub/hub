@@ -2,9 +2,9 @@ import classNames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import { FaKey } from 'react-icons/fa';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { HelmChartSignKey, RepositoryKind, SearchFiltersURL, Signature } from '../../types';
+import { HelmChartSignKey, RepositoryKind, Signature } from '../../types';
 import ElementWithTooltip from '../common/ElementWithTooltip';
 import Modal from '../common/Modal';
 import CommandBlock from './installation/CommandBlock';
@@ -16,31 +16,35 @@ interface Props {
   repoKind: RepositoryKind;
   signatures?: Signature[];
   signKey?: HelmChartSignKey;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
 }
 
 const SignKeyInfo = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
 
   const onClose = () => {
     setOpenStatus(false);
-    history.replace({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    navigate('', {
+      state: location.state,
+      replace: true,
     });
   };
 
-  const onOpen = useCallback(() => {
-    if (props.signed && props.repoKind === RepositoryKind.Helm && !isUndefined(props.signKey)) {
-      setOpenStatus(true);
-      history.replace({
-        search: '?modal=key-info',
-        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
-      });
-    }
-  }, [history, props.fromStarredPage, props.repoKind, props.searchUrlReferer, props.signKey, props.signed]);
+  const onOpen = useCallback(
+    () => {
+      if (props.signed && props.repoKind === RepositoryKind.Helm && !isUndefined(props.signKey)) {
+        setOpenStatus(true);
+        navigate('?modal=key-info', {
+          state: location.state,
+          replace: true,
+        });
+      }
+    },
+    /* eslint-disable react-hooks/exhaustive-deps */
+    [props.repoKind, props.signKey, props.signed]
+    /* eslint-enable react-hooks/exhaustive-deps */
+  );
 
   useEffect(() => {
     if (props.visibleKeyInfo && !openStatus) {

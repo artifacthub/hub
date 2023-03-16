@@ -2,7 +2,7 @@ import { isNull, isUndefined, trim } from 'lodash';
 import { ChangeEvent, MouseEvent as ReactMouseEvent, useContext, useEffect, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { RiTestTubeFill } from 'react-icons/ri';
-import { Prompt } from 'react-router-dom';
+import { unstable_usePrompt as usePrompt } from 'react-router-dom';
 
 import API from '../../../../../api';
 import { AppCtx, updateOrg } from '../../../../../context/AppCtx';
@@ -385,14 +385,15 @@ const AuthorizationSection = (props: Props) => {
     };
   }, [orgPolicy]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
+  usePrompt({
+    when: !isNull(orgPolicy) && !isUndefined(orgPolicy) && !notGetPolicyAllowed && checkIfUnsavedChanges(),
+    message:
+      'You have some unsaved changes in your policy data. If you continue without saving, those changes will be lost.',
+  });
+
   return (
     <main role="main" className="p-0">
       {(isUndefined(orgPolicy) || isLoading) && <Loading />}
-
-      <Prompt
-        when={!isNull(orgPolicy) && !isUndefined(orgPolicy) && !notGetPolicyAllowed && checkIfUnsavedChanges()}
-        message="You have some unsaved changes in your policy data. If you continue without saving, those changes will be lost."
-      />
 
       <div className={`h3 pb-2 border-bottom ${styles.title}`}>Authorization</div>
 

@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
 import { useEffect, useRef, useState } from 'react';
 import { FiPackage } from 'react-icons/fi';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { Repository } from '../../types';
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const RepositoryInfo = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const ref = useRef(null);
   const [openStatus, setOpenStatus] = useState(false);
   const [onLinkHover, setOnLinkHover] = useState(false);
@@ -112,7 +112,7 @@ const RepositoryInfo = (props: Props) => {
             )}
             onClick={(e) => {
               e.preventDefault();
-              history.push({
+              navigate({
                 pathname: '/packages/search',
                 search: prepareQueryString({
                   pageNumber: 1,

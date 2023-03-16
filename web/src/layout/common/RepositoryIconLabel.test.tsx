@@ -5,13 +5,11 @@ import { RepositoryKind } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import RepositoryIconLabel from './RepositoryIconLabel';
 
-const mockHistoryPush = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 describe('RepositoryIconLabel', () => {
@@ -43,8 +41,8 @@ describe('RepositoryIconLabel', () => {
     expect(btn).toBeInTheDocument();
 
     await userEvent.click(btn);
-    expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-    expect(mockHistoryPush).toHaveBeenCalledWith({
+    expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+    expect(mockUseNavigate).toHaveBeenCalledWith({
       pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: 1,

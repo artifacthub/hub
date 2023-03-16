@@ -1,10 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter as Router } from 'react-router-dom';
+import ReactRouter, { BrowserRouter as Router } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
 import Navbar from './Navbar';
 jest.mock('./MobileSettings', () => () => <div />);
+
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as {}),
+  useSearchParams: () => jest.fn(),
+}));
 
 const defaultProps = {
   isSearching: false,
@@ -77,6 +82,16 @@ Object.defineProperty(document, 'querySelector', {
 });
 
 describe('Navbar', () => {
+  beforeEach(() => {
+    jest.spyOn(ReactRouter, 'useSearchParams').mockReturnValue([
+      {
+        get: (): null => {
+          return null;
+        },
+      },
+    ] as any);
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -171,10 +186,23 @@ describe('Navbar', () => {
     });
 
     it('opens Sign in modal when redirect is defined', async () => {
+      jest.spyOn(ReactRouter, 'useSearchParams').mockReturnValue([
+        {
+          get: (name: string): string | null => {
+            switch (name) {
+              case 'redirect':
+                return '/control-panel';
+              default:
+                return null;
+            }
+          },
+        },
+      ] as any);
+
       render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
-            <Navbar {...defaultProps} redirect="/control-panel" />
+            <Navbar {...defaultProps} />
           </Router>
         </AppCtx.Provider>
       );

@@ -15,7 +15,7 @@ interface Props {
   packageId: string;
   templates: ChartTemplate[] | null;
   currentVersion: string;
-  visibleTemplate?: string;
+  visibleTemplate?: string | null;
   comparedVersion: string;
   updateUrl: (q: TemplatesQuery) => void;
 }

@@ -6,7 +6,6 @@ import { GoStop } from 'react-icons/go';
 import { HiDotsVertical } from 'react-icons/hi';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
-import { SearchFiltersURL } from '../../types';
 import getMetaTag from '../../utils/getMetaTag';
 import styles from './MoreActionsButton.module.css';
 import WidgetModal from './WidgetModal';
@@ -16,8 +15,6 @@ interface Props {
   packageName: string;
   packageDescription: string;
   visibleWidget: boolean;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
 }
 
 const MoreActionsButton = (props: Props) => {

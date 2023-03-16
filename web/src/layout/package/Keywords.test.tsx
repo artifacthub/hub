@@ -5,13 +5,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import Keywords from './Keywords';
 
-const mockHistoryPush = jest.fn();
+const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 const defaultProps = {
@@ -70,7 +68,7 @@ describe('Keywords', () => {
       expect(keywords).toHaveLength(3);
     });
 
-    it('calls history push to click keyword button', async () => {
+    it('calls navigate to click keyword button', async () => {
       render(
         <Router>
           <Keywords {...defaultProps} />
@@ -81,8 +79,8 @@ describe('Keywords', () => {
       await userEvent.click(keywordBtn);
 
       await waitFor(() => {
-        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-        expect(mockHistoryPush).toHaveBeenCalledWith({
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith({
           pathname: '/packages/search',
           search: prepareQueryString({
             tsQueryWeb: defaultProps.keywords[0],

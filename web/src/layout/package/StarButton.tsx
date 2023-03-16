@@ -4,7 +4,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useContext, useEffect, useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
-import { useHistory } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import API from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
@@ -22,7 +22,8 @@ interface Props {
 
 const StarButton = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [packageStars, setPackageStars] = useState<PackageStars | undefined | null>(undefined);
   const [isSending, setIsSending] = useState(false);
   const [isGettingIfStarred, setIsGettingIfStarred] = useState<boolean | undefined>(undefined);
@@ -76,7 +77,7 @@ const StarButton = (props: Props) => {
       // On unauthorized, we force sign out
       if (err.kind === ErrorKind.Unauthorized) {
         dispatch(signOut());
-        history.push(`${window.location.pathname}?modal=login&redirect=${window.location.pathname}`);
+        navigate(`${location.pathname}?modal=login&redirect=${location.pathname}`);
       } else {
         let errMessage = `An error occurred ${
           notStarred ? 'starring' : 'unstarring'

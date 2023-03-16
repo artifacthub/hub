@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mocked } from 'jest-mock';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../../api';
 import { ErrorKind } from '../../../types';
@@ -9,7 +10,7 @@ import Values from './';
 jest.mock('../../../api');
 jest.mock('../../../utils/alertDispatcher');
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
 const scrollToMock = jest.fn();
 const itemScrollMock = jest.fn();
 
@@ -18,9 +19,7 @@ window.HTMLElement.prototype.scrollTo = scrollToMock;
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
 
 jest.mock('react-syntax-highlighter', () => () => <div id="line_59">port:</div>);
@@ -218,7 +217,11 @@ describe('Values', () => {
   it('creates snapshot', async () => {
     mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
-    const { asFragment } = render(<Values {...defaultProps} visibleValues />);
+    const { asFragment } = render(
+      <Router>
+        <Values {...defaultProps} visibleValues />
+      </Router>
+    );
 
     await waitFor(() => {
       expect(API.getChartValues).toHaveBeenCalledTimes(1);
@@ -232,7 +235,11 @@ describe('Values', () => {
     it('renders component', async () => {
       mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
-      render(<Values {...defaultProps} />);
+      render(
+        <Router>
+          <Values {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open default values modal/ });
       expect(btn).toBeInTheDocument();
@@ -249,21 +256,24 @@ describe('Values', () => {
     it('opens modal', async () => {
       mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
-      render(<Values {...defaultProps} />);
+      render(
+        <Router>
+          <Values {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open default values modal/ });
       await userEvent.click(btn);
 
       await waitFor(() => {
         expect(API.getChartValues).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-        expect(mockHistoryReplace).toHaveBeenCalledWith({
-          search: '?modal=values',
-          state: {
-            fromStarredPage: undefined,
-            searchUrlReferer: undefined,
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith(
+          {
+            search: '?modal=values',
           },
-        });
+          { replace: true, state: null }
+        );
       });
 
       await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
@@ -273,7 +283,11 @@ describe('Values', () => {
     it('closes modal', async () => {
       mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
-      render(<Values {...defaultProps} visibleValues />);
+      render(
+        <Router>
+          <Values {...defaultProps} visibleValues />
+        </Router>
+      );
 
       await waitFor(() => {
         expect(API.getChartValues).toHaveBeenCalledTimes(1);
@@ -284,14 +298,8 @@ describe('Values', () => {
       const close = screen.getByRole('button', { name: 'Close modal' });
       await userEvent.click(close);
 
-      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-      expect(mockHistoryReplace).toHaveBeenCalledWith({
-        search: '',
-        state: {
-          fromStarredPage: undefined,
-          searchUrlReferer: undefined,
-        },
-      });
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith('', { replace: true, state: null });
 
       await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
     });
@@ -299,7 +307,11 @@ describe('Values', () => {
     it('opens modal with empty values', async () => {
       mocked(API).getChartValues.mockResolvedValue('');
 
-      render(<Values {...defaultProps} visibleValues />);
+      render(
+        <Router>
+          <Values {...defaultProps} visibleValues />
+        </Router>
+      );
 
       await waitFor(() => {
         expect(API.getChartValues).toHaveBeenCalledTimes(1);
@@ -313,7 +325,11 @@ describe('Values', () => {
     it('calls again to getChartValues when version is different', async () => {
       mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
-      const { rerender } = render(<Values {...defaultProps} />);
+      const { rerender } = render(
+        <Router>
+          <Values {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open default values modal/ });
       await userEvent.click(btn);
@@ -328,7 +344,11 @@ describe('Values', () => {
       const close = screen.getByText('Close');
       await userEvent.click(close);
 
-      rerender(<Values {...defaultProps} version="1.0.0" />);
+      rerender(
+        <Router>
+          <Values {...defaultProps} version="1.0.0" />
+        </Router>
+      );
 
       await userEvent.click(btn);
 
@@ -343,7 +363,11 @@ describe('Values', () => {
     it('calls again to getChartValues when packageId is different', async () => {
       mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
-      const { rerender } = render(<Values {...defaultProps} />);
+      const { rerender } = render(
+        <Router>
+          <Values {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open default values modal/ });
       await userEvent.click(btn);
@@ -358,7 +382,11 @@ describe('Values', () => {
       const close = screen.getByText('Close');
       await userEvent.click(close);
 
-      rerender(<Values {...defaultProps} packageId="id2" />);
+      rerender(
+        <Router>
+          <Values {...defaultProps} packageId="id2" />
+        </Router>
+      );
 
       await userEvent.click(btn);
 
@@ -373,7 +401,11 @@ describe('Values', () => {
     it('closes modal when a new pkg is open', async () => {
       mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
-      const { rerender } = render(<Values {...defaultProps} />);
+      const { rerender } = render(
+        <Router>
+          <Values {...defaultProps} />
+        </Router>
+      );
 
       const btn = screen.getByRole('button', { name: /Open default values modal/ });
       await userEvent.click(btn);
@@ -381,7 +413,11 @@ describe('Values', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(API.getChartValues).toHaveBeenCalledTimes(1);
 
-      rerender(<Values {...defaultProps} packageId="id2" />);
+      rerender(
+        <Router>
+          <Values {...defaultProps} packageId="id2" />
+        </Router>
+      );
 
       await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
     });
@@ -390,7 +426,11 @@ describe('Values', () => {
       it('renders search bar', async () => {
         mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
-        render(<Values {...defaultProps} visibleValues />);
+        render(
+          <Router>
+            <Values {...defaultProps} visibleValues />
+          </Router>
+        );
 
         await waitFor(() => {
           expect(API.getChartValues).toHaveBeenCalledTimes(1);
@@ -417,7 +457,11 @@ describe('Values', () => {
       it('clicks option after searching', async () => {
         mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
-        render(<Values {...defaultProps} visibleValues />);
+        render(
+          <Router>
+            <Values {...defaultProps} visibleValues />
+          </Router>
+        );
 
         await waitFor(() => {
           expect(API.getChartValues).toHaveBeenCalledTimes(1);
@@ -432,21 +476,25 @@ describe('Values', () => {
         await userEvent.click(opts[8]);
 
         await waitFor(() => {
-          expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-          expect(mockHistoryReplace).toHaveBeenCalledWith({
-            search: '?modal=values&path=tracker.repositoriesNames',
-            state: {
-              fromStarredPage: undefined,
-              searchUrlReferer: undefined,
-            },
-          });
+          expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+          expect(mockUseNavigate).toHaveBeenCalledWith(
+            { search: '?modal=values&path=tracker.repositoriesNames' },
+            {
+              replace: true,
+              state: null,
+            }
+          );
         });
       });
 
       it('goes to correct position when querystring path is defined', async () => {
         mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
-        render(<Values {...defaultProps} visibleValues visibleValuesPath="hub.service.port" />);
+        render(
+          <Router>
+            <Values {...defaultProps} visibleValues visibleValuesPath="hub.service.port" />
+          </Router>
+        );
 
         await waitFor(() => {
           expect(API.getChartValues).toHaveBeenCalledTimes(1);
@@ -466,7 +514,11 @@ describe('Values', () => {
           kind: ErrorKind.NotFound,
         });
 
-        render(<Values {...defaultProps} />);
+        render(
+          <Router>
+            <Values {...defaultProps} />
+          </Router>
+        );
 
         const btn = screen.getByRole('button', { name: /Open default values modal/ });
         await userEvent.click(btn);
@@ -489,7 +541,11 @@ describe('Values', () => {
       it('default error', async () => {
         mocked(API).getChartValues.mockRejectedValue({ kind: ErrorKind.Other });
 
-        render(<Values {...defaultProps} />);
+        render(
+          <Router>
+            <Values {...defaultProps} />
+          </Router>
+        );
 
         const btn = screen.getByRole('button', { name: /Open default values modal/ });
         await userEvent.click(btn);
@@ -507,14 +563,8 @@ describe('Values', () => {
         });
 
         await waitFor(() => {
-          expect(mockHistoryReplace).toHaveBeenCalledTimes(2);
-          expect(mockHistoryReplace).toHaveBeenLastCalledWith({
-            search: '',
-            state: {
-              fromStarredPage: undefined,
-              searchUrlReferer: undefined,
-            },
-          });
+          expect(mockUseNavigate).toHaveBeenCalledTimes(2);
+          expect(mockUseNavigate).toHaveBeenLastCalledWith('', { replace: true, state: null });
         });
       });
     });

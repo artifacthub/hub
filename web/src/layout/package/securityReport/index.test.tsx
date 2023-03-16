@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { RepositoryKind } from '../../../types';
 import calculateDiffInYears from '../../../utils/calculateDiffInYears';
@@ -29,15 +30,14 @@ const defaultProps = {
   ],
 };
 
-const mockHistoryReplace = jest.fn();
+const mockUseNavigate = jest.fn();
 
-jest.mock('react-markdown', () => () => <div />);
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as {}),
-  useHistory: () => ({
-    replace: mockHistoryReplace,
-  }),
+  useNavigate: () => mockUseNavigate,
 }));
+
+jest.mock('react-markdown', () => () => <div />);
 
 describe('SecurityReport', () => {
   beforeEach(() => {
@@ -49,13 +49,21 @@ describe('SecurityReport', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<SecurityReport {...defaultProps} />);
+    const { asFragment } = render(
+      <Router>
+        <SecurityReport {...defaultProps} />
+      </Router>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      render(<SecurityReport {...defaultProps} />);
+      render(
+        <Router>
+          <SecurityReport {...defaultProps} />
+        </Router>
+      );
       expect(screen.getByText('Security Report')).toBeInTheDocument();
       expect(screen.getByText('179')).toBeInTheDocument();
       expect(screen.getByText(/vulnerabilities found/)).toBeInTheDocument();
@@ -89,7 +97,11 @@ describe('SecurityReport', () => {
           unknown: 0,
         },
       };
-      render(<SecurityReport {...props} />);
+      render(
+        <Router>
+          <SecurityReport {...props} />
+        </Router>
+      );
 
       expect(screen.getByText('Security Report')).toBeInTheDocument();
       expect(screen.getByText('No vulnerabilities found')).toBeInTheDocument();
@@ -108,7 +120,11 @@ describe('SecurityReport', () => {
         },
       };
 
-      render(<SecurityReport {...props} />);
+      render(
+        <Router>
+          <SecurityReport {...props} />
+        </Router>
+      );
 
       expect(screen.getByText('24.5k')).toBeInTheDocument();
       expect(screen.getByText(/vulnerabilities found/)).toBeInTheDocument();
@@ -116,17 +132,19 @@ describe('SecurityReport', () => {
 
     it('renders scanner disabled repository security text', () => {
       render(
-        <SecurityReport
-          summary={null}
-          packageId="pkgID"
-          repoKind={0}
-          version="1.1.1"
-          ts={1671024110}
-          visibleSecurityReport={false}
-          disabledReport
-          containers={defaultProps.containers}
-          allContainersImagesWhitelisted={false}
-        />
+        <Router>
+          <SecurityReport
+            summary={null}
+            packageId="pkgID"
+            repoKind={0}
+            version="1.1.1"
+            ts={1671024110}
+            visibleSecurityReport={false}
+            disabledReport
+            containers={defaultProps.containers}
+            allContainersImagesWhitelisted={false}
+          />
+        </Router>
       );
 
       expect(
@@ -136,28 +154,30 @@ describe('SecurityReport', () => {
 
     it('renders scanner disabled repository security text when all containers are whitelisted', () => {
       render(
-        <SecurityReport
-          summary={{}}
-          packageId="pkgID"
-          repoKind={0}
-          version="1.1.1"
-          ts={1671024110}
-          visibleSecurityReport={false}
-          disabledReport={false}
-          allContainersImagesWhitelisted={true}
-          containers={[
-            {
-              name: '',
-              image: 'test-container:0.0.1',
-              whitelisted: true,
-            },
-            {
-              name: '',
-              image: 'test-container-2:0.0.1',
-              whitelisted: true,
-            },
-          ]}
-        />
+        <Router>
+          <SecurityReport
+            summary={{}}
+            packageId="pkgID"
+            repoKind={0}
+            version="1.1.1"
+            ts={1671024110}
+            visibleSecurityReport={false}
+            disabledReport={false}
+            allContainersImagesWhitelisted={true}
+            containers={[
+              {
+                name: '',
+                image: 'test-container:0.0.1',
+                whitelisted: true,
+              },
+              {
+                name: '',
+                image: 'test-container-2:0.0.1',
+                whitelisted: true,
+              },
+            ]}
+          />
+        </Router>
       );
 
       expect(
@@ -169,50 +189,56 @@ describe('SecurityReport', () => {
   describe('Does not render component when not disabledReport and', () => {
     it('when summary is undefined', () => {
       const { container } = render(
-        <SecurityReport
-          packageId="pkgID"
-          version="1.1.1"
-          ts={1671024110}
-          repoKind={0}
-          visibleSecurityReport={false}
-          disabledReport={false}
-          containers={defaultProps.containers}
-          allContainersImagesWhitelisted={false}
-        />
+        <Router>
+          <SecurityReport
+            packageId="pkgID"
+            version="1.1.1"
+            ts={1671024110}
+            repoKind={0}
+            visibleSecurityReport={false}
+            disabledReport={false}
+            containers={defaultProps.containers}
+            allContainersImagesWhitelisted={false}
+          />
+        </Router>
       );
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when summary is null', () => {
       const { container } = render(
-        <SecurityReport
-          summary={null}
-          packageId="pkgID"
-          version="1.1.1"
-          ts={1671024110}
-          repoKind={0}
-          visibleSecurityReport={false}
-          disabledReport={false}
-          containers={defaultProps.containers}
-          allContainersImagesWhitelisted={false}
-        />
+        <Router>
+          <SecurityReport
+            summary={null}
+            packageId="pkgID"
+            version="1.1.1"
+            ts={1671024110}
+            repoKind={0}
+            visibleSecurityReport={false}
+            disabledReport={false}
+            containers={defaultProps.containers}
+            allContainersImagesWhitelisted={false}
+          />
+        </Router>
       );
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when summary is empty', () => {
       const { container } = render(
-        <SecurityReport
-          summary={{}}
-          packageId="pkgID"
-          version="1.1.1"
-          ts={1671024110}
-          repoKind={0}
-          visibleSecurityReport={false}
-          disabledReport={false}
-          containers={defaultProps.containers}
-          allContainersImagesWhitelisted={false}
-        />
+        <Router>
+          <SecurityReport
+            summary={{}}
+            packageId="pkgID"
+            version="1.1.1"
+            ts={1671024110}
+            repoKind={0}
+            visibleSecurityReport={false}
+            disabledReport={false}
+            containers={defaultProps.containers}
+            allContainersImagesWhitelisted={false}
+          />
+        </Router>
       );
       expect(container).toBeEmptyDOMElement();
     });
@@ -223,17 +249,19 @@ describe('SecurityReport', () => {
       (calculateDiffInYears as jest.Mock).mockImplementation(() => 1.5);
 
       const { container } = render(
-        <SecurityReport
-          summary={null}
-          packageId="pkgID"
-          repoKind={0}
-          version="1.1.1"
-          ts={1631960186}
-          visibleSecurityReport={false}
-          disabledReport
-          containers={defaultProps.containers}
-          allContainersImagesWhitelisted={false}
-        />
+        <Router>
+          <SecurityReport
+            summary={null}
+            packageId="pkgID"
+            repoKind={0}
+            version="1.1.1"
+            ts={1631960186}
+            visibleSecurityReport={false}
+            disabledReport
+            containers={defaultProps.containers}
+            allContainersImagesWhitelisted={false}
+          />
+        </Router>
       );
 
       expect(container).toBeEmptyDOMElement();

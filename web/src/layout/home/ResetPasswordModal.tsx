@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { CgLastpass } from 'react-icons/cg';
 import { MdClose, MdDone } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import API from '../../api';
 import { ErrorKind, RefInputField } from '../../types';
@@ -26,7 +26,7 @@ interface FormValidation {
 }
 
 interface Props {
-  code?: string;
+  code?: string | null;
 }
 
 const ResetPasswordModal = (props: Props) => {
@@ -38,7 +38,7 @@ const ResetPasswordModal = (props: Props) => {
   const repeatPasswordInput = useRef<RefInputField>(null);
   const [password, setPassword] = useState<Password>({ value: '', isValid: false });
   const [displayResetPwd, setDisplayResetPwd] = useState<boolean>(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [isSending, setIsSending] = useState<boolean>(false);
   const [isValidated, setIsValidated] = useState<boolean>(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -127,19 +127,22 @@ const ResetPasswordModal = (props: Props) => {
       }
     }
 
-    if (!isUndefined(code)) {
-      history.replace({
-        pathname: '/',
-        search: '',
-      });
+    if (code) {
+      navigate(
+        {
+          pathname: '/',
+          search: '',
+        },
+        { replace: true }
+      );
       if (code !== props.code) {
         setCode(code);
       }
       verifyPasswordResetCode();
     }
-  }, [code, history]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [code]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if (isUndefined(code) || isNull(verifying)) return null;
+  if (isUndefined(code) || isNull(code) || isNull(verifying)) return null;
 
   const closeButton = (
     <button
@@ -171,7 +174,7 @@ const ResetPasswordModal = (props: Props) => {
       header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Reset password</div>}
       disabledClose={verifying}
       modalClassName={styles.modal}
-      open={!isUndefined(code)}
+      open
       closeButton={validCode && !isSuccess ? closeButton : undefined}
       error={apiError}
       cleanError={cleanApiError}

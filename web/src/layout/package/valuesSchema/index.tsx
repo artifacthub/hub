@@ -2,11 +2,10 @@ import merger from 'json-schema-merge-allof';
 import { isUndefined } from 'lodash';
 import { useEffect, useState } from 'react';
 import { CgListTree } from 'react-icons/cg';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import API from '../../../api';
 import { JSONSchema } from '../../../jsonschema';
-import { SearchFiltersURL } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import dereferenceJSONSchema from '../../../utils/dereference';
 import ErrorBoundary from '../../common/ErrorBoundary';
@@ -19,9 +18,7 @@ interface Props {
   version: string;
   normalizedName: string;
   visibleValuesSchema: boolean;
-  searchUrlReferer?: SearchFiltersURL;
-  fromStarredPage?: boolean;
-  visibleValuesSchemaPath?: string;
+  visibleValuesSchemaPath?: string | null;
 }
 
 async function enrichValuesSchema(schema: JSONSchema) {
@@ -37,16 +34,17 @@ async function enrichValuesSchema(schema: JSONSchema) {
 }
 
 const ValuesSchema = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [valuesSchema, setValuesSchema] = useState<JSONSchema | undefined | null>();
   const [currentPkgId, setCurrentPkgId] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const cleanUrl = () => {
-    history.replace({
-      search: '',
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    navigate('', {
+      state: location.state,
+      replace: true,
     });
   };
 
@@ -71,16 +69,16 @@ const ValuesSchema = (props: Props) => {
 
   const onOpenModal = () => {
     getValuesSchema();
-    history.replace({
-      search: `?modal=values-schema${props.visibleValuesSchemaPath ? `&path=${props.visibleValuesSchemaPath}` : ''}`,
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    navigate(`?modal=values-schema${props.visibleValuesSchemaPath ? `&path=${props.visibleValuesSchemaPath}` : ''}`, {
+      state: location.state,
+      replace: true,
     });
   };
 
   const onPathChange = (path?: string) => {
-    history.replace({
-      search: `?modal=values-schema${path ? `&path=${path}` : ''}`,
-      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    navigate(`?modal=values-schema${path ? `&path=${path}` : ''}`, {
+      state: location.state,
+      replace: true,
     });
   };
 

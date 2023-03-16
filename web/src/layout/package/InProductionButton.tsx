@@ -5,7 +5,7 @@ import { useContext, useRef, useState } from 'react';
 import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 import { MdBusiness } from 'react-icons/md';
 import { RiMedalLine } from 'react-icons/ri';
-import { useHistory } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import API from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
@@ -25,7 +25,8 @@ interface Props {
 
 const InProductionButton = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [openStatus, setOpenStatus] = useState(false);
   const [organizations, setOrganizations] = useState<Organization[] | undefined | null>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -69,7 +70,7 @@ const InProductionButton = (props: Props) => {
           });
         } else {
           dispatch(signOut());
-          history.push(`${window.location.pathname}?modal=login&redirect=${window.location.pathname}`);
+          navigate(`${location.pathname}?modal=login&redirect=${location.pathname}`);
         }
       }
     }
@@ -120,7 +121,7 @@ const InProductionButton = (props: Props) => {
         });
       } else {
         dispatch(signOut());
-        history.push(`${window.location.pathname}?modal=login&redirect=${window.location.pathname}`);
+        navigate(`${location.pathname}?modal=login&redirect=${location.pathname}`);
       }
     }
   }

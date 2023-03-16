@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mocked } from 'jest-mock';
-import { BrowserRouter as Router } from 'react-router-dom';
+import ReactRouter, { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
@@ -10,6 +10,11 @@ import StatsView from './index';
 jest.mock('../../api');
 jest.mock('./BrushChart', () => () => <div>Chart</div>);
 jest.mock('react-apexcharts', () => () => <div>Chart</div>);
+
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as any),
+  useLocation: jest.fn(),
+}));
 
 const getMockStats = (fixtureId: string): AHStats => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as AHStats;
@@ -40,6 +45,14 @@ describe('StatsView', () => {
 
   beforeEach(() => {
     dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1639468828000);
+
+    jest.spyOn(ReactRouter, 'useLocation').mockReturnValue({
+      pathname: '',
+      search: '',
+      hash: '',
+      state: null,
+      key: 'key',
+    });
   });
 
   afterEach(() => {
@@ -184,13 +197,21 @@ describe('StatsView', () => {
     });
 
     it('calls scrollIntoView when hash is defined to load component', async () => {
+      jest.spyOn(ReactRouter, 'useLocation').mockReturnValue({
+        pathname: '',
+        search: '',
+        hash: '#repositories',
+        state: null,
+        key: 'key',
+      });
+
       const mockStats = getMockStats('4');
       mocked(API).getAHStats.mockResolvedValue(mockStats);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
-            <StatsView hash="#repositories" />
+            <StatsView />
           </Router>
         </AppCtx.Provider>
       );

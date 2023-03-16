@@ -14,8 +14,8 @@ interface Props {
   templatesInHelpers: DefinedTemplatesList;
   values?: any;
   normalizedName: string;
-  visibleTemplate?: string;
-  visibleLine?: string;
+  visibleTemplate?: string | null;
+  visibleLine?: string | null;
   updateUrl: (q: TemplatesQuery) => void;
 }
 

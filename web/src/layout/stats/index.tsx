@@ -3,7 +3,7 @@ import { isNull, isUndefined } from 'lodash';
 import moment from 'moment';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
@@ -20,12 +20,9 @@ import BrushChart from './BrushChart';
 import PackagesList from './PackagesList';
 import styles from './StatsView.module.css';
 
-interface Props {
-  hash?: string;
-}
-
-const StatsView = (props: Props) => {
-  const history = useHistory();
+const StatsView = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { ctx } = useContext(AppCtx);
   const whiteLabel = isWhiteLabel();
   const siteName = getMetaTag('siteName');
@@ -377,16 +374,16 @@ const StatsView = (props: Props) => {
 
   const scrollIntoView = useCallback(
     (id?: string) => {
-      const elId = id || props.hash;
+      const elId = id || location.hash;
       if (isUndefined(elId) || elId === '') return;
 
       try {
         const element = document.querySelector(elId);
         if (element) {
           element.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
-          if (props.hash !== elId) {
-            history.push({
-              pathname: history.location.pathname,
+          if (location.hash !== elId) {
+            navigate({
+              pathname: location.pathname,
               hash: elId,
             });
           }
@@ -395,7 +392,7 @@ const StatsView = (props: Props) => {
         return;
       }
     },
-    [props.hash, history]
+    [location.hash] /* eslint-disable-line react-hooks/exhaustive-deps */
   );
 
   return (

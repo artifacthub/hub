@@ -2,7 +2,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { MouseEvent as ReactMouseEvent, useContext, useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
@@ -16,14 +16,14 @@ import styles from './MembersSection.module.css';
 import MemberModal from './Modal';
 
 interface Props {
-  activePage?: string;
+  activePage: string | null;
   onAuthError: () => void;
 }
 
 const DEFAULT_LIMIT = 10;
 
 const MembersSection = (props: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { ctx } = useContext(AppCtx);
   const [isGettingMembers, setIsGettingMembers] = useState(false);
   const [members, setMembers] = useState<Member[] | undefined>(undefined);
@@ -46,9 +46,12 @@ const MembersSection = (props: Props) => {
   };
 
   const updatePageNumber = () => {
-    history.replace({
-      search: `?page=${activePage}`,
-    });
+    navigate(
+      {
+        search: `?page=${activePage}`,
+      },
+      { replace: true }
+    );
   };
 
   const getConfirmedMembersNumber = (members: Member[]): number => {

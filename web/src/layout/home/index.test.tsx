@@ -13,13 +13,17 @@ jest.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));
 
-const getMockStats = (fixtureId: string): Stats => {
-  return require(`./__fixtures__/index/${fixtureId}.json`) as Stats;
+const mockOutletContextData: any = {
+  isSearching: false,
 };
 
-const defaultProps = {
-  isSearching: true,
-  onOauthFailed: false,
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useOutletContext: () => mockOutletContextData,
+}));
+
+const getMockStats = (fixtureId: string): Stats => {
+  return require(`./__fixtures__/index/${fixtureId}.json`) as Stats;
 };
 
 describe('Home index', () => {
@@ -33,7 +37,7 @@ describe('Home index', () => {
 
     const { asFragment } = render(
       <Router>
-        <HomeView {...defaultProps} />
+        <HomeView />
       </Router>
     );
 
@@ -52,7 +56,7 @@ describe('Home index', () => {
 
       render(
         <Router>
-          <HomeView {...defaultProps} />
+          <HomeView />
         </Router>
       );
 
@@ -67,14 +71,9 @@ describe('Home index', () => {
       const mockStats = getMockStats('4');
       mocked(API).getStats.mockResolvedValue(mockStats);
 
-      const props = {
-        ...defaultProps,
-        isSearching: true,
-      };
-
       render(
         <Router>
-          <HomeView {...props} />
+          <HomeView />
         </Router>
       );
 
@@ -85,14 +84,9 @@ describe('Home index', () => {
     it('renders dash symbol when getStats call fails', async () => {
       mocked(API).getStats.mockRejectedValue({ kind: ErrorKind.Other });
 
-      const props = {
-        ...defaultProps,
-        isSearching: true,
-      };
-
       render(
         <Router>
-          <HomeView {...props} />
+          <HomeView />
         </Router>
       );
 
@@ -106,7 +100,7 @@ describe('Home index', () => {
 
       render(
         <Router>
-          <HomeView {...defaultProps} />
+          <HomeView />
         </Router>
       );
 
@@ -124,7 +118,7 @@ describe('Home index', () => {
 
       render(
         <Router>
-          <HomeView {...defaultProps} />
+          <HomeView />
         </Router>
       );
 
