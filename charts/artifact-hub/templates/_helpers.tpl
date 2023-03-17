@@ -91,7 +91,7 @@ Provide an init container to verify the database is accessible
 */}}
 {{- define "chart.checkDbIsReadyInitContainer" -}}
 name: check-db-ready
-image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
+image: {{ .Values.postgresql.image.registry }}/{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
 imagePullPolicy: {{ .Values.pullPolicy }}
 {{- with .Values.hub.deploy.initContainers.checkDbIsReady.resources }}
 resources:
