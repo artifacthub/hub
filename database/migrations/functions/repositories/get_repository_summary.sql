@@ -7,6 +7,7 @@ returns setof json as $$
         'name', r.name,
         'display_name', r.display_name,
         'url', r.url,
+        'branch', r.branch,
         'private', (
             case when r.auth_user is not null or r.auth_pass is not null then true
             else false end

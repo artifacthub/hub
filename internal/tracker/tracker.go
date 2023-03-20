@@ -194,6 +194,7 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 		hub.Keptn,
 		hub.KnativeClientPlugin,
 		hub.Krew,
+		hub.KubeArmor,
 		hub.Kubewarden,
 		hub.Kyverno,
 		hub.OPA,

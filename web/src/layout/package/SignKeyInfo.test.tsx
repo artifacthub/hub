@@ -65,7 +65,7 @@ describe('SignKeyInfo', () => {
 
       expect(screen.getByText('Sign key information'));
       expect(screen.getByText('Fingerprint')).toBeInTheDocument();
-      expect(screen.getByText('0011223344')).toBeInTheDocument();
+      expect(await screen.findByText('0011223344')).toBeInTheDocument();
       expect(screen.getByText('URL')).toBeInTheDocument();
       expect(screen.getByText('https://key.url')).toBeInTheDocument();
       expect(screen.getByText('Close')).toBeInTheDocument();

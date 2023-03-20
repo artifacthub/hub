@@ -120,6 +120,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Krew kubectl plugins
                     </option>
                     <option
+                      value="19"
+                    >
+                      KubeArmor policies
+                    </option>
+                    <option
                       value="13"
                     >
                       Kubewarden policies

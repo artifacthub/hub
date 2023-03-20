@@ -40,6 +40,8 @@ const getRepoKind = (repoName: string): RepositoryKind | null => {
       return RepositoryKind.Backstage;
     case 'argo-template':
       return RepositoryKind.ArgoTemplate;
+    case 'kubearmor':
+      return RepositoryKind.KubeArmor;
     default:
       return null;
   }
@@ -85,6 +87,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'backstage';
     case RepositoryKind.ArgoTemplate:
       return 'argo-template';
+    case RepositoryKind.KubeArmor:
+      return 'kubearmor';
     default:
       return null;
   }

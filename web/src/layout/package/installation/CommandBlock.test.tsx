@@ -7,20 +7,21 @@ describe('CommandBlock', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const { asFragment } = render(<CommandBlock command="command" />);
+    expect(await screen.findByText('command')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
-    it('renders component', () => {
+    it('renders component', async () => {
       render(<CommandBlock command="command" />);
-      expect(screen.getByText('command')).toBeInTheDocument();
+      expect(await screen.findByText('command')).toBeInTheDocument();
     });
 
-    it('renders component with title', () => {
+    it('renders component with title', async () => {
       render(<CommandBlock title="this is a title" command="command" />);
-      expect(screen.getByText('this is a title')).toBeInTheDocument();
+      expect(await screen.findByText('this is a title')).toBeInTheDocument();
     });
 
     it('renders component with filename', () => {

@@ -1391,6 +1391,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/kubearmor/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getKubeArmorPoliciesDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KubeArmorPoliciesPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/kubewarden/{repoName}/{packageName}":
     get:
       tags:
@@ -1834,6 +1857,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/KrewPluginsPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/kubearmor/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getKubeArmorPoliciesVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KubeArmorPoliciesPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -3788,6 +3835,23 @@ components:
                   additionalProperties:
                     type: string
                   example: "apiVersion: krew.googlecontainertools.github.com/v1alpha2"
+    KubeArmorPoliciesPackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              nullable: false
+              properties:
+                policies:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  example:
+                    system/ksc-misconfig-service.yaml: |
+                      apiVersion: security.kubearmor.com/v1
+                      kind: KubeArmorPolicy
     KubewardenPoliciesPackage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -4467,6 +4531,7 @@ components:
           * `16` - Knative client plugins
           * `17` - Backstage plugins
           * `18` - Argo templates
+          * `19` - KubeArmor templates
     RepositoryKindParam:
       type: string
       enum:
@@ -4489,6 +4554,7 @@ components:
         - knative-client-plugin
         - backstage
         - argo-template
+        - kubearmor
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4510,6 +4576,7 @@ components:
         * `knative-client-plugin` - Knative client plugins
         * `backstage` - Backstage plugins
         * `argo-template` - Argo templates
+        * `kubearmor` - KubeArmor policies
     RepositorySummary:
       type: object
       required:
@@ -5048,6 +5115,7 @@ components:
           * `16` - Knative client plugins
           * `17` - Backstage plugins
           * `18` - Argo templates
+          * `19` - KubeArmor templates
     PackageNameParam:
       in: path
       name: packageName

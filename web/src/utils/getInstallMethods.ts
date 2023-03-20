@@ -6,6 +6,7 @@ import {
   GatekeeperExample,
   HelmChartType,
   Package,
+  Policies,
   Repository,
   RepositoryKind,
 } from '../types';
@@ -30,6 +31,7 @@ export interface InstallMethod {
     images?: ContainerImage[] | null;
     relativePath?: string;
     examples?: GatekeeperExample[];
+    policies?: Policies;
   };
 }
 
@@ -55,6 +57,7 @@ export enum InstallMethodKind {
   Kubewarden,
   KustomizeGatekeeperInstall,
   KubectlGatekeeperInstall,
+  KubeArmor,
 }
 
 const SPECIAL_OLM = 'community-operators';
@@ -88,6 +91,12 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
           break;
         case RepositoryKind.Falco:
           if (isUndefined(pkg.install) && pkg.repository.name !== SPECIAL_FALCO) {
+            output.errorMessage = 'This package does not include installation instructions yet.';
+            hasError = true;
+          }
+          break;
+        case RepositoryKind.KubeArmor:
+          if (isUndefined(pkg.install) && (isUndefined(pkg.data) || (pkg.data && isUndefined(pkg.data.policies)))) {
             output.errorMessage = 'This package does not include installation instructions yet.';
             hasError = true;
           }
@@ -293,6 +302,20 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
               },
             }
           );
+        }
+        break;
+      case RepositoryKind.KubeArmor:
+        if (isUndefined(pkg.install)) {
+          output.methods.push({
+            label: 'kubectl',
+            title: 'Kubectl',
+            kind: InstallMethodKind.KubeArmor,
+            props: {
+              repository: pkg.repository,
+              policies: pkg.data && pkg.data.policies ? pkg.data.policies : undefined,
+              relativePath: pkg.relativePath!,
+            },
+          });
         }
         break;
     }

@@ -13,16 +13,17 @@ describe('KubewardenInstall', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const { asFragment } = render(<KubewardenInstall {...defaultProps} />);
+    expect(await screen.findByText('kwctl pull ghcr.io/kubewarden/policies/...:vx.x.x')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
-    it('renders component', () => {
+    it('renders component', async () => {
       render(<KubewardenInstall {...defaultProps} />);
 
-      expect(screen.getByText('kwctl pull ghcr.io/kubewarden/policies/...:vx.x.x')).toBeInTheDocument();
+      expect(await screen.findByText('kwctl pull ghcr.io/kubewarden/policies/...:vx.x.x')).toBeInTheDocument();
       expect(screen.getByText(/The policy can be obtained using/)).toBeInTheDocument();
 
       const link = screen.getByText('kwctl');
@@ -42,7 +43,7 @@ describe('KubewardenInstall', () => {
       );
 
       expect(screen.getByText('Source')).toBeInTheDocument();
-      expect(screen.getByText('kwctl pull ghcr.io/kubewarden/policies/...:vx.x.x')).toBeInTheDocument();
+      expect(await screen.findByText('kwctl pull ghcr.io/kubewarden/policies/...:vx.x.x')).toBeInTheDocument();
 
       const select = screen.getByRole('combobox', { name: 'source-select' });
       expect(select).toBeInTheDocument();

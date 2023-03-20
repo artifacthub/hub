@@ -19,6 +19,7 @@ import HelmInstall from './HelmInstall';
 import HelmOCIInstall from './HelmOCIInstall';
 import HelmPluginInstall from './HelmPluginInstall';
 import KrewInstall from './KrewInstall';
+import KubeArmorInstall from './KubeArmorInstall';
 import KubectlGatekeeperInstall from './KubectlGatekeeperInstall';
 import KubewardenInstall from './KubewardenInstall';
 import KustomizeGatekeeperInstall from './KustomizeGatekeeperInstall';
@@ -213,6 +214,14 @@ const InstallationModal = (props: Props) => {
                               <KubectlGatekeeperInstall
                                 repository={method.props.repository!}
                                 examples={method.props.examples}
+                                relativePath={method.props.relativePath!}
+                              />
+                            );
+                          case InstallMethodKind.KubeArmor:
+                            return (
+                              <KubeArmorInstall
+                                repository={method.props.repository!}
+                                policies={method.props.policies}
                                 relativePath={method.props.relativePath!}
                               />
                             );

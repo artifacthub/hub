@@ -92,6 +92,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.ArgoTemplate,
     name: 'Argo templates',
   },
+  {
+    kind: RepositoryKind.KubeArmor,
+    name: 'KubeArmor policies',
+  },
 ];
 
 const Wrapper = styled('span')`

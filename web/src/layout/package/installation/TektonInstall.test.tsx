@@ -22,24 +22,25 @@ describe('TektonInstall', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const { asFragment } = render(<TektonInstall {...defaultProps} />);
+    expect(await screen.findByText('kubectl apply -f https://url.com')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
-    it('renders component', () => {
+    it('renders component', async () => {
       render(<TektonInstall {...defaultProps} />);
 
       expect(screen.getByText('Install the task:')).toBeInTheDocument();
-      expect(screen.getByText('kubectl apply -f https://url.com')).toBeInTheDocument();
+      expect(await screen.findByText('kubectl apply -f https://url.com')).toBeInTheDocument();
     });
 
-    it('when kind is TektonPipeline', () => {
+    it('when kind is TektonPipeline', async () => {
       render(<TektonInstall {...defaultProps} repository={{ ...repo, kind: RepositoryKind.TektonPipeline }} />);
 
       expect(screen.getByText('Install the pipeline:')).toBeInTheDocument();
-      expect(screen.getByText('kubectl apply -f https://url.com')).toBeInTheDocument();
+      expect(await screen.findByText('kubectl apply -f https://url.com')).toBeInTheDocument();
     });
 
     it('renders private repo', () => {
@@ -51,14 +52,14 @@ describe('TektonInstall', () => {
     });
 
     describe('when contentUrl', () => {
-      it('is undefined', () => {
+      it('is undefined', async () => {
         render(<TektonInstall {...defaultProps} contentUrl={undefined} />);
-        expect(screen.getByText('kubectl apply -f TASK_RAW_YAML_URL')).toBeInTheDocument();
+        expect(await screen.findByText('kubectl apply -f TASK_RAW_YAML_URL')).toBeInTheDocument();
       });
 
-      it('is an empty string', () => {
+      it('is an empty string', async () => {
         render(<TektonInstall repository={{ ...repo, kind: RepositoryKind.TektonPipeline }} contentUrl="" />);
-        expect(screen.getByText('kubectl apply -f PIPELINE_RAW_YAML_URL')).toBeInTheDocument();
+        expect(await screen.findByText('kubectl apply -f PIPELINE_RAW_YAML_URL')).toBeInTheDocument();
       });
     });
   });

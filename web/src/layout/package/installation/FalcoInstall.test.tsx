@@ -7,17 +7,24 @@ describe('FalcoInstall', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const { asFragment } = render(<FalcoInstall normalizedName="falco-repo" />);
+
+    expect(
+      await screen.findByText(
+        'helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/falco-repo/custom-rules.yaml stable/falco'
+      )
+    ).toBeInTheDocument();
+
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
-    it('renders component', () => {
+    it('renders component', async () => {
       render(<FalcoInstall normalizedName="falco-repo" />);
 
       expect(
-        screen.getByText(
+        await screen.findByText(
           'helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/falco-repo/custom-rules.yaml stable/falco'
         )
       ).toBeInTheDocument();
