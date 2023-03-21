@@ -413,6 +413,7 @@ const ContentDefaultModal = (props: Props) => {
                                     color: 'var(--color-black-25)',
                                     marginRight: '5px',
                                     fontSize: '0.8rem',
+                                    minWidth: '3rem',
                                   }}
                                   showLineNumbers
                                 >
