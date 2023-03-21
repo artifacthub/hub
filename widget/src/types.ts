@@ -46,6 +46,7 @@ export enum RepositoryKind {
   KnativeClientPlugin,
   Backstage,
   ArgoTemplate,
+  KubeArmor,
 }
 
 export interface SearchResults {

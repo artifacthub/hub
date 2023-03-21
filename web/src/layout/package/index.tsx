@@ -364,6 +364,25 @@ const PackageView = () => {
     return policies;
   };
 
+  const getKubeArmorPolicies = (): ContentDefaultModalItem[] | undefined => {
+    let policies: ContentDefaultModalItem[] | undefined;
+    if (
+      !isUndefined(detail) &&
+      !isNull(detail) &&
+      !isNull(detail.data) &&
+      !isUndefined(detail.data) &&
+      !isUndefined(detail.data.policies)
+    ) {
+      policies = Object.keys(detail.data.policies).map((policyName: string) => {
+        return {
+          name: policyName,
+          file: detail.data!.policies![policyName],
+        };
+      });
+    }
+    return policies;
+  };
+
   const getTektonExamples = (): ContentDefaultModalItem[] | undefined => {
     let examples: ContentDefaultModalItem[] | undefined;
     if (
@@ -1209,6 +1228,33 @@ const PackageView = () => {
                                       normalizedName={detail.normalizedName}
                                       title="Rules"
                                       files={getFalcoRules() as any}
+                                    />
+                                  </div>
+                                );
+
+                              case RepositoryKind.KubeArmor:
+                                return (
+                                  <div className="d-none d-lg-block">
+                                    <ContentDefaultModal
+                                      kind={ContentDefaultModalKind.Policy}
+                                      packageId={detail.packageId}
+                                      modalName="policies"
+                                      language="yaml"
+                                      visibleModal={!isNull(visibleModal) && visibleModal === 'policies'}
+                                      visibleFile={
+                                        !isNull(visibleModal) && visibleModal === 'policies'
+                                          ? searchParams.get('file')
+                                          : undefined
+                                      }
+                                      btnModalContent={
+                                        <div className="d-flex flex-row align-items-center justify-content-center">
+                                          <FiCode />
+                                          <span className="ms-2 fw-bold text-uppercase">Policies</span>
+                                        </div>
+                                      }
+                                      normalizedName={detail.normalizedName}
+                                      title="Policies"
+                                      files={getKubeArmorPolicies() as any}
                                     />
                                   </div>
                                 );

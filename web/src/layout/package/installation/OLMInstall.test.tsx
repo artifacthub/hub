@@ -17,17 +17,18 @@ describe('OLMInstall', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const { asFragment } = render(<OLMInstall {...defaultProps} />);
+    expect(await screen.findByText(`cat <<EOF | kubectl apply -f -`)).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
-    it('renders component', () => {
+    it('renders component', async () => {
       render(<OLMInstall {...defaultProps} />);
 
       expect(screen.getByText('Install the operator by running the following command:')).toBeInTheDocument();
-      expect(screen.getByText(`cat <<EOF | kubectl apply -f -`)).toBeInTheDocument();
+      expect(await screen.findByText(`cat <<EOF | kubectl apply -f -`)).toBeInTheDocument();
       expect(screen.getByText('After install, watch your operator come up using next command:')).toBeInTheDocument();
       expect(screen.getByText(`kubectl get csv -n my-${defaultProps.name}`)).toBeInTheDocument();
       expect(
@@ -44,9 +45,9 @@ describe('OLMInstall', () => {
       );
     });
 
-    it('renders global operator', () => {
+    it('renders global operator', async () => {
       render(<OLMInstall {...defaultProps} isGlobalOperator />);
-      expect(screen.getByText('kubectl get csv -n operators')).toBeInTheDocument();
+      expect(await screen.findByText('kubectl get csv -n operators')).toBeInTheDocument();
     });
 
     it('renders private repo', () => {

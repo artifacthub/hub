@@ -186,7 +186,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                         style="white-space: pre;"
                       >
                         <span>
-                          helm repo add incubator https://repo.url
+                           
                         </span>
                       </code>
                     </pre>
@@ -255,15 +255,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                         style="white-space: pre;"
                       >
                         <span>
-                          helm install my-test incubator/
-                        </span>
-                        <span
-                          style="color: rgb(0, 134, 179);"
-                        >
-                          test
-                        </span>
-                        <span>
-                           --version 1.0.0
+                           
                         </span>
                       </code>
                     </pre>

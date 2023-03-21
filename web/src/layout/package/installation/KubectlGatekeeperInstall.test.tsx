@@ -70,17 +70,18 @@ describe('KubectlGatekeeperInstall', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const { asFragment } = render(<KubectlGatekeeperInstall {...defaultProps} />);
+    expect(await screen.findByText('library/general/storageclass')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
-    it('renders component', () => {
+    it('renders component', async () => {
       render(<KubectlGatekeeperInstall {...defaultProps} />);
 
       expect(screen.getByText(/and the sample constraints provided in each/)).toBeInTheDocument();
-      expect(screen.getByText('library/general/storageclass')).toBeInTheDocument();
+      expect(await screen.findByText('library/general/storageclass')).toBeInTheDocument();
       expect(
         screen.getByText(/kubectl apply -f samples\/container-must-meet-ratio\/constraint\.yaml/)
       ).toBeInTheDocument();

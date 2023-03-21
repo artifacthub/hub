@@ -31,6 +31,7 @@ const ICONS: IconsList = {
   [RepositoryKind.KnativeClientPlugin]: <SVGIcons name="knative" />,
   [RepositoryKind.Backstage]: <SVGIcons name="backstage" />,
   [RepositoryKind.ArgoTemplate]: <SVGIcons name="argo" />,
+  [RepositoryKind.KubeArmor]: <SVGIcons name="kubearmor" />,
 };
 
 const RepositoryIcon = (props: Props) => (

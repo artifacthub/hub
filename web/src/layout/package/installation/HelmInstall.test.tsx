@@ -23,16 +23,17 @@ describe('HelmInstall', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const { asFragment } = render(<HelmInstall {...defaultProps} />);
+    expect(await screen.findByText(`helm repo add ${repo.name} ${repo.url}`)).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
-    it('renders component', () => {
+    it('renders component', async () => {
       render(<HelmInstall {...defaultProps} />);
 
-      expect(screen.getByText(`helm repo add ${repo.name} ${repo.url}`)).toBeInTheDocument();
+      expect(await screen.findByText(`helm repo add ${repo.name} ${repo.url}`)).toBeInTheDocument();
       expect(
         screen.getByText(
           `helm install my-${defaultProps.name} ${repo.name}/${defaultProps.name} --version ${defaultProps.version}`

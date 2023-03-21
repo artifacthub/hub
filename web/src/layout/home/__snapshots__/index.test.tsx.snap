@@ -316,7 +316,7 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-3 px-xs-0"
         >
-          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins and Argo templates.
+          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo templates and KubeArmor policies.
           <div
             class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
           >
@@ -426,10 +426,6 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </a>
-          </div>
-          <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
-          >
             <a
               aria-label="Open Tinkerbell site"
               class="link col iconLink"
@@ -456,6 +452,10 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </a>
+          </div>
+          <div
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+          >
             <a
               aria-label="Open Krew site"
               class="link col iconLink"
@@ -534,10 +534,6 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </a>
-          </div>
-          <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
-          >
             <a
               aria-label="Open CoreDNS site"
               class="link col iconLink"
@@ -590,6 +586,10 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </a>
+          </div>
+          <div
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+          >
             <a
               aria-label="Open Container Initiative site"
               class="link col iconLink"
@@ -642,10 +642,6 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </a>
-          </div>
-          <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
-          >
             <a
               aria-label="Open Kubewarden site"
               class="link col iconLink"
@@ -724,6 +720,13 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </a>
+          </div>
+          <div
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+          >
+            <div
+              class="col"
+            />
             <a
               aria-label="Open Argo templates web"
               class="link col iconLink"
@@ -750,6 +753,35 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </a>
+            <a
+              aria-label="Open KubeArmor policies web"
+              class="link col iconLink"
+              href="https://kubearmor.io"
+              rel="noopener noreferrer"
+              role="button"
+              tabindex="-1"
+              target="_blank"
+            >
+              <div
+                class="d-flex flex-column justify-content-between align-items-center h-100"
+              >
+                <img
+                  alt="Icon"
+                  class="aboutIcon"
+                  src="/static/media/kubearmor-light.svg"
+                />
+                <div
+                  class="d-none d-sm-block text-light mt-2 legendIcon"
+                >
+                  <small>
+                    KubeArmor policies
+                  </small>
+                </div>
+              </div>
+            </a>
+            <div
+              class="col"
+            />
           </div>
           Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
         </div>

@@ -554,7 +554,8 @@ select results_eq(
         (15, 'Kyverno policies'),
         (16, 'Knative client plugins'),
         (17, 'Backstage plugins'),
-        (18, 'Argo templates')
+        (18, 'Argo templates'),
+        (19, 'KubeArmor policies')
     $$,
     'Repository kinds should exist'
 );

@@ -33,6 +33,10 @@ const (
 	// that contains the template.
 	GatekeeperTemplateKey = "template"
 
+	// KubeArmorPoliciesKey represents the key used in the package's data field
+	// that contains the raw policies.
+	KubeArmorPoliciesKey = "policies"
+
 	// KyvernoPolicyKey represents the key used in the package's data field that
 	// contains the raw policy.
 	KyvernoPolicyKey = "policy"
@@ -48,6 +52,10 @@ const (
 	// falcoRulesSuffix is the suffix that each of the rules files in the
 	// package must use.
 	falcoRulesSuffix = "-rules.yaml"
+
+	// kubeArmorPoliciesSuffix is the suffix that each of the policies files in
+	// the package must use.
+	kubeArmorPoliciesSuffix = ".yaml"
 
 	// opaPoliciesSuffix is the suffix that each of the policies files in the
 	// package must use.
@@ -196,7 +204,7 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 	}
 
 	// Include kind specific data into package
-	ignorer := ignore.CompileIgnoreLines(md.Ignore...)
+	ignorer := ignore.CompileIgnoreLines(append(md.Ignore, "artifacthub-*")...)
 	var kindData map[string]interface{}
 	switch r.Kind {
 	case hub.ArgoTemplate:
@@ -205,6 +213,8 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 		kindData, err = prepareFalcoData(pkgPath, ignorer)
 	case hub.Gatekeeper:
 		kindData, err = prepareGatekeeperData(pkgPath)
+	case hub.KubeArmor:
+		kindData, err = prepareKubeArmorData(pkgPath, ignorer)
 	case hub.Kyverno:
 		kindData, err = prepareKyvernoData(pkgPath)
 	case hub.OPA:
@@ -312,6 +322,21 @@ func prepareGatekeeperData(pkgPath string) (map[string]interface{}, error) {
 	return map[string]interface{}{
 		GatekeeperTemplateKey: string(template),
 		GatekeeperExamplesKey: examples,
+	}, nil
+}
+
+// prepareKubeArmorData reads and formats KubeArmor specific data available in
+// the path provided, returning the resulting data structure.
+func prepareKubeArmorData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]interface{}, error) {
+	// Read policies files
+	policies, err := GetFilesWithSuffix(kubeArmorPoliciesSuffix, pkgPath, ignorer)
+	if err != nil {
+		return nil, fmt.Errorf("error getting kubearmor policies files: %w", err)
+	}
+
+	// Return package data field
+	return map[string]interface{}{
+		KubeArmorPoliciesKey: policies,
 	}, nil
 }
 

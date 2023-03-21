@@ -26,18 +26,19 @@ describe('OLMOCIInstall', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const { asFragment } = render(<OLMOCIInstall {...defaultProps} />);
+    expect(await screen.findByText(/Repo/)).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
-    it('renders component', () => {
+    it('renders component', async () => {
       render(<OLMOCIInstall {...defaultProps} />);
 
       expect(screen.getByText('Install catalog')).toBeInTheDocument();
       expect(screen.getByText('repo-catalog.yaml')).toBeInTheDocument();
-      expect(screen.getByText(/Repo/)).toBeInTheDocument();
+      expect(await screen.findByText(/Repo/)).toBeInTheDocument();
       expect(screen.getByText(/user/)).toBeInTheDocument();
       expect(screen.getByText(/docker.io\/ibmcom\/ibm-operator-catalog:latest/)).toBeInTheDocument();
       expect(screen.getByText('kubectl apply -f repo-catalog.yaml')).toBeInTheDocument();

@@ -85,6 +85,10 @@ const ICONS = {
     default: '/static/media/argo.svg',
     white: '/static/media/argo-light.svg',
   },
+  [RepositoryKind.KubeArmor]: {
+    default: '/static/media/kubearmor.svg',
+    white: '/static/media/kubearmor-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

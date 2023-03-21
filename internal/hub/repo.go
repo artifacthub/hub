@@ -103,6 +103,9 @@ const (
 
 	// ArgoTemplate represents a repository with Argo templates.
 	ArgoTemplate RepositoryKind = 18
+
+	// KubeArmor represents a repository with KubeArmor policies.
+	KubeArmor RepositoryKind = 19
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -132,6 +135,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "knative-client-plugin"
 	case Krew:
 		return "krew"
+	case KubeArmor:
+		return "kubearmor"
 	case Kubewarden:
 		return "kubewarden"
 	case Kyverno:
@@ -179,6 +184,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return KnativeClientPlugin, nil
 	case "krew":
 		return Krew, nil
+	case "kubearmor":
+		return KubeArmor, nil
 	case "kubewarden":
 		return Kubewarden, nil
 	case "kyverno":

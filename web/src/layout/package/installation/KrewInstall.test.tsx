@@ -21,17 +21,18 @@ describe('KrewInstall', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const { asFragment } = render(<KrewInstall {...defaultProps} />);
+    expect(await screen.findByText('kubectl krew index add repo http://repo.test')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
-    it('renders component', () => {
+    it('renders component', async () => {
       render(<KrewInstall {...defaultProps} />);
 
       expect(screen.getByText('Add repository')).toBeInTheDocument();
-      expect(screen.getByText('kubectl krew index add repo http://repo.test')).toBeInTheDocument();
+      expect(await screen.findByText('kubectl krew index add repo http://repo.test')).toBeInTheDocument();
 
       expect(screen.getByText('Install plugin')).toBeInTheDocument();
       expect(screen.getByText('kubectl krew install repo/packageName')).toBeInTheDocument();
@@ -41,7 +42,7 @@ describe('KrewInstall', () => {
       expect(link).toHaveProperty('href', 'https://krew.sigs.k8s.io/docs/user-guide/setup/install/');
     });
 
-    it('renders component when is default Krew repo', () => {
+    it('renders component when is default Krew repo', async () => {
       const props = {
         ...defaultProps,
         repository: { ...defaultProps.repository, url: 'https://github.com/kubernetes-sigs/krew-index' },
@@ -52,7 +53,7 @@ describe('KrewInstall', () => {
       expect(screen.queryByText('kubectl krew index add repo http://repo.test')).toBeNull();
 
       expect(screen.getByText('Install plugin')).toBeInTheDocument();
-      expect(screen.getByText('kubectl krew install packageName')).toBeInTheDocument();
+      expect(await screen.findByText('kubectl krew install packageName')).toBeInTheDocument();
 
       const link = screen.getByText('Need Krew?');
       expect(link).toBeInTheDocument();

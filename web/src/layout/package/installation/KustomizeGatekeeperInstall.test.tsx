@@ -22,16 +22,17 @@ describe('KustomizeGatekeeperInstall', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const { asFragment } = render(<KustomizeGatekeeperInstall {...defaultProps} />);
+    expect(await screen.findByText('kustomize.config.k8s.io/v1beta1')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
-    it('renders component', () => {
+    it('renders component', async () => {
       render(<KustomizeGatekeeperInstall {...defaultProps} />);
 
-      expect(screen.getByText('kustomize.config.k8s.io/v1beta1')).toBeInTheDocument();
+      expect(await screen.findByText('kustomize.config.k8s.io/v1beta1')).toBeInTheDocument();
       expect(screen.getByText('github.com/tegioz/gatekeeper-library/library/general/storageclass')).toBeInTheDocument();
 
       const link = screen.getByText('kustomization documentation');

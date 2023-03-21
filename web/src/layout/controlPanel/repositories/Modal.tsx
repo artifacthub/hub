@@ -453,6 +453,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.KubeArmor:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/kubearmor-policies"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            KubeArmor policies
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -479,6 +490,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.KnativeClientPlugin:
               case RepositoryKind.Backstage:
               case RepositoryKind.ArgoTemplate:
+              case RepositoryKind.KubeArmor:
                 return (
                   <>
                     <p
@@ -869,6 +881,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.KnativeClientPlugin,
               RepositoryKind.Backstage,
               RepositoryKind.ArgoTemplate,
+              RepositoryKind.KubeArmor,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -1012,6 +1025,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.KnativeClientPlugin,
               RepositoryKind.Backstage,
               RepositoryKind.ArgoTemplate,
+              RepositoryKind.KubeArmor,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

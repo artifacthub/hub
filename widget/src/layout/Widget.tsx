@@ -87,6 +87,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'backstage';
     case RepositoryKind.ArgoTemplate:
       return 'argo-template';
+    case RepositoryKind.KubeArmor:
+      return 'kubearmor';
     default:
       return null;
   }
