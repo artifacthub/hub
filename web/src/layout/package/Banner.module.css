@@ -6,3 +6,9 @@
 .loaded {
   max-height: 1500px;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .bannerWrapper {
+    transition: max-height 3s ease-in-out;
+  }
+}

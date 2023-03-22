@@ -74,3 +74,9 @@
     font-size: 1.25rem;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .animatedWarning {
+    animation: none;
+  }
+}

@@ -6,3 +6,9 @@
 .isAlertActive {
   max-height: 300px;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .alertWrapper {
+    transition: max-height 2s;
+  }
+}

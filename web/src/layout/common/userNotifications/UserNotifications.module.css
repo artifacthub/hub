@@ -39,3 +39,9 @@
 .content p {
   margin-bottom: 0rem;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition: opacity 1.3s ease-in-out;
+  }
+}

@@ -14,3 +14,9 @@
   height: 2rem;
   border-color: var(--bs-white) !important;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .navbarToggler {
+    transition: all 1.3s ease-in-out;
+  }
+}

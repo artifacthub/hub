@@ -118,3 +118,9 @@
 .anchor {
   top: -5px;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .activeLine {
+    animation: blinker 2s linear 1;
+  }
+}
