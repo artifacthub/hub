@@ -154,7 +154,7 @@ describe('repoKind', () => {
     });
 
     it('unknown kind', () => {
-      expect(methods.getRepoKindName(20)).toBeNull();
+      expect(methods.getRepoKindName(20 as RepositoryKind)).toBeNull();
     });
   });
 });
