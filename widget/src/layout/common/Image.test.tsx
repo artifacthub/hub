@@ -165,7 +165,7 @@ describe('Image', () => {
     });
 
     it('when kind is defferent to current ones', () => {
-      render(<Image {...defaultProps} kind={30} />);
+      render(<Image {...defaultProps} kind={30 as RepositoryKind} />);
       const image = screen.getByAltText('alt image');
       expect(image).toBeInTheDocument();
       expect(image).toHaveProperty('src', 'https://localhost:8000/static/media/package_placeholder.svg');

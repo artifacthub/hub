@@ -136,7 +136,7 @@ describe('RepositoryIcon', () => {
   });
 
   it('renders empty icon', () => {
-    render(<RepositoryIcon kind={101} type="white" />);
+    render(<RepositoryIcon kind={101 as RepositoryKind} type="white" />);
     expect(() => screen.getByAltText('Icon')).toThrow();
   });
 

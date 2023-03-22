@@ -26,7 +26,7 @@ describe('RepositoryIconLabel', () => {
   });
 
   it('does not render when repo does not belong to the repo list', () => {
-    const { container } = render(<RepositoryIconLabel {...defaultProps} kind={30} />);
+    const { container } = render(<RepositoryIconLabel {...defaultProps} kind={30 as RepositoryKind} />);
     expect(container).toBeEmptyDOMElement();
   });
 });
