@@ -96,3 +96,9 @@
     max-width: 100%;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .btnMobileFilters {
+    transition: all 1.3s ease-in-out;
+  }
+}

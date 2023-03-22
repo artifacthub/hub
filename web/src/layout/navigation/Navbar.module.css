@@ -73,3 +73,9 @@
     width: 100%;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: all 1.3s ease-in-out;
+  }
+}

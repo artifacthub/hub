@@ -74,18 +74,15 @@
   from {
     -webkit-transform: scale(0.5, 0.5);
     transform: scale(0.5, 0.5);
-    -webkit-transform: scale(0.5, 0.5);
-    transform: scale(0.5, 0.5);
     opacity: 0;
   }
   to {
     -webkit-transform: scale(1, 1);
     transform: scale(1, 1);
-    -webkit-transform: scale(1, 1);
-    transform: scale(1, 1);
     opacity: 1;
   }
 }
+
 @-webkit-keyframes spWaveBe {
   from {
     -webkit-transform: scale(1, 1);
@@ -108,5 +105,68 @@
     -webkit-transform: scale(1.5, 1.5);
     transform: scale(1.5, 1.5);
     opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @-webkit-keyframes spWaveAf {
+    from {
+      -webkit-transform: scale(0.5, 0.5);
+      transform: scale(0.5, 0.5);
+      opacity: 1;
+    }
+    to {
+      -webkit-transform: scale(0.5, 0.5);
+      transform: scale(0.5, 0.5);
+      opacity: 0;
+    }
+  }
+
+  @keyframes spWaveAf {
+    from {
+      -webkit-transform: scale(0.5, 0.5);
+      transform: scale(0.5, 0.5);
+      opacity: 1;
+    }
+    to {
+      -webkit-transform: scale(0.5, 0.5);
+      transform: scale(0.5, 0.5);
+      opacity: 0;
+    }
+  }
+
+  @-webkit-keyframes spWaveBe {
+    from {
+      -webkit-transform: none;
+      transform: none;
+      opacity: 0;
+    }
+    to {
+      -webkit-transform: none;
+      transform: none;
+      opacity: 1;
+    }
+  }
+  @keyframes spWaveBe {
+    from {
+      -webkit-transform: none;
+      transform: none;
+      opacity: 0;
+    }
+    to {
+      -webkit-transform: none;
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  .wave:before {
+    -webkit-animation: spWaveBe 2.6s infinite linear;
+    animation: spWaveBe 2.6s infinite linear;
+  }
+
+  .wave:after {
+    -webkit-animation: spWaveAf 2.6s infinite linear;
+    animation: spWaveAf 2.6s infinite linear;
   }
 }
