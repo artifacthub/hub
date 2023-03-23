@@ -35,7 +35,7 @@ describe('KrewInstall', () => {
       expect(await screen.findByText('kubectl krew index add repo http://repo.test')).toBeInTheDocument();
 
       expect(screen.getByText('Install plugin')).toBeInTheDocument();
-      expect(screen.getByText('kubectl krew install repo/packageName')).toBeInTheDocument();
+      expect(await screen.findByText('kubectl krew install repo/packageName')).toBeInTheDocument();
 
       const link = screen.getByText('Need Krew?');
       expect(link).toBeInTheDocument();

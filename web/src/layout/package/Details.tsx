@@ -307,7 +307,10 @@ const Details = (props: Props) => {
                         className={classnames('text-truncate', styles.text, { 'mb-1': index + 1 !== subjects.length })}
                         key={`kyverno-subject-${subject}`}
                       >
-                        {subject}
+                        <div className="d-flex align-items-center">
+                          <span className="pe-1">&#183;</span>
+                          <small>{subject}</small>
+                        </div>
                       </p>
                     ))}
                   </div>
@@ -376,7 +379,10 @@ const Details = (props: Props) => {
                         className={classnames('text-truncate', styles.text, { 'mb-1': index + 1 !== kinds.length })}
                         key={`keptn-kind-${kind}`}
                       >
-                        {kind}
+                        <div className="d-flex align-items-center">
+                          <span className="pe-1">&#183;</span>
+                          <small>{kind}</small>
+                        </div>
                       </p>
                     ))}
                   </div>
@@ -407,7 +413,10 @@ const Details = (props: Props) => {
                         className={`text-truncate mb-1 ${styles.text}`}
                         key={`kubewarden-resource-${resource}`}
                       >
-                        {resource}
+                        <div className="d-flex align-items-center">
+                          <span className="pe-1">&#183;</span>
+                          <small>{resource}</small>
+                        </div>
                       </p>
                     ))}
                   </div>
