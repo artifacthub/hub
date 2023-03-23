@@ -233,203 +233,209 @@ const HomeView = () => {
                 kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations,
                 container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo
                 templates and KubeArmor policies.
-                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
-                  <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`} label="Open Helm site">
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small className="text-nowrap">Helm charts and plugins</small>
+                <div className="py-0 py-lg-5">
+                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
+                    <ExternalLink
+                      href="https://argoproj.github.io/argo-workflows/"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Argo templates web"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.ArgoTemplate} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Argo templates</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink href="https://falco.org" className={`col ${styles.iconLink}`} label="Open Falco site">
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.Falco} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>Falco rules</small>
+                    </ExternalLink>
+                    <ExternalLink
+                      href="https://backstage.io/plugins"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Backstage web"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.Backstage} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Backstage plugins</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink
-                    href="https://www.openpolicyagent.org"
-                    className={`col ${styles.iconLink}`}
-                    label="Open Open Policy Agent site"
-                  >
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>OPA and Gatekeeper policies</small>
+                    </ExternalLink>
+                    <ExternalLink
+                      href="https://opencontainers.org"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Container Initiative site"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.Container} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Container images</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink
-                    href="https://github.com/operator-framework"
-                    className={`col ${styles.iconLink}`}
-                    label="Open Operator framework site"
-                  >
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>OLM operators</small>
+                    </ExternalLink>
+                    <ExternalLink
+                      href="https://coredns.io"
+                      className={`col ${styles.iconLink}`}
+                      label="Open CoreDNS site"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.CoreDNS} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>CoreDNS plugins</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink
-                    href="https://tinkerbell.org"
-                    className={`col ${styles.iconLink}`}
-                    label="Open Tinkerbell site"
-                  >
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.TBAction} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>Tinkerbell actions</small>
+                    </ExternalLink>
+                    <ExternalLink href="https://falco.org" className={`col ${styles.iconLink}`} label="Open Falco site">
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.Falco} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Falco rules</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                </div>
-                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
-                  <ExternalLink
-                    href="https://krew.sigs.k8s.io"
-                    className={`col ${styles.iconLink}`}
-                    label="Open Krew site"
-                  >
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.Krew} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>Kubectl plugins</small>
+                    </ExternalLink>
+                  </div>
+                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
+                    <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`} label="Open Helm site">
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small className="text-nowrap">Helm charts and plugins</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink href="https://tekton.dev" className={`col ${styles.iconLink}`} label="Open Tekton site">
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.TektonTask} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>Tekton tasks and pipelines</small>
+                    </ExternalLink>
+                    <ExternalLink href="https://keda.sh" className={`col ${styles.iconLink}`} label="Open KEDA site">
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.KedaScaler} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>KEDA scalers</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink href="https://keda.sh" className={`col ${styles.iconLink}`} label="Open KEDA site">
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.KedaScaler} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>KEDA scalers</small>
+                    </ExternalLink>
+                    <ExternalLink href="https://keptn.sh" className={`col ${styles.iconLink}`} label="Open Keptn site">
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.Keptn} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Keptn integrations</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink
-                    href="https://coredns.io"
-                    className={`col ${styles.iconLink}`}
-                    label="Open CoreDNS site"
-                  >
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.CoreDNS} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>CoreDNS plugins</small>
+                    </ExternalLink>
+                    <ExternalLink
+                      href="https://github.com/knative/client"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Knative client repository"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon
+                          kind={RepositoryKind.KnativeClientPlugin}
+                          type="white"
+                          className={styles.aboutIcon}
+                        />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Knative client plugins</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink href="https://keptn.sh" className={`col ${styles.iconLink}`} label="Open Keptn site">
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.Keptn} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>Keptn integrations</small>
+                    </ExternalLink>
+                    <ExternalLink
+                      href="https://krew.sigs.k8s.io"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Krew site"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.Krew} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Kubectl plugins</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                </div>
-                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
-                  <ExternalLink
-                    href="https://opencontainers.org"
-                    className={`col ${styles.iconLink}`}
-                    label="Open Container Initiative site"
-                  >
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.Container} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>Container images</small>
+                    </ExternalLink>
+                  </div>
+                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
+                    <ExternalLink
+                      href="https://kubearmor.io"
+                      className={`col ${styles.iconLink}`}
+                      label="Open KubeArmor policies web"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.KubeArmor} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>KubeArmor policies</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink
-                    href="https://www.kubewarden.io"
-                    className={`col ${styles.iconLink}`}
-                    label="Open Kubewarden site"
-                  >
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.Kubewarden} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>Kubewarden policies</small>
+                    </ExternalLink>
+                    <ExternalLink
+                      href="https://www.kubewarden.io"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Kubewarden site"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.Kubewarden} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Kubewarden policies</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink
-                    href="https://www.kyverno.io"
-                    className={`col ${styles.iconLink}`}
-                    label="Open Kubewarden site"
-                  >
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.Kyverno} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>Kyverno policies</small>
+                    </ExternalLink>
+                    <ExternalLink
+                      href="https://www.kyverno.io"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Kubewarden site"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.Kyverno} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Kyverno policies</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink
-                    href="https://github.com/knative/client"
-                    className={`col ${styles.iconLink}`}
-                    label="Open Knative client repository"
-                  >
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon
-                        kind={RepositoryKind.KnativeClientPlugin}
-                        type="white"
-                        className={styles.aboutIcon}
-                      />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>Knative client plugins</small>
+                    </ExternalLink>
+                    <ExternalLink
+                      href="https://github.com/operator-framework"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Operator framework site"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>OLM operators</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink
-                    href="https://backstage.io/plugins"
-                    className={`col ${styles.iconLink}`}
-                    label="Open Backstage web"
-                  >
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.Backstage} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>Backstage plugins</small>
+                    </ExternalLink>
+                    <ExternalLink
+                      href="https://www.openpolicyagent.org"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Policy Agent site"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>OPA and Gatekeeper policies</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                </div>
-                <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
-                  <div className="col" />
-                  <ExternalLink
-                    href="https://argoproj.github.io/argo-workflows/"
-                    className={`col ${styles.iconLink}`}
-                    label="Open Argo templates web"
-                  >
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.ArgoTemplate} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>Argo templates</small>
+                    </ExternalLink>
+                  </div>
+                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
+                    <div className="col" />
+                    <ExternalLink
+                      href="https://tekton.dev"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Tekton site"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.TektonTask} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Tekton tasks and pipelines</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <ExternalLink
-                    href="https://kubearmor.io"
-                    className={`col ${styles.iconLink}`}
-                    label="Open KubeArmor policies web"
-                  >
-                    <div className="d-flex flex-column justify-content-between align-items-center h-100">
-                      <RepositoryIcon kind={RepositoryKind.KubeArmor} type="white" className={styles.aboutIcon} />
-                      <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                        <small>KubeArmor policies</small>
+                    </ExternalLink>
+                    <ExternalLink
+                      href="https://tinkerbell.org"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Tinkerbell site"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.TBAction} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Tinkerbell actions</small>
+                        </div>
                       </div>
-                    </div>
-                  </ExternalLink>
-                  <div className="col" />
+                    </ExternalLink>
+                    <div className="col" />
+                  </div>
                 </div>
                 Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to
                 share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a
@@ -438,7 +444,6 @@ const HomeView = () => {
               </div>
             </div>
           </div>
-
           <div className="py-5 text-dark fs-4 fw-light">
             <div className="container-lg px-sm-4 px-lg-0 py-0 py-md-5">
               <div className="text-center px-4 px-xs-0">

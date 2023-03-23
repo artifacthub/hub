@@ -318,470 +318,474 @@ exports[`Home index creates snapshot 1`] = `
         >
           Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo templates and KubeArmor policies.
           <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+            class="py-0 py-lg-5"
           >
-            <a
-              aria-label="Open Helm site"
-              class="link col iconLink"
-              href="https://helm.sh"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
+            <div
+              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
             >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
+              <a
+                aria-label="Open Argo templates web"
+                class="link col iconLink"
+                href="https://argoproj.github.io/argo-workflows/"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
               >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/helm-chart-light.svg"
-                />
                 <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
                 >
-                  <small
-                    class="text-nowrap"
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/argo-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
                   >
-                    Helm charts and plugins
-                  </small>
+                    <small>
+                      Argo templates
+                    </small>
+                  </div>
                 </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open Falco site"
-              class="link col iconLink"
-              href="https://falco.org"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
+              </a>
+              <a
+                aria-label="Open Backstage web"
+                class="link col iconLink"
+                href="https://backstage.io/plugins"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
               >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/falco-rules-light.svg"
-                />
                 <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
                 >
-                  <small>
-                    Falco rules
-                  </small>
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/backstage-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      Backstage plugins
+                    </small>
+                  </div>
                 </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open Open Policy Agent site"
-              class="link col iconLink"
-              href="https://www.openpolicyagent.org"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
+              </a>
+              <a
+                aria-label="Open Container Initiative site"
+                class="link col iconLink"
+                href="https://opencontainers.org"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
               >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/opa-policies-light.svg"
-                />
                 <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
                 >
-                  <small>
-                    OPA and Gatekeeper policies
-                  </small>
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/container-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      Container images
+                    </small>
+                  </div>
                 </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open Operator framework site"
-              class="link col iconLink"
-              href="https://github.com/operator-framework"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
+              </a>
+              <a
+                aria-label="Open CoreDNS site"
+                class="link col iconLink"
+                href="https://coredns.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
               >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/olm-operators-light.svg"
-                />
                 <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
                 >
-                  <small>
-                    OLM operators
-                  </small>
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/coredns-plugin-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      CoreDNS plugins
+                    </small>
+                  </div>
                 </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open Tinkerbell site"
-              class="link col iconLink"
-              href="https://tinkerbell.org"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
+              </a>
+              <a
+                aria-label="Open Falco site"
+                class="link col iconLink"
+                href="https://falco.org"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
               >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/tinkerbell-actions-light.svg"
-                />
                 <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
                 >
-                  <small>
-                    Tinkerbell actions
-                  </small>
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/falco-rules-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      Falco rules
+                    </small>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </div>
-          <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
-          >
-            <a
-              aria-label="Open Krew site"
-              class="link col iconLink"
-              href="https://krew.sigs.k8s.io"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
-              >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/krew-plugins-light.svg"
-                />
-                <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
-                >
-                  <small>
-                    Kubectl plugins
-                  </small>
-                </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open Tekton site"
-              class="link col iconLink"
-              href="https://tekton.dev"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
-              >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/tekton-pkg-light.svg"
-                />
-                <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
-                >
-                  <small>
-                    Tekton tasks and pipelines
-                  </small>
-                </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open KEDA site"
-              class="link col iconLink"
-              href="https://keda.sh"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
-              >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/keda-scaler-light.svg"
-                />
-                <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
-                >
-                  <small>
-                    KEDA scalers
-                  </small>
-                </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open CoreDNS site"
-              class="link col iconLink"
-              href="https://coredns.io"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
-              >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/coredns-plugin-light.svg"
-                />
-                <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
-                >
-                  <small>
-                    CoreDNS plugins
-                  </small>
-                </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open Keptn site"
-              class="link col iconLink"
-              href="https://keptn.sh"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
-              >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/keptn-integrations-light.svg"
-                />
-                <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
-                >
-                  <small>
-                    Keptn integrations
-                  </small>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
-          >
-            <a
-              aria-label="Open Container Initiative site"
-              class="link col iconLink"
-              href="https://opencontainers.org"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
-              >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/container-light.svg"
-                />
-                <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
-                >
-                  <small>
-                    Container images
-                  </small>
-                </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open Kubewarden site"
-              class="link col iconLink"
-              href="https://www.kubewarden.io"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
-              >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/kubewarden-light.svg"
-                />
-                <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
-                >
-                  <small>
-                    Kubewarden policies
-                  </small>
-                </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open Kubewarden site"
-              class="link col iconLink"
-              href="https://www.kyverno.io"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
-              >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/kyverno-light.svg"
-                />
-                <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
-                >
-                  <small>
-                    Kyverno policies
-                  </small>
-                </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open Knative client repository"
-              class="link col iconLink"
-              href="https://github.com/knative/client"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
-              >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/knative-light.svg"
-                />
-                <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
-                >
-                  <small>
-                    Knative client plugins
-                  </small>
-                </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open Backstage web"
-              class="link col iconLink"
-              href="https://backstage.io/plugins"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
-              >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/backstage-light.svg"
-                />
-                <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
-                >
-                  <small>
-                    Backstage plugins
-                  </small>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
-          >
+              </a>
+            </div>
             <div
-              class="col"
-            />
-            <a
-              aria-label="Open Argo templates web"
-              class="link col iconLink"
-              href="https://argoproj.github.io/argo-workflows/"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
+              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
             >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
+              <a
+                aria-label="Open Helm site"
+                class="link col iconLink"
+                href="https://helm.sh"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
               >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/argo-light.svg"
-                />
                 <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
                 >
-                  <small>
-                    Argo templates
-                  </small>
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/helm-chart-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small
+                      class="text-nowrap"
+                    >
+                      Helm charts and plugins
+                    </small>
+                  </div>
                 </div>
-              </div>
-            </a>
-            <a
-              aria-label="Open KubeArmor policies web"
-              class="link col iconLink"
-              href="https://kubearmor.io"
-              rel="noopener noreferrer"
-              role="button"
-              tabindex="-1"
-              target="_blank"
-            >
-              <div
-                class="d-flex flex-column justify-content-between align-items-center h-100"
+              </a>
+              <a
+                aria-label="Open KEDA site"
+                class="link col iconLink"
+                href="https://keda.sh"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
               >
-                <img
-                  alt="Icon"
-                  class="aboutIcon"
-                  src="/static/media/kubearmor-light.svg"
-                />
                 <div
-                  class="d-none d-sm-block text-light mt-2 legendIcon"
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
                 >
-                  <small>
-                    KubeArmor policies
-                  </small>
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/keda-scaler-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      KEDA scalers
+                    </small>
+                  </div>
                 </div>
-              </div>
-            </a>
+              </a>
+              <a
+                aria-label="Open Keptn site"
+                class="link col iconLink"
+                href="https://keptn.sh"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/keptn-integrations-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      Keptn integrations
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Knative client repository"
+                class="link col iconLink"
+                href="https://github.com/knative/client"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/knative-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      Knative client plugins
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Krew site"
+                class="link col iconLink"
+                href="https://krew.sigs.k8s.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/krew-plugins-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      Kubectl plugins
+                    </small>
+                  </div>
+                </div>
+              </a>
+            </div>
             <div
-              class="col"
-            />
+              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+            >
+              <a
+                aria-label="Open KubeArmor policies web"
+                class="link col iconLink"
+                href="https://kubearmor.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/kubearmor-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      KubeArmor policies
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Kubewarden site"
+                class="link col iconLink"
+                href="https://www.kubewarden.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/kubewarden-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      Kubewarden policies
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Kubewarden site"
+                class="link col iconLink"
+                href="https://www.kyverno.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/kyverno-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      Kyverno policies
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Operator framework site"
+                class="link col iconLink"
+                href="https://github.com/operator-framework"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/olm-operators-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      OLM operators
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Policy Agent site"
+                class="link col iconLink"
+                href="https://www.openpolicyagent.org"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/opa-policies-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      OPA and Gatekeeper policies
+                    </small>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div
+              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+            >
+              <div
+                class="col"
+              />
+              <a
+                aria-label="Open Tekton site"
+                class="link col iconLink"
+                href="https://tekton.dev"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/tekton-pkg-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      Tekton tasks and pipelines
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Tinkerbell site"
+                class="link col iconLink"
+                href="https://tinkerbell.org"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/tinkerbell-actions-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      Tinkerbell actions
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <div
+                class="col"
+              />
+            </div>
           </div>
           Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
         </div>
