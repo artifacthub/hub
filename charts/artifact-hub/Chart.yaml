@@ -2,7 +2,7 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.13.1-1
+version: 1.13.1-2
 appVersion: 1.13.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
@@ -83,6 +83,8 @@ annotations:
       description: Harcoded image pull policy in hub deployment
     - kind: fixed
       description: Some other minor bugs and improvements
+    - kind: fixed
+      description: Append registry value from postgres subchart.
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
