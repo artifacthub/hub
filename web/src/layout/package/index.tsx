@@ -863,13 +863,9 @@ const PackageView = () => {
                             className={`position-relative d-none d-md-flex flex-row align-items-baseline mt-2 ${styles.subtitle}`}
                           >
                             {detail.repository.userAlias ? (
-                              <div className={`me-2 text-truncate ${styles.mw50}`}>
-                                <span className={`text-dark me-1 position-relative ${styles.userIcon}`}>
-                                  <FaUser />
-                                </span>
-
+                              <div className={`position-relative me-2 text-truncate ${styles.userLink} ${styles.mw50}`}>
                                 <Link
-                                  className="text-muted"
+                                  className="d-flex align-items-baseline text-muted"
                                   to={{
                                     pathname: '/packages/search',
                                     search: prepareQueryString({
@@ -881,6 +877,9 @@ const PackageView = () => {
                                     }),
                                   }}
                                 >
+                                  <span className={`text-dark me-1 position-relative ${styles.userIcon}`}>
+                                    <FaUser />
+                                  </span>
                                   {detail.repository.userAlias}
                                 </Link>
                               </div>

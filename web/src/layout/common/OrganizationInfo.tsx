@@ -138,12 +138,6 @@ const OrganizationInfo = (props: Props) => {
       </div>
 
       <div className="d-flex flex-row align-items-baseline text-truncate">
-        {props.visibleLegend && (
-          <div className={`d-flex flex-row align-items-baseline me-1 text-dark position-relative ${styles.icon}`}>
-            <MdBusiness />
-          </div>
-        )}
-
         <button
           className={`p-0 border-0 text-muted text-truncate flex-grow-1 bg-transparent position-relative ${styles.link} ${props.btnClassName}`}
           onClick={(e) => {
@@ -174,12 +168,19 @@ const OrganizationInfo = (props: Props) => {
           aria-hidden="true"
           tabIndex={-1}
         >
-          <div
-            className={classnames({
-              'text-truncate': isUndefined(props.multiLine) || !props.multiLine,
-            })}
-          >
-            {props.organizationDisplayName || props.organizationName}
+          <div className="d-flex flex-row align-items-baseline">
+            {props.visibleLegend && (
+              <div className={`d-flex flex-row align-items-baseline me-1 text-dark position-relative ${styles.icon}`}>
+                <MdBusiness />
+              </div>
+            )}
+            <div
+              className={classnames({
+                'text-truncate': isUndefined(props.multiLine) || !props.multiLine,
+              })}
+            >
+              {props.organizationDisplayName || props.organizationName}
+            </div>
           </div>
         </button>
       </div>

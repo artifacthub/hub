@@ -197,14 +197,10 @@ const PackageCard = (props: Props) => {
 
                         {props.package.repository.userAlias && (
                           <div className={`d-flex flex-row align-items-baseline ${styles.userInfo}`}>
-                            <div className={`text-dark me-1 position-relative ${styles.userIcon}`}>
-                              <FaUser />
-                            </div>
                             <span className="visually-hidden">{props.package.repository.userAlias}</span>
-
                             <button
                               data-testid="userLink"
-                              className={`p-0 border-0 text-truncate text-muted mw-100 bg-transparent ${styles.link}`}
+                              className={`d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent ${styles.link}`}
                               onClick={(e) => {
                                 e.preventDefault();
                                 navigate({
@@ -222,6 +218,9 @@ const PackageCard = (props: Props) => {
                               aria-hidden="true"
                               tabIndex={-1}
                             >
+                              <div className={`text-dark me-1 position-relative ${styles.userIcon}`}>
+                                <FaUser />
+                              </div>
                               <div className="text-truncate">{props.package.repository.userAlias}</div>
                             </button>
                           </div>
