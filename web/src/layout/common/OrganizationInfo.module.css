@@ -5,7 +5,7 @@
 .dropdown {
   width: 350px;
   font-size: 0.85rem;
-  margin-top: 17px;
+  margin-top: 22px;
 }
 
 .content {
@@ -33,7 +33,7 @@
 }
 
 .icon {
-  top: 1px;
+  top: 2px;
 }
 
 @media only screen and (max-width: 575.98px) {

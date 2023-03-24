@@ -11,6 +11,10 @@
   background-color: inherit !important;
 }
 
+.checkbox {
+  margin-top: 0.25rem;
+}
+
 .checkbox,
 .checkbox + label {
   cursor: pointer;
@@ -42,7 +46,7 @@
 
 .switchLoading {
   left: calc(50% + 1.5rem);
-  top: -3px;
+  top: 0;
 }
 
 .body {

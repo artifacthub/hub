@@ -22,9 +22,13 @@ exports[`OrganizationInfo creates snapshot 1`] = `
         tabindex="-1"
       >
         <div
-          class="text-truncate"
+          class="d-flex flex-row align-items-baseline"
         >
-          orgname
+          <div
+            class="text-truncate"
+          >
+            orgname
+          </div>
         </div>
       </button>
     </div>

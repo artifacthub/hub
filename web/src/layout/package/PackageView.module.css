@@ -64,6 +64,10 @@
   white-space: pre !important;
 }
 
+.userLink {
+  top: -1px;
+}
+
 .link {
   color: var(--color-font) !important;
 }
