@@ -58,7 +58,7 @@ const PackageCard = (props: Props) => {
 
   const starsAndKindInfo = (
     <div className={`align-self-start d-flex align-items-center text-uppercase ms-auto ${styles.kind}`}>
-      <StarBadge className="me-2" starsNumber={props.package.stars} />
+      <StarBadge className={`me-2 ${styles.starBadge}`} starsNumber={props.package.stars} />
       <RepositoryIconLabel
         btnClassName={`position-relative ${styles.repoLabel}`}
         kind={props.package.repository.kind}

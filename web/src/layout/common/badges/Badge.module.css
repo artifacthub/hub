@@ -3,7 +3,7 @@
   width: 2rem;
   line-height: 1.2rem;
   color: var(--color-black-5);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   background-color: var(--color-white-50);
 }
 
@@ -59,6 +59,11 @@
 
 .secondBlock {
   margin-top: -0.75rem;
+}
+
+.cncf {
+  width: 30px;
+  height: 30px;
 }
 
 @media only screen and (max-width: 575.98px) {

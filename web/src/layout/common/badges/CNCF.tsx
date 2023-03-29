@@ -1,6 +1,7 @@
 import { isUndefined } from 'lodash';
 
 import Badge from './Badge';
+import styles from './Badge.module.css';
 
 interface Props {
   className?: string;
@@ -12,7 +13,7 @@ const CNCF = (props: Props) => {
   return (
     <Badge
       title="CNCF"
-      icon={<img src="/static/media/cncf-icon.svg" alt="CNCF icon" className="h-100 w-100" />}
+      icon={<img src="/static/media/cncf-icon.svg" alt="CNCF icon" className={styles.cncf} />}
       active
       className={props.className}
       dropdownAlignment={props.dropdownAlignment}
