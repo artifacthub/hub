@@ -94,7 +94,7 @@ const RepositoriesSection = (props: Props) => {
       }
     });
 
-    return sortBy(list, 'repository.name');
+    return sortBy(list, 'repository.name') as OptOutByRepo[];
   };
 
   async function getOptOutList(callback?: () => void) {
