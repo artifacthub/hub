@@ -555,7 +555,7 @@ func TestExtractContainersImages(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, []string{
 			"postgres:12",
-			"bitnami/kubectl:1.20",
+			"bitnami/kubectl:1.22",
 			"artifacthub/hub:v0.19.0",
 			"aquasec/trivy:0.16.0",
 			"docker.io/bitnami/minideb:stretch",
