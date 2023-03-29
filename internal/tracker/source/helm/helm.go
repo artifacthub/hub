@@ -564,6 +564,11 @@ func extractContainersImages(chrt *chart.Chart) (images []string, err error) {
 	install := action.NewInstall(&action.Configuration{
 		Log: func(string, ...interface{}) {},
 	})
+	install.KubeVersion = &chartutil.KubeVersion{
+		Version: "1.22",
+		Major:   "1",
+		Minor:   "22",
+	}
 	install.ReleaseName = "release-name"
 	install.DryRun = true
 	install.DisableHooks = true
