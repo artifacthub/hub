@@ -381,7 +381,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                 tabindex="-1"
                               >
                                 <span
-                                  class="badge bg-light text-dark border bg badge"
+                                  class="badge bg-light text-dark border border-1 bg badge"
                                 >
                                   <div
                                     class="d-flex flex-row align-items-center"
@@ -414,7 +414,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex d-md-none fs-6"
                             >
                               <span
-                                class="badge bg-light text-dark border bg badge"
+                                class="badge bg-light text-dark border border-1 bg badge"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
@@ -497,7 +497,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               tabindex="-1"
                             >
                               <span
-                                class="badge bg-light text-dark border bg badge"
+                                class="badge bg-light text-dark border border-1 bg badge"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
@@ -530,7 +530,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-flex d-md-none fs-6"
                           >
                             <span
-                              class="badge bg-light text-dark border bg badge"
+                              class="badge bg-light text-dark border border-1 bg badge"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
@@ -921,7 +921,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                 tabindex="-1"
                               >
                                 <span
-                                  class="badge bg-light text-dark border bg badge"
+                                  class="badge bg-light text-dark border border-1 bg badge"
                                 >
                                   <div
                                     class="d-flex flex-row align-items-center"
@@ -954,7 +954,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex d-md-none fs-6"
                             >
                               <span
-                                class="badge bg-light text-dark border bg badge"
+                                class="badge bg-light text-dark border border-1 bg badge"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
@@ -1037,7 +1037,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               tabindex="-1"
                             >
                               <span
-                                class="badge bg-light text-dark border bg badge"
+                                class="badge bg-light text-dark border border-1 bg badge"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
@@ -1070,7 +1070,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-flex d-md-none fs-6"
                           >
                             <span
-                              class="badge bg-light text-dark border bg badge"
+                              class="badge bg-light text-dark border border-1 bg badge"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
@@ -1461,7 +1461,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                 tabindex="-1"
                               >
                                 <span
-                                  class="badge bg-light text-dark border bg badge"
+                                  class="badge bg-light text-dark border border-1 bg badge"
                                 >
                                   <div
                                     class="d-flex flex-row align-items-center"
@@ -1494,7 +1494,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex d-md-none fs-6"
                             >
                               <span
-                                class="badge bg-light text-dark border bg badge"
+                                class="badge bg-light text-dark border border-1 bg badge"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
@@ -1577,7 +1577,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               tabindex="-1"
                             >
                               <span
-                                class="badge bg-light text-dark border bg badge"
+                                class="badge bg-light text-dark border border-1 bg badge"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
@@ -1610,7 +1610,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-flex d-md-none fs-6"
                           >
                             <span
-                              class="badge bg-light text-dark border bg badge"
+                              class="badge bg-light text-dark border border-1 bg badge"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
@@ -2001,7 +2001,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                 tabindex="-1"
                               >
                                 <span
-                                  class="badge bg-light text-dark border bg badge"
+                                  class="badge bg-light text-dark border border-1 bg badge"
                                 >
                                   <div
                                     class="d-flex flex-row align-items-center"
@@ -2034,7 +2034,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex d-md-none fs-6"
                             >
                               <span
-                                class="badge bg-light text-dark border bg badge"
+                                class="badge bg-light text-dark border border-1 bg badge"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
@@ -2117,7 +2117,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               tabindex="-1"
                             >
                               <span
-                                class="badge bg-light text-dark border bg badge"
+                                class="badge bg-light text-dark border border-1 bg badge"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
@@ -2150,7 +2150,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-flex d-md-none fs-6"
                           >
                             <span
-                              class="badge bg-light text-dark border bg badge"
+                              class="badge bg-light text-dark border border-1 bg badge"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
@@ -2541,7 +2541,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                 tabindex="-1"
                               >
                                 <span
-                                  class="badge bg-light text-dark border bg badge"
+                                  class="badge bg-light text-dark border border-1 bg badge"
                                 >
                                   <div
                                     class="d-flex flex-row align-items-center"
@@ -2574,7 +2574,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex d-md-none fs-6"
                             >
                               <span
-                                class="badge bg-light text-dark border bg badge"
+                                class="badge bg-light text-dark border border-1 bg badge"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
@@ -2657,7 +2657,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               tabindex="-1"
                             >
                               <span
-                                class="badge bg-light text-dark border bg badge"
+                                class="badge bg-light text-dark border border-1 bg badge"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
@@ -2690,7 +2690,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-flex d-md-none fs-6"
                           >
                             <span
-                              class="badge bg-light text-dark border bg badge"
+                              class="badge bg-light text-dark border border-1 bg badge"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"

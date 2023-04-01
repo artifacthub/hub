@@ -1,6 +1,4 @@
 .endCode {
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
   border-color: var(--color-black-15) !important;
   background-color: var(--extra-light-gray);
 }

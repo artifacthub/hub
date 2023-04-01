@@ -58,7 +58,7 @@ const Changes = (props: DiffProps) => {
             <span className="badge bg-dark px-2 py-1 badge-md">{newPath}</span>
           </div>
         </header>
-        <div ref={tmplWrapper} className={`overflow-scroll border-top py-2 ${styles.codeWrapper}`}>
+        <div ref={tmplWrapper} className={`overflow-scroll border-top border-1 py-2 ${styles.codeWrapper}`}>
           <Diff viewType="unified" diffType={type} hunks={hunks || []}>
             {(hunks: any[]) => (
               <>

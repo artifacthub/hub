@@ -104,7 +104,7 @@ exports[`ValuesView creates snapshot 1`] = `
       </button>
     </div>
     <div
-      class="overflow-auto h-100 position-relative border codeWrapper"
+      class="overflow-auto h-100 position-relative border border-1 codeWrapper"
     >
       <pre
         class="hljs customYAML"

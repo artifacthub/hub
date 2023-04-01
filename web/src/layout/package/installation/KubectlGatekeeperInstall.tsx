@@ -21,8 +21,8 @@ const KubectlGatekeeperInstall = (props: Props) => {
     <div className={`mt-3 ${styles.gatekeeperInstallContent}`}>
       <p className="text-muted">
         Instead of using <span className="fw-bold">kustomize</span>, you can directly apply the{' '}
-        <code className={`border ${styles.inlineCode}`}>template.yaml</code> and the sample constraints provided in each
-        directory using <span className="fw-bold">kubectl</span>.
+        <code className={`border border-1 ${styles.inlineCode}`}>template.yaml</code> and the sample constraints
+        provided in each directory using <span className="fw-bold">kubectl</span>.
       </p>
 
       <CommandBlock

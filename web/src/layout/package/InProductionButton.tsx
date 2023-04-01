@@ -181,7 +181,7 @@ const InProductionButton = (props: Props) => {
           </div>
         ) : (
           <div>
-            <div className={`p-3 border-bottom ${styles.title}`}>
+            <div className={`p-3 border-bottom border-1 ${styles.title}`}>
               Select which of your organizations are using this package in production
             </div>
             <div className={`overflow-auto ${styles.buttonsWrapper}`}>

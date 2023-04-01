@@ -141,7 +141,9 @@ const StarButton = (props: Props) => {
           visibleTooltip={isNull(ctx.user)}
         />
 
-        <span className={`badge bg-light text-dark text-center px-3 border border-start-0 lh-base ${styles.starBadge}`}>
+        <span
+          className={`badge bg-light text-dark text-center px-3 border border-1 border-start-0 lh-base ${styles.starBadge}`}
+        >
           {isNumber(packageStars.stars) ? prettifyNumber(packageStars.stars) : '-'}
         </span>
 

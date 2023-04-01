@@ -69,7 +69,7 @@ const TektonManifestModal = (props: Props) => {
           footerClassName={styles.modalFooter}
         >
           <div className="h-100 mw-100">
-            <div className={`position-relative h-100 mh-100 border ${styles.syntaxWrapper}`}>
+            <div className={`position-relative h-100 mh-100 border border-1 ${styles.syntaxWrapper}`}>
               <BlockCodeButtons filename={`${props.normalizedName}.yaml`} content={props.manifestRaw} />
 
               <SyntaxHighlighter

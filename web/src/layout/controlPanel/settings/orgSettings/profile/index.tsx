@@ -62,7 +62,7 @@ const ProfileSection = (props: Props) => {
     <main role="main" className="p-0">
       {(isUndefined(organization) || isLoading) && <Loading />}
 
-      <div className={`h3 pb-2 border-bottom ${styles.title}`}>Profile information</div>
+      <div className={`h3 pb-2 border-bottom border-1 ${styles.title}`}>Profile information</div>
 
       <div
         className={classnames('mt-4 mt-md-5 mb-5 mw-100', {
@@ -92,7 +92,7 @@ const ProfileSection = (props: Props) => {
         )}
       </div>
 
-      <div className={`h3 mb-4 pb-2 border-bottom ${styles.title}`}>Delete organization</div>
+      <div className={`h3 mb-4 pb-2 border-bottom border-1 ${styles.title}`}>Delete organization</div>
 
       {organization && <DeleteOrganization organization={organization} onAuthError={props.onAuthError} />}
     </main>

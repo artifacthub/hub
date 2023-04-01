@@ -7,7 +7,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
     role="main"
   >
     <div
-      class="h3 pb-2 border-bottom title"
+      class="h3 pb-2 border-bottom border-1 title"
     >
       Authorization
     </div>

@@ -92,7 +92,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Job
             </span>
@@ -142,7 +142,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Secret
             </span>
@@ -192,7 +192,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Job
             </span>
@@ -242,7 +242,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Deployment
             </span>
@@ -292,7 +292,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Ingress
             </span>
@@ -342,7 +342,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Secret
             </span>
@@ -392,7 +392,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Service
             </span>
@@ -442,7 +442,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Multiple kinds
             </span>
@@ -492,7 +492,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               CronJob
             </span>
@@ -542,7 +542,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Secret
             </span>
@@ -592,7 +592,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               CronJob
             </span>
@@ -642,7 +642,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Secret
             </span>
@@ -692,7 +692,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Deployment
             </span>
@@ -742,7 +742,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               PersistentVolumeClaim
             </span>
@@ -792,7 +792,7 @@ exports[`TemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Service
             </span>

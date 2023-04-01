@@ -126,7 +126,7 @@ const MembersSection = (props: Props) => {
     >
       <div className="flex-grow-1 w-100 mb-4">
         <div>
-          <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
+          <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom border-1">
             <div className={`h3 pb-0 ${styles.title}`}>Members</div>
 
             <div>

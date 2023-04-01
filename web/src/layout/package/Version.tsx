@@ -53,7 +53,9 @@ const Version = (props: Props) => {
                 return (
                   <div key={`v_channel_${channel}`} className="d-flex flex-row align-items-center">
                     <div className={`${styles.badgeDecorator} position-relative mx-1`} />
-                    <span className={`badge my-1 text-truncate border ${styles.badge} ${styles.isHighlighted}`}>
+                    <span
+                      className={`badge my-1 text-truncate border border-1 ${styles.badge} ${styles.isHighlighted}`}
+                    >
                       <small className="text-uppercase me-1">Channel:</small>
                       {channel}
                     </span>
@@ -66,14 +68,14 @@ const Version = (props: Props) => {
           {props.prerelease && (
             <div className="d-flex flex-row align-items-center">
               <div className={`${styles.badgeDecorator} position-relative mx-1`} />
-              <span className={`badge my-1 border ${styles.badge}`}>Pre-release</span>
+              <span className={`badge my-1 border border-1 ${styles.badge}`}>Pre-release</span>
             </div>
           )}
 
           {props.containsSecurityUpdates && (
             <div className="d-flex flex-row align-items-center">
               <div className={`${styles.badgeDecorator} position-relative mx-1`} />
-              <span className={`badge my-1 border ${styles.badge}`}>Contains security updates</span>
+              <span className={`badge my-1 border border-1 ${styles.badge}`}>Contains security updates</span>
             </div>
           )}
         </div>

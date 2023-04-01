@@ -3,7 +3,7 @@
 exports[`Stats creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="d-flex flex-row flex-wrap align-items-center border mt-3 px-2 wrapper"
+    class="d-flex flex-row flex-wrap align-items-center border border-1 mt-3 px-2 wrapper"
   >
     <div
       class="d-flex flex-row align-items-baseline mx-2"

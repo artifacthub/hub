@@ -395,7 +395,7 @@ const AuthorizationSection = (props: Props) => {
     <main role="main" className="p-0">
       {(isUndefined(orgPolicy) || isLoading) && <Loading />}
 
-      <div className={`h3 pb-2 border-bottom ${styles.title}`}>Authorization</div>
+      <div className={`h3 pb-2 border-bottom border-1 ${styles.title}`}>Authorization</div>
 
       <div className="mt-4 mt-md-5" onClick={() => setApiError(null)}>
         <p>

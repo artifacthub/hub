@@ -387,7 +387,7 @@ const SchemaDefinition = (props: Props) => {
         </button>
 
         {props.isExpanded && (
-          <div className={`${styles.moreInfo} border-top my-2 pt-2`}>
+          <div className={`${styles.moreInfo} border-top border-1 my-2 pt-2`}>
             <div className="d-flex flex-column">
               {isNull(typeDef) ? (
                 <div className="mt-2">
@@ -409,6 +409,7 @@ const SchemaDefinition = (props: Props) => {
                       />
                     </div>
                   </div>
+
                   <div>
                     <small className="text-muted text-uppercase">Description</small>:{' '}
                     <span className="ms-1">

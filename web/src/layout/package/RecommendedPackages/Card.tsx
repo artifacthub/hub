@@ -16,7 +16,9 @@ const RecommendedPackageCard = (props: Props) => (
       pathname: props.recommendation.url,
     }}
   >
-    <div className={`badge bg-light text-dark d-flex flex-row align-items-center ps-0 pe-3 border ${styles.badge}`}>
+    <div
+      className={`badge bg-light text-dark d-flex flex-row align-items-center ps-0 pe-3 border border-1 ${styles.badge}`}
+    >
       <div className="me-2">
         <div className={`${styles.imageWrapper} ms-1 overflow-hidden`}>
           <div className="d-flex align-items-center justify-content-center w-100 h-100">

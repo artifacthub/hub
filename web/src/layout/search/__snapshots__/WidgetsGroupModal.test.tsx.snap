@@ -373,7 +373,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                     Color
                   </label>
                   <div
-                    class="btn btn-sm btn-light border p-1 ms-2 colorInputWrapper"
+                    class="btn btn-sm btn-light border border-1 p-1 ms-2 colorInputWrapper"
                   >
                     <div
                       class="colorInput"

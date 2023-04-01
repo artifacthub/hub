@@ -74,7 +74,7 @@ const Sidebar = (props: Props) => {
         })}
       >
         <div className="d-flex flex-column h-100">
-          <div className="border-bottom p-4 pb-3">
+          <div className="border-bottom border-1 p-4 pb-3">
             <div className="d-flex align-items-center justify-content-between">
               <div>{props.header}</div>
 

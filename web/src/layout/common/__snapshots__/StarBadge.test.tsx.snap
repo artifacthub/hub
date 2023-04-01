@@ -4,7 +4,7 @@ exports[`StarBadge creates snapshot 1`] = `
 <DocumentFragment>
   <div
     aria-label="1 stars"
-    class="badge bg-light text-dark border badge"
+    class="badge bg-light text-dark border border-1 badge"
     data-testid="starBadge"
   >
     <div

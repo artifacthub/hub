@@ -301,7 +301,7 @@ exports[`Values creates snapshot 1`] = `
                   </button>
                 </div>
                 <div
-                  class="overflow-auto h-100 position-relative border codeWrapper"
+                  class="overflow-auto h-100 position-relative border border-1 codeWrapper"
                 >
                   <div
                     id="line_59"

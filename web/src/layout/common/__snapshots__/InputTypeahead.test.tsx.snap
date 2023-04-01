@@ -15,7 +15,7 @@ exports[`InputTypeahead creates snapshot 1`] = `
     />
   </div>
   <div
-    class="py-1 border-bottom"
+    class="py-1 border-bottom border-1"
   >
     <button
       aria-label="Clear all"

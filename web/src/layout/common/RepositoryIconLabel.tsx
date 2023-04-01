@@ -28,7 +28,8 @@ const RepositoryIconLabel = (props: Props) => {
     <span
       className={classnames(
         {
-          [`badge bg-light text-dark border ${styles.bg}`]: isUndefined(props.noBackground) || !props.noBackground,
+          [`badge bg-light text-dark border border-1 ${styles.bg}`]:
+            isUndefined(props.noBackground) || !props.noBackground,
         },
         styles.badge,
         props.className

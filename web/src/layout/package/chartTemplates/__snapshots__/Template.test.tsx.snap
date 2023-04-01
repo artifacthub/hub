@@ -29,7 +29,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{- 
                 <span
@@ -172,7 +172,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{ 
                 <span
@@ -254,7 +254,7 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{- 
                 <span
@@ -327,7 +327,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{- 
                 <span
@@ -440,7 +440,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{- 
                 <span
@@ -513,7 +513,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{- 
                 <span
@@ -594,7 +594,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{ 
                 <span
@@ -632,7 +632,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{ 
                 <div
@@ -703,7 +703,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{- 
                 <span
@@ -804,7 +804,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{- 
                 <span
@@ -877,7 +877,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{- 
                 <span
@@ -914,7 +914,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{- 
                 <span
@@ -1015,7 +1015,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{- 
                 <span
@@ -1088,7 +1088,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{- 
                 <span
@@ -1124,7 +1124,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border bg-white badge"
+                class="badge fw-normal border border-1 bg-white badge"
               >
                 {{- 
                 <span

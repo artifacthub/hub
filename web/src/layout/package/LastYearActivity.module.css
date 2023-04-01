@@ -38,6 +38,7 @@
   left: auto;
   top: 18px;
   font-size: 0.8rem;
+  padding: 0 !important;
   z-index: -1;
 }
 

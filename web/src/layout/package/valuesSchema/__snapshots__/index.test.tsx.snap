@@ -73,7 +73,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 class="row"
               >
                 <div
-                  class="col-7 pt-3 position-relative border border-bottom-0 code"
+                  class="col-7 pt-3 position-relative border border-1 border-bottom-0 code"
                 >
                   <div
                     class="text-truncate font-monospace comment"
@@ -87,7 +87,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content pt-4"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -195,7 +195,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -328,7 +328,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -461,7 +461,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -594,7 +594,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -727,7 +727,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -860,7 +860,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content pt-4"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -968,7 +968,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -1060,7 +1060,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -1187,7 +1187,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -1279,7 +1279,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -1406,7 +1406,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -1533,7 +1533,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -1660,7 +1660,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -1787,7 +1787,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -1914,7 +1914,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -2041,7 +2041,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -2139,7 +2139,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -2237,7 +2237,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -2370,7 +2370,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -2503,7 +2503,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -2636,7 +2636,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -2764,7 +2764,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -2862,7 +2862,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -2954,7 +2954,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -3046,7 +3046,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -3200,7 +3200,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -3327,7 +3327,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -3454,7 +3454,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -3581,7 +3581,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -3673,7 +3673,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -3827,7 +3827,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -3954,7 +3954,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -4081,7 +4081,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -4208,7 +4208,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -4306,7 +4306,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -4439,7 +4439,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -4566,7 +4566,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -4699,7 +4699,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -4832,7 +4832,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -4930,7 +4930,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -5063,7 +5063,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -5190,7 +5190,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -5317,7 +5317,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -5450,7 +5450,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -5548,7 +5548,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -5676,7 +5676,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -5809,7 +5809,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -5917,7 +5917,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -6050,7 +6050,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -6148,7 +6148,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -6281,7 +6281,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -6414,7 +6414,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -6506,7 +6506,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -6633,7 +6633,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content pt-4"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -6731,7 +6731,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -6864,7 +6864,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -6997,7 +6997,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content pt-4"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -7105,7 +7105,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -7203,7 +7203,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -7326,7 +7326,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -7459,7 +7459,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -7586,7 +7586,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -7713,7 +7713,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -7840,7 +7840,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -7938,7 +7938,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -8065,7 +8065,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -8198,7 +8198,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -8325,7 +8325,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content pt-4"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -8433,7 +8433,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -8531,7 +8531,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -8629,7 +8629,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -8762,7 +8762,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -8895,7 +8895,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -9028,7 +9028,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -9161,7 +9161,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content pt-4"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -9269,7 +9269,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -9367,7 +9367,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -9494,7 +9494,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -9592,7 +9592,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -9690,7 +9690,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -9823,7 +9823,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -9956,7 +9956,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -10089,7 +10089,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -10222,7 +10222,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -10355,7 +10355,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -10494,7 +10494,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -10633,7 +10633,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content pt-4"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -10766,7 +10766,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content pt-4"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -10874,7 +10874,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -10972,7 +10972,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -11070,7 +11070,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -11203,7 +11203,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -11336,7 +11336,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content pt-4"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -11459,7 +11459,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content pt-4"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -11576,7 +11576,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content pt-4"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -11693,7 +11693,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 data-testid="schemaLine"
               >
                 <div
-                  class="col-7 border-start border-end position-relative py-1 user-select-none content pt-4"
+                  class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content pt-4"
                   data-testid="lineContent"
                   role="button"
                 >
@@ -11805,7 +11805,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                 class="row"
               >
                 <div
-                  class="col-7 pt-3 border border-top-0 endCode"
+                  class="col-7 pt-3 border border-1 border-top-0 endCode"
                 />
               </div>
             </div>

@@ -283,7 +283,7 @@ const WidgetsGroupModal = (props: Props) => {
                 <label htmlFor="color" className={`form-label fw-bold mb-0 ${styles.label}`}>
                   Color
                 </label>
-                <div className={`btn btn-sm btn-light border p-1 ms-2 ${styles.colorInputWrapper}`}>
+                <div className={`btn btn-sm btn-light border border-1 p-1 ms-2 ${styles.colorInputWrapper}`}>
                   <div
                     className={styles.colorInput}
                     style={{

@@ -18,7 +18,7 @@ const RepositoryDisabled = (props: Props) => {
       dropdownAlignment={props.dropdownAlignment}
       popoverContent={
         <>
-          <div className="fs-6 fw-semibold border-bottom mb-3 pb-1">Repository disabled</div>
+          <div className="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1">Repository disabled</div>
 
           <p className="mb-0">
             This repository is <span className="fw-bold">disabled</span> and it won't be processed.

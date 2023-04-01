@@ -65,13 +65,13 @@ const WebhookCard = (props: Props) => {
                 <div>{props.webhook.name}</div>
                 {props.webhook.active ? (
                   <span
-                    className={`ms-3 mt-1 fw-bold badge border border-success text-success text-uppercase ${styles.badge}`}
+                    className={`ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase ${styles.badge}`}
                   >
                     Active
                   </span>
                 ) : (
                   <span
-                    className={`ms-3 mt-1 fw-bold badge border border-dark text-dark text-uppercase ${styles.badge} ${styles.inactiveBadge}`}
+                    className={`ms-3 mt-1 fw-bold badge border border-dark border-1 text-dark text-uppercase ${styles.badge} ${styles.inactiveBadge}`}
                   >
                     Inactive
                   </span>

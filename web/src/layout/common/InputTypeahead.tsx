@@ -246,7 +246,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
       </div>
 
       {selectedItems.length > 0 && props.visibleClear && (
-        <div className="py-1 border-bottom">
+        <div className="py-1 border-bottom border-1">
           <button
             className="btn btn-sm w-100"
             onClick={() => {

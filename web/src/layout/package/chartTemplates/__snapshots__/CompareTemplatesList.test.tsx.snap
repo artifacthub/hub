@@ -98,7 +98,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               ConfigMap
             </span>
@@ -169,7 +169,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               ConfigMap
             </span>
@@ -240,7 +240,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               ConfigMap
             </span>
@@ -311,7 +311,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Deployment
             </span>
@@ -382,7 +382,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Service
             </span>
@@ -453,7 +453,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Secret
             </span>
@@ -524,7 +524,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               ServiceMonitor
             </span>
@@ -595,7 +595,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border fw-bold label"
+              class="text-truncate border border-1 fw-bold label"
             >
               Sample
             </span>

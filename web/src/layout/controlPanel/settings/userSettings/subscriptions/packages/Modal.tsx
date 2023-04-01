@@ -174,7 +174,7 @@ const SubscriptionModal = (props: Props) => {
           {!isNull(packageItem) ? (
             <div
               data-testid="activePackageItem"
-              className={`border border-secondary w-100 mt-1 ${styles.packageWrapper}`}
+              className={`border border-secondary border-1 w-100 mt-1 ${styles.packageWrapper}`}
             >
               <div className="d-flex flex-row flex-nowrap align-items-stretch justify-content-between">
                 <div className="flex-grow-1 text-truncate py-2">
@@ -210,7 +210,7 @@ const SubscriptionModal = (props: Props) => {
 
                 <div>
                   <button
-                    className={`btn btn-close h-100 rounded-0 border-start px-3 py-0 ${styles.closeButton}`}
+                    className={`btn btn-close h-100 rounded-0 border-start border-1 px-3 py-0 ${styles.closeButton}`}
                     onClick={() => setPackageItem(null)}
                     aria-label="Close"
                   ></button>

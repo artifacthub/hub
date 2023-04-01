@@ -293,7 +293,7 @@ const WebhookForm = (props: Props) => {
 
   return (
     <div>
-      <div className="mb-4 pb-2 border-bottom">
+      <div className="mb-4 pb-2 border-bottom border-1">
         <button
           className={`btn btn-link text-dark btn-sm ps-0 d-flex align-items-center ${styles.link}`}
           onClick={onCloseForm}
@@ -404,7 +404,7 @@ const WebhookForm = (props: Props) => {
             </div>
           </div>
 
-          <div className="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom">Triggers</div>
+          <div className="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom border-1">Triggers</div>
 
           <div className="my-4">
             <label className={`form-label fw-bold ${styles.label}`} htmlFor="kind" id="events-group">
@@ -452,7 +452,9 @@ const WebhookForm = (props: Props) => {
             {selectedPackages.length > 0 && (
               <div className="row">
                 <div className="col-12 col-xxl-10 col-xxxl-8">
-                  <table className={`table table-hover table-sm border transparentBorder text-break ${styles.table}`}>
+                  <table
+                    className={`table table-hover table-sm border border-1 transparentBorder text-break ${styles.table}`}
+                  >
                     <thead>
                       <tr className={styles.tableTitle}>
                         <th scope="col" className={`align-middle d-none d-sm-table-cell ${styles.fitCell}`}></th>
@@ -520,7 +522,7 @@ const WebhookForm = (props: Props) => {
             )}
           </div>
 
-          <div className="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom">Payload</div>
+          <div className="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom border-1">Payload</div>
 
           <div className="d-flex flex-row mb-3">
             {PAYLOAD_KINDS_LIST.map((item: PayloadKindsItem) => {
@@ -640,7 +642,7 @@ const WebhookForm = (props: Props) => {
             <div className="row">
               <div className="col col-xxxl-8 overflow-auto">
                 <small className={`text-muted ${styles.tableWrapper}`}>
-                  <table className={`table table-sm border ${styles.variablesTable}`}>
+                  <table className={`table table-sm border border-1 ${styles.variablesTable}`}>
                     <tbody>
                       <tr>
                         <th scope="row">

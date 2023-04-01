@@ -98,7 +98,7 @@ exports[`SchemaDefinition creates snapshot 1`] = `
         </div>
       </button>
       <div
-        class="moreInfo border-top my-2 pt-2"
+        class="moreInfo border-top border-1 my-2 pt-2"
       >
         <div
           class="d-flex flex-column"

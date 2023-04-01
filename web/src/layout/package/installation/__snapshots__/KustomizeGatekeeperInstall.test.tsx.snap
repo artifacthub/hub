@@ -10,7 +10,7 @@ exports[`KustomizeGatekeeperInstall creates snapshot 1`] = `
     >
       First, create a 
       <code
-        class="border inlineCode"
+        class="border border-1 inlineCode"
       >
         kustomization.yaml
       </code>
@@ -159,7 +159,7 @@ exports[`KustomizeGatekeeperInstall creates snapshot 1`] = `
     >
       Then define your constraints in a file called 
       <code
-        class="border inlineCode"
+        class="border border-1 inlineCode"
       >
         constraints.yaml
       </code>
@@ -170,7 +170,7 @@ exports[`KustomizeGatekeeperInstall creates snapshot 1`] = `
     >
       You can install everything with 
       <code
-        class="border inlineCode"
+        class="border border-1 inlineCode"
       >
         kustomize build . | kubectl apply -f -
       </code>

@@ -317,7 +317,7 @@ const ContentDefaultModal = (props: Props) => {
                                         <div className={styles.legend}>
                                           <small className="text-muted text-uppercase">Kind:</small>
                                         </div>
-                                        <span className={`text-truncate border fw-semibold ${styles.label}`}>
+                                        <span className={`text-truncate border border-1 fw-semibold ${styles.label}`}>
                                           {resource.kind}
                                         </span>
                                       </div>
@@ -353,7 +353,7 @@ const ContentDefaultModal = (props: Props) => {
               </div>
 
               <div className="col-9 ps-3 h-100">
-                <div className={`position-relative h-100 mh-100 border ${styles.templateWrapper}`}>
+                <div className={`position-relative h-100 mh-100 border border-1 ${styles.templateWrapper}`}>
                   {isChangingSelectedItem && <Loading />}
 
                   <div className="d-flex flex-column h-100">
@@ -363,7 +363,7 @@ const ContentDefaultModal = (props: Props) => {
                           switch (props.kind) {
                             case ContentDefaultModalKind.CustomResourcesDefinition:
                               return (
-                                <div className={`p-3 border-bottom ${styles.extraInfo}`}>
+                                <div className={`p-3 border-bottom border-1 ${styles.extraInfo}`}>
                                   <div className="h6 fw-bold">{selectedItem.displayName || selectedItem.name}</div>
                                   <div className="mb-1">
                                     <small className="text-muted text-uppercase me-2">Name:</small>

@@ -3,7 +3,7 @@
 exports[`ResourceLabel creates snapshot 1`] = `
 <DocumentFragment>
   <span
-    class="text-truncate border fw-bold label"
+    class="text-truncate border border-1 fw-bold label"
   >
     Scanner
   </span>

@@ -60,17 +60,22 @@ const LastYearActivity = (props: Props) => {
               <div key={`activity_${month}`} className="position-relative">
                 <div
                   data-testid="heatMapCell"
-                  className={classnames('position-relative border', styles.heatMapCell, styles[`level${level}`], {
-                    border: level === 0,
-                  })}
+                  className={classnames(
+                    'position-relative border border-1',
+                    styles.heatMapCell,
+                    styles[`level${level}`],
+                    {
+                      border: level === 0,
+                    }
+                  )}
                 />
-                <div data-testid="heatMapPopover" className={`popover end-0 ${styles.popover}`} role="tooltip">
+                <div data-testid="heatMapPopover" className={`tooltip popover end-0 ${styles.popover}`} role="tooltip">
                   <div className={`popover-header lh-1 p-2 ${styles.popoverHeader}`}>
                     {moment(month, 'MM/YY').format("MMM'YY")}
                   </div>
                   <div className="popover-body text-nowrap">
                     <div className="d-flex flex-row align-items-center">
-                      <div className={`me-2 border top-0 ${styles.marker} ${styles[`level${level}`]}`} />
+                      <div className={`me-2 border border-1 top-0 ${styles.marker} ${styles[`level${level}`]}`} />
                       Releases: <span className="fw-bold ms-2">{versions[month] ? versions[month].length : 0}</span>
                     </div>
                   </div>

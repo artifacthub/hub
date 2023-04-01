@@ -15,7 +15,7 @@ exports[`SecurityRating creates snapshot 1`] = `
           class="d-flex flex-row align-items-center overflow-hidden labelWrapper custom"
         >
           <div
-            class="text-center border border-end-0 position-relative labelIconWrapper iconWrapper"
+            class="text-center border border-1 border-end-0 position-relative labelIconWrapper iconWrapper"
             data-testid="label-wrapper"
             style="background-color: rgb(150, 0, 3);"
           >
@@ -30,7 +30,7 @@ exports[`SecurityRating creates snapshot 1`] = `
             </span>
           </div>
           <div
-            class="text-nowrap border fw-bold labelText"
+            class="text-nowrap border border-1 fw-bold labelText"
           >
             <span
               class="d-none d-sm-inline"

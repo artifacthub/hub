@@ -54,7 +54,7 @@ const CompareView = (props: Props) => {
   }, [props.comparedVersion]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
-    <div className={`position-relative h-100 mh-100 border ${styles.templateWrapper}`}>
+    <div className={`position-relative h-100 mh-100 border border-1 ${styles.templateWrapper}`}>
       {isLoading && <Loading />}
       <div className={`position-absolute d-flex ${styles.wrapper}`}>
         <div className="position-relative">

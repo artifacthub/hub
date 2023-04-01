@@ -567,7 +567,7 @@ const PackageView = () => {
                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Manifest" />
 
                       <div
-                        className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border ${styles.manifestWrapper}`}
+                        className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border border-1 ${styles.manifestWrapper}`}
                       >
                         <BlockCodeButtons content={manifest} filename={`${detail.normalizedName}-rules.yaml`} />
                         <SyntaxHighlighter
@@ -609,7 +609,7 @@ const PackageView = () => {
                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Template" />
 
                       <div
-                        className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border ${styles.manifestWrapper}`}
+                        className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border border-1 ${styles.manifestWrapper}`}
                       >
                         <BlockCodeButtons content={tmpl} filename={`${detail.normalizedName}-template.yaml`} />
                         <SyntaxHighlighter
@@ -651,7 +651,7 @@ const PackageView = () => {
                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Policy" />
 
                       <div
-                        className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border ${styles.manifestWrapper}`}
+                        className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border border-1 ${styles.manifestWrapper}`}
                       >
                         <BlockCodeButtons content={policy} filename={`${detail.normalizedName}-policy.yaml`} />
                         <SyntaxHighlighter
@@ -693,7 +693,7 @@ const PackageView = () => {
                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Template" />
 
                       <div
-                        className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border ${styles.manifestWrapper}`}
+                        className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border border-1 ${styles.manifestWrapper}`}
                       >
                         <BlockCodeButtons content={argoTpml} filename={`${detail.normalizedName}-template.yaml`} />
                         <SyntaxHighlighter

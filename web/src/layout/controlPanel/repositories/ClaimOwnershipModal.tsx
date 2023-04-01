@@ -216,7 +216,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
               {!isNull(repoItem) ? (
                 <div
                   data-testid="activeRepoItem"
-                  className={`border border-secondary w-100 mt-1 ${styles.repoWrapper}`}
+                  className={`border border-secondary border-1 w-100 mt-1 ${styles.repoWrapper}`}
                 >
                   <div className="d-flex flex-row flex-nowrap align-items-stretch justify-content-between">
                     <div className="flex-grow-1 text-truncate py-2">
@@ -242,7 +242,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
 
                     <div>
                       <button
-                        className={`btn btn-close btn-sm h-100 rounded-0 border-start px-3 py-0 ${styles.closeButton}`}
+                        className={`btn btn-close btn-sm h-100 rounded-0 border-start border-1 px-3 py-0 ${styles.closeButton}`}
                         onClick={() => setRepoItem(null)}
                         aria-label="Close"
                       ></button>

@@ -31,7 +31,7 @@ const Label = (props: Props) => (
         <div
           data-testid="label-wrapper"
           className={classnames(
-            'text-center border border-end-0 position-relative',
+            'text-center border border-1 border-end-0 position-relative',
             {
               labelIconWrapper:
                 isUndefined(props.labelStyle) || (!isUndefined(props.labelStyle) && props.labelStyle !== 'success'),
@@ -55,7 +55,7 @@ const Label = (props: Props) => (
       {(isUndefined(props.onlyIcon) || !props.onlyIcon) && (
         <div
           className={classnames(
-            'text-nowrap border fw-bold',
+            'text-nowrap border border-1 fw-bold',
             styles.labelText,
             { [styles.labelTextNoIcon]: isUndefined(props.icon) },
             props.labelClassName

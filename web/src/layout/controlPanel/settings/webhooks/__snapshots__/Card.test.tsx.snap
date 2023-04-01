@@ -25,7 +25,7 @@ exports[`WebhookCard creates snapshot 1`] = `
                 Webhook name
               </div>
               <span
-                class="ms-3 mt-1 fw-bold badge border border-success text-success text-uppercase badge"
+                class="ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase badge"
               >
                 Active
               </span>
