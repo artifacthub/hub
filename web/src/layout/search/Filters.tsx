@@ -221,7 +221,7 @@ const Filters = (props: Props) => {
   return (
     <div className={styles.filters}>
       {props.visibleTitle && (
-        <div className="d-flex flex-row align-items-center justify-content-between pb-2 mb-4 border-bottom">
+        <div className="d-flex flex-row align-items-center justify-content-between pb-2 mb-4 border-bottom border-1">
           <div className="h6 text-uppercase mb-0 lh-base">Filters</div>
           {(!isEmpty(props.activeFilters) ||
             props.deprecated ||

@@ -44,7 +44,7 @@ const Signed = (props: Props) => {
       smallSize={props.smallSize}
       popoverContent={
         <>
-          <div className="fs-6 fw-semibold border-bottom mb-3 pb-1">Signed</div>
+          <div className="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1">Signed</div>
 
           {notSupported ? (
             <p className="mb-0">Artifact Hub does not support any form of signature for this package kind yet.</p>
@@ -69,7 +69,7 @@ const Signed = (props: Props) => {
                   )}
                   {!isUndefined(props.signKey) && (
                     <>
-                      <div className="fs-6 fw-semibold border-bottom mt-4 mb-3 pb-1">Sign key information</div>
+                      <div className="fs-6 fw-semibold border-bottom border-1 mt-4 mb-3 pb-1">Sign key information</div>
                       <CommandBlock
                         language="text"
                         command={props.signKey.fingerprint}

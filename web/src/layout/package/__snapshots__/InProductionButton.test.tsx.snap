@@ -53,7 +53,7 @@ exports[`InProductionButton creates snapshot 1`] = `
       />
       <div>
         <div
-          class="p-3 border-bottom title"
+          class="p-3 border-bottom border-1 title"
         >
           Select which of your organizations are using this package in production
         </div>

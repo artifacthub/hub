@@ -96,10 +96,10 @@ exports[`ChangelogModal creates snapshot 1`] = `
                   class="h-100 d-none d-lg-flex"
                 >
                   <div
-                    class="d-flex flex-column me-4 border-end overflow-auto versionsIndexWrapper"
+                    class="d-flex flex-column me-4 border-end border-1 overflow-auto versionsIndexWrapper"
                   >
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom versionBtnWrapper border-top"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper border-top"
                       data-testid="versionBtnWrapper"
                     >
                       <button
@@ -115,7 +115,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       </button>
                     </div>
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom versionBtnWrapper"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper"
                       data-testid="versionBtnWrapper"
                     >
                       <button
@@ -131,7 +131,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       </button>
                     </div>
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom versionBtnWrapper"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper"
                       data-testid="versionBtnWrapper"
                     >
                       <button
@@ -147,7 +147,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       </button>
                     </div>
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom versionBtnWrapper"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper"
                       data-testid="versionBtnWrapper"
                     >
                       <button
@@ -163,7 +163,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       </button>
                     </div>
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom versionBtnWrapper"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper"
                       data-testid="versionBtnWrapper"
                     >
                       <button
@@ -179,7 +179,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       </button>
                     </div>
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom versionBtnWrapper"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper"
                       data-testid="versionBtnWrapper"
                     >
                       <button
@@ -195,7 +195,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       </button>
                     </div>
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom versionBtnWrapper"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper"
                       data-testid="versionBtnWrapper"
                     >
                       <button
@@ -220,7 +220,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     data-testid="changelogBlock"
                   >
                     <div
-                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
+                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom border-1 w-100 mb-3 pb-2"
                       id="changelog-0"
                     >
                       <div
@@ -591,7 +591,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     data-testid="changelogBlock"
                   >
                     <div
-                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
+                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom border-1 w-100 mb-3 pb-2"
                       id="changelog-1"
                     >
                       <div
@@ -930,7 +930,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     data-testid="changelogBlock"
                   >
                     <div
-                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
+                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom border-1 w-100 mb-3 pb-2"
                       id="changelog-2"
                     >
                       <div
@@ -1301,7 +1301,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     data-testid="changelogBlock"
                   >
                     <div
-                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
+                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom border-1 w-100 mb-3 pb-2"
                       id="changelog-3"
                     >
                       <div
@@ -1640,7 +1640,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     data-testid="changelogBlock"
                   >
                     <div
-                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
+                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom border-1 w-100 mb-3 pb-2"
                       id="changelog-4"
                     >
                       <div
@@ -1947,7 +1947,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     data-testid="changelogBlock"
                   >
                     <div
-                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
+                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom border-1 w-100 mb-3 pb-2"
                       id="changelog-5"
                     >
                       <div
@@ -2318,7 +2318,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     data-testid="changelogBlock"
                   >
                     <div
-                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
+                      class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom border-1 w-100 mb-3 pb-2"
                       id="changelog-6"
                     >
                       <div

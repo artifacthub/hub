@@ -10,7 +10,7 @@ exports[`User settings index creates snapshot 1`] = `
       class="mb-5"
     >
       <div
-        class="h3 mb-4 pb-2 border-bottom title"
+        class="h3 mb-4 pb-2 border-bottom border-1 title"
       >
         Profile information
       </div>
@@ -231,7 +231,7 @@ exports[`User settings index creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="h3 mb-4 pb-2 border-bottom title"
+      class="h3 mb-4 pb-2 border-bottom border-1 title"
     >
       Delete account
     </div>

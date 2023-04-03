@@ -106,7 +106,7 @@ const WebhooksSection = (props: Props) => {
           ) : (
             <>
               <div>
-                <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
+                <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom border-1">
                   <div className={`h3 pb-0 ${styles.title}`}>Webhooks</div>
 
                   <div>

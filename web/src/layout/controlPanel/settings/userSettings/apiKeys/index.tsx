@@ -95,7 +95,7 @@ const APIKeysSection = (props: Props) => {
 
       <main role="main" className="p-0">
         <div className="flex-grow-1">
-          <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
+          <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom border-1">
             <div className={`h3 pb-0 ${styles.title}`}>API keys</div>
             <div>
               <button

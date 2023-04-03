@@ -43,7 +43,7 @@ exports[`StarButton creates snapshot 1`] = `
       </div>
     </div>
     <span
-      class="badge bg-light text-dark text-center px-3 border border-start-0 lh-base starBadge"
+      class="badge bg-light text-dark text-center px-3 border border-1 border-start-0 lh-base starBadge"
     >
       4
     </span>

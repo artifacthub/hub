@@ -18,7 +18,7 @@ const SecurityScannerDisabled = (props: Props) => {
       dropdownAlignment={props.dropdownAlignment}
       popoverContent={
         <>
-          <div className="fs-6 fw-semibold border-bottom mb-3 pb-1">Security scanner disabled</div>
+          <div className="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1">Security scanner disabled</div>
 
           <p className="mb-0">
             The <span className="fw-bold">security scanner</span> is disabled for this repository.

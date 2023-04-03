@@ -4,7 +4,7 @@ exports[`WebhookForm creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="mb-4 pb-2 border-bottom"
+      class="mb-4 pb-2 border-bottom border-1"
     >
       <button
         aria-label="Back to webhooks list"
@@ -228,7 +228,7 @@ exports[`WebhookForm creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom"
+          class="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom border-1"
         >
           Triggers
         </div>
@@ -388,7 +388,7 @@ exports[`WebhookForm creates snapshot 1`] = `
               class="col-12 col-xxl-10 col-xxxl-8"
             >
               <table
-                class="table table-hover table-sm border transparentBorder text-break table"
+                class="table table-hover table-sm border border-1 transparentBorder text-break table"
               >
                 <thead>
                   <tr
@@ -550,7 +550,7 @@ exports[`WebhookForm creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom"
+          class="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom border-1"
         >
           Payload
         </div>
@@ -760,7 +760,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                 class="text-muted tableWrapper"
               >
                 <table
-                  class="table table-sm border variablesTable"
+                  class="table table-sm border border-1 variablesTable"
                 >
                   <tbody>
                     <tr>

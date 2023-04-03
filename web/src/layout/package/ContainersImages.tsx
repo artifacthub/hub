@@ -25,7 +25,7 @@ const ContainersImages = (props: Props) => {
   const getBadge = (): JSX.Element => (
     <ElementWithTooltip
       className={styles.tooltipIcon}
-      element={<span className={`badge my-1 border ${styles.badge}`}>Whitelisted</span>}
+      element={<span className={`badge my-1 border border-1 ${styles.badge}`}>Whitelisted</span>}
       tooltipMessage="This image has been whitelisted by the publisher and it won't be scanned for security vulnerabilities."
       visibleTooltip
       active
@@ -74,7 +74,9 @@ const ContainersImages = (props: Props) => {
           {containerImage.whitelisted && (
             <div className={`d-flex flex-column mb-1 ${styles.badgesWrapper}`}>
               <div className="d-flex flex-row align-items-center">
-                <div className={`border border-top-0 border-end-0 ${styles.badgeDecorator} position-relative mx-1`} />
+                <div
+                  className={`border border-1 border-top-0 border-end-0 ${styles.badgeDecorator} position-relative mx-1`}
+                />
                 {getBadge()}
               </div>
             </div>

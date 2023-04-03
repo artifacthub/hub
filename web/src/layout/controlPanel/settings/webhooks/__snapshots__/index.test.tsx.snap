@@ -14,7 +14,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
       >
         <div>
           <div
-            class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
+            class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom border-1"
           >
             <div
               class="h3 pb-0 title"
@@ -109,7 +109,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           test
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge border border-dark text-dark text-uppercase badge inactiveBadge"
+                          class="ms-3 mt-1 fw-bold badge border border-dark border-1 text-dark text-uppercase badge inactiveBadge"
                         >
                           Inactive
                         </span>
@@ -252,7 +252,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           test1
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge border border-success text-success text-uppercase badge"
+                          class="ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase badge"
                         >
                           Active
                         </span>
@@ -395,7 +395,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           dfgfgdhg
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge border border-success text-success text-uppercase badge"
+                          class="ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase badge"
                         >
                           Active
                         </span>
@@ -536,7 +536,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           testdefault
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge border border-dark text-dark text-uppercase badge inactiveBadge"
+                          class="ms-3 mt-1 fw-bold badge border border-dark border-1 text-dark text-uppercase badge inactiveBadge"
                         >
                           Inactive
                         </span>
@@ -679,7 +679,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           ffdsffdfgdsd
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge border border-success text-success text-uppercase badge"
+                          class="ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase badge"
                         >
                           Active
                         </span>

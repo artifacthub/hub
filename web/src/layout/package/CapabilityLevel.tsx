@@ -32,9 +32,13 @@ const CapabilityLevel = (props: Props) => {
           >
             <div
               data-testid="capabilityLevelStep"
-              className={classnames('rounded-circle text-center me-2 textLight step border bg-white', styles.step, {
-                [`activeStep ${styles.activeStep}`]: activeLevel >= index,
-              })}
+              className={classnames(
+                'rounded-circle text-center me-2 textLight step border border-1 bg-white',
+                styles.step,
+                {
+                  [`activeStep ${styles.activeStep}`]: activeLevel >= index,
+                }
+              )}
             >
               {activeLevel >= index && <FaCheck />}
             </div>

@@ -268,7 +268,7 @@ const ChangelogModal = (props: Props) => {
             <div className="d-flex flex-row h-100">
               <div className="h-100 d-none d-lg-flex">
                 <div
-                  className={`d-flex flex-column me-4 border-end overflow-auto ${styles.versionsIndexWrapper}`}
+                  className={`d-flex flex-column me-4 border-end border-1 overflow-auto ${styles.versionsIndexWrapper}`}
                   ref={btnsWrapper}
                 >
                   {changelog.map((item: ChangeLog, index: number) => {
@@ -277,7 +277,7 @@ const ChangelogModal = (props: Props) => {
                       <div
                         data-testid="versionBtnWrapper"
                         className={classnames(
-                          'pe-4 ps-2 position-relative border-bottom',
+                          'pe-4 ps-2 position-relative border-bottom border-1',
                           styles.versionBtnWrapper,
                           {
                             [styles.activeVersionBtnWrapper]: index === activeVersionIndex,

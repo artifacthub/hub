@@ -215,7 +215,7 @@ const Template = (props: Props) => {
     const parts = str.match(TOKENIZE_RE);
     if (isNull(parts)) return null;
     return (
-      <span className={`badge fw-normal border bg-white ${styles.badge}`}>
+      <span className={`badge fw-normal border border-1 bg-white ${styles.badge}`}>
         {parts.map((word: string, idx: number) => {
           if (word === ')' || word === '|')
             return (

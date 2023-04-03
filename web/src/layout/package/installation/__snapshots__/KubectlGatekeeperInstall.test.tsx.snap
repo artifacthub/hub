@@ -16,7 +16,7 @@ exports[`KubectlGatekeeperInstall creates snapshot 1`] = `
       </span>
       , you can directly apply the 
       <code
-        class="border inlineCode"
+        class="border border-1 inlineCode"
       >
         template.yaml
       </code>

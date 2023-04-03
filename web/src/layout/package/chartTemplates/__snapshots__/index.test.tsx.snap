@@ -945,7 +945,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                     class="col-9 ps-3 h-100"
                   >
                     <div
-                      class="position-relative h-100 mh-100 border templateWrapper"
+                      class="position-relative h-100 mh-100 border border-1 templateWrapper"
                     >
                       <div
                         class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"

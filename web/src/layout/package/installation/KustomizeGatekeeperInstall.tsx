@@ -17,7 +17,7 @@ const KustomizeGatekeeperInstall = (props: Props) => {
   return (
     <div className={`mt-3 ${styles.gatekeeperInstallContent}`}>
       <p className="text-muted">
-        First, create a <code className={`border ${styles.inlineCode}`}>kustomization.yaml</code> file:
+        First, create a <code className={`border border-1 ${styles.inlineCode}`}>kustomization.yaml</code> file:
       </p>
 
       <CommandBlock
@@ -31,13 +31,13 @@ resources:
 
       <p className="text-muted">
         Then define your constraints in a file called{' '}
-        <code className={`border ${styles.inlineCode}`}>constraints.yaml</code> in the same directory. Example
+        <code className={`border border-1 ${styles.inlineCode}`}>constraints.yaml</code> in the same directory. Example
         constraints can be found in the "samples" folders.
       </p>
 
       <p className="text-muted">
         You can install everything with{' '}
-        <code className={`border ${styles.inlineCode}`}>kustomize build . | kubectl apply -f -</code>
+        <code className={`border border-1 ${styles.inlineCode}`}>kustomize build . | kubectl apply -f -</code>
       </p>
 
       <p className="text-muted">

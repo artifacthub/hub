@@ -11,7 +11,7 @@ exports[`Members section index creates snapshot 1`] = `
     >
       <div>
         <div
-          class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
+          class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom border-1"
         >
           <div
             class="h3 pb-0 title"

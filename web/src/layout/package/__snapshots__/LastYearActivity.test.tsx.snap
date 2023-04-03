@@ -28,11 +28,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative border heatMapCell level3"
+          class="position-relative border border-1 heatMapCell level3"
           data-testid="heatMapCell"
         />
         <div
-          class="popover end-0 popover"
+          class="tooltip popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
@@ -48,7 +48,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border top-0 marker level3"
+                class="me-2 border border-1 top-0 marker level3"
               />
               Releases: 
               <span
@@ -64,11 +64,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative border heatMapCell level1"
+          class="position-relative border border-1 heatMapCell level1"
           data-testid="heatMapCell"
         />
         <div
-          class="popover end-0 popover"
+          class="tooltip popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
@@ -84,7 +84,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border top-0 marker level1"
+                class="me-2 border border-1 top-0 marker level1"
               />
               Releases: 
               <span
@@ -100,11 +100,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative border heatMapCell level3"
+          class="position-relative border border-1 heatMapCell level3"
           data-testid="heatMapCell"
         />
         <div
-          class="popover end-0 popover"
+          class="tooltip popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
@@ -120,7 +120,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border top-0 marker level3"
+                class="me-2 border border-1 top-0 marker level3"
               />
               Releases: 
               <span
@@ -136,11 +136,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative border heatMapCell level2"
+          class="position-relative border border-1 heatMapCell level2"
           data-testid="heatMapCell"
         />
         <div
-          class="popover end-0 popover"
+          class="tooltip popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
@@ -156,7 +156,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border top-0 marker level2"
+                class="me-2 border border-1 top-0 marker level2"
               />
               Releases: 
               <span
@@ -172,11 +172,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative border heatMapCell level3"
+          class="position-relative border border-1 heatMapCell level3"
           data-testid="heatMapCell"
         />
         <div
-          class="popover end-0 popover"
+          class="tooltip popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
@@ -192,7 +192,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border top-0 marker level3"
+                class="me-2 border border-1 top-0 marker level3"
               />
               Releases: 
               <span
@@ -208,11 +208,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative border heatMapCell level1"
+          class="position-relative border border-1 heatMapCell level1"
           data-testid="heatMapCell"
         />
         <div
-          class="popover end-0 popover"
+          class="tooltip popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
@@ -228,7 +228,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border top-0 marker level1"
+                class="me-2 border border-1 top-0 marker level1"
               />
               Releases: 
               <span
@@ -244,11 +244,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative border heatMapCell level3"
+          class="position-relative border border-1 heatMapCell level3"
           data-testid="heatMapCell"
         />
         <div
-          class="popover end-0 popover"
+          class="tooltip popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
@@ -264,7 +264,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border top-0 marker level3"
+                class="me-2 border border-1 top-0 marker level3"
               />
               Releases: 
               <span
@@ -280,11 +280,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative border heatMapCell level1"
+          class="position-relative border border-1 heatMapCell level1"
           data-testid="heatMapCell"
         />
         <div
-          class="popover end-0 popover"
+          class="tooltip popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
@@ -300,7 +300,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border top-0 marker level1"
+                class="me-2 border border-1 top-0 marker level1"
               />
               Releases: 
               <span
@@ -316,11 +316,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative border heatMapCell level0 border"
+          class="position-relative border border-1 heatMapCell level0 border"
           data-testid="heatMapCell"
         />
         <div
-          class="popover end-0 popover"
+          class="tooltip popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
@@ -336,7 +336,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border top-0 marker level0"
+                class="me-2 border border-1 top-0 marker level0"
               />
               Releases: 
               <span
@@ -352,11 +352,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative border heatMapCell level1"
+          class="position-relative border border-1 heatMapCell level1"
           data-testid="heatMapCell"
         />
         <div
-          class="popover end-0 popover"
+          class="tooltip popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
@@ -372,7 +372,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border top-0 marker level1"
+                class="me-2 border border-1 top-0 marker level1"
               />
               Releases: 
               <span
@@ -388,11 +388,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative border heatMapCell level1"
+          class="position-relative border border-1 heatMapCell level1"
           data-testid="heatMapCell"
         />
         <div
-          class="popover end-0 popover"
+          class="tooltip popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
@@ -408,7 +408,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border top-0 marker level1"
+                class="me-2 border border-1 top-0 marker level1"
               />
               Releases: 
               <span
@@ -424,11 +424,11 @@ exports[`LastYearActivity creates snapshot 1`] = `
         class="position-relative"
       >
         <div
-          class="position-relative border heatMapCell level0 border"
+          class="position-relative border border-1 heatMapCell level0 border"
           data-testid="heatMapCell"
         />
         <div
-          class="popover end-0 popover"
+          class="tooltip popover end-0 popover"
           data-testid="heatMapPopover"
           role="tooltip"
         >
@@ -444,7 +444,7 @@ exports[`LastYearActivity creates snapshot 1`] = `
               class="d-flex flex-row align-items-center"
             >
               <div
-                class="me-2 border top-0 marker level0"
+                class="me-2 border border-1 top-0 marker level0"
               />
               Releases: 
               <span

@@ -4,28 +4,28 @@ exports[`SampleQueries creates snapshot 1`] = `
 <DocumentFragment>
   <a
     aria-label="Filter by OLM operators for databases"
-    class="badge border fw-normal mx-2 mt-3 sampleQuery undefined"
+    class="badge border border-1 fw-normal mx-2 mt-3 sampleQuery undefined"
     href="/packages/search?kind=3&ts_query_web=database"
   >
     OLM operators for databases
   </a>
   <a
     aria-label="Filter by Helm Charts provided by Bitnami"
-    class="badge border fw-normal mx-2 mt-3 sampleQuery undefined"
+    class="badge border border-1 fw-normal mx-2 mt-3 sampleQuery undefined"
     href="/packages/search?kind=0&org=bitnami"
   >
     Helm Charts provided by Bitnami
   </a>
   <a
     aria-label="Filter by Packages of any kind related to etcd"
-    class="badge border fw-normal mx-2 mt-3 sampleQuery undefined"
+    class="badge border border-1 fw-normal mx-2 mt-3 sampleQuery undefined"
     href="/packages/search?ts_query_web=etcd"
   >
     Packages of any kind related to etcd
   </a>
   <a
     aria-label="Filter by Falco rules for CVE"
-    class="badge border fw-normal mx-2 mt-3 sampleQuery undefined"
+    class="badge border border-1 fw-normal mx-2 mt-3 sampleQuery undefined"
     href="/packages/search?kind=1&ts_query_web=cve"
   >
     Falco rules for CVE

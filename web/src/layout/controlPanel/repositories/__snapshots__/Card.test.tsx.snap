@@ -30,7 +30,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                 class="d-flex fs-6"
               >
                 <span
-                  class="badge bg-light text-dark border bg badge"
+                  class="badge bg-light text-dark border border-1 bg badge"
                 >
                   <div
                     class="d-flex flex-row align-items-center"
@@ -63,7 +63,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
               class="d-flex d-md-none fs-6"
             >
               <span
-                class="badge bg-light text-dark border bg badge"
+                class="badge bg-light text-dark border border-1 bg badge"
               >
                 <div
                   class="d-flex flex-row align-items-center"
@@ -304,7 +304,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                     class="content"
                   >
                     <div
-                      class="fs-6 fw-semibold border-bottom mb-3 pb-1"
+                      class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
                     >
                       Verified publisher
                     </div>
@@ -487,7 +487,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
                     class="content"
                   >
                     <div
-                      class="fs-6 fw-semibold border-bottom mb-3 pb-1"
+                      class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
                     >
                       Official
                     </div>

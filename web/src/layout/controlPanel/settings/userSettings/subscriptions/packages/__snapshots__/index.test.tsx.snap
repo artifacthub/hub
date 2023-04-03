@@ -13,7 +13,7 @@ exports[`PackagesSection creates snapshot 1`] = `
         class="flex-grow-1"
       >
         <div
-          class="h3 pb-2 mb-2 border-bottom title"
+          class="h3 pb-2 mb-2 border-bottom border-1 title"
         >
           Your subscriptions
         </div>

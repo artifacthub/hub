@@ -21,7 +21,7 @@ const Stats = (props: Props) => {
     return null;
 
   return (
-    <div className={`d-flex flex-row flex-wrap align-items-center border mt-3 px-2 ${styles.wrapper}`}>
+    <div className={`d-flex flex-row flex-wrap align-items-center border border-1 mt-3 px-2 ${styles.wrapper}`}>
       {!isUndefined(props.packageStats) && (
         <>
           {props.packageStats.subscriptions > 0 && (

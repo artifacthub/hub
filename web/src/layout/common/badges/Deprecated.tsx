@@ -18,7 +18,7 @@ const Deprecated = (props: Props) => {
       dropdownAlignment={props.dropdownAlignment}
       popoverContent={
         <>
-          <div className="fs-6 fw-semibold border-bottom mb-3 pb-1">Deprecated</div>
+          <div className="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1">Deprecated</div>
 
           <p className="mb-0">
             This package is <span className="fw-bold">deprecated</span>. Please see the package details for possible

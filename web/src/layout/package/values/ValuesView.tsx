@@ -123,7 +123,7 @@ const ValuesView = (props: Props) => {
           disabled={isEmptyValues}
         />
 
-        <div ref={code} className={`overflow-auto h-100 position-relative border ${styles.codeWrapper}`}>
+        <div ref={code} className={`overflow-auto h-100 position-relative border border-1 ${styles.codeWrapper}`}>
           {!isUndefined(props.lines) && !isUndefined(clickedLine) && !isUndefined(topPositionMenu) && (
             <div
               role="complementary"

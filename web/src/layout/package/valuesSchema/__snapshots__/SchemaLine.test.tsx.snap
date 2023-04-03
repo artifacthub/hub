@@ -7,7 +7,7 @@ exports[`SchemaLine creates snapshot 1`] = `
     data-testid="schemaLine"
   >
     <div
-      class="col-7 border-start border-end position-relative py-1 user-select-none content undefined"
+      class="col-7 border-start border-end border-1 position-relative py-1 user-select-none content undefined"
       data-testid="lineContent"
       role="button"
     >

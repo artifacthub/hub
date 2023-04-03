@@ -3,7 +3,7 @@
 exports[`CompareView creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="position-relative h-100 mh-100 border templateWrapper"
+    class="position-relative h-100 mh-100 border border-1 templateWrapper"
   >
     <div
       class="position-absolute d-flex wrapper"
@@ -68,7 +68,7 @@ exports[`CompareView creates snapshot 1`] = `
           </div>
         </header>
         <div
-          class="overflow-scroll border-top py-2 codeWrapper"
+          class="overflow-scroll border-top border-1 py-2 codeWrapper"
         >
           <table
             class="diff diff-unified"

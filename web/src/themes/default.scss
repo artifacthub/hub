@@ -112,7 +112,14 @@ button,
   user-select: none;
 }
 
+// Tooltip
+.tooltip,
+.tooltip-arrow {
+  position: absolute !important;
+}
+
 .tooltip {
+  padding: 0.45rem 0 0 !important;
   opacity: 0.97;
 }
 

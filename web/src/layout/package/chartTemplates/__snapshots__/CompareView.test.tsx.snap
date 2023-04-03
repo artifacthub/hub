@@ -104,7 +104,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border fw-bold label"
+                  class="text-truncate border border-1 fw-bold label"
                 >
                   ConfigMap
                 </span>
@@ -175,7 +175,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border fw-bold label"
+                  class="text-truncate border border-1 fw-bold label"
                 >
                   ConfigMap
                 </span>
@@ -246,7 +246,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border fw-bold label"
+                  class="text-truncate border border-1 fw-bold label"
                 >
                   ConfigMap
                 </span>
@@ -317,7 +317,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border fw-bold label"
+                  class="text-truncate border border-1 fw-bold label"
                 >
                   Deployment
                 </span>
@@ -388,7 +388,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border fw-bold label"
+                  class="text-truncate border border-1 fw-bold label"
                 >
                   Service
                 </span>
@@ -459,7 +459,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border fw-bold label"
+                  class="text-truncate border border-1 fw-bold label"
                 >
                   Secret
                 </span>
@@ -530,7 +530,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border fw-bold label"
+                  class="text-truncate border border-1 fw-bold label"
                 >
                   ServiceMonitor
                 </span>
@@ -544,7 +544,7 @@ exports[`CompareView creates snapshot 1`] = `
       class="col-9 ps-3 h-100"
     >
       <div
-        class="position-relative h-100 mh-100 border templateWrapper"
+        class="position-relative h-100 mh-100 border border-1 templateWrapper"
       >
         <div
           class="position-absolute d-flex wrapper"
@@ -614,7 +614,7 @@ exports[`CompareView creates snapshot 1`] = `
               </div>
             </header>
             <div
-              class="overflow-scroll border-top py-2 codeWrapper"
+              class="overflow-scroll border-top border-1 py-2 codeWrapper"
             >
               <table
                 class="diff diff-unified"

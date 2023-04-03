@@ -30,7 +30,7 @@ const VerifiedPublisher = (props: Props) => {
       smallSize={props.smallSize}
       popoverContent={
         <>
-          <div className="fs-6 fw-semibold border-bottom mb-3 pb-1">Verified publisher</div>
+          <div className="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1">Verified publisher</div>
 
           <p>
             This {!isUndefined(props.inRepo) && props.inRepo ? 'repository' : 'package'}{' '}

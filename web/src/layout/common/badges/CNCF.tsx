@@ -19,7 +19,7 @@ const CNCF = (props: Props) => {
       dropdownAlignment={props.dropdownAlignment}
       popoverContent={
         <>
-          <div className="fs-6 fw-semibold border-bottom mb-3 pb-1">CNCF</div>
+          <div className="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1">CNCF</div>
 
           <p className="mb-0">
             This {!isUndefined(props.inRepo) && props.inRepo ? 'repository' : 'package'} has been published by a{' '}

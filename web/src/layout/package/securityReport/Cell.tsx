@@ -67,7 +67,7 @@ const SecurityCell = (props: Props) => {
 
   const Code: ElementType = (props: CodeProps) => {
     if (props.inline) {
-      return <code className={`border ${styles.inlineCode}`}>{props.children}</code>;
+      return <code className={`border border-1 ${styles.inlineCode}`}>{props.children}</code>;
     }
     if (props.children) {
       const content = String(props.children).replace(/\n$/, '');

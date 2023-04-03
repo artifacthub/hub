@@ -10,7 +10,7 @@ exports[`Changelog content  creates snapshot 1`] = `
       data-testid="changelogBlock"
     >
       <div
-        class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
+        class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom border-1 w-100 mb-3 pb-2"
         id="changelog-0"
       >
         <div
@@ -390,7 +390,7 @@ exports[`Changelog content  creates snapshot 1`] = `
       data-testid="changelogBlock"
     >
       <div
-        class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
+        class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom border-1 w-100 mb-3 pb-2"
         id="changelog-1"
       >
         <div

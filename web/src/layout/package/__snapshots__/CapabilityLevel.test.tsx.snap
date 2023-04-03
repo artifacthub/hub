@@ -137,7 +137,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
         class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
       >
         <div
-          class="rounded-circle text-center me-2 textLight step border bg-white step activeStep activeStep"
+          class="rounded-circle text-center me-2 textLight step border border-1 bg-white step activeStep activeStep"
           data-testid="capabilityLevelStep"
         >
           <svg
@@ -164,7 +164,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
         class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
       >
         <div
-          class="rounded-circle text-center me-2 textLight step border bg-white step activeStep activeStep"
+          class="rounded-circle text-center me-2 textLight step border border-1 bg-white step activeStep activeStep"
           data-testid="capabilityLevelStep"
         >
           <svg
@@ -191,7 +191,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
         class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
       >
         <div
-          class="rounded-circle text-center me-2 textLight step border bg-white step activeStep activeStep"
+          class="rounded-circle text-center me-2 textLight step border border-1 bg-white step activeStep activeStep"
           data-testid="capabilityLevelStep"
         >
           <svg
@@ -218,7 +218,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
         class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
       >
         <div
-          class="rounded-circle text-center me-2 textLight step border bg-white step activeStep activeStep"
+          class="rounded-circle text-center me-2 textLight step border border-1 bg-white step activeStep activeStep"
           data-testid="capabilityLevelStep"
         >
           <svg
@@ -245,7 +245,7 @@ exports[`CapabilityLevel creates snapshot 1`] = `
         class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
       >
         <div
-          class="rounded-circle text-center me-2 textLight step border bg-white step"
+          class="rounded-circle text-center me-2 textLight step border border-1 bg-white step"
           data-testid="capabilityLevelStep"
         />
         <small

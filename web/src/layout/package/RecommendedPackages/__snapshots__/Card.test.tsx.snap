@@ -8,7 +8,7 @@ exports[`RecommendedPackageCard creates snapshot 1`] = `
     href="/packages/helm/artifact-hub/artifact-hub"
   >
     <div
-      class="badge bg-light text-dark d-flex flex-row align-items-center ps-0 pe-3 border badge"
+      class="badge bg-light text-dark d-flex flex-row align-items-center ps-0 pe-3 border border-1 badge"
     >
       <div
         class="me-2"
