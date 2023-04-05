@@ -65,7 +65,7 @@
     "react-scripts": "^5.0.1",
     "sass": "^1.60.0",
     "shx": "^0.3.4",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.3"
   },
   "resolutions": {
     "autoprefixer": "10.4.5",
