@@ -409,7 +409,7 @@ func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOption
 		// Get chart content
 		req, _ := http.NewRequest("GET", u.String(), nil)
 		req = req.WithContext(ctx)
-		req.Header.Set("Accept-Encoding", "*")
+		req.Header.Set("Accept-Encoding", "identity")
 		if o.Username != "" || o.Password != "" {
 			req.SetBasicAuth(o.Username, o.Password)
 		}
