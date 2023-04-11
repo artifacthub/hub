@@ -20,6 +20,7 @@ describe('OLMInstall', () => {
   it('creates snapshot', async () => {
     const { asFragment } = render(<OLMInstall {...defaultProps} />);
     expect(await screen.findByText(`cat <<EOF | kubectl apply -f -`)).toBeInTheDocument();
+    expect(await screen.findByText(`kubectl get csv -n my-packageName`)).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -30,6 +31,7 @@ describe('OLMInstall', () => {
       expect(screen.getByText('Install the operator by running the following command:')).toBeInTheDocument();
       expect(await screen.findByText(`cat <<EOF | kubectl apply -f -`)).toBeInTheDocument();
       expect(screen.getByText('After install, watch your operator come up using next command:')).toBeInTheDocument();
+      expect(await screen.findByText(`kubectl get csv -n my-packageName`)).toBeInTheDocument();
       expect(screen.getByText(`kubectl get csv -n my-${defaultProps.name}`)).toBeInTheDocument();
       expect(
         screen.getByText(
