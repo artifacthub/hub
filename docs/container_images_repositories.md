@@ -60,13 +60,25 @@ artifacthub/ah:latest
 
 ### Repository metadata
 
-There is an Artifact Hub repository metadata file named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified publisher](https://github.com/artifacthub/hub/blob/master/docs/repositories.md#verified-publisher) or [Ownership claim](https://github.com/artifacthub/hub/blob/master/docs/repositories.md#ownership-claim). Once your repository metadata file is ready, you can push it to the OCI registry using [oras](https://oras.land/cli/):
+There is an Artifact Hub repository metadata file named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified publisher](https://github.com/artifacthub/hub/blob/master/docs/repositories.md#verified-publisher) or [Ownership claim](https://github.com/artifacthub/hub/blob/master/docs/repositories.md#ownership-claim).
+
+Once your repository metadata file is ready, you can push it to the OCI registry using [oras](https://oras.land/cli/):
 
 ```bash
 oras push \
   registry/namespace/repository:artifacthub.io \
   --manifest-config /dev/null:application/vnd.cncf.artifacthub.config.v1+yaml \
   artifacthub-repo.yml:application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml
+```
+
+or you can use [regclient](https://github.com/regclient/regclient) to do the same:
+```bash
+ regctl artifact put \
+                --format '{{ .Manifest.GetDescriptor.Digest }}' \
+                --artifact-type application/vnd.cncf.artifacthub.config.v1+yaml \
+                -f artifacthub-repo.yml \
+                --file-media-type "application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml" \
+                registry/namespace/repository:artifacthub.io
 ```
 
 The repository metadata file is pushed to the registry using a special tag named `artifacthub.io`. Artifact Hub will pull that artifact looking for the `application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml` layer when the repository metadata is needed.
@@ -78,6 +90,17 @@ oras push \
   docker.io/repository:artifacthub.io \
   --manifest-config /dev/null:application/vnd.cncf.artifacthub.config.v1+yaml \
   artifacthub-repo.yml:application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml
+```
+
+or you can use [regclient](https://github.com/regclient/regclient) to do the same:
+
+```bash
+ regctl artifact put \
+                --format '{{ .Manifest.GetDescriptor.Digest }}' \
+                --artifact-type application/vnd.cncf.artifacthub.config.v1+yaml \
+                -f artifacthub-repo.yml \
+                --file-media-type "application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml" \
+                docker.io/repository:artifacthub.io
 ```
 
 *Please note that publishing an Artifact Hub repository metadata file requires that the registry supports [OCI artifacts](https://oras.land/implementors/).*
