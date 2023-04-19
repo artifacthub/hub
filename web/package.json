@@ -25,7 +25,7 @@
     "react-dom": "^18.1.0",
     "react-icons": "^4.8.0",
     "react-image-crop": "^10.0.9",
-    "react-markdown": "^8.0.6",
+    "react-markdown": "^8.0.7",
     "react-router-dom": "^6.10.0",
     "react-syntax-highlighter": "^15.5.0",
     "regexify-string": "^1.0.17",
