@@ -31,7 +31,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
       - name: Lint OpenAPI specs
-        uses: github/super-linter@v4
+        uses: github/super-linter@v5
         env:
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_OPENAPI: true
