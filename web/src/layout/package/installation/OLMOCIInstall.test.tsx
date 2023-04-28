@@ -45,7 +45,7 @@ describe('OLMOCIInstall', () => {
       expect(screen.getByText('Create subscription')).toBeInTheDocument();
       expect(screen.getByText('packageName-subscription.yaml')).toBeInTheDocument();
       expect(screen.getAllByText(/stable/)).toHaveLength(2);
-      expect(screen.getByText('kubectl apply -f packageName-subscription.yaml')).toBeInTheDocument();
+      expect(await screen.findByText('kubectl apply -f packageName-subscription.yaml')).toBeInTheDocument();
 
       const olmLink = screen.getByText('Need OLM?');
       expect(olmLink).toBeInTheDocument();
