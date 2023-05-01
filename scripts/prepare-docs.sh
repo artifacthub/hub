@@ -36,3 +36,4 @@ cat docs/www/headers/kubewarden_annotations docs/kubewarden_annotations.md > doc
 cat docs/www/headers/kyverno_annotations docs/kyverno_annotations.md > docs/www/content/topics/annotations/kyverno.md
 cat docs/www/headers/olm_annotations docs/olm_annotations.md > docs/www/content/topics/annotations/olm.md
 cat docs/www/headers/tekton_annotations docs/tekton_annotations.md > docs/www/content/topics/annotations/tekton.md
+cat docs/www/headers/embedding_artifacts docs/embedding_artifacts.md > docs/www/content/topics/embedding_artifacts.md

@@ -19,7 +19,8 @@ The documentation is organized in the following topics:
 | [Kubewarden annotations](/docs/topics/annotations/kubewarden) | Describes some custom annotations that allow enriching the existing metadata in Kubewarden policies to improve users' experience in Artifact Hub.       |
 | [Kyverno annotations](/docs/topics/annotations/kyverno)       | Describes some custom annotations that allow enriching the existing metadata in Kyverno policies to improve users' experience in Artifact Hub.          |
 | [OLM annotations](/docs/topics/annotations/olm)               | Describes some custom annotations that allow enriching the existing metadata in OLM operators to improve users' experience in Artifact Hub.             |
-| [Tekton annotations](/docs/topics/annotations/tekton)         | Describes some custom annotations that allow enriching the existing metadata in Tekton tasks to improve users' experience in Artifact Hub.              |
+| [Tekton annotations](/docs/topics/annotations/tekton)         | Describes some custom annotations that allow enriching the existing metadata in Tekton tasks to improve users' experience in Artifact Hub.
+| [Embedding artifacts](/docs/topics/embedding_artifacts)       | Explains how to embed a single artifact or a group of them in other websites.              |
 | [Packages security report](/docs/topics/security_report)      | Explains how packages are scanned for security vulnerabilities and the structure of the security report.                                                |
 | [Authorization](/docs/topics/authorization)                   | Explains how the authorization mechanism that allows organizations to define what actions can be performed by their members works and how to set it up. |
 | [Architecture](/docs/topics/architecture)                     | Describes the components that form Artifact Hub, what each of them do and the layout of the source repository.                                          |
