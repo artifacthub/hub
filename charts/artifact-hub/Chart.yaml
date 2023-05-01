@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.13.1-2
-appVersion: 1.13.0
+version: 1.14.0
+appVersion: 1.14.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -42,59 +42,49 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Support for Knative client plugins
+      description: Support for Argo templates
     - kind: added
-      description: Support for Backstage plugins
+      description: Support for KubeArmor policies
     - kind: added
-      description: Category classifier based on ML model
+      description: Reduced motion support (accessibility)
     - kind: added
-      description: Allow publishers to provide packages' category manually
-    - kind: added
-      description: Display category label in cards and package view
-    - kind: added
-      description: Filter for artifacts published by CNCF projects
-    - kind: added
-      description: Display badge on artifacts published by CNCF projects
-    - kind: added
-      description: Auto-focus search form input field
-    - kind: added
-      description: Chart option to disable sign up
-    - kind: added
-      description: Chart option to set ttlSecondsAfterFinished on dbMigrator job
-    - kind: added
-      description: Link to Linux Foundation Privacy Policy
+      description: Document how to embed artifacts on other websites
     - kind: changed
-      description: Redesign and reorganize badges
+      description: Request charts content uncompressed
     - kind: changed
-      description: Category filter now uses the new category field
+      description: Some minor UI improvements
     - kind: changed
-      description: Sample search queries
+      description: Updated official status definition
     - kind: changed
-      description: Bump Go to 1.20.1
+      description: Improve Kyverno policies docs
     - kind: changed
-      description: Bump Trivy to 0.37.3
+      description: Improve container images docs (add regctl commands)
     - kind: changed
-      description: Bump OPM to 1.26.4
+      description: Bump Alpine to 3.17.3
+    - kind: changed
+      description: Bump Go to 1.20.2
+    - kind: changed
+      description: Upgrade Bootstrap to 5.2.3
+    - kind: changed
+      description: Upgrade react-router-dom to v6
     - kind: changed
       description: Upgrade backend and frontend dependencies
-    - kind: removed
-      description: Publisher and repository from filters column
     - kind: fixed
-      description: Harcoded image pull policy in hub deployment
+      description: Include registry (if available) in check db image
+    - kind: fixed
+      description: Clean repeated keywords ignoring case
     - kind: fixed
       description: Some other minor bugs and improvements
-    - kind: fixed
-      description: Append registry value from postgres subchart.
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.13.0
+      image: artifacthub/db-migrator:v1.14.0
     - name: hub
-      image: artifacthub/hub:v1.13.0
+      image: artifacthub/hub:v1.14.0
     - name: tracker
-      image: artifacthub/tracker:v1.13.0
+      image: artifacthub/tracker:v1.14.0
     - name: scanner
-      image: artifacthub/scanner:v1.13.0
+      image: artifacthub/scanner:v1.14.0
     - name: trivy
       image: aquasec/trivy:0.37.3
   artifacthub.io/links: |
