@@ -82,7 +82,8 @@ select {
 [type=reset],
 [type=submit],
 button {
-  -webkit-appearance: button
+  -webkit-appearance: button;
+  appearance: button;
 }
 [type=button]::-moz-focus-inner,
 [type=reset]::-moz-focus-inner,
@@ -125,6 +126,7 @@ textarea {
 }
 [type=search] {
   -webkit-appearance: textfield;
+  appearance: textfield;
   outline-offset: -2px
 }
 [type=search]::-webkit-search-decoration {
@@ -742,7 +744,7 @@ img {
   text-decoration: underline
 }
 .gdoc-markdown img {
-  max-width: 100%
+  max-width: 100%;
 }
 .gdoc-markdown blockquote {
   margin: 1rem 0;

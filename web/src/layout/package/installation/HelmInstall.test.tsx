@@ -35,7 +35,7 @@ describe('HelmInstall', () => {
 
       expect(await screen.findByText(`helm repo add ${repo.name} ${repo.url}`)).toBeInTheDocument();
       expect(
-        screen.getByText(
+        await screen.findByText(
           `helm install my-${defaultProps.name} ${repo.name}/${defaultProps.name} --version ${defaultProps.version}`
         )
       ).toBeInTheDocument();
