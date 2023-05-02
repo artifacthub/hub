@@ -78,6 +78,15 @@ code {
   top: -1px;
 }
 
+.gdoc-markdown img {
+  margin: 1rem 0;
+  border: 3px solid rgba(0,0,0, 0.05);
+}
+
+[data-theme='dark'] .gdoc-markdown img {
+  border-color: rgba(0,0,0, 0.2);
+}
+
 .gdoc-footer {
   background-color: var(--color-1-900);
 }
