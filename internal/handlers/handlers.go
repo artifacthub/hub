@@ -370,6 +370,14 @@ func (h *Handlers) setupRouter() {
 		//
 		// (*) https://github.com/sstarcher/helm-exporter
 		r.Get("/helm-exporter", h.Packages.GetHelmExporterDump)
+
+		// Nova
+		//
+		// This endpoint is used by Fairwinds Nova (*) to get the all charts
+		// listed on Artifact Hub.
+		//
+		// (*) https://github.com/FairwindsOps/nova
+		r.Get("/nova", h.Packages.GetNovaDump)
 	})
 
 	// Monocular compatible search API

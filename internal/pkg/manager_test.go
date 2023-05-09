@@ -571,6 +571,34 @@ func TestGetJSON(t *testing.T) {
 	})
 }
 
+func TestGetNovaDumpJSON(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getNovaDumpDBQ).Return([]byte("dataJSON"), nil)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetNovaDumpJSON(ctx)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getNovaDumpDBQ).Return(nil, tests.ErrFakeDB)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetNovaDumpJSON(ctx)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestGetProductionUsageJSON(t *testing.T) {
 	userID := "userID"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)

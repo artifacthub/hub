@@ -716,6 +716,43 @@ func TestGetHelmExporterDump(t *testing.T) {
 	})
 }
 
+func TestGetNovaDump(t *testing.T) {
+	t.Run("get nova dump succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetNovaDumpJSON", r.Context()).Return([]byte("dataJSON"), nil)
+		hw.h.GetNovaDump(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := io.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(2*time.Hour), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.assertExpectations(t)
+	})
+
+	t.Run("error getting nova dump", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetNovaDumpJSON", r.Context()).Return(nil, tests.ErrFakeDB)
+		hw.h.GetNovaDump(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.assertExpectations(t)
+	})
+}
+
 func TestGetProductionUsage(t *testing.T) {
 	rctx := &chi.Context{
 		URLParams: chi.RouteParams{

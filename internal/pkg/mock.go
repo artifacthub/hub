@@ -59,6 +59,13 @@ func (m *ManagerMock) GetJSON(ctx context.Context, input *hub.GetPackageInput) (
 	return data, args.Error(1)
 }
 
+// GetNovaDumpJSON implements the PackageManager interface.
+func (m *ManagerMock) GetNovaDumpJSON(ctx context.Context) ([]byte, error) {
+	args := m.Called(ctx)
+	data, _ := args.Get(0).([]byte)
+	return data, args.Error(1)
+}
+
 // GetProductionUsageJSON implements the PackageManager interface.
 func (m *ManagerMock) GetProductionUsageJSON(ctx context.Context, repoName, pkgName string) ([]byte, error) {
 	args := m.Called(ctx, repoName, pkgName)

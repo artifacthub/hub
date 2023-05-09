@@ -3373,6 +3373,128 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  /nova:
+    get:
+      tags:
+        - Integrations
+      summary: Get Nova dump
+      description: Get all charts listed in Artifact Hub.
+      operationId: getNovaDump
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - name
+                    - latest_version
+                properties:
+                  name:
+                    type: string
+                    nullable: false
+                  description:
+                    type: string
+                  home:
+                    type: string
+                  latest_version:
+                    type: string
+                    nullable: false
+                  links:
+                    type: array
+                    nullable: true
+                    items:
+                      $ref: "#/components/schemas/Link"
+                  logo:
+                    type: string
+                  maintainers:
+                    type: array
+                    nullable: true
+                    items:
+                      type: object
+                      required:
+                        - name
+                      properties:
+                        name:
+                          type: string
+                          nullable: false
+                  official:
+                    type: boolean
+                    nullable: true
+                  repository:
+                    type: object
+                    nullable: false
+                    required:
+                      - name
+                      - url
+                    properties:
+                      name:
+                        type: string
+                        nullable: false
+                      url:
+                        type: string
+                        format: uri
+                        nullable: false
+                      official:
+                        type: boolean
+                        nullable: true
+                      verified:
+                        type: boolean
+                        nullable: true
+                  versions:
+                    type: array
+                    nullable: false
+                    items:
+                      type: object
+                      nullable: false
+                      required:
+                        - pkg
+                        - app
+                      properties:
+                        pkg:
+                          type: string
+                          nullable: false
+                        app:
+                          type: string
+                        deprecated:
+                          type: boolean
+                          nullable: true
+                example:
+                  - name: package1
+                    description: description
+                    home: https://home.url
+                    latest_version: 1.0.0
+                    links:
+                      - name: link1
+                        url: https://link1
+                      - name: link2
+                        url: https://link2
+                    logo: https://logo.url
+                    maintainers:
+                      - name: name1
+                    official: true
+                    repository:
+                      name: repo1
+                      url: https://repo1.com
+                      verified: true
+                    versions:
+                      - pkg: 1.0.0
+                        app: 1.0.0
+                  - name: package2
+                    latest_version: 1.0.0
+                    repository:
+                      name: repo2
+                      url: https://repo2.com
+                    versions:
+                      - pkg: 1.0.0
+                        deprecated: true
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 components:
   securitySchemes:
     ApiKeyId:

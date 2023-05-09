@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(189);
+select plan(190);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -448,6 +448,7 @@ select has_function('enrich_package_data');
 select has_function('generate_package_tsdoc');
 select has_function('get_harbor_replication_dump');
 select has_function('get_helm_exporter_dump');
+select has_function('get_nova_dump');
 select has_function('get_package');
 select has_function('get_package_changelog');
 select has_function('get_package_summary');

@@ -287,6 +287,18 @@ func (h *Handlers) GetHelmExporterDump(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, dataJSON, 1*time.Hour, http.StatusOK)
 }
 
+// GetNovaDump is an http handler used to get a summary of all packages of kind
+// Helm in the hub database so that they can be used by Fairwinds Nova.
+func (h *Handlers) GetNovaDump(w http.ResponseWriter, r *http.Request) {
+	dataJSON, err := h.pkgManager.GetNovaDumpJSON(r.Context())
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetNovaDump").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, 2*time.Hour, http.StatusOK)
+}
+
 // GetProductionUsage is an http handler used to get a summary of which of the
 // organizations the user belongs to are using the package in production.
 func (h *Handlers) GetProductionUsage(w http.ResponseWriter, r *http.Request) {

@@ -22,6 +22,7 @@ const (
 	deleteProductionUsageDBQ        = `select delete_production_usage($1::uuid, $2::text, $3::text, $4::text)`
 	getHarborReplicationDumpDBQ     = `select get_harbor_replication_dump()`
 	getHelmExporterDumpDBQ          = `select get_helm_exporter_dump()`
+	getNovaDumpDBQ                  = `select get_nova_dump()`
 	getPkgDBQ                       = `select get_package($1::jsonb)`
 	getPkgChangelogDBQ              = `select get_package_changelog($1::uuid)`
 	getPkgStarsDBQ                  = `select get_package_stars($1::uuid, $2::uuid)`
@@ -132,6 +133,12 @@ func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]by
 	// Get package from database
 	inputJSON, _ := json.Marshal(input)
 	return util.DBQueryJSON(ctx, m.db, getPkgDBQ, inputJSON)
+}
+
+// GetNovaDumpJSON returns a json list with some information from all packages
+// of kind Helm available so that it can be used by Fairwinds Nova.
+func (m *Manager) GetNovaDumpJSON(ctx context.Context) ([]byte, error) {
+	return util.DBQueryJSON(ctx, m.db, getNovaDumpDBQ)
 }
 
 // GetProductionUsageJSON returns a json object describing which of the
