@@ -191,6 +191,7 @@ type PackageManager interface {
 	GetHarborReplicationDumpJSON(ctx context.Context) ([]byte, error)
 	GetHelmExporterDumpJSON(ctx context.Context) ([]byte, error)
 	GetJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
+	GetNovaDumpJSON(ctx context.Context) ([]byte, error)
 	GetProductionUsageJSON(ctx context.Context, repoName, pkgName string) ([]byte, error)
 	GetRandomJSON(ctx context.Context) ([]byte, error)
 	GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, version string) ([]byte, error)
