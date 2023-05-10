@@ -31,7 +31,7 @@
     "prettier": "^2.8.8",
     "react-scripts": "^5.0.1",
     "typescript": "^5.0.3",
-    "webpack-cli": "^5.0.2"
+    "webpack-cli": "^5.1.1"
   },
   "resolutions": {
     "minimatch": "5.1.0",
