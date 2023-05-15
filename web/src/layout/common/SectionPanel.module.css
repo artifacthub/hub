@@ -31,6 +31,10 @@
   text-decoration: none;
 }
 
+.listItem:hover {
+  border-color: var(--bs-list-group-border-color);
+}
+
 @media only screen and (min-width: 768px) {
   .sidebar {
     width: 300px;

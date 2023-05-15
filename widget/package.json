@@ -18,9 +18,9 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.5.1",
     "@types/lodash": "^4.14.194",
-    "@types/node": "^18.16.2",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.1",
+    "@types/node": "^20.1.1",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
     "@types/styled-components": "^5.1.25",
     "babel-plugin-styled-components": "^2.1.1",
     "eslint-config-prettier": "^8.8.0",
@@ -31,7 +31,7 @@
     "prettier": "^2.8.8",
     "react-scripts": "^5.0.1",
     "typescript": "^5.0.3",
-    "webpack-cli": "^5.0.2"
+    "webpack-cli": "^5.1.1"
   },
   "resolutions": {
     "minimatch": "5.1.0",
