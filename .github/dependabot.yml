@@ -29,8 +29,6 @@ updates:
     ignore:
       - dependency-name: "k8s.io/apimachinery"
       - dependency-name: "k8s.io/client-go"
-      - dependency-name: "github.com/hashicorp/golang-lru"
-        versions: ["1.x.x", "2.x.x"]
   - package-ecosystem: "docker"
     directory: "/cmd/ah"
     schedule:
