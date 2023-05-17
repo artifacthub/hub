@@ -12,7 +12,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
-	gk "github.com/open-policy-agent/gatekeeper/pkg/gator"
+	gk "github.com/open-policy-agent/gatekeeper/v3/pkg/gator/verify"
 	ignore "github.com/sabhiram/go-gitignore"
 )
 
@@ -281,7 +281,7 @@ func prepareGatekeeperData(pkgPath string) (map[string]interface{}, error) {
 	}
 
 	// Read examples
-	suites, err := gk.ReadSuites(os.DirFS(pkgPath), ".", false)
+	suites, err := gk.ReadSuites(os.DirFS(pkgPath), ".", ".", false)
 	if err != nil {
 		return nil, fmt.Errorf("error reading gatekeeper suite: %w", err)
 	}

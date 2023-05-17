@@ -9,7 +9,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	svg "github.com/h2non/go-is-svg"
-	lru "github.com/hashicorp/golang-lru"
+	lru "github.com/hashicorp/golang-lru/v2"
 	"github.com/jackc/pgx/v4"
 	"github.com/spf13/viper"
 )
@@ -35,8 +35,8 @@ type ImageStore struct {
 	cfg         *viper.Viper
 	db          DB
 	hc          img.HTTPClient
-	imagesCache *lru.Cache
-	errorsCache *lru.Cache
+	imagesCache *lru.Cache[string, []byte]
+	errorsCache *lru.Cache[string, error]
 	mutexes     sync.Map
 }
 
@@ -46,8 +46,8 @@ func NewImageStore(
 	db DB,
 	hc img.HTTPClient,
 ) *ImageStore {
-	imagesCache, _ := lru.New(cacheSize)
-	errorsCache, _ := lru.New(cacheSize)
+	imagesCache, _ := lru.New[string, []byte](cacheSize)
+	errorsCache, _ := lru.New[string, error](cacheSize)
 	return &ImageStore{
 		cfg:         cfg,
 		db:          db,
@@ -66,20 +66,17 @@ func (s *ImageStore) DownloadAndSaveImage(ctx context.Context, imageURL string) 
 	defer imageMu.Unlock()
 
 	// Try to get image data from the cache to avoid hitting the source
-	var data []byte
-	var err error
-	cachedImage, ok := s.imagesCache.Get(imageURL)
-	if ok {
-		data = cachedImage.([]byte)
-	} else {
+	data, ok := s.imagesCache.Get(imageURL)
+	if !ok {
 		// Image not found in the cache. Check if we've tried downloading it
 		// already, returning the cached error if available.
 		cachedError, ok := s.errorsCache.Get(imageURL)
 		if ok {
-			return "", cachedError.(error)
+			return "", cachedError
 		}
 
 		// Download it from source and store it in the cache.
+		var err error
 		data, err = img.Download(ctx, s.hc, imageURL)
 		if err != nil {
 			s.errorsCache.Add(imageURL, err)
