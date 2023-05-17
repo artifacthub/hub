@@ -23,7 +23,7 @@ There is an extra Artifact Hub specific metadata file named [artifacthub-repo.ym
 ```bash
 oras push \
   registry/namespace/chart-name:artifacthub.io \
-  --manifest-config /dev/null:application/vnd.cncf.artifacthub.config.v1+yaml \
+  --config /dev/null:application/vnd.cncf.artifacthub.config.v1+yaml \
   artifacthub-repo.yml:application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml
 ```
 
