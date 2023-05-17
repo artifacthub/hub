@@ -67,7 +67,7 @@ Once your repository metadata file is ready, you can push it to the OCI registry
 ```bash
 oras push \
   registry/namespace/repository:artifacthub.io \
-  --manifest-config /dev/null:application/vnd.cncf.artifacthub.config.v1+yaml \
+  --config /dev/null:application/vnd.cncf.artifacthub.config.v1+yaml \
   artifacthub-repo.yml:application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml
 ```
 
@@ -88,7 +88,7 @@ The [OCI Artifacts support](https://www.docker.com/blog/announcing-docker-hub-oc
 ```bash
 oras push \
   docker.io/repository:artifacthub.io \
-  --manifest-config /dev/null:application/vnd.cncf.artifacthub.config.v1+yaml \
+  --config /dev/null:application/vnd.cncf.artifacthub.config.v1+yaml \
   artifacthub-repo.yml:application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml
 ```
 
