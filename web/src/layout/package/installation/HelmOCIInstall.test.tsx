@@ -33,7 +33,7 @@ describe('HelmOCIInstall', () => {
     it('renders component', async () => {
       render(<HelmOCIInstall {...defaultProps} />);
 
-      expect(screen.getByText('Enable OCI support')).toBeInTheDocument();
+      expect(await screen.findByText('Enable OCI support')).toBeInTheDocument();
       expect(await screen.findByText('HELM_EXPERIMENTAL_OCI=1')).toBeInTheDocument();
       expect(screen.getByText('Install chart')).toBeInTheDocument();
       expect(screen.getByText('my-packageName')).toBeInTheDocument();
