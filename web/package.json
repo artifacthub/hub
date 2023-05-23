@@ -16,7 +16,7 @@
     "json-schema-merge-allof": "^0.8.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
-    "nanoid": "^3.3.6",
+    "nanoid": "^4.0.2",
     "react": "^18.1.0",
     "react-apexcharts": "^1.4.0",
     "react-codemirror2": "^7.2.1",
@@ -30,14 +30,14 @@
     "react-syntax-highlighter": "^15.5.0",
     "regexify-string": "^1.0.17",
     "remark-gfm": "^3.0.1",
-    "remark-parse": "^9.0.0",
+    "remark-parse": "^10.0.2",
     "remark-strip-html": "^1.0.2",
     "remark-unlink": "^3.1.0",
     "semver": "7.4.0",
     "tinycolor2": "^1.6.0",
     "ua-parser-js": "^1.0.35",
-    "unified": "^9.2.1",
-    "yaml": "2.0.1"
+    "unified": "^10.1.2",
+    "yaml": "2.2.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -50,14 +50,14 @@
     "@types/json-schema": "^7.0.11",
     "@types/json-schema-merge-allof": "^0.6.1",
     "@types/lodash": "^4.14.194",
-    "@types/node": "^20.1.1",
+    "@types/node": "^20.2.3",
     "@types/react": "^18.2.6",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.2.4",
     "@types/react-syntax-highlighter": "^15.5.6",
     "@types/semver": "^7.5.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-mock": "^29.5.0",
@@ -101,6 +101,11 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!remark-parse)/"
     ]
   }
 }

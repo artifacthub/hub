@@ -5,22 +5,11 @@ updates:
     schedule:
       interval: "weekly"
       day: "wednesday"
-    ignore:
-      - dependency-name: "bootstrap"
-        versions: ["5.2.x"]
-      - dependency-name: "eslint-plugin-prettier"
-      - dependency-name: "nanoid"
-      - dependency-name: "react-router-dom"
-      - dependency-name: "remark-parse"
-      - dependency-name: "unified"
-      - dependency-name: "yaml"
   - package-ecosystem: "npm"
     directory: "/widget"
     schedule:
       interval: "weekly"
       day: "wednesday"
-    ignore:
-      - dependency-name: "eslint-plugin-prettier"
   - package-ecosystem: gomod
     directory: "/"
     schedule:
