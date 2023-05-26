@@ -33,13 +33,14 @@
     "remark-parse": "^10.0.2",
     "remark-strip-html": "^1.0.2",
     "remark-unlink": "^3.1.0",
-    "semver": "7.5.1",
+    "semver": "^7.5.1",
     "tinycolor2": "^1.6.0",
     "ua-parser-js": "^1.0.35",
     "unified": "^10.1.2",
-    "yaml": "2.2.2"
+    "yaml": "2.3.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/react-hooks": "^8.0.0",
@@ -47,14 +48,14 @@
     "@types/bootstrap": "^5.2.5",
     "@types/crypto-js": "^4.1.1",
     "@types/jest": "^29.5.1",
-    "@types/json-schema": "^7.0.11",
+    "@types/json-schema": "^7.0.12",
     "@types/json-schema-merge-allof": "^0.6.1",
-    "@types/lodash": "^4.14.194",
-    "@types/node": "^20.2.3",
-    "@types/react": "^18.2.6",
+    "@types/lodash": "^4.14.195",
+    "@types/node": "^20.2.4",
+    "@types/react": "^18.2.7",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.2.4",
-    "@types/react-syntax-highlighter": "^15.5.6",
+    "@types/react-syntax-highlighter": "^15.5.7",
     "@types/semver": "^7.5.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -66,12 +67,6 @@
     "sass": "^1.62.1",
     "shx": "^0.3.4",
     "typescript": "^5.0.3"
-  },
-  "resolutions": {
-    "autoprefixer": "10.4.5",
-    "minimatch": "5.1.0",
-    "nth-check": "2.0.1",
-    "react-scripts/**/core-js-pure": "3.25.3"
   },
   "proxy": "http://localhost:8000",
   "scripts": {
