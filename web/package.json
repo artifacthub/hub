@@ -37,7 +37,7 @@
     "tinycolor2": "^1.6.0",
     "ua-parser-js": "^1.0.35",
     "unified": "^10.1.2",
-    "yaml": "2.3.0"
+    "yaml": "2.3.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.0",
