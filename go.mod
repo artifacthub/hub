@@ -26,7 +26,7 @@ require (
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/mitchellh/hashstructure/v2 v2.0.2
 	github.com/open-policy-agent/gatekeeper/v3 v3.13.0-beta.0.0.20230516011236-6723b42ae31e
-	github.com/open-policy-agent/opa v0.53.0
+	github.com/open-policy-agent/opa v0.53.1
 	github.com/opencontainers/image-spec v1.1.0-rc3
 	github.com/operator-framework/api v0.17.5
 	github.com/patrickmn/go-cache v2.1.0+incompatible
