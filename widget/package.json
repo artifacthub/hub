@@ -7,7 +7,7 @@
     "moment": "^2.29.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-shadow": "^20.0.0",
+    "react-shadow": "^20.2.0",
     "styled-components": "^5.3.11"
   },
   "devDependencies": {
