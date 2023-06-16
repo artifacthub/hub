@@ -85,6 +85,10 @@ The *changelog* is [available on Artifact Hub](https://artifacthub.io/packages/h
 
 This project follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
 
+## Roadmap
+
+Please see [ROADMAP.md](./ROADMAP.md) for more details.
+
 ## Security
 
 To report a security problem in Artifact Hub, please contact the Maintainers Team at <cncf-artifacthub-maintainers@lists.cncf.io>. Please see [SECURITY.md](./SECURITY.md) for more details.
