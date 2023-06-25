@@ -33,7 +33,7 @@
     "remark-parse": "^10.0.2",
     "remark-strip-html": "^1.0.2",
     "remark-unlink": "^4.0.1",
-    "semver": "^7.5.1",
+    "semver": "^7.5.2",
     "tinycolor2": "^1.6.0",
     "ua-parser-js": "^1.0.35",
     "unified": "^10.1.2",
