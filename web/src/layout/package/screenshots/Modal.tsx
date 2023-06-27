@@ -3,7 +3,7 @@ import { isUndefined } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { BiImages, BiUnlink } from 'react-icons/bi';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
-import { GoPrimitiveDot } from 'react-icons/go';
+import { GoDotFill } from 'react-icons/go';
 import { useLocation, useNavigate } from 'react-router';
 
 import useOutsideClick from '../../../hooks/useOutsideClick';
@@ -241,7 +241,7 @@ const ScreenshotsModal = (props: Props) => {
                 disabled={idx === activeScreenshot}
                 aria-label={`Go to screenshot number ${idx + 1}`}
               >
-                <GoPrimitiveDot />
+                <GoDotFill />
               </button>
             ))}
           </div>

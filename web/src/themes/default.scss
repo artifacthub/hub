@@ -244,7 +244,7 @@ body {
   color: var(--color-font);
 }
 
-// Bootstrap 5
+// Bootstrap
 .btn,
 .card,
 .badge,
@@ -254,6 +254,10 @@ body {
 .alert,
 .dropdown-menu {
   border-radius: 0;
+}
+
+.card-title {
+  color: var(--color-font);
 }
 
 .input-group-sm > .form-control,
