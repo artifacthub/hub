@@ -3,9 +3,9 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { FaCog, FaEdit, FaSignInAlt, FaStar, FaUserCircle } from 'react-icons/fa';
-import { GoThreeBars } from 'react-icons/go';
 import { HiChartSquareBar } from 'react-icons/hi';
 import { ImBooks } from 'react-icons/im';
+import { VscThreeBars } from 'react-icons/vsc';
 import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
@@ -44,7 +44,7 @@ const MobileSettings = (props: Props) => {
         return <FaUserCircle />;
       }
     } else {
-      return <GoThreeBars />;
+      return <VscThreeBars />;
     }
   };
 

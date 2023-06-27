@@ -170,13 +170,12 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
               height="1em"
               stroke="currentColor"
               stroke-width="0"
-              viewBox="0 0 8 16"
+              viewBox="0 0 24 24"
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"
-                fill-rule="evenodd"
+                d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"
               />
             </svg>
           </button>
@@ -190,13 +189,12 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
               height="1em"
               stroke="currentColor"
               stroke-width="0"
-              viewBox="0 0 8 16"
+              viewBox="0 0 24 24"
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"
-                fill-rule="evenodd"
+                d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"
               />
             </svg>
           </button>
@@ -210,13 +208,12 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
               height="1em"
               stroke="currentColor"
               stroke-width="0"
-              viewBox="0 0 8 16"
+              viewBox="0 0 24 24"
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"
-                fill-rule="evenodd"
+                d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"
               />
             </svg>
           </button>
@@ -230,13 +227,12 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
               height="1em"
               stroke="currentColor"
               stroke-width="0"
-              viewBox="0 0 8 16"
+              viewBox="0 0 24 24"
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"
-                fill-rule="evenodd"
+                d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"
               />
             </svg>
           </button>
@@ -250,13 +246,12 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
               height="1em"
               stroke="currentColor"
               stroke-width="0"
-              viewBox="0 0 8 16"
+              viewBox="0 0 24 24"
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"
-                fill-rule="evenodd"
+                d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"
               />
             </svg>
           </button>
@@ -270,13 +265,12 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
               height="1em"
               stroke="currentColor"
               stroke-width="0"
-              viewBox="0 0 8 16"
+              viewBox="0 0 24 24"
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"
-                fill-rule="evenodd"
+                d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"
               />
             </svg>
           </button>
