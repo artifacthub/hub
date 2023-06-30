@@ -322,7 +322,12 @@ a:not(.badge):not(.btn):not(.dropdown-item):hover,
   padding: 2rem 1rem;
 }
 
+.card {
+  color: var(--color-font);
+}
+
 .card-body {
+  color: var(--color-font);
   padding: 1.25rem;
 }
 
