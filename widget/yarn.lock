@@ -8027,10 +8027,10 @@ react-scripts@^5.0.1:
   optionalDependencies:
     fsevents "^2.3.2"
 
-react-shadow@^20.2.0:
-  version "20.2.0"
-  resolved "https://registry.yarnpkg.com/react-shadow/-/react-shadow-20.2.0.tgz#9fd1e27db6c30ad0fa023a7dcf74aae93e07a6ee"
-  integrity sha512-K4rC5vM/9bxRRD9dH0FcjUj/Pxf4DPIIh5K7+dH542IVrPG30uXJCzWmZBDYyIYUktcIrlA4l+RlCKc4wTmOXw==
+react-shadow@^20.3.0:
+  version "20.3.0"
+  resolved "https://registry.yarnpkg.com/react-shadow/-/react-shadow-20.3.0.tgz#38708c9775214ddae17315f3b065859cd077b228"
+  integrity sha512-oWi4W+FE6Puz+7+psL5l90wD9tu+OI1x+Uf1C2Y+O9J1AZzfaWVBbAQjvrDk/Sn8Nh0owCGSD0eemcr1ErtGzw==
   dependencies:
     humps "^2.0.1"
 
