@@ -292,3 +292,4 @@ jobs:
         run: |
           docker build -f cmd/tracker/Dockerfile -t $ECR_REGISTRY/tracker:$GITHUB_SHA .
           docker push $ECR_REGISTRY/tracker:$GITHUB_SHA
+helm repo add stakater https://stakater.github.io/stakater-charts
