@@ -15,10 +15,14 @@ spec:
     spec:
       template:
         spec:
-        {{- with .Values.imagePullSecrets }}
+          {{- with .Values.imagePullSecrets }}
           imagePullSecrets:
             {{- toYaml . | nindent 12 }}
-        {{- end }}
+          {{- end }}
+          {{- with .Values.tracker.cronjob.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           restartPolicy: Never
           initContainers:
             - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 14 }}
