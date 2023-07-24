@@ -87,6 +87,7 @@ dbMigrator:
       repository: artifacthub/db-migrator
     # Limits the lifetime of the job after it has finished execution
     ttlSecondsAfterFinished: null
+    securityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
@@ -295,6 +296,7 @@ scanner:
     image:
       # Scanner image repository (without the tag)
       repository: artifacthub/scanner
+    securityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
@@ -324,6 +326,7 @@ tracker:
     image:
       # Tracker image repository (without the tag)
       repository: artifacthub/tracker
+    securityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.

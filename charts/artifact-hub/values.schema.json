@@ -89,6 +89,12 @@
                             "default": {},
                             "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
                         },
+                        "securityContext": {
+                            "title": "DB migrator pod security context",
+                            "type": "object",
+                            "default": {},
+                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.SecurityContext"
+                        },
                         "ttlSecondsAfterFinished": {
                             "title": "Lifetime after finished execution",
                             "description": "Limits the lifetime of the job after it has finished execution",
@@ -966,6 +972,12 @@
                             "type": "object",
                             "default": {},
                             "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
+                        },
+                        "securityContext": {
+                            "title": "Scanner pod security context",
+                            "type": "object",
+                            "default": {},
+                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.SecurityContext"
                         }
                     },
                     "required": [
@@ -1056,6 +1068,12 @@
                             "type": "object",
                             "default": {},
                             "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements"
+                        },
+                        "securityContext": {
+                            "title": "Tracker pod security context",
+                            "type": "object",
+                            "default": {},
+                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.SecurityContext"
                         }
                     },
                     "required": [
