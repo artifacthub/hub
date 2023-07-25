@@ -66,6 +66,16 @@
     color: var(--color-font);
   }
 
+  ::placeholder {
+    opacity: 0.5;
+    color: var(--color-font);
+  }
+
+  .table > :not(caption) > * > * {
+    background-color: transparent;
+    color: inherit;
+  }
+
   // $theme-colors for Bootstrap
   $color1: #1a1d21;
   $color2: #8c96a1;
@@ -236,7 +246,7 @@
 
   .form-select:disabled {
     background-color: var(--color-1-500);
-    opacity: 0.75;
+    opacity: 0.9;
   }
 
   .was-validated .form-control:valid {
