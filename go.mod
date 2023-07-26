@@ -13,7 +13,7 @@ require (
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-chi/chi/v5 v5.0.10
 	github.com/go-enry/go-license-detector/v4 v4.3.1
-	github.com/go-git/go-git/v5 v5.7.0
+	github.com/go-git/go-git/v5 v5.8.0
 	github.com/google/go-containerregistry v0.15.2
 	github.com/google/go-github v17.0.0+incompatible
 	github.com/gorilla/csrf v1.7.1
