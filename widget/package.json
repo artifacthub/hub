@@ -24,7 +24,7 @@
     "@types/react-dom": "^18.2.7",
     "@types/styled-components": "^5.1.25",
     "babel-plugin-styled-components": "^2.1.4",
-    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-prettier": "^8.9.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "jest-fetch-mock": "^3.0.3",
