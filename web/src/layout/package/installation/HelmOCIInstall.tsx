@@ -12,8 +12,6 @@ interface Props {
 
 const HelmOCIInstall = (props: Props) => (
   <>
-    <CommandBlock command="export HELM_EXPERIMENTAL_OCI=1" title="Enable OCI support" />
-
     <CommandBlock
       command={`helm install my-${props.name} ${props.repository.url} --version ${props.version}`}
       title="Install chart"
