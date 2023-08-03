@@ -25,7 +25,9 @@ describe('HelmOCIInstall', () => {
 
   it('creates snapshot', async () => {
     const { asFragment } = render(<HelmOCIInstall {...defaultProps} />);
-    expect(await screen.findByText('HELM_EXPERIMENTAL_OCI=1')).toBeInTheDocument();
+    expect(
+      await screen.findByText('helm install my-packageName oci://ghcr.io/artifacthub/artifact-hub --version 1.0.0')
+    ).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -33,9 +35,7 @@ describe('HelmOCIInstall', () => {
     it('renders component', async () => {
       render(<HelmOCIInstall {...defaultProps} />);
 
-      expect(await screen.findByText('Enable OCI support')).toBeInTheDocument();
-      expect(await screen.findByText('HELM_EXPERIMENTAL_OCI=1')).toBeInTheDocument();
-      expect(screen.getByText('Install chart')).toBeInTheDocument();
+      expect(await screen.findByText('Install chart')).toBeInTheDocument();
       expect(screen.getByText('my-packageName')).toBeInTheDocument();
       expect(screen.getByText('helm install')).toBeInTheDocument();
       expect(

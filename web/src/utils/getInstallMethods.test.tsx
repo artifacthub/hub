@@ -130,7 +130,7 @@ const tests: Tests[] = [
       methods: [
         {
           label: 'v3',
-          title: 'Helm v3 (>=3.7)',
+          title: 'Helm v3 (>=3.8)',
           kind: 2,
           props: {
             name: 'artifact-hub',
@@ -198,7 +198,7 @@ const tests: Tests[] = [
         },
         {
           label: 'v3',
-          title: 'Helm v3 (>=3.7)',
+          title: 'Helm v3 (>=3.8)',
           kind: 2,
           props: {
             name: 'artifact-hub',
