@@ -13,7 +13,7 @@ require (
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-chi/chi/v5 v5.0.10
 	github.com/go-enry/go-license-detector/v4 v4.3.1
-	github.com/go-git/go-git/v5 v5.7.0
+	github.com/go-git/go-git/v5 v5.8.1
 	github.com/google/go-containerregistry v0.15.2
 	github.com/google/go-github v17.0.0+incompatible
 	github.com/gorilla/csrf v1.7.1
@@ -22,7 +22,7 @@ require (
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/hashicorp/golang-lru/v2 v2.0.4
-	github.com/jackc/pgconn v1.14.0
+	github.com/jackc/pgconn v1.14.1
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/mitchellh/hashstructure/v2 v2.0.2
 	github.com/open-policy-agent/gatekeeper/v3 v3.13.0-beta.1
@@ -33,7 +33,7 @@ require (
 	github.com/pquerna/otp v1.4.0
 	github.com/prometheus/client_golang v1.16.0
 	github.com/rs/cors v1.9.0
-	github.com/rs/zerolog v1.29.1
+	github.com/rs/zerolog v1.30.0
 	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06
 	github.com/satori/uuid v1.2.0
 	github.com/sigstore/cosign v1.13.1
@@ -49,7 +49,7 @@ require (
 	golang.org/x/crypto v0.11.0
 	golang.org/x/oauth2 v0.10.0
 	golang.org/x/text v0.11.0
-	google.golang.org/api v0.132.0
+	google.golang.org/api v0.134.0
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
 	helm.sh/helm/v3 v3.11.3
@@ -66,6 +66,7 @@ require (
 	cloud.google.com/go/kms v1.12.1 // indirect
 	contrib.go.opencensus.io/exporter/ocagent v0.7.1-0.20200907061046-05415f1de66d // indirect
 	contrib.go.opencensus.io/exporter/prometheus v0.4.2 // indirect
+	dario.cat/mergo v1.0.0 // indirect
 	github.com/AdaLogics/go-fuzz-headers v0.0.0-20230106234847-43070de90fa1 // indirect
 	github.com/Azure/azure-sdk-for-go v68.0.0+incompatible // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
@@ -86,7 +87,7 @@ require (
 	github.com/Masterminds/squirrel v1.5.3 // indirect
 	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/OneOfOne/xxhash v1.2.8 // indirect
-	github.com/ProtonMail/go-crypto v0.0.0-20230518184743-7afd39499903 // indirect
+	github.com/ProtonMail/go-crypto v0.0.0-20230717121422-5aa5874ade95 // indirect
 	github.com/acomagu/bufpipe v1.0.4 // indirect
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/anchore/go-struct-converter v0.0.0-20221118182256-c68fdcfa2092 // indirect
@@ -267,7 +268,7 @@ require (
 	github.com/sigstore/rekor v1.2.1 // indirect
 	github.com/sigstore/sigstore v1.6.4 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
-	github.com/skeema/knownhosts v1.1.1 // indirect
+	github.com/skeema/knownhosts v1.2.0 // indirect
 	github.com/spdx/tools-golang v0.5.0 // indirect
 	github.com/spf13/afero v1.9.5 // indirect
 	github.com/spf13/cast v1.5.1 // indirect
@@ -320,7 +321,7 @@ require (
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20230706204954-ccb25ca9f130 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20230706204954-ccb25ca9f130 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20230711160842-782d3b101e98 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20230720185612-659f7aaaa771 // indirect
 	google.golang.org/grpc v1.56.2 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
@@ -328,7 +329,7 @@ require (
 	gopkg.in/neurosnap/sentences.v1 v1.0.7 // indirect
 	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
-	k8s.io/api v0.26.4 // indirect
+	k8s.io/api v0.26.5 // indirect
 	k8s.io/apiextensions-apiserver v0.26.4 // indirect
 	k8s.io/apiserver v0.26.4 // indirect
 	k8s.io/cli-runtime v0.26.3 // indirect
@@ -350,7 +351,7 @@ require (
 replace (
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp => go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.38.0
 	go.opentelemetry.io/otel/metric => go.opentelemetry.io/otel/metric v0.35.0
-	k8s.io/apimachinery => k8s.io/apimachinery v0.26.4
-	k8s.io/client-go => k8s.io/client-go v0.26.4
+	k8s.io/apimachinery => k8s.io/apimachinery v0.26.5
+	k8s.io/client-go => k8s.io/client-go v0.26.5
 	knative.dev/pkg => github.com/tegioz/knative-pkg v0.0.0-20230516120619-31481a3b1e35
 )
