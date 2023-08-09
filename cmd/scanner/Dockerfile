@@ -1,5 +1,5 @@
 # Build scanner
-FROM golang:1.20.7-alpine3.18 AS scanner-builder
+FROM golang:1.21.0-alpine3.18 AS scanner-builder
 WORKDIR /go/src/github.com/artifacthub/scanner
 COPY go.* ./
 COPY cmd/scanner cmd/scanner
