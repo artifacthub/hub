@@ -83,6 +83,8 @@ events:
 dbMigrator:
   job:
     image:
+      # Database migrator image registry
+      registry: docker.io
       # Database migrator image repository (without the tag)
       repository: artifacthub/db-migrator
     # Limits the lifetime of the job after it has finished execution
@@ -130,6 +132,8 @@ hub:
     readinessGates: []
     replicaCount: 1
     image:
+      # Hub image registry
+      registry: docker.io
       # Hub image repository (without the tag)
       repository: artifacthub/hub
     securityContext: {}
@@ -145,6 +149,7 @@ hub:
     initContainers:
       checkDbMigrator:
         image:
+          registry: docker.io
           repository: bitnami/kubectl
           # tag: 1.21
         resources: {}
@@ -294,6 +299,8 @@ scanner:
   enabled: true
   cronjob:
     image:
+      # Scanner image registry
+      registry: docker.io
       # Scanner image repository (without the tag)
       repository: artifacthub/scanner
     securityContext: {}
@@ -324,6 +331,8 @@ scanner:
 tracker:
   cronjob:
     image:
+      # Tracker image registry
+      registry: docker.io
       # Tracker image repository (without the tag)
       repository: artifacthub/tracker
     securityContext: {}

@@ -29,7 +29,7 @@ spec:
             - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 14 }}
           containers:
             - name: scanner
-              image: {{ .Values.scanner.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
+              image: {{ .Values.scanner.cronjob.image.registry }}/{{ .Values.scanner.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
               imagePullPolicy: {{ .Values.pullPolicy }}
               {{- with .Values.scanner.cronjob.resources }}
               resources:

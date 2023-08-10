@@ -40,7 +40,7 @@ spec:
         - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 10 }}
         {{- if .Release.IsInstall }}
         - name: check-db-migrator-run
-          image: "{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.repository }}:{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.tag | default (include "chart.KubernetesVersion" . ) }}"
+          image: "{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.registry }}/{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.repository }}:{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.tag | default (include "chart.KubernetesVersion" . ) }}"
           imagePullPolicy: {{ .Values.pullPolicy }}
           {{- with .Values.hub.deploy.initContainers.checkDbMigrator.resources }}
           resources:
@@ -50,7 +50,7 @@ spec:
         {{- end }}
       containers:
         - name: hub
-          image: {{ .Values.hub.deploy.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
+          image: {{ .Values.hub.deploy.image.registry }}/{{ .Values.hub.deploy.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
           imagePullPolicy: {{ .Values.pullPolicy }}
           {{- if .Values.hub.server.cacheDir }}
           env:

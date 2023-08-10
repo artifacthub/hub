@@ -27,7 +27,7 @@ spec:
         - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 10 }}
       containers:
         - name: db-migrator
-          image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
+          image: {{ .Values.dbMigrator.job.image.registry }}/{{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
           imagePullPolicy: {{ .Values.pullPolicy }}
           {{- with .Values.dbMigrator.job.resources }}
           resources:

@@ -28,7 +28,7 @@ spec:
             - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 14 }}
           containers:
             - name: tracker
-              image: {{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
+              image: {{ .Values.scanner.cronjob.image.registry }}/{{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
               imagePullPolicy: {{ .Values.pullPolicy }}
               {{- with .Values.tracker.cronjob.resources }}
               resources:
