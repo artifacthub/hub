@@ -23,6 +23,9 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- if .Release.IsInstall }}
+          serviceAccountName: {{ include "chart.serviceAccountName" . }}
+          {{- end }}
           restartPolicy: Never
           initContainers:
             - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 14 }}
