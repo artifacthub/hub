@@ -101,6 +101,10 @@ imagePullPolicy: {{ .Values.pullPolicy }}
 resources:
   {{-  toYaml . | nindent 2 }}
 {{- end }}
+{{- with .Values.hub.deploy.initContainers.checkDbIsReady.containerSecurityContext }}
+securityContext:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
 env:
   - name: PGHOST
     value: {{ default (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.db.host }}

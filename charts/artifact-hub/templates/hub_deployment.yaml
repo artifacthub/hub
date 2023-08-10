@@ -46,6 +46,10 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- with .Values.hub.deploy.initContainers.checkDbMigrator.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           command: ['kubectl', 'wait', '--namespace={{ .Release.Namespace }}', '--for=condition=complete', 'job/{{ include "chart.resourceNamePrefix" . }}db-migrator-install', '--timeout=60s']
         {{- end }}
       containers:
@@ -74,6 +78,10 @@ spec:
               protocol: TCP
           {{- with .Values.hub.deploy.resources }}
           resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.hub.deploy.containerSecurityContext }}
+          securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- if .Values.hub.deploy.livenessProbe }}

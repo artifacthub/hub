@@ -42,6 +42,10 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- with .Values.trivy.deploy.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       volumes:
         - name: trivy
         {{- if .Values.trivy.persistence.enabled }}

@@ -41,6 +41,10 @@ spec:
               mountPath: {{ .Values.dbMigrator.configDir }}
               readOnly: true
           command: ["./migrate.sh"]
+          {{- with .Values.dbMigrator.job.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       volumes:
         - name: db-migrator-config
           secret:

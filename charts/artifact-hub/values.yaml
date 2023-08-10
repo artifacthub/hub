@@ -88,6 +88,7 @@ dbMigrator:
     # Limits the lifetime of the job after it has finished execution
     ttlSecondsAfterFinished: null
     securityContext: {}
+    containerSecurityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
@@ -133,6 +134,7 @@ hub:
       # Hub image repository (without the tag)
       repository: artifacthub/hub
     securityContext: {}
+    containerSecurityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
@@ -147,6 +149,7 @@ hub:
         image:
           repository: bitnami/kubectl
           # tag: 1.21
+        containerSecurityContext: {}
         resources: {}
         # If you do want to specify resources, uncomment the following
         # lines and adjust them as necessary.
@@ -157,6 +160,7 @@ hub:
         #     cpu: 100m
         #     memory: 128Mi
       checkDbIsReady:
+        containerSecurityContext: {}
         resources: {}
         # If you do want to specify resources, uncomment the following
         # lines and adjust them as necessary.
@@ -297,6 +301,7 @@ scanner:
       # Scanner image repository (without the tag)
       repository: artifacthub/scanner
     securityContext: {}
+    containerSecurityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
@@ -327,6 +332,7 @@ tracker:
       # Tracker image repository (without the tag)
       repository: artifacthub/tracker
     securityContext: {}
+    containerSecurityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
@@ -362,6 +368,7 @@ trivy:
   deploy:
     image: aquasec/trivy:0.43.1
     securityContext: {}
+    containerSecurityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.

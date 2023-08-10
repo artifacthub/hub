@@ -40,6 +40,10 @@ spec:
                 - name: TRIVY_CACHE_DIR
                   value: {{ .Values.scanner.cacheDir | quote }}
               {{- end }}
+              {{- with .Values.scanner.cronjob.containerSecurityContext }}
+              securityContext:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
               volumeMounts:
                 - name: scanner-config
                   mountPath: {{ .Values.scanner.configDir | quote }}

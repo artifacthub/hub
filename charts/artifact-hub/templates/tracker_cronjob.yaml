@@ -39,6 +39,10 @@ spec:
                 - name: XDG_CACHE_HOME
                   value: {{ .Values.tracker.cacheDir | quote }}
               {{- end }}
+              {{- with .Values.tracker.cronjob.containerSecurityContext }}
+              securityContext:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
               volumeMounts:
                 - name: tracker-config
                   mountPath: {{ .Values.tracker.configDir | quote }}
