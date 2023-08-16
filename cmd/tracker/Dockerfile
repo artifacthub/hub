@@ -1,5 +1,5 @@
 # Build tracker
-FROM golang:1.20.7-bullseye AS builder
+FROM golang:1.21.0-bullseye AS builder
 WORKDIR /tmp
 ENV LIBTENSORFLOW_TGZ libtensorflow-cpu-linux-x86_64-2.11.0.tar.gz
 RUN wget -q --no-check-certificate https://storage.googleapis.com/tensorflow/libtensorflow/$LIBTENSORFLOW_TGZ
