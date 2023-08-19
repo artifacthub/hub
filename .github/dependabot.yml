@@ -5,16 +5,11 @@ updates:
     schedule:
       interval: "weekly"
       day: "wednesday"
-    ignore:
-      - dependency-name: react-diff-view
-      - dependency-name: "@testing-library/react"
   - package-ecosystem: "npm"
     directory: "/widget"
     schedule:
       interval: "weekly"
       day: "wednesday"
-    ignore:
-      - dependency-name: styled-components
   - package-ecosystem: gomod
     directory: "/"
     schedule:
