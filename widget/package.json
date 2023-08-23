@@ -28,7 +28,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "jest-fetch-mock": "^3.0.3",
-    "jest-mock": "^29.6.2",
+    "jest-mock": "^29.6.3",
     "prettier": "^3.0.2",
     "react-scripts": "^5.0.1",
     "typescript": "^5.1.6",
