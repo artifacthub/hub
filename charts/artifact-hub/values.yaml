@@ -108,6 +108,7 @@ hub:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
+    extraLabels: {}
     defaultBackendEnabled: true
     rules: []
     tls: []
