@@ -4,6 +4,9 @@ kind: Ingress
 metadata:
   name: {{ include "chart.resourceNamePrefix" . }}hub
   labels:
+  {{- with .Values.hub.ingress.extraLabels }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
     app.kubernetes.io/component: hub
     {{- include "chart.labels" . | nindent 4 }}
   {{- with .Values.hub.ingress.annotations }}

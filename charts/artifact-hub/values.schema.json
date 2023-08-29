@@ -381,6 +381,11 @@
                             "type": "boolean",
                             "default": true
                         },
+                        "extraLabels": {
+                            "title": "Some extra labels to add to the ingress",
+                            "type": "object",
+                            "default": {}
+                        },
                         "defaultBackendEnabled": {
                             "title": "Enable default backend for Hub Ingress",
                             "type": "boolean",
