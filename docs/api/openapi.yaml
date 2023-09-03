@@ -3897,25 +3897,27 @@ components:
                   example: ">=1.16.0-0"
                   nullable: false
                 dependencies:
-                  type: object
-                  nullable: false
-                  required:
-                    - name
-                    - version
-                    - repository
-                  properties:
-                    name:
-                      type: string
-                      nullable: false
-                      example: mysql
-                    version:
-                      type: string
-                      nullable: false
-                      example: 1.6.4
-                    repository:
-                      type: string
-                      nullable: false
-                      example: "http://repo.url"
+                  type: array
+                  items:
+                    type: object
+                    nullable: false
+                    required:
+                      - name
+                      - version
+                      - repository
+                    properties:
+                      name:
+                        type: string
+                        nullable: false
+                        example: mysql
+                      version:
+                        type: string
+                        nullable: false
+                        example: 1.6.4
+                      repository:
+                        type: string
+                        nullable: false
+                        example: "http://repo.url"
     HelmPluginPackage:
       $ref: "#/components/schemas/Package"
     KedaScalerPackage:
@@ -4361,22 +4363,24 @@ components:
               nullable: false
               example: Provider 1
             containers_images:
-              type: object
-              nullable: false
-              required:
-                - image
-              properties:
-                image:
-                  type: string
-                  nullable: false
-                  example: "url.io/name/operator:v0.2.0"
-                name:
-                  type: string
-                  nullable: false
-                whitelisted:
-                  type: boolean
-                  nullable: false
-                  example: false
+              type: array
+              items:
+                type: object
+                nullable: false
+                required:
+                  - image
+                properties:
+                  image:
+                    type: string
+                    nullable: false
+                    example: "url.io/name/operator:v0.2.0"
+                  name:
+                    type: string
+                    nullable: false
+                  whitelisted:
+                    type: boolean
+                    nullable: false
+                    example: false
             ts:
               type: integer
               nullable: false
