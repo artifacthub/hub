@@ -85,6 +85,10 @@ dbMigrator:
     image:
       # Database migrator image repository (without the tag)
       repository: artifacthub/db-migrator
+    # Optionally specify extra list of additional labels for the dbMigrator job
+    extraJobLabels: {}
+    # Optionally specify extra list of additional labels for the dbMigrator pod
+    extraPodLabels: {}
     # Limits the lifetime of the job after it has finished execution
     ttlSecondsAfterFinished: null
     securityContext: {}
@@ -167,6 +171,10 @@ hub:
         #   requests:
         #     cpu: 100m
         #     memory: 128Mi
+    # Optionally specify extra list of additional labels for the hub deployment
+    extraDeploymentLabels: {}
+    # Optionally specify extra list of additional labels for hub pods
+    extraPodLabels: {}
     # Optionally specify extra list of additional volumes for the hub deployment
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the hub deployment
@@ -307,6 +315,10 @@ scanner:
     #   requests:
     #     cpu: 100m
     #     memory: 128Mi
+    # Optionally specify extra list of additional labels for the cronjob
+    extraCronJobLabels: {}
+    # Optionally specify extra list of additional labels for the jobs spawned by the scanner cronjob
+    extraJobLabels: {}
     # Optionally specify extra list of additional volumes for the scanner cronjob
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the scanner cronjob
@@ -337,6 +349,10 @@ tracker:
     #   requests:
     #     cpu: 100m
     #     memory: 128Mi
+    # Optionally specify extra list of additional labels for the tracker cronjob
+    extraCronJobLabels: {}
+    # Optionally specify extra list of additional labels for the Jobs spawned by the tracker cronjob
+    extraJobLabels: {}
     # Optionally specify extra list of additional volumes for the tracker cronjob
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the tracker cronjob
@@ -372,6 +388,10 @@ trivy:
     #   requests:
     #     cpu: 100m
     #     memory: 128Mi
+    # Optionally specify extra list of additional labels for the hub deployment
+    extraDeploymentLabels: {}
+    # Optionally specify extra list of additional labels for hub pods
+    extraPodLabels: {}
     # Optionally specify extra list of additional volumes for the trivy deployment
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the trivy deployment
