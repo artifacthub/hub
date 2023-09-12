@@ -6,8 +6,8 @@ metadata:
   labels:
     app.kubernetes.io/component: trivy
     {{- include "chart.labels" . | nindent 4 }}
-    {{- if .Values.trivy.deploy.extraDeploymentLabels }}
-    {{- toYaml .Values.trivy.deploy.extraDeploymentLabels | nindent 4 }}
+    {{- with .Values.trivy.deploy.extraDeploymentLabels }}
+      {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   replicas: 1
@@ -22,8 +22,8 @@ spec:
       labels:
         app.kubernetes.io/component: trivy
         {{- include "chart.selectorLabels" . | nindent 8 }}
-        {{- if .Values.trivy.deploy.extraPodLabels }}
-        {{- toYaml .Values.trivy.deploy.extraPodLabels | nindent 8 }}
+        {{- with .Values.trivy.deploy.extraPodLabels }}
+          {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
       {{- with .Values.trivy.deploy.securityContext }}

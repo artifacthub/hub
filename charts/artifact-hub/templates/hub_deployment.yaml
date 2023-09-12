@@ -5,8 +5,8 @@ metadata:
   labels:
     app.kubernetes.io/component: hub
     {{- include "chart.labels" . | nindent 4 }}
-    {{- if .Values.hub.deploy.extraDeploymentLabels }}
-    {{- toYaml .Values.hub.deploy.extraDeploymentLabels | nindent 4 }}
+    {{- with .Values.hub.deploy.extraDeploymentLabels }}
+      {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   replicas: {{ .Values.hub.deploy.replicaCount }}
@@ -23,8 +23,8 @@ spec:
       labels:
         app.kubernetes.io/component: hub
         {{- include "chart.selectorLabels" . | nindent 8 }}
-        {{- if .Values.hub.deploy.extraPodLabels }}
-        {{- toYaml .Values.hub.deploy.extraPodLabels | nindent 8 }}
+        {{- with .Values.hub.deploy.extraPodLabels }}
+          {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
       {{- with .Values.hub.deploy.readinessGates }}

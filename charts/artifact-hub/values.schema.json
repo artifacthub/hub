@@ -973,7 +973,7 @@
                     "properties": {
                         "extraCronJobLabels": {
                             "title": "Extra cronjob labels",
-                            "description": "Optionally specify extra list of additional volumes for the scanner cronjob",
+                            "description": "Optionally specify extra list of additional labels for the scanner cronjob",
                             "type": "object",
                             "default": {}
                         },
@@ -1081,7 +1081,7 @@
                     "properties": {
                         "extraCronJobLabels": {
                             "title": "Extra cronjob labels",
-                            "description": "Optionally specify extra list of additional volumes for the tracker cronjob",
+                            "description": "Optionally specify extra list of additional labels for the tracker cronjob",
                             "type": "object",
                             "default": {}
                         },

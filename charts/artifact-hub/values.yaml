@@ -315,7 +315,7 @@ scanner:
     #   requests:
     #     cpu: 100m
     #     memory: 128Mi
-    # Optionally specify extra list of additional labels for the cronjob
+    # Optionally specify extra list of additional labels for the scanner cronjob
     extraCronJobLabels: {}
     # Optionally specify extra list of additional labels for the jobs spawned by the scanner cronjob
     extraJobLabels: {}
@@ -388,9 +388,9 @@ trivy:
     #   requests:
     #     cpu: 100m
     #     memory: 128Mi
-    # Optionally specify extra list of additional labels for the hub deployment
+    # Optionally specify extra list of additional labels for the trivy deployment
     extraDeploymentLabels: {}
-    # Optionally specify extra list of additional labels for hub pods
+    # Optionally specify extra list of additional labels for trivy pods
     extraPodLabels: {}
     # Optionally specify extra list of additional volumes for the trivy deployment
     extraVolumes: []
