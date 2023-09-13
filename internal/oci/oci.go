@@ -3,6 +3,7 @@ package oci
 import (
 	"context"
 	"errors"
+	"regexp"
 	"sort"
 	"strings"
 
@@ -31,6 +32,10 @@ var (
 
 	// Cosign represents the cosign signature kind.
 	Cosign = "cosign"
+
+	// dockerHubRE is a regexp used to check if the registry used is the Docker
+	// Hub.
+	dockerHubRE = regexp.MustCompile(`^(.*\.)?docker\.io$`)
 )
 
 // Puller is a hub.OCIPuller implementation.
@@ -59,7 +64,7 @@ func (p *Puller) PullLayer(
 	if err != nil {
 		return ocispec.Descriptor{}, nil, err
 	}
-	if username == "" && password == "" && p.cfg != nil && registryIsDockerHub(ref) {
+	if username == "" && password == "" && p.cfg != nil && RegistryIsDockerHub(ref) {
 		username = p.cfg.GetString("creds.dockerUsername")
 		password = p.cfg.GetString("creds.dockerPassword")
 	}
@@ -208,7 +213,7 @@ func PrepareRemoteOptions(
 			Username: username,
 			Password: password,
 		}))
-	} else if cfg != nil && registryIsDockerHub(ref) {
+	} else if cfg != nil && RegistryIsDockerHub(ref) {
 		options = append(options, remote.WithAuth(&authn.Basic{
 			Username: cfg.GetString("creds.dockerUsername"),
 			Password: cfg.GetString("creds.dockerPassword"),
@@ -217,8 +222,8 @@ func PrepareRemoteOptions(
 	return options
 }
 
-// registryIsDockerHub checks if the registry name of the reference provided is
-// docker.io.
-func registryIsDockerHub(ref name.Reference) bool {
-	return strings.HasSuffix(ref.Context().Registry.Name(), "docker.io")
+// RegistryIsDockerHub checks if the registry of the reference provided is the
+// Docker Hub.
+func RegistryIsDockerHub(ref name.Reference) bool {
+	return dockerHubRE.MatchString(ref.Context().Registry.Name())
 }
