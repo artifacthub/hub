@@ -91,13 +91,13 @@ exports[`CompareView creates snapshot 1`] = `
                         stroke="none"
                       />
                       <path
-                        d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"
+                        d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5"
                       />
                       <path
-                        d="M9 12l6 0"
+                        d="M16 19h6"
                       />
                       <path
-                        d="M12 9l0 6"
+                        d="M19 16v6"
                       />
                     </svg>
                   </span>
@@ -174,13 +174,13 @@ exports[`CompareView creates snapshot 1`] = `
                         stroke="none"
                       />
                       <path
-                        d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"
+                        d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5"
                       />
                       <path
-                        d="M9 12l6 0"
+                        d="M16 19h6"
                       />
                       <path
-                        d="M12 9l0 6"
+                        d="M19 16v6"
                       />
                     </svg>
                   </span>
@@ -337,13 +337,13 @@ exports[`CompareView creates snapshot 1`] = `
                         stroke="none"
                       />
                       <path
-                        d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"
+                        d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5"
                       />
                       <path
-                        d="M9 12l6 0"
+                        d="M16 19h6"
                       />
                       <path
-                        d="M12 9l0 6"
+                        d="M19 16v6"
                       />
                     </svg>
                   </span>
@@ -420,13 +420,13 @@ exports[`CompareView creates snapshot 1`] = `
                         stroke="none"
                       />
                       <path
-                        d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"
+                        d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5"
                       />
                       <path
-                        d="M9 12l6 0"
+                        d="M16 19h6"
                       />
                       <path
-                        d="M12 9l0 6"
+                        d="M19 16v6"
                       />
                     </svg>
                   </span>
@@ -503,13 +503,13 @@ exports[`CompareView creates snapshot 1`] = `
                         stroke="none"
                       />
                       <path
-                        d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"
+                        d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5"
                       />
                       <path
-                        d="M9 12l6 0"
+                        d="M16 19h6"
                       />
                       <path
-                        d="M12 9l0 6"
+                        d="M19 16v6"
                       />
                     </svg>
                   </span>
@@ -586,13 +586,13 @@ exports[`CompareView creates snapshot 1`] = `
                         stroke="none"
                       />
                       <path
-                        d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"
+                        d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5"
                       />
                       <path
-                        d="M9 12l6 0"
+                        d="M16 19h6"
                       />
                       <path
-                        d="M12 9l0 6"
+                        d="M19 16v6"
                       />
                     </svg>
                   </span>
