@@ -14,6 +14,7 @@ import (
 
 	trivy "github.com/aquasecurity/trivy/pkg/types"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/oci"
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
@@ -189,7 +190,7 @@ func (s *TrivyScanner) ScanImage(image string) ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error parsing image %s ref: %w", image, err)
 	}
-	if strings.HasSuffix(ref.Context().Registry.Name(), "docker.io") {
+	if oci.RegistryIsDockerHub(ref) {
 		cmd.Env = append(cmd.Env,
 			"TRIVY_USERNAME="+s.cfg.GetString("creds.dockerUsername"),
 			"TRIVY_PASSWORD="+s.cfg.GetString("creds.dockerPassword"),
