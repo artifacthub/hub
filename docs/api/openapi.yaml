@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Artifact Hub
   description: "Find, install and publish Kubernetes packages"
-  version: 1.15.0
+  version: 1.16.0
   contact:
     name: Artifact Hub support
     url: https://cloud-native.slack.com/channels/artifact-hub
