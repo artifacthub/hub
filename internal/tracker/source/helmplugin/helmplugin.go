@@ -11,6 +11,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/license"
 	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/hashicorp/go-multierror"
 	"helm.sh/helm/v3/pkg/plugin"
 	"sigs.k8s.io/yaml"
@@ -147,7 +148,7 @@ func PreparePackage(r *hub.Repository, md *plugin.Metadata, pkgPath string) (*hu
 	}
 
 	// Include readme file if available
-	readme, err := os.ReadFile(filepath.Join(pkgPath, "README.md"))
+	readme, err := util.ReadRegularFile(filepath.Join(pkgPath, "README.md"))
 	if err == nil {
 		p.Readme = string(readme)
 	}
@@ -157,7 +158,7 @@ func PreparePackage(r *hub.Repository, md *plugin.Metadata, pkgPath string) (*hu
 	if err == nil {
 		for _, file := range files {
 			if licenseRE.Match([]byte(file.Name())) {
-				licenseFile, err := os.ReadFile(filepath.Join(pkgPath, file.Name()))
+				licenseFile, err := util.ReadRegularFile(filepath.Join(pkgPath, file.Name()))
 				if err == nil {
 					p.License = license.Detect(licenseFile)
 					break
