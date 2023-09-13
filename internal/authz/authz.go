@@ -38,10 +38,14 @@ var (
 	validPredefinedPolicies = []string{
 		"rbac.v1",
 	}
+
 	policyMgmtActions = []hub.Action{
 		hub.GetAuthorizationPolicy,
 		hub.UpdateAuthorizationPolicy,
 	}
+
+	// Unsafe rego built-ins (to disable them)
+	unsafeRegoBuiltins = map[string]struct{}{ast.HTTPSend.Name: {}}
 )
 
 // Authorizer is in charge of authorizing actions that users intend to perform.
@@ -104,6 +108,7 @@ func (a *Authorizer) preparePoliciesQueries() error {
 			rego.Query(AllowedActionsQuery),
 			rego.Module(fmt.Sprintf("%s.rego", organizationName), rules),
 			rego.Store(inmem.NewFromReader(bytes.NewBuffer(policy.PolicyData))),
+			rego.UnsafeBuiltins(unsafeRegoBuiltins),
 		).PrepareForEval(context.Background())
 		if err == nil {
 			allowedActionsQueries[organizationName] = allowedActionsPreparedEvalQuery
@@ -238,6 +243,7 @@ func (a *Authorizer) WillUserBeLockedOut(
 		rego.Query(AllowedActionsQuery),
 		rego.Module("", rules),
 		rego.Store(inmem.NewFromReader(bytes.NewBufferString(policyDataJSON))),
+		rego.UnsafeBuiltins(unsafeRegoBuiltins),
 	).PrepareForEval(context.Background())
 	if err != nil {
 		return true, err
