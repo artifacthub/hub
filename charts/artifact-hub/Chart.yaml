@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.15.1-1
-appVersion: 1.15.0
+version: 1.16.0
+appVersion: 1.16.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -41,40 +41,30 @@ dependencies:
     condition: postgresql.enabled
 annotations:
   artifacthub.io/changes: |
+    - kind: security
+      description: Do not follow symlinks when reading certain files
+    - kind: security
+      description: Disable unsafe rego built-ins
+    - kind: security
+      description: Improve Docker Hub registry check
     - kind: added
-      description: Governance and roadmap documents
-    - kind: added
-      description: Add API endpoint for Fairwinds Nova
-    - kind: added
-      description: Allow providing security context to cronjobs
+      description: Optional custom labels for some resources in chart
     - kind: changed
-      description: Some adjustments in packages search ranking
-    - kind: changed
-      description: Update Helm charts (OCI) installation instructions
-    - kind: changed
-      description: Update security process documentation
-    - kind: changed
-      description: Bump Alpine to 3.18.2
-    - kind: changed
-      description: Bump Go to 1.21.0
-    - kind: changed
-      description: Bump Trivy to 0.44.1
+      description: Bump Go to 1.21.1
     - kind: changed
       description: Upgrade backend and frontend dependencies
     - kind: fixed
-      description: Oras command in documentation
-    - kind: fixed
-      description: Some other minor bugs and improvements
+      description: Issue in API documentation
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.15.0
+      image: artifacthub/db-migrator:v1.16.0
     - name: hub
-      image: artifacthub/hub:v1.15.0
+      image: artifacthub/hub:v1.16.0
     - name: tracker
-      image: artifacthub/tracker:v1.15.0
+      image: artifacthub/tracker:v1.16.0
     - name: scanner
-      image: artifacthub/scanner:v1.15.0
+      image: artifacthub/scanner:v1.16.0
     - name: trivy
       image: aquasec/trivy:0.44.1
   artifacthub.io/links: |
