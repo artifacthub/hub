@@ -17,6 +17,7 @@ import (
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/artifacthub/hub/internal/tracker/source/generic"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/ghodss/yaml"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
@@ -463,7 +464,7 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 	}
 
 	// Include readme file
-	readme, err := os.ReadFile(filepath.Join(i.PkgPath, "README.md"))
+	readme, err := util.ReadRegularFile(filepath.Join(i.PkgPath, "README.md"))
 	if err == nil {
 		p.Readme = string(readme)
 	}

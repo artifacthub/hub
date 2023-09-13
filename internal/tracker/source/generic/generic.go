@@ -12,6 +12,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/artifacthub/hub/internal/util"
 	gk "github.com/open-policy-agent/gatekeeper/v3/pkg/gator/verify"
 	ignore "github.com/sabhiram/go-gitignore"
 )
@@ -197,7 +198,7 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 	// If the readme content hasn't been provided in the metadata file, try to
 	// get it from the README.md file.
 	if p.Readme == "" {
-		readme, err := os.ReadFile(filepath.Join(pkgPath, "README.md"))
+		readme, err := util.ReadRegularFile(filepath.Join(pkgPath, "README.md"))
 		if err == nil {
 			p.Readme = string(readme)
 		}
@@ -241,7 +242,7 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 func prepareArgoTemplateData(pkgPath string) (map[string]interface{}, error) {
 	// Read manifests file
 	manifestsPath := path.Join(pkgPath, argoTemplateManifests)
-	template, err := os.ReadFile(manifestsPath)
+	template, err := util.ReadRegularFile(manifestsPath)
 	if err != nil {
 		return nil, fmt.Errorf("error reading argo template manifests: %w", err)
 	}
@@ -275,7 +276,7 @@ func prepareFalcoData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]i
 func prepareGatekeeperData(pkgPath string) (map[string]interface{}, error) {
 	// Read template file
 	templatePath := path.Join(pkgPath, "template.yaml")
-	template, err := os.ReadFile(templatePath)
+	template, err := util.ReadRegularFile(templatePath)
 	if err != nil {
 		return nil, fmt.Errorf("error reading gatekeeper template file: %w", err)
 	}
@@ -290,7 +291,7 @@ func prepareGatekeeperData(pkgPath string) (map[string]interface{}, error) {
 		for _, t := range suites[0].Tests {
 			var cases []*GKExampleCase
 			if t.Constraint != "" {
-				content, err := os.ReadFile(path.Join(pkgPath, t.Constraint))
+				content, err := util.ReadRegularFile(path.Join(pkgPath, t.Constraint))
 				if err != nil {
 					return nil, fmt.Errorf("error reading constraint file (%s): %w", t.Constraint, err)
 				}
@@ -301,7 +302,7 @@ func prepareGatekeeperData(pkgPath string) (map[string]interface{}, error) {
 				})
 			}
 			for _, c := range t.Cases {
-				content, err := os.ReadFile(path.Join(pkgPath, c.Object))
+				content, err := util.ReadRegularFile(path.Join(pkgPath, c.Object))
 				if err != nil {
 					return nil, fmt.Errorf("error reading example file (%s): %w", c.Object, err)
 				}
@@ -345,7 +346,7 @@ func prepareKubeArmorData(pkgPath string, ignorer ignore.IgnoreParser) (map[stri
 func prepareKyvernoData(pkgPath string) (map[string]interface{}, error) {
 	// Read policy file
 	policyPath := path.Join(pkgPath, path.Base(pkgPath)+".yaml")
-	policy, err := os.ReadFile(policyPath)
+	policy, err := util.ReadRegularFile(policyPath)
 	if err != nil {
 		return nil, fmt.Errorf("error reading kyverno policy file: %w", err)
 	}
@@ -392,7 +393,7 @@ func GetFilesWithSuffix(suffix, rootPath string, ignorer ignore.IgnoreParser) (m
 		if !strings.HasSuffix(info.Name(), suffix) {
 			return nil
 		}
-		content, err := os.ReadFile(path)
+		content, err := util.ReadRegularFile(path)
 		if err != nil {
 			return fmt.Errorf("error reading file: %w", err)
 		}
