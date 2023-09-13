@@ -10,9 +10,18 @@ metadata:
     "helm.sh/hook-weight": "0"
     "helm.sh/hook-delete-policy": before-hook-creation
 {{- end }}
+{{- with .Values.dbMigrator.job.extraJobLabels }}
+  labels:
+    {{- toYaml . | nindent 4 }}
+{{- end }}
 spec:
   ttlSecondsAfterFinished: {{ .Values.dbMigrator.job.ttlSecondsAfterFinished }}
   template:
+    {{- with .Values.dbMigrator.job.extraPodLabels }}
+    metadata:
+      labels:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

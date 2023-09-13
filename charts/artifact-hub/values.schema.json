@@ -70,6 +70,18 @@
                 "job": {
                     "type": "object",
                     "properties": {
+                        "extraJobLabels": {
+                            "title": "Additional labels for the DB migrator job",
+                            "description": "Optionally specify extra list of additional labels for the dbMigrator job",
+                            "type": "object",
+                            "default": {}
+                        },
+                        "extraPodLabels": {
+                            "title": "Additional labels for the DB migrator pod",
+                            "description": "Optionally specify extra list of additional labels for the dbMigrator pod",
+                            "type": "object",
+                            "default": {}
+                        },
                         "image": {
                             "type": "object",
                             "properties": {
@@ -242,6 +254,18 @@
                 "deploy": {
                     "type": "object",
                     "properties": {
+                        "extraDeploymentLabels": {
+                            "title": "Extra deployment labels",
+                            "description": "Optionally specify extra list of additional labels for the hub deployment",
+                            "type": "object",
+                            "default": {}
+                        },
+                        "extraPodLabels": {
+                            "title": "Extra pod labels",
+                            "description": "Optionally specify extra list of additional labels for the hub pods",
+                            "type": "object",
+                            "default": {}
+                        },
                         "extraVolumes": {
                             "title": "Extra volumes",
                             "description": "Optionally specify extra list of additional volumes for the hub deployment",
@@ -947,6 +971,18 @@
                 "cronjob": {
                     "type": "object",
                     "properties": {
+                        "extraCronJobLabels": {
+                            "title": "Extra cronjob labels",
+                            "description": "Optionally specify extra list of additional labels for the scanner cronjob",
+                            "type": "object",
+                            "default": {}
+                        },
+                        "extraJobLabels": {
+                            "title": "Extra job labels",
+                            "description": "Optionally specify extra list of additional labels for the jobs spawned by the scanner cronjob",
+                            "type": "object",
+                            "default": {}
+                        },
                         "extraVolumes": {
                             "title": "Extra volumes",
                             "description": "Optionally specify extra list of additional volumes for the scanner cronjob",
@@ -1043,6 +1079,18 @@
                 "cronjob": {
                     "type": "object",
                     "properties": {
+                        "extraCronJobLabels": {
+                            "title": "Extra cronjob labels",
+                            "description": "Optionally specify extra list of additional labels for the tracker cronjob",
+                            "type": "object",
+                            "default": {}
+                        },
+                        "extraJobLabels": {
+                            "title": "Extra job labels",
+                            "description": "Optionally specify extra list of additional labels for the jobs spawned by the tracker cronjob",
+                            "type": "object",
+                            "default": {}
+                        },
                         "extraVolumes": {
                             "title": "Extra volumes",
                             "description": "Optionally specify extra list of additional volumes for the tracker cronjob",
@@ -1133,6 +1181,18 @@
                 "deploy": {
                     "type": "object",
                     "properties": {
+                        "extraDeploymentLabels": {
+                            "title": "Extra deployment labels",
+                            "description": "Optionally specify extra list of additional labels for the trivy deployment",
+                            "type": "object",
+                            "default": {}
+                        },
+                        "extraPodLabels": {
+                            "title": "Extra pod labels",
+                            "description": "Optionally specify extra list of additional labels for the trivy pods",
+                            "type": "object",
+                            "default": {}
+                        },
                         "extraVolumes": {
                             "title": "Extra volumes",
                             "description": "Optionally specify extra list of additional volumes for the trivy deployment",

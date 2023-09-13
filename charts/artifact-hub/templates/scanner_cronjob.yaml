@@ -7,6 +7,10 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: {{ include "chart.resourceNamePrefix" . }}scanner
+  {{- with .Values.scanner.cronjob.extraCronJobLabels }}
+  labels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   schedule: "15,45 * * * *"
   successfulJobsHistoryLimit: 1
@@ -15,6 +19,11 @@ spec:
   jobTemplate:
     spec:
       template:
+        {{- with .Values.scanner.cronjob.extraJobLabels }}
+        metadata:
+          labels:
+            {{- toYaml . | nindent 12 }}
+        {{- end }}
         spec:
           {{- with .Values.imagePullSecrets }}
           imagePullSecrets:
