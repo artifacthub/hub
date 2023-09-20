@@ -2181,10 +2181,10 @@
     expect "^29.0.0"
     pretty-format "^29.0.0"
 
-"@types/json-schema-merge-allof@^0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@types/json-schema-merge-allof/-/json-schema-merge-allof-0.6.1.tgz#c476c2aeed04d8a14882ff872de9ddeca5608e0b"
-  integrity sha512-tBVtkCCbA1oF8vQ2cp2yuGLp0T2f0AZ2dAic64ZftoWQnKqrTYY/+PuiqPKX1XaxoR43ll/EkYcHnJbdbHUS2g==
+"@types/json-schema-merge-allof@^0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@types/json-schema-merge-allof/-/json-schema-merge-allof-0.6.2.tgz#0316c36530ce7df8d658637a9778f21c8b4818ff"
+  integrity sha512-r0aK0QSJNfngf+zLv5pyxXaMyTGj+EuuSzvffkocOcY79W1Qu399qB0bFhcxE/3RbhXHwFfUY3mib7/FniszRQ==
   dependencies:
     "@types/json-schema" "*"
 
