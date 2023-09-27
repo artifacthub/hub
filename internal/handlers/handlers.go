@@ -148,6 +148,7 @@ func (h *Handlers) setupRouter() {
 		AllowedMethods:   []string{"GET"},
 		AllowCredentials: false,
 	}).Handler
+	compress := middleware.Compress(5)
 	r.Use(middleware.Recoverer)
 	r.Use(realIP(h.cfg.GetInt("server.xffIndex")))
 	r.Use(logger)
@@ -259,7 +260,7 @@ func (h *Handlers) setupRouter() {
 		})
 
 		// Packages
-		r.Route("/packages", func(r chi.Router) {
+		r.With(compress).Route("/packages", func(r chi.Router) {
 			r.Get("/random", h.Packages.GetRandom)
 			r.Get("/stats", h.Packages.GetStats)
 			r.With(corsMW).Get("/search", h.Packages.Search)
@@ -351,7 +352,7 @@ func (h *Handlers) setupRouter() {
 		r.With(h.Users.RequireLogin).Post("/images", h.Static.SaveImage)
 
 		// Stats
-		r.Get("/stats", h.Stats.Get)
+		r.With(compress).Get("/stats", h.Stats.Get)
 
 		// Harbor replication
 		//
@@ -360,8 +361,8 @@ func (h *Handlers) setupRouter() {
 		// available so that they can be synchronized in Harbor deployments. It
 		// will probably start being used in Harbor 2.2.0, so we need to be
 		// careful to not introduce breaking changes.
-		r.Get("/harbor-replication", h.Packages.GetHarborReplicationDump)
-		r.Get("/harborReplication", h.Packages.GetHarborReplicationDump) // Deprecated
+		r.With(compress).Get("/harbor-replication", h.Packages.GetHarborReplicationDump)
+		r.With(compress).Get("/harborReplication", h.Packages.GetHarborReplicationDump) // Deprecated
 
 		// Helm exporter
 		//
@@ -369,7 +370,7 @@ func (h *Handlers) setupRouter() {
 		// available of all charts listed in Artifact Hub.
 		//
 		// (*) https://github.com/sstarcher/helm-exporter
-		r.Get("/helm-exporter", h.Packages.GetHelmExporterDump)
+		r.With(compress).Get("/helm-exporter", h.Packages.GetHelmExporterDump)
 
 		// Nova
 		//
@@ -377,7 +378,7 @@ func (h *Handlers) setupRouter() {
 		// listed on Artifact Hub.
 		//
 		// (*) https://github.com/FairwindsOps/nova
-		r.Get("/nova", h.Packages.GetNovaDump)
+		r.With(compress).Get("/nova", h.Packages.GetNovaDump)
 	})
 
 	// Monocular compatible search API
@@ -387,7 +388,7 @@ func (h *Handlers) setupRouter() {
 	// from the Helm Hub to Artifact Hub, allowing the existing Helm tooling to
 	// continue working without modifications. This is a temporary solution and
 	// future Helm CLI versions should use the generic Artifact Hub search API.
-	r.Get("/api/chartsvc/v1/charts/search", h.Packages.SearchMonocular)
+	r.With(compress).Get("/api/chartsvc/v1/charts/search", h.Packages.SearchMonocular)
 
 	// Monocular charts url redirect endpoint
 	//
