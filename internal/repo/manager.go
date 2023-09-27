@@ -570,7 +570,7 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 
 	case GitRepoURLRE.MatchString(r.URL):
 		// Do not track repo's digest for Tekton repos using git based versioning
-		if r.Data != nil {
+		if (r.Kind == hub.TektonTask || r.Kind == hub.TektonPipeline) && r.Data != nil {
 			var data *hub.TektonData
 			if err := json.Unmarshal(r.Data, &data); err != nil {
 				return "", fmt.Errorf("invalid tekton repository data: %w", err)
