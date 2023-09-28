@@ -1,0 +1,49 @@
+name: Build images
+
+on:
+  push:
+    branches:
+      - master
+
+permissions: read-all
+
+jobs:
+  build-docker-images:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+      - name: Login to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build, tag and push hub image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -f cmd/hub/Dockerfile -t $ECR_REGISTRY/hub:$GITHUB_SHA .
+          docker push $ECR_REGISTRY/hub:$GITHUB_SHA
+      - name: Build, tag and push db-migrator image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -f database/migrations/Dockerfile -t $ECR_REGISTRY/db-migrator:$GITHUB_SHA .
+          docker push $ECR_REGISTRY/db-migrator:$GITHUB_SHA
+      - name: Build, tag and push scanner image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -f cmd/scanner/Dockerfile -t $ECR_REGISTRY/scanner:$GITHUB_SHA .
+          docker push $ECR_REGISTRY/scanner:$GITHUB_SHA
+      - name: Build, tag and push tracker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -f cmd/tracker/Dockerfile -t $ECR_REGISTRY/tracker:$GITHUB_SHA .
+          docker push $ECR_REGISTRY/tracker:$GITHUB_SHA

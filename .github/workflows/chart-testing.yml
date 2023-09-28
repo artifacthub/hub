@@ -1,5 +1,7 @@
 name: Helm CI
+
 on:
+  merge_group:
   pull_request:
     paths:
       - "charts/**"

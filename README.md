@@ -1,6 +1,5 @@
 # Artifact Hub
 
-[![CI](https://github.com/artifacthub/hub/workflows/CI/badge.svg)](https://github.com/artifacthub/hub/actions?query=workflow%3ACI)
 [![Go Report Card](https://goreportcard.com/badge/github.com/artifacthub/hub)](https://goreportcard.com/report/github.com/artifacthub/hub)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4106/badge)](https://bestpractices.coreinfrastructure.org/projects/4106)
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/artifact-hub)](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub)
