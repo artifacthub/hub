@@ -1,7 +1,9 @@
 name: CodeQL
+
 on:
   push:
-    branches: [master]
+    branches:
+      - master
 
 permissions: read-all
 
