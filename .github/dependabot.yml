@@ -4,50 +4,74 @@ updates:
     directory: "/web"
     schedule:
       interval: "weekly"
-      day: "wednesday"
+    groups:
+      web:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
   - package-ecosystem: "npm"
     directory: "/widget"
     schedule:
       interval: "weekly"
-      day: "wednesday"
+    groups:
+      widget:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
   - package-ecosystem: gomod
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "wednesday"
     ignore:
       - dependency-name: "k8s.io/apimachinery"
       - dependency-name: "k8s.io/client-go"
-  - package-ecosystem: "docker"
-    directory: "/cmd/ah"
-    schedule:
-      interval: "weekly"
-      day: "wednesday"
-  - package-ecosystem: "docker"
-    directory: "/cmd/hub"
-    schedule:
-      interval: "weekly"
-      day: "wednesday"
-    ignore:
-      - dependency-name: "node"
-        versions: ["18-alpine3.16", "19-alpine3.16", "20-alpine3.16"]
-  - package-ecosystem: "docker"
-    directory: "/cmd/scanner"
-    schedule:
-      interval: "weekly"
-      day: "wednesday"
-  - package-ecosystem: "docker"
-    directory: "/cmd/tracker"
-    schedule:
-      interval: "weekly"
-      day: "wednesday"
-  - package-ecosystem: "docker"
-    directory: "/database/migrations"
-    schedule:
-      interval: "weekly"
-      day: "wednesday"
+    groups:
+      backend:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "wednesday"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "docker"
+    directory: "/cmd/ah"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "docker"
+    directory: "/cmd/hub"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "node"
+        versions: ["18-alpine3.16", "19-alpine3.16", "20-alpine3.16"]
+
+  - package-ecosystem: "docker"
+    directory: "/cmd/scanner"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "docker"
+    directory: "/cmd/tracker"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "docker"
+    directory: "/database/migrations"
+    schedule:
+      interval: "weekly"
