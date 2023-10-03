@@ -1,0 +1,21 @@
+header:
+  schema-version: '1.0.0'
+  expiration-date: '2024-10-3T10:00:00.000Z'
+  project-url: https://github.com/artifacthub/hub
+project-lifecycle:
+  status: active
+  bug-fixes-only: false
+  core-maintainers:
+  - https://github.com/tegioz
+  - https://github.com/cynthia-sg
+  - https://github.com/mattfarina
+contribution-policy:
+  accepts-pull-requests: true
+  accepts-automated-pull-requests: true
+distribution-points:
+  - https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+security-contacts:
+  - type: email
+    value: cncf-artifacthub-maintainers@lists.cncf.io
+vulnerability-reporting:
+  accepts-vulnerability-reports: true
