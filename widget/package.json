@@ -25,7 +25,7 @@
     "@types/styled-components": "^5.1.27",
     "babel-plugin-styled-components": "^2.1.4",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-mock": "^29.7.0",
