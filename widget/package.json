@@ -8,7 +8,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-shadow": "^20.4.0",
-    "styled-components": "5.3.11"
+    "styled-components": "6.1.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
