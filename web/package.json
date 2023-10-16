@@ -30,7 +30,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "regexify-string": "^1.0.17",
     "remark-gfm": "^3.0.1",
-    "remark-parse": "^10.0.2",
+    "remark-parse": "^11.0.0",
     "remark-strip-html": "^1.0.2",
     "remark-unlink": "^4.0.1",
     "semver": "^7.5.4",
