@@ -22,7 +22,7 @@ jobs:
           aws-region: us-east-2
       - name: Login to AWS ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
       - name: Build, tag and push hub image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
