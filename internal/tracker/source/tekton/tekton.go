@@ -22,7 +22,7 @@ import (
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/hashicorp/go-multierror"
-	"github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
+	v1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
 	pipelinerun "github.com/tektoncd/pipeline/pkg/reconciler/pipelinerun/resources"
 	taskrun "github.com/tektoncd/pipeline/pkg/reconciler/taskrun/resources"
 )
@@ -288,9 +288,9 @@ func GetManifest(kind hub.RepositoryKind, pkgName, pkgPath string) (interface{},
 	var manifest interface{}
 	switch kind {
 	case hub.TektonTask:
-		manifest = &v1beta1.Task{}
+		manifest = &v1.Task{}
 	case hub.TektonPipeline:
-		manifest = &v1beta1.Pipeline{}
+		manifest = &v1.Pipeline{}
 	}
 	if err := yaml.Unmarshal(manifestData, &manifest); err != nil {
 		return nil, nil, err
@@ -308,11 +308,11 @@ func validateManifest(manifest interface{}) error {
 	// Extract some information from package manifest
 	var name, version, description string
 	switch m := manifest.(type) {
-	case *v1beta1.Task:
+	case *v1.Task:
 		name = m.Name
 		version = m.Labels[versionLabelTKey]
 		description = m.Spec.Description
-	case *v1beta1.Pipeline:
+	case *v1.Pipeline:
 		name = m.Name
 		version = m.Labels[versionLabelTKey]
 		description = m.Spec.Description
@@ -354,24 +354,23 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 	var name, version, description, tektonKind string
 	var annotations map[string]string
 	var tasks []map[string]interface{}
-	var steps []v1beta1.Step
+	var steps []v1.Step
 
 	switch m := i.Manifest.(type) {
-	case *v1beta1.Task:
+	case *v1.Task:
 		tektonKind = "task"
 		name = m.Name
 		version = m.Labels[versionLabelTKey]
 		description = m.Spec.Description
 		annotations = m.Annotations
 
-		ts := m.TaskSpec()
-		var defaults []v1beta1.ParamSpec
-		if len(ts.Params) > 0 {
-			defaults = append(defaults, ts.Params...)
+		var defaults []v1.ParamSpec
+		if len(m.Spec.Params) > 0 {
+			defaults = append(defaults, m.Spec.Params...)
 		}
-		mts := taskrun.ApplyParameters(context.Background(), &ts, &v1beta1.TaskRun{}, defaults...)
+		mts := taskrun.ApplyParameters(context.Background(), &m.Spec, &v1.TaskRun{}, defaults...)
 		steps = mts.Steps
-	case *v1beta1.Pipeline:
+	case *v1.Pipeline:
 		tektonKind = "pipeline"
 		name = m.Name
 		version = m.Labels[versionLabelTKey]
@@ -379,7 +378,7 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 		annotations = m.Annotations
 
 		ps := m.PipelineSpec()
-		mps := pipelinerun.ApplyParameters(context.Background(), &ps, &v1beta1.PipelineRun{})
+		mps := pipelinerun.ApplyParameters(context.Background(), &ps, &v1.PipelineRun{})
 		for _, mts := range mps.Tasks {
 			if mts.TaskSpec != nil {
 				steps = append(steps, mts.TaskSpec.Steps...)

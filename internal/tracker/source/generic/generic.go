@@ -13,8 +13,8 @@ import (
 	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/util"
-	gk "github.com/open-policy-agent/gatekeeper/v3/pkg/gator/verify"
 	ignore "github.com/sabhiram/go-gitignore"
+	"gopkg.in/yaml.v3"
 )
 
 const (
@@ -282,13 +282,19 @@ func prepareGatekeeperData(pkgPath string) (map[string]interface{}, error) {
 	}
 
 	// Read examples
-	suites, err := gk.ReadSuites(os.DirFS(pkgPath), ".", ".", false)
-	if err != nil {
-		return nil, fmt.Errorf("error reading gatekeeper suite: %w", err)
-	}
 	var examples []*GKExample
-	if len(suites) == 1 {
-		for _, t := range suites[0].Tests {
+	suitePath := path.Join(pkgPath, "suite.yaml")
+	suiteYaml, err := util.ReadRegularFile(suitePath)
+	if err != nil {
+		if !errors.Is(err, os.ErrNotExist) {
+			return nil, fmt.Errorf("error reading gatekeeper suite: %w", err)
+		}
+	} else {
+		var suite *GKSuite
+		if err := yaml.Unmarshal(suiteYaml, &suite); err != nil {
+			return nil, fmt.Errorf("error reading parsing suite file: %w", err)
+		}
+		for _, t := range suite.Tests {
 			var cases []*GKExampleCase
 			if t.Constraint != "" {
 				content, err := util.ReadRegularFile(path.Join(pkgPath, t.Constraint))
