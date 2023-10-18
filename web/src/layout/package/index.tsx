@@ -28,6 +28,7 @@ import {
   Package,
   PackageLink,
   PackageViewsStats,
+  Recommendation,
   RepositoryKind,
   Version,
 } from '../../types';
@@ -69,7 +70,7 @@ import MoreActionsButton from './MoreActionsButton';
 import styles from './PackageView.module.css';
 import PackagesViewsStats from './PackageViewsStats';
 import ReadmeWrapper from './readme';
-import RecommendedPackages from './RecommendedPackages';
+import RecommendedPackages, { URL_regex } from './RecommendedPackages';
 import RelatedPackages from './RelatedPackages';
 import ScreenshotsModal from './screenshots/Modal';
 import StarButton from './StarButton';
@@ -284,17 +285,22 @@ const PackageView = () => {
 
   // Section for recommended packages and in production (orgs)
   const renderMoreDetails = (): JSX.Element | null => {
-    if (detail) {
-      const recommendations = detail.recommendations && detail.recommendations.length > 0;
+    if (detail && detail.recommendations) {
+      const recommendations: Recommendation[] = [];
+      detail.recommendations.forEach((recommendation: Recommendation) => {
+        if (recommendation.url.match(URL_regex)) {
+          recommendations.push(recommendation);
+        }
+      });
 
-      if (recommendations) {
+      if (recommendations.length > 0) {
         return (
           <div
             data-testid="more-details-section"
             className={`d-none d-md-block px-3 ${styles.moreDetailsSectionWrapper}`}
           >
             <div className="container-lg px-sm-4 px-lg-0 py-2 d-flex flex-column position-relative">
-              {recommendations && <RecommendedPackages recommendations={detail.recommendations} className="mt-3" />}
+              <RecommendedPackages recommendations={recommendations} className="mt-3" />
             </div>
           </div>
         );

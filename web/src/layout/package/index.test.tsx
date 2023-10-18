@@ -564,6 +564,47 @@ describe('Package index', () => {
       expect(pkgs[1]).toHaveTextContent('kube-prometheus-stack');
     });
 
+    it('renders only recommended pkgs with valid urls', async () => {
+      const mockPackage = getMockPackage('16a');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      render(
+        <Router>
+          <PackageView />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
+
+      expect(await screen.findByTestId('more-details-section')).toBeInTheDocument();
+      expect(screen.getByText(/recommended by the publisher/)).toBeInTheDocument();
+
+      const pkgs = await screen.findAllByTestId('recommended-pkg');
+      expect(pkgs).toHaveLength(1);
+      expect(pkgs[0]).toHaveTextContent('artifact-hub');
+    });
+
+    it('does not renders recommended pkgs with not valid urls', async () => {
+      const mockPackage = getMockPackage('16b');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      render(
+        <Router>
+          <PackageView />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
+
+      expect(await screen.findAllByText('Pretty name')).toHaveLength(2);
+
+      expect(screen.queryByTestId('more-details-section')).toBeNull();
+    });
+
     it('does not render when recommended and production usage are undefined', async () => {
       const mockPackage = getMockPackage('18');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
