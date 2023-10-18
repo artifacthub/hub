@@ -14,6 +14,7 @@ cat docs/www/headers/falco_rules_repositories docs/falco_rules_repositories.md >
 cat docs/www/headers/gatekeeper_policies_repositories docs/gatekeeper_policies_repositories.md > docs/www/content/topics/repositories/gatekeeper-policies.md
 cat docs/www/headers/helm_charts_repositories docs/helm_charts_repositories.md > docs/www/content/topics/repositories/helm-charts.md
 cat docs/www/headers/helm_plugins_repositories docs/helm_plugins_repositories.md > docs/www/content/topics/repositories/helm-plugins.md
+cat docs/www/headers/kcl_packages_repositories docs/kcl_packages_repositories.md > docs/www/content/topics/repositories/kcl-packages.md
 cat docs/www/headers/keda_scalers_repositories docs/keda_scalers_repositories.md > docs/www/content/topics/repositories/keda-scalers.md
 cat docs/www/headers/keptn_integrations_repositories docs/keptn_integrations_repositories.md > docs/www/content/topics/repositories/keptn-integrations.md
 cat docs/www/headers/knative_client_plugins_repositories docs/knative_client_plugins_repositories.md > docs/www/content/topics/repositories/knative-client-plugins.md

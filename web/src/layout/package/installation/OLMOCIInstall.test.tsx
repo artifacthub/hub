@@ -28,7 +28,7 @@ describe('OLMOCIInstall', () => {
 
   it('creates snapshot', async () => {
     const { asFragment } = render(<OLMOCIInstall {...defaultProps} />);
-    expect(await screen.findByText(/Repo/)).toBeInTheDocument();
+    expect(await screen.findByText('kubectl apply -f packageName-subscription.yaml')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 

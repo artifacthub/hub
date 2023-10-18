@@ -47,6 +47,7 @@ export enum RepositoryKind {
   Backstage,
   ArgoTemplate,
   KubeArmor,
+  KCL,
 }
 
 export interface SearchResults {

@@ -21,6 +21,7 @@ export enum RepositoryKind {
   Backstage,
   ArgoTemplate,
   KubeArmor,
+  KCL,
 }
 
 export enum PackageCategory {

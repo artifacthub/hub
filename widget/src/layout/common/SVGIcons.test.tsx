@@ -113,6 +113,11 @@ describe('SVGIcons', () => {
     expect(screen.getByTitle('backstage'));
   });
 
+  it('renders KCL icon', () => {
+    render(<SVGIcons name="kcl" />);
+    expect(screen.getByTitle('kcl'));
+  });
+
   it('does not render when name is not in the list', () => {
     render(<SVGIcons name="not-listed" />);
     expect(screen.getByTestId('iconWrapper')).toBeEmptyDOMElement();

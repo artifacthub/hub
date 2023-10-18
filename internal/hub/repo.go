@@ -106,6 +106,9 @@ const (
 
 	// KubeArmor represents a repository with KubeArmor policies.
 	KubeArmor RepositoryKind = 19
+
+	// KCL represents a repository with KCL policies.
+	KCL RepositoryKind = 20
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -127,6 +130,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "helm"
 	case HelmPlugin:
 		return "helm-plugin"
+	case KCL:
+		return "kcl"
 	case KedaScaler:
 		return "keda-scaler"
 	case Keptn:
@@ -176,6 +181,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return Helm, nil
 	case "helm-plugin":
 		return HelmPlugin, nil
+	case "kcl":
+		return KCL, nil
 	case "keda-scaler":
 		return KedaScaler, nil
 	case "keptn":

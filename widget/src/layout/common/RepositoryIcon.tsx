@@ -32,6 +32,7 @@ const ICONS: IconsList = {
   [RepositoryKind.Backstage]: <SVGIcons name="backstage" />,
   [RepositoryKind.ArgoTemplate]: <SVGIcons name="argo" />,
   [RepositoryKind.KubeArmor]: <SVGIcons name="kubearmor" />,
+  [RepositoryKind.KCL]: <SVGIcons name="kcl" />,
 };
 
 const RepositoryIcon = (props: Props) => (
