@@ -464,6 +464,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.KCL:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/kcl-packages"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            KCL packages
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -491,6 +502,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.Backstage:
               case RepositoryKind.ArgoTemplate:
               case RepositoryKind.KubeArmor:
+              case RepositoryKind.KCL:
                 return (
                   <>
                     <p
@@ -882,6 +894,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Backstage,
               RepositoryKind.ArgoTemplate,
               RepositoryKind.KubeArmor,
+              RepositoryKind.KCL,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -1026,6 +1039,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Backstage,
               RepositoryKind.ArgoTemplate,
               RepositoryKind.KubeArmor,
+              RepositoryKind.KCL,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

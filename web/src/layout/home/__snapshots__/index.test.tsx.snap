@@ -316,7 +316,7 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-3 px-xs-0"
         >
-          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo templates and KubeArmor policies.
+          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo templates, KubeArmor policies and KCL packages.
           <div
             class="py-0 py-lg-5"
           >
@@ -486,6 +486,32 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </a>
               <a
+                aria-label="Open KCL site"
+                class="link col iconLink"
+                href="https://kcl-lang.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="aboutIcon"
+                    src="/static/media/kcl-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                  >
+                    <small>
+                      KCL packages
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
                 aria-label="Open KEDA site"
                 class="link col iconLink"
                 href="https://keda.sh"
@@ -563,6 +589,10 @@ exports[`Home index creates snapshot 1`] = `
                   </div>
                 </div>
               </a>
+            </div>
+            <div
+              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+            >
               <a
                 aria-label="Open Krew site"
                 class="link col iconLink"
@@ -589,10 +619,6 @@ exports[`Home index creates snapshot 1`] = `
                   </div>
                 </div>
               </a>
-            </div>
-            <div
-              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
-            >
               <a
                 aria-label="Open KubeArmor policies web"
                 class="link col iconLink"
@@ -697,6 +723,13 @@ exports[`Home index creates snapshot 1`] = `
                   </div>
                 </div>
               </a>
+            </div>
+            <div
+              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+            >
+              <div
+                class="col"
+              />
               <a
                 aria-label="Open Policy Agent site"
                 class="link col iconLink"
@@ -723,13 +756,6 @@ exports[`Home index creates snapshot 1`] = `
                   </div>
                 </div>
               </a>
-            </div>
-            <div
-              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
-            >
-              <div
-                class="col"
-              />
               <a
                 aria-label="Open Tekton site"
                 class="link col iconLink"

@@ -117,6 +117,7 @@ func SetupSource(i *hub.TrackerSourceInput) hub.TrackerSource {
 		hub.Backstage,
 		hub.CoreDNS,
 		hub.Gatekeeper,
+		hub.KCL,
 		hub.KedaScaler,
 		hub.Keptn,
 		hub.KnativeClientPlugin,

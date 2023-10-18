@@ -96,6 +96,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.KubeArmor,
     name: 'KubeArmor policies',
   },
+  {
+    kind: RepositoryKind.KCL,
+    name: 'KCL package',
+  },
 ];
 
 const Wrapper = styled('span')`

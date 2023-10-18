@@ -100,6 +100,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Gatekeeper policies
                     </option>
                     <option
+                      value="20"
+                    >
+                      KCL packages
+                    </option>
+                    <option
                       value="8"
                     >
                       KEDA scalers

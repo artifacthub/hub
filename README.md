@@ -21,6 +21,7 @@ At the moment, the following artifacts kinds are supported *(with plans to suppo
 - [Gatekeeper policies](https://open-policy-agent.github.io/gatekeeper/website/docs/)
 - [Helm charts](https://helm.sh/)
 - [Helm plugins](https://helm.sh/docs/topics/plugins/)
+- [KCL packages](https://kcl-lang.io)
 - [KEDA scalers](https://keda.sh/)
 - [Keptn integrations](https://keptn.sh)
 - [Knative client plugins](https://knative.dev)

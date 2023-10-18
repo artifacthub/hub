@@ -1299,6 +1299,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/kcl/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getKCLPackageDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KCLPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/keda-scaler/{repoName}/{packageName}":
     get:
       tags:
@@ -1761,6 +1784,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HelmPluginPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/KCL/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getKCLVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KCLPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -3920,6 +3967,8 @@ components:
                         example: "http://repo.url"
     HelmPluginPackage:
       $ref: "#/components/schemas/Package"
+    KCLPackage:
+      $ref: "#/components/schemas/Package"
     KedaScalerPackage:
       $ref: "#/components/schemas/Package"
     KeptnIntegrationsPackage:
@@ -4636,6 +4685,10 @@ components:
         - 14
         - 15
         - 16
+        - 17
+        - 18
+        - 19
+        - 20
       description: |
         Repository kind:
           * `0` - Helm charts
@@ -4658,6 +4711,7 @@ components:
           * `17` - Backstage plugins
           * `18` - Argo templates
           * `19` - KubeArmor templates
+          * `20` - KCL packages
     RepositoryKindParam:
       type: string
       enum:
@@ -4681,6 +4735,7 @@ components:
         - backstage
         - argo-template
         - kubearmor
+        - kcl
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4703,6 +4758,7 @@ components:
         * `backstage` - Backstage plugins
         * `argo-template` - Argo templates
         * `kubearmor` - KubeArmor policies
+        * `kcl` - KCL packages
     RepositorySummary:
       type: object
       required:
@@ -5242,6 +5298,7 @@ components:
           * `17` - Backstage plugins
           * `18` - Argo templates
           * `19` - KubeArmor templates
+          * `20` - KCL packages
     PackageNameParam:
       in: path
       name: packageName
