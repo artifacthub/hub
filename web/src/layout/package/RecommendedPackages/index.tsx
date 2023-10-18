@@ -12,7 +12,8 @@ interface Props {
   className?: string;
 }
 
-const URL_regex = /^https:\/\/([^\/?]+)\/packages\/([a-z-]+)\/([a-z0-9-]+)\/([a-z0-9-]+)$/; // eslint-disable-line
+export const URL_regex =
+  /^https:\/\/([^\/?]+)\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|container)\/([a-z0-9-]+)\/([a-z0-9-]+)$/; // eslint-disable-line
 
 const prepareRecommendations = (recommendations?: Recommendation[]): RecommendedPackage[] => {
   let list: RecommendedPackage[] = [];
