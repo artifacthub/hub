@@ -162,9 +162,9 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
   {
     kind: RepositoryKind.KCL,
     label: 'kcl',
-    name: 'KCL packages',
-    singular: 'KCL package',
-    plural: 'KCL packages',
+    name: 'KCL modules',
+    singular: 'KCL module',
+    plural: 'KCL modules',
     icon: <RepositoryIcon kind={RepositoryKind.KCL} className="mw-100 mh-100" />,
     active: true,
   },

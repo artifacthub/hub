@@ -107,7 +107,7 @@ const (
 	// KubeArmor represents a repository with KubeArmor policies.
 	KubeArmor RepositoryKind = 19
 
-	// KCL represents a repository with KCL policies.
+	// KCL represents a repository with KCL modules.
 	KCL RepositoryKind = 20
 )
 

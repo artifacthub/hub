@@ -467,11 +467,11 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.KCL:
         link = (
           <ExternalLink
-            href="/docs/topics/repositories/kcl-packages"
+            href="/docs/topics/repositories/kcl-modules"
             className="text-primary fw-bold"
             label="Open documentation"
           >
-            KCL packages
+            KCL modules
           </ExternalLink>
         );
         break;

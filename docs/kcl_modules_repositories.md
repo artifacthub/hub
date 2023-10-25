@@ -1,6 +1,6 @@
-## KCL packages repositories
+## KCL modules repositories
 
-KCL packages repositories are expected to be hosted in GitHub, GitLab or Bitbucket repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+KCL modules repositories are expected to be hosted in GitHub, GitLab or Bitbucket repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
@@ -12,7 +12,7 @@ By default the `master` branch is used, but it's possible to specify a different
 
 The *path/to/packages* provided can contain metadata for one or more packages. Each package version **must** be on a separate folder, and it's up to you to decide if you want to publish one or multiple versions of your package.
 
-The structure of a repository with multiple packages and versions could look something like this:
+The structure of a repository with multiple modules packages and versions could look something like this:
 
 ```sh
 $ tree path/to/packages
@@ -46,4 +46,4 @@ In the previous case, even the `package1` directory could be omitted. The reason
 
 Each package version **needs** an `artifacthub-pkg.yml` metadata file. Please see the file [spec](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml) for more details. The [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml) repository metadata file shown above can be used to setup features like [Verified publisher](https://github.com/artifacthub/hub/blob/master/docs/repositories.md#verified-publisher) or [Ownership claim](https://github.com/artifacthub/hub/blob/master/docs/repositories.md#ownership-claim). This file must be located at `/path/to/packages`.
 
-Once you have added your repository, you are all set up. As you add new versions of your packages or new packages to your git repository, they'll be automatically indexed and listed in Artifact Hub.
+Once you have added your repository, you are all set up. As you add new versions of your modules packages or new packages to your git repository, they'll be automatically indexed and listed in Artifact Hub.

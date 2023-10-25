@@ -11,7 +11,7 @@ The following repositories kinds are supported at the moment:
 - [Falco rules repositories](https://github.com/artifacthub/hub/blob/master/docs/falco_rules_repositories.md)
 - [Helm charts repositories](https://github.com/artifacthub/hub/blob/master/docs/helm_charts_repositories.md)
 - [Helm plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/helm_plugins_repositories.md)
-- [KCL packages repositories](https://github.com/artifacthub/hub/blob/master/docs/kcl_packages_repositories.md)
+- [KCL modules repositories](https://github.com/artifacthub/hub/blob/master/docs/kcl_modules_repositories.md)
 - [KEDA scalers repositories](https://github.com/artifacthub/hub/blob/master/docs/keda_scalers_repositories.md)
 - [Keptn integrations repositories](https://github.com/artifacthub/hub/blob/master/docs/keptn_integrations_repositories.md)
 - [Knative client plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/knative_client_plugins_repositories.md)
