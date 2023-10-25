@@ -102,7 +102,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     <option
                       value="20"
                     >
-                      KCL packages
+                      KCL modules
                     </option>
                     <option
                       value="8"

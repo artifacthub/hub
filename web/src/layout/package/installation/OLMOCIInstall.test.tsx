@@ -41,7 +41,7 @@ describe('OLMOCIInstall', () => {
       expect(await screen.findByText(/Repo/)).toBeInTheDocument();
       expect(screen.getByText(/user/)).toBeInTheDocument();
       expect(screen.getByText(/docker.io\/ibmcom\/ibm-operator-catalog:latest/)).toBeInTheDocument();
-      expect(screen.getByText('kubectl apply -f repo-catalog.yaml')).toBeInTheDocument();
+      expect(await screen.findByText('kubectl apply -f repo-catalog.yaml')).toBeInTheDocument();
       expect(screen.getByText('Create subscription')).toBeInTheDocument();
       expect(screen.getByText('packageName-subscription.yaml')).toBeInTheDocument();
       expect(screen.getAllByText(/stable/)).toHaveLength(2);

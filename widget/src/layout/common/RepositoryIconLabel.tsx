@@ -98,7 +98,7 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
   },
   {
     kind: RepositoryKind.KCL,
-    name: 'KCL package',
+    name: 'KCL module',
   },
 ];
 

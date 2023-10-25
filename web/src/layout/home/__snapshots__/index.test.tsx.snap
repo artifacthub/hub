@@ -316,7 +316,7 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-3 px-xs-0"
         >
-          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo templates, KubeArmor policies and KCL packages.
+          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo templates, KubeArmor policies and KCL modules.
           <div
             class="py-0 py-lg-5"
           >
@@ -506,7 +506,7 @@ exports[`Home index creates snapshot 1`] = `
                     class="d-none d-sm-block text-light mt-2 legendIcon"
                   >
                     <small>
-                      KCL packages
+                      KCL modules
                     </small>
                   </div>
                 </div>
