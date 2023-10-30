@@ -55,7 +55,7 @@ require (
 	k8s.io/apimachinery v0.28.2
 	oras.land/oras-go v1.2.4
 	sigs.k8s.io/krew v0.4.4
-	sigs.k8s.io/yaml v1.3.0
+	sigs.k8s.io/yaml v1.4.0
 )
 
 require (
