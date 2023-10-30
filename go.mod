@@ -27,7 +27,7 @@ require (
 	github.com/mitchellh/hashstructure/v2 v2.0.2
 	github.com/open-policy-agent/opa v0.57.0
 	github.com/opencontainers/image-spec v1.1.0-rc5
-	github.com/operator-framework/api v0.17.7
+	github.com/operator-framework/api v0.18.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pquerna/otp v1.4.0
 	github.com/prometheus/client_golang v1.17.0
@@ -35,7 +35,7 @@ require (
 	github.com/rs/zerolog v1.31.0
 	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06
 	github.com/satori/uuid v1.2.0
-	github.com/sigstore/cosign v1.13.1
+	github.com/sigstore/cosign v1.5.2
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.17.0
 	github.com/stretchr/testify v1.8.4
@@ -59,10 +59,12 @@ require (
 )
 
 require (
+	cloud.google.com/go v0.110.8 // indirect
 	cloud.google.com/go/compute v1.23.0 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	cloud.google.com/go/iam v1.1.2 // indirect
 	cloud.google.com/go/kms v1.15.2 // indirect
+	cloud.google.com/go/storage v1.31.0 // indirect
 	contrib.go.opencensus.io/exporter/ocagent v0.7.1-0.20200907061046-05415f1de66d // indirect
 	contrib.go.opencensus.io/exporter/prometheus v0.4.2 // indirect
 	dario.cat/mergo v1.0.0 // indirect
@@ -172,6 +174,7 @@ require (
 	github.com/golang/glog v1.1.1 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/btree v1.1.2 // indirect
 	github.com/google/flatbuffers v2.0.8+incompatible // indirect
 	github.com/google/gnostic-models v0.6.9-0.20230804172637-c7be7c783f49 // indirect
@@ -268,6 +271,7 @@ require (
 	github.com/sagikazarmark/locafero v0.3.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/samber/lo v1.38.1 // indirect
+	github.com/secure-systems-lab/go-securesystemslib v0.7.0 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/shogo82148/go-shuffle v1.0.1 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
@@ -288,6 +292,7 @@ require (
 	github.com/spiffe/spire-api-sdk v1.7.2 // indirect
 	github.com/stretchr/objx v0.5.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
+	github.com/syndtr/goleveldb v1.0.1-0.20220721030215-126854af5e6d // indirect
 	github.com/tchap/go-patricia/v2 v2.3.1 // indirect
 	github.com/theupdateframework/go-tuf v0.5.2 // indirect
 	github.com/titanous/rocacheck v0.0.0-20171023193734-afe73141d399 // indirect
