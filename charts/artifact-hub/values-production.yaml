@@ -130,7 +130,6 @@ trivy:
     enabled: true
     size: 100Gi
     storageClassName: gp2
-  authURL: https://registry.hub.docker.com
 
 postgresql:
   enabled: false

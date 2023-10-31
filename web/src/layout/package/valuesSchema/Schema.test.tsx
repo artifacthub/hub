@@ -28,7 +28,7 @@ describe('Schema', () => {
 
       expect(screen.getByText(`# ${defaultSchema.title}`)).toBeInTheDocument();
       const lines = screen.getAllByTestId('schemaLine');
-      expect(lines).toHaveLength(97);
+      expect(lines).toHaveLength(96);
 
       expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
