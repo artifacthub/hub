@@ -82,3 +82,17 @@ Date:   Thu Feb 2 11:41:15 2018 -0800
 Notice how the `Author` and `Signed-off-by` lines match. If they do not match the PR will be rejected by the automated DCO check.
 
 If more than one person contributed to a commit than there can be more than one `Signed-off-by` line where each line is a signoff from a different person who contributed to the commit.
+
+
+## Dependencies Policy
+
+Dependencies must be evaluated before being introduced to ensure they:
+
+1) are actively maintained
+2) are maintained by trustworthy maintainers
+
+These evaluations vary from dependency to dependencies.
+
+Dependencies are also scheduled for removal if that project has been deprecated or if the project is no longer maintained.
+
+CVEs in dependencies will be patched for all supported versions if the CVE is applicable and is assessed as a high or critical severity.
