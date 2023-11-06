@@ -19,3 +19,6 @@ security-contacts:
     value: cncf-artifacthub-maintainers@lists.cncf.io
 vulnerability-reporting:
   accepts-vulnerability-reports: true
+dependencies:
+  env-dependencies-policy:
+    policy-url: https://github.com/artifacthub/hub/blob/master/CONTRIBUTING.md#dependencies-policy
