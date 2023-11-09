@@ -63,7 +63,7 @@ paths:
                 password:
                   type: string
                   format: password
-                  example: pass123
+                  example: strongP@55w0rd
       responses:
         "201":
           $ref: "#/components/responses/Created"
@@ -180,8 +180,8 @@ paths:
                   type: string
                   format: password
               example:
-                old: oldPass
-                new: newPass
+                old: strongP@55w0rd
+                new: newstrongP@55w0rd
       responses:
         "204":
           $ref: "#/components/responses/NoContent"
