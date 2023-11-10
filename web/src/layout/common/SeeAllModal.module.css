@@ -8,6 +8,10 @@
   width: 620px !important;
 }
 
+.modalBig {
+  width: 840px !important;
+}
+
 .summary {
   font-size: 70%;
   top: -1px;

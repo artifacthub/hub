@@ -681,10 +681,10 @@ exports[`ContainersImages creates snapshot 1`] = `
         role="dialog"
       >
         <div
-          class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+          class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable modalDialog"
         >
           <div
-            class="modal-content border border-3 mx-auto content undefined modal"
+            class="modal-content border border-3 mx-auto content modal modalBig"
           >
             <div
               class="modal-header d-flex flex-row align-items-center header undefined"

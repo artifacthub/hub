@@ -86,7 +86,7 @@ const ContainersImages = (props: Props) => {
 
       itemsForModal.push(
         <tr key={`container-row-${index}-${containerImage.image}`}>
-          <td>
+          <td className={styles.image}>
             <div className={`d-flex flex-row align-items-center`}>
               <div className="mx-1">
                 <FiPackage className="text-muted" />
@@ -124,7 +124,7 @@ const ContainersImages = (props: Props) => {
         <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
           <thead>
             <tr className={styles.tableTitle}>
-              <th scope="col">
+              <th scope="col" className={styles.imageCol}>
                 <span className="px-1">Image</span>
               </th>
               <th scope="col">
@@ -155,6 +155,7 @@ const ContainersImages = (props: Props) => {
           moreBtnText="details"
           {...containers}
           packageId={props.packageId}
+          size="xl"
           visibleModal
         />
       </div>

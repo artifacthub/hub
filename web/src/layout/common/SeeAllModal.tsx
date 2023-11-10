@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { isUndefined } from 'lodash';
 import { useEffect, useState } from 'react';
 import { HiPlusCircle } from 'react-icons/hi';
@@ -16,6 +17,7 @@ interface Props {
   modalClassName?: string;
   moreBtnText?: string;
   visibleModal?: boolean;
+  size?: string;
 }
 
 const DEFAULT_VISIBLE_ITEMS = 5;
@@ -74,11 +76,14 @@ const SeeAllModal = (props: Props) => {
 
           <Modal
             modalDialogClassName={styles.modalDialog}
-            modalClassName={`${props.modalClassName} ${styles.modal}`}
+            modalClassName={classNames(props.modalClassName, styles.modal, {
+              [styles.modalBig]: !isUndefined(props.size) && props.size === 'xl',
+            })}
             header={<div className={`h3 m-2 flex-grow-1 text-truncate ${styles.title}`}>{props.title}</div>}
             open={openStatus}
             onClose={() => setOpenStatus(false)}
             footerClassName={styles.modalFooter}
+            size={props.size}
           >
             <div className="my-3 mw-100">
               <div className="d-none d-md-block">{props.itemsForModal || props.items}</div>

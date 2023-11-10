@@ -111,7 +111,7 @@ exports[`SeeAllModal creates snapshot 1`] = `
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
       >
         <div
-          class="modal-content border border-3 mx-auto content undefined modal"
+          class="modal-content border border-3 mx-auto content modal"
         >
           <div
             class="modal-header d-flex flex-row align-items-center header undefined"
