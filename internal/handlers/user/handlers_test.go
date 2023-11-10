@@ -1853,6 +1853,7 @@ func newHandlersWrapper() *handlersWrapper {
 	cfg.Set("server.baseURL", "baseURL")
 	cfg.Set("server.oauth.github", map[string]string{})
 	cfg.Set("server.allowUserSignUp", true)
+	cfg.Set("server.cookie.hashKey", "tests")
 
 	um := &user.ManagerMock{}
 	am := &apikey.ManagerMock{}
