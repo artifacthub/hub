@@ -18,13 +18,13 @@ import (
 	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/artifacthub/hub/internal/tracker/source/generic"
 	"github.com/artifacthub/hub/internal/util"
-	"github.com/ghodss/yaml"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/hashicorp/go-multierror"
 	v1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
 	pipelinerun "github.com/tektoncd/pipeline/pkg/reconciler/pipelinerun/resources"
 	taskrun "github.com/tektoncd/pipeline/pkg/reconciler/taskrun/resources"
+	"sigs.k8s.io/yaml"
 )
 
 const (
