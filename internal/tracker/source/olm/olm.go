@@ -17,10 +17,10 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/tracker/source"
-	"github.com/ghodss/yaml"
 	"github.com/hashicorp/go-multierror"
 	"github.com/operator-framework/api/pkg/manifests"
 	operatorsv1alpha1 "github.com/operator-framework/api/pkg/operators/v1alpha1"
+	"sigs.k8s.io/yaml"
 )
 
 const (
