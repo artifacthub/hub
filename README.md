@@ -4,7 +4,7 @@
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4106/badge)](https://bestpractices.coreinfrastructure.org/projects/4106)
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/artifact-hub)](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub)
 [![CLOMonitor](https://img.shields.io/endpoint?url=https://clomonitor.io/api/projects/cncf/artifact-hub/badge)](https://clomonitor.io/projects/cncf/artifact-hub)
-[![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/artifacthub/hub?label=openssf%20scorecard&style=flat)](https://securityscorecards.dev/viewer/?uri=github.com/artifacthub/hub)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/artifacthub/hub/badge)](https://securityscorecards.dev/viewer/?uri=github.com/artifacthub/hub)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/artifacthub/hub)
 [![Licenses](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fartifacthub%2Fhub.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fartifacthub%2Fhub?ref=badge_shield)
 
