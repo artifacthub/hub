@@ -14,6 +14,9 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  {{- with .Values.hub.ingress.ingressClassName }}
+  ingressClassName: {{ . }}
+  {{- end }}
   {{- if .Values.hub.ingress.defaultBackendEnabled }}  
   defaultBackend:
     service:

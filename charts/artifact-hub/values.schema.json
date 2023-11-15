@@ -389,16 +389,7 @@
                         "annotations": {
                             "title": "Hub ingress annotations",
                             "type": "object",
-                            "properties": {
-                                "kubernetes.io/ingress.class": {
-                                    "title": "Hub ingress class",
-                                    "type": "string",
-                                    "default": "nginx"
-                                }
-                            },
-                            "required": [
-                                "kubernetes.io/ingress.class"
-                            ]
+                            "default": {}
                         },
                         "enabled": {
                             "title": "Enable Hub ingress",
@@ -409,6 +400,12 @@
                             "title": "Some extra labels to add to the ingress",
                             "type": "object",
                             "default": {}
+                        },
+                        "ingressClassName": {
+                            "title": "Hub ingress class",
+                            "description": "The ingress class used for `spec.ingressClassName`",
+                            "type": "string",
+                            "default": ""
                         },
                         "defaultBackendEnabled": {
                             "title": "Enable default backend for Hub Ingress",
