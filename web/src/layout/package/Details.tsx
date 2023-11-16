@@ -374,7 +374,7 @@ const Details = (props: Props) => {
                   <div>
                     <SmallTitle text="Kind" />
                     {kinds.map((kind: string, index: number) => (
-                      <p
+                      <div
                         data-testid="keptnKind"
                         className={classnames('text-truncate', styles.text, { 'mb-1': index + 1 !== kinds.length })}
                         key={`keptn-kind-${kind}`}
@@ -383,7 +383,7 @@ const Details = (props: Props) => {
                           <span className="pe-1">&#183;</span>
                           <small>{kind}</small>
                         </div>
-                      </p>
+                      </div>
                     ))}
                   </div>
                 )}
