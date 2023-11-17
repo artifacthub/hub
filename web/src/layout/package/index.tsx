@@ -759,7 +759,7 @@ const PackageView = () => {
                   }),
                 },
                 {
-                  state: { 'from-detail': true },
+                  state: { fromDetail: true },
                 }
               );
             }}
@@ -790,7 +790,7 @@ const PackageView = () => {
                   pathname: '/packages/starred',
                 },
                 {
-                  state: { 'from-detail': true },
+                  state: { fromDetail: true },
                 }
               );
             }}

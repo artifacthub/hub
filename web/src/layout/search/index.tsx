@@ -6,7 +6,7 @@ import isUndefined from 'lodash/isUndefined';
 import { Fragment, useContext, useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import { useLocation, useNavigate, useOutletContext } from 'react-router-dom';
+import { NavigationType, useLocation, useNavigate, useNavigationType, useOutletContext } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx, updateLimit } from '../../context/AppCtx';
@@ -52,6 +52,7 @@ const SearchView = () => {
   const { ctx, dispatch } = useContext(AppCtx);
   const navigate = useNavigate();
   const location = useLocation();
+  const navType: NavigationType = useNavigationType();
   const { tsQueryWeb, filters, pageNumber, deprecated, operators, verifiedPublisher, cncf, official, sort } =
     buildSearchParams(location.search);
   const sampleQueries = getSampleQueries();
@@ -309,12 +310,7 @@ const SearchView = () => {
         setApiError('An error occurred searching packages, please try again later.');
       } finally {
         setIsSearching(false);
-        if (
-          // TODO - location.action === 'POP' ||
-          fromDetail &&
-          !isUndefined(viewedPackage) &&
-          !isUndefined(scrollPosition)
-        ) {
+        if (navType === 'POP' || (fromDetail && !isUndefined(viewedPackage) && !isUndefined(scrollPosition))) {
           setTimeout(() => {
             scrollToTop(scrollPosition);
           }, 200);
