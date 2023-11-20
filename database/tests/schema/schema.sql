@@ -311,7 +311,9 @@ select indexes_are('email_verification_code', array[
 ]);
 select indexes_are('event', array[
     'event_pkey',
-    'event_not_processed_idx'
+    'event_not_processed_idx',
+    'event_repository_id_idx',
+    'event_package_id_idx'
 ]);
 select indexes_are('image', array[
     'image_pkey',
