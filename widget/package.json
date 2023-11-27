@@ -21,7 +21,7 @@
     "@types/lodash": "^4.14.200",
     "@types/node": "^20.8.10",
     "@types/react": "^18.2.35",
-    "@types/react-dom": "^18.2.14",
+    "@types/react-dom": "^18.2.17",
     "@types/styled-components": "^5.1.27",
     "babel-plugin-styled-components": "^2.1.4",
     "eslint-config-prettier": "^9.0.0",
