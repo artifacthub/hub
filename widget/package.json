@@ -31,7 +31,7 @@
     "jest-mock": "^29.7.0",
     "prettier": "^3.0.3",
     "react-scripts": "^5.0.1",
-    "typescript": "^5.2.2",
+    "typescript": "^5.3.2",
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
