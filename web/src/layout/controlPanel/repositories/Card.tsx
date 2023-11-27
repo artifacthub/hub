@@ -95,8 +95,8 @@ const RepositoryCard = (props: Props) => {
           {props.repository.disabled
             ? '.'
             : nextCheckTime > 0
-            ? `, it will be processed automatically in ~ ${nextCheckTime} minutes`
-            : ', it will be processed automatically in less than 30 minutes'}
+              ? `, it will be processed automatically in ~ ${nextCheckTime} minutes`
+              : ', it will be processed automatically in less than 30 minutes'}
         </>
       );
     }
@@ -213,8 +213,8 @@ const RepositoryCard = (props: Props) => {
           {props.repository.disabled
             ? '.'
             : nextCheckTime > 0
-            ? `, next scan in ~ ${nextCheckTime} minutes`
-            : ', next scan in less than 30 minutes'}
+              ? `, next scan in ~ ${nextCheckTime} minutes`
+              : ', next scan in less than 30 minutes'}
         </>
       );
     }
