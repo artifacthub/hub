@@ -26,7 +26,7 @@ require (
 	github.com/mitchellh/hashstructure/v2 v2.0.2
 	github.com/open-policy-agent/opa v0.58.0
 	github.com/opencontainers/image-spec v1.1.0-rc5
-	github.com/operator-framework/api v0.19.0
+	github.com/operator-framework/api v0.20.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pquerna/otp v1.4.0
 	github.com/prometheus/client_golang v1.17.0
