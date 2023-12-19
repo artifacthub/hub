@@ -44,7 +44,7 @@ require (
 	github.com/vincent-petithory/dataurl v1.0.0
 	github.com/wagslane/go-password-validator v0.3.0
 	github.com/writeas/go-strip-markdown v2.0.1+incompatible
-	golang.org/x/crypto v0.16.0
+	golang.org/x/crypto v0.17.0
 	golang.org/x/oauth2 v0.15.0
 	golang.org/x/text v0.14.0
 	google.golang.org/api v0.153.0
