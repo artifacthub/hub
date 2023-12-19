@@ -354,7 +354,8 @@ select indexes_are('package_category', array[
     'package_category_pkey'
 ]);
 select indexes_are('package_views', array[
-    'package_views_package_id_version_day_key'
+    'package_views_package_id_version_day_key',
+    'package_views_year_month_idx'
 ]);
 select indexes_are('package__maintainer', array[
     'package__maintainer_pkey'

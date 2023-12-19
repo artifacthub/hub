@@ -78,8 +78,8 @@ returns setof json as $$
                         get_package_summary(jsonb_build_object('package_id', package_id)) as package,
                         sum(total) as total
                     from package_views
-                    where date_trunc('year', day) = date_trunc('year', current_date)
-                    and date_trunc('month', day) = date_trunc('month', current_date)
+                    where date_trunc('year', day::timestamp) = date_trunc('year', current_timestamp)
+                    and date_trunc('month', day::timestamp) = date_trunc('month', current_timestamp)
                     and package_id is not null
                     group by package_id
                     order by total desc
