@@ -73,12 +73,12 @@ oras push \
 
 or you can use [regclient](https://github.com/regclient/regclient) to do the same:
 ```bash
- regctl artifact put \
-                --format '{{ .Manifest.GetDescriptor.Digest }}' \
-                --artifact-type application/vnd.cncf.artifacthub.config.v1+yaml \
-                -f artifacthub-repo.yml \
-                --file-media-type "application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml" \
-                registry/namespace/repository:artifacthub.io
+regctl artifact put \
+  --format '{{ .Manifest.GetDescriptor.Digest }}' \
+  --artifact-type application/vnd.cncf.artifacthub.config.v1+yaml \
+  -f artifacthub-repo.yml \
+  --file-media-type "application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml" \
+  registry/namespace/repository:artifacthub.io
 ```
 
 The repository metadata file is pushed to the registry using a special tag named `artifacthub.io`. Artifact Hub will pull that artifact looking for the `application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml` layer when the repository metadata is needed.
@@ -95,12 +95,12 @@ oras push \
 or you can use [regclient](https://github.com/regclient/regclient) to do the same:
 
 ```bash
- regctl artifact put \
-                --format '{{ .Manifest.GetDescriptor.Digest }}' \
-                --artifact-type application/vnd.cncf.artifacthub.config.v1+yaml \
-                -f artifacthub-repo.yml \
-                --file-media-type "application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml" \
-                docker.io/repository:artifacthub.io
+regctl artifact put \
+  --format '{{ .Manifest.GetDescriptor.Digest }}' \
+  --artifact-type application/vnd.cncf.artifacthub.config.v1+yaml \
+  -f artifacthub-repo.yml \
+  --file-media-type "application/vnd.cncf.artifacthub.repository-metadata.layer.v1.yaml" \
+  docker.io/repository:artifacthub.io
 ```
 
 *Please note that publishing an Artifact Hub repository metadata file requires that the registry supports [OCI artifacts](https://oras.land/implementors/).*
