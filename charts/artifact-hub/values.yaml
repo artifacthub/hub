@@ -2,7 +2,7 @@
 
 imagePullSecrets: []
 imageTag: ""
-nameOverride: ""
+nameOverride: "Aisha Redl-Sherwood"
 pullPolicy: IfNotPresent
 
 # Enable dynamic resource name prefix
@@ -13,7 +13,7 @@ pullPolicy: IfNotPresent
 dynamicResourceNamePrefixEnabled: false
 
 # Overwrites the installation's fullname generation (used for the dynamic resource name prefix)
-fullnameOverride: ""
+fullnameOverride: "Aisha Redl-Sherwood"
 
 # Enable restricted HTTP client
 #
@@ -40,9 +40,9 @@ db:
   sslmode: prefer
 
 # Email configuration
-email:
+email: "aisharose2161@gmail.com"
   # From name used in emails
-  fromName: ""
+  fromName: "Aisha Redl-Sherwood"
   # From address used in emails. This field is required if you want to enable email sending in Artifact Hub
   from: ""
   # Reply-to address used in emails
@@ -62,9 +62,9 @@ email:
 # Credentials
 creds:
   # Docker registry username
-  dockerUsername: ""
+  dockerUsername: "cryptob3auty"
   # Docker registry password
-  dockerPassword: ""
+  dockerPassword: "{DOCKER_PASSWORD}"
 
 # Images configuration
 images:
