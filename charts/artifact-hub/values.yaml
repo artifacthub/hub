@@ -4,6 +4,7 @@ imagePullSecrets: []
 imageTag: ""
 nameOverride: ""
 pullPolicy: IfNotPresent
+nodeSelector: {}
 
 # Enable dynamic resource name prefix
 #
@@ -101,6 +102,8 @@ dbMigrator:
     #   requests:
     #     cpu: 100m
     #     memory: 128Mi
+    # Optionally specify a node selector for the dbMigrator pod
+    nodeSelector: {}
   # Load demo user and sample repositories
   loadSampleData: true
   # Directory path where the configuration files should be mounted
@@ -179,6 +182,8 @@ hub:
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the hub deployment
     extraVolumeMounts: []
+    # Optionally specify a node selector for the hub deployment
+    nodeSelector: {}
   server:
     # Allow adding private repositories to the Hub
     allowPrivateRepositories: false
@@ -323,6 +328,8 @@ scanner:
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the scanner cronjob
     extraVolumeMounts: []
+    # Optionally specify a node selector for the scanner cronjob
+    nodeSelector: {}
   # Number of snapshots to process concurrently
   concurrency: 3
   # Trivy server url. Defaults to the Trivy service's internal URL
@@ -357,6 +364,8 @@ tracker:
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the tracker cronjob
     extraVolumeMounts: []
+    # Optionally specify a node selector for the tracker cronjob
+    nodeSelector: {}
   # Cache directory path. If set, the cache directory for the Helm client will be explicitly set (otherwise defaults
   # to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir)
   cacheDir: ""
@@ -396,6 +405,8 @@ trivy:
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the trivy deployment
     extraVolumeMounts: []
+    # Optionally specify a node selector for the trivy deployment
+    nodeSelector: {}
   persistence:
     enabled: false
     size: 10Gi
