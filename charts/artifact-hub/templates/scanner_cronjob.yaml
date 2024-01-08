@@ -33,6 +33,10 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- with (default .Values.nodeSelector .Values.scanner.cronjob.nodeSelector) }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           restartPolicy: Never
           initContainers:
             - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 14 }}

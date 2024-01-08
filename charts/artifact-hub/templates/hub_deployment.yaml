@@ -39,6 +39,10 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- with (default .Values.nodeSelector .Values.hub.deploy.nodeSelector) }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if .Release.IsInstall }}
       serviceAccountName: {{ include "chart.serviceAccountName" . }}
       {{- end }}

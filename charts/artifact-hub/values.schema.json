@@ -95,6 +95,11 @@
                                 "repository"
                             ]
                         },
+                        "nodeSelector": {
+                            "title": "DB migrator pod node selector",
+                            "type": "object",
+                            "default": {}
+                        },
                         "resources": {
                             "title": "DB migrator pod resource requirements",
                             "type": "object",
@@ -345,6 +350,11 @@
                             "title": "Hub pod liveness probe",
                             "type": "object",
                             "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.Probe"
+                        },
+                        "nodeSelector": {
+                            "title": "Hub pod node selector",
+                            "type": "object",
+                            "default": {}
                         },
                         "readinessGates": {
                             "title": "Hub pod readiness gates",
@@ -929,6 +939,11 @@
             "type": "string",
             "default": ""
         },
+        "nodeSelector": {
+            "title": "Default node selector used by pods",
+            "type": "object",
+            "default": {}
+        },
         "pullPolicy": {
             "type": "string",
             "default": "IfNotPresent"
@@ -1004,6 +1019,11 @@
                             "required": [
                                 "repository"
                             ]
+                        },
+                        "nodeSelector": {
+                            "title": "Scanner pod node selector",
+                            "type": "object",
+                            "default": {}
                         },
                         "resources": {
                             "title": "Scanner pod resource requirements",
@@ -1113,6 +1133,11 @@
                                 "repository"
                             ]
                         },
+                        "nodeSelector": {
+                            "title": "Tracker pod node selector",
+                            "type": "object",
+                            "default": {}
+                        },
                         "resources": {
                             "title": "Tracker pod resource requirements",
                             "type": "object",
@@ -1206,6 +1231,11 @@
                             "title": "Trivy container image",
                             "type": "string",
                             "default": "aquasec/trivy:0.44.1"
+                        },
+                        "nodeSelector": {
+                            "title": "Trivy pod node selector",
+                            "type": "object",
+                            "default": {}
                         },
                         "resources": {
                             "title": "Trivy pod resource requirements",

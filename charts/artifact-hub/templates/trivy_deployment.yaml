@@ -30,6 +30,10 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- with (default .Values.nodeSelector .Values.trivy.deploy.nodeSelector) }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: trivy
           image: {{ .Values.trivy.deploy.image }}
