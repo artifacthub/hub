@@ -2,6 +2,10 @@
   top: 0;
 }
 
+.tooltipArrow {
+  margin-top: 7px;
+}
+
 .centerAligned {
   left: 50%;
 }
