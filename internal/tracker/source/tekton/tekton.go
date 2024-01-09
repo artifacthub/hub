@@ -368,7 +368,7 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 		if len(m.Spec.Params) > 0 {
 			defaults = append(defaults, m.Spec.Params...)
 		}
-		mts := taskrun.ApplyParameters(context.Background(), &m.Spec, &v1.TaskRun{}, defaults...)
+		mts := taskrun.ApplyParameters(&m.Spec, &v1.TaskRun{}, defaults...)
 		steps = mts.Steps
 	case *v1.Pipeline:
 		tektonKind = "pipeline"
