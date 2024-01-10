@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 import {
   ArgoTemplateData,
   Channel,
+  HeadlampData,
   HelmChartType,
   KeptnData,
   KubewardenData,
@@ -15,6 +16,7 @@ import {
   RepositoryKind,
   Version as VersionData,
 } from '../../types';
+import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import RSSLinkTitle from '../common/RSSLinkTitle';
 import SeeAllModal from '../common/SeeAllModal';
 import SmallTitle from '../common/SmallTitle';
@@ -24,6 +26,7 @@ import ContainerRegistry from './ContainerRegistry';
 import ContainersImages from './ContainersImages';
 import Dependencies from './Dependencies';
 import styles from './Details.module.css';
+import Flavors from './Flavors';
 import Keywords from './Keywords';
 import Last30DaysViews from './Last30DaysViews';
 import LastYearActivity from './LastYearActivity';
@@ -166,6 +169,8 @@ const Details = (props: Props) => {
           case RepositoryKind.Keptn:
           case RepositoryKind.Kubewarden:
           case RepositoryKind.Gatekeeper:
+          case RepositoryKind.KCL:
+          case RepositoryKind.Headlamp:
             return (
               <>
                 {props.package.appVersion && (
@@ -439,6 +444,51 @@ const Details = (props: Props) => {
                       {props.package.data[ArgoTemplateData.Version]}
                     </p>
                   </div>
+                )}
+              </>
+            );
+
+          case RepositoryKind.Headlamp:
+            return (
+              <>
+                {props.package.data &&
+                  (props.package.data[HeadlampData.Url] || props.package.data[HeadlampData.Checksum]) && (
+                    <div>
+                      <SmallTitle text="Plugin archive" />
+                      <div className="d-flex flex-row mb-3">
+                        {props.package.data[HeadlampData.Url] && (
+                          <ButtonCopyToClipboard
+                            text={props.package.data[HeadlampData.Url]}
+                            contentBtn="URL"
+                            title={props.package.data[HeadlampData.Url]}
+                            visibleBtnText
+                            className={`btn btn-outline-secondary btn-sm p-1 me-2 ${styles.btn}`}
+                            label="Copy url to clipboard"
+                          />
+                        )}
+                        {props.package.data[HeadlampData.Checksum] && (
+                          <ButtonCopyToClipboard
+                            text={props.package.data[HeadlampData.Checksum]}
+                            contentBtn="CHECKSUM"
+                            title={props.package.data[HeadlampData.Checksum]}
+                            visibleBtnText
+                            className={`btn btn-outline-secondary btn-sm p-1 ${styles.btn}`}
+                            label="Copy checksum to clipboard"
+                          />
+                        )}
+                      </div>
+                    </div>
+                  )}
+                {props.package.data && props.package.data[HeadlampData.Version] && (
+                  <div>
+                    <SmallTitle text="Headlamp version" />
+                    <p data-testid="headlampVersion" className={`text-truncate ${styles.text}`}>
+                      {props.package.data[HeadlampData.Version]}
+                    </p>
+                  </div>
+                )}
+                {props.package.data && props.package.data[HeadlampData.Flavors] && (
+                  <Flavors title="Headlamp Flavors" flavors={props.package.data[HeadlampData.Flavors]} />
                 )}
               </>
             );

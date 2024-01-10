@@ -26,3 +26,8 @@
 .icon {
   font-size: 0.7rem;
 }
+
+.btn {
+  font-size: 0.65rem;
+  line-height: 0.65rem;
+}

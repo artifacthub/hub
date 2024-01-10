@@ -100,6 +100,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.KCL,
     name: 'KCL module',
   },
+  {
+    kind: RepositoryKind.Headlamp,
+    name: 'Headlamp plugin',
+  },
 ];
 
 const Wrapper = styled('span')`

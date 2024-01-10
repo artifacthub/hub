@@ -265,7 +265,7 @@ func (h *Handlers) setupRouter() {
 			r.Get("/stats", h.Packages.GetStats)
 			r.With(corsMW).Get("/search", h.Packages.Search)
 			r.With(h.Users.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
-			r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler|^coredns|^keptn|^tekton-pipeline|^container|^kubewarden|^gatekeeper|^kyverno|^knative-client-plugin|^backstage|^argo-template|^kubearmor|^kcl$}/{repoName}/{packageName}", func(r chi.Router) {
+			r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler|^coredns|^keptn|^tekton-pipeline|^container|^kubewarden|^gatekeeper|^kyverno|^knative-client-plugin|^backstage|^argo-template|^kubearmor|^kcl|^headlamp$}/{repoName}/{packageName}", func(r chi.Router) {
 				r.Get("/feed/rss", h.Packages.RssFeed)
 				r.With(corsMW).Get("/summary", h.Packages.GetSummary)
 				r.Get("/{version}", h.Packages.Get)
@@ -430,7 +430,7 @@ func (h *Handlers) setupRouter() {
 
 	// Index special entry points
 	r.Route("/packages", func(r chi.Router) {
-		r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler|^coredns|^keptn|^tekton-pipeline|^container|^kubewarden|^gatekeeper|^kyverno|^knative-client-plugin|^backstage|^argo-template|^kubearmor|^kcl$}/{repoName}/{packageName}", func(r chi.Router) {
+		r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler|^coredns|^keptn|^tekton-pipeline|^container|^kubewarden|^gatekeeper|^kyverno|^knative-client-plugin|^backstage|^argo-template|^kubearmor|^kcl|^headlamp$}/{repoName}/{packageName}", func(r chi.Router) {
 			r.With(h.Packages.InjectIndexMeta).Get("/{version}", h.Static.Index)
 			r.With(h.Packages.InjectIndexMeta).Get("/", h.Static.Index)
 		})

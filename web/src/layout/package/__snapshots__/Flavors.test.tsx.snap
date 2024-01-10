@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Flavors creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mt-2 mb-1 undefined"
+    data-testid="smallTitle"
+  >
+    <small
+      class="card-title text-muted text-uppercase"
+    >
+      <span
+        aria-level="5"
+        role="heading"
+      >
+        Headlamp Flavors
+      </span>
+    </small>
+  </div>
+  <div
+    class="mb-3"
+  >
+    <div
+      class="text-truncate mb-1 text"
+      data-testid="flavor"
+    >
+      <div
+        class="d-flex align-items-center"
+      >
+        <span
+          class="pe-1"
+        >
+          ·
+        </span>
+        <small>
+          in-cluster
+        </small>
+      </div>
+    </div>
+    <div
+      class="text-truncate mb-1 text"
+      data-testid="flavor"
+    >
+      <div
+        class="d-flex align-items-center"
+      >
+        <span
+          class="pe-1"
+        >
+          ·
+        </span>
+        <small>
+          web
+        </small>
+      </div>
+    </div>
+    <div
+      class="text-truncate mb-1 text"
+      data-testid="flavor"
+    >
+      <div
+        class="d-flex align-items-center"
+      >
+        <span
+          class="pe-1"
+        >
+          ·
+        </span>
+        <small>
+          docker-desktop
+        </small>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

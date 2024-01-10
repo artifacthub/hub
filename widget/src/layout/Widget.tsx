@@ -91,6 +91,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'kubearmor';
     case RepositoryKind.KCL:
       return 'kcl';
+    case RepositoryKind.Headlamp:
+      return 'headlamp';
     default:
       return null;
   }

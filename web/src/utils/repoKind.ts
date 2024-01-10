@@ -44,6 +44,8 @@ const getRepoKind = (repoName: string): RepositoryKind | null => {
       return RepositoryKind.KubeArmor;
     case 'kcl':
       return RepositoryKind.KCL;
+    case 'headlamp':
+      return RepositoryKind.Headlamp;
     default:
       return null;
   }
@@ -93,6 +95,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'kubearmor';
     case RepositoryKind.KCL:
       return 'kcl';
+    case RepositoryKind.Headlamp:
+      return 'headlamp';
     default:
       return null;
   }

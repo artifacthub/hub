@@ -232,7 +232,7 @@ const HomeView = () => {
                 configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions,
                 kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations,
                 container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo
-                templates, KubeArmor policies and KCL modules.
+                templates, KubeArmor policies, KCL modules and Headlamp plugins.
                 <div className="py-0 py-lg-5">
                   <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
@@ -293,6 +293,18 @@ const HomeView = () => {
                     </ExternalLink>
                   </div>
                   <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
+                    <ExternalLink
+                      href="https://headlamp.dev"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Headlamp site"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.Headlamp} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Headlamp plugins</small>
+                        </div>
+                      </div>
+                    </ExternalLink>
                     <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`} label="Open Helm site">
                       <div className="d-flex flex-column justify-content-between align-items-center h-100">
                         <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
@@ -325,6 +337,8 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
+                  </div>
+                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
                       href="https://github.com/knative/client"
                       className={`col ${styles.iconLink}`}
@@ -341,8 +355,6 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
-                  </div>
-                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
                       href="https://krew.sigs.k8s.io"
                       className={`col ${styles.iconLink}`}
@@ -391,6 +403,8 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
+                  </div>
+                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
                       href="https://github.com/operator-framework"
                       className={`col ${styles.iconLink}`}
@@ -403,9 +417,6 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
-                  </div>
-                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
-                    <div className="col" />
                     <ExternalLink
                       href="https://www.openpolicyagent.org"
                       className={`col ${styles.iconLink}`}
@@ -442,7 +453,6 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
-                    <div className="col" />
                   </div>
                 </div>
                 Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to

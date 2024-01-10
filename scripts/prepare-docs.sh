@@ -12,6 +12,7 @@ cat docs/www/headers/container_images_repositories docs/container_images_reposit
 cat docs/www/headers/coredns_plugins_repositories docs/coredns_plugins_repositories.md > docs/www/content/topics/repositories/coredns-plugins.md
 cat docs/www/headers/falco_rules_repositories docs/falco_rules_repositories.md > docs/www/content/topics/repositories/falco-rules.md
 cat docs/www/headers/gatekeeper_policies_repositories docs/gatekeeper_policies_repositories.md > docs/www/content/topics/repositories/gatekeeper-policies.md
+cat docs/www/headers/headlamp_plugins_repositories docs/headlamp_plugins_repositories.md > docs/www/content/topics/repositories/headlamp-plugins.md
 cat docs/www/headers/helm_charts_repositories docs/helm_charts_repositories.md > docs/www/content/topics/repositories/helm-charts.md
 cat docs/www/headers/helm_plugins_repositories docs/helm_plugins_repositories.md > docs/www/content/topics/repositories/helm-plugins.md
 cat docs/www/headers/kcl_modules_repositories docs/kcl_modules_repositories.md > docs/www/content/topics/repositories/kcl-modules.md
@@ -30,6 +31,7 @@ cat docs/www/headers/tinkerbell_actions_repositories docs/tinkerbell_actions_rep
 cat docs/www/headers/security_report docs/security_report.md > docs/www/content/topics/security_report.md
 cat docs/www/headers/cli docs/cli.md > docs/www/content/topics/cli.md
 cat docs/www/headers/argo_annotations docs/argo_annotations.md > docs/www/content/topics/annotations/argo.md
+cat docs/www/headers/headlamp_annotations docs/headlamp_annotations.md > docs/www/content/topics/annotations/headlamp.md
 cat docs/www/headers/helm_annotations docs/helm_annotations.md > docs/www/content/topics/annotations/helm.md
 cat docs/www/headers/keptn_annotations docs/keptn_annotations.md > docs/www/content/topics/annotations/keptn.md
 cat docs/www/headers/krew_annotations docs/krew_annotations.md > docs/www/content/topics/annotations/krew.md
