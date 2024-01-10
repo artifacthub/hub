@@ -9,6 +9,7 @@ The following repositories kinds are supported at the moment:
 - [Containers images repositories](https://github.com/artifacthub/hub/blob/master/docs/container_images_repositories.md)
 - [CoreDNS plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/coredns_plugins_repositories.md)
 - [Falco rules repositories](https://github.com/artifacthub/hub/blob/master/docs/falco_rules_repositories.md)
+- [Headlamp plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/headlamp_plugins_repositories.md)
 - [Helm charts repositories](https://github.com/artifacthub/hub/blob/master/docs/helm_charts_repositories.md)
 - [Helm plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/helm_plugins_repositories.md)
 - [KCL modules repositories](https://github.com/artifacthub/hub/blob/master/docs/kcl_modules_repositories.md)

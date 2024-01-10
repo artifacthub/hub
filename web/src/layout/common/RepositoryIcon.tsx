@@ -93,6 +93,10 @@ const ICONS = {
     default: '/static/media/kcl.svg',
     white: '/static/media/kcl-light.svg',
   },
+  [RepositoryKind.Headlamp]: {
+    default: '/static/media/headlamp.svg',
+    white: '/static/media/headlamp-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

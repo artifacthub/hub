@@ -22,6 +22,7 @@ export enum RepositoryKind {
   ArgoTemplate,
   KubeArmor,
   KCL,
+  Headlamp,
 }
 
 export enum PackageCategory {
@@ -50,6 +51,13 @@ export enum KyvernoData {
   Version = 'kyvernoVersion',
   KubernetesVersion = 'kyvernoKubernetesVersion',
   Category = 'kyvernoCategory',
+}
+
+export enum HeadlampData {
+  Url = 'headlampPluginArchiveUrl',
+  Checksum = 'headlampPluginArchiveChecksum',
+  Version = 'headlampPluginVersionCompat',
+  Flavors = 'headlampPluginDistroCompat',
 }
 
 export enum HelmChartType {
@@ -255,6 +263,10 @@ export interface PackageData {
   [KyvernoData.Version]?: string;
   [KyvernoData.Category]?: string;
   [KyvernoData.KubernetesVersion]?: string;
+  [HeadlampData.Url]?: string;
+  [HeadlampData.Checksum]?: string;
+  [HeadlampData.Version]?: string;
+  [HeadlampData.Flavors]?: string;
   [ArgoTemplateData.Version]?: string;
   tasks?: TektonTaskInPipeline[];
   alternativeLocations?: string[];

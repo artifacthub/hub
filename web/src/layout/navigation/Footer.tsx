@@ -143,7 +143,7 @@ const Footer = (props: Props) => {
       {!whiteLabel && (
         <div className={`text-center py-2 px-3 px-md-4 ${styles.trademark} trademark`}>
           <small className="opacity-75">
-            © 2022{' '}
+            © 2024{' '}
             <ExternalLink className="opacity-100 text-white" href="https://linuxfoundation.org/">
               The Linux Foundation
             </ExternalLink>

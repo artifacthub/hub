@@ -17,6 +17,7 @@ interface Props {
   icon?: JSX.Element;
   disabled?: boolean;
   label?: string;
+  title?: string;
   tooltipType?: 'normal' | 'light';
   noTooltip?: boolean;
   onClick?: () => void;
@@ -105,6 +106,7 @@ const ButtonCopyToClipboard = (props: Props) => {
         }}
         disabled={props.disabled}
         aria-label={props.label || 'Copy to clipboard'}
+        title={props.title}
       >
         <div className="d-flex flex-row align-items-center" aria-hidden="true">
           {!isUndefined(props.visibleBtnText) && props.visibleBtnText && props.contentBtn && (

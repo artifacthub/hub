@@ -475,6 +475,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.Headlamp:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/headlamp-plugins"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Headlamp plugins
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -503,6 +514,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.ArgoTemplate:
               case RepositoryKind.KubeArmor:
               case RepositoryKind.KCL:
+              case RepositoryKind.Headlamp:
                 return (
                   <>
                     <p
@@ -895,6 +907,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.ArgoTemplate,
               RepositoryKind.KubeArmor,
               RepositoryKind.KCL,
+              RepositoryKind.Headlamp,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -1040,6 +1053,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.ArgoTemplate,
               RepositoryKind.KubeArmor,
               RepositoryKind.KCL,
+              RepositoryKind.Headlamp,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

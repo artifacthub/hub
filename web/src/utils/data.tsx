@@ -133,6 +133,24 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     active: true,
   },
   {
+    kind: RepositoryKind.Gatekeeper,
+    label: 'gatekeeper',
+    name: 'Gatekeeper policies',
+    singular: 'Gatekeeper policy',
+    plural: 'Gatekeeper policies',
+    icon: <RepositoryIcon kind={RepositoryKind.Gatekeeper} className="mw-100 mh-100" />,
+    active: true,
+  },
+  {
+    kind: RepositoryKind.Headlamp,
+    label: 'headlamp',
+    name: 'Headlamp plugins',
+    singular: 'Headlamp plugin',
+    plural: 'Headlamp plugins',
+    icon: <RepositoryIcon kind={RepositoryKind.Headlamp} className="mw-100 mh-100" />,
+    active: true,
+  },
+  {
     kind: RepositoryKind.Helm,
     label: 'helm',
     name: 'Helm charts',
@@ -148,15 +166,6 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     singular: 'Helm plugin',
     plural: 'Helm plugins',
     icon: <RepositoryIcon kind={RepositoryKind.Helm} className="mw-100 mh-100" />,
-    active: true,
-  },
-  {
-    kind: RepositoryKind.Gatekeeper,
-    label: 'gatekeeper',
-    name: 'Gatekeeper policies',
-    singular: 'Gatekeeper policy',
-    plural: 'Gatekeeper policies',
-    icon: <RepositoryIcon kind={RepositoryKind.Gatekeeper} className="mw-100 mh-100" />,
     active: true,
   },
   {
@@ -777,7 +786,7 @@ export const CVSS_V3_VECTORS: { [key: string]: CVSSVectorMetric[] } = {
 export const OCI_PREFIX = 'oci://';
 
 export const PKG_DETAIL_PATH =
-  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|kcl|container)\//;
+  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|kcl|headlamp|container)\//;
 
 export const HOME_ROUTES = [
   '/verify-email',

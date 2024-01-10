@@ -20,6 +20,7 @@ At the moment, the following artifacts kinds are supported *(with plans to suppo
 - [CoreDNS plugins](https://coredns.io/)
 - [Falco configurations](https://falco.org/)
 - [Gatekeeper policies](https://open-policy-agent.github.io/gatekeeper/website/docs/)
+- [Headlamp plugins](https://headlamp.dev)
 - [Helm charts](https://helm.sh/)
 - [Helm plugins](https://helm.sh/docs/topics/plugins/)
 - [KCL modules](https://kcl-lang.io)

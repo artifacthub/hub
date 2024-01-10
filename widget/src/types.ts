@@ -48,6 +48,7 @@ export enum RepositoryKind {
   ArgoTemplate,
   KubeArmor,
   KCL,
+  Headlamp,
 }
 
 export interface SearchResults {

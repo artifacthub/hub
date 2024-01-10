@@ -29,6 +29,13 @@ var (
 	// ErrInvalidMetadata indicates that the metadata provided is not valid.
 	ErrInvalidMetadata = errors.New("invalid metadata")
 
+	// headlampRequiredAnnotations represents a list of annotations that must
+	// be present in Headlamp plugins packages.
+	headlampRequiredAnnotations = []string{
+		"headlamp/plugin/archive-url",
+		"headlamp/plugin/archive-checksum",
+	}
+
 	// validChangeKinds is the list of valid kinds that a pkg change can use.
 	validChangeKinds = []string{
 		"added",
@@ -119,46 +126,67 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 func ValidatePackageMetadata(kind hub.RepositoryKind, md *hub.PackageMetadata) error {
 	var errs *multierror.Error
 
+	// Version
 	if md.Version == "" {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "version not provided"))
 	} else if _, err := semver.NewVersion(md.Version); err != nil {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s: %w", ErrInvalidMetadata, "invalid version (semver expected)", err))
 	}
+
+	// Name, display name and alternative name
 	if md.Name == "" {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "name not provided"))
+	}
+	if md.DisplayName == "" {
+		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "display name not provided"))
 	}
 	if md.AlternativeName != "" &&
 		!strings.Contains(md.Name, md.AlternativeName) &&
 		!strings.Contains(md.AlternativeName, md.Name) {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "invalid alternative name (must be a subset or superset of the name)"))
 	}
+
+	// Category
 	if md.Category != "" {
 		if _, err := hub.PackageCategoryFromName(md.Category); err != nil {
 			errs = multierror.Append(errs, fmt.Errorf("%w: %w", ErrInvalidMetadata, err))
 		}
 	}
-	if md.DisplayName == "" {
-		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "display name not provided"))
-	}
+
+	// Created at
 	if md.CreatedAt == "" {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "createdAt not provided"))
 	} else if _, err := time.Parse(time.RFC3339, md.CreatedAt); err != nil {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s: %w", ErrInvalidMetadata, "invalid createdAt (RFC3339 expected)", err))
 	}
+
+	// Description
 	if md.Description == "" {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "description not provided"))
+
 	}
+
+	// Maintainers
 	for _, maintainer := range md.Maintainers {
 		if maintainer.Email == "" {
 			errs = multierror.Append(errs, fmt.Errorf("%w: %s", ErrInvalidMetadata, "maintainer email not provided"))
 		}
 	}
+
+	// Changes
 	for _, change := range md.Changes {
 		if err := ValidateChange(change); err != nil {
 			errs = multierror.Append(errs, fmt.Errorf("%w: %w", ErrInvalidMetadata, err))
 		}
 	}
+
+	// Containers images
 	if err := ValidateContainersImages(kind, md.ContainersImages); err != nil {
+		errs = multierror.Append(errs, fmt.Errorf("%w: %w", ErrInvalidMetadata, err))
+	}
+
+	// Annotations
+	if err := ValidateAnnotations(kind, md.Annotations); err != nil {
 		errs = multierror.Append(errs, fmt.Errorf("%w: %w", ErrInvalidMetadata, err))
 	}
 
@@ -245,6 +273,24 @@ func ValidateContainersImages(kind hub.RepositoryKind, images []*hub.ContainerIm
 				kwPolicyImage,
 				kwPolicyImageAlternativeLoc,
 			))
+		}
+	}
+
+	return errs.ErrorOrNil()
+}
+
+// ValidateAnnotations checks if the provided annotations are valid.
+func ValidateAnnotations(kind hub.RepositoryKind, annotations map[string]string) error {
+	var errs *multierror.Error
+
+	// Repository kind specific validation
+	switch kind {
+	case hub.Headlamp:
+		// Required annotations
+		for _, requiredAnnotation := range headlampRequiredAnnotations {
+			if _, ok := annotations[requiredAnnotation]; !ok {
+				errs = multierror.Append(errs, fmt.Errorf(`required annotation "%s" not provided`, requiredAnnotation))
+			}
 		}
 	}
 

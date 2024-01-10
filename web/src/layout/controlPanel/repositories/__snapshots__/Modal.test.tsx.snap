@@ -85,6 +85,16 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Falco rules
                     </option>
                     <option
+                      value="14"
+                    >
+                      Gatekeeper policies
+                    </option>
+                    <option
+                      value="21"
+                    >
+                      Headlamp plugins
+                    </option>
+                    <option
                       value="0"
                     >
                       Helm charts
@@ -93,11 +103,6 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       value="6"
                     >
                       Helm plugins
-                    </option>
-                    <option
-                      value="14"
-                    >
-                      Gatekeeper policies
                     </option>
                     <option
                       value="20"

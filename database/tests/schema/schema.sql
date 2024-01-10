@@ -560,7 +560,8 @@ select results_eq(
         (17, 'Backstage plugins'),
         (18, 'Argo templates'),
         (19, 'KubeArmor policies'),
-        (20, 'KCL modules')
+        (20, 'KCL modules'),
+        (21, 'Headlamp plugins')
     $$,
     'Repository kinds should exist'
 );

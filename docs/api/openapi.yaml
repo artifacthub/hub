@@ -1299,6 +1299,30 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/headlamp/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getHeadlampPluginDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HeadlampPluginPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
   "/packages/kcl/{repoName}/{packageName}":
     get:
       tags:
@@ -1790,7 +1814,31 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/packages/KCL/{repoName}/{packageName}/{version}":
+  "/packages/headlamp/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getHeadlampVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HeadlampPluginPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/kcl/{repoName}/{packageName}/{version}":
     get:
       tags:
         - Packages
@@ -3967,6 +4015,27 @@ components:
                         example: "http://repo.url"
     HelmPluginPackage:
       $ref: "#/components/schemas/Package"
+    HeadlampPluginPackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              nullable: false
+              properties:
+                headlamp/plugin/archive-url:
+                  type: string
+                  example: "https://headlamp.dev/sample-plugin-url"
+                headlamp/plugin/distro-compat:
+                  type: string
+                  example: "in-cluster,web,docker-desktop"
+                headlamp/plugin/version-compat:
+                  type: string
+                  example: ">=1.2.3"
+                headlamp/plugin/archive-checksum:
+                  type: string
+                  example: "sha256:123456..."
     KCLPackage:
       $ref: "#/components/schemas/Package"
     KedaScalerPackage:
@@ -4689,6 +4758,7 @@ components:
         - 18
         - 19
         - 20
+        - 21
       description: |
         Repository kind:
           * `0` - Helm charts
@@ -4712,6 +4782,7 @@ components:
           * `18` - Argo templates
           * `19` - KubeArmor templates
           * `20` - KCL packages
+          * `21` - Headlamp plugins
     RepositoryKindParam:
       type: string
       enum:
@@ -4736,6 +4807,7 @@ components:
         - argo-template
         - kubearmor
         - kcl
+        - headlamp
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4759,6 +4831,7 @@ components:
         * `argo-template` - Argo templates
         * `kubearmor` - KubeArmor policies
         * `kcl` - KCL packages
+        * `headlamp` - Headlamp plugins
     RepositorySummary:
       type: object
       required:
@@ -5299,6 +5372,7 @@ components:
           * `18` - Argo templates
           * `19` - KubeArmor templates
           * `20` - KCL packages
+          * `21` - Headlamp plugins
     PackageNameParam:
       in: path
       name: packageName

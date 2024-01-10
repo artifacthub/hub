@@ -109,6 +109,9 @@ const (
 
 	// KCL represents a repository with KCL modules.
 	KCL RepositoryKind = 20
+
+	// Headlamp represents a repository with Headlamp plugins.
+	Headlamp RepositoryKind = 21
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -126,6 +129,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "falco"
 	case Gatekeeper:
 		return "gatekeeper"
+	case Headlamp:
+		return "headlamp"
 	case Helm:
 		return "helm"
 	case HelmPlugin:
@@ -177,6 +182,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return Falco, nil
 	case "gatekeeper":
 		return Gatekeeper, nil
+	case "headlamp":
+		return Headlamp, nil
 	case "helm":
 		return Helm, nil
 	case "helm-plugin":
