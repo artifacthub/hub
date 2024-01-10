@@ -91,6 +91,10 @@ const StatsView = () => {
         height: 300,
         type: 'area',
         redrawOnParentResize: false,
+        // Temporary solution -> https://github.com/apexcharts/apexcharts.js/issues/4154 and https://github.com/apexcharts/Blazor-ApexCharts/issues/376
+        animations: {
+          enabled: false,
+        },
         zoom: {
           type: 'x',
           enabled: true,
