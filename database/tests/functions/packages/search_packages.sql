@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(30);
+select plan(31);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -93,7 +93,7 @@ insert into snapshot (
     'digest-package1-1.0.0',
     'readme',
     'basic install',
-    '2020-06-16 11:20:34+02'
+    '2020-06-16 11:20:35+02'
 );
 insert into snapshot (
     package_id,
@@ -290,7 +290,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -438,7 +438,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -513,7 +513,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -559,7 +559,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -636,7 +636,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -682,7 +682,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -760,7 +760,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -838,7 +838,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -923,7 +923,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -1027,7 +1027,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -1348,7 +1348,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -1399,7 +1399,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -1478,7 +1478,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -1528,7 +1528,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -1609,7 +1609,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -1727,7 +1727,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -1884,7 +1884,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -1962,7 +1962,7 @@ select results_eq(
                         "app_version": "12.1.0",
                         "license": "Apache-2.0",
                         "production_organizations_count": 1,
-                        "ts": 1592299234,
+                        "ts": 1592299235,
                         "repository": {
                             "repository_id": "00000000-0000-0000-0000-000000000001",
                             "kind": 0,
@@ -1982,6 +1982,84 @@ select results_eq(
         )
     $$,
     'Sort: stars TSQueryWeb: kw1 | Packages 2 and 1 expected'
+);
+select results_eq(
+    $$
+        select data::jsonb, total_count::integer from search_packages('{
+            "ts_query_web": "kw1",
+            "sort": "last_updated",
+            "deprecated": true
+        }')
+    $$,
+    $$
+        values (
+            '{
+                "packages": [
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000001",
+                        "name": "package1",
+                        "normalized_name": "package1",
+                        "category": 1,
+                        "stars": 10,
+                        "official": false,
+                        "cncf": true,
+                        "display_name": "Package 1",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "license": "Apache-2.0",
+                        "production_organizations_count": 1,
+                        "ts": 1592299235,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000001",
+                            "kind": 0,
+                            "name": "repo1",
+                            "display_name": "Repo 1",
+                            "url": "https://repo1.com",
+                            "verified_publisher": true,
+                            "official": true,
+                            "cncf": true,
+                            "scanner_disabled": false,
+                            "user_alias": "user1"
+                        }
+                    },
+                    {
+                        "package_id": "00000000-0000-0000-0000-000000000002",
+                        "name": "package2",
+                        "normalized_name": "package2",
+                        "stars": 11,
+                        "official": true,
+                        "display_name": "Package 2",
+                        "description": "description",
+                        "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                        "version": "1.0.0",
+                        "app_version": "12.1.0",
+                        "deprecated": true,
+                        "signed": true,
+                        "signatures": ["cosign"],
+                        "all_containers_images_whitelisted": false,
+                        "production_organizations_count": 0,
+                        "ts": 1592299234,
+                        "repository": {
+                            "repository_id": "00000000-0000-0000-0000-000000000002",
+                            "kind": 0,
+                            "name": "repo2",
+                            "display_name": "Repo 2",
+                            "url": "https://repo2.com",
+                            "verified_publisher": false,
+                            "official": false,
+                            "scanner_disabled": false,
+                            "organization_name": "org1",
+                            "organization_display_name": "Organization 1"
+                        }
+                    }
+                ]
+            }'::jsonb,
+            2
+        )
+    $$,
+    'Sort: last_updated TSQueryWeb: kw1 | Packages 1 and 2 expected'
 );
 
 -- Finish tests and rollback transaction

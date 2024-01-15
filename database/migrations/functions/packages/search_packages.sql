@@ -217,6 +217,7 @@ begin
                     order by
                         case when v_sort = 'relevance' then (relevance, stars) end desc,
                         case when v_sort = 'stars' then (stars, relevance) end desc,
+                        case when v_sort = 'last_updated' then (ts, stars) end desc,
                         official desc,
                         verified_publisher desc,
                         name asc

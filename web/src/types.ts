@@ -873,3 +873,9 @@ export interface OutletContext {
   viewedPackage?: string;
   setViewedPackage: (value?: string) => void;
 }
+
+export enum SortOption {
+  Relevance = 'relevance',
+  Stars = 'stars',
+  'Last updated' = 'last_updated',
+}

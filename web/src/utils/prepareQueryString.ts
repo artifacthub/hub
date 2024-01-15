@@ -1,6 +1,6 @@
 import { isEmpty, isUndefined } from 'lodash';
 
-import { BasicQuery, SearchFiltersURL, SearchQuery } from '../types';
+import { BasicQuery, SearchFiltersURL, SearchQuery, SortOption } from '../types';
 
 export const getURLSearchParams = (query: BasicQuery): URLSearchParams => {
   const q = new URLSearchParams();
@@ -44,7 +44,7 @@ export const prepareAPIQueryString = (query: SearchQuery): string => {
 
 export const prepareQueryString = (query: SearchFiltersURL): string => {
   const q = getURLSearchParams(query);
-  q.set('sort', query.sort || 'relevance');
+  q.set('sort', query.sort || SortOption.Relevance);
   q.set('page', query.pageNumber.toString());
   return `?${q.toString()}`;
 };
