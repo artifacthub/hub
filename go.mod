@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/Masterminds/semver/v3 v3.2.1
-	github.com/aquasecurity/trivy v0.48.2
+	github.com/aquasecurity/trivy v0.48.3
 	github.com/coreos/go-oidc v2.2.1+incompatible
 	github.com/disintegration/imaging v1.6.2
 	github.com/domodwyer/mailyak v3.1.1+incompatible
@@ -26,7 +26,7 @@ require (
 	github.com/mitchellh/hashstructure/v2 v2.0.2
 	github.com/open-policy-agent/opa v0.60.0
 	github.com/opencontainers/image-spec v1.1.0-rc5
-	github.com/operator-framework/api v0.20.0
+	github.com/operator-framework/api v0.21.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pquerna/otp v1.4.0
 	github.com/prometheus/client_golang v1.18.0
@@ -47,7 +47,7 @@ require (
 	golang.org/x/crypto v0.18.0
 	golang.org/x/oauth2 v0.16.0
 	golang.org/x/text v0.14.0
-	google.golang.org/api v0.153.0
+	google.golang.org/api v0.156.0
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
 	helm.sh/helm/v3 v3.13.3
@@ -139,7 +139,7 @@ require (
 	github.com/docker/go-metrics v0.0.1 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/ekzhu/minhash-lsh v0.0.0-20190924033628-faac2c6342f8 // indirect
-	github.com/emicklei/go-restful/v3 v3.10.2 // indirect
+	github.com/emicklei/go-restful/v3 v3.11.0 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/evanphx/json-patch v5.6.0+incompatible // indirect
 	github.com/evanphx/json-patch/v5 v5.6.0 // indirect
@@ -304,6 +304,7 @@ require (
 	github.com/zeebo/errs v1.3.0 // indirect
 	go.mongodb.org/mongo-driver v1.11.3 // indirect
 	go.opencensus.io v0.24.0 // indirect
+	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.46.1 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.46.1 // indirect
 	go.opentelemetry.io/otel v1.21.0 // indirect
 	go.opentelemetry.io/otel/exporters/jaeger v1.17.0 // indirect
@@ -319,7 +320,7 @@ require (
 	golang.org/x/image v0.10.0 // indirect
 	golang.org/x/mod v0.14.0 // indirect
 	golang.org/x/net v0.20.0 // indirect
-	golang.org/x/sync v0.5.0 // indirect
+	golang.org/x/sync v0.6.0 // indirect
 	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/term v0.16.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
@@ -328,11 +329,11 @@ require (
 	gomodules.xyz/jsonpatch/v2 v2.4.0 // indirect
 	gonum.org/v1/gonum v0.11.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto v0.0.0-20231211222908-989df2bf70f3 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20231211222908-989df2bf70f3 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20231212172506-995d672761c0 // indirect
+	google.golang.org/genproto v0.0.0-20231212172506-995d672761c0 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20231212172506-995d672761c0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240102182953-50ed04b92917 // indirect
 	google.golang.org/grpc v1.60.1 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
+	google.golang.org/protobuf v1.32.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/neurosnap/sentences.v1 v1.0.7 // indirect
