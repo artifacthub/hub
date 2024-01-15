@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 1.16.1-5
-appVersion: 1.16.0
+version: 1.17.0
+appVersion: 1.17.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -43,30 +43,48 @@ dependencies:
     condition: postgresql.enabled
 annotations:
   artifacthub.io/changes: |
-    - kind: security
-      description: Do not follow symlinks when reading certain files
-    - kind: security
-      description: Disable unsafe rego built-ins
-    - kind: security
-      description: Improve Docker Hub registry check
     - kind: added
-      description: Optional custom labels for some resources in chart
+      description: Support for KCL modules
+    - kind: added
+      description: Support for Headlamp plugins
+    - kind: added
+      description: Some missing indexes to event table
+    - kind: added
+      description: OpenSSF Security Insights manifest
     - kind: changed
-      description: Bump Go to 1.21.1
+      description: Improve get stats database function performance
+    - kind: changed
+      description: Improve containers images modal
+    - kind: changed
+      description: Enable compression for some endpoints
+    - kind: changed
+      description: Validate urls in packages recommendations
+    - kind: changed
+      description: Extend Helm chart with more configuration options
+    - kind: changed
+      description: Bump Alpine to 3.19.0
+    - kind: changed
+      description: Bump Go to 1.21.6
     - kind: changed
       description: Upgrade backend and frontend dependencies
     - kind: fixed
-      description: Issue in API documentation
+      description: Issue rendering some stats graphs
+    - kind: fixed
+      description: Regression maintaining scroll position
+    - kind: fixed
+      description: Issue getting repository remote digest
+    - kind: fixed
+      description: Issue in API docs
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.16.0
+      image: artifacthub/db-migrator:v1.17.0
     - name: hub
-      image: artifacthub/hub:v1.16.0
+      image: artifacthub/hub:v1.17.0
     - name: tracker
-      image: artifacthub/tracker:v1.16.0
+      image: artifacthub/tracker:v1.17.0
     - name: scanner
-      image: artifacthub/scanner:v1.16.0
+      image: artifacthub/scanner:v1.17.0
     - name: trivy
       image: aquasec/trivy:0.44.1
   artifacthub.io/links: |
