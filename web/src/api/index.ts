@@ -32,6 +32,7 @@ import {
   SearchResults,
   SecurityReport,
   SecurityReportResult,
+  SortOption,
   Stats,
   Subscription,
   TestWebhook,
@@ -320,7 +321,7 @@ class API_CLASS {
   public searchPackages(query: SearchQuery, facets: boolean = true): Promise<SearchResults> {
     const q = getURLSearchParams(query);
     q.set('facets', facets ? 'true' : 'false');
-    q.set('sort', query.sort || 'relevance');
+    q.set('sort', query.sort || SortOption.Relevance);
     q.set('limit', query.limit.toString());
     q.set('offset', query.offset.toString());
 

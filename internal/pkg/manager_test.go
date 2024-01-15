@@ -1214,7 +1214,7 @@ func TestSearchJSON(t *testing.T) {
 				},
 			},
 			{
-				"invalid sort (relevance|stars)",
+				"invalid sort (relevance|stars|last_updated)",
 				&hub.SearchPackageInput{
 					Limit: 10,
 					Sort:  "invalid",

@@ -18,6 +18,7 @@ import {
   RepositoryKind,
   SearchFiltersURL,
   SearchResults,
+  SortOption,
 } from '../../types';
 import buildSearchParams from '../../utils/buildSearchParams';
 import getSampleQueries from '../../utils/getSampleQueries';
@@ -41,7 +42,7 @@ interface FiltersProp {
   [key: string]: string[];
 }
 
-const DEFAULT_SORT = 'relevance';
+const DEFAULT_SORT = SortOption.Relevance;
 
 interface FilterLabel {
   key: string;
@@ -444,7 +445,7 @@ const SearchView = () => {
                 {/* Only display sort options when ts_query_web is defined */}
                 {tsQueryWeb && tsQueryWeb !== '' && (
                   <SortOptions
-                    activeSort={sort || DEFAULT_SORT}
+                    activeSort={(sort || DEFAULT_SORT) as SortOption}
                     updateSort={onSortChange}
                     disabled={isNull(searchResults.packages) || searchResults.packages.length === 0}
                   />

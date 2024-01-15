@@ -5225,7 +5225,7 @@ components:
       name: sort
       schema:
         type: string
-        enum: ["relevance", "stars"]
+        enum: ["relevance", "stars", "last_updated"]
         example: relevance
       required: false
       description: Sort criteria

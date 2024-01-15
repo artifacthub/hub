@@ -323,8 +323,8 @@ func (m *Manager) SearchJSON(ctx context.Context, input *hub.SearchPackageInput)
 	if input.Offset < 0 {
 		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid offset (o >= 0)")
 	}
-	if input.Sort != "" && input.Sort != "relevance" && input.Sort != "stars" {
-		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid sort (relevance|stars)")
+	if input.Sort != "" && input.Sort != "relevance" && input.Sort != "stars" && input.Sort != "last_updated" {
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid sort (relevance|stars|last_updated)")
 	}
 	for _, alias := range input.Users {
 		if alias == "" {
