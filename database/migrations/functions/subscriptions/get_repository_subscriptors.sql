@@ -2,7 +2,8 @@
 -- provided for the given event kind. At the moment, the user owning a given
 -- repository or all the users who belong to the organization which owns the
 -- repository are considered to be subscribed to the repository, unless they
--- have opted out of notifications for that repository and event.
+-- have opted out of notifications for that repository and event or they've
+-- fully disabled the repositories notifications.
 create or replace function get_repository_subscriptors(p_repository_id uuid, p_event_kind_id int)
 returns setof json as $$
     select coalesce(json_agg(json_build_object(
@@ -27,5 +28,9 @@ returns setof json as $$
         from opt_out
         where repository_id = p_repository_id
         and event_kind_id = p_event_kind_id
+        union
+        select user_id
+        from "user"
+        where repositories_notifications_disabled = true
     );
 $$ language sql;

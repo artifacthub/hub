@@ -257,7 +257,8 @@ select columns_are('user', array[
     'created_at',
     'tfa_enabled',
     'tfa_recovery_codes',
-    'tfa_url'
+    'tfa_url',
+    'repositories_notifications_disabled'
 ]);
 select columns_are('user_starred_package', array[
     'user_id',
@@ -390,7 +391,8 @@ select indexes_are('subscription', array[
 select indexes_are('user', array[
     'user_pkey',
     'user_alias_key',
-    'user_email_key'
+    'user_email_key',
+    'user_repositories_notifications_disabled_idx'
 ]);
 select indexes_are('user__organization', array[
     'user__organization_pkey'

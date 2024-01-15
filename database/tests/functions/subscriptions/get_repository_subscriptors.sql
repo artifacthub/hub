@@ -8,6 +8,7 @@ select plan(2);
 \set user3ID '00000000-0000-0000-0000-000000000003'
 \set user4ID '00000000-0000-0000-0000-000000000004'
 \set user5ID '00000000-0000-0000-0000-000000000005'
+\set user6ID '00000000-0000-0000-0000-000000000006'
 \set org1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set repo2ID '00000000-0000-0000-0000-000000000002'
@@ -23,12 +24,15 @@ insert into "user" (user_id, alias, email)
 values (:'user4ID', 'user4', 'user4@email.com');
 insert into "user" (user_id, alias, email)
 values (:'user5ID', 'user5', 'user5@email.com');
+insert into "user" (user_id, alias, email, repositories_notifications_disabled)
+values (:'user6ID', 'user6', 'user6@email.com', true);
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
 insert into user__organization (user_id, organization_id, confirmed) values(:'user2ID', :'org1ID', true);
 insert into user__organization (user_id, organization_id, confirmed) values(:'user3ID', :'org1ID', true);
 insert into user__organization (user_id, organization_id, confirmed) values(:'user4ID', :'org1ID', false);
 insert into user__organization (user_id, organization_id, confirmed) values(:'user5ID', :'org1ID', true);
+insert into user__organization (user_id, organization_id, confirmed) values(:'user6ID', :'org1ID', true);
 insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id)
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
 insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
