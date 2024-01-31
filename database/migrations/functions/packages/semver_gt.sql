@@ -21,7 +21,7 @@ begin
             elsif v2_prerelease is null then
                 return false;
             else
-                return v1_prerelease > v2_prerelease;
+                return (v1_prerelease collate semver_prerelease) > (v2_prerelease collate semver_prerelease);
             end if;
         end if;
     else
