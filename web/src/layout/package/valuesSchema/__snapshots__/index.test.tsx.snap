@@ -70,6 +70,40 @@ exports[`ValuesSchema creates snapshot 1`] = `
               class="mb-3 mx-3 mw-100"
             >
               <div
+                class="d-flex flex-row"
+              >
+                <div
+                  class="position-relative wrapper search"
+                >
+                  <div
+                    class="mb-3 input-group-sm inputWrapper undefined"
+                  >
+                    <input
+                      class="flex-grow-1 form-control input ps-3 pe-4"
+                      name="inputTypeahead_path"
+                      placeholder="Search path"
+                      spellcheck="false"
+                      type="text"
+                      value=""
+                    />
+                    <svg
+                      class="text-muted position-absolute searchIcon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
                 class="row"
               >
                 <div
@@ -79,6 +113,70 @@ exports[`ValuesSchema creates snapshot 1`] = `
                     class="text-truncate font-monospace comment"
                   >
                     # Artifact Hub Chart JSON Schema
+                  </div>
+                  <div
+                    class="position-absolute d-flex flex-row wrapper btns"
+                  >
+                    <div
+                      class="position-relative me-2"
+                    >
+                      <button
+                        aria-label="Copy to clipboard"
+                        class="btn btn-sm btn-primary btn"
+                        type="button"
+                      >
+                        <div
+                          aria-hidden="true"
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <svg
+                            fill="none"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              height="13"
+                              rx="2"
+                              ry="2"
+                              width="13"
+                              x="9"
+                              y="9"
+                            />
+                            <path
+                              d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                    <button
+                      aria-label="Download"
+                      class="btn btn-sm btn-primary fs-5 btn"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M18.948 11.112C18.511 7.67 15.563 5 12.004 5c-2.756 0-5.15 1.611-6.243 4.15-2.148.642-3.757 2.67-3.757 4.85 0 2.757 2.243 5 5 5h1v-2h-1c-1.654 0-3-1.346-3-3 0-1.404 1.199-2.757 2.673-3.016l.581-.102.192-.558C8.153 8.273 9.898 7 12.004 7c2.757 0 5 2.243 5 5v1h1c1.103 0 2 .897 2 2s-.897 2-2 2h-2v2h2c2.206 0 4-1.794 4-4a4.008 4.008 0 0 0-3.056-3.888z"
+                        />
+                        <path
+                          d="M13.004 14v-4h-2v4h-3l4 5 4-5z"
+                        />
+                      </svg>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -11715,7 +11813,7 @@ exports[`ValuesSchema creates snapshot 1`] = `
                     fill="none"
                   />
                   <path
-                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                   />
                 </svg>
                 <div>

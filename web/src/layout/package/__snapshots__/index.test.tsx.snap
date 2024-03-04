@@ -639,7 +639,7 @@ exports[`Package index creates snapshot 1`] = `
                                   fill="none"
                                 />
                                 <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                                 />
                               </svg>
                               <div>
@@ -734,7 +734,7 @@ exports[`Package index creates snapshot 1`] = `
                           fill="none"
                         />
                         <path
-                          d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"
+                          d="m23 12-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"
                         />
                       </svg>
                     </div>
@@ -768,7 +768,7 @@ exports[`Package index creates snapshot 1`] = `
                           fill="none"
                         />
                         <path
-                          d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"
+                          d="m23 12-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"
                         />
                       </svg>
                     </div>
@@ -822,7 +822,7 @@ exports[`Package index creates snapshot 1`] = `
                                   fill="none"
                                 />
                                 <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                                 />
                               </svg>
                               <div>
@@ -1005,7 +1005,7 @@ exports[`Package index creates snapshot 1`] = `
                                   fill="none"
                                 />
                                 <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                                 />
                               </svg>
                               <div>
@@ -1266,7 +1266,7 @@ exports[`Package index creates snapshot 1`] = `
                             fill="none"
                           />
                           <path
-                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                           />
                         </svg>
                         <div>
@@ -1541,7 +1541,489 @@ exports[`Package index creates snapshot 1`] = `
                       -
                     </p>
                   </div>
-                  <div />
+                  <div>
+                    <div
+                      class="mt-2 mb-1 undefined"
+                      data-testid="smallTitle"
+                    >
+                      <small
+                        class="card-title text-muted text-uppercase"
+                      >
+                        <span
+                          aria-level="5"
+                          role="heading"
+                        >
+                          Last year activity
+                        </span>
+                      </small>
+                    </div>
+                    <div
+                      class="d-flex flex-column w-100 mb-3 heatMap"
+                      data-testid="lastYearActivity"
+                    >
+                      <div
+                        class="d-flex flex-row justify-content-between w-100"
+                      >
+                        <div
+                          class="position-relative"
+                        >
+                          <div
+                            class="position-relative border border-1 heatMapCell level0 border"
+                            data-testid="heatMapCell"
+                          />
+                          <div
+                            class="tooltip popover end-0 popover"
+                            data-testid="heatMapPopover"
+                            role="tooltip"
+                          >
+                            <div
+                              class="popover-header lh-1 p-2 popoverHeader"
+                            >
+                              Nov'20
+                            </div>
+                            <div
+                              class="popover-body text-nowrap"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="me-2 border border-1 top-0 marker level0"
+                                />
+                                Releases: 
+                                <span
+                                  class="fw-bold ms-2"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="position-relative"
+                        >
+                          <div
+                            class="position-relative border border-1 heatMapCell level0 border"
+                            data-testid="heatMapCell"
+                          />
+                          <div
+                            class="tooltip popover end-0 popover"
+                            data-testid="heatMapPopover"
+                            role="tooltip"
+                          >
+                            <div
+                              class="popover-header lh-1 p-2 popoverHeader"
+                            >
+                              Dec'20
+                            </div>
+                            <div
+                              class="popover-body text-nowrap"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="me-2 border border-1 top-0 marker level0"
+                                />
+                                Releases: 
+                                <span
+                                  class="fw-bold ms-2"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="position-relative"
+                        >
+                          <div
+                            class="position-relative border border-1 heatMapCell level0 border"
+                            data-testid="heatMapCell"
+                          />
+                          <div
+                            class="tooltip popover end-0 popover"
+                            data-testid="heatMapPopover"
+                            role="tooltip"
+                          >
+                            <div
+                              class="popover-header lh-1 p-2 popoverHeader"
+                            >
+                              Jan'21
+                            </div>
+                            <div
+                              class="popover-body text-nowrap"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="me-2 border border-1 top-0 marker level0"
+                                />
+                                Releases: 
+                                <span
+                                  class="fw-bold ms-2"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="position-relative"
+                        >
+                          <div
+                            class="position-relative border border-1 heatMapCell level0 border"
+                            data-testid="heatMapCell"
+                          />
+                          <div
+                            class="tooltip popover end-0 popover"
+                            data-testid="heatMapPopover"
+                            role="tooltip"
+                          >
+                            <div
+                              class="popover-header lh-1 p-2 popoverHeader"
+                            >
+                              Feb'21
+                            </div>
+                            <div
+                              class="popover-body text-nowrap"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="me-2 border border-1 top-0 marker level0"
+                                />
+                                Releases: 
+                                <span
+                                  class="fw-bold ms-2"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="position-relative"
+                        >
+                          <div
+                            class="position-relative border border-1 heatMapCell level0 border"
+                            data-testid="heatMapCell"
+                          />
+                          <div
+                            class="tooltip popover end-0 popover"
+                            data-testid="heatMapPopover"
+                            role="tooltip"
+                          >
+                            <div
+                              class="popover-header lh-1 p-2 popoverHeader"
+                            >
+                              Mar'21
+                            </div>
+                            <div
+                              class="popover-body text-nowrap"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="me-2 border border-1 top-0 marker level0"
+                                />
+                                Releases: 
+                                <span
+                                  class="fw-bold ms-2"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="position-relative"
+                        >
+                          <div
+                            class="position-relative border border-1 heatMapCell level0 border"
+                            data-testid="heatMapCell"
+                          />
+                          <div
+                            class="tooltip popover end-0 popover"
+                            data-testid="heatMapPopover"
+                            role="tooltip"
+                          >
+                            <div
+                              class="popover-header lh-1 p-2 popoverHeader"
+                            >
+                              Apr'21
+                            </div>
+                            <div
+                              class="popover-body text-nowrap"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="me-2 border border-1 top-0 marker level0"
+                                />
+                                Releases: 
+                                <span
+                                  class="fw-bold ms-2"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="position-relative"
+                        >
+                          <div
+                            class="position-relative border border-1 heatMapCell level0 border"
+                            data-testid="heatMapCell"
+                          />
+                          <div
+                            class="tooltip popover end-0 popover"
+                            data-testid="heatMapPopover"
+                            role="tooltip"
+                          >
+                            <div
+                              class="popover-header lh-1 p-2 popoverHeader"
+                            >
+                              May'21
+                            </div>
+                            <div
+                              class="popover-body text-nowrap"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="me-2 border border-1 top-0 marker level0"
+                                />
+                                Releases: 
+                                <span
+                                  class="fw-bold ms-2"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="position-relative"
+                        >
+                          <div
+                            class="position-relative border border-1 heatMapCell level0 border"
+                            data-testid="heatMapCell"
+                          />
+                          <div
+                            class="tooltip popover end-0 popover"
+                            data-testid="heatMapPopover"
+                            role="tooltip"
+                          >
+                            <div
+                              class="popover-header lh-1 p-2 popoverHeader"
+                            >
+                              Jun'21
+                            </div>
+                            <div
+                              class="popover-body text-nowrap"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="me-2 border border-1 top-0 marker level0"
+                                />
+                                Releases: 
+                                <span
+                                  class="fw-bold ms-2"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="position-relative"
+                        >
+                          <div
+                            class="position-relative border border-1 heatMapCell level0 border"
+                            data-testid="heatMapCell"
+                          />
+                          <div
+                            class="tooltip popover end-0 popover"
+                            data-testid="heatMapPopover"
+                            role="tooltip"
+                          >
+                            <div
+                              class="popover-header lh-1 p-2 popoverHeader"
+                            >
+                              Jul'21
+                            </div>
+                            <div
+                              class="popover-body text-nowrap"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="me-2 border border-1 top-0 marker level0"
+                                />
+                                Releases: 
+                                <span
+                                  class="fw-bold ms-2"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="position-relative"
+                        >
+                          <div
+                            class="position-relative border border-1 heatMapCell level0 border"
+                            data-testid="heatMapCell"
+                          />
+                          <div
+                            class="tooltip popover end-0 popover"
+                            data-testid="heatMapPopover"
+                            role="tooltip"
+                          >
+                            <div
+                              class="popover-header lh-1 p-2 popoverHeader"
+                            >
+                              Aug'21
+                            </div>
+                            <div
+                              class="popover-body text-nowrap"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="me-2 border border-1 top-0 marker level0"
+                                />
+                                Releases: 
+                                <span
+                                  class="fw-bold ms-2"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="position-relative"
+                        >
+                          <div
+                            class="position-relative border border-1 heatMapCell level0 border"
+                            data-testid="heatMapCell"
+                          />
+                          <div
+                            class="tooltip popover end-0 popover"
+                            data-testid="heatMapPopover"
+                            role="tooltip"
+                          >
+                            <div
+                              class="popover-header lh-1 p-2 popoverHeader"
+                            >
+                              Sep'21
+                            </div>
+                            <div
+                              class="popover-body text-nowrap"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="me-2 border border-1 top-0 marker level0"
+                                />
+                                Releases: 
+                                <span
+                                  class="fw-bold ms-2"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="position-relative"
+                        >
+                          <div
+                            class="position-relative border border-1 heatMapCell level0 border"
+                            data-testid="heatMapCell"
+                          />
+                          <div
+                            class="tooltip popover end-0 popover"
+                            data-testid="heatMapPopover"
+                            role="tooltip"
+                          >
+                            <div
+                              class="popover-header lh-1 p-2 popoverHeader"
+                            >
+                              Oct'21
+                            </div>
+                            <div
+                              class="popover-body text-nowrap"
+                            >
+                              <div
+                                class="d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="me-2 border border-1 top-0 marker level0"
+                                />
+                                Releases: 
+                                <span
+                                  class="fw-bold ms-2"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex flex-row justify-content-between w-100 legend"
+                      >
+                        <div>
+                          <small
+                            class="text-muted"
+                          >
+                            Nov'20
+                          </small>
+                        </div>
+                        <div>
+                          <small
+                            class="text-muted"
+                          >
+                            Apr'21
+                          </small>
+                        </div>
+                        <div>
+                          <small
+                            class="text-muted"
+                          >
+                            Oct'21
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div>
                     <div
                       class="mt-2 mb-1 undefined"
@@ -1739,13 +2221,13 @@ exports[`Package index creates snapshot 1`] = `
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M416 221.25V416a48 48 0 01-48 48H144a48 48 0 01-48-48V96a48 48 0 0148-48h98.75a32 32 0 0122.62 9.37l141.26 141.26a32 32 0 019.37 22.62z"
+                          d="M416 221.25V416a48 48 0 0 1-48 48H144a48 48 0 0 1-48-48V96a48 48 0 0 1 48-48h98.75a32 32 0 0 1 22.62 9.37l141.26 141.26a32 32 0 0 1 9.37 22.62z"
                           fill="none"
                           stroke-linejoin="round"
                           stroke-width="32"
                         />
                         <path
-                          d="M256 56v120a32 32 0 0032 32h120m-232 80h160m-160 80h160"
+                          d="M256 56v120a32 32 0 0 0 32 32h120m-232 80h160m-160 80h160"
                           fill="none"
                           stroke-linecap="round"
                           stroke-linejoin="round"

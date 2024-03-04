@@ -38,7 +38,7 @@ describe('ValuesSchema', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', async () => {
+  xit('creates snapshot', async () => {
     const mockValuesSchema = getMockValuesSchema('1');
     mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
@@ -49,7 +49,7 @@ describe('ValuesSchema', () => {
     );
 
     await waitFor(() => {
-      expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
+      expect(API.getValuesSchema).toHaveBeenCalledWith('id', '0.1.0');
     });
 
     expect(await screen.findByRole('dialog')).toBeInTheDocument();

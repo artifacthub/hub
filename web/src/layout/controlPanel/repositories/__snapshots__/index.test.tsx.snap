@@ -147,24 +147,6 @@ exports[`Repository index creates snapshot 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
-      >
-        <div
-          class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-        >
-          <div
-            class="wave"
-            role="status"
-          >
-            <span
-              class="visually-hidden"
-            >
-              Loading...
-            </span>
-          </div>
-        </div>
-      </div>
       <p
         class="mt-5"
       >
@@ -190,6 +172,722 @@ exports[`Repository index creates snapshot 1`] = `
         </a>
          to each of them including the repository ID provided below. This label will let users know that you own or have control over the repository. The repository metadata file must be located at the path used in the repository URL.
       </p>
+      <div
+        class="row mt-3 mt-md-4 gx-0 gx-xxl-4"
+        data-testid="repoList"
+      >
+        <div
+          class="col-12 col-xxl-6 py-sm-3 py-2 px-0 px-xxl-3"
+          data-testid="repoCard"
+        >
+          <div
+            class="card h-100"
+          >
+            <div
+              class="card-body d-flex flex-column h-100"
+            >
+              <div
+                class="d-flex flex-row w-100 justify-content-between"
+              >
+                <div
+                  class="text-truncate h5 mb-0 titleCard"
+                >
+                  test
+                </div>
+                <div
+                  class="ms-auto ps-3"
+                >
+                  <div
+                    class="d-none d-md-inline-block"
+                  >
+                    <div
+                      class="d-flex fs-6"
+                    >
+                      <span
+                        class="badge bg-light text-dark border border-1 bg badge"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <div
+                            aria-hidden="true"
+                            class="position-relative icon undefined"
+                          >
+                            <img
+                              alt="Icon"
+                              class="mw-100 mh-100 iconLight"
+                              src="/static/media/helm-chart.svg"
+                            />
+                            <img
+                              alt="Icon"
+                              class="mw-100 mh-100 iconDark"
+                              src="/static/media/helm-chart-light.svg"
+                            />
+                          </div>
+                          <div
+                            class="ms-1 text"
+                          >
+                            Helm charts
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex d-md-none fs-6"
+                  >
+                    <span
+                      class="badge bg-light text-dark border border-1 bg badge"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          aria-hidden="true"
+                          class="position-relative icon undefined"
+                        >
+                          <img
+                            alt="Icon"
+                            class="mw-100 mh-100 iconLight"
+                            src="/static/media/helm-chart.svg"
+                          />
+                          <img
+                            alt="Icon"
+                            class="mw-100 mh-100 iconDark"
+                            src="/static/media/helm-chart-light.svg"
+                          />
+                        </div>
+                        <div
+                          class="ms-1 text"
+                        >
+                          Helm charts
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="ms-3"
+                >
+                  <div
+                    class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                  >
+                    <div
+                      class="dropdown-arrow arrow"
+                    />
+                    <button
+                      aria-label="Open badge modal"
+                      class="dropdown-item btn btn-sm rounded-0 text-dark"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <svg
+                          class="me-2 btnIcon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z"
+                          />
+                        </svg>
+                        <span>
+                          Get badge
+                        </span>
+                      </div>
+                    </button>
+                    <span
+                      class="position-relative"
+                    >
+                      <button
+                        aria-label="Open transfer repository modal"
+                        class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        type="button"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center undefined"
+                        >
+                          <svg
+                            class="me-2 btnIcon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M16.0503 12.0498L21 16.9996L16.0503 21.9493L14.636 20.5351L17.172 17.9988L4 17.9996V15.9996L17.172 15.9988L14.636 13.464L16.0503 12.0498ZM7.94975 2.0498L9.36396 3.46402L6.828 5.9988L20 5.99955V7.99955L6.828 7.9988L9.36396 10.5351L7.94975 11.9493L3 6.99955L7.94975 2.0498Z"
+                            />
+                          </svg>
+                          <span>
+                            Transfer
+                          </span>
+                        </div>
+                      </button>
+                    </span>
+                    <span
+                      class="position-relative"
+                    >
+                      <button
+                        aria-label="Open update repository modal"
+                        class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        type="button"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center undefined"
+                        >
+                          <svg
+                            class="me-2 btnIcon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                            />
+                          </svg>
+                          <span>
+                            Edit
+                          </span>
+                        </div>
+                      </button>
+                    </span>
+                    <span
+                      class="position-relative"
+                    >
+                      <button
+                        aria-label="Open delete repository modal"
+                        class="dropdown-item btn btn-sm rounded-0 text-dark"
+                        type="button"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center undefined"
+                        >
+                          <svg
+                            class="me-2 btnIcon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 448 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                            />
+                          </svg>
+                          <span>
+                            Delete
+                          </span>
+                        </div>
+                      </button>
+                    </span>
+                  </div>
+                  <button
+                    aria-expanded="false"
+                    aria-label="Open menu"
+                    class="btn btn-outline-secondary p-0 text-center btnDropdown"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 16 16"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="mt-2 d-flex flex-row align-items-baseline"
+              >
+                <div
+                  class="text-truncate"
+                >
+                  <small
+                    class="text-muted text-uppercase me-1"
+                  >
+                    ID: 
+                  </small>
+                  <small>
+                    test
+                  </small>
+                </div>
+                <div
+                  class="ms-1 copyBtn"
+                >
+                  <div
+                    class="position-absolute copyBtnWrapper"
+                  >
+                    <div
+                      class="position-relative undefined"
+                    >
+                      <button
+                        aria-label="Copy repository ID to clipboard"
+                        class="btn btn-sm btn-link border-0 text-dark fw-bold"
+                        type="button"
+                      >
+                        <div
+                          aria-hidden="true"
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <svg
+                            fill="none"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              height="13"
+                              rx="2"
+                              ry="2"
+                              width="13"
+                              x="9"
+                              y="9"
+                            />
+                            <path
+                              d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="text-truncate"
+              >
+                <small
+                  class="text-muted text-uppercase me-1"
+                >
+                  Url: 
+                </small>
+                <small>
+                  http://test.com
+                </small>
+              </div>
+              <div>
+                <small
+                  class="text-muted text-uppercase me-1"
+                >
+                  Last processed: 
+                </small>
+                <small>
+                  Not processed yet, it will be processed automatically in ~ 3 minutes
+                </small>
+              </div>
+              <div>
+                <small
+                  class="text-muted text-uppercase me-1"
+                >
+                  Last security scan: 
+                </small>
+                <small>
+                  -
+                </small>
+              </div>
+              <div
+                class="mt-3 d-flex flex-row justify-content-end"
+              >
+                <div
+                  data-testid="Verified publisher badge"
+                >
+                  <div
+                    class="d-none d-md-block position-relative ms-2"
+                  >
+                    <div
+                      class="position-absolute"
+                    >
+                      <div
+                        class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
+                        role="complementary"
+                      >
+                        <div
+                          class="content"
+                        >
+                          <div
+                            class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
+                          >
+                            Verified publisher
+                          </div>
+                          <p>
+                            This repository does not come from a 
+                            <span
+                              class="fw-bold"
+                            >
+                              verified publisher
+                            </span>
+                            .
+                          </p>
+                          <p
+                            class="mb-0 text-muted legend"
+                          >
+                            The 
+                            <code>
+                              verified publisher
+                            </code>
+                             status indicates if the publisher of this package 
+                            <span
+                              class="fw-italic"
+                            >
+                              owns or has control
+                            </span>
+                             over the source repository. For more information, please see the 
+                            <button
+                              aria-label="Open external link"
+                              class="btn p-0 link text-decoration-underline text-reset btnInBadge"
+                              tabindex="-1"
+                              type="button"
+                            >
+                              repositories guide
+                            </button>
+                            .
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="border label"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                      >
+                        <div
+                          class="icon"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="m23 12-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-block d-md-none ms-2"
+                  >
+                    <div
+                      class="border label"
+                      role="button"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                      >
+                        <div
+                          class="icon"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="m23 12-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82L8.6 22.5l3.4-1.47 3.4 1.46 1.89-3.19 3.61-.82-.34-3.69L23 12zm-12.91 4.72-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        aria-modal="false"
+                        class="modal modal"
+                        role="dialog"
+                      >
+                        <div
+                          class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+                        >
+                          <div
+                            class="modal-content border border-3 mx-auto content"
+                          >
+                            <div
+                              class="modal-body p-4 h-100 d-flex flex-column"
+                            >
+                              <div>
+                                <div
+                                  class="overflow-hidden alertWrapper"
+                                  data-testid="alertWrapper"
+                                />
+                              </div>
+                            </div>
+                            <div
+                              class="modal-footer p-3 undefined"
+                            >
+                              <div
+                                aria-label="Close modal"
+                                class="btn btn-sm btn-outline-secondary text-uppercase"
+                                role="button"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <svg
+                                    class="me-2"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 24 24"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M0 0h24v24H0z"
+                                      fill="none"
+                                    />
+                                    <path
+                                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                    />
+                                  </svg>
+                                  <div>
+                                    Close
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  data-testid="Official badge"
+                >
+                  <div
+                    class="d-none d-md-block position-relative ms-2"
+                  >
+                    <div
+                      class="position-absolute"
+                    >
+                      <div
+                        class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
+                        role="complementary"
+                      >
+                        <div
+                          class="content"
+                        >
+                          <div
+                            class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
+                          >
+                            Official
+                          </div>
+                          <p>
+                            This repository is not marked as 
+                            <span
+                              class="fw-bold"
+                            >
+                              official
+                            </span>
+                            .
+                          </p>
+                          <p
+                            class="mb-0 text-muted legend"
+                          >
+                            In Artifact Hub, the 
+                            <code>
+                              official
+                            </code>
+                             status means that the publisher 
+                            <span
+                              class="fw-bold"
+                            >
+                              owns the software
+                            </span>
+                             a package primarily focuses on. For more information, please see the 
+                            <button
+                              aria-label="Open external link"
+                              class="btn p-0 link text-decoration-underline text-reset btnInBadge"
+                              tabindex="-1"
+                              type="button"
+                            >
+                              repositories guide
+                            </button>
+                            .
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="border label"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                      >
+                        <div
+                          class="icon"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-block d-md-none ms-2"
+                  >
+                    <div
+                      class="border label"
+                      role="button"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+                      >
+                        <div
+                          class="icon"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        aria-modal="false"
+                        class="modal modal"
+                        role="dialog"
+                      >
+                        <div
+                          class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+                        >
+                          <div
+                            class="modal-content border border-3 mx-auto content"
+                          >
+                            <div
+                              class="modal-body p-4 h-100 d-flex flex-column"
+                            >
+                              <div>
+                                <div
+                                  class="overflow-hidden alertWrapper"
+                                  data-testid="alertWrapper"
+                                />
+                              </div>
+                            </div>
+                            <div
+                              class="modal-footer p-3 undefined"
+                            >
+                              <div
+                                aria-label="Close modal"
+                                class="btn btn-sm btn-outline-secondary text-uppercase"
+                                role="button"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <svg
+                                    class="me-2"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 24 24"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M0 0h24v24H0z"
+                                      fill="none"
+                                    />
+                                    <path
+                                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                    />
+                                  </svg>
+                                  <div>
+                                    Close
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </DocumentFragment>
