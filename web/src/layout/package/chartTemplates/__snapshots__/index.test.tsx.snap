@@ -222,8 +222,8 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                       >
                         <button
                           aria-label="Show template db_migrator_install_job.yaml"
-                          aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          aria-pressed="true"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 btn activeTemplate active"
                         >
                           <div
                             class="d-flex flex-column"
@@ -965,9 +965,240 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </div>
                       </div>
+                      <div
+                        class="position-absolute d-flex flex-row wrapper undefined"
+                      >
+                        <div
+                          class="position-relative me-2"
+                        >
+                          <button
+                            aria-label="Copy to clipboard"
+                            class="btn btn-sm btn-primary btn"
+                            style="box-shadow: 0px 0px 0px 8px var(--extra-light-gray);"
+                            type="button"
+                          >
+                            <div
+                              aria-hidden="true"
+                              class="d-flex flex-row align-items-center"
+                            >
+                              <svg
+                                fill="none"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <rect
+                                  height="13"
+                                  rx="2"
+                                  ry="2"
+                                  width="13"
+                                  x="9"
+                                  y="9"
+                                />
+                                <path
+                                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                />
+                              </svg>
+                            </div>
+                          </button>
+                        </div>
+                        <button
+                          aria-label="Download"
+                          class="btn btn-sm btn-primary fs-5 btn"
+                          style="box-shadow: 0px 0px 0px 8px var(--extra-light-gray);"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M18.948 11.112C18.511 7.67 15.563 5 12.004 5c-2.756 0-5.15 1.611-6.243 4.15-2.148.642-3.757 2.67-3.757 4.85 0 2.757 2.243 5 5 5h1v-2h-1c-1.654 0-3-1.346-3-3 0-1.404 1.199-2.757 2.673-3.016l.581-.102.192-.558C8.153 8.273 9.898 7 12.004 7c2.757 0 5 2.243 5 5v1h1c1.103 0 2 .897 2 2s-.897 2-2 2h-2v2h2c2.206 0 4-1.794 4-4a4.008 4.008 0 0 0-3.056-3.888z"
+                            />
+                            <path
+                              d="M13.004 14v-4h-2v4h-3l4 5 4-5z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                       <pre
                         class="text-muted h-100 mh-100 mb-0 overflow-auto position-relative pre"
-                      />
+                      >
+                        <span
+                          data-testid="activeTmpl"
+                        >
+                          <code>
+                            <div
+                              class="codeWrapper"
+                            >
+                              <div
+                                class="d-flex flex-row my-1 position-relative"
+                              >
+                                <div
+                                  class="position-absolute anchor"
+                                  data-testid="anchor"
+                                  id="line_1"
+                                />
+                                <div
+                                  class="text-end me-3 lineNumber"
+                                >
+                                  1
+                                </div>
+                                <div
+                                  class="flex-grow-1 position-relative"
+                                >
+                                  ú'ÑzW±â,"{-jY~jz»"¢vÚµÈ¿Y"Òhng­iÖ­jv¦z)Üç^r«¶·¬¢êÜxÖ¦xúÞ~,]oé¢¶­¢¿¢ËZ[)yË^Zµë)yÏ°ØUj[²)ãîTr·­²)ãîTr·­³ëha©¥)Ýz{|ùéÝ­ë-j»O¢XÈ×¯z¸§Ð¨Ö¢êìúv¦yÈ^rOoêÞiÜ¢¨U©nzÊh²Ø+zÊ¥f z·©¢È­¢¼j[²,¶
+                                </div>
+                                <div
+                                  class="ps-2"
+                                />
+                              </div>
+                              <div
+                                class="d-flex flex-row my-1 position-relative"
+                              >
+                                <div
+                                  class="position-absolute anchor"
+                                  data-testid="anchor"
+                                  id="line_2"
+                                />
+                                <div
+                                  class="text-end me-3 lineNumber"
+                                >
+                                  2
+                                </div>
+                                <div
+                                  class="flex-grow-1 position-relative"
+                                >
+                                  Þ²©b¨µ¨"¨&gt;ée&gt;bs%Zç¬¦ée&gt;bs'§¿éÚãÆä½©ny×jém¦¸§µû&gt;¦-·¬ª[zW±ãZä^æ¬xÖ¦zÊZqåZç¬u¸h²ß§jgóNö¥¹åZç¬uºh®×(f§vÈ~réíZ\`þ++y§rvØ§ú+u«Zm«²W§ghç(Ö¢êìúv¦yÖþ(+jÚ+f yV¥¹ëlÈ ­«h®:f z·©¢È­¢¼j[²)äÚ×jém¦¸§µûì
+                                </div>
+                                <div
+                                  class="ps-2"
+                                />
+                              </div>
+                              <div
+                                class="d-flex flex-row my-1 position-relative"
+                              >
+                                <div
+                                  class="position-absolute anchor"
+                                  data-testid="anchor"
+                                  id="line_3"
+                                />
+                                <div
+                                  class="text-end me-3 lineNumber"
+                                >
+                                  3
+                                </div>
+                                <div
+                                  class="flex-grow-1 position-relative"
+                                >
+                                  «´
+                                </div>
+                                <div
+                                  class="ps-2"
+                                />
+                              </div>
+                              <div
+                                class="d-flex flex-row my-1 position-relative"
+                              >
+                                <div
+                                  class="position-absolute anchor"
+                                  data-testid="anchor"
+                                  id="line_4"
+                                />
+                                <div
+                                  class="text-end me-3 lineNumber"
+                                >
+                                  4
+                                </div>
+                                <div
+                                  class="flex-grow-1 position-relative"
+                                >
+                                  iUêìâ¨&gt;ée&gt;bs%Zç¬¦ée&gt;bs'§¿éÚäÄDßÂ8Ñoj[U©nzÇ[2(+jÚ+rßâ¯û^®w(ûèé2§¶Ï§jgoé¢¶­¢¿¢wâj.ÓÚ¶Zç¬u³"¶­¢·(ø *ëy§N\\­®ç¢ißæ
+                                </div>
+                                <div
+                                  class="ps-2"
+                                />
+                              </div>
+                              <div
+                                class="d-flex flex-row my-1 position-relative"
+                              >
+                                <div
+                                  class="position-absolute anchor"
+                                  data-testid="anchor"
+                                  id="line_5"
+                                />
+                                <div
+                                  class="text-end me-3 lineNumber"
+                                >
+                                  5
+                                </div>
+                                <div
+                                  class="flex-grow-1 position-relative"
+                                >
+                                  Úµë!¾në&gt;©u¿¦
+                                </div>
+                                <div
+                                  class="ps-2"
+                                />
+                              </div>
+                              <div
+                                class="d-flex flex-row my-1 position-relative"
+                              >
+                                <div
+                                  class="position-absolute anchor"
+                                  data-testid="anchor"
+                                  id="line_6"
+                                />
+                                <div
+                                  class="text-end me-3 lineNumber"
+                                >
+                                  6
+                                </div>
+                                <div
+                                  class="flex-grow-1 position-relative"
+                                >
+                                  Ú¶þrßr·­±ç+zÓZè§r[yÈZ®ÚÞ²«qãZãëyø±u¿¦
+                                </div>
+                                <div
+                                  class="ps-2"
+                                />
+                              </div>
+                              <div
+                                class="d-flex flex-row my-1 position-relative"
+                              >
+                                <div
+                                  class="position-absolute anchor"
+                                  data-testid="anchor"
+                                  id="line_7"
+                                />
+                                <div
+                                  class="text-end me-3 lineNumber"
+                                >
+                                  7
+                                </div>
+                                <div
+                                  class="flex-grow-1 position-relative"
+                                >
+                                  Ú¶þrß
+                                </div>
+                                <div
+                                  class="ps-2"
+                                />
+                              </div>
+                            </div>
+                          </code>
+                        </span>
+                      </pre>
                     </div>
                   </div>
                 </div>
@@ -1029,7 +1260,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         fill="none"
                       />
                       <path
-                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                       />
                     </svg>
                     <div>

@@ -154,10 +154,7 @@ exports[`Home index creates snapshot 1`] = `
           <div
             class="h3 counter"
           >
-            <div
-              class="spinner-grow text-primary"
-              role="status"
-            />
+            1039
           </div>
           <small
             class="text-uppercase"
@@ -174,10 +171,7 @@ exports[`Home index creates snapshot 1`] = `
           <div
             class="h3 counter"
           >
-            <div
-              class="spinner-grow text-primary"
-              role="status"
-            />
+            18197
           </div>
           <small
             class="text-uppercase"

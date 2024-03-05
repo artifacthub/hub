@@ -105,7 +105,7 @@ describe('Package index', () => {
         expect(API.trackView).toHaveBeenCalledWith('id', '1.0.0');
       });
 
-      expect(await screen.findAllByText('Pretty name')).toHaveLength(2);
+      expect(await screen.findAllByText('Pretty name')).toHaveLength(4);
     });
 
     it('calls getViews', async () => {

@@ -86,7 +86,7 @@ describe('Organization profile settings index', () => {
       });
 
       expect(await screen.findByText('Profile information')).toBeInTheDocument();
-      expect(screen.getByText('Delete organization')).toBeInTheDocument();
+      expect(screen.getAllByText('Delete organization')).toHaveLength(3);
     });
   });
 
