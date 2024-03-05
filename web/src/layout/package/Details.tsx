@@ -171,6 +171,7 @@ const Details = (props: Props) => {
           case RepositoryKind.Gatekeeper:
           case RepositoryKind.KCL:
           case RepositoryKind.Headlamp:
+          case RepositoryKind.InspektorGadget:
             return (
               <>
                 {props.package.appVersion && (

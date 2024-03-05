@@ -15,6 +15,7 @@ cat docs/www/headers/gatekeeper_policies_repositories docs/gatekeeper_policies_r
 cat docs/www/headers/headlamp_plugins_repositories docs/headlamp_plugins_repositories.md > docs/www/content/topics/repositories/headlamp-plugins.md
 cat docs/www/headers/helm_charts_repositories docs/helm_charts_repositories.md > docs/www/content/topics/repositories/helm-charts.md
 cat docs/www/headers/helm_plugins_repositories docs/helm_plugins_repositories.md > docs/www/content/topics/repositories/helm-plugins.md
+cat docs/www/headers/inspektor_gadgets_repositories docs/inspektor_gadgets_repositories.md > docs/www/content/topics/repositories/inspektor-gadgets.md
 cat docs/www/headers/kcl_modules_repositories docs/kcl_modules_repositories.md > docs/www/content/topics/repositories/kcl-modules.md
 cat docs/www/headers/keda_scalers_repositories docs/keda_scalers_repositories.md > docs/www/content/topics/repositories/keda-scalers.md
 cat docs/www/headers/keptn_integrations_repositories docs/keptn_integrations_repositories.md > docs/www/content/topics/repositories/keptn-integrations.md

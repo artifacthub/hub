@@ -529,6 +529,88 @@ func TestValidatePackageMetadata(t *testing.T) {
 					`only "policy" and "policy-alternative-location" images can be provided`,
 				},
 			},
+			{
+				hub.InspektorGadget,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+				},
+				[]string{
+					`"gadget" image not provided`,
+				},
+			},
+			{
+				hub.InspektorGadget,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "something",
+							Image: "registry.io/namespace/something:tag",
+						},
+					},
+				},
+				[]string{
+					`"gadget" image not provided`,
+				},
+			},
+			{
+				hub.InspektorGadget,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "gadget",
+							Image: "registry.io/namespace/gadget:tag",
+						},
+						{
+							Name:  "something",
+							Image: "registry.io/namespace/something:tag",
+						},
+					},
+				},
+				[]string{
+					`only "gadget" and "gadget-alternative-location" images can be provided`,
+				},
+			},
+			{
+				hub.InspektorGadget,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "gadget",
+							Image: "registry.io/namespace/gadget:tag",
+						},
+						{
+							Name:  "gadget-alternative-location",
+							Image: "registry2.io/namespace/gadget:tag",
+						},
+						{
+							Name:  "something",
+							Image: "registry.io/namespace/something:tag",
+						},
+					},
+				},
+				[]string{
+					`only "gadget" and "gadget-alternative-location" images can be provided`,
+				},
+			},
 		}
 		for i, tc := range testCases {
 			tc := tc
@@ -626,6 +708,65 @@ func TestValidatePackageMetadata(t *testing.T) {
 						{
 							Name:  "policy",
 							Image: "registry.io/namespace/policy:tag",
+						},
+					},
+				},
+			},
+			{
+				hub.InspektorGadget,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Category:    "security",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "gadget",
+							Image: "registry.io/namespace/gadget:tag",
+						},
+					},
+				},
+			},
+			{
+				hub.InspektorGadget,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Category:    "security",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "gadget",
+							Image: "registry.io/namespace/gadget:tag",
+						},
+						{
+							Name:  "gadget-alternative-location",
+							Image: "registry2.io/namespace/gadget:tag",
+						},
+					},
+				},
+			},
+			{
+				hub.InspektorGadget,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Category:    "security",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "gadget-alternative-location",
+							Image: "registry2.io/namespace/gadget:tag",
+						},
+						{
+							Name:  "gadget",
+							Image: "registry.io/namespace/gadget:tag",
 						},
 					},
 				},

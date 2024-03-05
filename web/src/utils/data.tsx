@@ -169,6 +169,15 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     active: true,
   },
   {
+    kind: RepositoryKind.InspektorGadget,
+    label: 'inspektor-gadget',
+    name: 'Inspektor gadgets',
+    singular: 'Inspektor gadget',
+    plural: 'Inspektor gadgets',
+    icon: <RepositoryIcon kind={RepositoryKind.InspektorGadget} className="mw-100 mh-100" />,
+    active: true,
+  },
+  {
     kind: RepositoryKind.KCL,
     label: 'kcl',
     name: 'KCL modules',
@@ -786,7 +795,7 @@ export const CVSS_V3_VECTORS: { [key: string]: CVSSVectorMetric[] } = {
 export const OCI_PREFIX = 'oci://';
 
 export const PKG_DETAIL_PATH =
-  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|kcl|headlamp|container)\//;
+  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|kcl|headlamp|inspektor-gadget|container)\//;
 
 export const HOME_ROUTES = [
   '/verify-email',

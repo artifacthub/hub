@@ -97,6 +97,10 @@ const ICONS = {
     default: '/static/media/headlamp.svg',
     white: '/static/media/headlamp-light.svg',
   },
+  [RepositoryKind.InspektorGadget]: {
+    default: '/static/media/inspektor-gadget.svg',
+    white: '/static/media/inspektor-gadget-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

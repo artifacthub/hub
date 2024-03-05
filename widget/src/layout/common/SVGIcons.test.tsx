@@ -123,6 +123,11 @@ describe('SVGIcons', () => {
     expect(screen.getByTitle('headlamp'));
   });
 
+  it('renders Inspektor Gadget icon', () => {
+    render(<SVGIcons name="inspektor-gadget" />);
+    expect(screen.getByTitle('inspektor-gadget'));
+  });
+
   it('does not render when name is not in the list', () => {
     render(<SVGIcons name="not-listed" />);
     expect(screen.getByTestId('iconWrapper')).toBeEmptyDOMElement();

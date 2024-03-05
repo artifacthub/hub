@@ -563,7 +563,8 @@ select results_eq(
         (18, 'Argo templates'),
         (19, 'KubeArmor policies'),
         (20, 'KCL modules'),
-        (21, 'Headlamp plugins')
+        (21, 'Headlamp plugins'),
+        (22, 'Inspektor gadgets')
     $$,
     'Repository kinds should exist'
 );

@@ -75,6 +75,10 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('backstage')).toBe(RepositoryKind.Backstage);
     });
 
+    it('inspektor-gadget', () => {
+      expect(methods.getRepoKind('inspektor-gadget')).toBe(RepositoryKind.InspektorGadget);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -151,6 +155,10 @@ describe('repoKind', () => {
 
     it('backstage kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.Backstage)).toBe('backstage');
+    });
+
+    it('inspektor gadget kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.InspektorGadget)).toBe('inspektor-gadget');
     });
 
     it('unknown kind', () => {

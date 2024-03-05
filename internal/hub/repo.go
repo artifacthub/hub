@@ -112,6 +112,9 @@ const (
 
 	// Headlamp represents a repository with Headlamp plugins.
 	Headlamp RepositoryKind = 21
+
+	// InspektorGadget represents a repository with Inspektor Gadgets.
+	InspektorGadget RepositoryKind = 22
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -135,6 +138,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "helm"
 	case HelmPlugin:
 		return "helm-plugin"
+	case InspektorGadget:
+		return "inspektor-gadget"
 	case KCL:
 		return "kcl"
 	case KedaScaler:
@@ -188,6 +193,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return Helm, nil
 	case "helm-plugin":
 		return HelmPlugin, nil
+	case "inspektor-gadget":
+		return InspektorGadget, nil
 	case "kcl":
 		return KCL, nil
 	case "keda-scaler":
