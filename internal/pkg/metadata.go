@@ -16,6 +16,14 @@ import (
 )
 
 const (
+	// gadgetImage represents the name that must be used for the gadget image
+	// in an Inspektor gadget package.
+	gadgetImage = "gadget"
+
+	// gadgetImageAlternativeLoc represents the name that must be used for the
+	// gadget image alternative location in an Inspektor gadget package.
+	gadgetImageAlternativeLoc = "gadget-alternative-location"
+
 	// kwPolicyImage represents the name that must be used for the policy image
 	// in a Kubewarden policy package.
 	kwPolicyImage = "policy"
@@ -247,6 +255,33 @@ func ValidateContainersImages(kind hub.RepositoryKind, images []*hub.ContainerIm
 
 	// Repository kind specific validation
 	switch kind {
+	case hub.InspektorGadget:
+		// Gadget image is required
+		if len(images) == 0 || (len(images) == 1 && images[0].Name != gadgetImage) {
+			errs = multierror.Append(errs, fmt.Errorf(`"%s" image not provided`, gadgetImage))
+		}
+
+		// A second gadget image pointing to an alternative location may be provided
+		if len(images) == 2 {
+			imagesNames := []string{images[0].Name, images[1].Name}
+			sort.Strings(imagesNames)
+			if imagesNames[0] != gadgetImage || imagesNames[1] != gadgetImageAlternativeLoc {
+				errs = multierror.Append(errs, fmt.Errorf(
+					`only "%s" and "%s" images can be provided`,
+					gadgetImage,
+					gadgetImageAlternativeLoc,
+				))
+			}
+		}
+
+		// Providing more than two images is not allowed
+		if len(images) > 2 {
+			errs = multierror.Append(errs, fmt.Errorf(
+				`only "%s" and "%s" images can be provided`,
+				gadgetImage,
+				gadgetImageAlternativeLoc,
+			))
+		}
 	case hub.Kubewarden:
 		// Policy image is required
 		if len(images) == 0 || (len(images) == 1 && images[0].Name != kwPolicyImage) {

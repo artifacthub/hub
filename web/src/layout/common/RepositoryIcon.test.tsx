@@ -135,6 +135,13 @@ describe('RepositoryIcon', () => {
     expect(icon).toHaveProperty('src', 'http://localhost/static/media/backstage-light.svg');
   });
 
+  it('renders Inspektor gadget icon', () => {
+    render(<RepositoryIcon kind={RepositoryKind.InspektorGadget} type="white" />);
+    const icon = screen.getByAltText('Icon');
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveProperty('src', 'http://localhost/static/media/inspektor-gadget-light.svg');
+  });
+
   it('renders empty icon', () => {
     render(<RepositoryIcon kind={101 as RepositoryKind} type="white" />);
     expect(() => screen.getByAltText('Icon')).toThrow();

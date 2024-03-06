@@ -1162,7 +1162,7 @@
                 },
                 "repositoriesKinds": {
                     "title": "Repositories kinds to process ([] = all)",
-                    "description": "The following kinds are supported at the moment: falco, helm, olm, opa, tbaction, krew, helm-plugin, tekton-task, keda-scaler, coredns, keptn, tekton-pipeline, container, kubewarden, gatekeeper, kyverno, knative-client-plugin, backstage, argo-template, kubearmor, kcl, headlamp",
+                    "description": "The following kinds are supported at the moment: falco, helm, olm, opa, tbaction, krew, helm-plugin, tekton-task, keda-scaler, coredns, keptn, tekton-pipeline, container, kubewarden, gatekeeper, kyverno, knative-client-plugin, backstage, argo-template, kubearmor, kcl, headlamp, inspektor-gadget",
                     "type": "array",
                     "items": {
                         "type": "string"

@@ -486,6 +486,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.InspektorGadget:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/inspektor-gadgets"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Inspektor gadgets
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -515,6 +526,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.KubeArmor:
               case RepositoryKind.KCL:
               case RepositoryKind.Headlamp:
+              case RepositoryKind.InspektorGadget:
                 return (
                   <>
                     <p
@@ -908,6 +920,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.KubeArmor,
               RepositoryKind.KCL,
               RepositoryKind.Headlamp,
+              RepositoryKind.InspektorGadget,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -1054,6 +1067,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.KubeArmor,
               RepositoryKind.KCL,
               RepositoryKind.Headlamp,
+              RepositoryKind.InspektorGadget,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

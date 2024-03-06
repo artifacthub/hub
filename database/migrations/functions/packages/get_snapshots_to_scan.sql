@@ -31,6 +31,7 @@ returns setof json as $$
             or security_report_created_at < (current_timestamp - '1 week'::interval)
         )
         and r.repository_kind_id <> 13 -- Kubewarden policies are excluded for now
+        and r.repository_kind_id <> 22 -- Inspektor gadgets are excluded for now
         order by s.created_at desc
     ) s;
 $$ language sql;

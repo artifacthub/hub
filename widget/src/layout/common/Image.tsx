@@ -73,6 +73,8 @@ const Image = (props: Props) => {
           return '/static/media/placeholder_pkg_kcl.png';
         case RepositoryKind.Headlamp:
           return '/static/media/placeholder_pkg_headlamp.png';
+        case RepositoryKind.InspektorGadget:
+          return '/static/media/placeholder_pkg_inspektor-gadget.png';
         default:
           return PLACEHOLDER_SRC;
       }

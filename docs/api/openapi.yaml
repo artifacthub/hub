@@ -1207,52 +1207,6 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/packages/helm/{repoName}/{packageName}":
-    get:
-      tags:
-        - Packages
-      summary: Get package details
-      description: Get package details
-      operationId: getHelmPackageDetails
-      parameters:
-        - $ref: "#/components/parameters/RepoNameParam"
-        - $ref: "#/components/parameters/PackageNameParam"
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/HelmPackage"
-        "404":
-          $ref: "#/components/responses/NotFoundResponse"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-  "/packages/helm-plugin/{repoName}/{packageName}":
-    get:
-      tags:
-        - Packages
-      summary: Get package details
-      description: Get package details
-      operationId: getHelmPluginDetails
-      parameters:
-        - $ref: "#/components/parameters/RepoNameParam"
-        - $ref: "#/components/parameters/PackageNameParam"
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/HelmPluginPackage"
-        "404":
-          $ref: "#/components/responses/NotFoundResponse"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
   "/packages/falco/{repoName}/{packageName}":
     get:
       tags:
@@ -1322,7 +1276,75 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-
+  "/packages/helm/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getHelmPackageDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelmPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/helm-plugin/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getHelmPluginDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelmPluginPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/inspektor-gadget/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getInspektorGadgetDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InspektorGadgetPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/kcl/{repoName}/{packageName}":
     get:
       tags:
@@ -1832,6 +1854,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HeadlampPluginPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/inspektor-gadget/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getInspektorGadgetVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InspektorGadgetPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -4036,6 +4082,8 @@ components:
                 headlamp/plugin/archive-checksum:
                   type: string
                   example: "sha256:123456..."
+    InspektorGadgetPackage:
+      $ref: "#/components/schemas/Package"
     KCLPackage:
       $ref: "#/components/schemas/Package"
     KedaScalerPackage:
@@ -4783,6 +4831,7 @@ components:
           * `19` - KubeArmor templates
           * `20` - KCL packages
           * `21` - Headlamp plugins
+          * `22` - Inspektor gadgets
     RepositoryKindParam:
       type: string
       enum:
@@ -4808,6 +4857,7 @@ components:
         - kubearmor
         - kcl
         - headlamp
+        - inspektor-gadget
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4832,6 +4882,7 @@ components:
         * `kubearmor` - KubeArmor policies
         * `kcl` - KCL packages
         * `headlamp` - Headlamp plugins
+        * `inspektor-gadget` - Inspektor gadgets
     RepositorySummary:
       type: object
       required:
@@ -5373,6 +5424,7 @@ components:
           * `19` - KubeArmor templates
           * `20` - KCL packages
           * `21` - Headlamp plugins
+          * `22` - Inspektor gadgets
     PackageNameParam:
       in: path
       name: packageName

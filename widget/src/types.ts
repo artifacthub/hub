@@ -49,6 +49,7 @@ export enum RepositoryKind {
   KubeArmor,
   KCL,
   Headlamp,
+  InspektorGadget,
 }
 
 export interface SearchResults {

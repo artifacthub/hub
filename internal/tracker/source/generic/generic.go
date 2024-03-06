@@ -124,7 +124,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 
 		// Check if the package is signed (for applicable kinds)
 		switch p.Repository.Kind {
-		case hub.Kubewarden:
+		case hub.InspektorGadget, hub.Kubewarden:
 			// We'll consider the package signed if all images are signed
 			signedImages := 0
 			for _, entry := range p.ContainersImages {

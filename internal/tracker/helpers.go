@@ -118,6 +118,7 @@ func SetupSource(i *hub.TrackerSourceInput) hub.TrackerSource {
 		hub.CoreDNS,
 		hub.Gatekeeper,
 		hub.Headlamp,
+		hub.InspektorGadget,
 		hub.KCL,
 		hub.KedaScaler,
 		hub.Keptn,

@@ -23,6 +23,7 @@ At the moment, the following artifacts kinds are supported *(with plans to suppo
 - [Headlamp plugins](https://headlamp.dev)
 - [Helm charts](https://helm.sh/)
 - [Helm plugins](https://helm.sh/docs/topics/plugins/)
+- [Inspektor Gadgets](https://www.inspektor-gadget.io)
 - [KCL modules](https://kcl-lang.io)
 - [KEDA scalers](https://keda.sh/)
 - [Keptn integrations](https://keptn.sh)

@@ -106,6 +106,13 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
         case RepositoryKind.KedaScaler:
         case RepositoryKind.CoreDNS:
         case RepositoryKind.Keptn:
+        case RepositoryKind.Kyverno:
+        case RepositoryKind.KnativeClientPlugin:
+        case RepositoryKind.Backstage:
+        case RepositoryKind.ArgoTemplate:
+        case RepositoryKind.KCL:
+        case RepositoryKind.Headlamp:
+        case RepositoryKind.InspektorGadget:
           if (isUndefined(pkg.install)) {
             output.errorMessage = 'This package does not include installation instructions yet.';
             hasError = true;

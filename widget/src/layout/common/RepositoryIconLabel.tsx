@@ -104,6 +104,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.Headlamp,
     name: 'Headlamp plugin',
   },
+  {
+    kind: RepositoryKind.InspektorGadget,
+    name: 'Inspektor Gadget',
+  },
 ];
 
 const Wrapper = styled('span')`

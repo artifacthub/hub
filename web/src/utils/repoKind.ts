@@ -46,6 +46,8 @@ const getRepoKind = (repoName: string): RepositoryKind | null => {
       return RepositoryKind.KCL;
     case 'headlamp':
       return RepositoryKind.Headlamp;
+    case 'inspektor-gadget':
+      return RepositoryKind.InspektorGadget;
     default:
       return null;
   }
@@ -97,6 +99,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'kcl';
     case RepositoryKind.Headlamp:
       return 'headlamp';
+    case RepositoryKind.InspektorGadget:
+      return 'inspektor-gadget';
     default:
       return null;
   }

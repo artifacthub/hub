@@ -105,6 +105,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Helm plugins
                     </option>
                     <option
+                      value="22"
+                    >
+                      Inspektor gadgets
+                    </option>
+                    <option
                       value="20"
                     >
                       KCL modules

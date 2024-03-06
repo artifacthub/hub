@@ -23,6 +23,7 @@ export enum RepositoryKind {
   KubeArmor,
   KCL,
   Headlamp,
+  InspektorGadget,
 }
 
 export enum PackageCategory {
