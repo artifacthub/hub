@@ -19,9 +19,9 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.12",
     "@types/lodash": "^4.14.202",
-    "@types/node": "^20.11.24",
-    "@types/react": "^18.2.62",
-    "@types/react-dom": "^18.2.19",
+    "@types/node": "^20.11.25",
+    "@types/react": "^18.2.64",
+    "@types/react-dom": "^18.2.21",
     "@types/styled-components": "^5.1.27",
     "babel-plugin-styled-components": "^2.1.4",
     "eslint-config-prettier": "^9.1.0",
@@ -31,7 +31,7 @@
     "jest-mock": "^29.7.0",
     "prettier": "^3.2.5",
     "react-scripts": "^5.0.1",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.2",
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
