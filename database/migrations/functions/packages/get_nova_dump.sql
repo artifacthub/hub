@@ -30,6 +30,7 @@ returns setof json as $$
             select json_agg(json_build_object(
                 'pkg', version,
                 'app', app_version,
+                'kube', nullif(s.data->>'kubeVersion', ''),
                 'deprecated', nullif(deprecated, false)
             ))
             from snapshot
