@@ -24,7 +24,7 @@
     "react-diff-view": "3.0.2",
     "react-dom": "^18.1.0",
     "react-icons": "^5.0.1",
-    "react-image-crop": "^10.1.8",
+    "react-image-crop": "^11.0.5",
     "react-markdown": "^8.0.7",
     "react-router-dom": "^6.22.2",
     "react-syntax-highlighter": "^15.5.0",
