@@ -51,6 +51,7 @@ insert into snapshot (
     app_version,
     description,
     home_url,
+    data,
     links,
     logo_url
 ) values (
@@ -59,6 +60,7 @@ insert into snapshot (
     '1.0.0',
     'description',
     'https://home.url',
+    '{"kubeVersion": ">= 1.19.0-0"}',
     '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]',
     'https://logo.url'
 );
@@ -76,10 +78,12 @@ insert into package (
 insert into snapshot (
     package_id,
     version,
+    data,
     deprecated
 ) values (
     :'package2ID',
     '1.0.0',
+    '{"kubeVersion": ""}',
     true
 );
 insert into package (
@@ -135,7 +139,8 @@ select is(
             "versions": [
                 {
                     "pkg": "1.0.0",
-                    "app": "1.0.0"
+                    "app": "1.0.0",
+                    "kube": ">= 1.19.0-0"
                 }
             ]
         },
