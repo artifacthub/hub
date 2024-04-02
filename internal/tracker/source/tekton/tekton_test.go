@@ -271,4 +271,97 @@ func TestTrackerSource(t *testing.T) {
 		assert.NoError(t, err)
 		sw.AssertExpectations(t)
 	})
+
+	t.Run("one package returned (tekton-stepaction), no errors", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{
+				Kind: hub.TektonStepAction,
+				URL:  "https://github.com/user/repo/path",
+				Data: json.RawMessage(fmt.Sprintf(`{"versioning": "%s"}`, hub.TektonDirBasedVersioning)),
+			},
+			BasePath: "testdata/path5",
+			Svc:      sw.Svc,
+		}
+
+		// Run test and check expectations
+		manifestRaw, _ := os.ReadFile("testdata/path5/stepaction1/0.1/stepaction1.yaml")
+		var tasks []map[string]interface{}
+		p := &hub.Package{
+			Name:        "stepaction1",
+			DisplayName: "StepAction 1",
+			Description: "StepAction 1 StepAction",
+			Keywords:    []string{"tekton", "stepaction", "tag1", "tag2"},
+			Readme:      "This is just a test stepaction\n",
+			Version:     "0.1.0",
+			Provider:    "Some organization",
+			ContentURL:  "https://github.com/user/repo/raw/master/path/stepaction1/0.1/stepaction1.yaml",
+			Digest:      "530682380f55de185372b1f2c776c0ef82b75273e33f9af34fa0279a9fb8ee0f",
+			Repository:  i.Repository,
+			License:     "Apache-2.0",
+			Links: []*hub.Link{
+				{
+					Name: "source",
+					URL:  "https://github.com/user/repo/blob/master/path/stepaction1/0.1/stepaction1.yaml",
+				},
+				{
+					Name: "link1",
+					URL:  "https://link1.url",
+				},
+				{
+					Name: "link2",
+					URL:  "https://link2.url",
+				},
+			},
+			Maintainers: []*hub.Maintainer{
+				{
+					Name:  "user1",
+					Email: "user1@email.com",
+				},
+				{
+					Name:  "user2",
+					Email: "user2@email.com",
+				},
+			},
+			Changes: []*hub.Change{
+				{
+					Description: "Added cool feature",
+				},
+				{
+					Description: "Fixed minor bug",
+				},
+			},
+			Recommendations: []*hub.Recommendation{
+				{
+					URL: "https://artifacthub.io/packages/helm/artifact-hub/artifact-hub",
+				},
+			},
+			Screenshots: []*hub.Screenshot{
+				{
+					Title: "Screenshot 1",
+					URL:   "https://artifacthub.io/screenshot1.jpg",
+				},
+			},
+			Data: map[string]interface{}{
+				PipelinesMinVersionKey: "0.54.0",
+				RawManifestKey:         string(manifestRaw),
+				TasksKey:               tasks,
+				PlatformsKey:           []string{"linux/amd64", "linux/arm64"},
+				ExamplesKey: map[string]string{
+					"sample1.yaml": "sample content\n",
+				},
+			},
+			Signatures: []string{tekton},
+			Signed:     true,
+		}
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{
+			pkg.BuildKey(p): p,
+		}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
 }

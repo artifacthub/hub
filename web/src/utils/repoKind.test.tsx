@@ -79,6 +79,10 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('inspektor-gadget')).toBe(RepositoryKind.InspektorGadget);
     });
 
+    it('tekton-stepaction', () => {
+      expect(methods.getRepoKind('tekton-stepaction')).toBe(RepositoryKind.TektonStepAction);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -159,6 +163,10 @@ describe('repoKind', () => {
 
     it('inspektor gadget kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.InspektorGadget)).toBe('inspektor-gadget');
+    });
+
+    it('tekton-stepaction kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.TektonStepAction)).toBe('tekton-stepaction');
     });
 
     it('unknown kind', () => {

@@ -203,7 +203,8 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 		hub.OPA,
 		hub.TBAction,
 		hub.TektonPipeline,
-		hub.TektonTask:
+		hub.TektonTask,
+		hub.TektonStepAction:
 		tmpDir, packagesPath, err = t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
 	}
 

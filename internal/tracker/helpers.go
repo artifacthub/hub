@@ -129,7 +129,7 @@ func SetupSource(i *hub.TrackerSourceInput) hub.TrackerSource {
 		hub.OPA,
 		hub.TBAction:
 		source = generic.NewTrackerSource(i)
-	case hub.TektonTask, hub.TektonPipeline:
+	case hub.TektonTask, hub.TektonPipeline, hub.TektonStepAction:
 		source = tekton.NewTrackerSource(i)
 	}
 	return source

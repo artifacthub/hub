@@ -1621,6 +1621,30 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/tekton-stepaction/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getTektonStepActionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TektonStepActionPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
   "/packages/tekton-task/{repoName}/{packageName}":
     get:
       tags:
@@ -2166,6 +2190,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TektonPipelinePackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/tekton-stepaction/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getTektonStepActionVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TektonStepActionPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -4396,6 +4444,32 @@ components:
                     type: string
                     nullable: false
                     example: darwin/amd64
+    TektonStepActionPackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                pipelines.minVersion:
+                  type: string
+                  example: 2.0.0
+                manifestRaw:
+                  type: string
+                  additionalProperties:
+                    type: string
+                  example: "apiVersion: tekton.dev/v1beta1"
+                examples:
+                  type: object
+                  nullable: false
+                  additionalProperties: true
+                platforms:
+                  type: array
+                  items:
+                    type: string
+                    nullable: false
+                    example: darwin/amd64
     TektonTaskPackage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -4832,6 +4906,7 @@ components:
           * `20` - KCL packages
           * `21` - Headlamp plugins
           * `22` - Inspektor gadgets
+          * `23` - Tekton stepactions
     RepositoryKindParam:
       type: string
       enum:
@@ -4858,6 +4933,7 @@ components:
         - kcl
         - headlamp
         - inspektor-gadget
+        - tekton-stepaction
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4883,6 +4959,7 @@ components:
         * `kcl` - KCL packages
         * `headlamp` - Headlamp plugins
         * `inspektor-gadget` - Inspektor gadgets
+        * `tekton-stepaction` - Tekton stepactions
     RepositorySummary:
       type: object
       required:
@@ -5425,6 +5502,7 @@ components:
           * `20` - KCL packages
           * `21` - Headlamp plugins
           * `22` - Inspektor gadgets
+          * `23` - Tekton stepactions
     PackageNameParam:
       in: path
       name: packageName

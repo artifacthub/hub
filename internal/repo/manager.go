@@ -101,6 +101,7 @@ var (
 		hub.TBAction,
 		hub.TektonPipeline,
 		hub.TektonTask,
+		hub.TektonStepAction,
 	}
 )
 
@@ -300,7 +301,8 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 		hub.OPA,
 		hub.TBAction,
 		hub.TektonPipeline,
-		hub.TektonTask:
+		hub.TektonTask,
+		hub.TektonStepAction:
 		tmpDir, packagesPath, err := m.rc.CloneRepository(ctx, r)
 		if err != nil {
 			return err
@@ -480,7 +482,8 @@ func (m *Manager) locateMetadataFile(r *hub.Repository, basePath string) string 
 		hub.OPA,
 		hub.TBAction,
 		hub.TektonPipeline,
-		hub.TektonTask:
+		hub.TektonTask,
+		hub.TektonStepAction:
 		mdFile = filepath.Join(basePath, hub.RepositoryMetadataFile)
 	}
 	return mdFile
@@ -579,7 +582,7 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 
 	case GitRepoURLRE.MatchString(r.URL):
 		// Do not track repo's digest for Tekton repos using git based versioning
-		if (r.Kind == hub.TektonTask || r.Kind == hub.TektonPipeline) && r.Data != nil {
+		if (r.Kind == hub.TektonTask || r.Kind == hub.TektonPipeline || r.Kind == hub.TektonStepAction) && r.Data != nil {
 			var data *hub.TektonData
 			if err := json.Unmarshal(r.Data, &data); err != nil {
 				return "", fmt.Errorf("invalid tekton repository data: %w", err)
@@ -844,7 +847,8 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 		hub.OPA,
 		hub.TBAction,
 		hub.TektonPipeline,
-		hub.TektonTask:
+		hub.TektonTask,
+		hub.TektonStepAction:
 		if SchemeIsHTTP(u) && !GitRepoURLRE.MatchString(r.URL) {
 			return errors.New("invalid url format")
 		}

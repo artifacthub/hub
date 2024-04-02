@@ -230,9 +230,9 @@ const HomeView = () => {
                 Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
                 configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco
                 configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions,
-                kubectl plugins, Tekton tasks and pipelines, KEDA scalers, CoreDNS plugins, Keptn integrations,
-                container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo
-                templates, KubeArmor policies, KCL modules, Headlamp plugins and Inspektor gadgets.
+                kubectl plugins, Tekton tasks, pipelines and stepactions, KEDA scalers, CoreDNS plugins, Keptn
+                integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage
+                plugins, Argo templates, KubeArmor policies, KCL modules, Headlamp plugins and Inspektor gadgets.
                 <div className="py-0 py-lg-5">
                   <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
@@ -453,7 +453,7 @@ const HomeView = () => {
                       <div className="d-flex flex-column justify-content-between align-items-center h-100">
                         <RepositoryIcon kind={RepositoryKind.TektonTask} type="white" className={styles.aboutIcon} />
                         <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
-                          <small>Tekton tasks and pipelines</small>
+                          <small>Tekton packages</small>
                         </div>
                       </div>
                     </ExternalLink>

@@ -11,10 +11,28 @@ interface Props {
 }
 
 const TektonInstall = (props: Props) => {
-  const type = props.repository.kind === RepositoryKind.TektonPipeline ? 'pipeline' : 'task';
+  let type: string = 'task';
+  switch (props.repository.kind) {
+    case RepositoryKind.TektonPipeline:
+      type = 'pipeline';
+      break;
+    case RepositoryKind.TektonStepAction:
+      type = 'stepaction';
+      break;
+  }
   let url = props.contentUrl;
   if (isUndefined(url) || url === '') {
-    url = type === 'pipeline' ? 'PIPELINE_RAW_YAML_URL' : 'TASK_RAW_YAML_URL';
+    switch (props.repository.kind) {
+      case RepositoryKind.TektonPipeline:
+        url = 'PIPELINE_RAW_YAML_URL';
+        break;
+      case RepositoryKind.TektonStepAction:
+        url = 'STEPACTION_RAW_YAML_URL';
+        break;
+      case RepositoryKind.TektonTask:
+        url = 'TASK_RAW_YAML_URL';
+        break;
+    }
   }
 
   return (

@@ -1,0 +1,37 @@
+apiVersion: tekton.dev/v1alpha1
+kind: StepAction
+metadata:
+  name: stepaction1
+  labels:
+    app.kubernetes.io/version: "0.1.0"
+  annotations:
+    artifacthub.io/changes: |
+      - Added cool feature
+      - Fixed minor bug
+    artifacthub.io/license: Apache-2.0
+    artifacthub.io/links: |
+      - name: link1
+        url: https://link1.url
+      - name: link2
+        url: https://link2.url
+    artifacthub.io/maintainers: |
+      - name: user1
+        email: user1@email.com
+      - name: user2
+        email: user2@email.com
+    artifacthub.io/provider: Some organization
+    artifacthub.io/recommendations: |
+      - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+    artifacthub.io/screenshots: |
+      - title: Screenshot 1
+        url: https://artifacthub.io/screenshot1.jpg
+    tekton.dev/pipelines.minVersion: "0.54.0"
+    tekton.dev/platforms: "linux/amd64,linux/arm64"
+    tekton.dev/tags: tag1, tag2
+    tekton.dev/displayName: "StepAction 1"
+    tekton.dev/signature: "stepaction signature val"
+spec:
+  description: Test stepaction
+  params:
+    - name: param1
+      description: param1 description

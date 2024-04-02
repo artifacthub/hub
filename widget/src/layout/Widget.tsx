@@ -95,6 +95,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'headlamp';
     case RepositoryKind.InspektorGadget:
       return 'inspektor-gadget';
+    case RepositoryKind.TektonStepAction:
+      return 'tekton-stepaction';
     default:
       return null;
   }

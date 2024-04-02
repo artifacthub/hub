@@ -22,6 +22,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/hashicorp/go-multierror"
 	v1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
+	v1alpha "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1alpha1"
 	pipelinerun "github.com/tektoncd/pipeline/pkg/reconciler/pipelinerun/resources"
 	taskrun "github.com/tektoncd/pipeline/pkg/reconciler/taskrun/resources"
 	"sigs.k8s.io/yaml"
@@ -278,7 +279,7 @@ func (s *TrackerSource) warn(err error) {
 }
 
 // GetManifest reads, parses and validates the package manifest, which can be a
-// Tekton task or a pipeline manifest.
+// Tekton task, pipeline or stepaction manifest.
 func GetManifest(kind hub.RepositoryKind, pkgName, pkgPath string) (interface{}, []byte, error) {
 	manifestPath := path.Join(pkgPath, pkgName+".yaml")
 	manifestData, err := os.ReadFile(manifestPath)
@@ -291,6 +292,8 @@ func GetManifest(kind hub.RepositoryKind, pkgName, pkgPath string) (interface{},
 		manifest = &v1.Task{}
 	case hub.TektonPipeline:
 		manifest = &v1.Pipeline{}
+	case hub.TektonStepAction:
+		manifest = &v1alpha.StepAction{}
 	}
 	if err := yaml.Unmarshal(manifestData, &manifest); err != nil {
 		return nil, nil, err
@@ -316,6 +319,10 @@ func validateManifest(manifest interface{}) error {
 		name = m.Name
 		version = m.Labels[versionLabelTKey]
 		description = m.Spec.Description
+	case *v1alpha.StepAction:
+		name = m.Name
+		version = m.Labels[versionLabelTKey]
+		description = "Tekton StepAction" // TODO: description missing in v1alpha.StepAction
 	}
 
 	// Validate manifest data
@@ -335,7 +342,7 @@ func validateManifest(manifest interface{}) error {
 }
 
 // PreparePackageInput represents the information required to prepare a package
-// of Tekton task and pipelines kinds.
+// of Tekton task, pipeline and stepaction kinds.
 type PreparePackageInput struct {
 	R           *hub.Repository
 	Tag         string
@@ -388,6 +395,16 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 				"run_after": mts.RunAfter,
 			})
 		}
+	case *v1alpha.StepAction:
+		tektonKind = "stepaction"
+		name = m.Name
+		version = m.Labels[versionLabelTKey]
+		descriptionPrefix := m.Annotations[displayNameTKey]
+		if descriptionPrefix == "" {
+			descriptionPrefix = name
+		}
+		description = fmt.Sprintf("%s StepAction", descriptionPrefix)
+		annotations = m.Annotations
 	}
 
 	// Prepare version

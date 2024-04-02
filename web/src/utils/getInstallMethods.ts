@@ -260,6 +260,7 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
         break;
       case RepositoryKind.TektonTask:
       case RepositoryKind.TektonPipeline:
+      case RepositoryKind.TektonStepAction:
         if (isUndefined(pkg.install)) {
           output.methods.push({
             label: 'kubectl',
