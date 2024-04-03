@@ -24,6 +24,7 @@ export enum RepositoryKind {
   KCL,
   Headlamp,
   InspektorGadget,
+  TektonStepAction,
 }
 
 export enum PackageCategory {

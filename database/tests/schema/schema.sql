@@ -564,7 +564,8 @@ select results_eq(
         (19, 'KubeArmor policies'),
         (20, 'KCL modules'),
         (21, 'Headlamp plugins'),
-        (22, 'Inspektor gadgets')
+        (22, 'Inspektor gadgets'),
+        (23, 'Tekton stepactions')
     $$,
     'Repository kinds should exist'
 );

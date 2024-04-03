@@ -50,6 +50,7 @@ export enum RepositoryKind {
   KCL,
   Headlamp,
   InspektorGadget,
+  TektonStepAction,
 }
 
 export interface SearchResults {

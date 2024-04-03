@@ -108,6 +108,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.InspektorGadget,
     name: 'Inspektor Gadget',
   },
+  {
+    kind: RepositoryKind.TektonStepAction,
+    name: 'Tekton stepaction',
+  },
 ];
 
 const Wrapper = styled('span')`

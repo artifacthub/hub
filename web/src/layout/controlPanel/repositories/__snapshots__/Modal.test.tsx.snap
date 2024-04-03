@@ -165,6 +165,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Tekton pipelines
                     </option>
                     <option
+                      value="23"
+                    >
+                      Tekton stepactions
+                    </option>
+                    <option
                       value="7"
                     >
                       Tekton tasks

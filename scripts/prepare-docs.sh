@@ -28,6 +28,7 @@ cat docs/www/headers/olm_operators_repositories docs/olm_operators_repositories.
 cat docs/www/headers/opa_policies_repositories docs/opa_policies_repositories.md > docs/www/content/topics/repositories/opa-policies.md
 cat docs/www/headers/tekton_pipelines_repositories docs/tekton_pipelines_repositories.md > docs/www/content/topics/repositories/tekton-pipelines.md
 cat docs/www/headers/tekton_tasks_repositories docs/tekton_tasks_repositories.md > docs/www/content/topics/repositories/tekton-tasks.md
+cat docs/www/headers/tekton_stepactions_repositories docs/tekton_stepactions_repositories.md > docs/www/content/topics/repositories/tekton-stepactions.md
 cat docs/www/headers/tinkerbell_actions_repositories docs/tinkerbell_actions_repositories.md > docs/www/content/topics/repositories/tinkerbell-actions.md
 cat docs/www/headers/security_report docs/security_report.md > docs/www/content/topics/security_report.md
 cat docs/www/headers/cli docs/cli.md > docs/www/content/topics/cli.md

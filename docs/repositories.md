@@ -25,6 +25,7 @@ The following repositories kinds are supported at the moment:
 - [OPA policies repositories](https://github.com/artifacthub/hub/blob/master/docs/opa_policies_repositories.md)
 - [Tekton pipelines repositories](https://github.com/artifacthub/hub/blob/master/docs/tekton_pipelines_repositories.md)
 - [Tekton tasks repositories](https://github.com/artifacthub/hub/blob/master/docs/tekton_tasks_repositories.md)
+- [Tekton stepactions repositories](https://github.com/artifacthub/hub/blob/master/docs/tekton_stepactions_repositories.md)
 - [Tinkerbell actions repositories](https://github.com/artifacthub/hub/blob/master/docs/tinkerbell_actions_repositories.md)
 
 This guide also contains additional information about the following repositories topics:

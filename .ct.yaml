@@ -1,3 +1,4 @@
 helm-extra-args: --timeout 180s
 chart-repos:
   - stable=https://charts.helm.sh/stable
+validate-maintainers: false

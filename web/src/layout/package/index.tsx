@@ -1086,6 +1086,7 @@ const PackageView = () => {
                             switch (detail.repository.kind) {
                               case RepositoryKind.TektonTask:
                               case RepositoryKind.TektonPipeline:
+                              case RepositoryKind.TektonStepAction:
                                 return (
                                   <>
                                     <div className="d-none d-lg-block">

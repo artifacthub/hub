@@ -101,6 +101,10 @@ const ICONS = {
     default: '/static/media/inspektor-gadget.svg',
     white: '/static/media/inspektor-gadget-light.svg',
   },
+  [RepositoryKind.TektonStepAction]: {
+    default: '/static/media/tekton-pkg.svg',
+    white: '/static/media/tekton-pkg-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

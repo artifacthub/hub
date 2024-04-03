@@ -90,7 +90,7 @@ func newLintCmd() *cobra.Command {
 			return lint(opts, &output{cmd.OutOrStdout()})
 		},
 	}
-	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: argo-template, backstage, coredns, falco, gatekeeper, headlamp, helm, helm-plugin, inspektor-gadget, kcl, keda-scaler, keptn, knative-client-plugin, krew, kubearmor, kubewarden, kyverno, olm, opa, tbaction, tekton-task, tekton-pipeline")
+	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: argo-template, backstage, coredns, falco, gatekeeper, headlamp, helm, helm-plugin, inspektor-gadget, kcl, keda-scaler, keptn, knative-client-plugin, krew, kubearmor, kubewarden, kyverno, olm, opa, tbaction, tekton-task, tekton-pipeline, tekton-stepaction")
 	lintCmd.Flags().StringVarP(&opts.path, "path", "p", ".", "repository's packages path")
 	return lintCmd
 }
@@ -134,7 +134,7 @@ func lint(opts *lintOptions, out *output) error {
 		report = lintKrew(opts.path)
 	case hub.OLM:
 		report = lintOLM(opts.path)
-	case hub.TektonTask, hub.TektonPipeline:
+	case hub.TektonTask, hub.TektonPipeline, hub.TektonStepAction:
 		report = lintTekton(opts.path, kind)
 	default:
 		return errors.New("kind not supported yet")
@@ -376,9 +376,9 @@ func lintOLM(basePath string) *lintReport {
 	return report
 }
 
-// lintTekton checks if the Tekton tasks or pipelines available in the path
-// provided are ready to be processed by the Tekton tracker source and listed
-// on Artifact Hub.
+// lintTekton checks if the Tekton tasks, pipelines or stepactions available in
+// the path provided are ready to be processed by the Tekton tracker source and
+// listed on Artifact Hub.
 func lintTekton(basePath string, kind hub.RepositoryKind) *lintReport {
 	report := &lintReport{}
 	repository := &hub.Repository{

@@ -325,6 +325,7 @@ const Details = (props: Props) => {
             );
 
           case RepositoryKind.TektonTask:
+          case RepositoryKind.TektonStepAction:
             return (
               <>
                 {props.package.data && props.package.data.pipelinesMinVersion && (

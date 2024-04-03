@@ -191,7 +191,11 @@ const RepositoryModal = (props: Props) => {
           };
         }
 
-        if ([RepositoryKind.TektonTask, RepositoryKind.TektonPipeline].includes(selectedKind)) {
+        if (
+          [RepositoryKind.TektonTask, RepositoryKind.TektonPipeline, RepositoryKind.TektonStepAction].includes(
+            selectedKind
+          )
+        ) {
           repository.data = {
             versioning: versioning,
           };
@@ -497,6 +501,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.TektonStepAction:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/tekton-stepactions"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Tekton stepactions
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -527,6 +542,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.KCL:
               case RepositoryKind.Headlamp:
               case RepositoryKind.InspektorGadget:
+              case RepositoryKind.TektonStepAction:
                 return (
                   <>
                     <p
@@ -921,6 +937,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.KCL,
               RepositoryKind.Headlamp,
               RepositoryKind.InspektorGadget,
+              RepositoryKind.TektonStepAction,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -941,7 +958,9 @@ const RepositoryModal = (props: Props) => {
               </div>
             )}
 
-            {[RepositoryKind.TektonTask, RepositoryKind.TektonPipeline].includes(selectedKind) && (
+            {[RepositoryKind.TektonTask, RepositoryKind.TektonPipeline, RepositoryKind.TektonStepAction].includes(
+              selectedKind
+            ) && (
               <>
                 <label className={`form-label fw-bold ${styles.label}`}>Versioning</label>
 
@@ -1068,6 +1087,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.KCL,
               RepositoryKind.Headlamp,
               RepositoryKind.InspektorGadget,
+              RepositoryKind.TektonStepAction,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

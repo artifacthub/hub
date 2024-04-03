@@ -115,6 +115,9 @@ const (
 
 	// InspektorGadget represents a repository with Inspektor Gadgets.
 	InspektorGadget RepositoryKind = 22
+
+	// TektonStepAction represents a repository with Tekton stepactions.
+	TektonStepAction RepositoryKind = 23
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -166,6 +169,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "tekton-pipeline"
 	case TektonTask:
 		return "tekton-task"
+	case TektonStepAction:
+		return "tekton-stepaction"
 	default:
 		return ""
 	}
@@ -221,6 +226,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return TektonPipeline, nil
 	case "tekton-task":
 		return TektonTask, nil
+	case "tekton-stepaction":
+		return TektonStepAction, nil
 	default:
 		return -1, errors.New("invalid kind name")
 	}
