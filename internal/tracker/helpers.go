@@ -126,6 +126,7 @@ func SetupSource(i *hub.TrackerSourceInput) hub.TrackerSource {
 		hub.KubeArmor,
 		hub.Kubewarden,
 		hub.Kyverno,
+		hub.Meshery,
 		hub.OPA,
 		hub.TBAction:
 		source = generic.NewTrackerSource(i)

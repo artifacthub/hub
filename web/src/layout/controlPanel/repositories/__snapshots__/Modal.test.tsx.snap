@@ -150,6 +150,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Kyverno policies
                     </option>
                     <option
+                      value="24"
+                    >
+                      Meshery designs
+                    </option>
+                    <option
                       value="3"
                     >
                       OLM operators

@@ -21,6 +21,7 @@ The following repositories kinds are supported at the moment:
 - [KubeArmor policies repositories](https://github.com/artifacthub/hub/blob/master/docs/kubearmor_policies_repositories.md)
 - [Kubewarden policies repositories](https://github.com/artifacthub/hub/blob/master/docs/kubewarden_policies_repositories.md)
 - [Kyverno policies repositories](https://github.com/artifacthub/hub/blob/master/docs/kyverno_policies_repositories.md)
+- [Meshery designs repositories](https://github.com/artifacthub/hub/blob/master/docs/meshery_designs_repositories.md)
 - [OLM operators repositories](https://github.com/artifacthub/hub/blob/master/docs/olm_operators_repositories.md)
 - [OPA policies repositories](https://github.com/artifacthub/hub/blob/master/docs/opa_policies_repositories.md)
 - [Tekton pipelines repositories](https://github.com/artifacthub/hub/blob/master/docs/tekton_pipelines_repositories.md)

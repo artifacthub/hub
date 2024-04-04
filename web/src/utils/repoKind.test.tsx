@@ -83,6 +83,10 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('tekton-stepaction')).toBe(RepositoryKind.TektonStepAction);
     });
 
+    it('meshery', () => {
+      expect(methods.getRepoKind('meshery')).toBe(RepositoryKind.MesheryDesign);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -167,6 +171,10 @@ describe('repoKind', () => {
 
     it('tekton-stepaction kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.TektonStepAction)).toBe('tekton-stepaction');
+    });
+
+    it('meshery design kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.MesheryDesign)).toBe('meshery');
     });
 
     it('unknown kind', () => {

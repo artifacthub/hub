@@ -65,6 +65,7 @@ import Details from './Details';
 import GatekeeperExamplesModal from './GatekeeperExamplesModal';
 import InProductionButton from './InProductionButton';
 import InstallationModal from './installation/Modal';
+import MesheryDesignModal from './MesheryDesignModal';
 import ModalHeader from './ModalHeader';
 import MoreActionsButton from './MoreActionsButton';
 import styles from './PackageView.module.css';
@@ -435,6 +436,20 @@ const PackageView = () => {
       manifest = detail.data.manifestRaw as string;
     }
     return manifest;
+  };
+
+  const getMesheryDesign = (): string | undefined => {
+    let design: string | undefined;
+    if (
+      !isUndefined(detail) &&
+      !isNull(detail) &&
+      !isNull(detail.data) &&
+      !isUndefined(detail.data) &&
+      !isUndefined(detail.data.design)
+    ) {
+      design = detail.data.design as string;
+    }
+    return design;
   };
 
   const getKyvernoPolicy = (): string | undefined => {
@@ -1263,6 +1278,15 @@ const PackageView = () => {
                                       files={getKubeArmorPolicies() as any}
                                     />
                                   </div>
+                                );
+
+                              case RepositoryKind.MesheryDesign:
+                                return (
+                                  <MesheryDesignModal
+                                    normalizedName={detail.normalizedName}
+                                    design={getMesheryDesign()}
+                                    visibleDesign={!isNull(visibleModal) && visibleModal === 'design'}
+                                  />
                                 );
 
                               default:

@@ -50,6 +50,8 @@ const getRepoKind = (repoName: string): RepositoryKind | null => {
       return RepositoryKind.InspektorGadget;
     case 'tekton-stepaction':
       return RepositoryKind.TektonStepAction;
+    case 'meshery':
+      return RepositoryKind.MesheryDesign;
     default:
       return null;
   }
@@ -105,6 +107,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'inspektor-gadget';
     case RepositoryKind.TektonStepAction:
       return 'tekton-stepaction';
+    case RepositoryKind.MesheryDesign:
+      return 'meshery';
     default:
       return null;
   }

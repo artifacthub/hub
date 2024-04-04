@@ -25,6 +25,7 @@ export enum RepositoryKind {
   Headlamp,
   InspektorGadget,
   TektonStepAction,
+  MesheryDesign,
 }
 
 export enum PackageCategory {
@@ -249,6 +250,7 @@ export interface PackageData {
   customResourcesDefinitionsExamples?: string;
   customResourcesDefinitions?: CustomResourcesDefinition[];
   isGlobalOperator?: boolean;
+  design?: string;
   manifestRaw?: string;
   template?: string;
   pipelinesMinVersion?: string;

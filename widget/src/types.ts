@@ -51,6 +51,7 @@ export enum RepositoryKind {
   Headlamp,
   InspektorGadget,
   TektonStepAction,
+  MesheryDesign,
 }
 
 export interface SearchResults {

@@ -512,6 +512,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.MesheryDesign:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/meshery-designs"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Meshery designs
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -543,6 +554,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.Headlamp:
               case RepositoryKind.InspektorGadget:
               case RepositoryKind.TektonStepAction:
+              case RepositoryKind.MesheryDesign:
                 return (
                   <>
                     <p
@@ -938,6 +950,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Headlamp,
               RepositoryKind.InspektorGadget,
               RepositoryKind.TektonStepAction,
+              RepositoryKind.MesheryDesign,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -1088,6 +1101,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.Headlamp,
               RepositoryKind.InspektorGadget,
               RepositoryKind.TektonStepAction,
+              RepositoryKind.MesheryDesign,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

@@ -1529,6 +1529,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/meshery/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getMesheryDesignsDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MesheryDesign"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/opa/{repoName}/{packageName}":
     get:
       tags:
@@ -2094,6 +2117,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/KyvernoPolicy"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/meshery/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getMesheryDesignVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MesheryDesign"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -4299,6 +4346,20 @@ components:
           type: boolean
           nullable: false
           example: true
+    MesheryDesign:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              nullable: false
+              properties:
+                design:
+                  type: string
+                  additionalProperties:
+                    type: string
+                  example: "name: sample"
     OLMPackage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -4907,6 +4968,7 @@ components:
           * `21` - Headlamp plugins
           * `22` - Inspektor gadgets
           * `23` - Tekton stepactions
+          * `24` - Meshery designs
     RepositoryKindParam:
       type: string
       enum:
@@ -4934,6 +4996,7 @@ components:
         - headlamp
         - inspektor-gadget
         - tekton-stepaction
+        - meshery
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -4960,6 +5023,7 @@ components:
         * `headlamp` - Headlamp plugins
         * `inspektor-gadget` - Inspektor gadgets
         * `tekton-stepaction` - Tekton stepactions
+        * `meshery` - Meshery designs
     RepositorySummary:
       type: object
       required:
@@ -5503,6 +5567,7 @@ components:
           * `21` - Headlamp plugins
           * `22` - Inspektor gadgets
           * `23` - Tekton stepactions
+          * `24` - Meshery designs
     PackageNameParam:
       in: path
       name: packageName
