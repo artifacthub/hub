@@ -42,6 +42,10 @@ const (
 	// contains the raw policy.
 	KyvernoPolicyKey = "policy"
 
+	// mesheryDesignKey represents the key used in the package's data field that
+	// contains the design.
+	MesheryDesignKey = "design"
+
 	// OPAPoliciesKey represents the key used in the package's data field that
 	// contains the raw policies.
 	OPAPoliciesKey = "policies"
@@ -57,6 +61,10 @@ const (
 	// kubeArmorPoliciesSuffix is the suffix that each of the policies files in
 	// the package must use.
 	kubeArmorPoliciesSuffix = ".yaml"
+
+	// mesheryDesignFile represents the filename that contains the Meshery
+	// design file.
+	mesheryDesignFile = "design.yml"
 
 	// opaPoliciesSuffix is the suffix that each of the policies files in the
 	// package must use.
@@ -218,6 +226,8 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 		kindData, err = prepareKubeArmorData(pkgPath, ignorer)
 	case hub.Kyverno:
 		kindData, err = prepareKyvernoData(pkgPath)
+	case hub.Meshery:
+		kindData, err = prepareMesheryData(pkgPath)
 	case hub.OPA:
 		kindData, err = prepareOPAData(pkgPath, ignorer)
 	}
@@ -360,6 +370,22 @@ func prepareKyvernoData(pkgPath string) (map[string]interface{}, error) {
 	// Return package data field
 	return map[string]interface{}{
 		KyvernoPolicyKey: string(policy),
+	}, nil
+}
+
+// prepareMesheryData reads and formats Meshery designs specific data available
+// in the path provided, returning the resulting data structure.
+func prepareMesheryData(pkgPath string) (map[string]interface{}, error) {
+	// Read design file
+	designPath := path.Join(pkgPath, mesheryDesignFile)
+	design, err := util.ReadRegularFile(designPath)
+	if err != nil {
+		return nil, fmt.Errorf("error reading meshery design file: %w", err)
+	}
+
+	// Return package data field
+	return map[string]interface{}{
+		MesheryDesignKey: string(design),
 	}, nil
 }
 

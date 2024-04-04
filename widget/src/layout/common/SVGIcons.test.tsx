@@ -128,6 +128,11 @@ describe('SVGIcons', () => {
     expect(screen.getByTitle('inspektor-gadget'));
   });
 
+  it('renders Meshery design icon', () => {
+    render(<SVGIcons name="meshery" />);
+    expect(screen.getByTitle('meshery'));
+  });
+
   it('does not render when name is not in the list', () => {
     render(<SVGIcons name="not-listed" />);
     expect(screen.getByTestId('iconWrapper')).toBeEmptyDOMElement();

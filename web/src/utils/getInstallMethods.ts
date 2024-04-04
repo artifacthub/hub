@@ -113,6 +113,7 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
         case RepositoryKind.KCL:
         case RepositoryKind.Headlamp:
         case RepositoryKind.InspektorGadget:
+        case RepositoryKind.MesheryDesign:
           if (isUndefined(pkg.install)) {
             output.errorMessage = 'This package does not include installation instructions yet.';
             hasError = true;

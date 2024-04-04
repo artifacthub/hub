@@ -118,6 +118,9 @@ const (
 
 	// TektonStepAction represents a repository with Tekton stepactions.
 	TektonStepAction RepositoryKind = 23
+
+	// Meshery represents a repository with Meshery designs.
+	Meshery RepositoryKind = 24
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -159,6 +162,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "kubewarden"
 	case Kyverno:
 		return "kyverno"
+	case Meshery:
+		return "meshery"
 	case OLM:
 		return "olm"
 	case OPA:
@@ -216,6 +221,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return Kubewarden, nil
 	case "kyverno":
 		return Kyverno, nil
+	case "meshery":
+		return Meshery, nil
 	case "olm":
 		return OLM, nil
 	case "opa":

@@ -105,6 +105,10 @@ const ICONS = {
     default: '/static/media/tekton-pkg.svg',
     white: '/static/media/tekton-pkg-light.svg',
   },
+  [RepositoryKind.MesheryDesign]: {
+    default: '/static/media/meshery.svg',
+    white: '/static/media/meshery-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

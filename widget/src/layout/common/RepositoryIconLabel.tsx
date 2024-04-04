@@ -112,6 +112,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.TektonStepAction,
     name: 'Tekton stepaction',
   },
+  {
+    kind: RepositoryKind.MesheryDesign,
+    name: 'Meshery design',
+  },
 ];
 
 const Wrapper = styled('span')`

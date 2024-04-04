@@ -1,0 +1,39 @@
+.title span {
+  font-size: 90%;
+}
+
+.syntaxWrapper {
+  border-color: var(--color-black-15) !important;
+  background-color: var(--extra-light-gray);
+}
+
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .modalDialog {
+    max-width: 80% !important;
+    min-height: calc(100% - 10rem) !important;
+    max-height: calc(100% - 10rem) !important;
+    margin: 5rem auto !important;
+  }
+}
+
+@media only screen and (max-height: 700px) {
+  .modalDialog {
+    min-height: calc(100% - 6rem) !important;
+    max-height: calc(100% - 6rem) !important;
+    margin: 3rem auto !important;
+  }
+
+  .modalFooter {
+    display: none;
+  }
+
+  .title {
+    font-size: 1.35rem;
+  }
+}
