@@ -254,7 +254,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     label: 'meshery',
     name: 'Meshery designs',
     singular: 'Meshery design',
-    plural: 'Mesher designs',
+    plural: 'Meshery designs',
     icon: <RepositoryIcon kind={RepositoryKind.MesheryDesign} className="mw-100 mh-100" />,
     active: true,
   },
