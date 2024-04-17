@@ -168,6 +168,20 @@ const SVGIcons = (props: Props) => (
             </svg>
           );
 
+        case 'valuesSchema':
+          return (
+            <svg width="1em" height="1em" fill="none" stroke="currentColor" strokeWidth="0" viewBox="0 0 24 24">
+              <title>{props.name}</title>
+              <path
+                fill="currentColor"
+                fillRule="evenodd"
+                stroke="none"
+                d="M9 1H1V9H9V6H11V20H15V23H23V15H15V18H13V6H15V9H23V1H15V4H9V1ZM21 3H17V7H21V3ZM17 17H21V21H17V17Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          );
+
         case 'cncf':
           return (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0,389,389" version="1.1">

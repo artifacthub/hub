@@ -13,6 +13,7 @@ export interface PackageSummary {
   cncf?: boolean;
   signed?: boolean;
   deprecated?: boolean;
+  hasValuesSchema?: boolean;
 }
 
 export interface Repository {

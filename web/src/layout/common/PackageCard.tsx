@@ -21,6 +21,7 @@ import CNCF from './badges/CNCF';
 import Deprecated from './badges/Deprecated';
 import Official from './badges/Official';
 import Signed from './badges/Signed';
+import ValuesSchemaBadge from './badges/ValuesSchema';
 import VerifiedPublisher from './badges/VerifiedPublisher';
 import styles from './PackageCard.module.css';
 import PackageCategoryLabel from './PackageCategoryLabel';
@@ -273,6 +274,12 @@ const PackageCard = (props: Props) => {
                 <div className="d-flex flex-row ms-auto">
                   {props.package.deprecated && <Deprecated className="d-inline mt-3 ms-2" />}
                   {(props.package.cncf || props.package.repository.cncf) && <CNCF className="d-inline mt-3 ms-2" />}
+                  {props.package.repository.kind === RepositoryKind.Helm && (
+                    <ValuesSchemaBadge
+                      hasValuesSchema={props.package.hasValuesSchema || false}
+                      className="d-inline mt-3 ms-2"
+                    />
+                  )}
                   <Signed
                     signed={props.package.signed}
                     signatures={props.package.signatures}

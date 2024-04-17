@@ -247,7 +247,7 @@ exports[`Widget creates snapshot 1`] = `
             class="sc-ikkxIA bGCYMV"
           >
             <div
-              class="sc-eqUAAy iJJbyO verified"
+              class="sc-eqUAAy iwndgS verified"
             >
               <div
                 aria-hidden="true"
@@ -273,7 +273,7 @@ exports[`Widget creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="sc-eqUAAy iJJbyO official"
+              class="sc-eqUAAy iwndgS official"
             >
               <div
                 aria-hidden="true"
