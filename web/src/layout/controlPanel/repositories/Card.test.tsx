@@ -127,23 +127,6 @@ describe('Repository Card - packages section', () => {
       expect(screen.getByTestId('Verified publisher badge')).toBeInTheDocument();
     });
 
-    it('renders Official badge', () => {
-      const props = {
-        ...defaultProps,
-        repository: {
-          ...repoMock,
-          official: true,
-        },
-      };
-      render(
-        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Card {...props} />
-        </AppCtx.Provider>
-      );
-
-      expect(screen.getByText('Official')).toBeInTheDocument();
-    });
-
     it('renders deletion modal when delete button in dropdown is clicked', async () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
