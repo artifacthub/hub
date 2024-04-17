@@ -83,7 +83,8 @@ begin
             r.scanner_disabled as repository_scanner_disabled,
             u.alias as user_alias,
             o.name as organization_name,
-            o.display_name as organization_display_name
+            o.display_name as organization_display_name,
+            (s.values_schema is not null and s.values_schema <> '{}') as has_values_schema
         from package p
         join snapshot s using (package_id)
         join repository r using (repository_id)
@@ -176,6 +177,7 @@ begin
                     'app_version', app_version,
                     'license', license,
                     'deprecated', deprecated,
+                    'has_values_schema', has_values_schema,
                     'signed', signed,
                     'signatures', signatures,
                     'security_report_summary', security_report_summary,
