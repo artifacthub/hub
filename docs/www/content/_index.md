@@ -5,7 +5,7 @@ weight: 1
 
 # Welcome
 
-Welcome to the [Artifact Hub](https://artifacthub.io/) documentation. Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
+Welcome to the [Artifact Hub](https://artifacthub.io/) documentation. Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.
 
 The documentation is organized in the following topics:
 

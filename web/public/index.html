@@ -10,7 +10,7 @@
     <link rel="manifest" href="/manifest.json" />
     <% if (process.env.NODE_ENV === 'development') { %>
       <title>Artifact Hub</title>
-      <meta name="description" content="Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages." />
+      <meta name="description" content="Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages." />
       <meta name="artifacthub:siteName" content="Artifact Hub" />
       <meta name="artifacthub:websiteLogo" content="/static/media/logo/artifacthub-brand-white.svg" />
       <meta name="artifacthub:primaryColor" content="#417598" />
@@ -28,6 +28,7 @@
     <% } else { %>
       <title>{{ .title }}</title>
       <meta name="description" content="{{ .description }}" />
+      <meta name="keywords" content="Artifact Hub, Cloud Native, Kubernetes, packages"/>
       <meta name="artifacthub:siteName" content="{{ .siteName }}" />
       <meta name="artifacthub:websiteLogo" content="{{ .websiteLogo }}" />
       <meta name="artifacthub:primaryColor" content="{{ .primaryColor }}" />

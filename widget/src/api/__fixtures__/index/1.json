@@ -3,7 +3,7 @@
   "name": "artifact-hub",
   "normalized_name": "artifact-hub",
   "stars": 26,
-  "description": "Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.",
+  "description": "Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.",
   "logo_image_id": "3cfb161e-2652-43b9-ada1-c1ced4b20111",
   "version": "0.20.0",
   "app_version": "0.20.0",

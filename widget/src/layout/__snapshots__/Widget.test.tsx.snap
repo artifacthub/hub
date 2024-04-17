@@ -241,7 +241,7 @@ exports[`Widget creates snapshot 1`] = `
           <div
             class="sc-dAbbOL kBlLZO"
           >
-            Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
+            Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.
           </div>
           <div
             class="sc-ikkxIA bGCYMV"

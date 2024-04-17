@@ -13,7 +13,7 @@ const defaultPackage: Package = {
   logoImageId: 'f4d39ecd-b710-4b4e-a88f-234d94d73fce',
   stars: 0,
   description:
-    'Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.',
+    'Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.',
   version: '0.15.0',
   appVersion: '0.15.0',
   license: 'Apache-2.0',

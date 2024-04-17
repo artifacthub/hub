@@ -4,7 +4,7 @@ const siteName = getMetaTag('siteName');
 
 const updateMetaIndex = (
   title: string = siteName,
-  description: string = 'Find, install and publish Kubernetes package'
+  description: string = 'Find, install and publish Cloud Native packages'
 ): void => {
   document.title = title;
   document.querySelector(`meta[property='og:title']`)!.setAttribute('content', title);
