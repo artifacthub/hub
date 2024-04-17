@@ -11,7 +11,6 @@ interface Props {
   dropdownAlignment?: 'start' | 'end';
   noDropdown?: boolean;
   smallSize?: boolean;
-  inRepo?: boolean;
 }
 
 const Official = (props: Props) => {
@@ -32,8 +31,7 @@ const Official = (props: Props) => {
           <div className="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1">Official</div>
 
           <p>
-            This {!isUndefined(props.inRepo) && props.inRepo ? 'repository' : 'package'} is {isOfficial ? '' : 'not'}{' '}
-            marked as <span className="fw-bold">official</span>.
+            This package is {isOfficial ? '' : 'not'} marked as <span className="fw-bold">official</span>.
           </p>
           <p className={`mb-0 text-muted ${styles.legend}`}>
             In Artifact Hub, the <code>official</code> status means that the publisher{' '}
