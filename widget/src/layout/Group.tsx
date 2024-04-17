@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import API from '../api';
-import { PackageSummary } from '../types';
+import { PackageSummary, RepositoryKind } from '../types';
 import Loading from './common/Loading';
 import Widget from './Widget';
 
@@ -52,7 +52,11 @@ const hasBadges = (packages: PackageSummary[] | null): boolean => {
   if (packages) {
     return some(
       packages,
-      (pkg: PackageSummary) => pkg.official || pkg.repository.official || pkg.repository.verifiedPublisher
+      (pkg: PackageSummary) =>
+        pkg.official ||
+        pkg.repository.official ||
+        pkg.repository.verifiedPublisher ||
+        (pkg.repository.kind === RepositoryKind.Helm && pkg.hasValuesSchema)
     );
   }
 

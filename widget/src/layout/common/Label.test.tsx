@@ -16,4 +16,9 @@ describe('Label', () => {
     render(<Label {...defaultProps} />);
     expect(screen.getByTitle('official')).toBeInTheDocument();
   });
+
+  it('renders valuesSchema', () => {
+    render(<Label type="valuesSchema" />);
+    expect(screen.getByTitle('valuesSchema')).toBeInTheDocument();
+  });
 });

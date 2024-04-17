@@ -23,6 +23,10 @@ const LabelWrapper = styled('div')`
     background-color: #645cbb;
   }
 
+  &.valuesSchema {
+    background-color: #fca311;
+  }
+
   &.cncf {
     background-color: transparent;
 

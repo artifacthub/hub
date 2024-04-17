@@ -44,6 +44,7 @@ import CNCF from '../common/badges/CNCF';
 import Deprecated from '../common/badges/Deprecated';
 import Official from '../common/badges/Official';
 import Signed from '../common/badges/Signed';
+import ValuesSchemaBagde from '../common/badges/ValuesSchema';
 import VerifiedPublisher from '../common/badges/VerifiedPublisher';
 import BlockCodeButtons from '../common/BlockCodeButtons';
 import ContentDefaultModal from '../common/ContentDefaultModal';
@@ -931,6 +932,13 @@ const PackageView = () => {
                       <div className="d-flex flex-row mt-3 me-4">
                         {detail.deprecated && <Deprecated className="me-2" dropdownAlignment="start" />}
                         {(detail.cncf || detail.repository.cncf) && <CNCF className="me-2" dropdownAlignment="start" />}
+                        {detail.repository.kind === RepositoryKind.Helm && (
+                          <ValuesSchemaBagde
+                            hasValuesSchema={detail.hasValuesSchema || false}
+                            className="me-2"
+                            dropdownAlignment="start"
+                          />
+                        )}
                         <Signed
                           signed={detail.signed}
                           signatures={detail.signatures}

@@ -466,11 +466,16 @@ export default function Widget(props: Props) {
 
                 {(packageSummary.official ||
                   packageSummary.repository.official ||
-                  packageSummary.repository.verifiedPublisher) && (
+                  packageSummary.repository.verifiedPublisher ||
+                  (packageSummary.repository.kind === RepositoryKind.Helm && packageSummary.hasValuesSchema)) && (
                   <BadgesWrapper>
                     {packageSummary.deprecated && <Label type="deprecated" />}
 
                     {(packageSummary.cncf || packageSummary.repository.cncf) && <Label type="cncf" />}
+
+                    {packageSummary.repository.kind === RepositoryKind.Helm && packageSummary.hasValuesSchema && (
+                      <Label type="valuesSchema" />
+                    )}
 
                     {packageSummary.signed && <Label type="signed" />}
 
