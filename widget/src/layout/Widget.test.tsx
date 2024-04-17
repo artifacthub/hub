@@ -67,7 +67,7 @@ describe('Widget', () => {
     expect(await screen.findByText('artifact-hub')).toBeInTheDocument();
     expect(
       screen.getByText(
-        'Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.'
+        'Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.'
       )
     ).toBeInTheDocument();
     expect(screen.getByTitle('logo')).toBeInTheDocument();
@@ -148,7 +148,7 @@ describe('Widget', () => {
     expect(screen.getByText('artifact-hub')).toBeInTheDocument();
     expect(
       screen.getByText(
-        'Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.'
+        'Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.'
       )
     ).toBeInTheDocument();
     expect(screen.getByTitle('logo')).toBeInTheDocument();

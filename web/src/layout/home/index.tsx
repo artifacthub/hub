@@ -88,14 +88,14 @@ const HomeView = () => {
       <div className={`jumbotron mb-0 text-center border-0 ${styles.jumbotron}`}>
         <div
           role="banner"
-          aria-label="Find, install and publisher Kubernetes packages"
+          aria-label="Find, install and publisher Cloud Native packages"
           className={`display-4 text-center d-block d-xxl-flex justify-content-center noFocus ${styles.mainTitle}`}
           id="content"
           tabIndex={-1}
         >
           Find, install and publish
           <br />
-          <span className={styles.secondLine}>Kubernetes packages</span>
+          <span className={styles.secondLine}>Cloud Native packages</span>
         </div>
 
         <div className="mt-4 mt-sm-5 text-center">
@@ -227,8 +227,8 @@ const HomeView = () => {
           <div className={`py-5 textLight fs-4 fw-light ${styles.about}`}>
             <div className="container-lg px-4 px-sm-0 py-0 py-md-5">
               <div className="text-center px-3 px-xs-0">
-                Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
-                configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco
+                Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native
+                packages and configurations. For example, this could include Helm charts and plugins, Falco
                 configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions,
                 kubectl plugins, Tekton tasks, pipelines and stepactions, KEDA scalers, CoreDNS plugins, Keptn
                 integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage

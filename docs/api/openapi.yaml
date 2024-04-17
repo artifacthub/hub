@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Artifact Hub
-  description: "Find, install and publish Kubernetes packages"
+  description: "Find, install and publish Cloud Native packages"
   version: 1.17.0
   contact:
     name: Artifact Hub support
@@ -987,7 +987,7 @@ paths:
                         stars: 2
                         description: >-
                           Artifact Hub is a web-based application that enables
-                          finding, installing, and publishing Kubernetes
+                          finding, installing, and publishing Cloud Native
                           packages.
                         version: 0.1.0
                         app_version: 0.1.0
@@ -5404,7 +5404,7 @@ components:
       schema:
         type: boolean
       required: false
-      description: Whether to get only pacakges published by CNCF projects
+      description: Whether to get only packages published by CNCF projects
     OfficialParam:
       in: query
       name: official

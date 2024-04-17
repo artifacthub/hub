@@ -1,6 +1,6 @@
 # Artifact Hub
 
-[Artifact Hub](https://artifacthub.io) is a web-based application that enables finding, installing, and publishing Kubernetes packages.
+[Artifact Hub](https://artifacthub.io) is a web-based application that enables finding, installing, and publishing Cloud Native packages.
 
 ## Introduction
 

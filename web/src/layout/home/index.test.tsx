@@ -45,7 +45,7 @@ describe('Home index', () => {
       expect(API.getStats).toHaveBeenCalledTimes(1);
     });
 
-    expect(await screen.findByText('Kubernetes packages')).toBeInTheDocument();
+    expect(await screen.findByText('Cloud Native packages')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -64,7 +64,7 @@ describe('Home index', () => {
         expect(API.getStats).toHaveBeenCalledTimes(1);
       });
 
-      expect(await screen.findByText('Kubernetes packages')).toBeInTheDocument();
+      expect(await screen.findByText('Cloud Native packages')).toBeInTheDocument();
     });
 
     it('renders dash symbol when results are 0', async () => {
@@ -107,7 +107,7 @@ describe('Home index', () => {
       const heading = await screen.findByRole('banner');
       expect(heading).toBeInTheDocument();
       expect(await screen.findByText(/Find, install and publish/)).toBeInTheDocument();
-      expect(await screen.findByText('Kubernetes packages')).toBeInTheDocument();
+      expect(await screen.findByText('Cloud Native packages')).toBeInTheDocument();
     });
   });
 

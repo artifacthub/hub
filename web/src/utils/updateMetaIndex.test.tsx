@@ -33,7 +33,7 @@ const tests: Test[] = [
 
 const placeholder = {
   title: 'Artifact Hub',
-  description: 'Find, install and publish Kubernetes package',
+  description: 'Find, install and publish Cloud Native packages',
 };
 
 describe('updateMetaIndex', () => {

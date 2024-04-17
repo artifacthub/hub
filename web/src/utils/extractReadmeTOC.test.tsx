@@ -1810,7 +1810,7 @@ const tests = [
             {
               type: 'text',
               value:
-                ' is a web-based application that enables finding, installing, and publishing Kubernetes packages.',
+                ' is a web-based application that enables finding, installing, and publishing Cloud Native packages.',
             },
           ],
         },

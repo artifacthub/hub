@@ -28,7 +28,7 @@ The generated code would be something like this:
   data-responsive="false"
 >
   <blockquote>
-     <p lang="en" dir="ltr"><b>artifact-hub</b>: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.</p>
+     <p lang="en" dir="ltr"><b>artifact-hub</b>: Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.</p>
      &mdash; Open in <a href="https://artifacthub.io/packages/helm/artifact-hub/artifact-hub">Artifact Hub</a>
   </blockquote>
 </div>

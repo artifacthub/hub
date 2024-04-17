@@ -9,7 +9,7 @@ exports[`Home index creates snapshot 1`] = `
       class="jumbotron mb-0 text-center border-0 jumbotron"
     >
       <div
-        aria-label="Find, install and publisher Kubernetes packages"
+        aria-label="Find, install and publisher Cloud Native packages"
         class="display-4 text-center d-block d-xxl-flex justify-content-center noFocus mainTitle"
         id="content"
         role="banner"
@@ -20,7 +20,7 @@ exports[`Home index creates snapshot 1`] = `
         <span
           class="secondLine"
         >
-          Kubernetes packages
+          Cloud Native packages
         </span>
       </div>
       <div
@@ -310,7 +310,7 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-3 px-xs-0"
         >
-          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks, pipelines and stepactions, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo templates, KubeArmor policies, KCL modules, Headlamp plugins, Inspektor gadgets and Meshery designs.
+          Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages and configurations. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, kubectl plugins, Tekton tasks, pipelines and stepactions, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo templates, KubeArmor policies, KCL modules, Headlamp plugins, Inspektor gadgets and Meshery designs.
           <div
             class="py-0 py-lg-5"
           >
