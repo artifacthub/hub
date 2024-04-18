@@ -25,9 +25,9 @@ const SecuritySummary = (props: Props) => {
   };
 
   const getExtraData = (): JSX.Element => {
-    if (props.totalFixableVulnerabilities > 0 || props.totalUniqueVulnerabilities > 0) {
-      const visibleFixable = props.totalFixableVulnerabilities > 0 && !props.allVulnerabilitiesAreFixable;
+    const visibleFixable = props.totalFixableVulnerabilities > 0 && !props.allVulnerabilitiesAreFixable;
 
+    if (visibleFixable || props.totalUniqueVulnerabilities > 0) {
       return (
         <>
           (
