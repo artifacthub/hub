@@ -9,7 +9,6 @@ import API from '../../../api';
 import { FixableVulnerabilitiesInReport, RepositoryKind, SecurityReport, SecurityReportSummary } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import isFuture from '../../../utils/isFuture';
-import sumObjectValues from '../../../utils/sumObjectValues';
 import {
   filterFixableVulnerabilities,
   prepareFixableSummary,
@@ -86,10 +85,10 @@ const SecurityModal = (props: Props) => {
       const fixableVulnerabilities = filterFixableVulnerabilities(currentReport);
       setFixableReport(fixableVulnerabilities);
       setFixableReportSummary(prepareFixableSummary(fixableVulnerabilities));
-      const uniqueSummary = prepareUniqueVulnerabilitiesSummary(currentReport);
-      setUniqueSummary(uniqueSummary);
-      if (!isNull(uniqueSummary)) {
-        setTotalUniqueVulnerabilities(sumObjectValues(uniqueSummary));
+      const uniqueVulnerabilities = prepareUniqueVulnerabilitiesSummary(currentReport);
+      if (!isNull(uniqueVulnerabilities)) {
+        setUniqueSummary(uniqueVulnerabilities.summary);
+        setTotalUniqueVulnerabilities(uniqueVulnerabilities.total);
       }
       activateTargetWhenIsOnlyOne(currentReport);
       setIsLoading(false);

@@ -38,18 +38,22 @@ const prepareFixableSummary = (
   return fixReport;
 };
 
-const prepareUniqueVulnerabilitiesSummary = (currentReport: SecurityReport | null): SecurityReportSummary | null => {
+const prepareUniqueVulnerabilitiesSummary = (
+  currentReport: SecurityReport | null
+): { summary: SecurityReportSummary; total: number } | null => {
   if (isNull(currentReport)) return null;
 
   const fullReportSumary: SecurityReportSummary = {};
   const summary: any = {};
   const uniqueSummaryReport: SecurityReportSummary = {};
+  const allVulnerabilities: string[] = [];
 
   Object.keys(currentReport).forEach((img: string) => {
     currentReport[img].Results.forEach((target: SecurityReportResult) => {
       if (target.Vulnerabilities) {
         target.Vulnerabilities.forEach((vulnerability: Vulnerability) => {
           const severity = vulnerability.Severity.toLowerCase() as VulnerabilitySeverity;
+          allVulnerabilities.push(vulnerability.VulnerabilityID);
           if (isUndefined(summary[severity])) {
             summary[severity] = [vulnerability.VulnerabilityID];
             fullReportSumary[severity] = 1;
@@ -69,7 +73,7 @@ const prepareUniqueVulnerabilitiesSummary = (currentReport: SecurityReport | nul
   if (isEqual(fullReportSumary, uniqueSummaryReport)) {
     return null;
   } else {
-    return uniqueSummaryReport;
+    return { summary: uniqueSummaryReport, total: new Set(allVulnerabilities).size };
   }
 };
 
