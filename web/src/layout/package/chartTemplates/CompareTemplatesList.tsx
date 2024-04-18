@@ -2,7 +2,8 @@ import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { TbSquareDot, TbSquareMinus, TbSquarePlus } from 'react-icons/tb';
+import { FaRegSquareMinus, FaRegSquarePlus } from 'react-icons/fa6';
+import { TbSquareDot } from 'react-icons/tb';
 
 import { ChartTmplTypeFile, CompareChartTemplate, CompareChartTemplateStatus } from '../../../types';
 import styles from './CompareTemplatesList.module.css';
@@ -33,13 +34,13 @@ const CompareTemplatesList = (props: Props) => {
             case CompareChartTemplateStatus.Deleted:
               return (
                 <div className="text-danger" data-testid="tmpl-deleted-icon">
-                  <TbSquareMinus />
+                  <FaRegSquareMinus />
                 </div>
               );
             case CompareChartTemplateStatus.Added:
               return (
                 <span className="text-success" data-testid="tmpl-added-icon">
-                  <TbSquarePlus />
+                  <FaRegSquarePlus />
                 </span>
               );
             case CompareChartTemplateStatus.Modified:
