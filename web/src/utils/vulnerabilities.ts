@@ -1,6 +1,13 @@
-import { filter, isEmpty, isNull, isUndefined } from 'lodash';
+import { filter, isEmpty, isEqual, isNull, isUndefined } from 'lodash';
 
-import { FixableVulnerabilitiesInReport, SecurityReport, SecurityReportResult, Vulnerability } from '../types';
+import {
+  FixableVulnerabilitiesInReport,
+  SecurityReport,
+  SecurityReportResult,
+  SecurityReportSummary,
+  Vulnerability,
+  VulnerabilitySeverity,
+} from '../types';
 import formatSecurityReport from './formatSecurityReport';
 import sumObjectValues from './sumObjectValues';
 
@@ -31,6 +38,41 @@ const prepareFixableSummary = (
   return fixReport;
 };
 
+const prepareUniqueVulnerabilitiesSummary = (currentReport: SecurityReport | null): SecurityReportSummary | null => {
+  if (isNull(currentReport)) return null;
+
+  const fullReportSumary: SecurityReportSummary = {};
+  const summary: any = {};
+  const uniqueSummaryReport: SecurityReportSummary = {};
+
+  Object.keys(currentReport).forEach((img: string) => {
+    currentReport[img].Results.forEach((target: SecurityReportResult) => {
+      if (target.Vulnerabilities) {
+        target.Vulnerabilities.forEach((vulnerability: Vulnerability) => {
+          const severity = vulnerability.Severity.toLowerCase() as VulnerabilitySeverity;
+          if (isUndefined(summary[severity])) {
+            summary[severity] = [vulnerability.VulnerabilityID];
+            fullReportSumary[severity] = 1;
+          } else {
+            summary[severity].push(vulnerability.VulnerabilityID);
+            fullReportSumary[severity]! += 1;
+          }
+        });
+      }
+    });
+  });
+
+  Object.keys(summary).forEach((severity: string) => {
+    uniqueSummaryReport[severity as VulnerabilitySeverity] = new Set(summary[severity]).size;
+  });
+
+  if (isEqual(fullReportSumary, uniqueSummaryReport)) {
+    return null;
+  } else {
+    return uniqueSummaryReport;
+  }
+};
+
 const filterFixableVulnerabilities = (currentReport: SecurityReport | null): SecurityReport | null => {
   if (isNull(currentReport)) return null;
 
@@ -55,4 +97,4 @@ const filterFixableVulnerabilities = (currentReport: SecurityReport | null): Sec
   return tmpReport;
 };
 
-export { filterFixableVulnerabilities, prepareFixableSummary };
+export { filterFixableVulnerabilities, prepareFixableSummary, prepareUniqueVulnerabilitiesSummary };

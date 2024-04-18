@@ -21,6 +21,14 @@ const defaultProps = {
     medium: 41,
     unknown: 0,
   },
+  uniqueSummary: {
+    critical: 2,
+    high: 7,
+    low: 40,
+    medium: 60,
+    unknown: 0,
+  },
+  totalUniqueVulnerabilities: 109,
   allVulnerabilitiesAreFixable: false,
 };
 
@@ -39,15 +47,17 @@ describe('SecuritySummary', () => {
       render(<SecuritySummary {...defaultProps} />);
       expect(screen.getByText('170')).toBeInTheDocument();
       expect(screen.getByText(/have been detected in this package's/)).toBeInTheDocument();
-      expect(screen.getByText('2')).toBeInTheDocument();
+      expect(screen.getAllByText('2')).toHaveLength(2);
       expect(screen.getByText('10')).toBeInTheDocument();
       expect(screen.getByText('53')).toBeInTheDocument();
       expect(screen.getByText('105')).toBeInTheDocument();
       expect(screen.queryByText('0')).toBeNull();
       expect(screen.getByText('80')).toBeInTheDocument();
-      expect(screen.getByText('7')).toBeInTheDocument();
+      expect(screen.getAllByText('7')).toHaveLength(2);
       expect(screen.getByText('32')).toBeInTheDocument();
       expect(screen.getByText('41')).toBeInTheDocument();
+      expect(screen.getByText('40')).toBeInTheDocument();
+      expect(screen.getByText('60')).toBeInTheDocument();
     });
 
     it('renders component with 0 vulnerabilities', () => {
@@ -67,6 +77,8 @@ describe('SecuritySummary', () => {
             low: 0,
           }}
           allVulnerabilitiesAreFixable={false}
+          uniqueSummary={null}
+          totalUniqueVulnerabilities={0}
         />
       );
       expect(screen.getByText(/No vulnerabilities have been detected in this package's/)).toBeInTheDocument();
@@ -90,6 +102,8 @@ describe('SecuritySummary', () => {
             low: 0,
           }}
           allVulnerabilitiesAreFixable={false}
+          uniqueSummary={null}
+          totalUniqueVulnerabilities={0}
         />
       );
       expect(screen.getByText(/No vulnerabilities have been detected in this package's/)).toBeInTheDocument();

@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
 
 import { RepositoryKind, SecurityReportSummary, VulnerabilitySeverity } from '../../../types';
 import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';
@@ -9,6 +9,8 @@ interface Props {
   totalVulnerabilities: number;
   summary: SecurityReportSummary;
   fixableSummary: SecurityReportSummary;
+  uniqueSummary: SecurityReportSummary | null;
+  totalUniqueVulnerabilities: number;
   totalFixableVulnerabilities: number;
   allVulnerabilitiesAreFixable: boolean;
 }
@@ -22,11 +24,25 @@ const SecuritySummary = (props: Props) => {
     }
   };
 
-  const getFixableVulnerabilitiesNumber = (): JSX.Element => {
-    if (props.totalFixableVulnerabilities > 0) {
+  const getExtraData = (): JSX.Element => {
+    if (props.totalFixableVulnerabilities > 0 || props.totalUniqueVulnerabilities > 0) {
+      const visibleFixable = props.totalFixableVulnerabilities > 0 && !props.allVulnerabilitiesAreFixable;
+
       return (
         <>
-          (<span className="fw-bold">{props.totalFixableVulnerabilities}</span> fixable){' '}
+          (
+          {props.totalUniqueVulnerabilities > 0 && (
+            <>
+              <span className="fw-bold">{props.totalUniqueVulnerabilities}</span> unique
+              {visibleFixable && <>, </>}
+            </>
+          )}
+          {visibleFixable && (
+            <>
+              <span className="fw-bold">{props.totalFixableVulnerabilities}</span> fixable
+            </>
+          )}
+          ){' '}
         </>
       );
     } else {
@@ -36,6 +52,7 @@ const SecuritySummary = (props: Props) => {
 
   const renderProgressBar = (summary: SecurityReportSummary, total: number, legend: string): JSX.Element | null => {
     if (total === 0) return null;
+
     return (
       <>
         <div className="fw-bold text-uppercase text-muted">
@@ -70,9 +87,19 @@ const SecuritySummary = (props: Props) => {
   return (
     <div className="mb-5">
       <div className="h5 my-3 pt-2">
-        {getVulnerabilitiesNumber()} vulnerabilities {getFixableVulnerabilitiesNumber()} have been detected in this
-        package's <span className="fw-bold">{props.repoKind === RepositoryKind.Container ? 'image' : 'images'}</span>.
+        {getVulnerabilitiesNumber()} vulnerabilities {getExtraData()} have been detected in this package's{' '}
+        <span className="fw-bold">{props.repoKind === RepositoryKind.Container ? 'image' : 'images'}</span>.
       </div>
+
+      {!isNull(props.uniqueSummary) && (
+        <>
+          {renderProgressBar(
+            props.uniqueSummary,
+            props.totalUniqueVulnerabilities,
+            `Unique vulnerabilities (${props.totalUniqueVulnerabilities})`
+          )}
+        </>
+      )}
 
       {!props.allVulnerabilitiesAreFixable && (
         <>
@@ -87,7 +114,9 @@ const SecuritySummary = (props: Props) => {
       {renderProgressBar(
         props.summary,
         props.totalVulnerabilities,
-        props.allVulnerabilitiesAreFixable ? '' : `All vulnerabilities (${props.totalVulnerabilities})`
+        props.allVulnerabilitiesAreFixable && isNull(props.uniqueSummary)
+          ? ''
+          : `All vulnerabilities (${props.totalVulnerabilities})`
       )}
     </div>
   );
