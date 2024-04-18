@@ -294,6 +294,12 @@ exports[`SecurityModal creates snapshot 1`] = `
                   <span
                     class="fw-bold"
                   >
+                    511
+                  </span>
+                   unique, 
+                  <span
+                    class="fw-bold"
+                  >
                     186
                   </span>
                    fixable)  have been detected in this package's 
@@ -303,6 +309,66 @@ exports[`SecurityModal creates snapshot 1`] = `
                     images
                   </span>
                   .
+                </div>
+                <div
+                  class="fw-bold text-uppercase text-muted"
+                >
+                  <small>
+                    Unique vulnerabilities (511)
+                  </small>
+                </div>
+                <div
+                  class="progress mb-4"
+                  style="height: 25px;"
+                >
+                  <div
+                    aria-label="Vulnerabilities number - critical"
+                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    role="progressbar"
+                    style="width: 0.19569471624266144%; background-color: rgb(150, 0, 3);"
+                  >
+                    <span
+                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                    >
+                      1
+                    </span>
+                  </div>
+                  <div
+                    aria-label="Vulnerabilities number - high"
+                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    role="progressbar"
+                    style="width: 2.544031311154599%; background-color: rgb(223, 42, 25);"
+                  >
+                    <span
+                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                    >
+                      13
+                    </span>
+                  </div>
+                  <div
+                    aria-label="Vulnerabilities number - medium"
+                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    role="progressbar"
+                    style="width: 41.48727984344423%; background-color: rgb(247, 134, 15);"
+                  >
+                    <span
+                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                    >
+                      212
+                    </span>
+                  </div>
+                  <div
+                    aria-label="Vulnerabilities number - low"
+                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    role="progressbar"
+                    style="width: 55.77299412915851%; background-color: rgb(244, 189, 12);"
+                  >
+                    <span
+                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                    >
+                      285
+                    </span>
+                  </div>
                 </div>
                 <div
                   class="fw-bold text-uppercase text-muted"

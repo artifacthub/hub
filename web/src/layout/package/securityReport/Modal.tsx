@@ -9,7 +9,12 @@ import API from '../../../api';
 import { FixableVulnerabilitiesInReport, RepositoryKind, SecurityReport, SecurityReportSummary } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import isFuture from '../../../utils/isFuture';
-import { filterFixableVulnerabilities, prepareFixableSummary } from '../../../utils/vulnerabilities';
+import sumObjectValues from '../../../utils/sumObjectValues';
+import {
+  filterFixableVulnerabilities,
+  prepareFixableSummary,
+  prepareUniqueVulnerabilitiesSummary,
+} from '../../../utils/vulnerabilities';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
 import OldVulnerabilitiesWarning from './OldVulnerabilitiesWarning';
@@ -49,6 +54,8 @@ const SecurityModal = (props: Props) => {
   const [hasOnlyOneTarget, setHasOnlyOneTarget] = useState<boolean>(false);
   const [contentHeight, setContentHeight] = useState<number | undefined>(undefined);
   const [fixableReportSummary, setFixableReportSummary] = useState<FixableVulnerabilitiesInReport | undefined>();
+  const [uniqueSummary, setUniqueSummary] = useState<SecurityReportSummary | null>(null);
+  const [totalUniqueVulnerabilities, setTotalUniqueVulnerabilities] = useState<number>(0);
   const [showOnlyFixableVulnerabilities, setShowOnlyFixableVulnerabilities] = useState<boolean>(false);
   const allVulnerabilitiesAreFixable =
     !isUndefined(fixableReportSummary) && fixableReportSummary.total === props.totalVulnerabilities;
@@ -79,6 +86,11 @@ const SecurityModal = (props: Props) => {
       const fixableVulnerabilities = filterFixableVulnerabilities(currentReport);
       setFixableReport(fixableVulnerabilities);
       setFixableReportSummary(prepareFixableSummary(fixableVulnerabilities));
+      const uniqueSummary = prepareUniqueVulnerabilitiesSummary(currentReport);
+      setUniqueSummary(uniqueSummary);
+      if (!isNull(uniqueSummary)) {
+        setTotalUniqueVulnerabilities(sumObjectValues(uniqueSummary));
+      }
       activateTargetWhenIsOnlyOne(currentReport);
       setIsLoading(false);
       setOpenStatus(true);
@@ -228,6 +240,8 @@ const SecurityModal = (props: Props) => {
                 fixableSummary={fixableReportSummary.summary}
                 totalFixableVulnerabilities={fixableReportSummary.total}
                 allVulnerabilitiesAreFixable={allVulnerabilitiesAreFixable}
+                uniqueSummary={uniqueSummary}
+                totalUniqueVulnerabilities={totalUniqueVulnerabilities}
               />
             )}
 

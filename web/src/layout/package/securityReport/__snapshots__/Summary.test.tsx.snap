@@ -17,6 +17,12 @@ exports[`SecuritySummary creates snapshot 1`] = `
       <span
         class="fw-bold"
       >
+        109
+      </span>
+       unique, 
+      <span
+        class="fw-bold"
+      >
         80
       </span>
        fixable)  have been detected in this package's 
@@ -26,6 +32,66 @@ exports[`SecuritySummary creates snapshot 1`] = `
         images
       </span>
       .
+    </div>
+    <div
+      class="fw-bold text-uppercase text-muted"
+    >
+      <small>
+        Unique vulnerabilities (109)
+      </small>
+    </div>
+    <div
+      class="progress mb-4"
+      style="height: 25px;"
+    >
+      <div
+        aria-label="Vulnerabilities number - critical"
+        class="progress-bar text-dark px-1 fw-bold progressBar"
+        role="progressbar"
+        style="width: 1.834862385321101%; background-color: rgb(150, 0, 3);"
+      >
+        <span
+          class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+        >
+          2
+        </span>
+      </div>
+      <div
+        aria-label="Vulnerabilities number - high"
+        class="progress-bar text-dark px-1 fw-bold progressBar"
+        role="progressbar"
+        style="width: 6.422018348623853%; background-color: rgb(223, 42, 25);"
+      >
+        <span
+          class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+        >
+          7
+        </span>
+      </div>
+      <div
+        aria-label="Vulnerabilities number - medium"
+        class="progress-bar text-dark px-1 fw-bold progressBar"
+        role="progressbar"
+        style="width: 55.04587155963303%; background-color: rgb(247, 134, 15);"
+      >
+        <span
+          class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+        >
+          60
+        </span>
+      </div>
+      <div
+        aria-label="Vulnerabilities number - low"
+        class="progress-bar text-dark px-1 fw-bold progressBar"
+        role="progressbar"
+        style="width: 36.69724770642202%; background-color: rgb(244, 189, 12);"
+      >
+        <span
+          class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+        >
+          40
+        </span>
+      </div>
     </div>
     <div
       class="fw-bold text-uppercase text-muted"
