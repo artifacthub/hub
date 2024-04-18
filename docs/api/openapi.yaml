@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Artifact Hub
   description: "Find, install and publish Cloud Native packages"
-  version: 1.17.0
+  version: 1.18.0
   contact:
     name: Artifact Hub support
     url: https://cloud-native.slack.com/channels/artifact-hub
