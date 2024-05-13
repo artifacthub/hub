@@ -25,7 +25,7 @@ jobs:
           sudo tar -C /usr/local -xzf ${FILENAME}
           sudo ldconfig /usr/local/lib
       - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v4
+        uses: golangci/golangci-lint-action@v6
         with:
           version: v1.51.2
           args: --timeout 10m
@@ -36,7 +36,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Lint OpenAPI specs
-        uses: github/super-linter@v5
+        uses: github/super-linter@v6
         env:
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_OPENAPI: true
