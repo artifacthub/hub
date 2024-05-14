@@ -1,5 +1,7 @@
 import classNames from 'classnames';
-import { isNull, isUndefined, slice } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import slice from 'lodash/slice';
 import { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 

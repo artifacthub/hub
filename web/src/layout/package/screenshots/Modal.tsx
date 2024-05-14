@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useRef, useState } from 'react';
 import { BiImages, BiUnlink } from 'react-icons/bi';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
@@ -81,7 +81,7 @@ const ScreenshotsModal = (props: Props) => {
     if (props.visibleScreenshotsModal && !openStatus) {
       onOpenModal();
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   if (props.screenshots.length === 0) return null;
 

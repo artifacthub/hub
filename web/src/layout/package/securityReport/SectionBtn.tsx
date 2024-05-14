@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useRef } from 'react';
 import { FaLink } from 'react-icons/fa';
 

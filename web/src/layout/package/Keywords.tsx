@@ -1,6 +1,7 @@
-import { compact, uniqWith } from 'lodash';
+import compact from 'lodash/compact';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
+import uniqWith from 'lodash/uniqWith';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +31,7 @@ const Keywords = (props: Props) => {
 
   useEffect(() => {
     setKeywords(cleanKeywords());
-  }, [props.keywords]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.keywords]);
 
   if (keywords.length === 0) return null;
 

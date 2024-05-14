@@ -52,10 +52,11 @@ const UpdateProfile = (props: Props) => {
       await API.updateUserProfile(user);
       dispatch(updateUser(formattedUser));
       setIsSending(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
-        let error = compoundErrorMessage(err, 'An error occurred updating your profile');
+        const error = compoundErrorMessage(err, 'An error occurred updating your profile');
         alertDispatcher.postAlert({
           type: 'danger',
           message: error,

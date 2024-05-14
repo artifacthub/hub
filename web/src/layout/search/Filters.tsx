@@ -1,7 +1,7 @@
-import { sortBy } from 'lodash';
 import find from 'lodash/find';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
+import sortBy from 'lodash/sortBy';
 import { ChangeEvent } from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { MdInfoOutline } from 'react-icons/md';
@@ -46,7 +46,7 @@ const Filters = (props: Props) => {
     let kindElement = null;
     const kind = getFacetsByFilterKey('kind');
     if (!isUndefined(kind) && kind.options.length > 0 && kind.filterKey) {
-      const active = props.activeFilters.hasOwnProperty(kind.filterKey) ? props.activeFilters[kind.filterKey] : [];
+      const active = !isUndefined(props.activeFilters[kind.filterKey]) ? props.activeFilters[kind.filterKey] : [];
       const isChecked = (facetOptionId: string) => {
         return active.includes(facetOptionId.toString());
       };
@@ -83,7 +83,7 @@ const Filters = (props: Props) => {
     let categoryElement = null;
     const categories = getFacetsByFilterKey('category');
     if (!isUndefined(categories) && categories.options.length > 0 && categories.filterKey) {
-      const active = props.activeFilters.hasOwnProperty(categories.filterKey)
+      const active = !isUndefined(props.activeFilters[categories.filterKey])
         ? props.activeFilters[categories.filterKey]
         : [];
       const isChecked = (facetOptionId: string) => {
@@ -126,7 +126,7 @@ const Filters = (props: Props) => {
     let element = null;
     const capabilities = getFacetsByFilterKey('capabilities');
     if (!isUndefined(capabilities) && capabilities.options.length > 0 && capabilities.filterKey) {
-      const active = props.activeFilters.hasOwnProperty(capabilities.filterKey)
+      const active = !isUndefined(props.activeFilters[capabilities.filterKey])
         ? props.activeFilters[capabilities.filterKey]
         : [];
       const isChecked = (facetOptionId: string) => {

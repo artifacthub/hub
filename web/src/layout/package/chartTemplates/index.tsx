@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useRef, useState } from 'react';
 import { GoCheck } from 'react-icons/go';
 import { ImInsertTemplate } from 'react-icons/im';
@@ -73,6 +74,7 @@ const ChartTemplatesModal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [templates, setTemplates] = useState<ChartTemplate[] | null | undefined>();
   const [templatesInHelpers, setTemplatesInHelpers] = useState<DefinedTemplatesList>({});
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [values, setValues] = useState<any | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
@@ -122,13 +124,13 @@ const ChartTemplatesModal = (props: Props) => {
         cleanUrl();
       }
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     if (props.packageId !== currentPkgId && openStatus) {
       setOpenStatus(false);
     }
-  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.packageId]);
 
   if (props.repoKind !== RepositoryKind.Helm) return null;
 
@@ -163,6 +165,7 @@ const ChartTemplatesModal = (props: Props) => {
         cleanUrl();
       }
       setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.kind === ErrorKind.NotFound) {
         alertDispatcher.postAlert({

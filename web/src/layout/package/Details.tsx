@@ -1,6 +1,7 @@
 import classnames from 'classnames';
-import { isNull, uniq } from 'lodash';
+import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
+import uniq from 'lodash/uniq';
 import { useCallback, useEffect, useState } from 'react';
 
 import {
@@ -70,8 +71,8 @@ const getVersionsTitle = (repoKind: RepositoryKind): string => {
 
 const Details = (props: Props) => {
   const getAllVersions = useCallback((): VersionsProps => {
-    let items: JSX.Element[] = [];
-    let itemsForModal: JSX.Element[] = [];
+    const items: JSX.Element[] = [];
+    const itemsForModal: JSX.Element[] = [];
 
     const getLinkedChannelsToVersion = (version: string): string[] | undefined => {
       let linked: string[] | undefined;
@@ -242,6 +243,9 @@ const Details = (props: Props) => {
       </div>
 
       {(() => {
+        let content: string[] = [];
+        let isMutationTrue;
+
         switch (props.package.repository.kind) {
           case RepositoryKind.Helm:
             return (
@@ -272,7 +276,7 @@ const Details = (props: Props) => {
             );
 
           case RepositoryKind.Kyverno:
-            const subjects: string[] =
+            content =
               props.package.data &&
               !isUndefined(props.package.data[KyvernoData.Subject]) &&
               props.package.data[KyvernoData.Subject] !== ''
@@ -305,13 +309,13 @@ const Details = (props: Props) => {
                     </p>
                   </div>
                 )}
-                {subjects.length > 0 && (
+                {content.length > 0 && (
                   <div>
                     <SmallTitle text="Subjects" />
-                    {subjects.map((subject: string, index: number) => (
+                    {content.map((subject: string, index: number) => (
                       <p
                         data-testid="kyvernoSubject"
-                        className={classnames('text-truncate', styles.text, { 'mb-1': index + 1 !== subjects.length })}
+                        className={classnames('text-truncate', styles.text, { 'mb-1': index + 1 !== content.length })}
                         key={`kyverno-subject-${subject}`}
                       >
                         <div className="d-flex align-items-center">
@@ -359,7 +363,7 @@ const Details = (props: Props) => {
             );
 
           case RepositoryKind.Keptn:
-            const kinds: string[] =
+            content =
               props.package.data &&
               !isUndefined(props.package.data[KeptnData.Kind]) &&
               props.package.data[KeptnData.Kind] !== ''
@@ -378,13 +382,13 @@ const Details = (props: Props) => {
                       </p>
                     </div>
                   )}
-                {kinds.length > 0 && (
+                {content.length > 0 && (
                   <div>
                     <SmallTitle text="Kind" />
-                    {kinds.map((kind: string, index: number) => (
+                    {content.map((kind: string, index: number) => (
                       <div
                         data-testid="keptnKind"
-                        className={classnames('text-truncate', styles.text, { 'mb-1': index + 1 !== kinds.length })}
+                        className={classnames('text-truncate', styles.text, { 'mb-1': index + 1 !== content.length })}
                         key={`keptn-kind-${kind}`}
                       >
                         <div className="d-flex align-items-center">
@@ -399,23 +403,23 @@ const Details = (props: Props) => {
             );
 
           case RepositoryKind.Kubewarden:
-            const resources: string[] =
+            content =
               props.package.data &&
               !isUndefined(props.package.data[KubewardenData.Resources]) &&
               props.package.data[KubewardenData.Resources] !== ''
                 ? props.package.data[KubewardenData.Resources]!.split(',')
                 : [];
 
-            const isMutationTrue =
+            isMutationTrue =
               props.package.data &&
               !isUndefined(props.package.data[KubewardenData.Mutation]) &&
               props.package.data[KubewardenData.Mutation] === 'true';
             return (
               <>
-                {resources.length > 0 && (
+                {content.length > 0 && (
                   <div>
                     <SmallTitle text="Resources" />
-                    {resources.map((resource: string) => (
+                    {content.map((resource: string) => (
                       <p
                         data-testid="kubewardenResource"
                         className={`text-truncate mb-1 ${styles.text}`}

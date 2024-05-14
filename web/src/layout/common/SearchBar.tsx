@@ -189,7 +189,7 @@ const SearchBar = (props: Props) => {
       } else {
         cleanSearch();
       }
-    } catch (err: any) {
+    } catch {
       cleanSearch();
     }
   }
@@ -216,7 +216,7 @@ const SearchBar = (props: Props) => {
         clearTimeout(dropdownTimeout);
       }
     };
-  }, [value]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [value]);
 
   return (
     <>

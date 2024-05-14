@@ -1,5 +1,10 @@
 import classnames from 'classnames';
-import { get, isEmpty, isNull, isObject, isString, isUndefined } from 'lodash';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
+import isNull from 'lodash/isNull';
+import isObject from 'lodash/isObject';
+import isString from 'lodash/isString';
+import isUndefined from 'lodash/isUndefined';
 import { Dispatch, Fragment, memo, SetStateAction, useContext, useEffect, useState } from 'react';
 import regexifyString from 'regexify-string';
 
@@ -16,11 +21,14 @@ interface Props {
   templatesInHelpers: DefinedTemplatesList;
   onDefinedTemplateClick: (templateName: string, line: string, lineNumber: string) => void;
   setIsChangingTemplate: Dispatch<SetStateAction<boolean>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   values?: any;
 }
 
 const HIGHLIGHT_PATTERN = /{{(?!\/\*)(.*?)([^{]|{})*}}/;
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const FUNCTIONS_DEFINITIONS = require('./functions.json');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const BUILTIN_DEFINITIONS = require('./builtIn.json');
 const SPECIAL_CHARACTERS = /[^|({})-]+/;
 const TOKENIZE_RE = /[^\s"']+|"([^"]*)"|'([^']*)/g;
@@ -35,7 +43,7 @@ const Template = (props: Props) => {
   useEffect(() => {
     props.setIsChangingTemplate(false);
     goToLine();
-  }, [activeTemplate]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activeTemplate]);
 
   useEffect(() => {
     if (props.template !== activeTemplate) {
@@ -45,7 +53,7 @@ const Template = (props: Props) => {
 
   useEffect(() => {
     goToLine();
-  }, [props.visibleLine]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.visibleLine]);
 
   const goToLine = () => {
     if (props.visibleLine) {
@@ -59,7 +67,8 @@ const Template = (props: Props) => {
   const processActiveTemplate = (tmpl: string): JSX.Element | null => {
     const rows = tmpl.split('\n');
     // Don't display last line if empty
-    let cleanRows = [...rows];
+    const cleanRows = [...rows];
+    // eslint-disable-next-line for-direction
     for (let i = rows.length - 1; i < rows.length; --i) {
       if (rows[i].trim() === '') {
         cleanRows.splice(i, 1);
@@ -140,7 +149,7 @@ const Template = (props: Props) => {
   };
 
   const renderTemplateFunction = (word: string) => {
-    const definition = FUNCTIONS_DEFINITIONS.hasOwnProperty(word);
+    const definition = FUNCTIONS_DEFINITIONS[word];
     if (definition) {
       return (
         <ParamInfo
@@ -156,7 +165,7 @@ const Template = (props: Props) => {
   };
 
   const renderTemplateBuiltIn = (word: string) => {
-    const definition = BUILTIN_DEFINITIONS.hasOwnProperty(word);
+    const definition = BUILTIN_DEFINITIONS[word];
     if (definition) {
       return (
         <ParamInfo
@@ -172,7 +181,7 @@ const Template = (props: Props) => {
   };
 
   const renderDefinedTemplate = (word: string, lineNumber: string): JSX.Element => {
-    let templateInHelper: DefinedTemplate | undefined = !isEmpty(props.templatesInHelpers)
+    const templateInHelper: DefinedTemplate | undefined = !isEmpty(props.templatesInHelpers)
       ? props.templatesInHelpers[word.replace(/"/g, '')]
       : undefined;
     if (isUndefined(templateInHelper)) {

@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
@@ -54,6 +54,7 @@ const ValuesView = (props: Props) => {
           });
         }
       } finally {
+        // eslint-disable-next-line no-unsafe-finally
         return;
       }
     };
@@ -83,7 +84,7 @@ const ValuesView = (props: Props) => {
         props.updateUrl({});
       }
     }
-  }, [props.visibleValuesPath]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.visibleValuesPath]);
 
   useEffect(() => {
     if (!isUndefined(clickedLine)) {

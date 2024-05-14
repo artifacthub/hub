@@ -9,7 +9,7 @@ jest.mock('react-apexcharts', () => () => <div>Chart</div>);
 const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as {}),
+  ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
   useLocation: () => ({
     pathname: 'test',
@@ -98,6 +98,7 @@ const defaultProps = {
 };
 
 describe('Last30DaysViews', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let dateNowSpy: any;
 
   beforeEach(() => {

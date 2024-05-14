@@ -44,6 +44,7 @@ const MemberCard = (props: Props) => {
       } else {
         props.onSuccess();
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsDeletingMember(false);
       if (err.kind !== ErrorKind.Unauthorized) {

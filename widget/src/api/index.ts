@@ -52,6 +52,7 @@ class API_CLASS {
     },
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public toCamelCase(r: any): any {
     if (isArray(r)) {
       return r.map((v) => this.toCamelCase(v));
@@ -59,6 +60,7 @@ class API_CLASS {
       return Object.keys(r).reduce(
         (result, key) => ({
           ...result,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           [camelCase(key)]: this.toCamelCase((r as any)[key]),
         }),
         {}
@@ -67,17 +69,19 @@ class API_CLASS {
     return r;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async handleContent(res: any) {
     if (!res.ok) {
       throw new Error('error');
     } else {
+      let content;
       switch (res.headers.get('Content-Type')) {
         case 'text/plain; charset=utf-8':
-          const text = await res.text();
-          return text;
+          content = await res.text();
+          return content;
         case 'application/json':
-          const json = await res.json();
-          return this.toCamelCase(json);
+          content = await res.json();
+          return this.toCamelCase(content);
         default:
           return res;
       }
@@ -102,7 +106,7 @@ class API_CLASS {
     const tsQuery = q.get('ts_query');
     if (tsQuery) {
       const formattedTsQuery = tsQuery.split(' | ');
-      let values: string[] = [];
+      const values: string[] = [];
       formattedTsQuery.forEach((value: string) => {
         if (value !== '') {
           const activeTsQuery = this.TS_QUERY.find((ts) => ts.label === value);

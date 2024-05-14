@@ -69,6 +69,7 @@ const OrganizationsSection = (props: Props) => {
       updatePageNumber();
       setApiError(null);
       setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -82,13 +83,13 @@ const OrganizationsSection = (props: Props) => {
 
   useEffect(() => {
     fetchOrganizations();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     if (props.activePage && activePage !== parseInt(props.activePage)) {
       fetchOrganizations();
     }
-  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activePage]);
 
   return (
     <main

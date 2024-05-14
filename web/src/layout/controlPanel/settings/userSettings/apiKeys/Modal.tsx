@@ -69,6 +69,7 @@ const APIKeyModal = (props: Props) => {
       if (props.apiKey) {
         onCloseModal();
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -123,6 +124,7 @@ const APIKeyModal = (props: Props) => {
         const currentAPIKey = await API.getAPIKey(props.apiKey!.apiKeyId!);
         setApiKey(currentAPIKey);
         nameInput.current!.updateValue(currentAPIKey.name);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         if (err.kind === ErrorKind.Unauthorized) {
           props.onAuthError();

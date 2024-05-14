@@ -3,7 +3,9 @@ import userEvent from '@testing-library/user-event';
 
 import SchemaDefinition from './SchemaDefinition';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getProps = (fixtureId: string): any => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-explicit-any
   return require(`./__fixtures__/SchemaDefinition/${fixtureId}.json`) as any;
 };
 

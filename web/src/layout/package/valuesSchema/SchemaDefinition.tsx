@@ -1,5 +1,8 @@
 import classnames from 'classnames';
-import { isArray, isEmpty, isNull, isUndefined } from 'lodash';
+import isArray from 'lodash/isArray';
+import isEmpty from 'lodash/isEmpty';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, Fragment, MouseEvent as ReactMouseEvent, useEffect, useRef, useState } from 'react';
 import { BsFillCaretDownFill, BsFillCaretRightFill } from 'react-icons/bs';
 import { FaCheck } from 'react-icons/fa';
@@ -142,10 +145,11 @@ const SchemaDefinition = (props: Props) => {
 
   useEffect(() => {
     setActiveType(getInitialType());
-  }, [props.def.active, props.def.combinationType]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.def.active, props.def.combinationType]);
 
   const typeDef = activeType ? SCHEMA_PROPS_PER_TYPE[activeType] : null;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const formatPropValue = (value?: any, required?: string[]): JSX.Element => {
     if (isUndefined(value) || isNull(value)) {
       return <span className="ms-1">-</span>;
@@ -212,8 +216,10 @@ const SchemaDefinition = (props: Props) => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getItemsDef = (value?: any): JSX.Element => {
     if (isUndefined(value) || isNull(value)) return <span className="ms-1">-</span>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const types = isArray(value) ? value.map((item: any) => item.type) : [value.type];
     return (
       <>
@@ -225,13 +231,16 @@ const SchemaDefinition = (props: Props) => {
     );
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getArrayDesc = (value?: any): JSX.Element => {
     if (isUndefined(value)) return <span className="ms-1">-</span>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const desc = isArray(value) ? value.map((item: any) => item.description) : [value.description];
     return <span>{detectLinksInText(desc.join('. '), 'text-break') || '-'}</span>;
   };
 
   const getTypeSpecificKeyword = (item: KeywordProp, className?: string): JSX.Element | null => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const value = (def as any)[item.value as string];
     return (
       <div

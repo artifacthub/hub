@@ -51,6 +51,7 @@ const UserContext = () => {
       }
       setOrganizations(confirmedOrganizations);
       setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -62,7 +63,7 @@ const UserContext = () => {
   useEffect(() => {
     fetchOrganizations();
     authorizer.init(ctx.prefs.controlPanel.selectedOrg);
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   return (
     <div className={`position-relative ${styles.ctxWrapper}`}>

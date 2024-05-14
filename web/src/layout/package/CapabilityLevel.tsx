@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { FaCheck } from 'react-icons/fa';
 
 import { OPERATOR_CAPABILITIES } from '../../utils/data';

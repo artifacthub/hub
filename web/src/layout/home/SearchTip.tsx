@@ -1,4 +1,5 @@
-import { isUndefined, sample } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
+import sample from 'lodash/sample';
 import { memo, useState } from 'react';
 import { FaRegLightbulb } from 'react-icons/fa';
 import { Link } from 'react-router-dom';

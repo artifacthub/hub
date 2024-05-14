@@ -1,5 +1,9 @@
 import classnames from 'classnames';
-import { isArray, isEmpty, isNull, isString, isUndefined } from 'lodash';
+import isArray from 'lodash/isArray';
+import isEmpty from 'lodash/isEmpty';
+import isNull from 'lodash/isNull';
+import isString from 'lodash/isString';
+import isUndefined from 'lodash/isUndefined';
 import { Fragment, useEffect, useState } from 'react';
 
 import { JSONSchema } from '../../../jsonschema';
@@ -12,6 +16,7 @@ import styles from './SchemaLine.module.css';
 
 interface Props {
   definitions?: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [k: string]: any;
   };
   name: string;
@@ -32,6 +37,7 @@ interface ValueProp {
   className?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getValue = (newValue: any): ValueProp => {
   const valueToCheck = newValue;
 
@@ -48,6 +54,7 @@ const getValue = (newValue: any): ValueProp => {
     };
   }
 
+  let isLongText;
   switch (isArray(valueToCheck.type) ? valueToCheck.type[0] : valueToCheck.type) {
     case 'object':
       return {
@@ -64,6 +71,7 @@ const getValue = (newValue: any): ValueProp => {
                   <>{`[]`}</>
                 ) : (
                   <>
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     {(valueToCheck.default as string[]).map((listItem: any) => (
                       <div className={`level1 text-break ${styles.listItem} position-relative`} key={listItem}>
                         {isString(listItem) ? listItem : JSON.stringify(listItem)}
@@ -89,7 +97,7 @@ const getValue = (newValue: any): ValueProp => {
         className: 'text-danger',
       };
     case 'string':
-      const isLongText = (valueToCheck.default as string).length > 40;
+      isLongText = (valueToCheck.default as string).length > 40;
       if (isLongText) {
         return {
           content: (
@@ -123,7 +131,7 @@ const SchemaLine = (props: Props) => {
   });
 
   async function getCurrentJSON() {
-    let currentValue = props.value;
+    const currentValue = props.value;
     let error = false;
 
     let options = [currentValue];
@@ -158,7 +166,7 @@ const SchemaLine = (props: Props) => {
   const activeValue = value ? value.options[value.active] : null;
   useEffect(() => {
     getCurrentJSON();
-  }, [props.value]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.value]);
 
   if (isNull(value) || isNull(activeValue) || isUndefined(activeValue)) return null;
 
@@ -166,11 +174,7 @@ const SchemaLine = (props: Props) => {
 
   let children = activeValue.properties;
   let isArrayParent = false;
-  if (
-    props.value.type === 'array' &&
-    props.value.items &&
-    (props.value.items as JSONSchema).hasOwnProperty('properties')
-  ) {
+  if (props.value.type === 'array' && props.value.items && !isUndefined((props.value.items as JSONSchema).properties)) {
     isArrayParent = true;
     children = (props.value.items as JSONSchema).properties;
   }
@@ -224,7 +228,7 @@ const SchemaLine = (props: Props) => {
             let isRequired = checkIfPropIsRequiredInSchema(propName, activeValue.required);
             if (isArrayParent) {
               isRequired =
-                (props.value.items as JSONSchema).hasOwnProperty('required') &&
+                !isUndefined((props.value.items as JSONSchema).required) &&
                 ((props.value.items! as JSONSchema).required as string[]).includes(propName);
             }
             return (

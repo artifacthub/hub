@@ -12,10 +12,12 @@ const mockOnSuccess = jest.fn();
 const mockOnClose = jest.fn();
 
 const getMockSubscriptions = (fixtureId: string): Package[] => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/Modal/${fixtureId}.json`) as Package[];
 };
 
 const getMockSearch = (fixtureId: string): SearchResults => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/Modal/${fixtureId}s.json`) as SearchResults;
 };
 

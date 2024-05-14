@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { BiCloudDownload } from 'react-icons/bi';
 
 import styles from './BlockCodeButtons.module.css';

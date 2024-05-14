@@ -71,6 +71,7 @@ const WebhooksSection = (props: Props) => {
       updatePageNumber();
       setApiError(null);
       setIsGettingWebhooks(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsGettingWebhooks(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -84,13 +85,13 @@ const WebhooksSection = (props: Props) => {
 
   useEffect(() => {
     fetchWebhooks();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     if (props.activePage && activePage !== parseInt(props.activePage)) {
       fetchWebhooks();
     }
-  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activePage]);
 
   return (
     <div className="d-flex flex-column flex-grow-1">

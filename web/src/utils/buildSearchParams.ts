@@ -18,7 +18,7 @@ interface F {
 
 const buildSearchParams = (query: string): SearchFiltersURL => {
   const p = new URLSearchParams(query);
-  let filters: F = {};
+  const filters: F = {};
 
   p.forEach((value, key) => {
     if (WHITELISTED_FILTER_KEYS.includes(key)) {

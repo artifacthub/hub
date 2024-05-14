@@ -1,5 +1,5 @@
 import merger from 'json-schema-merge-allof';
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { CgListTree } from 'react-icons/cg';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -28,7 +28,7 @@ async function enrichValuesSchema(schema: JSONSchema) {
     const mergedSchema = merger(dereferencedSchema);
 
     return mergedSchema;
-  } catch (err: any) {
+  } catch {
     return schema;
   }
 }
@@ -92,13 +92,13 @@ const ValuesSchema = (props: Props) => {
     if (props.visibleValuesSchema && !openStatus && isUndefined(currentPkgId)) {
       onOpenModal();
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     if ((openStatus || props.visibleValuesSchema) && !isUndefined(currentPkgId)) {
       onCloseModal();
     }
-  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.packageId]);
 
   return (
     <>

@@ -8,13 +8,16 @@ import { AppCtx } from '../../../../context/AppCtx';
 import { ErrorKind, SearchResults, Webhook } from '../../../../types';
 import WebhookForm from './Form';
 jest.mock('../../../../api');
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 jest.mock('../../../common/Alert', () => (props: any) => <div>{props.message}</div>);
 
 const getMockWebhook = (fixtureId: string): Webhook => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/Form/${fixtureId}.json`) as Webhook;
 };
 
 const getMockSearch = (fixtureId: string): SearchResults => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/Form/${fixtureId}s.json`) as SearchResults;
 };
 

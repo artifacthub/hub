@@ -1,4 +1,5 @@
-import { isArray, isUndefined } from 'lodash';
+import isArray from 'lodash/isArray';
+import isUndefined from 'lodash/isUndefined';
 
 const checkIfPropIsRequiredInSchema = (value: string, schema?: string[] | boolean): boolean => {
   if (isUndefined(schema)) return false;

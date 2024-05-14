@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 
 const isVisibleItemInContainer = function (ele: HTMLDivElement | null, container: HTMLDivElement | null): boolean {
   if (!isNull(ele) && !isNull(container)) {

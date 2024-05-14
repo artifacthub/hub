@@ -7,6 +7,7 @@ import getMetaTag from '../../utils/getMetaTag';
 import prettifyNumber from '../../utils/prettifyNumber';
 
 interface Props {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   series: any[];
   id: string;
   title: string;

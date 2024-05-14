@@ -53,6 +53,7 @@ const OrganizationCard = (props: Props) => {
       ) {
         dispatch(unselectOrg());
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsLeaving(false);
       if (err.kind !== ErrorKind.Unauthorized) {

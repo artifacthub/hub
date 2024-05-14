@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { MdClose, MdDone } from 'react-icons/md';
@@ -27,6 +27,7 @@ const UserInvitation = (props: Props) => {
       try {
         await API.confirmOrganizationMembership(orgToConfirm!);
         setValidInvitation(true);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         let error = !isUndefined(err.message)
           ? err.message
@@ -52,7 +53,7 @@ const UserInvitation = (props: Props) => {
       );
       confirmOrganizationMembership();
     }
-  }, [orgToConfirm]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [orgToConfirm]);
 
   if (isUndefined(orgToConfirm) || isNull(props.orgToConfirm)) return null;
 

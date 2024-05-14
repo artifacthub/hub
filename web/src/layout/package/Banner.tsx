@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 import { AppCtx } from '../../context/AppCtx';
@@ -33,7 +33,7 @@ const Banner = (props: Props) => {
         }, 100)
       );
     }
-  }, [props.banner]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.banner]);
 
   useEffect(() => {
     return () => {
@@ -41,7 +41,7 @@ const Banner = (props: Props) => {
         clearTimeout(bannerTimeout);
       }
     };
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   if (isNull(visibleBanner)) return null;
 
@@ -70,7 +70,7 @@ const Banner = (props: Props) => {
         <ExternalLink
           href={visibleBanner.link}
           className={props.wrapperClassName}
-          label={`${props.banner.name} link` || 'Banner link'}
+          label={props.banner.name ? `${props.banner.name} link` : 'Banner link'}
         >
           <>{getCardImage()}</>
         </ExternalLink>

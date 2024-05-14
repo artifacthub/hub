@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 
 import API from '../api';
 import { AuthorizerAction, AuthorizerInput } from '../types';
@@ -58,7 +58,7 @@ export class Authorizer {
           this.pendingActions.forEach((action: () => void) => action());
           this.pendingActions = [];
         }
-      } catch (err: any) {
+      } catch {
         this.allowedActions = ['all'];
         this.gettingActions = false;
       }

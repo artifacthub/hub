@@ -1,4 +1,4 @@
-import { compact } from 'lodash';
+import compact from 'lodash/compact';
 
 const getGitHostingProvider = (url: string, branch?: string | null): string | null => {
   let contentURL: string | null = null;

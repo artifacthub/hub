@@ -1,6 +1,8 @@
 import classnames from 'classnames';
-import { isArray, isString, isUndefined } from 'lodash';
+import isArray from 'lodash/isArray';
 import isNull from 'lodash/isNull';
+import isString from 'lodash/isString';
+import isUndefined from 'lodash/isUndefined';
 import { ElementType, memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -20,6 +22,7 @@ interface Props {
 interface CodeProps {
   className: string;
   inline: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
 
@@ -31,6 +34,7 @@ interface ImageProps {
 interface LinkProps {
   href: string;
   target: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
 
@@ -231,6 +235,7 @@ const AVAILABLE_LANGUAGES = [
   'zephir',
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const EmojiConvertor = require('emoji-js');
 const emoji = new EmojiConvertor();
 
@@ -249,7 +254,7 @@ const checkCodeLanguage = (language: string | null): string => {
 const Readme = (props: Props) => {
   useLayoutEffect(() => {
     props.stopPkgLoading();
-  }, [props.readme]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.readme]);
 
   const Code: ElementType = ({ inline, className, children }: CodeProps) => {
     const match = /language-(\w+)/.exec(className || '');
@@ -360,6 +365,7 @@ const Readme = (props: Props) => {
     return <blockquote className={`text-muted position-relative ${styles.quote}`}>{data.children}</blockquote>;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Heading: ElementType = (data: any) => <AnchorHeader {...data} scrollIntoView={props.scrollIntoView} />;
 
   const isElementInView = (id: string) => {
@@ -378,7 +384,7 @@ const Readme = (props: Props) => {
   useEffect(() => {
     // Scrolls to hash (if necessary) when readme is loaded
     props.scrollIntoView();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   return (
     <ReactMarkdown

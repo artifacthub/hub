@@ -8,6 +8,7 @@ interface Keys {
   [key: string]: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const renameKeysInObject = (obj: any, keys: Keys): any => {
   forEach(Object.keys(keys), (key: string) => {
     if (has(obj, key)) {

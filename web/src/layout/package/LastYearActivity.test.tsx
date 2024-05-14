@@ -4,10 +4,12 @@ import { Version } from '../../types';
 import LastYearActivity from './LastYearActivity';
 
 const getMockVersions = (fixtureId: string): Version[] => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/LastYearActivity/${fixtureId}.json`) as Version[];
 };
 
 describe('LastYearActivity', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let dateNowSpy: any;
 
   beforeEach(() => {

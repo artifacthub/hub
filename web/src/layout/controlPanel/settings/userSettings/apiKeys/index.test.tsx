@@ -7,7 +7,10 @@ import API from '../../../../../api';
 import { ErrorKind } from '../../../../../types';
 import APIKeysSection from './index';
 jest.mock('../../../../../api');
-jest.mock('moment', () => ({ ...(jest.requireActual('moment') as {}), format: () => '2020/06/18 16:35:39 (+00:00)' }));
+jest.mock('moment', () => ({
+  ...(jest.requireActual('moment') as object),
+  format: () => '2020/06/18 16:35:39 (+00:00)',
+}));
 
 const getMockAPIKeys = (fixtureId: string) => {
   return require(`./__fixtures__/index/${fixtureId}.json`);

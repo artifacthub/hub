@@ -1,4 +1,6 @@
-import { isEmpty, isNull, isUndefined } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { useCallback, useEffect, useState } from 'react';
 
 import { ContainerImage, RepositoryKind, SecurityReportSummary, VulnerabilitySeverity } from '../../../types';
@@ -45,7 +47,7 @@ const SecurityReport = (props: Props) => {
 
   useEffect(() => {
     setHasWhitelistedContainers(hasSomeWhitelistedContainers());
-  }, [props.containers]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.containers]);
 
   useEffect(() => {
     const diffInYears = calculateDiffInYears(props.ts);
@@ -108,7 +110,7 @@ const SecurityReport = (props: Props) => {
             {total > 0 && (
               <>
                 {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => {
-                  if (!props.summary!.hasOwnProperty(severity) || props.summary![severity] === 0) return null;
+                  if (isUndefined(props.summary![severity]) || props.summary![severity] === 0) return null;
                   return (
                     <div
                       key={`summary_${severity}`}

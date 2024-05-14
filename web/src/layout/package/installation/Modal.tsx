@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -70,7 +71,7 @@ const InstallationModal = (props: Props) => {
         })
       );
     }
-  }, [props.package]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.package]);
 
   useEffect(() => {
     if (props.visibleInstallationModal && !openStatus && installMethods && installMethods.methods.length > 0) {
@@ -79,7 +80,7 @@ const InstallationModal = (props: Props) => {
     if (props.visibleInstallationModal && installMethods && installMethods.methods.length === 0) {
       onCloseModal();
     }
-  }, [installMethods]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [installMethods]);
 
   if (isNull(installMethods) || (installMethods.methods.length === 0 && isUndefined(installMethods.errorMessage)))
     return null;

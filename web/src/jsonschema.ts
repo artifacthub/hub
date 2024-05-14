@@ -243,6 +243,7 @@ export interface JSONSchema4 {
   /**
    * @see https://tools.ietf.org/html/draft-zyp-json-schema-04#section-5.6
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [k: string]: any;
 
   format?: string | undefined;

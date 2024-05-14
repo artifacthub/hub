@@ -13,11 +13,13 @@ interface Props {
 
 interface CodeProps {
   inline: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
 
 interface HeadingProps {
   level: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
 
@@ -29,6 +31,7 @@ interface ImageProps {
 interface LinkProps {
   href: string;
   target: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
 

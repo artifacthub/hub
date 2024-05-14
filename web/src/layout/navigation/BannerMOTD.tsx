@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { useState } from 'react';
 
 import getMetaTag from '../../utils/getMetaTag';

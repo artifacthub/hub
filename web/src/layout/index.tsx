@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { useState } from 'react';
 import { matchRoutes, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
@@ -25,6 +25,7 @@ const Layout = () => {
   history.location = location;
 
   const analyticsConfig: string | null = getMetaTag('gaTrackingID');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let analytics: any = null;
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);

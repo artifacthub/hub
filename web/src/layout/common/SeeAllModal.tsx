@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { HiPlusCircle } from 'react-icons/hi';
 
@@ -47,7 +47,7 @@ const SeeAllModal = (props: Props) => {
       setOpenStatus(!openStatus);
     }
     setVisibleItems(getFirstItems());
-  }, [props.packageId, props.version, props.items]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.packageId, props.version, props.items]);
 
   return (
     <>

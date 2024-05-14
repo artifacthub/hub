@@ -1,12 +1,14 @@
 import compoundJSONSchemaYAML, { shouldIgnorePath } from './compoundJSONSchemaYAML';
 
 interface Tests {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   input: any;
   opts?: { [key: string]: number };
   output: { yamlContent?: string; paths: string[] };
 }
 
 interface TestsIgnorePath {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   input: any;
   output: boolean;
 }

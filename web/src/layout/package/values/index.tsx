@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useRef, useState } from 'react';
 import { GoCheck } from 'react-icons/go';
 import { MdClose } from 'react-icons/md';
@@ -32,16 +33,19 @@ interface Lines {
   [key: number]: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getPathsPerLine = (values: any): Lines => {
   const lineCounter = new LineCounter();
   const doc = parseDocument(values, { lineCounter });
-  let lines: Lines = {};
+  const lines: Lines = {};
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const extractKeys = (elem: any, path?: string) => {
     if (elem) {
       if (isDocument(elem) && elem.contents) {
         extractKeys(elem.contents);
       } else if (isMap(elem)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         elem.items.forEach((item: any) => {
           const currentPath = getJMESPathForValuesSchema(item.key.value, path);
           const line = lineCounter.linePos(item.key.range[0]).line;
@@ -49,6 +53,7 @@ const getPathsPerLine = (values: any): Lines => {
           extractKeys(item.value, currentPath);
         });
       } else if (isSeq(elem)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         elem.items.forEach((item: any, index: number) => {
           extractKeys(item, `${path}[${index}]`);
         });
@@ -111,6 +116,7 @@ const Values = (props: Props) => {
       setCurrentPkgId(props.packageId);
       setIsLoading(false);
       setOpenStatus(true);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.kind === ErrorKind.NotFound) {
         alertDispatcher.postAlert({
@@ -157,13 +163,13 @@ const Values = (props: Props) => {
     if (props.visibleValues && !openStatus && isUndefined(currentPkgId)) {
       onOpenModal();
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     if ((openStatus || props.visibleValues) && !isUndefined(currentPkgId)) {
       onCloseModal();
     }
-  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.packageId]);
 
   const isDisabledDiffView = props.sortedVersions.length <= 1 || values === ' ';
 

@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { useCallback, useEffect, useState } from 'react';
 import { BsArrowsCollapse, BsArrowsExpand } from 'react-icons/bs';
 
@@ -51,7 +51,7 @@ const CompareView = (props: Props) => {
     } else {
       setDiffValues('');
     }
-  }, [props.comparedVersion]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.comparedVersion]);
 
   return (
     <div className={`position-relative h-100 mh-100 border border-1 ${styles.templateWrapper}`}>

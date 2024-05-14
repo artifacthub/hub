@@ -1,4 +1,4 @@
-import { compact } from 'lodash';
+import compact from 'lodash/compact';
 import uniq from 'lodash/uniq';
 import { useCallback, useEffect, useState } from 'react';
 

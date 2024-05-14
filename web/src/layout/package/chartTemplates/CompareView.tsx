@@ -1,4 +1,7 @@
-import { differenceBy, isNull, isUndefined, sortBy } from 'lodash';
+import differenceBy from 'lodash/differenceBy';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import sortBy from 'lodash/sortBy';
 import { useEffect, useState } from 'react';
 import { BsArrowsCollapse, BsArrowsExpand } from 'react-icons/bs';
 
@@ -62,11 +65,11 @@ const CompareView = (props: Props) => {
     } else {
       setDiffTemplates([]);
     }
-  }, [props.comparedVersion]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.comparedVersion]);
 
   useEffect(() => {
     const prepareVisibleTemplates = () => {
-      let tmpls: CompareChartTemplate[] = [];
+      const tmpls: CompareChartTemplate[] = [];
       props.templates!.forEach((tmpl: ChartTemplate) => {
         const diffTmpl = diffTemplates!.find((t: ChartTemplate) => t.name === tmpl.name);
         if (diffTmpl) {
@@ -112,7 +115,7 @@ const CompareView = (props: Props) => {
       prepareVisibleTemplates();
       setIsChangingTemplate(false);
     }
-  }, [diffTemplates]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [diffTemplates]);
 
   return (
     <div className="d-flex flex-row align-items-stretch g-0 h-100 mh-100">

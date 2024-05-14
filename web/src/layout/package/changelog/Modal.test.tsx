@@ -11,7 +11,7 @@ jest.mock('../../../api');
 jest.mock('../../../utils/alertDispatcher');
 
 jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as {}),
+  ...(jest.requireActual('moment') as object),
   unix: () => ({
     isAfter: () => false,
     fromNow: () => '3 hours ago',
@@ -22,7 +22,7 @@ jest.mock('moment', () => ({
 const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as {}),
+  ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 
@@ -30,6 +30,7 @@ const scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const getMockChangelog = (fixtureId: string): ChangeLog[] => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/Modal/${fixtureId}.json`) as ChangeLog[];
 };
 

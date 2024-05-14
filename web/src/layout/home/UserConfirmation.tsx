@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { MdClose, MdDone } from 'react-icons/md';
@@ -28,6 +28,7 @@ const UserConfirmation = (props: Props) => {
       try {
         await API.verifyEmail(emailCode!);
         setValidEmail(true);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         let error = 'An error occurred verifying your email, please contact us about this issue.';
         if (!isUndefined(err.message)) {
@@ -50,7 +51,7 @@ const UserConfirmation = (props: Props) => {
       );
       fetchEmailConfirmation();
     }
-  }, [emailCode]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [emailCode]);
 
   if (isUndefined(emailCode) || isNull(emailCode)) return null;
 

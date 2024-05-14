@@ -1,4 +1,6 @@
-import { identity, isEmpty, pickBy } from 'lodash';
+import identity from 'lodash/identity';
+import isEmpty from 'lodash/isEmpty';
+import pickBy from 'lodash/pickBy';
 
 const sumObjectValues = (data: { [key: string]: number | undefined }): number => {
   const cleanData = pickBy(data, identity);

@@ -119,6 +119,7 @@ const WebhookForm = (props: Props) => {
       setIsSending(false);
       props.onSuccess();
       onCloseForm();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -145,10 +146,11 @@ const WebhookForm = (props: Props) => {
       await API.triggerWebhookTest(webhook);
       setIsTestSent(true);
       setIsSendingTest(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSendingTest(false);
       if (err.kind !== ErrorKind.Unauthorized) {
-        let error = compoundErrorMessage(err, `An error occurred testing the webhook`);
+        const error = compoundErrorMessage(err, `An error occurred testing the webhook`);
         setApiError(error);
       } else {
         props.onAuthError();
@@ -276,7 +278,7 @@ const WebhookForm = (props: Props) => {
 
   useEffect(() => {
     checkTestAvailability();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   const getPublisher = (pkg: Package): JSX.Element => {
     return (

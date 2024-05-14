@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
 import { Dispatch, ElementType, SetStateAction, useEffect, useRef } from 'react';
 import { FaCaretDown, FaCaretRight, FaLink } from 'react-icons/fa';
@@ -21,11 +21,13 @@ interface Props {
 
 interface HeadingProps {
   level: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
 
 interface CodeProps {
   inline: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
 
@@ -152,7 +154,7 @@ const SecurityCell = (props: Props) => {
                         h5: Heading,
                         h6: Heading,
                         code: Code,
-                        p: ({ node, ...props }) => <p className="text-muted mb-1" {...props} />,
+                        p: ({ ...props }) => <p className="text-muted mb-1" {...props} />,
                       }}
                       linkTarget="_blank"
                       skipHtml

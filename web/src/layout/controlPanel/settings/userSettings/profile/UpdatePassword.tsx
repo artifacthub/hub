@@ -40,10 +40,11 @@ const UpdatePassword = () => {
       cleanForm();
       setIsSending(false);
       setIsValidated(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
-        let error = compoundErrorMessage(err, 'An error occurred updating your password');
+        const error = compoundErrorMessage(err, 'An error occurred updating your password');
         alertDispatcher.postAlert({
           type: 'danger',
           message: error,

@@ -4,10 +4,12 @@ import { SecurityReport } from '../../../types';
 import OldVulnerabilitiesWarning from './OldVulnerabilitiesWarning';
 
 const getMockSecurityReport = (fixtureId: string): SecurityReport => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/OldVulnerabilitiesWarning/${fixtureId}.json`) as SecurityReport;
 };
 
 describe('OldVulnerabilitiesWarning', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let dateNowSpy: any;
 
   beforeEach(() => {

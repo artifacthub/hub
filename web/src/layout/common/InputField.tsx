@@ -93,8 +93,6 @@ const InputField = forwardRef((props: Props, ref: Ref<RefInputField>) => {
             errorTxt = props.invalidText.tooShort;
           } else if (validityState.patternMismatch && !isUndefined(props.invalidText.patternMismatch)) {
             errorTxt = props.invalidText.patternMismatch;
-          } else if (validityState.typeMismatch && !isUndefined(props.invalidText.typeMismatch)) {
-            errorTxt = props.invalidText.typeMismatch;
           } else if (validityState.rangeUnderflow && !isUndefined(props.invalidText.rangeUnderflow)) {
             errorTxt = props.invalidText.rangeUnderflow;
           } else if (validityState.rangeOverflow && !isUndefined(props.invalidText.rangeOverflow)) {
@@ -151,6 +149,7 @@ const InputField = forwardRef((props: Props, ref: Ref<RefInputField>) => {
               input.current!.setCustomValidity('');
               setPwdStrengthError(null);
             }
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (e: any) {
             if (!isNull(input.current) && e.message) {
               setPwdStrengthError(e.message);
@@ -208,7 +207,7 @@ const InputField = forwardRef((props: Props, ref: Ref<RefInputField>) => {
         clearTimeout(validateTimeout);
       }
     };
-  }, [inputValue]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [inputValue]);
 
   return (
     <div className={`${props.smallBottomMargin ? 'mb-3' : 'mb-4'} position-relative ${props.className}`}>

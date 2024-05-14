@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 jest.mock('./MobileSettings', () => () => <div />);
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as {}),
+  ...(jest.requireActual('react-router-dom') as object),
   useSearchParams: () => jest.fn(),
 }));
 
@@ -68,7 +68,7 @@ const mockUndefinedUser = {
 };
 
 Object.defineProperty(document, 'querySelector', {
-  value: (selector: any) => {
+  value: (selector: string) => {
     switch (selector) {
       case `meta[name='artifacthub:allowUserSignUp']`:
         return {
@@ -89,6 +89,7 @@ describe('Navbar', () => {
           return null;
         },
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
   });
 
@@ -197,6 +198,7 @@ describe('Navbar', () => {
             }
           },
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any);
 
       render(

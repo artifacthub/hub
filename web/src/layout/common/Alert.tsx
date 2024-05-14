@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { ElementType, useEffect, useRef, useState } from 'react';
 
 import styles from './Alert.module.css';
@@ -39,7 +40,7 @@ const Alert: ElementType = (props: Props) => {
         clearTimeout(timeout);
       }
     };
-  }, [props.message]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.message]);
 
   return (
     <div

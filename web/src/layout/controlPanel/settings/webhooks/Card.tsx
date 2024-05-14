@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { MouseEvent as ReactMouseEvent, useContext, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
@@ -42,6 +42,7 @@ const WebhookCard = (props: Props) => {
       await API.deleteWebhook(props.webhook.webhookId!, ctx.prefs.controlPanel.selectedOrg);
       setIsDeleting(false);
       props.onDeletion();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsDeleting(false);
       if (err.kind === ErrorKind.Unauthorized) {

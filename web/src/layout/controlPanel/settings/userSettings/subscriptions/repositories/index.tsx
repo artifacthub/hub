@@ -1,4 +1,5 @@
-import { isUndefined, sortBy } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
+import sortBy from 'lodash/sortBy';
 import { useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from 'react-icons/io';
@@ -78,7 +79,7 @@ const RepositoriesSection = (props: Props) => {
   };
 
   const sortOptOutList = (items: OptOutItem[]): OptOutByRepo[] => {
-    let list: OptOutByRepo[] = [];
+    const list: OptOutByRepo[] = [];
 
     items.forEach((item: OptOutItem) => {
       const itemIndex = list.findIndex(
@@ -114,6 +115,7 @@ const RepositoriesSection = (props: Props) => {
         setOptOutList(newVisibleItems);
       }
       setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -142,6 +144,7 @@ const RepositoriesSection = (props: Props) => {
         await API.addOptOut(data.repoId, data.kind);
       }
       getOptOutList(callback);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       callback();
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -162,11 +165,11 @@ const RepositoriesSection = (props: Props) => {
 
   useEffect(() => {
     getOptOutList();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     setOptOutList(getVisibleOptOut(optOutFullList || []));
-  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activePage]);
 
   return (
     <div className="mt-5 pt-3">
@@ -296,7 +299,7 @@ const RepositoriesSection = (props: Props) => {
                               </Link>
                             )}
                           </td>
-                          {REPOSITORY_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem, index: number) => {
+                          {REPOSITORY_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
                             const optItem = item.optOutItems.find((opt: OptOutItem) => subs.kind === opt.eventKind);
 
                             return (

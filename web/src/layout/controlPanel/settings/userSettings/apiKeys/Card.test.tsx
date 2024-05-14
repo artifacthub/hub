@@ -9,7 +9,7 @@ import Card from './Card';
 jest.mock('../../../../../api');
 jest.mock('../../../../../utils/alertDispatcher');
 jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as {}),
+  ...(jest.requireActual('moment') as object),
   unix: () => ({
     format: () => '2020/06/18 16:35:39 (+00:00)',
   }),

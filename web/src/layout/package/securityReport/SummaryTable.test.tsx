@@ -5,10 +5,12 @@ import { FixableVulnerabilitiesInReport, SecurityReport } from '../../../types';
 import SummaryTable from './SummaryTable';
 
 const getMockSecurityReport = (fixtureId: string): SecurityReport => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/SummaryTable/${fixtureId}.json`) as SecurityReport;
 };
 
 const getMockFixableSecurityReport = (fixtureId: string): FixableVulnerabilitiesInReport => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/SummaryTable/${fixtureId}fix.json`) as FixableVulnerabilitiesInReport;
 };
 

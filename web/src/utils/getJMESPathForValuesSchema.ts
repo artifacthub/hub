@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 
 const formatPathWithDots = (value: string): string => {
   return `"${value.replace(/\./g, '\\.')}"`;

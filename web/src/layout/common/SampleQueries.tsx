@@ -1,4 +1,5 @@
-import { isUndefined, sampleSize } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
+import sampleSize from 'lodash/sampleSize';
 import { Fragment, memo } from 'react';
 import { Link } from 'react-router-dom';
 

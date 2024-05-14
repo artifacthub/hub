@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { every, isNull } from 'lodash';
+import every from 'lodash/every';
+import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { CgLastpass } from 'react-icons/cg';
@@ -61,8 +62,9 @@ const ResetPasswordModal = (props: Props) => {
       await API.resetPassword(code!, password);
       setIsSuccess(true);
       setIsSending(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      let error = compoundErrorMessage(err, 'An error occurred resetting the password');
+      const error = compoundErrorMessage(err, 'An error occurred resetting the password');
       setApiError(error);
       setIsSending(false);
     }
@@ -110,6 +112,7 @@ const ResetPasswordModal = (props: Props) => {
       try {
         await API.verifyPasswordResetCode(code!);
         setValidCode(true);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         if (err.kind === ErrorKind.Gone) {
           setApiError('This password reset link is no longer valid, please get a new one.');
@@ -140,7 +143,7 @@ const ResetPasswordModal = (props: Props) => {
       }
       verifyPasswordResetCode();
     }
-  }, [code]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [code]);
 
   if (isUndefined(code) || isNull(code) || isNull(verifying)) return null;
 

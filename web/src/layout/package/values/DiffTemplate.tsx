@@ -1,12 +1,13 @@
 import 'react-diff-view/style/index.css';
 
 import classnames from 'classnames';
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { useEffect, useState } from 'react';
 import { Decoration, Diff, Hunk, parseDiff } from 'react-diff-view';
 
 import styles from './DiffTemplate.module.css';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const DiffLibrary = require('diff');
 
 interface Props {
@@ -25,6 +26,7 @@ interface DiffProps {
 const Changes = (props: DiffProps) => {
   const files = parseDiff(props.diffText);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderFile = ({ oldPath, newPath, oldRevision, newRevision, type, hunks }: any) => {
     return (
       <div key={`${oldRevision}-${newRevision}`} className="file-diff h-100" data-testid="diffTemplate">
@@ -40,6 +42,7 @@ const Changes = (props: DiffProps) => {
         </header>
         <div className={`overflow-scroll border-top border-1 py-2 ${styles.codeWrapper}`}>
           <Diff viewType="unified" diffType={type} hunks={hunks || []}>
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {(hunks: any[]) => (
               <>
                 {hunks.map((hunk, index) => {
@@ -90,11 +93,11 @@ const DiffTemplate = (props: Props) => {
     };
 
     prepareDiff();
-  }, [props.compareData, props.expanded]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.compareData, props.expanded]);
 
   useEffect(() => {
     props.removeLoading();
-  }, [diffContent]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [diffContent]);
 
   return <>{!isNull(diffContent) && <Changes diffText={`diff --git \n ${diffContent}`} />}</>;
 };

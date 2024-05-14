@@ -224,7 +224,11 @@ const CardBody = styled.div<CardBodyProps>`
   }
 `;
 
-const Brand = styled(SVGIcons)`
+interface BrandProps {
+  theme: string;
+}
+
+const Brand = styled(SVGIcons)<BrandProps>`
   ${(props) =>
     props.theme === 'dark' &&
     css`
@@ -386,14 +390,14 @@ export default function Widget(props: Props) {
         setPackageSummary(null);
       }
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     if (props.url !== currentUrl && !props.inGroup) {
       setCurrentUrl(props.url);
       fetchPackage();
     }
-  }, [props.url]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.url]);
 
   if (isNull(packageSummary) || isUndefined(props.url)) return null;
 
@@ -421,7 +425,7 @@ export default function Widget(props: Props) {
             ) : (
               <>
                 <HeaderWrapper>
-                  <ImageWrapper theme={currentTheme}>
+                  <ImageWrapper>
                     <Image
                       baseUrl={urlParams!.origin}
                       imageId={packageSummary.logoImageId}

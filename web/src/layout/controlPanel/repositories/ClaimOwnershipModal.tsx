@@ -80,6 +80,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
       }
       setIsSending(false);
       onCloseModal();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -126,6 +127,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
         setOrganizations(confirmedOrganizations);
         setApiOrgsError(null);
         setIsFetchingOrgs(false);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         setIsFetchingOrgs(false);
         if (err.kind !== ErrorKind.Unauthorized) {

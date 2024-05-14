@@ -9,13 +9,14 @@ import PackageCard from './PackageCard';
 jest.mock('../../utils/calculateDiffInYears');
 
 const getMockPackage = (fixtureId: string): Package => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/PackageCard/${fixtureId}.json`) as Package;
 };
 
 const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as {}),
+  ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 

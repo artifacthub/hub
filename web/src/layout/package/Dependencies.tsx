@@ -25,8 +25,8 @@ const Dependencies = (props: Props) => {
   const getAllDependencies = useCallback((): DependenciesList | null => {
     if (isUndefined(props.dependencies) || props.dependencies.length === 0) return null;
 
-    let items: JSX.Element[] = [];
-    let itemsForModal: JSX.Element[] = [];
+    const items: JSX.Element[] = [];
+    const itemsForModal: JSX.Element[] = [];
 
     props.dependencies.forEach((dependency: Dependency, index: number) => {
       items.push(

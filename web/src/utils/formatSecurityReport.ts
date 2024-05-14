@@ -1,4 +1,5 @@
-import { groupBy, orderBy } from 'lodash';
+import groupBy from 'lodash/groupBy';
+import orderBy from 'lodash/orderBy';
 
 import { SecurityReportSummary, Vulnerability, VulnerabilitySeverity } from '../types';
 import { SEVERITY_ORDER } from './data';
@@ -31,7 +32,7 @@ const formatSecurityReport = (
   const sortedBySeverity = groupBy(vulnerabilities, 'Severity');
 
   const summary: SecurityReportSummary = {};
-  for (let severity in VulnerabilitySeverity) {
+  for (const severity in VulnerabilitySeverity) {
     const value: VulnerabilitySeverity = severity.toLowerCase() as VulnerabilitySeverity;
     if (sortedBySeverity[severity.toUpperCase()]) {
       summary[value] = sortedBySeverity[severity.toUpperCase()].length;

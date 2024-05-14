@@ -125,7 +125,7 @@ const SearchView = () => {
   };
 
   const prepareSelectedFilters = (name: string, newFilters: string[], prevFilters: FiltersProp): FiltersProp => {
-    let cleanFilters: FiltersProp = {};
+    const cleanFilters: FiltersProp = {};
     switch (name) {
       case 'kind':
         // Remove selected chart repositories when some kind different to Chart is selected and Chart is not selected
@@ -156,6 +156,7 @@ const SearchView = () => {
     };
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updateCurrentPage = (searchChanges: any) => {
     // cleanPrevSearch();
     navigate({
@@ -183,7 +184,7 @@ const SearchView = () => {
   };
 
   const onResetSomeFilters = (filterKeys: string[]): void => {
-    let newFilters: FiltersProp = {};
+    const newFilters: FiltersProp = {};
     filterKeys.forEach((fKey: string) => {
       newFilters[fKey] = [];
     });
@@ -323,7 +324,6 @@ const SearchView = () => {
     fetchSearchResults();
 
     // prettier-ignore
-    /* eslint-disable react-hooks/exhaustive-deps */
   }, [
     tsQueryWeb,
     pageNumber,
@@ -336,7 +336,6 @@ const SearchView = () => {
     ctx.prefs.search.limit,
     sort,
   ]);
-  /* eslint-enable react-hooks/exhaustive-deps */
 
   const activeFilters = deprecated || operators || verifiedPublisher || official || cncf || !isEmpty(filters);
 

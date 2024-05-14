@@ -1,4 +1,7 @@
-import { isEmpty, isNull, sortBy } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import sortBy from 'lodash/sortBy';
 
 import { Prefs, ThemePrefs } from '../types';
 import detectActiveThemeMode from './detectActiveThemeMode';
@@ -41,10 +44,10 @@ const migrations: Migration[] = [
     key: 1,
     description: "Fix typo: efective -> effective and use 'automatic' as configured option",
     method: (lsActual: PreferencesList): PreferencesList => {
-      let lsUpdated: PreferencesList = {};
+      const lsUpdated: PreferencesList = {};
       Object.keys(lsActual).forEach((user: string) => {
         const oldThemePrefs = { ...lsActual[user].theme } as OldThemePrefs;
-        let themePrefs: ThemePrefs = {
+        const themePrefs: ThemePrefs = {
           configured: oldThemePrefs.configured,
           effective: oldThemePrefs.configured,
         };
@@ -64,8 +67,8 @@ const migrations: Migration[] = [
     key: 2,
     description: "Update default guest theme prefs when the configured theme is 'light'",
     method: (lsActual: PreferencesList): PreferencesList => {
-      let lsUpdated: PreferencesList = { ...lsActual };
-      let guestPrefs: Prefs = lsUpdated.guest ? { ...lsUpdated.guest } : DEFAULT_PREFS;
+      const lsUpdated: PreferencesList = { ...lsActual };
+      const guestPrefs: Prefs = lsUpdated.guest ? { ...lsUpdated.guest } : DEFAULT_PREFS;
       if (guestPrefs.theme.configured === 'light') {
         guestPrefs.theme = DEFAULT_PREFS.theme;
       }
@@ -97,7 +100,7 @@ export const applyMigrations = (lsActual: PreferencesList): PreferencesList => {
       }
     }
 
-    migrationsToApply.forEach((migration: Migration, index: number) => {
+    migrationsToApply.forEach((migration: Migration) => {
       lsUpdated = migration.method(lsUpdated);
     });
   }
@@ -131,7 +134,7 @@ export class LocalStoragePreferences {
   }
 
   public updateAlias(oldAlias: string, newAlias: string) {
-    if (this.savedPreferences.hasOwnProperty(oldAlias)) {
+    if (!isUndefined(this.savedPreferences[oldAlias])) {
       const newSavedPreferences: PreferencesList = { ...this.savedPreferences };
       newSavedPreferences[newAlias] = this.savedPreferences[oldAlias];
       delete newSavedPreferences[oldAlias];

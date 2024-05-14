@@ -1,6 +1,6 @@
-import { isNull } from 'lodash';
 import camelCase from 'lodash/camelCase';
 import isArray from 'lodash/isArray';
+import isNull from 'lodash/isNull';
 import isObject from 'lodash/isObject';
 import isUndefined from 'lodash/isUndefined';
 
@@ -59,6 +59,7 @@ interface TransferRepositoryRequest {
 }
 
 interface Result {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
@@ -67,6 +68,7 @@ interface FetchOptions {
   headers?: {
     [key: string]: string;
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body?: any;
 }
 
@@ -102,6 +104,7 @@ class API_CLASS {
   private csrfToken: string | null = null;
   private API_BASE_URL = '/api/v1';
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public toCamelCase(r: any): any {
     if (isArray(r)) {
       return r.map((v) => this.toCamelCase(v));
@@ -116,16 +119,18 @@ class API_CLASS {
     return r;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async handleErrors(res: any) {
     if (!res.ok) {
       let error: Error;
+      let tmpError;
       switch (res.status) {
         case 401:
           try {
-            let text = await res.json();
+            tmpError = await res.json();
             error = {
               kind: ErrorKind.Unauthorized,
-              message: text.message !== '' ? text.message : undefined,
+              message: tmpError.message !== '' ? tmpError.message : undefined,
             };
           } catch {
             error = {
@@ -141,8 +146,8 @@ class API_CLASS {
           break;
         case 403:
           try {
-            const er = await res.text();
-            if (er.includes('CSRF token invalid')) {
+            tmpError = await res.text();
+            if (tmpError.includes('CSRF token invalid')) {
               this.csrfToken = null;
               error = {
                 kind: ErrorKind.InvalidCSRF,
@@ -165,10 +170,10 @@ class API_CLASS {
           break;
         default:
           try {
-            let text = await res.json();
+            tmpError = await res.json();
             error = {
               kind: ErrorKind.Other,
-              message: text.message !== '' ? text.message : undefined,
+              message: tmpError.message !== '' ? tmpError.message : undefined,
             };
           } catch {
             error = {
@@ -181,6 +186,7 @@ class API_CLASS {
     return res;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private checkIfApprovedSession(res: any) {
     if (res.headers.has(this.HEADERS.sessionApproved)) {
       const isApproved = res.headers.get(this.HEADERS.sessionApproved);
@@ -197,9 +203,11 @@ class API_CLASS {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private getHeadersValue(res: any, params?: string[]): any {
     if (!isUndefined(params) && params.length > 0) {
-      let headers: any = {};
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const headers: any = {};
       params.forEach((param: string) => {
         if (res.headers.has(param)) {
           headers[param] = res.headers.get(param);
@@ -211,6 +219,7 @@ class API_CLASS {
   }
 
   private async handleContent(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     res: any,
     skipCamelConversion?: boolean,
     checkApprovedSession?: boolean,
@@ -220,6 +229,8 @@ class API_CLASS {
     if (!isUndefined(checkApprovedSession) && checkApprovedSession) {
       response = this.checkIfApprovedSession(res);
     }
+    let content;
+    let tmpHeaders;
 
     switch (response.headers.get('Content-Type')) {
       case 'text/plain; charset=utf-8':
@@ -227,25 +238,27 @@ class API_CLASS {
       case 'application/yaml':
       case 'text/yaml; charset=UTF-8':
       case 'text/yaml':
-        const text = await response.text();
-        return text;
+        content = await response.text();
+        return content;
       case 'application/json':
-        let json = await response.json();
-        const tmpHeaders = this.getHeadersValue(res, headers);
+        content = await response.json();
+        tmpHeaders = this.getHeadersValue(res, headers);
         if (!isNull(tmpHeaders)) {
-          if (isArray(json)) {
-            json = { items: json };
+          if (isArray(content)) {
+            content = { items: content };
           }
-          json = { ...json, ...tmpHeaders };
+          content = { ...content, ...tmpHeaders };
         }
-        return skipCamelConversion ? json : this.toCamelCase(json);
+        return skipCamelConversion ? content : this.toCamelCase(content);
       default:
         return response;
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async processFetchOptions(opts?: FetchOptions): Promise<FetchOptions | any> {
-    let options: FetchOptions | any = opts || {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const options: FetchOptions | any = opts || {};
     // Use CSRF token only when methods are DELETE, POST and PUT
     if (opts && ['DELETE', 'POST', 'PUT'].includes(opts.method)) {
       if (isNull(this.csrfToken)) {
@@ -268,7 +281,9 @@ class API_CLASS {
     return options;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async apiFetch(props: APIFetchProps): Promise<any> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const csrfRetry = (func: () => Promise<any>) => {
       return func().catch((error: Error) => {
         if (error.kind === ErrorKind.InvalidCSRF) {
@@ -280,7 +295,8 @@ class API_CLASS {
     };
 
     return csrfRetry(async () => {
-      let options: FetchOptions | any = await this.processFetchOptions(props.opts);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const options: FetchOptions | any = await this.processFetchOptions(props.opts);
 
       return fetch(props.url, options)
         .then(this.handleErrors)
@@ -501,20 +517,23 @@ class API_CLASS {
   }
 
   public async checkAvailability(props: CheckAvailabilityProps): Promise<boolean> {
-    return fetch(`${this.API_BASE_URL}/check-availability/${props.resourceKind}?v=${encodeURIComponent(props.value)}`, {
-      method: 'HEAD',
-    })
-      .then((res: any) => {
-        switch (res.status) {
-          case 404:
-            return Promise.resolve(false);
-          default:
-            return Promise.resolve(true);
-        }
+    return (
+      fetch(`${this.API_BASE_URL}/check-availability/${props.resourceKind}?v=${encodeURIComponent(props.value)}`, {
+        method: 'HEAD',
       })
-      .catch(() => {
-        return Promise.resolve(true);
-      });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((res: any) => {
+          switch (res.status) {
+            case 404:
+              return Promise.resolve(false);
+            default:
+              return Promise.resolve(true);
+          }
+        })
+        .catch(() => {
+          return Promise.resolve(true);
+        })
+    );
   }
 
   public getUserOrganizations(query: SearchQuery): Promise<{ items: Organization[]; paginationTotalCount: string }> {
@@ -896,7 +915,8 @@ class API_CLASS {
           newFormatReport[item] = {
             Results: report[item] as SecurityReportResult[],
           };
-        } else if (isObject(report[item]) && report[item].hasOwnProperty('Results')) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } else if (isObject(report[item]) && !isUndefined((report[item] as any).Results)) {
           newFormatReport[item] = report[item] as { Results: SecurityReportResult[] };
         }
       });
@@ -1087,9 +1107,10 @@ class API_CLASS {
     return this.getAllItems(`${this.API_BASE_URL}/subscriptions/opt-out`) as Promise<OptOutItem[]>;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private getAllItems(url: string): Promise<any[]> {
     const MAX_LIMIT = 60;
-    let formattedUrl = `${url}?limit=${MAX_LIMIT}`;
+    const formattedUrl = `${url}?limit=${MAX_LIMIT}`;
 
     return this.apiFetch({ url: `${formattedUrl}&offset=0`, headers: [this.HEADERS.pagination] }).then(
       async (result) => {
@@ -1101,6 +1122,7 @@ class API_CLASS {
 
           await Promise.all([
             ...pagesList.map((page: number) => this.apiFetch({ url: `${formattedUrl}&offset=${page * MAX_LIMIT}` })),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ]).then((res) => res.forEach((list: any[]) => (items = [...items, ...list])));
           return items;
         } else {
@@ -1149,12 +1171,14 @@ class API_CLASS {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public getBannersInfo(url: string): Promise<any> {
     return this.apiFetch({
       url: url,
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public getSchemaDef(url: string): Promise<any> {
     return this.apiFetch({
       url: url,

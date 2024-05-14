@@ -35,7 +35,9 @@ import renameKeysInObject from '../utils/renameKeysInObject';
 import API from './index';
 enableFetchMocks();
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getData = (fixtureId: string): any => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-explicit-any
   return require(`./__fixtures__/index/${fixtureId}.json`) as any;
 };
 

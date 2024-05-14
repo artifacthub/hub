@@ -1,8 +1,10 @@
 import classnames from 'classnames';
-import { compact, isEmpty, uniq } from 'lodash';
+import compact from 'lodash/compact';
 import every from 'lodash/every';
+import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
+import uniq from 'lodash/uniq';
 import { nanoid } from 'nanoid';
 import { ChangeEvent, KeyboardEvent, useContext, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
@@ -124,6 +126,7 @@ const RepositoryModal = (props: Props) => {
       }
       setIsSending(false);
       onCloseModal();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -978,6 +981,7 @@ const RepositoryModal = (props: Props) => {
                 <label className={`form-label fw-bold ${styles.label}`}>Versioning</label>
 
                 <div className="d-flex flex-row mb-2">
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                   {Object.entries(VersioningOption).map((opt: any) => {
                     return (
                       <div className="form-check me-4 mb-2" key={`versioning_${opt[1]}`}>

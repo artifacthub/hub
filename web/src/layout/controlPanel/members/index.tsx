@@ -80,6 +80,7 @@ const MembersSection = (props: Props) => {
       updatePageNumber();
       setApiError(null);
       setIsGettingMembers(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsGettingMembers(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -95,7 +96,7 @@ const MembersSection = (props: Props) => {
     if (props.activePage && activePage !== parseInt(props.activePage)) {
       fetchMembers();
     }
-  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activePage]);
 
   useEffect(() => {
     if (!isUndefined(members)) {
@@ -107,17 +108,17 @@ const MembersSection = (props: Props) => {
         onPageNumberChange(1);
       }
     }
-  }, [activeOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activeOrg]);
 
   useEffect(() => {
     if (activeOrg !== ctx.prefs.controlPanel.selectedOrg) {
       setActiveOrg(ctx.prefs.controlPanel.selectedOrg);
     }
-  }, [ctx.prefs.controlPanel.selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx.prefs.controlPanel.selectedOrg]);
 
   useEffect(() => {
     fetchMembers();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   return (
     <main

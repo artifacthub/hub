@@ -43,6 +43,7 @@ const APIKeyCard = (props: Props) => {
       await API.deleteAPIKey(props.apiKey.apiKeyId!);
       setIsDeleting(false);
       props.onSuccess();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsDeleting(false);
       if (err.kind === ErrorKind.Unauthorized) {

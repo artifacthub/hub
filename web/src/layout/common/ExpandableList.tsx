@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 
@@ -28,13 +28,13 @@ const ExpandableList = (props: Props) => {
     if (!isUndefined(props.open) && open !== props.open) {
       setOpenStatus(props.open);
     }
-  }, [props.open]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.open]);
 
   useEffect(() => {
     if (props.forceCollapseList && open) {
       setOpenStatus(!open);
     }
-  }, [props.forceCollapseList]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.forceCollapseList]);
 
   return (
     <>

@@ -1,5 +1,8 @@
 import classnames from 'classnames';
-import { isEmpty, isEqual, isNull, isUndefined } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { FiCode } from 'react-icons/fi';
@@ -60,7 +63,7 @@ const GatekeeperExamplesModal = (props: Props) => {
 
   useEffect(() => {
     const getVisibleFiles = (): GatekeeperExample[] => {
-      let examples: GatekeeperExample[] = [];
+      const examples: GatekeeperExample[] = [];
       props.examples!.forEach((example: GatekeeperExample) => {
         const cases = example.cases.filter((caseItem: GatekeeperCase) => {
           const term = caseItem.name.toLowerCase();
@@ -113,7 +116,7 @@ const GatekeeperExamplesModal = (props: Props) => {
         setVisibleExamples(filteredFiles);
       }
     }
-  }, [inputValue]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [inputValue]);
 
   const updateUrl = (example?: string, fileName?: string) => {
     navigate(
@@ -140,7 +143,7 @@ const GatekeeperExamplesModal = (props: Props) => {
     if (props.visibleModal && !openStatus && props.examples && !isEmpty(props.examples)) {
       onOpenModal();
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     if (props.packageId !== currentPkgId) {
@@ -151,7 +154,7 @@ const GatekeeperExamplesModal = (props: Props) => {
         onOpenModal();
       }
     }
-  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.packageId]);
 
   // Display active file in list
   useLayoutEffect(() => {

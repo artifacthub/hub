@@ -1,8 +1,9 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { Dispatch, useCallback, useEffect, useState } from 'react';
 
 import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function useSystemThemeMode(enabled: boolean, dispatch: Dispatch<any>) {
   const [mediaQuery, setMediaQuery] = useState<MediaQueryList | null>(null);
   const themeDarkModeFn = useCallback(() => {
@@ -44,5 +45,5 @@ export default function useSystemThemeMode(enabled: boolean, dispatch: Dispatch<
         removeListener();
       }
     };
-  }, [enabled]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [enabled]);
 }

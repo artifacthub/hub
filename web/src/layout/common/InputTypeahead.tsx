@@ -1,5 +1,9 @@
 import classnames from 'classnames';
-import { compact, escapeRegExp, isNull, isUndefined, orderBy } from 'lodash';
+import compact from 'lodash/compact';
+import escapeRegExp from 'lodash/escapeRegExp';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import orderBy from 'lodash/orderBy';
 import {
   ChangeEvent,
   forwardRef,
@@ -59,6 +63,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
 
   const getVisibleItems = useCallback((): Option[] | null => {
     let filteredItems: Option[] = [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let elements: any[] | null = null;
 
     if (!isNull(highlightedItem)) {
@@ -71,7 +76,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
         filteredItems,
         [
           (item: Option) =>
-            props.selected.hasOwnProperty(item.filterKey) && props.selected[item.filterKey].includes(item.id.toString())
+            !isUndefined(props.selected[item.filterKey]) && props.selected[item.filterKey].includes(item.id.toString())
               ? -1
               : 1,
           'total',
@@ -88,7 +93,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
   }, [highlightedItem, props.displayItemsInValueLength, props.options, props.selected, inputValue]);
 
   const getSelectedItems = useCallback((): Option[] => {
-    let selectedItems: Option[] = [];
+    const selectedItems: Option[] = [];
     Object.keys(props.selected).forEach((fKey: string) => {
       props.selected[fKey].forEach((item: string) => {
         const selected = props.options.find((opt: Option) => opt.id.toString() === item && opt.filterKey === fKey);
@@ -139,7 +144,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
 
   useEffect(() => {
     setVisibleItems(getVisibleItems());
-  }, [inputValue, props.options]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [inputValue, props.options]);
 
   useEffect(() => {
     setSelectedItems(getSelectedItems());
@@ -176,8 +181,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
         if (!isNull(highlightedItem) && visibleItems) {
           const item = visibleItems[highlightedItem];
           const isSelected =
-            props.selected.hasOwnProperty(item.filterKey) &&
-            props.selected[item.filterKey].includes(item.id.toString());
+            !isUndefined(props.selected[item.filterKey]) && props.selected[item.filterKey].includes(item.id.toString());
           onSelect(item.filterKey, item.id.toString(), isSelected);
         }
         return;
@@ -274,7 +278,7 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
             <div className={`${styles.itemsList} ${props.listClassName}`} ref={itemsWrapper}>
               {visibleItems.map((opt: Option, index: number) => {
                 const isSelected =
-                  props.selected.hasOwnProperty(opt.filterKey) &&
+                  !isUndefined(props.selected[opt.filterKey]) &&
                   props.selected[opt.filterKey].includes(opt.id.toString());
                 const name = getOptionName(opt.name);
 

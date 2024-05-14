@@ -1,6 +1,7 @@
 import stringifyPolicyData from './stringifyPolicyData';
 
 interface Test {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
   result: string;
 }

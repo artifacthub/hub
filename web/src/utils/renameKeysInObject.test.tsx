@@ -1,11 +1,11 @@
 import renameKeysInObject from './renameKeysInObject';
 
 interface Test {
-  obj: any;
+  obj: object;
   keys: {
     [key: string]: string;
   };
-  result: any;
+  result: object;
 }
 
 const tests: Test[] = [

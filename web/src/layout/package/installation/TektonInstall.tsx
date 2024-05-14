@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 
 import { Repository, RepositoryKind } from '../../../types';
 import CommandBlock from './CommandBlock';

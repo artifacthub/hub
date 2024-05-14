@@ -68,6 +68,7 @@ const APIKeysSection = (props: Props) => {
       updatePageNumber();
       setApiError(null);
       setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -81,13 +82,13 @@ const APIKeysSection = (props: Props) => {
 
   useEffect(() => {
     getAPIKeys();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     if (props.activePage && activePage !== parseInt(props.activePage)) {
       getAPIKeys();
     }
-  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activePage]);
 
   return (
     <div className="d-flex flex-column flex-grow-1">

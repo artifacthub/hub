@@ -104,7 +104,7 @@ const ControlPanelView = () => {
         setContext(context);
       }
     }
-  }, [ctx]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx]);
 
   useEffect(() => {
     if (ctx.user && !isNull(context)) {
@@ -125,7 +125,7 @@ const ControlPanelView = () => {
         }
       }
     }
-  }, [section, subsection, context]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [section, subsection, context]);
 
   if (!isUndefined(ctx.user) && isNull(ctx.user)) {
     navigate('/');

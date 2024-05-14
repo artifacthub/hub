@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { Fragment, useEffect, useState } from 'react';
 
 import { JSONSchema } from '../../../jsonschema';
@@ -48,7 +48,7 @@ const Schema = (props: Props) => {
 
   useEffect(() => {
     setActivePath(props.visibleValuesSchemaPath);
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   return (
     <>

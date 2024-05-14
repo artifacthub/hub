@@ -9,6 +9,7 @@ import ProfileOrgSection from './index';
 jest.mock('../../../../../api');
 
 const getMockOrganization = (fixtureId: string): Organization => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/index/${fixtureId}.json`) as Organization;
 };
 

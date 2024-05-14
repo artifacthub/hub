@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { forwardRef, MouseEvent, Ref, useContext, useEffect, useImperativeHandle, useState } from 'react';
 
 import { AppCtx } from '../../context/AppCtx';
@@ -61,13 +61,13 @@ const ActionBtn = forwardRef((props: Props, ref: Ref<RefActionBtn>) => {
         })
       );
     }
-  }, [activeOrg, updateView]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activeOrg, updateView]);
 
   useEffect(() => {
     if (activeOrg !== ctx.prefs.controlPanel.selectedOrg) {
       setActiveOrg(ctx.prefs.controlPanel.selectedOrg);
     }
-  }, [ctx.prefs.controlPanel.selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx.prefs.controlPanel.selectedOrg]);
 
   return (
     <span

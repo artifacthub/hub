@@ -81,7 +81,7 @@ const HomeView = () => {
         autoClose: false,
       });
     }
-  }, [location]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [location]);
 
   return (
     <div className="d-flex flex-column flex-grow-1 bg-white home">

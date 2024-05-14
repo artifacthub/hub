@@ -79,6 +79,7 @@ const mockUndefinedUserCtx = {
 };
 
 const getMockProductionUsage = (fixtureId: string): Organization[] => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/InProductionButton/${fixtureId}.json`) as Organization[];
 };
 

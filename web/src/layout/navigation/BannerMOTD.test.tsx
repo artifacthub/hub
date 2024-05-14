@@ -5,13 +5,14 @@ import BannerMOTD from './BannerMOTD';
 
 describe('BannerMOTD', () => {
   afterEach(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     delete (window as any).config;
     jest.resetAllMocks();
   });
 
   it('creates snapshot', () => {
     Object.defineProperty(document, 'querySelector', {
-      value: (selector: any) => {
+      value: (selector: string) => {
         switch (selector) {
           case `meta[name='artifacthub:motd']`:
             return {
@@ -31,7 +32,7 @@ describe('BannerMOTD', () => {
   describe('Render', () => {
     it('renders component', () => {
       Object.defineProperty(document, 'querySelector', {
-        value: (selector: any) => {
+        value: (selector: string) => {
           switch (selector) {
             case `meta[name='artifacthub:motd']`:
               return {
@@ -54,13 +55,14 @@ describe('BannerMOTD', () => {
     });
 
     it('renders component with specific severity type', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (window as any).config = {
         motd: 'this is a sample',
         motdSeverity: 'error',
       };
 
       Object.defineProperty(document, 'querySelector', {
-        value: (selector: any) => {
+        value: (selector: string) => {
           switch (selector) {
             case `meta[name='artifacthub:motd']`:
               return {
@@ -85,7 +87,7 @@ describe('BannerMOTD', () => {
 
     it('closes alert', async () => {
       Object.defineProperty(document, 'querySelector', {
-        value: (selector: any) => {
+        value: (selector: string) => {
           switch (selector) {
             case `meta[name='artifacthub:motd']`:
               return {
@@ -123,7 +125,7 @@ describe('BannerMOTD', () => {
 
       it('when motd is a empty string', () => {
         Object.defineProperty(document, 'querySelector', {
-          value: (selector: any) => {
+          value: (selector: string) => {
             switch (selector) {
               case `meta[name='artifacthub:motd']`:
                 return {
@@ -142,7 +144,7 @@ describe('BannerMOTD', () => {
 
       it('when motd is a {{ .motd }}', () => {
         Object.defineProperty(document, 'querySelector', {
-          value: (selector: any) => {
+          value: (selector: string) => {
             switch (selector) {
               case `meta[name='artifacthub:motd']`:
                 return {

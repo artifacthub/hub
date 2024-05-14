@@ -1,6 +1,7 @@
 import isValidJSON from './isValidJSON';
 
 interface Test {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   json: any;
   result: boolean;
 }

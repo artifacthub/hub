@@ -12,11 +12,12 @@ jest.mock('./BrushChart', () => () => <div>Chart</div>);
 jest.mock('react-apexcharts', () => () => <div>Chart</div>);
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as any),
+  ...(jest.requireActual('react-router-dom') as object),
   useLocation: jest.fn(),
 }));
 
 const getMockStats = (fixtureId: string): AHStats => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/index/${fixtureId}.json`) as AHStats;
 };
 
@@ -41,6 +42,7 @@ const mockCtx = {
 };
 
 describe('StatsView', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let dateNowSpy: any;
 
   beforeEach(() => {

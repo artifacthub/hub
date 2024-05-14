@@ -34,6 +34,7 @@ const DeleteOrganization = (props: Props) => {
       dispatch(unselectOrg());
       scrollToTop(); // Scroll to top when org is deleted
       setIsDeleting(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsDeleting(false);
       if (err.kind === ErrorKind.Unauthorized) {

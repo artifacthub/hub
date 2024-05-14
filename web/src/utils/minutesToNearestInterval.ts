@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
 
 const minutesToNearestInterval = (duration: number, decrement?: number): number => {

@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { nanoid } from 'nanoid';
 import { ChangeEvent, Dispatch, MouseEvent as ReactMouseEvent, SetStateAction, useEffect } from 'react';
 import { HiPlus } from 'react-icons/hi';
@@ -26,7 +26,7 @@ const TagsList = (props: Props) => {
 
   const deleteTag = (index: number) => {
     cleanRepeatedError();
-    let updatedTags = [...props.tags];
+    const updatedTags = [...props.tags];
     updatedTags.splice(index, 1);
     props.setContainerTags(updatedTags);
   };
@@ -37,13 +37,13 @@ const TagsList = (props: Props) => {
 
   const onUpdateTag = (index: number, field: 'name' | 'mutable', value?: string) => {
     cleanRepeatedError();
-    let tagToUpdate: ContainerTag = props.tags[index];
+    const tagToUpdate: ContainerTag = props.tags[index];
     if (field === 'name') {
       tagToUpdate[field] = value as string;
     } else {
       tagToUpdate[field] = !tagToUpdate.mutable;
     }
-    let updatedTags = [...props.tags];
+    const updatedTags = [...props.tags];
     updatedTags[index] = tagToUpdate;
     props.setContainerTags(updatedTags);
   };
@@ -52,7 +52,7 @@ const TagsList = (props: Props) => {
     if (isEmpty(props.tags)) {
       props.setContainerTags([{ ...EMPTY_TAG, id: nanoid() }]);
     }
-  }, [props.tags]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.tags]);
 
   return (
     <div className="mb-4">

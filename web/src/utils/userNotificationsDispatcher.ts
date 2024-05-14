@@ -1,5 +1,7 @@
 import md5 from 'crypto-js/md5';
-import { groupBy, isNull, isUndefined } from 'lodash';
+import groupBy from 'lodash/groupBy';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 import { NotificationsPrefs, PathTips, UserNotification } from '../types';
 import { PKG_DETAIL_PATH } from './data';
@@ -13,7 +15,9 @@ export interface UserNotificationsUpdatesHandler {
 }
 
 const getNotifications = (): UserNotification[] => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const list = require('./notifications.json').notifications;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return list.map((notif: any) => {
     const notification: UserNotification = {
       ...notif,
@@ -133,14 +137,15 @@ export class UserNotificationsDispatcher {
         // Only display a maximum of 1 notification per day when dateLimit is true
         hasToBeDisplayedNewNotification(dateLimit, this.settings.lastDisplayedTime)
       ) {
-        let notDisplayedNotifications = groupBy(
+        const notDisplayedNotifications = groupBy(
           this.notifications.filter((notif: UserNotification) => !this.settings!.displayed.includes(notif.id)),
           'linkTip'
         );
 
         const currentLocationTip = this.locationPathTip || getCurrentLocationPath();
+
         const getCommonTip = (): UserNotification | null => {
-          return notDisplayedNotifications.hasOwnProperty('undefined') && notDisplayedNotifications.undefined.length > 0
+          return !isUndefined(notDisplayedNotifications.undefined) && notDisplayedNotifications.undefined.length > 0
             ? (notDisplayedNotifications.undefined[
                 Math.floor(Math.random() * notDisplayedNotifications.undefined.length)
               ] as UserNotification)
@@ -149,7 +154,7 @@ export class UserNotificationsDispatcher {
 
         if (currentLocationTip) {
           if (
-            notDisplayedNotifications.hasOwnProperty(currentLocationTip) &&
+            !isUndefined(notDisplayedNotifications[currentLocationTip]) &&
             notDisplayedNotifications[currentLocationTip].length > 0
           ) {
             return notDisplayedNotifications[currentLocationTip][

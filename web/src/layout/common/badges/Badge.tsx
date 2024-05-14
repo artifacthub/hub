@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import classnames from 'classnames';
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useEffect, useRef, useState } from 'react';
 import { MdClose } from 'react-icons/md';

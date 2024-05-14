@@ -66,7 +66,7 @@ const mockUndefinedUser = {
 };
 
 Object.defineProperty(document, 'querySelector', {
-  value: (selector: any) => {
+  value: (selector: string) => {
     switch (selector) {
       case `meta[name='artifacthub:allowUserSignUp']`:
         return {

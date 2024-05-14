@@ -1,4 +1,5 @@
-import { compact, uniq } from 'lodash';
+import compact from 'lodash/compact';
+import uniq from 'lodash/uniq';
 
 import { ChartTemplate, ChartTmplTypeFile } from '../types';
 
@@ -43,8 +44,8 @@ const decodeData = (data: string): string => {
 };
 
 const formatChartTemplates = (templates: Tmpl[]): ChartTemplate[] => {
-  let finalTemplates: ChartTemplate[] = [];
-  let finalHelpers: ChartTemplate[] = [];
+  const finalTemplates: ChartTemplate[] = [];
+  const finalHelpers: ChartTemplate[] = [];
   templates.forEach((template: Tmpl) => {
     const templateName = template.name.replace('templates/', '');
     const { name, extension } = getFileNameAndExt(templateName);

@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 
 import Modal from './Modal';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 jest.mock('./Alert', () => (props: any) => <div>{props.message}</div>);
 
 const onCloseMock = jest.fn();

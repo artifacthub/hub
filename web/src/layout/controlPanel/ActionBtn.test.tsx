@@ -1,6 +1,5 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
 
 import { AppCtx } from '../../context/AppCtx';
 import { AuthorizerAction, AuthorizerInput } from '../../types';

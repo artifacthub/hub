@@ -1,5 +1,5 @@
-import { isNull, isUndefined } from 'lodash';
-import { Fragment } from 'react';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { FaFileSignature } from 'react-icons/fa';
 
 import { HelmChartSignKey, RepositoryKind, Signature } from '../../../types';

@@ -61,6 +61,7 @@ const TransferRepositoryModal = (props: Props) => {
       }
       setIsSending(false);
       onCloseModal();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -101,6 +102,7 @@ const TransferRepositoryModal = (props: Props) => {
         setOrganizations(orgs);
         setApiError(null);
         setIsFetchingOrgs(false);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         setIsFetchingOrgs(false);
         if (err.kind !== ErrorKind.Unauthorized) {

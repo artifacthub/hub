@@ -1,4 +1,6 @@
-import { isNull, isUndefined, trim } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import trim from 'lodash/trim';
 import { ChangeEvent, MouseEvent as ReactMouseEvent, useContext, useEffect, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { RiTestTubeFill } from 'react-icons/ri';
@@ -175,7 +177,7 @@ const AuthorizationSection = (props: Props) => {
         });
       }
       setIsTesting(false);
-    } catch (err: any) {
+    } catch {
       setIsTesting(false);
       alertDispatcher.postAlert({
         type: 'danger',
@@ -205,6 +207,7 @@ const AuthorizationSection = (props: Props) => {
         })
       );
       setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsLoading(false);
       if (err.kind === ErrorKind.Unauthorized) {
@@ -231,6 +234,7 @@ const AuthorizationSection = (props: Props) => {
       // Update allowed actions and re-render button
       authorizer.getAllowedActionsList(() => updateActionBtn.current!.reRender());
       setIsSaving(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSaving(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -263,7 +267,7 @@ const AuthorizationSection = (props: Props) => {
     try {
       const membersList: Member[] = await API.getAllOrganizationMembers(ctx.prefs.controlPanel.selectedOrg!);
       setMembers(membersList.map((member: Member) => member.alias));
-    } catch (err: any) {
+    } catch {
       setMembers(undefined);
     }
   }
@@ -345,7 +349,7 @@ const AuthorizationSection = (props: Props) => {
       getAuthorizationPolicy();
       fetchMembers();
     }
-  }, [selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [selectedOrg]);
 
   useEffect(() => {
     if (ctx.prefs.controlPanel.selectedOrg) {
@@ -364,7 +368,7 @@ const AuthorizationSection = (props: Props) => {
         }
       }
     }
-  }, [ctx.prefs.controlPanel.selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx.prefs.controlPanel.selectedOrg]);
 
   const onBeforeUnload = (e: BeforeUnloadEvent) => {
     e.preventDefault();
@@ -383,7 +387,7 @@ const AuthorizationSection = (props: Props) => {
     return () => {
       window.removeEventListener('beforeunload', onBeforeUnload);
     };
-  }, [orgPolicy]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [orgPolicy]);
 
   usePrompt({
     when: !isNull(orgPolicy) && !isUndefined(orgPolicy) && !notGetPolicyAllowed && checkIfUnsavedChanges(),

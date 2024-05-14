@@ -57,8 +57,9 @@ const CreateAnAccount = forwardRef<HTMLFormElement, Props>((props, ref) => {
       await API.register(user);
       props.setSuccess(true);
       props.setIsLoading({ status: false });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      let error = compoundErrorMessage(err, 'An error occurred registering the user');
+      const error = compoundErrorMessage(err, 'An error occurred registering the user');
       props.setApiError(error);
       props.setIsLoading({ status: false });
     }

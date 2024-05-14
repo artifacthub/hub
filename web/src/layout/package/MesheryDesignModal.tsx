@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { FiCode } from 'react-icons/fi';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -42,7 +42,7 @@ const MesheryDesignModal = (props: Props) => {
     if (props.visibleDesign && !openStatus) {
       onOpenModal();
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   if (isUndefined(props.design)) return null;
 
