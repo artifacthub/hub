@@ -31,6 +31,7 @@ linters-settings:
       - singleCaseSwitch
   goconst:
     min-occurrences: 5
-
-service:
-  golangci-lint-version: 1.51.x
+  revive:
+    rules:
+      - name: unused-parameter
+        disabled: true
