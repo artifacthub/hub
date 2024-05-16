@@ -424,7 +424,7 @@ func validateOrg(org *hub.Organization) error {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 	if !organizationNameRE.MatchString(org.Name) {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid name")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid name (only lowercase alphanumeric characters and hyphens are allowed)")
 	}
 	if org.LogoImageID != "" {
 		if _, err := uuid.FromString(org.LogoImageID); err != nil {
