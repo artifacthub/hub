@@ -90,7 +90,7 @@ func newLintCmd() *cobra.Command {
 			return lint(opts, &output{cmd.OutOrStdout()})
 		},
 	}
-	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: argo-template, backstage, coredns, falco, gatekeeper, headlamp, helm, helm-plugin, inspektor-gadget, kcl, keda-scaler, keptn, knative-client-plugin, krew, kubearmor, kubewarden, kyverno, meshery, olm, opa, tbaction, tekton-pipeline, tekton-stepaction, tekton-task")
+	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: argo-template, backstage, coredns, falco, gatekeeper, headlamp, helm, helm-plugin, inspektor-gadget, kcl, keda-scaler, keptn, knative-client-plugin, krew, kubearmor, kubewarden, kyverno, meshery, olm, opa, opencost, tbaction, tekton-pipeline, tekton-stepaction, tekton-task")
 	lintCmd.Flags().StringVarP(&opts.path, "path", "p", ".", "repository's packages path")
 	return lintCmd
 }
@@ -125,6 +125,7 @@ func lint(opts *lintOptions, out *output) error {
 		hub.Kyverno,
 		hub.Meshery,
 		hub.OPA,
+		hub.OpenCost,
 		hub.TBAction:
 		report = lintGeneric(opts.path, kind)
 	case hub.Helm:
@@ -631,6 +632,7 @@ func (out *output) printPkgDetails(pkg *hub.Package) {
 		hub.Kyverno,
 		hub.Meshery,
 		hub.OPA,
+		hub.OpenCost,
 		hub.TBAction:
 
 		// Install

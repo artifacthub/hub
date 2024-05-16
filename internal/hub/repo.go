@@ -121,6 +121,9 @@ const (
 
 	// Meshery represents a repository with Meshery designs.
 	Meshery RepositoryKind = 24
+
+	// OpenCost represents a repository with OpenCost plugins.
+	OpenCost RepositoryKind = 25
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -168,6 +171,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "olm"
 	case OPA:
 		return "opa"
+	case OpenCost:
+		return "opencost"
 	case TBAction:
 		return "tbaction"
 	case TektonPipeline:
@@ -227,6 +232,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return OLM, nil
 	case "opa":
 		return OPA, nil
+	case "opencost":
+		return OpenCost, nil
 	case "tbaction":
 		return TBAction, nil
 	case "tekton-pipeline":

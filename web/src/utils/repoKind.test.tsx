@@ -87,6 +87,10 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('meshery')).toBe(RepositoryKind.MesheryDesign);
     });
 
+    it('opencost', () => {
+      expect(methods.getRepoKind('opencost')).toBe(RepositoryKind.OpenCost);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -175,6 +179,10 @@ describe('repoKind', () => {
 
     it('meshery design kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.MesheryDesign)).toBe('meshery');
+    });
+
+    it('opencost plugin kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.OpenCost)).toBe('opencost');
     });
 
     it('unknown kind', () => {

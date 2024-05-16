@@ -116,6 +116,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.MesheryDesign,
     name: 'Meshery design',
   },
+  {
+    kind: RepositoryKind.OpenCost,
+    name: 'OpenCost plugin',
+  },
 ];
 
 const Wrapper = styled('span')`

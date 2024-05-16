@@ -26,6 +26,7 @@ export enum RepositoryKind {
   InspektorGadget,
   TektonStepAction,
   MesheryDesign,
+  OpenCost,
 }
 
 export enum PackageCategory {

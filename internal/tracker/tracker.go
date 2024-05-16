@@ -202,6 +202,7 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 		hub.Kyverno,
 		hub.Meshery,
 		hub.OPA,
+		hub.OpenCost,
 		hub.TBAction,
 		hub.TektonPipeline,
 		hub.TektonTask,

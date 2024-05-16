@@ -34,6 +34,7 @@ At the moment, the following artifacts kinds are supported *(with plans to suppo
 - [Kyverno policies](https://kyverno.io)
 - [Meshery designs](https://meshery.io)
 - [OLM operators](https://github.com/operator-framework)
+- [OpenCost plugins](https://www.opencost.io)
 - [Open Policy Agent (OPA) policies](https://www.openpolicyagent.org/)
 - [Tekton tasks, pipelines and stepactions](https://tekton.dev/)
 - [Tinkerbell actions](https://tinkerbell.org/)
