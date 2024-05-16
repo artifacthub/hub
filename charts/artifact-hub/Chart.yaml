@@ -2,7 +2,7 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.
 type: application
-version: 1.18.0
+version: 1.18.1-0
 appVersion: 1.18.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
@@ -31,6 +31,7 @@ keywords:
   - headlamp
   - inspektor gadget
   - meshery
+  - opencost
 maintainers:
   - name: Sergio
     email: tegioz@icloud.com

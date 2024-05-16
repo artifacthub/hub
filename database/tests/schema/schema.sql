@@ -566,7 +566,8 @@ select results_eq(
         (21, 'Headlamp plugins'),
         (22, 'Inspektor gadgets'),
         (23, 'Tekton stepactions'),
-        (24, 'Meshery designs')
+        (24, 'Meshery designs'),
+        (25, 'OpenCost plugins')
     $$,
     'Repository kinds should exist'
 );

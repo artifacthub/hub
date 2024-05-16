@@ -99,6 +99,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'tekton-stepaction';
     case RepositoryKind.MesheryDesign:
       return 'meshery';
+    case RepositoryKind.OpenCost:
+      return 'opencost';
     default:
       return null;
   }

@@ -526,6 +526,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.OpenCost:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/opencost-plugins"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            OpenCost plugins
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -558,6 +569,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.InspektorGadget:
               case RepositoryKind.TektonStepAction:
               case RepositoryKind.MesheryDesign:
+              case RepositoryKind.OpenCost:
                 return (
                   <>
                     <p
@@ -954,6 +966,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.InspektorGadget,
               RepositoryKind.TektonStepAction,
               RepositoryKind.MesheryDesign,
+              RepositoryKind.OpenCost,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -1106,6 +1119,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.InspektorGadget,
               RepositoryKind.TektonStepAction,
               RepositoryKind.MesheryDesign,
+              RepositoryKind.OpenCost,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

@@ -24,6 +24,7 @@ The following repositories kinds are supported at the moment:
 - [Meshery designs repositories](https://github.com/artifacthub/hub/blob/master/docs/meshery_designs_repositories.md)
 - [OLM operators repositories](https://github.com/artifacthub/hub/blob/master/docs/olm_operators_repositories.md)
 - [OPA policies repositories](https://github.com/artifacthub/hub/blob/master/docs/opa_policies_repositories.md)
+- [OpenCost plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/opencost_plugins_repositories.md)
 - [Tekton pipelines repositories](https://github.com/artifacthub/hub/blob/master/docs/tekton_pipelines_repositories.md)
 - [Tekton tasks repositories](https://github.com/artifacthub/hub/blob/master/docs/tekton_tasks_repositories.md)
 - [Tekton stepactions repositories](https://github.com/artifacthub/hub/blob/master/docs/tekton_stepactions_repositories.md)

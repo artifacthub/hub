@@ -78,6 +78,8 @@ const Image = (props: Props) => {
           return '/static/media/placeholder_pkg_inspektor-gadget.png';
         case RepositoryKind.MesheryDesign:
           return '/static/media/placeholder_pkg_meshery.png';
+        case RepositoryKind.OpenCost:
+          return '/static/media/placeholder_pkg_opencost.png';
         default:
           return PLACEHOLDER_SRC;
       }

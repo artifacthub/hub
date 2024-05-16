@@ -27,6 +27,7 @@ cat docs/www/headers/kyverno_policies_repositories docs/kyverno_policies_reposit
 cat docs/www/headers/meshery_designs_repositories docs/meshery_designs_repositories.md > docs/www/content/topics/repositories/meshery-designs.md
 cat docs/www/headers/olm_operators_repositories docs/olm_operators_repositories.md > docs/www/content/topics/repositories/olm-operators.md
 cat docs/www/headers/opa_policies_repositories docs/opa_policies_repositories.md > docs/www/content/topics/repositories/opa-policies.md
+cat docs/www/headers/opencost_plugins_repositories docs/opencost_plugins_repositories.md > docs/www/content/topics/repositories/opencost-plugins.md
 cat docs/www/headers/tekton_pipelines_repositories docs/tekton_pipelines_repositories.md > docs/www/content/topics/repositories/tekton-pipelines.md
 cat docs/www/headers/tekton_tasks_repositories docs/tekton_tasks_repositories.md > docs/www/content/topics/repositories/tekton-tasks.md
 cat docs/www/headers/tekton_stepactions_repositories docs/tekton_stepactions_repositories.md > docs/www/content/topics/repositories/tekton-stepactions.md

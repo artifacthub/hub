@@ -1598,6 +1598,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/opencost/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getOpencostPluginDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpencostPlugin"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/tbaction/{repoName}/{packageName}":
     get:
       tags:
@@ -2189,6 +2212,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/OLMPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/opencost/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getOpencostPluginVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpencostPlugin"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -4460,6 +4507,8 @@ components:
                     policy1: |
                       - macro: text
                         condition: (evt.num < 0)
+    OpencostPlugin:
+      $ref: "#/components/schemas/Package"
     TBActionPackage:
       $ref: "#/components/schemas/Package"
     TektonPipelinePackage:
@@ -4969,6 +5018,7 @@ components:
           * `22` - Inspektor gadgets
           * `23` - Tekton stepactions
           * `24` - Meshery designs
+          * `25` - Opencost plugins
     RepositoryKindParam:
       type: string
       enum:
@@ -4997,6 +5047,7 @@ components:
         - inspektor-gadget
         - tekton-stepaction
         - meshery
+        - opencost
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -5024,6 +5075,7 @@ components:
         * `inspektor-gadget` - Inspektor gadgets
         * `tekton-stepaction` - Tekton stepactions
         * `meshery` - Meshery designs
+        * `opencost` - Opencost plugins
     RepositorySummary:
       type: object
       required:
@@ -5568,6 +5620,7 @@ components:
           * `22` - Inspektor gadgets
           * `23` - Tekton stepactions
           * `24` - Meshery designs
+          * `25` - Opencost plugins
     PackageNameParam:
       in: path
       name: packageName
