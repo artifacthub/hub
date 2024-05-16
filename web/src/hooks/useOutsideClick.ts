@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { RefObject, useCallback, useEffect, useState } from 'react';
 
 export default function useOutsideClick(

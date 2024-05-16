@@ -1,4 +1,6 @@
-import { compact, isNull, isUndefined } from 'lodash';
+import compact from 'lodash/compact';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { memo } from 'react';
 
 import { GatekeeperCase, GatekeeperExample, Repository } from '../../../types';

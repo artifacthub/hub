@@ -1,5 +1,7 @@
+import isPropValid from '@emotion/is-prop-valid';
 import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { mocked } from 'jest-mock';
+import { StyleSheetManager } from 'styled-components';
 
 import API from '../api';
 import { SearchResults } from '../types';
@@ -7,11 +9,22 @@ import Group from './Group';
 jest.mock('../api');
 
 jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as {}),
+  ...(jest.requireActual('moment') as object),
   unix: () => ({
     fromNow: () => '3 hours ago',
   }),
 }));
+
+// This implements the default behavior from styled-components v5
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const shouldForwardProp = (propName: any, target: any): boolean => {
+  if (typeof target === 'string') {
+    // For HTML elements, forward the prop if it is a valid HTML attribute
+    return isPropValid(propName);
+  }
+  // For other elements, forward all props
+  return true;
+};
 
 const defaultProps = {
   url: 'https://localhost:8000/api/v1/packages/search',
@@ -23,6 +36,7 @@ const defaultProps = {
 };
 
 const getMockGroup = (fixtureId: string): SearchResults => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/Group/${fixtureId}.json`) as SearchResults;
 };
 
@@ -35,7 +49,11 @@ describe('Group', () => {
     const mockGroup = getMockGroup('1');
     mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
-    const { asFragment } = render(<Group {...defaultProps} />);
+    const { asFragment } = render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Group {...defaultProps} />
+      </StyleSheetManager>
+    );
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
     });
@@ -48,7 +66,11 @@ describe('Group', () => {
     const mockGroup = getMockGroup('2');
     mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
-    render(<Group {...defaultProps} />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Group {...defaultProps} />
+      </StyleSheetManager>
+    );
 
     expect(screen.getByTestId('wrapper')).toBeInTheDocument();
     expect(screen.getByTestId('wrapper')).toHaveStyle('--color-ah-primary: #417598');
@@ -67,7 +89,11 @@ describe('Group', () => {
     const mockGroup = getMockGroup('3');
     mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
-    render(<Group {...defaultProps} responsive={false} width="1800" />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Group {...defaultProps} responsive={false} width="1800" />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
@@ -83,7 +109,11 @@ describe('Group', () => {
     const mockGroup = getMockGroup('4');
     mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
-    render(<Group {...defaultProps} color="#F57C00" />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Group {...defaultProps} color="#F57C00" />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
@@ -97,7 +127,11 @@ describe('Group', () => {
     const mockGroup = getMockGroup('5');
     mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
-    render(<Group {...defaultProps} theme="dark" />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Group {...defaultProps} theme="dark" />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
@@ -112,7 +146,11 @@ describe('Group', () => {
       const mockGroup = getMockGroup('6');
       mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
-      const { container } = render(<Group {...defaultProps} />);
+      const { container } = render(
+        <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+          <Group {...defaultProps} />
+        </StyleSheetManager>
+      );
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
@@ -126,7 +164,11 @@ describe('Group', () => {
     it('when searchPackages call fails', async () => {
       mocked(API).searchPackages.mockRejectedValue(null);
 
-      const { container } = render(<Group {...defaultProps} />);
+      const { container } = render(
+        <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+          <Group {...defaultProps} />
+        </StyleSheetManager>
+      );
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);

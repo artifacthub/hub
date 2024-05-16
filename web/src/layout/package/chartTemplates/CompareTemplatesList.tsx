@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { FaRegSquareMinus, FaRegSquarePlus } from 'react-icons/fa6';
@@ -93,7 +94,7 @@ const CompareTemplatesList = (props: Props) => {
       reviewActiveTemplate(filteredTemplates);
       setVisibleTemplates(filteredTemplates);
     }
-  }, [inputValue, props.templates]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [inputValue, props.templates]);
 
   if (isNull(props.templates) || isUndefined(props.templates)) return null;
   return (

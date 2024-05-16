@@ -49,7 +49,7 @@ const SearchPackages = (props: Props) => {
       );
       setPackages(searchResults.packages);
       setIsSearching(false);
-    } catch (err: any) {
+    } catch {
       setPackages(null);
       alertDispatcher.postAlert({
         type: 'danger',
@@ -167,7 +167,7 @@ const SearchPackages = (props: Props) => {
         clearTimeout(dropdownTimeout);
       }
     };
-  }, [searchQuery]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [searchQuery]);
 
   return (
     <div className="position-relative">

@@ -99,23 +99,14 @@ const WidgetsGroupModal = (props: Props) => {
     resetValues();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleColorChange = (color: any) => {
     setColor(color.hex);
   };
 
   useEffect(() => {
     setWidgetCode(buildWidgetsGroupCode());
-    /* eslint-disable react-hooks/exhaustive-deps */
-  }, [
-    theme,
-    header,
-    stars,
-    fixedWidth,
-    groupWrapperWidthOpt,
-    color,
-    loading,
-    props.visibleWidget,
-  ]); /* eslint-enable react-hooks/exhaustive-deps */
+  }, [theme, header, stars, fixedWidth, groupWrapperWidthOpt, color, loading, props.visibleWidget]);
 
   return (
     <>

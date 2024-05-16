@@ -77,9 +77,7 @@ const WidgetModal = (props: Props) => {
 
   useEffect(() => {
     setWidgetCode(buildWidgetCode());
-    /* eslint-disable react-hooks/exhaustive-deps */
   }, [theme, header, responsive, stars, props.packageId, props.visibleWidget]);
-  /* eslint-enable react-hooks/exhaustive-deps */
 
   useEffect(() => {
     if (props.visibleWidget) {
@@ -88,7 +86,7 @@ const WidgetModal = (props: Props) => {
         replace: true,
       });
     }
-  }, [props.visibleWidget]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.visibleWidget]);
 
   return (
     <>

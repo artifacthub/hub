@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { ChangeEvent, useState } from 'react';
 import { FaLock } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -52,11 +52,12 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
       setSetUp(await API.setUpTFA());
       setOpenStatus(true);
       setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsLoading(false);
       setSetUp(null);
       if (err.kind !== ErrorKind.Unauthorized) {
-        let error = compoundErrorMessage(err, 'An error occurred turning on two-factor authentication');
+        const error = compoundErrorMessage(err, 'An error occurred turning on two-factor authentication');
         alertDispatcher.postAlert({
           type: 'danger',
           message: error,
@@ -73,10 +74,11 @@ const EnableTwoFactorAuthenticationModal = (props: Props) => {
       await API.enableTFA(passcode);
       setApiError(null);
       setActiveStep(3);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsProcessing(false);
       if (err.kind !== ErrorKind.Unauthorized) {
-        let error = compoundErrorMessage(err, 'An error occurred turning on two-factor authentication');
+        const error = compoundErrorMessage(err, 'An error occurred turning on two-factor authentication');
         setApiError(error);
       } else {
         props.onAuthError();

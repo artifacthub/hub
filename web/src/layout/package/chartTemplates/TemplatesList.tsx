@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
@@ -62,7 +63,7 @@ const TemplatesList = (props: Props) => {
       reviewActiveTemplate(filteredTemplates);
       setVisibleTemplates(filteredTemplates);
     }
-  }, [inputValue]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [inputValue]);
 
   // Display active template in list
   useLayoutEffect(() => {

@@ -5,6 +5,7 @@ import { ContainerImage, RepositoryKind } from '../../types';
 import ContainersImages from './ContainersImages';
 
 const getMockImages = (fixtureId: string): ContainerImage[] => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/ContainersImages/${fixtureId}.json`) as ContainerImage[];
 };
 

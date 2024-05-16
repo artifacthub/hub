@@ -35,7 +35,7 @@ const Navbar = (props: Props) => {
     if (!isNull(redirect) && isNull(ctx.user)) {
       setOpenLogIn(true);
     }
-  }, [redirect]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [redirect]);
 
   const logo = getMetaTag('websiteLogo');
   const siteName = getMetaTag('siteName');

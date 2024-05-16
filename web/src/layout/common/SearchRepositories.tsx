@@ -1,6 +1,7 @@
 import classnames from 'classnames';
-import { escapeRegExp, isUndefined } from 'lodash';
+import escapeRegExp from 'lodash/escapeRegExp';
 import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
@@ -65,6 +66,7 @@ const SearchRepositories = (props: Props) => {
       const data = await API.searchRepositories(query);
       setRepositories(data.items);
       setIsSearching(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
@@ -202,7 +204,7 @@ const SearchRepositories = (props: Props) => {
         clearTimeout(dropdownTimeout);
       }
     };
-  }, [searchName]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [searchName]);
 
   return (
     <div className="position-relative">

@@ -5,7 +5,7 @@ import Content from './Content';
 jest.mock('../../../api');
 
 jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as {}),
+  ...(jest.requireActual('moment') as object),
   unix: () => ({
     isAfter: () => false,
     fromNow: () => '3 hours ago',
@@ -16,7 +16,7 @@ jest.mock('moment', () => ({
 const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as {}),
+  ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 

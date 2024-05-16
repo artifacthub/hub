@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { createContext, Dispatch, useContext, useEffect, useReducer, useState } from 'react';
 
@@ -41,6 +41,7 @@ type Action =
 
 export const AppCtx = createContext<{
   ctx: AppState;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dispatch: Dispatch<any>;
 }>({
   ctx: initialState,
@@ -83,6 +84,7 @@ export function addNewDisplayedNotification(id: string) {
   return { type: 'addNewDisplayedNotification', id };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function refreshUserProfile(dispatch: Dispatch<any>, redirectUrl?: string | null) {
   try {
     const profile: Profile = await API.getUserProfile();
@@ -102,6 +104,7 @@ export async function refreshUserProfile(dispatch: Dispatch<any>, redirectUrl?: 
         });
       }
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     dispatch({ type: 'signOut' });
     if (err.message === 'invalid session' && history.navigate && history.location) {
@@ -156,10 +159,13 @@ function getCurrentSystemActiveTheme(prefs: ThemePrefs): ThemePrefs {
 
 export function appReducer(state: AppState, action: Action) {
   let prefs;
+  let userPrefs;
+  let guestPrefs;
+  let effective;
   switch (action.type) {
     case 'signIn':
       prefs = lsStorage.getPrefs(action.profile.alias);
-      const userPrefs = { ...prefs, theme: getCurrentSystemActiveTheme(prefs.theme) };
+      userPrefs = { ...prefs, theme: getCurrentSystemActiveTheme(prefs.theme) };
       updateActiveStyleSheet(userPrefs.theme.effective);
       lsStorage.setPrefs(userPrefs, action.profile.alias);
       lsStorage.setActiveProfile(action.profile.alias);
@@ -179,7 +185,7 @@ export function appReducer(state: AppState, action: Action) {
 
     case 'signOut':
       prefs = lsStorage.getPrefs();
-      const guestPrefs = { ...prefs, theme: getCurrentSystemActiveTheme(prefs.theme) };
+      guestPrefs = { ...prefs, theme: getCurrentSystemActiveTheme(prefs.theme) };
       lsStorage.setPrefs(guestPrefs);
       lsStorage.setActiveProfile();
       updateActiveStyleSheet(guestPrefs.theme.effective);
@@ -211,7 +217,7 @@ export function appReducer(state: AppState, action: Action) {
       };
 
     case 'updateTheme':
-      const effective = action.theme === 'automatic' ? detectActiveThemeMode() : action.theme;
+      effective = action.theme === 'automatic' ? detectActiveThemeMode() : action.theme;
       prefs = {
         ...state.prefs,
         theme: {
@@ -304,7 +310,7 @@ function AppCtxProvider(props: Props) {
     updateActiveStyleSheet(theme);
     setActiveInitialTheme(theme);
     refreshUserProfile(dispatch);
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useSystemThemeMode(ctx.prefs.theme.configured === 'automatic', dispatch);
 

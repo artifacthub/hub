@@ -6,6 +6,7 @@ import { Dependency } from '../../types';
 import Dependencies from './Dependencies';
 
 const getMockDependencies = (fixtureId: string): Dependency[] => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/Dependencies/${fixtureId}.json`) as Dependency[];
 };
 

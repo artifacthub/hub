@@ -34,6 +34,7 @@ const ProfileSection = (props: Props) => {
         setApiError(null);
       }
       setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -56,7 +57,7 @@ const ProfileSection = (props: Props) => {
     ) {
       fetchOrganization();
     }
-  }, [selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [selectedOrg]);
 
   return (
     <main role="main" className="p-0">

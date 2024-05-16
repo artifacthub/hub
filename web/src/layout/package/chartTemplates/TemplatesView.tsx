@@ -1,4 +1,5 @@
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useRef, useState } from 'react';
 
 import { ChartTemplate, DefinedTemplatesList, TemplatesQuery } from '../../../types';
@@ -12,6 +13,7 @@ import styles from './TemplatesView.module.css';
 interface Props {
   templates: ChartTemplate[] | null;
   templatesInHelpers: DefinedTemplatesList;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   values?: any;
   normalizedName: string;
   visibleTemplate?: string | null;
@@ -67,7 +69,7 @@ const TemplatesView = (props: Props) => {
       }
       setActiveTemplate(activeTmpl || props.templates[0]);
     }
-  }, [props.templates]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.templates]);
 
   useEffect(() => {
     if (props.templates && props.visibleTemplate) {
@@ -83,7 +85,7 @@ const TemplatesView = (props: Props) => {
         setActiveTemplate(activeTmpl || props.templates[0]);
       }
     }
-  }, [props.visibleTemplate]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.visibleTemplate]);
 
   return (
     <div className="d-flex flex-row align-items-stretch g-0 h-100 mh-100">

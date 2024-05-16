@@ -1,4 +1,11 @@
-import { isArray, isEmpty, isNull, isObject, isUndefined, repeat, set, trim } from 'lodash';
+import isArray from 'lodash/isArray';
+import isEmpty from 'lodash/isEmpty';
+import isNull from 'lodash/isNull';
+import isObject from 'lodash/isObject';
+import isUndefined from 'lodash/isUndefined';
+import repeat from 'lodash/repeat';
+import set from 'lodash/set';
+import trim from 'lodash/trim';
 
 import formatStringForYAML from './formatStringForYAML';
 import getJMESPathForValuesSchema from './getJMESPathForValuesSchema';
@@ -18,6 +25,7 @@ interface ItemValue {
 }
 
 interface JSONSchema {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
@@ -31,9 +39,10 @@ const renderValueLine = (item: ItemValue, name: string): string => {
   }${repeat(' ', activeLevel * 2)}${item.hasDecorator ? '- ' : ''}${name}: ${item.value || ''}`;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isObjectUndefined = (obj: any): boolean => {
   for (const item in obj.properties) {
-    if (obj.properties[item].hasOwnProperty('properties')) {
+    if (!isUndefined(obj.properties[item].properties)) {
       return isObjectUndefined(obj.properties[item]);
     } else if (!isUndefined(obj.properties[item].value)) {
       return false;
@@ -43,23 +52,29 @@ const isObjectUndefined = (obj: any): boolean => {
   return true;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const shouldIgnorePath = (item: any): boolean => {
-  if (item.hasOwnProperty('properties')) {
+  if (!isUndefined(item.properties)) {
     return isObjectUndefined(item);
   } else {
     return isUndefined(item.value);
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const prepareValueFile = (obj: any) => {
-  let newObj = {};
+  const newObj = {};
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const checkOpts = (el: any, path: string) => {
     if (isObject(el)) {
-      if (el.hasOwnProperty('properties')) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (!isUndefined((el as any).properties)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const properties = (el as any).properties;
         if (!shouldIgnorePath(el)) {
           set(newObj, path, { ...el, properties: {} });
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           Object.keys(properties).forEach((item: any) => {
             const currentPath = isUndefined(path) ? `properties.${item}` : `${path}.properties.${item}`;
             checkOpts(properties[item], currentPath);
@@ -80,11 +95,13 @@ const prepareValueFile = (obj: any) => {
   return newObj;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const prepareContent = (content: any): string => {
   let yamlContent: string = '';
   const cleanContent = prepareValueFile(content);
 
   if (!isEmpty(cleanContent)) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const checkContent = (obj: any) => {
       Object.keys(obj).forEach((item: string) => {
         if (obj[item].value) {
@@ -106,7 +123,7 @@ const prepareContent = (content: any): string => {
 
 const compoundJSONSchemaYAML = (schema: JSONSchema, savedOpts: { [key: string]: number }): FormattedValuesSchema => {
   const title = schema.title ? `# ${schema.title}` : '';
-  let paths: string[] = [];
+  const paths: string[] = [];
 
   const getValue = (value: JSONSchema, level: number): string | undefined => {
     if (isUndefined(value.default)) {
@@ -116,6 +133,9 @@ const compoundJSONSchemaYAML = (schema: JSONSchema, savedOpts: { [key: string]: 
     if (isNull(value.default)) {
       return 'null';
     }
+
+    let isLongText;
+
     switch (isArray(value.type) ? value.type[0] : value.type) {
       case 'object':
         return isEmpty(value.default) ? '{}' : JSON.stringify(value.default);
@@ -130,7 +150,7 @@ const compoundJSONSchemaYAML = (schema: JSONSchema, savedOpts: { [key: string]: 
       case 'integer':
         return value.default!.toString();
       case 'string':
-        const isLongText = (value.default as string).length > 40;
+        isLongText = (value.default as string).length > 40;
         if (isLongText) {
           return `|-\n\n${repeat(' ', (level + 1) * 2)}${value.default}`;
         } else {
@@ -143,6 +163,7 @@ const compoundJSONSchemaYAML = (schema: JSONSchema, savedOpts: { [key: string]: 
 
   const items = {};
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function checkProperties(props: any, level: number, isArrayParent: boolean, pathSteps: string[] = [], path?: string) {
     Object.keys(props).forEach((propName: string, index: number) => {
       let value: JSONSchema | undefined = props[propName] as JSONSchema;
@@ -152,7 +173,7 @@ const compoundJSONSchemaYAML = (schema: JSONSchema, savedOpts: { [key: string]: 
         !isNull(value.type) &&
         value.type === 'array' &&
         value.items &&
-        (value.items as JSONSchema).hasOwnProperty('properties')
+        !isUndefined((value.items as JSONSchema).properties)
       ) {
         isCurrentArrayParent = true;
       }

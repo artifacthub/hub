@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { ElementType, useContext, useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
@@ -69,13 +70,13 @@ const UserNotificationsController: ElementType = () => {
     return () => {
       notificationsDispatcher.close();
     };
-  }, [ctx.user]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx.user]);
 
   useEffect(() => {
     if (!isUndefined(ctx.user)) {
       notificationsDispatcher.updateSettings(ctx.prefs.notifications);
     }
-  }, [ctx.prefs.notifications]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx.prefs.notifications]);
 
   useEffect(() => {
     return () => {

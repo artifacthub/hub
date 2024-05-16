@@ -1,4 +1,6 @@
-import { isEmpty, isNull, isUndefined } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, useState } from 'react';
 
 import { Policies, Repository } from '../../../types';
@@ -16,7 +18,7 @@ const KubeArmorInstall = (props: Props) => {
   const [selectedPolicy, setSelectedPolicy] = useState<string | undefined>(
     !isUndefined(props.policies) && !isEmpty(props.policies) ? Object.keys(props.policies)[0] : undefined
   );
-  let url: string | null = getGitHostingProvider(props.repository.url, props.repository.branch);
+  const url: string | null = getGitHostingProvider(props.repository.url, props.repository.branch);
 
   if (isUndefined(props.policies) || isUndefined(selectedPolicy)) return null;
 

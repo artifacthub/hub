@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { useNavigate } from 'react-router-dom';
 
 import { RepositoryKind } from '../../types';

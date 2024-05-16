@@ -38,6 +38,7 @@ const DeleteAccount = (props: Props) => {
       await API.registerDeleteUserCode();
       setIsDeleting(false);
       setDeleteSuccess(true);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsDeleting(false);
       if (err.kind === ErrorKind.Unauthorized) {

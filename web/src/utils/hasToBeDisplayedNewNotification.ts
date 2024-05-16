@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import moment from 'moment';
 
 const hasToBeDisplayedNewNotification = (dateLimit: boolean, lastDisplayedTime: null | number): boolean => {

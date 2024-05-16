@@ -62,6 +62,7 @@ const StarredPackagesView = () => {
       updatePageNumber();
       setApiError(null);
       setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -75,13 +76,13 @@ const StarredPackagesView = () => {
 
   useEffect(() => {
     fetchStarredPackages();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     if (activePageParam && activePage !== parseInt(activePageParam)) {
       fetchStarredPackages();
     }
-  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activePage]);
 
   return (
     <div className="d-flex flex-column flex-grow-1 position-relative">

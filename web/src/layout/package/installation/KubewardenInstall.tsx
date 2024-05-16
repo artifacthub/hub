@@ -1,4 +1,6 @@
-import { isNull, isUndefined, sortBy } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import sortBy from 'lodash/sortBy';
 import { ChangeEvent, useState } from 'react';
 
 import { ContainerImage } from '../../../types';

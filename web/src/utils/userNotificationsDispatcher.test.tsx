@@ -1,5 +1,4 @@
-import { waitFor } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { act, waitFor } from '@testing-library/react';
 
 import { UserNotification } from '../types';
 import userNotificationsDispatcher from './userNotificationsDispatcher';

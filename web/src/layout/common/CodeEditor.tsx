@@ -6,7 +6,7 @@ import 'codemirror/mode/go/go';
 import 'codemirror-rego/mode';
 
 import classnames from 'classnames';
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { ElementType, useContext } from 'react';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 
@@ -46,6 +46,7 @@ const CodeEditor: ElementType = (props: Props) => {
       editorDidMount={(editor) => {
         editor.setSize('', '100%');
       }}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onBeforeChange={(editor: any, data: any, value: string) => {
         props.onChange(value);
       }}

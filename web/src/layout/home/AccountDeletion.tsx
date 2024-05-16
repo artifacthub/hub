@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useContext, useEffect, useState } from 'react';
 import { CgUserRemove } from 'react-icons/cg';
@@ -57,7 +57,7 @@ const AccountDeletion = (props: Props) => {
         deleteUser();
       }
     }
-  }, [ctx]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx]);
 
   if (isUndefined(code) || isNull(code) || isUndefined(ctx.user)) return null;
 

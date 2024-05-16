@@ -1,5 +1,7 @@
+import isPropValid from '@emotion/is-prop-valid';
 import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { mocked } from 'jest-mock';
+import { StyleSheetManager } from 'styled-components';
 
 import API from '../api';
 import { PackageSummary } from '../types';
@@ -7,11 +9,22 @@ import Widget from './Widget';
 jest.mock('../api');
 
 jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as {}),
+  ...(jest.requireActual('moment') as object),
   unix: () => ({
     fromNow: () => '3 hours ago',
   }),
 }));
+
+// This implements the default behavior from styled-components v5
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const shouldForwardProp = (propName: any, target: any): boolean => {
+  if (typeof target === 'string') {
+    // For HTML elements, forward the prop if it is a valid HTML attribute
+    return isPropValid(propName);
+  }
+  // For other elements, forward all props
+  return true;
+};
 
 const defaultProps = {
   url: 'https://localhost:8000/packages/helm/artifact-hub/artifact-hub',
@@ -23,6 +36,7 @@ const defaultProps = {
 };
 
 const getMockPkg = (fixtureId: string): PackageSummary => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/Widget/${fixtureId}.json`) as PackageSummary;
 };
 
@@ -35,7 +49,11 @@ describe('Widget', () => {
     const mockPkg = getMockPkg('1');
     mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
-    const { asFragment } = render(<Widget {...defaultProps} />);
+    const { asFragment } = render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Widget {...defaultProps} />
+      </StyleSheetManager>
+    );
     await waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
@@ -48,7 +66,11 @@ describe('Widget', () => {
     const mockPkg = getMockPkg('2');
     mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
-    render(<Widget {...defaultProps} />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Widget {...defaultProps} />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
@@ -96,7 +118,11 @@ describe('Widget', () => {
     const mockPkg = getMockPkg('3');
     mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
-    render(<Widget {...defaultProps} header={false} />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Widget {...defaultProps} header={false} />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
@@ -110,7 +136,11 @@ describe('Widget', () => {
     const mockPkg = getMockPkg('12');
     mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
-    render(<Widget {...defaultProps} stars={false} />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Widget {...defaultProps} stars={false} />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
@@ -124,7 +154,11 @@ describe('Widget', () => {
     const mockPkg = getMockPkg('4');
     mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
-    render(<Widget {...defaultProps} responsive={true} />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Widget {...defaultProps} responsive={true} />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
@@ -139,7 +173,11 @@ describe('Widget', () => {
   it('does not call to getPackageInfo when packageSummary is defined', () => {
     const mockPkg = getMockPkg('5');
 
-    render(<Widget {...defaultProps} packageSummary={mockPkg} />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Widget {...defaultProps} packageSummary={mockPkg} />
+      </StyleSheetManager>
+    );
 
     waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(0);
@@ -177,7 +215,11 @@ describe('Widget', () => {
     const mockPkg = getMockPkg('5');
     mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
-    render(<Widget {...defaultProps} color="#F57C00" />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Widget {...defaultProps} color="#F57C00" />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
@@ -196,7 +238,11 @@ describe('Widget', () => {
     const mockPkg = getMockPkg('6');
     mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
-    render(<Widget {...defaultProps} theme="dark" />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Widget {...defaultProps} theme="dark" />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
@@ -212,7 +258,11 @@ describe('Widget', () => {
     const mockPkg = getMockPkg('7');
     mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
-    render(<Widget {...defaultProps} />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Widget {...defaultProps} />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
@@ -226,7 +276,11 @@ describe('Widget', () => {
     const mockPkg = getMockPkg('8');
     mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
-    render(<Widget {...defaultProps} withBadges={false} inGroup={true} />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Widget {...defaultProps} withBadges={false} inGroup={true} />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
@@ -243,7 +297,11 @@ describe('Widget', () => {
     const mockPkg = getMockPkg('9');
     mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
-    render(<Widget {...defaultProps} withBadges={true} inGroup={true} />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Widget {...defaultProps} withBadges={true} inGroup={true} />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
@@ -260,7 +318,11 @@ describe('Widget', () => {
     it('renders helm-plugin', () => {
       const mockPkg = getMockPkg('10');
 
-      render(<Widget {...defaultProps} packageSummary={mockPkg} />);
+      render(
+        <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+          <Widget {...defaultProps} packageSummary={mockPkg} />
+        </StyleSheetManager>
+      );
 
       expect(screen.getByText('Helm plugin')).toBeInTheDocument();
     });
@@ -268,7 +330,11 @@ describe('Widget', () => {
     it('renders OLM operator', () => {
       const mockPkg = getMockPkg('11');
 
-      render(<Widget {...defaultProps} packageSummary={mockPkg} />);
+      render(
+        <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+          <Widget {...defaultProps} packageSummary={mockPkg} />
+        </StyleSheetManager>
+      );
 
       expect(screen.getByText('OLM operator')).toBeInTheDocument();
     });
@@ -278,7 +344,11 @@ describe('Widget', () => {
     const mockPkg = getMockPkg('9');
     mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
-    render(<Widget {...defaultProps} withBadges={true} inGroup={true} />);
+    render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Widget {...defaultProps} withBadges={true} inGroup={true} />
+      </StyleSheetManager>
+    );
 
     await waitFor(() => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
@@ -293,7 +363,11 @@ describe('Widget', () => {
 
   describe('does not render component', () => {
     it('when packageSummary and url are undefined', () => {
-      const { container } = render(<Widget {...defaultProps} url={undefined} />);
+      const { container } = render(
+        <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+          <Widget {...defaultProps} url={undefined} />
+        </StyleSheetManager>
+      );
 
       expect(container).toBeEmptyDOMElement();
     });
@@ -301,7 +375,11 @@ describe('Widget', () => {
     it('when error to getPackageInfo', async () => {
       mocked(API).getPackageInfo.mockRejectedValue(null);
 
-      const { container } = render(<Widget {...defaultProps} />);
+      const { container } = render(
+        <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+          <Widget {...defaultProps} />
+        </StyleSheetManager>
+      );
 
       await waitFor(() => {
         expect(API.getPackageInfo).toHaveBeenCalledTimes(1);

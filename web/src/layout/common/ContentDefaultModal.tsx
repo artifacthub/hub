@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -24,6 +25,7 @@ interface Props {
   btnModalContent: JSX.Element;
   normalizedName: string;
   title: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   files?: any[];
 }
 
@@ -52,13 +54,16 @@ const ContentDefaultModal = (props: Props) => {
   const location = useLocation();
   const anchor = useRef<HTMLDivElement>(null);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedItem, setSelectedItem] = useState<any | null>(null);
   const [isChangingSelectedItem, setIsChangingSelectedItem] = useState<boolean>(false);
   const [code, setCode] = useState<string | undefined>(undefined);
   const [inputValue, setInputValue] = useState<string>('');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [visibleFiles, setVisibleFiles] = useState<any[]>(props.files || []);
   const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onItemChange = (file: any | null) => {
     setIsChangingSelectedItem(true);
     setSelectedItem(file);
@@ -102,18 +107,22 @@ const ContentDefaultModal = (props: Props) => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const getVisibleFiles = (): any[] => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return props.files!.filter((file: any) => {
         const term = `${file.name} ${file.kind || ''}`.toLowerCase();
         return term.includes(inputValue.toLowerCase());
       });
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const reviewActiveFile = (currentFilteredFiles: any[][]) => {
       if (currentFilteredFiles.length === 0 && !isUndefined(selectedItem)) {
         onItemChange(null);
       } else {
         if (selectedItem) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const activeFile = currentFilteredFiles.find((file: any) => file === selectedItem);
           if (isUndefined(activeFile)) {
             onItemChange(currentFilteredFiles[0]);
@@ -136,7 +145,7 @@ const ContentDefaultModal = (props: Props) => {
         setVisibleFiles(filteredFiles);
       }
     }
-  }, [inputValue]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [inputValue]);
 
   const updateUrl = (fileName?: string) => {
     navigate(
@@ -162,7 +171,7 @@ const ContentDefaultModal = (props: Props) => {
     if (props.visibleModal && !openStatus && props.files && props.files.length > 0) {
       onOpenModal();
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     if (props.packageId !== currentPkgId) {
@@ -173,7 +182,7 @@ const ContentDefaultModal = (props: Props) => {
         onOpenModal();
       }
     }
-  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.packageId]);
 
   // Display active file in list
   useLayoutEffect(() => {
@@ -207,6 +216,7 @@ const ContentDefaultModal = (props: Props) => {
       setVisibleFiles(props.files);
       let currentActiveFile = props.files[0];
       if (props.visibleFile) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const visibleFile = props.files.find((file: any) => file.name.toLowerCase() === props.visibleFile);
         if (visibleFile) {
           currentActiveFile = visibleFile;
@@ -289,6 +299,7 @@ const ContentDefaultModal = (props: Props) => {
                   </div>
                 ) : (
                   <div className="pe-2">
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     {visibleFiles.map((file: any, index: number) => {
                       const isActive = selectedItem === file;
                       return (
@@ -308,9 +319,10 @@ const ContentDefaultModal = (props: Props) => {
                         >
                           <div className="d-flex flex-column align-self-center">
                             {(() => {
+                              let resource: CustomResourcesDefinition;
                               switch (props.kind) {
                                 case ContentDefaultModalKind.CustomResourcesDefinition:
-                                  const resource = file as CustomResourcesDefinition;
+                                  resource = file as CustomResourcesDefinition;
                                   return (
                                     <>
                                       <div className="d-flex flex-row align-items-baseline my-1">

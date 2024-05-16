@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isArray } from 'lodash';
+import isArray from 'lodash/isArray';
 import isUndefined from 'lodash/isUndefined';
 import { ElementType, useEffect, useRef, useState } from 'react';
 import { FiExternalLink } from 'react-icons/fi';
@@ -24,6 +24,7 @@ interface HeadingProps {
 interface LinkProps {
   href: string;
   target: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
 

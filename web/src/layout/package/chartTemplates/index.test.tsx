@@ -9,19 +9,21 @@ import alertDispatcher from '../../../utils/alertDispatcher';
 import ChartTemplatesModal from './index';
 jest.mock('../../../utils/alertDispatcher');
 jest.mock('../../../api');
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 jest.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
 jest.mock('remark-gfm', () => () => <div />);
 
 const getMockChartTemplates = (fixtureId: string): ChartTemplatesData => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/index/${fixtureId}.json`) as ChartTemplatesData;
 };
 
 const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as {}),
+  ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 

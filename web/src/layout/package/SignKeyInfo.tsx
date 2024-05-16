@@ -1,5 +1,6 @@
 import classNames from 'classnames';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { useCallback, useEffect, useState } from 'react';
 import { FaKey } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -31,26 +32,21 @@ const SignKeyInfo = (props: Props) => {
     });
   };
 
-  const onOpen = useCallback(
-    () => {
-      if (props.signed && props.repoKind === RepositoryKind.Helm && !isUndefined(props.signKey)) {
-        setOpenStatus(true);
-        navigate('?modal=key-info', {
-          state: location.state,
-          replace: true,
-        });
-      }
-    },
-    /* eslint-disable react-hooks/exhaustive-deps */
-    [props.repoKind, props.signKey, props.signed]
-    /* eslint-enable react-hooks/exhaustive-deps */
-  );
+  const onOpen = useCallback(() => {
+    if (props.signed && props.repoKind === RepositoryKind.Helm && !isUndefined(props.signKey)) {
+      setOpenStatus(true);
+      navigate('?modal=key-info', {
+        state: location.state,
+        replace: true,
+      });
+    }
+  }, [props.repoKind, props.signKey, props.signed]);
 
   useEffect(() => {
     if (props.visibleKeyInfo && !openStatus) {
       onOpen();
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   const onlyCosignSignature =
     !isUndefined(props.signatures) && props.signatures.length === 1 && props.signatures[0] === Signature.Cosign;

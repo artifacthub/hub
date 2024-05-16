@@ -1,4 +1,4 @@
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import { MutableRefObject, useEffect, useLayoutEffect, useState } from 'react';
 
 const useOverflowWrapper = (
@@ -28,15 +28,15 @@ const useOverflowWrapper = (
   useEffect(() => {
     window.addEventListener('resize', throttle(handleOverflow, 200));
     return () => window.removeEventListener('resize', handleOverflow);
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useLayoutEffect(() => {
     handleOverflow();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     handleOverflow();
-  }, [itemsLength]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [itemsLength]);
 
   return overflowContainer;
 };

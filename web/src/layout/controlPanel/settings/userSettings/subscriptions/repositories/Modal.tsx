@@ -52,14 +52,14 @@ const OptOutModal = (props: Props) => {
       const orgs = await API.getAllUserOrganizations();
       const orgsList = orgs.map((org: Organization) => org.name);
       setUserOrganizations(orgsList);
-    } catch (err: any) {
+    } catch {
       setUserOrganizations([]);
     }
   }
 
   useEffect(() => {
     getAllUserOrganizations();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   async function addOptOut() {
     try {
@@ -69,6 +69,7 @@ const OptOutModal = (props: Props) => {
       setIsSending(false);
       props.onSuccess();
       props.onClose();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {

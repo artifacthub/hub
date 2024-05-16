@@ -1,4 +1,5 @@
-import { isEmpty, isUndefined } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
@@ -37,6 +38,7 @@ const Last30DaysViews = (props: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [series, setSeries] = useState<any[]>([]);
 
   const getLegend = (): string => {
@@ -138,7 +140,7 @@ const Last30DaysViews = (props: Props) => {
     if (!isUndefined(props.stats)) {
       setSeries(prepareSeries(props.stats, props.version));
     }
-  }, [props.version, props.stats]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.version, props.stats]);
 
   return (
     <>

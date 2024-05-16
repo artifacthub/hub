@@ -111,7 +111,7 @@ const getRegistryData = (url: string): RegistryInfo => {
           break;
       }
 
-      let registry: RegistryInfo = {
+      const registry: RegistryInfo = {
         ...REGISTRIES[registryType],
         url: url.replace(OCI_PREFIX, ''),
       };

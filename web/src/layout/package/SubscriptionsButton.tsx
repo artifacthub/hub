@@ -74,6 +74,7 @@ const SubscriptionsButton = (props: Props) => {
         if (visibleLoading) {
           setIsLoading(false);
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         setActiveSubscriptions(null);
 
@@ -102,7 +103,7 @@ const SubscriptionsButton = (props: Props) => {
     ) {
       getSubscriptions();
     }
-  }, [ctx.user, props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx.user, props.packageId]);
 
   async function changeSubscription(kind: EventKind, isActive: boolean) {
     updateOptimisticallyActiveSubscriptions(kind, isActive);
@@ -116,6 +117,7 @@ const SubscriptionsButton = (props: Props) => {
       // We don't need to get subscriptions after changing it due to we are closing the dropdown
       // and we get them again every time we open the dropdown
       setOpenStatus(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.kind !== ErrorKind.Unauthorized) {
         const notif = getNotification(kind);

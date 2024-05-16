@@ -81,6 +81,7 @@ const SubscriptionModal = (props: Props) => {
         props.onSuccess();
         props.onClose();
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {

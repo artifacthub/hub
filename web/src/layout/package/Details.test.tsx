@@ -8,13 +8,14 @@ import sortPackageVersions from '../../utils/sortPackageVersions';
 import Details from './Details';
 
 const getMockPackage = (fixtureId: string): Package => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/Details/${fixtureId}.json`) as Package;
 };
 
 const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as {}),
+  ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 
@@ -33,6 +34,7 @@ const defaultProps = {
 };
 
 describe('Details', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let dateNowSpy: any;
 
   beforeEach(() => {

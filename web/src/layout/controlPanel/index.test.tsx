@@ -11,7 +11,7 @@ jest.mock('./repositories', () => () => <div />);
 const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as {}),
+  ...(jest.requireActual('react-router-dom') as object),
   useSearchParams: () => jest.fn(),
   useParams: jest.fn(),
   useNavigate: () => mockUseNavigate,
@@ -62,6 +62,7 @@ describe('ControlPanelView', () => {
           return null;
         },
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
   });
 
@@ -149,6 +150,7 @@ describe('ControlPanelView', () => {
           }
         },
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
 
     mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
@@ -180,6 +182,7 @@ describe('ControlPanelView', () => {
           }
         },
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
     mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
@@ -210,6 +213,7 @@ describe('ControlPanelView', () => {
           }
         },
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
     mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
@@ -242,6 +246,7 @@ describe('ControlPanelView', () => {
           }
         },
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
     mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
@@ -270,6 +275,7 @@ describe('ControlPanelView', () => {
           }
         },
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
     mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(

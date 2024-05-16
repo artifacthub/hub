@@ -14,7 +14,7 @@ const defaultProps = {
 const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as {}),
+  ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 
@@ -93,7 +93,7 @@ describe('MoreActionsButton', () => {
     describe('report abuse', () => {
       it('opens url', async () => {
         Object.defineProperty(document, 'querySelector', {
-          value: (selector: any) => {
+          value: (selector: string) => {
             switch (selector) {
               case `meta[name='artifacthub:reportURL']`:
                 return {
@@ -134,7 +134,7 @@ describe('MoreActionsButton', () => {
 
       it('does not render when url is undefined', async () => {
         Object.defineProperty(document, 'querySelector', {
-          value: (selector: any) => {
+          value: (selector: string) => {
             switch (selector) {
               case `meta[name='artifacthub:reportURL']`:
                 return {
@@ -169,7 +169,7 @@ describe('MoreActionsButton', () => {
 
     it('does not render when url is an empty string', async () => {
       Object.defineProperty(document, 'querySelector', {
-        value: (selector: any) => {
+        value: (selector: string) => {
           switch (selector) {
             case `meta[name='artifacthub:reportURL']`:
               return {

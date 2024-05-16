@@ -1,5 +1,7 @@
 import classnames from 'classnames';
-import { isEmpty, isNull, isUndefined } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
@@ -151,7 +153,7 @@ const SecurityModal = (props: Props) => {
     if (openStatus) {
       updateUrl();
     }
-  }, [visibleTarget, visibleImage, visibleSection]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [visibleTarget, visibleImage, visibleSection]);
 
   useEffect(() => {
     if (openStatus && report && contentWrapper && contentWrapper.current && isUndefined(contentHeight)) {
@@ -164,13 +166,13 @@ const SecurityModal = (props: Props) => {
     if ((openStatus || props.visibleSecurityReport) && !isUndefined(currentPkgId)) {
       onCloseModal();
     }
-  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.packageId]);
 
   useEffect(() => {
     if (props.visibleSecurityReport && !openStatus && isUndefined(currentPkgId)) {
       onOpenModal();
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   return (
     <>

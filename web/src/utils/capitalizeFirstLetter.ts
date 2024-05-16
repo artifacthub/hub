@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 
 const capitalizeFirstLetter = (str: string): string => {
   if (isUndefined(str)) return '';

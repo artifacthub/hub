@@ -9,6 +9,7 @@ import UserSettings from './index';
 jest.mock('../../../../../api');
 
 const getMockProfile = (fixtureId: string): Profile => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/index/${fixtureId}.json`) as Profile;
 };
 

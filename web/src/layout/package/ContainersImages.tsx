@@ -41,8 +41,8 @@ const ContainersImages = (props: Props) => {
     )
       return null;
 
-    let items: JSX.Element[] = [];
-    let itemsForModal: JSX.Element[] = [];
+    const items: JSX.Element[] = [];
+    const itemsForModal: JSX.Element[] = [];
 
     props.containers.forEach((containerImage: ContainerImage, index: number) => {
       const copyBtn = (className?: string) => (

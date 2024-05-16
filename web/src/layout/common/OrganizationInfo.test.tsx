@@ -18,11 +18,12 @@ const user = userEvent.setup({ delay: null });
 const mockUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as {}),
+  ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 
 const getMockOrganization = (fixtureId: string): Organization => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/OrganizationInfo/${fixtureId}.json`) as Organization;
 };
 

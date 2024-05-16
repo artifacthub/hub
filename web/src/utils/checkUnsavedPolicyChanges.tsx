@@ -1,4 +1,6 @@
-import { isEqual, isNull, isUndefined } from 'lodash';
+import isEqual from 'lodash/isEqual';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 import { OrganizationPolicy } from '../types';
 import isValidJSON from './isValidJSON';
@@ -30,6 +32,7 @@ export const checkUnsavedPolicyChanges = (
   server?: OrganizationPolicy | null,
   browser?: OrganizationPolicy | null,
   action: PolicyChangeAction = PolicyChangeAction.Default,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   predefinedPolicyData?: { [key: string]: any }
 ): Result => {
   let lostData: boolean = false;

@@ -1,4 +1,6 @@
-import { isArray, isObject, isUndefined } from 'lodash';
+import isArray from 'lodash/isArray';
+import isObject from 'lodash/isObject';
+import isUndefined from 'lodash/isUndefined';
 
 import API from '../api';
 import { JSONSchema } from '../jsonschema';
@@ -23,7 +25,7 @@ async function getRemoteSchemaDefinition(url: string): Promise<{ [key: string]: 
 }
 
 const urlsInList = () => {
-  let savedUrls: string[] = [];
+  const savedUrls: string[] = [];
   return (url: string) => {
     if (savedUrls.includes(url)) {
       return true;
@@ -37,6 +39,7 @@ const urlsInList = () => {
 const checkIfUrlInList = urlsInList();
 
 const dereferenceJSONSchema = (schema: JSONSchema): JSONSchema => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let definitions: any = schema.definitions;
 
   const checkIfTermInDefinitionsList = (term: string, item: JSONSchema): JSONSchema => {
@@ -64,13 +67,15 @@ const dereferenceJSONSchema = (schema: JSONSchema): JSONSchema => {
     return item;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const iterateSchema = (sch: JSONSchema): any => {
     if (!sch) return;
 
     let el: JSONSchema = derefSchema(sch);
 
     if (!isUndefined(el.properties)) {
-      let props: any = {};
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const props: any = {};
       Object.keys(el.properties).forEach((item: string) => {
         props[item] = iterateSchema(el.properties![item] as JSONSchema);
       });
@@ -79,7 +84,9 @@ const dereferenceJSONSchema = (schema: JSONSchema): JSONSchema => {
 
     Object.values(Composition).forEach((comp: Composition) => {
       if (!isUndefined(el[comp])) {
-        let opts: any = [];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const opts: any = [];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         el[comp]!.forEach((item: any) => {
           opts.push(iterateSchema(item as JSONSchema));
         });
@@ -89,7 +96,9 @@ const dereferenceJSONSchema = (schema: JSONSchema): JSONSchema => {
 
     if (!isUndefined(el.items)) {
       if (isArray(el.items)) {
-        let items: any[] = [];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const items: any[] = [];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         el.items.forEach((element: any) => {
           items.push(iterateSchema(element));
         });

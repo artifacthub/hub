@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { Dispatch, SetStateAction } from 'react';
 
 import { TOCEntryItem } from '../../../types';

@@ -4,6 +4,7 @@ import { Maintainer } from '../../types';
 import Maintainers from './Maintainers';
 
 const getMockMaintainers = (fixtureId: string): Maintainer[] => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/Maintainers/${fixtureId}.json`) as Maintainer[];
 };
 

@@ -1,7 +1,7 @@
 import detectActiveThemeMode from './detectActiveThemeMode';
 
 describe('detectActiveThemeMode', () => {
-  (window as any).matchMedia =
+  (window as Window).matchMedia =
     window.matchMedia ||
     function () {
       return {

@@ -7,6 +7,7 @@ interface Test {
   server?: OrganizationPolicy;
   browser?: OrganizationPolicy;
   action?: PolicyChangeAction;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   predefinedPolicyData?: { [key: string]: any };
   result: {
     lostData: boolean;

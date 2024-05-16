@@ -1,13 +1,14 @@
 import 'react-diff-view/style/index.css';
 
 import classnames from 'classnames';
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { Dispatch, Fragment, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import { Decoration, Diff, Hunk, parseDiff } from 'react-diff-view';
 
 import { CompareChartTemplate, CompareChartTemplateStatus } from '../../../types';
 import styles from './DiffTemplate.module.css';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const DiffLibrary = require('diff');
 
 interface Props {
@@ -43,7 +44,7 @@ const Changes = (props: DiffProps) => {
     type,
     hunks,
     oldEndingNewLine,
-    newEndingNewLine,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }: any) => {
     return (
       <div key={`${oldRevision}-${newRevision}`} className="file-diff h-100" data-testid="diffTemplate">
@@ -60,6 +61,7 @@ const Changes = (props: DiffProps) => {
         </header>
         <div ref={tmplWrapper} className={`overflow-scroll border-top border-1 py-2 ${styles.codeWrapper}`}>
           <Diff viewType="unified" diffType={type} hunks={hunks || []}>
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {(hunks: any[]) => (
               <>
                 {hunks.map((hunk, index) => {
@@ -103,7 +105,7 @@ const Changes = (props: DiffProps) => {
   useEffect(() => {
     props.removeLoading();
     scrollTop();
-  }, [props.fileName]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.fileName]);
 
   return <>{files.map(renderFile)}</>;
 };
@@ -113,7 +115,7 @@ const DiffTemplate = (props: Props) => {
 
   const removeLoading = useCallback(() => {
     props.setIsChangingTemplate(false);
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     const prepareDiff = () => {
@@ -131,7 +133,7 @@ const DiffTemplate = (props: Props) => {
     };
 
     prepareDiff();
-  }, [props.template, props.expanded]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.template, props.expanded]);
 
   return (
     <>

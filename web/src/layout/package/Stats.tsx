@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { FaUser } from 'react-icons/fa';
 import { GrConnect } from 'react-icons/gr';
 import { MdBusiness } from 'react-icons/md';

@@ -10,6 +10,7 @@ import alertDispatcher from '../../../../../utils/alertDispatcher';
 import AuthorizationSection from './index';
 
 jest.mock('../../../../../utils/alertDispatcher');
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 jest.mock('../../../../common/Alert', () => (props: any) => <div>{props.message}</div>);
 
 jest.mock('../../../../common/CodeEditor', () => () => <div />);
@@ -23,6 +24,7 @@ jest.mock('../../../../../utils/authorizer', () => ({
 }));
 
 const getMockAuthz = (fixtureId: string): OrganizationPolicy => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/index/${fixtureId}.json`) as OrganizationPolicy;
 };
 

@@ -6,7 +6,7 @@ import isUndefined from 'lodash/isUndefined';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { BiCrop, BiImageAlt } from 'react-icons/bi';
 import { MdAddAPhoto } from 'react-icons/md';
-import ReactCrop, { centerCrop, Crop, makeAspectCrop, PercentCrop, PixelCrop } from 'react-image-crop';
+import ReactCrop, { centerCrop, Crop, makeAspectCrop, PixelCrop } from 'react-image-crop';
 
 import API from '../../api';
 import { ErrorKind, LogoImage } from '../../types';
@@ -37,6 +37,7 @@ const InputFileField = (props: Props) => {
   const fileInput = useRef<HTMLInputElement | null>(null);
   const [isSending, setIsSending] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [image, setImage] = useState<any>(null);
 
   async function saveImage(data: string | ArrayBuffer) {
@@ -46,6 +47,7 @@ const InputFileField = (props: Props) => {
       if (!isUndefined(props.onImageChange)) {
         props.onImageChange(logo.imageId);
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -70,6 +72,7 @@ const InputFileField = (props: Props) => {
     setImage(null);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const saveOriginal = (file: any) => {
     setIsSending(true);
     const reader = new FileReader();
@@ -81,6 +84,7 @@ const InputFileField = (props: Props) => {
     reader.readAsArrayBuffer(file);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const saveCroppedImage = (canvas: any, crop: any) => {
     if (!crop || !canvas) {
       alertDispatcher.postAlert({
@@ -92,6 +96,7 @@ const InputFileField = (props: Props) => {
 
     setIsSending(true);
     canvas.toBlob(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (blob: any) => {
         saveImage(blob);
         onClose();
@@ -133,6 +138,7 @@ const InputFileField = (props: Props) => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onImageLoad = useCallback((e: any) => {
     const { width, height } = e.currentTarget;
 
@@ -158,10 +164,13 @@ const InputFileField = (props: Props) => {
 
   useEffect(() => {
     if (!isNull(completedCrop) && openStatus) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const img: any = imgRef.current;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const canvas: any = previewCanvasRef.current;
 
       if (!isNull(canvas) && !isNull(img)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const tmpCrop: any = completedCrop;
 
         const scaleX = img.naturalWidth / img.width;
@@ -188,7 +197,7 @@ const InputFileField = (props: Props) => {
         );
       }
     }
-  }, [completedCrop]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [completedCrop]);
 
   const onClick = () => {
     if (!isNull(fileInput) && !isNull(fileInput.current)) {
@@ -290,8 +299,8 @@ const InputFileField = (props: Props) => {
                     crop={crop}
                     aspect={1}
                     circularCrop={props.circularCrop}
-                    onChange={(c, percentCrop) => setCrop(c)}
-                    onComplete={(c: PixelCrop, percentCrop: PercentCrop) => setCompletedCrop(c)}
+                    onChange={(c) => setCrop(c)}
+                    onComplete={(c: PixelCrop) => setCompletedCrop(c)}
                   >
                     <img alt={props.label} src={upImg as string} onLoad={onImageLoad} />
                   </ReactCrop>

@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, SetStateAction, useState } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -32,6 +32,7 @@ const DeletionModal = (props: Props) => {
       await API.deleteRepository(props.repository.name, props.organizationName);
       setIsDeleting(false);
       props.onSuccess();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsDeleting(false);
       if (err.kind === ErrorKind.Unauthorized) {

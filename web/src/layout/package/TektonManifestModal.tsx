@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { GoFileCode } from 'react-icons/go';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -42,7 +42,7 @@ const TektonManifestModal = (props: Props) => {
     if (props.visibleManifest && !openStatus) {
       onOpenModal();
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   if (isUndefined(props.manifestRaw)) return null;
 

@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { MdOutlineCategory } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 

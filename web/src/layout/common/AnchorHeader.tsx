@@ -1,4 +1,5 @@
-import { isObject, isString } from 'lodash';
+import isObject from 'lodash/isObject';
+import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 import { ElementType, MouseEvent as ReactMouseEvent } from 'react';
 import { GoLink } from 'react-icons/go';
@@ -19,10 +20,12 @@ const AnchorHeader: ElementType = (props: Props) => {
   const location = useLocation();
   let value = props.title;
   if (isUndefined(value) && props.children && props.children.length > 0) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const allContentValues = props.children.map((n: any) => {
       if (isString(n)) {
         return [n];
       } else if (isObject(n)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return String((n as any).props.children);
       } else {
         return '';

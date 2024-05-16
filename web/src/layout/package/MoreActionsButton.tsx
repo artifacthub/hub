@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { useEffect, useRef, useState } from 'react';
 import { BiCode } from 'react-icons/bi';
 import { GoStop } from 'react-icons/go';
@@ -31,7 +31,7 @@ const MoreActionsButton = (props: Props) => {
       setVisibleWidget(false);
       setCurrentPkgId(props.packageId);
     }
-  }, [props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.packageId]);
 
   return (
     <>

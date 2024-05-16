@@ -13,7 +13,9 @@ const tests = [
   { number: 872389379, result: '872.39M' },
   { number: 76498237927, digits: 3, result: '76.498G' },
   { number: 8789378978948, result: '8.79T' },
+  // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
   { number: 9083509438032985, result: '9.08P' },
+  // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
   { number: 847892398156232876438, result: '847.89E' },
 ];
 

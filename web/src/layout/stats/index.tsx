@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
@@ -66,6 +67,7 @@ const StatsView = () => {
   }, [effective, activeTheme]);
 
   const getAreaChartConfig = (title: string, withAnnotations?: boolean): ApexCharts.ApexOptions => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const annotations: any[] =
       withAnnotations && !whiteLabel
         ? [
@@ -119,6 +121,7 @@ const StatsView = () => {
           },
         },
         events: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           beforeZoom: (chartContext: any, opt: any) => {
             const minDate = chartContext.ctx.data.twoDSeriesX[0];
             const maxDate = chartContext.ctx.data.twoDSeriesX[chartContext.ctx.data.twoDSeriesX.length - 1];
@@ -211,7 +214,7 @@ const StatsView = () => {
         const isCurrent = !isUndefined(lastBarDate)
           ? moment(moment.unix(lastBarDate / 1000)).isSame(moment(), monthlyFormatter ? 'month' : 'day')
           : false;
-        let colors = Array.from({ length: dataLength - 1 }, () => 'var(--color-1-500)');
+        const colors = Array.from({ length: dataLength - 1 }, () => 'var(--color-1-500)');
         if (isCurrent) {
           // Color for the last bar
           colors.push(activeTheme === 'dark' ? 'var(--highlighted)' : 'var(--color-1-900)');
@@ -349,6 +352,7 @@ const StatsView = () => {
   const checkCurrentStats = (currentStats: AHStats | null) => {
     if (!isNull(currentStats)) {
       const notEmptyItems = Object.keys(currentStats).some((elem: string) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return elem !== 'generatedAt' && (currentStats as any)[elem].total !== 0;
       });
       setEmptyStats(!notEmptyItems);
@@ -365,16 +369,17 @@ const StatsView = () => {
         scrollIntoView();
         setApiError(null);
         setIsLoading(false);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         setIsLoading(false);
-        let error = compoundErrorMessage(err, `An error occurred getting ${siteName} stats`);
+        const error = compoundErrorMessage(err, `An error occurred getting ${siteName} stats`);
         setApiError(error);
         setStats(null);
       }
     }
     scrollToTop(0, 'instant');
     getStats();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   const scrollIntoView = useCallback(
     (id?: string) => {
@@ -393,10 +398,11 @@ const StatsView = () => {
           }
         }
       } finally {
+        // eslint-disable-next-line no-unsafe-finally
         return;
       }
     },
-    [location.hash] /* eslint-disable-line react-hooks/exhaustive-deps */
+    [location.hash]
   );
 
   return (

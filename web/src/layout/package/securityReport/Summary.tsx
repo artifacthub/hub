@@ -1,4 +1,5 @@
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 import { RepositoryKind, SecurityReportSummary, VulnerabilitySeverity } from '../../../types';
 import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';
@@ -60,8 +61,7 @@ const SecuritySummary = (props: Props) => {
         </div>
         <div className="progress mb-4" style={{ height: '25px' }}>
           {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => {
-            if (!summary.hasOwnProperty(severity) || isUndefined(summary[severity]) || summary[severity] === 0)
-              return null;
+            if (isUndefined(summary[severity]) || summary[severity] === 0) return null;
             return (
               <div
                 key={`summary_${severity}`}

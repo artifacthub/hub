@@ -1,6 +1,6 @@
 import classnames from 'classnames';
-import { isNumber } from 'lodash';
 import isNull from 'lodash/isNull';
+import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
 import { useContext, useEffect, useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
@@ -54,7 +54,7 @@ const StarButton = (props: Props) => {
       setPkgId(props.packageId);
       getPackageStars();
     }
-  }, [ctx.user, props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx.user, props.packageId]);
 
   const notStarred =
     !isUndefined(ctx.user) &&
@@ -71,6 +71,7 @@ const StarButton = (props: Props) => {
       await API.toggleStar(props.packageId);
       getPackageStars();
       setIsSending(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
 
@@ -79,7 +80,7 @@ const StarButton = (props: Props) => {
         dispatch(signOut());
         navigate(`${location.pathname}?modal=login&redirect=${location.pathname}`);
       } else {
-        let errMessage = `An error occurred ${
+        const errMessage = `An error occurred ${
           notStarred ? 'starring' : 'unstarring'
         } the package, please try again later.`;
         alertDispatcher.postAlert({

@@ -18,7 +18,7 @@ Object.defineProperty(HTMLElement.prototype, 'scroll', { configurable: true, val
 window.HTMLElement.prototype.scrollTo = scrollToMock;
 
 jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as {}),
+  ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 

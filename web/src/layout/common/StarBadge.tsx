@@ -1,11 +1,13 @@
 import classnames from 'classnames';
-import { isNumber, isUndefined } from 'lodash';
+import isNumber from 'lodash/isNumber';
+import isUndefined from 'lodash/isUndefined';
 import { FaStar } from 'react-icons/fa';
 
 import prettifyNumber from '../../utils/prettifyNumber';
 import styles from './StarBadge.module.css';
 
 interface Props {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   starsNumber?: number | any;
   className?: string;
   size?: 'xs' | 'sm';

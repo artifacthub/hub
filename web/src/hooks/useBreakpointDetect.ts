@@ -1,4 +1,4 @@
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import { useEffect, useState } from 'react';
 
 const getDeviceConfig = (width: number) => {

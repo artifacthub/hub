@@ -82,7 +82,7 @@ const RepositoryCard = (props: Props) => {
       }
       navigate('', { replace: true });
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   const getLastTracking = (): JSX.Element => {
     const nextCheckTime: number = minutesToNearestInterval(30);

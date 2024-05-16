@@ -112,7 +112,7 @@ const Group = (props: Props) => {
     if (!isUndefined(urlParams)) {
       fetchPackagesList();
     }
-  }, [props.url]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.url]);
 
   if (isNull(packagesList) || (packagesList && packagesList.length === 0)) return null;
 

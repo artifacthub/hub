@@ -1,4 +1,5 @@
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,7 +29,8 @@ const SecurityRating = (props: Props) => {
       let rating = SEVERITY_RATING.default!;
       for (const key in VulnerabilitySeverity) {
         const sev = key.toLowerCase();
-        if (props.summary && props.summary.hasOwnProperty(sev) && (props.summary as any)[sev] > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (props.summary && !isUndefined((props.summary as any)[sev]) && (props.summary as any)[sev] > 0) {
           rating = SEVERITY_RATING[sev as VulnerabilitySeverity]!;
           break;
         }

@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useRef, useState } from 'react';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -42,7 +42,7 @@ const ValuesSearch = (props: Props) => {
     if (isUndefined(opts) && !isUndefined(props.paths)) {
       setOpts(props.paths.map((path: string) => ({ id: path, name: path, filterKey: 'path' })));
     }
-  }, [props.paths]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.paths]);
 
   if (isUndefined(opts)) return null;
 

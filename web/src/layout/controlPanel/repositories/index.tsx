@@ -72,13 +72,13 @@ const RepositoriesSection = (props: Props) => {
   async function fetchRepositories() {
     try {
       setIsLoading(true);
-      let filters: { [key: string]: string[] } = {};
+      const filters: { [key: string]: string[] } = {};
       if (activeOrg) {
         filters.org = [activeOrg];
       } else {
         filters.user = [ctx.user!.alias];
       }
-      let query: SearchQuery = {
+      const query: SearchQuery = {
         offset: offset,
         limit: DEFAULT_LIMIT,
         filters: filters,
@@ -105,6 +105,7 @@ const RepositoriesSection = (props: Props) => {
       }
       setApiError(null);
       setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsLoading(false);
       if (err.kind !== ErrorKind.Unauthorized) {
@@ -120,13 +121,13 @@ const RepositoriesSection = (props: Props) => {
     if (isUndefined(props.activePage) || isNull(props.activePage)) {
       updatePageNumber();
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   useEffect(() => {
     if (props.activePage && activePage !== parseInt(props.activePage)) {
       fetchRepositories();
     }
-  }, [activePage]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activePage]);
 
   useEffect(() => {
     if (!isUndefined(repositories)) {
@@ -138,17 +139,17 @@ const RepositoriesSection = (props: Props) => {
         onPageNumberChange(1);
       }
     }
-  }, [activeOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activeOrg]);
 
   useEffect(() => {
     if (activeOrg !== ctx.prefs.controlPanel.selectedOrg) {
       setActiveOrg(ctx.prefs.controlPanel.selectedOrg);
     }
-  }, [ctx.prefs.controlPanel.selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx.prefs.controlPanel.selectedOrg]);
 
   useEffect(() => {
     fetchRepositories();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   return (
     <main

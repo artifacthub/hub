@@ -1,6 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const parser = require('ua-parser-js');
 
 class BrowserDetect {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private ua: any = {};
 
   public init() {

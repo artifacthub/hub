@@ -51,6 +51,7 @@ const MemberModal = (props: Props) => {
       }
       setIsSending(false);
       onCloseModal();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {

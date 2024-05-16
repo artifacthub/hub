@@ -6,12 +6,7 @@ import SearchTip from './SearchTip';
 
 const mockTip = SEARH_TIPS[0];
 
-jest.mock('lodash', () => ({
-  ...(jest.requireActual('lodash') as {}),
-  sample: () => {
-    return mockTip;
-  },
-}));
+jest.mock('lodash/sample', () => () => mockTip);
 
 describe('SearchTip', () => {
   afterEach(() => {

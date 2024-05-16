@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import YAML from 'yaml';
 
 import API from '../api';
@@ -33,7 +33,8 @@ class BannerDispatcher {
 
   private parseBannerYAML(yaml: string): Banner[] {
     const bannersTmp = YAML.parse(yaml);
-    let banners: Banner[] = [];
+    const banners: Banner[] = [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     bannersTmp.forEach((banner: any) => {
       if (this.isBanner(banner)) {
         banners.push(banner);
@@ -42,6 +43,7 @@ class BannerDispatcher {
     return banners;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private isBanner(banner: any): boolean {
     if (
       banner.images &&

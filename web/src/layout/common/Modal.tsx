@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 import { MouseEvent, MutableRefObject, useEffect, useRef, useState } from 'react';

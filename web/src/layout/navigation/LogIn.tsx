@@ -82,6 +82,7 @@ const LogIn = (props: Props) => {
     props.setOpenLogIn(false);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onLoginError = (err: any) => {
     let error = compoundErrorMessage(err, 'An error occurred signing in');
     if (err.kind === ErrorKind.Unauthorized) {
@@ -104,6 +105,7 @@ const LogIn = (props: Props) => {
     try {
       await API.login(user);
       onLoginSuccess();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.kind === ErrorKind.NotApprovedSession) {
         setVisible2FACode(true);
@@ -118,6 +120,7 @@ const LogIn = (props: Props) => {
       setIsApprovingSession(true);
       await API.approveSession(passcode);
       onLoginSuccess();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       onLoginError(err);
     }

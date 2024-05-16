@@ -1,4 +1,5 @@
-import { isEmpty, isUndefined } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
 
 import { PackageViewsStats } from '../types';
@@ -25,7 +26,7 @@ const prepareVersions = (stats: PackageViewsStats, excludedVersions?: string[]):
 const sumViewsPerVersions = (stats: PackageViewsStats, excludedVersions?: string[]): number[] => {
   const last30Days = getLast30Days();
 
-  let versions = prepareVersions(stats, excludedVersions);
+  const versions = prepareVersions(stats, excludedVersions);
   if (versions.length === 0) return [];
 
   return last30Days.map((date: string) => {
@@ -40,7 +41,7 @@ const sumViewsPerVersions = (stats: PackageViewsStats, excludedVersions?: string
 const sumViewsPerVersionsWithTimestamp = (stats: PackageViewsStats, excludedVersions?: string[]): number[][] => {
   const last30Days = getLast30Days();
 
-  let versions = prepareVersions(stats, excludedVersions);
+  const versions = prepareVersions(stats, excludedVersions);
   if (versions.length === 0) return [];
 
   const versionsPerDates = last30Days.map((date: string) => {

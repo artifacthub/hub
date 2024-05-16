@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { useEffect, useRef } from 'react';
 import { FaLink } from 'react-icons/fa';
 

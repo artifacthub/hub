@@ -12,9 +12,11 @@ jest.mock('../../../api');
 jest.mock('../../../utils/alertDispatcher');
 
 const getMockValuesSchema = (fixtureId: string): JSONSchema => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/index/${fixtureId}.json`) as JSONSchema;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mockOutletContextData: any = {
   isSearching: false,
 };

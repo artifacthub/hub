@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { ChangeEvent, useState } from 'react';
 import { FaUnlock } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -34,6 +34,7 @@ const DisableTwoFactorAuthenticationModal = (props: Props) => {
       setApiError(null);
       props.onChange();
       setOpenStatus(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsProcessing(false);
       if (err.kind !== ErrorKind.Unauthorized) {

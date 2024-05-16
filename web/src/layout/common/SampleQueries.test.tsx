@@ -96,12 +96,7 @@ const mockQueries = [
   },
 ];
 
-jest.mock('lodash', () => ({
-  ...(jest.requireActual('lodash') as {}),
-  sampleSize: () => {
-    return mockQueries;
-  },
-}));
+jest.mock('lodash/sampleSize', () => () => mockQueries);
 
 describe('SampleQueries', () => {
   afterEach(() => {

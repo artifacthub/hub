@@ -4,8 +4,9 @@ import { PackageSummary, SearchResults } from '../types';
 import API from './index';
 enableFetchMocks();
 
-const getData = (fixtureId: string): any => {
-  return require(`./__fixtures__/index/${fixtureId}.json`) as any;
+const getData = (fixtureId: string): object => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  return require(`./__fixtures__/index/${fixtureId}.json`) as object;
 };
 
 describe('API', () => {

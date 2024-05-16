@@ -1,4 +1,8 @@
-import { filter, isEmpty, isEqual, isNull, isUndefined } from 'lodash';
+import filter from 'lodash/filter';
+import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 import {
   FixableVulnerabilitiesInReport,
@@ -14,7 +18,7 @@ import sumObjectValues from './sumObjectValues';
 const prepareFixableSummary = (
   fixableVulnerabilities: SecurityReport | null | undefined
 ): FixableVulnerabilitiesInReport => {
-  let fixReport: FixableVulnerabilitiesInReport = { report: {}, summary: {}, total: 0 };
+  const fixReport: FixableVulnerabilitiesInReport = { report: {}, summary: {}, total: 0 };
   if (fixableVulnerabilities) {
     let allVulnerabilities: Vulnerability[] = [];
     Object.keys(fixableVulnerabilities).forEach((image: string) => {
@@ -44,6 +48,7 @@ const prepareUniqueVulnerabilitiesSummary = (
   if (isNull(currentReport)) return null;
 
   const fullReportSumary: SecurityReportSummary = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const summary: any = {};
   const uniqueSummaryReport: SecurityReportSummary = {};
   const allVulnerabilities: string[] = [];
@@ -80,7 +85,7 @@ const prepareUniqueVulnerabilitiesSummary = (
 const filterFixableVulnerabilities = (currentReport: SecurityReport | null): SecurityReport | null => {
   if (isNull(currentReport)) return null;
 
-  let tmpReport: SecurityReport = {};
+  const tmpReport: SecurityReport = {};
   Object.keys(currentReport).forEach((img: string) => {
     currentReport[img].Results.forEach((target: SecurityReportResult) => {
       let vulnerabilities: null | Vulnerability[] = [];

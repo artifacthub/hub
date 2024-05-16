@@ -8,6 +8,7 @@ import RandomPackages from './RandomPackages';
 jest.mock('../../api');
 
 const getMockRandomPackages = (fixtureId: string): Package[] => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/RandomPackages/${fixtureId}.json`) as Package[];
 };
 

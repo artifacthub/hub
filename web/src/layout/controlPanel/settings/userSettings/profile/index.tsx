@@ -20,6 +20,7 @@ const ProfileSection = (props: Props) => {
   async function fetchProfile() {
     try {
       setProfile(await API.getUserProfile());
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.kind !== ErrorKind.Unauthorized) {
         setProfile(null);
@@ -31,7 +32,7 @@ const ProfileSection = (props: Props) => {
 
   useEffect(() => {
     fetchProfile();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, []);
 
   return (
     <main role="main" className="p-0">

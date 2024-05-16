@@ -13,6 +13,7 @@ jest.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mockOutletContextData: any = {
   isSearching: false,
 };
@@ -23,6 +24,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const getMockStats = (fixtureId: string): Stats => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/index/${fixtureId}.json`) as Stats;
 };
 

@@ -1,5 +1,7 @@
 import classnames from 'classnames';
-import { groupBy, isUndefined, rangeRight } from 'lodash';
+import groupBy from 'lodash/groupBy';
+import isUndefined from 'lodash/isUndefined';
+import rangeRight from 'lodash/rangeRight';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 

@@ -30,6 +30,7 @@ const LogOut = (props: Props) => {
       if (!isUndefined(props.privateRoute) && props.privateRoute) {
         navigate('/');
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       let error = 'An error occurred, please try again later.';
       if (!isUndefined(err.message)) {

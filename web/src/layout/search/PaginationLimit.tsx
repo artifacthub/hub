@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 import { ChangeEvent, useEffect, useRef } from 'react';
 
 import { DEFAULT_SEARCH_LIMIT } from '../../utils/localStoragePreferences';

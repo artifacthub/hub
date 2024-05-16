@@ -2,6 +2,7 @@ import { Package } from '../types';
 import buildPackageURL from './buildPackageURL';
 
 const getMockProps = (fixtureId: string): Package => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require(`./__fixtures__/buildPackageURL/${fixtureId}.json`) as Package;
 };
 

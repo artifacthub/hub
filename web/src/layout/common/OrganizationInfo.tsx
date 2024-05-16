@@ -37,7 +37,7 @@ const OrganizationInfo = (props: Props) => {
   async function fetchOrganization() {
     try {
       setOrganization(await API.getOrganization(props.organizationName));
-    } catch (err: any) {
+    } catch {
       setOrganization(null);
     }
   }
@@ -78,7 +78,7 @@ const OrganizationInfo = (props: Props) => {
       }
       cleanFetchTimeout();
     };
-  }, [onLinkHover, onDropdownHover, organization, openStatus]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [onLinkHover, onDropdownHover, organization, openStatus]);
 
   return (
     <div className={props.className}>

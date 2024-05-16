@@ -1,4 +1,5 @@
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { MdVerified } from 'react-icons/md';
 
 import ExternalLink from '../ExternalLink';

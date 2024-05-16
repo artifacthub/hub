@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, useState } from 'react';
 
 import { Channel, Repository } from '../../../types';
