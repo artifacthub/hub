@@ -299,7 +299,7 @@ class API_CLASS {
       const options: FetchOptions | any = await this.processFetchOptions(props.opts);
 
       return fetch(props.url, options)
-        .then(this.handleErrors)
+        .then((res) => this.handleErrors(res))
         .then((res) => this.handleContent(res, props.skipCamelConversion, props.checkApprovedSession, props.headers))
         .catch((error) => Promise.reject(error));
     });
