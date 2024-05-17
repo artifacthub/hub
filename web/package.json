@@ -6,7 +6,7 @@
   "dependencies": {
     "@analytics/google-analytics-v3": "^0.6.1",
     "analytics": "^0.8.11",
-    "apexcharts": "^3.49.1",
+    "apexcharts": "3.49.0",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
     "codemirror": "^5.65.15",
