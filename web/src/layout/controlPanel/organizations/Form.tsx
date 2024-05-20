@@ -167,7 +167,7 @@ const OrganizationForm = forwardRef<HTMLFormElement, Props>((props, ref) => {
           resourceKind: ResourceKind.organizationName,
           excluded: props.organization ? [props.organization.name] : [],
         }}
-        pattern="[a-z0-9-]+"
+        pattern="[a-z0-9\-]+"
         autoComplete="off"
         required
       />
