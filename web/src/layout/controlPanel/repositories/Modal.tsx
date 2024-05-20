@@ -645,11 +645,11 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.Helm:
         return undefined;
       case RepositoryKind.OLM:
-        return `(^(https://([A-Za-z0-9_.-]+)/|${OCI_PREFIX})[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)$`;
+        return `^((https?://)|${OCI_PREFIX}).*`;
       case RepositoryKind.Container:
-        return `^(${OCI_PREFIX})[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)$`;
+        return `^${OCI_PREFIX}.*`;
       default:
-        return '^(https://([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)$';
+        return `^https?://.*`;
     }
   };
 
@@ -880,7 +880,7 @@ const RepositoryModal = (props: Props) => {
                 resourceKind: ResourceKind.repositoryName,
                 excluded: !isUndefined(props.repository) ? [props.repository.name] : [],
               }}
-              pattern="[a-z][a-z0-9-]*"
+              pattern="[a-z][a-z0-9\-]*"
               autoComplete="off"
               disabled={!isUndefined(props.repository)}
               additionalInfo={
