@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const URL_regex =
-  /^https:\/\/([^\/?]+)\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|inspektor-gadget|tekton-stepaction|meshery|container)\/([a-z0-9-]+)\/([a-z0-9-]+)$/; // eslint-disable-line
+  /^https:\/\/([^\/?]+)\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|inspektor-gadget|tekton-stepaction|meshery|opencost|container)\/([a-z0-9-]+)\/([a-z0-9-]+)$/; // eslint-disable-line
 
 const prepareRecommendations = (recommendations?: Recommendation[]): RecommendedPackage[] => {
   const list: RecommendedPackage[] = [];
