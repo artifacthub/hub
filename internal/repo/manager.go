@@ -25,6 +25,7 @@ import (
 	"github.com/go-git/go-git/v5/storage/memory"
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
+	"github.com/rs/zerolog/log"
 	"github.com/satori/uuid"
 	"github.com/spf13/viper"
 	"gopkg.in/yaml.v2"
@@ -829,6 +830,7 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 	case hub.Helm:
 		if SchemeIsHTTP(u) {
 			if _, _, err := m.il.LoadIndex(r); err != nil {
+				log.Error().Err(err).Str("url", r.URL).Msg("error loading index")
 				return errors.New("the url provided does not point to a valid Helm repository")
 			}
 		}
