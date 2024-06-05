@@ -160,7 +160,7 @@ describe('Home index', () => {
       expect(links[26]).toHaveProperty('href', 'https://tekton.dev/');
       expect(links[27]).toHaveProperty('href', 'https://tinkerbell.org/');
 
-      expect(links[28]).toHaveProperty('href', 'https://www.cncf.io/sandbox-projects/');
+      expect(links[28]).toHaveProperty('href', 'https://www.cncf.io/projects/');
     });
   });
 });
