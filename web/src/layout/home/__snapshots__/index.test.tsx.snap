@@ -920,21 +920,26 @@ exports[`Home index creates snapshot 1`] = `
         class="container-lg px-sm-4 px-lg-0 py-0 py-md-5"
       >
         <div
-          class="text-center px-4 px-xs-0"
+          class="d-flex flex-column justify-content-center px-4 px-xs-0"
         >
           <img
-            alt="Logo CNCF sandbox project"
-            class="logo homeLogo"
-            src="/static/media/cncf-sandbox-horizontal-color.png"
+            alt="Logo CNCF incubating project"
+            class="logo colorLogo homeLogo"
+            src="/static/media/cncf-incubating-color.svg"
+          />
+          <img
+            alt="Logo CNCF incubating project"
+            class="logo whiteLogo homeLogo"
+            src="/static/media/cncf-incubating-white.svg"
           />
           <div
-            class="px-3 pt-4"
+            class="px-3 pt-4 text-center w-100"
           >
             Artifact Hub is a 
             <a
-              aria-label="Open CNCF sandbox projects site"
+              aria-label="Open CNCF projects site"
               class="link fw-semibold text-dark"
-              href="https://www.cncf.io/sandbox-projects/"
+              href="https://www.cncf.io/projects/"
               rel="noopener noreferrer"
               role="button"
               tabindex="-1"
@@ -942,7 +947,7 @@ exports[`Home index creates snapshot 1`] = `
             >
               Cloud Native Computing Foundation
             </a>
-             sandbox project.
+             incubating project.
           </div>
         </div>
       </div>

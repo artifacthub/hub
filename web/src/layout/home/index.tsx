@@ -507,22 +507,27 @@ const HomeView = () => {
           </div>
           <div className="py-5 text-dark fs-4 fw-light">
             <div className="container-lg px-sm-4 px-lg-0 py-0 py-md-5">
-              <div className="text-center px-4 px-xs-0">
+              <div className="d-flex flex-column justify-content-center px-4 px-xs-0">
                 <img
-                  className={`${styles.logo} homeLogo`}
-                  src="/static/media/cncf-sandbox-horizontal-color.png"
-                  alt="Logo CNCF sandbox project"
+                  className={`${styles.logo} ${styles.colorLogo} homeLogo`}
+                  src="/static/media/cncf-incubating-color.svg"
+                  alt="Logo CNCF incubating project"
                 />
-                <div className="px-3 pt-4">
+                <img
+                  className={`${styles.logo} ${styles.whiteLogo} homeLogo`}
+                  src="/static/media/cncf-incubating-white.svg"
+                  alt="Logo CNCF incubating project"
+                />
+                <div className="px-3 pt-4 text-center w-100">
                   Artifact Hub is a{' '}
                   <ExternalLink
-                    href="https://www.cncf.io/sandbox-projects/"
+                    href="https://www.cncf.io/projects/"
                     className="fw-semibold text-dark"
-                    label="Open CNCF sandbox projects site"
+                    label="Open CNCF projects site"
                   >
                     Cloud Native Computing Foundation
                   </ExternalLink>{' '}
-                  sandbox project.
+                  incubating project.
                 </div>
               </div>
             </div>

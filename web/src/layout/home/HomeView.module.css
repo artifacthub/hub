@@ -28,6 +28,22 @@
   width: auto;
 }
 
+[data-theme='dark'] .colorLogo {
+  display: none;
+}
+
+[data-theme='dark'] .whiteLogo {
+  display: block;
+}
+
+[data-theme='light'] .colorLogo {
+  display: block;
+}
+
+[data-theme='light'] .whiteLogo {
+  display: none;
+}
+
 .about {
   background-color: var(--color-1-600);
 }
