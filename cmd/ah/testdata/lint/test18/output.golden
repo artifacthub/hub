@@ -1,0 +1,95 @@
+
+------------------------------------------------------------------------------------------------------------------------
+✓ pkg1 1.0.0 (testdata/lint/test18/pkgs/pkg1/1.0.0)
+------------------------------------------------------------------------------------------------------------------------
+
+Package lint SUCCEEDED!
+
+✓ Name: pkg1
+✓ Display name: Package 1
+✓ Version: 1.0.0
+✓ App version: 10.0.0
+✓ Description: Description
+✓ License: Apache-2.0
+✓ Logo URL: https://home.url/logo.svg
+✓ Home URL: https://home.url
+✓ Deprecated: false
+✓ Pre-release: true
+✓ Contains security updates: true
+✓ Provider: Provider
+✓ Readme: PROVIDED
+✓ Keywords:
+  - kw1
+  - kw2
+✓ Links:
+  - Name: Link1 | URL: https://link1.url
+✓ Maintainers:
+  - Name: Maintainer | Email: test@email.com
+✓ Containers images:
+  - Name:  | Image: registry/test/test:latest
+✓ Changes:
+  - Kind: added | Description: feature 1
+  - Kind: fixed | Description: issue 1
+✓ Recommendations:
+  - https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+! Screenshots: *** NOT PROVIDED ***
+✓ Operator: false
+✓ Install: PROVIDED
+
+------------------------------------------------------------------------------------------------------------------------
+✓ pkg2 2.0.0 (testdata/lint/test18/pkgs/pkg2/2.0.0)
+------------------------------------------------------------------------------------------------------------------------
+
+Package lint SUCCEEDED!
+
+✓ Name: pkg2
+✓ Display name: Package 2
+✓ Version: 2.0.0
+✓ App version: 10.0.0
+✓ Description: Description
+✓ License: Apache-2.0
+✓ Logo URL: https://home.url/logo.svg
+✓ Home URL: https://home.url
+✓ Deprecated: false
+✓ Pre-release: true
+✓ Contains security updates: true
+✓ Provider: Provider
+✓ Readme: PROVIDED
+✓ Keywords:
+  - kw1
+  - kw2
+✓ Links:
+  - Name: Link1 | URL: https://link1.url
+✓ Maintainers:
+  - Name: Maintainer | Email: test@email.com
+✓ Containers images:
+  - Name:  | Image: registry/test/test:latest
+✓ Changes:
+  - Kind: added | Description: feature 1
+  - Kind: fixed | Description: issue 1
+✓ Recommendations:
+  - https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+! Screenshots: *** NOT PROVIDED ***
+✓ Operator: false
+✓ Install: PROVIDED
+
+------------------------------------------------------------------------------------------------------------------------
+✗ name: ? version: ? (testdata/lint/test18/pkgs/pkg1/2.0.0)
+------------------------------------------------------------------------------------------------------------------------
+
+Package lint FAILED. 1 error(s) occurred:
+
+  * error preparing package pkg1 version 2.0.0 data: error reading kyverno policy file: lstat testdata/lint/test18/pkgs/pkg1/2.0.0/2.0.0.yaml: no such file or directory
+
+------------------------------------------------------------------------------------------------------------------------
+✗ name: ? version: ? (testdata/lint/test18/pkgs/pkg2/1.0.0)
+------------------------------------------------------------------------------------------------------------------------
+
+Package lint FAILED. 1 error(s) occurred:
+
+  * error preparing package pkg2 version 1.0.0 data: error reading kyverno policy file: lstat testdata/lint/test18/pkgs/pkg2/1.0.0/1.0.0.yaml: no such file or directory
+
+------------------------------------------------------------------------------------------------------------------------
+
+4 package(s) found, 2 package(s) with errors
+

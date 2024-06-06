@@ -1,0 +1,39 @@
+version: 2.0.0
+name: pkg1
+displayName: Package 1
+createdAt: 2019-06-28T15:23:00Z
+description: Description
+digest: 0123456789
+license: Apache-2.0
+logoURL: https://home.url/logo.svg
+homeURL: https://home.url
+appVersion: 10.0.0
+containersImages:
+  - image: registry/test/test:latest
+containsSecurityUpdates: true
+operator: false
+deprecated: false
+prerelease: true
+keywords:
+  - kw1
+  - kw2
+links:
+  - name: Link1
+    url: https://link1.url
+readme: Readme content in markdown format
+install: Brief install instructions in markdown format
+changes:
+  - kind: added
+    description: feature 1
+  - kind: fixed
+    description: issue 1
+maintainers:
+  - name: Maintainer
+    email: test@email.com
+provider:
+  name: Provider
+recommendations:
+  - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
+annotations:
+  key1: value1
+  key2: value2
