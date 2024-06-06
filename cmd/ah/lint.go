@@ -9,6 +9,7 @@ import (
 	"path"
 	"path/filepath"
 	"reflect"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -459,6 +460,25 @@ type output struct {
 
 // printReport prints the provided lint report to the receiver output.
 func (out *output) printReport(report *lintReport) {
+	// Sort report entries leaving the ones with errors at the end
+	sort.Slice(report.entries, func(i, j int) bool {
+		if report.entries[i].result.ErrorOrNil() != nil && report.entries[j].result.ErrorOrNil() == nil {
+			return false
+		}
+		if report.entries[i].result.ErrorOrNil() == nil && report.entries[j].result.ErrorOrNil() != nil {
+			return true
+		}
+
+		if report.entries[i].pkg != nil && report.entries[j].pkg != nil {
+			if report.entries[i].pkg.Name == report.entries[j].pkg.Name {
+				return report.entries[i].pkg.Version < report.entries[j].pkg.Version
+			}
+			return report.entries[i].pkg.Name < report.entries[j].pkg.Name
+		}
+
+		return false
+	})
+
 	// Print packages checks results
 	for _, e := range report.entries {
 		// Setup minimal skeleton package if not provided
