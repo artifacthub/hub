@@ -61,6 +61,14 @@
 
   --font-color-light: #cbd3da;
 
+  // GitHub alerts
+  --github-alert-default-color: rgb(48, 54, 61);
+  --github-alert-note-color: rgb(31, 111, 235);
+  --github-alert-tip-color: rgb(35, 134, 54);
+  --github-alert-important-color: rgb(137, 87, 229);
+  --github-alert-warning-color: rgb(158, 106, 3);
+  --github-alert-caution-color: rgb(248, 81, 73);
+
   body {
     background-color: #2c2e31;
     color: var(--color-font);

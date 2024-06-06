@@ -1,11 +1,13 @@
 import { render, screen } from '@testing-library/react';
 
 import ReadmeWrapper from './index';
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 jest.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
 jest.mock('remark-gfm', () => () => <div />);
+jest.mock('rehype-github-alerts', () => () => <div />);
 
 const defaultProps = {
   packageName: 'package-name',

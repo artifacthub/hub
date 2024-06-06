@@ -34,6 +34,14 @@
   --color-activity-3: #30a14e;
   --color-activity-4: #216e39;
 
+  // GitHub alerts
+  --github-alert-default-color: rgb(208, 215, 222);
+  --github-alert-note-color: rgb(9, 105, 218);
+  --github-alert-tip-color: rgb(26, 127, 55);
+  --github-alert-important-color: rgb(130, 80, 223);
+  --github-alert-warning-color: rgb(191, 135, 0);
+  --github-alert-caution-color: rgb(207, 34, 46);
+
   // $theme-colors for Bootstrap
   $color1: #417598;
   $color2: #2d4857;
