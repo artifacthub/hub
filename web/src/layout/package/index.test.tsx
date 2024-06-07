@@ -7,6 +7,7 @@ import API from '../../api';
 import { ErrorKind, Package, SearchResults } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import PackageView from './index';
+
 jest.mock('../../api');
 jest.mock('../../utils/updateMetaIndex');
 jest.mock('react-apexcharts', () => () => <div>Chart</div>);
@@ -15,6 +16,7 @@ jest.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
 jest.mock('remark-gfm', () => () => <div />);
+jest.mock('rehype-github-alerts', () => () => <div />);
 jest.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));

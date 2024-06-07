@@ -7,6 +7,7 @@ import { ElementType, memo, useCallback, useEffect, useLayoutEffect, useRef, use
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { github } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import remarkGfm from 'remark-gfm';
 
 import useBreakpointDetect from '../../../hooks/useBreakpointDetect';
@@ -40,6 +41,7 @@ interface LinkProps {
 
 interface BasicProps {
   children: JSX.Element | JSX.Element[];
+  className?: string;
 }
 
 const AVAILABLE_LANGUAGES = [
@@ -344,6 +346,8 @@ const Readme = (props: Props) => {
   );
 
   const Paragraph: ElementType = (data: BasicProps) => {
+    if (data.className && data.className === 'markdown-alert-title')
+      return <p className={`fw-semibold ${data.className}`}>{data.children}</p>;
     const isOneChild = data.children && isArray(data.children) && data.children.length === 1;
     if (isUndefined(data.children)) return null;
     let content = data.children;
@@ -393,6 +397,7 @@ const Readme = (props: Props) => {
       linkTarget="_blank"
       skipHtml
       remarkPlugins={[[remarkGfm, { tableCellPadding: false }]]}
+      rehypePlugins={[rehypeGithubAlerts]}
       components={{
         pre: Pre,
         code: Code,
