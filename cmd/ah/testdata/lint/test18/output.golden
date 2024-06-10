@@ -79,7 +79,7 @@ Package lint SUCCEEDED!
 
 Package lint FAILED. 1 error(s) occurred:
 
-  * error preparing package pkg1 version 2.0.0 data: error reading kyverno policy file: lstat testdata/lint/test18/pkgs/pkg1/2.0.0/2.0.0.yaml: no such file or directory
+  * error preparing package pkg1 version 2.0.0 data: error reading kyverno policy file: lstat testdata/lint/test18/pkgs/pkg1/2.0.0/pkg1.yaml: no such file or directory
 
 ------------------------------------------------------------------------------------------------------------------------
 ✗ name: ? version: ? (testdata/lint/test18/pkgs/pkg2/1.0.0)
@@ -87,7 +87,7 @@ Package lint FAILED. 1 error(s) occurred:
 
 Package lint FAILED. 1 error(s) occurred:
 
-  * error preparing package pkg2 version 1.0.0 data: error reading kyverno policy file: lstat testdata/lint/test18/pkgs/pkg2/1.0.0/1.0.0.yaml: no such file or directory
+  * error preparing package pkg2 version 1.0.0 data: error reading kyverno policy file: lstat testdata/lint/test18/pkgs/pkg2/1.0.0/pkg2.yaml: no such file or directory
 
 ------------------------------------------------------------------------------------------------------------------------
 
