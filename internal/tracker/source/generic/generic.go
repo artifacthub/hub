@@ -225,7 +225,7 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 	case hub.KubeArmor:
 		kindData, err = prepareKubeArmorData(pkgPath, ignorer)
 	case hub.Kyverno:
-		kindData, err = prepareKyvernoData(pkgPath)
+		kindData, err = prepareKyvernoData(pkgPath, p.Name)
 	case hub.Meshery:
 		kindData, err = prepareMesheryData(pkgPath)
 	case hub.OPA:
@@ -359,9 +359,12 @@ func prepareKubeArmorData(pkgPath string, ignorer ignore.IgnoreParser) (map[stri
 
 // prepareKyernoData reads and formats Kyverno specific data available in the
 // path provided, returning the resulting data structure.
-func prepareKyvernoData(pkgPath string) (map[string]interface{}, error) {
+func prepareKyvernoData(pkgPath, pkgName string) (map[string]interface{}, error) {
 	// Read policy file
 	policyPath := path.Join(pkgPath, path.Base(pkgPath)+".yaml")
+	if _, err := os.Stat(policyPath); os.IsNotExist(err) {
+		policyPath = path.Join(pkgPath, pkgName+".yaml")
+	}
 	policy, err := util.ReadRegularFile(policyPath)
 	if err != nil {
 		return nil, fmt.Errorf("error reading kyverno policy file: %w", err)
