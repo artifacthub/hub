@@ -50,7 +50,12 @@ type TagsGetterMock struct {
 }
 
 // Tags implements the OCITagsGetter interface.
-func (m *TagsGetterMock) Tags(ctx context.Context, r *hub.Repository, onlySemver bool) ([]string, error) {
+func (m *TagsGetterMock) Tags(
+	ctx context.Context,
+	r *hub.Repository,
+	onlySemver bool,
+	restorePlusSign bool,
+) ([]string, error) {
 	args := m.Called(ctx, r, onlySemver)
 	tags, _ := args.Get(0).([]string)
 	return tags, args.Error(1)

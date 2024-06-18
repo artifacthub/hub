@@ -189,7 +189,7 @@ func (s *TrackerSource) getCharts() (map[string][]*helmrepo.ChartVersion, error)
 		}
 	case "oci":
 		// Get versions (tags) available in the repository
-		versions, err := s.tg.Tags(s.i.Svc.Ctx, s.i.Repository, true)
+		versions, err := s.tg.Tags(s.i.Svc.Ctx, s.i.Repository, true, true)
 		if err != nil {
 			return nil, fmt.Errorf("error getting repository available versions: %w", err)
 		}
@@ -197,12 +197,16 @@ func (s *TrackerSource) getCharts() (map[string][]*helmrepo.ChartVersion, error)
 		// Prepare chart versions using the list of versions available
 		name := path.Base(s.i.Repository.URL)
 		for _, version := range versions {
+			// See https://github.com/helm/helm/blob/14d0c13e9eefff5b4a1b511cf50643529692ec94/pkg/registry/client.go#L45C8-L50
+			versionReplacingPlusSign := strings.Replace(version, "+", "_", 1)
+			chartURL := fmt.Sprintf("%s:%s", s.i.Repository.URL, versionReplacingPlusSign)
+
 			charts[name] = append(charts[name], &helmrepo.ChartVersion{
 				Metadata: &chart.Metadata{
 					Name:    name,
 					Version: version,
 				},
-				URLs: []string{s.i.Repository.URL + ":" + version},
+				URLs: []string{chartURL},
 			})
 		}
 	default:
