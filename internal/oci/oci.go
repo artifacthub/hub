@@ -168,7 +168,12 @@ func NewTagsGetter(cfg *viper.Viper) *TagsGetter {
 }
 
 // Tags returns a list with the tags available for the provided repository.
-func (tg *TagsGetter) Tags(ctx context.Context, r *hub.Repository, onlySemver bool) ([]string, error) {
+func (tg *TagsGetter) Tags(
+	ctx context.Context,
+	r *hub.Repository,
+	onlySemver bool,
+	restorePlusSign bool,
+) ([]string, error) {
 	ref, err := name.ParseReference(strings.TrimPrefix(r.URL, hub.RepositoryOCIPrefix))
 	if err != nil {
 		return nil, err
@@ -181,6 +186,10 @@ func (tg *TagsGetter) Tags(ctx context.Context, r *hub.Repository, onlySemver bo
 	if onlySemver {
 		var semverTags []string
 		for _, tag := range tags {
+			if restorePlusSign {
+				// See https://github.com/helm/helm/blob/14d0c13e9eefff5b4a1b511cf50643529692ec94/pkg/registry/client.go#L45C8-L50
+				tag = strings.Replace(tag, "_", "+", 1)
+			}
 			if _, err := semver.NewVersion(tag); err == nil {
 				semverTags = append(semverTags, tag)
 			}
