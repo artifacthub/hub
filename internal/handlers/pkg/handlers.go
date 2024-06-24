@@ -256,8 +256,9 @@ func (h *Handlers) GetChartValues(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
-	w.Header().Set("Content-Type", "application/yaml")
 	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(24*time.Hour))
+	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
+	w.Header().Set("Content-Type", "application/yaml")
 	_, _ = w.Write(data)
 }
 
