@@ -3,7 +3,7 @@ import isObject from 'lodash/isObject';
 import isUndefined from 'lodash/isUndefined';
 
 import API from '../api';
-import { JSONSchema } from '../jsonschema';
+import { JSONSchema, JSONSchema7 } from '../jsonschema';
 
 enum Composition {
   AnyOf = 'anyOf',
@@ -40,7 +40,12 @@ const checkIfUrlInList = urlsInList();
 
 const dereferenceJSONSchema = (schema: JSONSchema): JSONSchema => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let definitions: any = schema.definitions;
+  let definitions: any = {};
+  if (schema.definitions) {
+    definitions = schema.definitions;
+  } else if ((schema as JSONSchema7).$defs) {
+    definitions = (schema as JSONSchema7).$defs;
+  }
 
   const checkIfTermInDefinitionsList = (term: string, item: JSONSchema): JSONSchema => {
     if (definitions && definitions[term]) {
