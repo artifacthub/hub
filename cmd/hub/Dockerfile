@@ -34,7 +34,7 @@ WORKDIR /docs/www
 RUN hugo
 
 # Final stage
-FROM alpine:3.20.0
+FROM alpine:3.20.1
 RUN apk --no-cache add ca-certificates && addgroup -S hub -g 1000 && adduser -S hub -u 1000 -G hub
 USER 1000
 WORKDIR /home/hub
