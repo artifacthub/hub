@@ -515,9 +515,17 @@ func (h *Handlers) RssFeed(w http.ResponseWriter, r *http.Request) {
 			return vj.LessThan(vi)
 		})
 	}
+	rss, err := feed.ToRss()
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "RssFeed").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
 
+	data := []byte(rss)
 	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge))
-	_ = feed.WriteRss(w)
+	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
+	_, _ = w.Write(data)
 }
 
 // Search is an http handler used to search for packages in the hub database.
