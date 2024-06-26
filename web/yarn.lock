@@ -2296,10 +2296,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^20.14.8":
-  version "20.14.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.14.8.tgz#45c26a2a5de26c3534a9504530ddb3b27ce031ac"
-  integrity sha512-DO+2/jZinXfROG7j7WKFn/3C6nFwxy2lLpgLjEXJz+0XKphZlTLJ14mo8Vfg8X5BWN6XjyESXq+LcYdT7tR3bA==
+"@types/node@*", "@types/node@^20.14.9":
+  version "20.14.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.14.9.tgz#12e8e765ab27f8c421a1820c99f5f313a933b420"
+  integrity sha512-06OCtnTXtWOZBJlRApleWndH4JsRVs1pDCc8dLSQp+7PpUpX3ePdHyeNSFTeSe7FtKyQkrlPvHwJOW3SLd8Oyg==
   dependencies:
     undici-types "~5.26.4"
 
@@ -2962,10 +2962,10 @@ anymatch@^3.0.3, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-apexcharts@3.49.0:
-  version "3.49.0"
-  resolved "https://registry.yarnpkg.com/apexcharts/-/apexcharts-3.49.0.tgz#b359fc9be8ffe45de3e8b553ebdcf18ad2a67e7e"
-  integrity sha512-2T9HnbQFLCuYRPndQLmh+bEQFoz0meUbvASaGgiSKDuYhWcLBodJtIpKql2aOtMx4B/sHrWW0dm90HsW4+h2PQ==
+apexcharts@3.49.2:
+  version "3.49.2"
+  resolved "https://registry.yarnpkg.com/apexcharts/-/apexcharts-3.49.2.tgz#48ebcf7e7ad7bd11300d408fb115c93f67a25e9e"
+  integrity sha512-vBB8KgwfD9rSObA7s4kY2rU6DeaN67gTR3JN7r32ztgKVf8lKkdFQ6iUhk6oIHrV7W8PoHhr5EwKymn0z5Fz6A==
   dependencies:
     "@yr/monotone-cubic-spline" "^1.0.3"
     svg.draggable.js "^2.2.2"
@@ -5598,6 +5598,11 @@ getpass@^0.1.1:
   integrity sha512-0fzj9JxOLfJ+XGLhR8ze3unN0KZCgZwiSSDz168VERjK8Wl8kVSdcu2kspd4s4wtAa1y/qrVRiAA0WclVsu0ng==
   dependencies:
     assert-plus "^1.0.0"
+
+gitdiff-parser@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/gitdiff-parser/-/gitdiff-parser-0.3.1.tgz#5eb3e66eb7862810ba962fab762134071601baa5"
+  integrity sha512-YQJnY8aew65id8okGxKCksH3efDCJ9HzV7M9rsvd65habf39Pkh4cgYJ27AaoDMqo1X98pgNJhNMrm/kpV7UVQ==
 
 glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"
@@ -9370,13 +9375,15 @@ react-dev-utils@^12.0.1:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
-react-diff-view@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/react-diff-view/-/react-diff-view-3.0.2.tgz#58e103671d7dd07785f788e3902679b57ed9125a"
-  integrity sha512-S2HcafUxu3ga+VgXUSiRBfwUzLR+0GpzBaMQcko8Vwm9S+pRJlUipDHaMZSHMWGLaiB2uebDxYR4cxbFVMjEEQ==
+react-diff-view@3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-diff-view/-/react-diff-view-3.2.1.tgz#cc1473955fae999c1d486638c4425ceb48f3d465"
+  integrity sha512-JoDahgiyeReeH9W9lrI3Z4c4esbd/HNAOdThj6Pce/ZAukFBmXSbZ4Qv8ayo7yow+fTpRNfqtQ9gX5nArEi08w==
   dependencies:
     classnames "^2.3.2"
     diff-match-patch "^1.0.5"
+    gitdiff-parser "^0.3.1"
+    lodash "^4.17.21"
     shallow-equal "^3.1.0"
     warning "^4.0.3"
 
