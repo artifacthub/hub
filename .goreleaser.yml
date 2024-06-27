@@ -6,7 +6,7 @@ release:
     Please see the [changelog](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog) for more details.
 
 changelog:
-  skip: true
+  disable: true
 
 snapshot:
   name_template: "devel-{{ .ShortCommit }}"
@@ -116,23 +116,23 @@ brews:
   - description: Artifact Hub command line tool
     homepage: https://github.com/artifacthub/hub
     license: Apache-2.0
-    tap:
+    repository:
       owner: artifacthub
       name: homebrew-cmd
     commit_author:
       name: artifacthubio
       email: hub@artifacthub.io
 
-scoop:
-  description: Artifact Hub command line tool
-  homepage: https://github.com/artifacthub/hub
-  license: Apache-2.0
-  bucket:
-    owner: artifacthub
-    name: scoop-cmd
-  commit_author:
-    name: artifacthubio
-    email: hub@artifacthub.io
+scoops:
+  - description: Artifact Hub command line tool
+    homepage: https://github.com/artifacthub/hub
+    license: Apache-2.0
+    repository:
+      owner: artifacthub
+      name: scoop-cmd
+    commit_author:
+      name: artifacthubio
+      email: hub@artifacthub.io
 
 signs:
   - artifacts: checksum
