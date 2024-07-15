@@ -3,6 +3,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ include "chart.resourceNamePrefix" . }}job-reader
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
 rules:
   - apiGroups: ["batch"]
     resources: ["jobs"]
@@ -12,6 +14,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ include "chart.resourceNamePrefix" . }}hub-job-reader
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "chart.resourceNamePrefix" . }}hub
