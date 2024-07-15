@@ -1,7 +1,7 @@
 # Build tracker
 FROM golang:1.22.4-bullseye AS builder
 WORKDIR /tmp
-ENV LIBTENSORFLOW_TGZ libtensorflow-cpu-linux-x86_64-2.15.0.tar.gz
+ENV LIBTENSORFLOW_TGZ libtensorflow-cpu-linux-x86_64-2.11.0.tar.gz
 RUN wget -q --no-check-certificate https://storage.googleapis.com/tensorflow/libtensorflow/$LIBTENSORFLOW_TGZ
 RUN tar -C /usr/local -xzf $LIBTENSORFLOW_TGZ
 RUN ldconfig /usr/local/lib
@@ -27,8 +27,9 @@ RUN apt-get update \
     && groupadd -g 1000 tracker \
     && useradd -u 1000 -g tracker tracker
 WORKDIR /tmp
-ENV LIBTENSORFLOW_TGZ libtensorflow-cpu-linux-x86_64-2.15.0.tar.gz
+ENV LIBTENSORFLOW_TGZ libtensorflow-cpu-linux-x86_64-2.11.0.tar.gz
 RUN apt-get install -y wget \
+    && export LIBTENSORFLOW_TGZ=libtensorflow-cpu-linux-x86_64-2.11.0.tar.gz \
     && wget -q --no-check-certificate https://storage.googleapis.com/tensorflow/libtensorflow/$LIBTENSORFLOW_TGZ \
     && tar -C /usr/local -xzf $LIBTENSORFLOW_TGZ \
     && rm $LIBTENSORFLOW_TGZ \
