@@ -7,8 +7,9 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: {{ include "chart.resourceNamePrefix" . }}scanner
-  {{- with .Values.scanner.cronjob.extraCronJobLabels }}
   labels:
+    {{- include "chart.labels" . | nindent 4 }}
+  {{- with .Values.scanner.cronjob.extraCronJobLabels }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
@@ -19,9 +20,10 @@ spec:
   jobTemplate:
     spec:
       template:
-        {{- with .Values.scanner.cronjob.extraJobLabels }}
         metadata:
           labels:
+            {{- include "chart.labels" . | nindent 12 }}
+        {{- with .Values.scanner.cronjob.extraJobLabels }}
             {{- toYaml . | nindent 12 }}
         {{- end }}
         spec:
