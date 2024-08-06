@@ -10,7 +10,7 @@ jest.mock('../../api');
 jest.mock('../../utils/alertDispatcher');
 
 const getMockSearch = (fixtureId: string): SearchResults => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/SearchPackages/${fixtureId}.json`) as SearchResults;
 };
 

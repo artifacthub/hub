@@ -23,7 +23,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const getMockOrganization = (fixtureId: string): Organization => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/OrganizationInfo/${fixtureId}.json`) as Organization;
 };
 

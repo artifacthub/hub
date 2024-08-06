@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { ChartTemplate } from '../../../types';
 import TemplatesList from './TemplatesList';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const isVisibleItemInContainer = require('../../../utils/isVisibleItemInContainer');
 
 jest.mock('../../../utils/isVisibleItemInContainer', () => jest.fn());
@@ -24,7 +24,7 @@ interface ChartTmpl {
 }
 
 const getMockChartTemplates = (fixtureId: string): ChartTmpl => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/TemplatesList/${fixtureId}.json`) as ChartTmpl;
 };
 

@@ -8,7 +8,7 @@ import { Decoration, Diff, Hunk, parseDiff } from 'react-diff-view';
 import { CompareChartTemplate, CompareChartTemplateStatus } from '../../../types';
 import styles from './DiffTemplate.module.css';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const DiffLibrary = require('diff');
 
 interface Props {

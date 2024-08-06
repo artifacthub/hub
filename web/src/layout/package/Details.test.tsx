@@ -8,7 +8,7 @@ import sortPackageVersions from '../../utils/sortPackageVersions';
 import Details from './Details';
 
 const getMockPackage = (fixtureId: string): Package => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/Details/${fixtureId}.json`) as Package;
 };
 
