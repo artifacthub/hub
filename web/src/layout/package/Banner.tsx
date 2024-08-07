@@ -46,7 +46,7 @@ const Banner = (props: Props) => {
   if (isNull(visibleBanner)) return null;
 
   const getCardImage = () => (
-    <div className={`card flex-row shadow-sm mw-100 p-3 overflow-hidden ${props.className}`}>
+    <div className={`card flex-row shadow-sm mw-100 overflow-hidden ${styles.card} ${props.className}`}>
       <img
         ref={img}
         src={effective === 'light' ? visibleBanner.images['light-theme'] : visibleBanner.images['dark-theme']}

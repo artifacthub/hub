@@ -3,6 +3,10 @@
   transition: max-height 0.5s ease-in-out;
 }
 
+.card {
+  padding: 0.33rem;
+}
+
 .loaded {
   max-height: 1500px;
 }
