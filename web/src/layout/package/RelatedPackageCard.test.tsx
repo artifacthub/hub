@@ -16,7 +16,7 @@ interface Props {
 }
 
 const getMockProps = (fixtureId: string): Props => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/RelatedPackageCard/${fixtureId}.json`) as Props;
 };
 

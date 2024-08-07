@@ -12,12 +12,12 @@ jest.mock('../../../../api');
 jest.mock('../../../common/Alert', () => (props: any) => <div>{props.message}</div>);
 
 const getMockWebhook = (fixtureId: string): Webhook => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/Form/${fixtureId}.json`) as Webhook;
 };
 
 const getMockSearch = (fixtureId: string): SearchResults => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/Form/${fixtureId}s.json`) as SearchResults;
 };
 

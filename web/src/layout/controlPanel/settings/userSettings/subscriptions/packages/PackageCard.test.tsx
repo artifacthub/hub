@@ -6,7 +6,7 @@ import { Package } from '../../../../../../types';
 import PackageCard from './PackageCard';
 
 const getMockPackage = (fixtureId: string): Package => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/PackageCard/${fixtureId}.json`) as Package;
 };
 

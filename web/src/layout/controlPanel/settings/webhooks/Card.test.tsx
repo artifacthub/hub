@@ -12,7 +12,7 @@ jest.mock('../../../../api');
 jest.mock('../../../../utils/alertDispatcher');
 
 const getmockWebhook = (fixtureId: string): Webhook => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/Card/${fixtureId}.json`) as Webhook;
 };
 

@@ -3,8 +3,8 @@
 import js from '@eslint/js';
 import reactHooks from 'eslint-plugin-react-hooks';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import tseslint from 'typescript-eslint';
 import globals from "globals";
+import tseslint from 'typescript-eslint';
 
 const config = [
   js.configs.recommended,
@@ -20,6 +20,7 @@ const config = [
     },
     ignores: ['analytics.ts', 'jsonschema.ts'],
     rules: {
+      '@typescript-eslint/no-require-imports': 'error',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
     },

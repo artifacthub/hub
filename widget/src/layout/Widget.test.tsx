@@ -36,7 +36,7 @@ const defaultProps = {
 };
 
 const getMockPkg = (fixtureId: string): PackageSummary => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/Widget/${fixtureId}.json`) as PackageSummary;
 };
 
