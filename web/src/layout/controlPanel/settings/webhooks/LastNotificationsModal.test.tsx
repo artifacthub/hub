@@ -6,7 +6,7 @@ import LastNotificationsModal from './LastNotificationsModal';
 jest.mock('../../../../api');
 
 const getMockNotifications = (fixtureId: string): WebhookNotification[] => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/LastNotificationsModal/${fixtureId}.json`) as WebhookNotification[];
 };
 

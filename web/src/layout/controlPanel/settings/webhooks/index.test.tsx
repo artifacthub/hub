@@ -10,6 +10,7 @@ import WebhooksSection from './index';
 jest.mock('../../../../api');
 
 const getMockWebhooks = (fixtureId: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/index/${fixtureId}.json`);
 };
 

@@ -12,6 +12,8 @@ jobs:
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-20.04
     steps:
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Configure AWS credentials

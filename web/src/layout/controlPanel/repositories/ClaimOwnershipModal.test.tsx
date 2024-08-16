@@ -62,10 +62,12 @@ const mockWithSelectedOrgCtx = {
 };
 
 const getMockOrganizations = (fixtureId: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/ClaimOwnershipModal/${fixtureId}org.json`);
 };
 
 const getMockRepositories = (fixtureId: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/ClaimOwnershipModal/${fixtureId}repo.json`);
 };
 

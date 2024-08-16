@@ -74,6 +74,7 @@ func GetPagination(qs url.Values, defaultLimit, maxLimit int) (*hub.Pagination, 
 // response writer, setting the appropriate content type, cache and status code.
 func RenderJSON(w http.ResponseWriter, dataJSON []byte, cacheMaxAge time.Duration, code int) {
 	w.Header().Set("Cache-Control", BuildCacheControlHeader(cacheMaxAge))
+	w.Header().Set("Content-Length", strconv.Itoa(len(dataJSON)))
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	_, _ = w.Write(dataJSON)

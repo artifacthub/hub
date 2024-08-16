@@ -22,12 +22,12 @@ jest.mock('../../utils/bannerDispatcher', () => ({
 }));
 
 const getMockPackage = (fixtureId: string): Package => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/index/${fixtureId}.json`) as Package;
 };
 
 const getMockRelatedPackages = (fixtureId: string): SearchResults => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/index/${fixtureId}Related.json`) as SearchResults;
 };
 

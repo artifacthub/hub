@@ -567,7 +567,7 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 			}
 		case SchemeIsOCI(u):
 			// Digest is obtained by hashing the list of versions available
-			versions, err := m.tg.Tags(ctx, r, true)
+			versions, err := m.tg.Tags(ctx, r, true, true)
 			if err != nil {
 				return digest, err
 			}

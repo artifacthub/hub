@@ -8,12 +8,12 @@ import SecurityTable from './Table';
 jest.mock('react-markdown', () => () => <div />);
 
 const getMockSecurityReport = (fixtureId: string): SecurityReportResult[] => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/Table/${fixtureId}.json`) as SecurityReportResult[];
 };
 
 const getMockFixableSecurityReport = (fixtureId: string): SecurityReportResult[] => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/Table/${fixtureId}fix.json`) as SecurityReportResult[];
 };
 

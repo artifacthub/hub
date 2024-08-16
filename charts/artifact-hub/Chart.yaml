@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.
 type: application
-version: 1.18.1-0
-appVersion: 1.18.0
+version: 1.19.1-0
+appVersion: 1.19.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -47,47 +47,47 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Support for Inspektor Gadget gadgets
+      description: Support for OpenCost plugins
     - kind: added
-      description: Support for Tekton StepActions
+      description: GitHub flavored alerts in README files
     - kind: added
-      description: Support for Meshery Designs
-    - kind: added
-      description: Helm charts values schema badge
-    - kind: added
-      description: Sort search results by last updated
-    - kind: added
-      description: Display unique vulnerabilities in security report
-    - kind: added
-      description: KubeVersion field to Nova data dump
+      description: ah lint now supports git versioning in Tekton packages
     - kind: changed
-      description: Artifact Hub description message
+      description: Improve container image tracker source
     - kind: changed
-      description: Upgrade grafana dashboard
+      description: Sort ah lint output leaving errors at the end
     - kind: changed
-      description: Bump Trivy to 0.50.1
+      description: Update homepage for Incubation promotion
     - kind: changed
-      description: Bump Go to 1.22.2
+      description: Improve invalid org name error message
     - kind: changed
-      description: Bump Alpine to 3.19.1
+      description: Disable chunked transfer encoding
+    - kind: changed
+      description: Bump Go to 1.22.4
+    - kind: changed
+      description: Bump Alpine to 3.20.1
     - kind: changed
       description: Upgrade backend and frontend dependencies
     - kind: fixed
-      description: Versions precedence check
+      description: Issue handling invalid CSRF token in webapp
     - kind: fixed
-      description: Issue selecting values in firefox
-    - kind: removed
-      description: Official badge from control panel repository card
+      description: Detect versions with build md in Helm OCI repos
+    - kind: fixed
+      description: Issue reading Kyverno policy files
+    - kind: fixed
+      description: Some input patterns in modals
+    - kind: fixed
+      description: Issue rendering some values schema definitions
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.18.0
+      image: artifacthub/db-migrator:v1.19.0
     - name: hub
-      image: artifacthub/hub:v1.18.0
+      image: artifacthub/hub:v1.19.0
     - name: tracker
-      image: artifacthub/tracker:v1.18.0
+      image: artifacthub/tracker:v1.19.0
     - name: scanner
-      image: artifacthub/scanner:v1.18.0
+      image: artifacthub/scanner:v1.19.0
     - name: trivy
       image: aquasec/trivy:0.50.1
   artifacthub.io/links: |

@@ -20,6 +20,7 @@ import (
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
+	"github.com/go-git/go-git/v5/plumbing/storer"
 	"github.com/hashicorp/go-multierror"
 	v1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
 	v1alpha "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1alpha1"
@@ -193,20 +194,10 @@ func (s *TrackerSource) processDirBasedCatalog() (map[string]*hub.Package, error
 // processGitBasedCatalog returns the packages available in the catalog using
 // the git based versioning.
 func (s *TrackerSource) processGitBasedCatalog() (map[string]*hub.Package, error) {
-	// Open git repository and get all tags
-	gr, err := git.PlainOpenWithOptions(s.i.BasePath, &git.PlainOpenOptions{
-		DetectDotGit: true,
-	})
+	// Open git repository and fetch all tags available
+	wt, tags, err := OpenGitRepository(s.i.BasePath)
 	if err != nil {
-		return nil, fmt.Errorf("error opening git repository: %w", err)
-	}
-	wt, err := gr.Worktree()
-	if err != nil {
-		return nil, fmt.Errorf("error getting worktree: %w", err)
-	}
-	tags, err := gr.Tags()
-	if err != nil {
-		return nil, fmt.Errorf("error reading tags references: %w", err)
+		return nil, err
 	}
 
 	// Read packages available in the catalog for each tag/version
@@ -276,6 +267,26 @@ func (s *TrackerSource) processGitBasedCatalog() (map[string]*hub.Package, error
 func (s *TrackerSource) warn(err error) {
 	s.i.Svc.Logger.Warn().Err(err).Send()
 	s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
+}
+
+// OpenGitRepository opens the git repository at the provided base path and
+// returns the worktree and tags references.
+func OpenGitRepository(basePath string) (*git.Worktree, storer.ReferenceIter, error) {
+	gr, err := git.PlainOpenWithOptions(basePath, &git.PlainOpenOptions{
+		DetectDotGit: true,
+	})
+	if err != nil {
+		return nil, nil, fmt.Errorf("error opening git repository: %w", err)
+	}
+	wt, err := gr.Worktree()
+	if err != nil {
+		return nil, nil, fmt.Errorf("error getting worktree: %w", err)
+	}
+	tags, err := gr.Tags()
+	if err != nil {
+		return nil, nil, fmt.Errorf("error reading tags references: %w", err)
+	}
+	return wt, tags, nil
 }
 
 // GetManifest reads, parses and validates the package manifest, which can be a

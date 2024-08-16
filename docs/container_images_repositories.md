@@ -2,17 +2,22 @@
 
 *This feature is experimental and it's subject to change.*
 
-Container images repositories are expected to be hosted in OCI registries. Each repository represents one package in Artifact Hub, and multiple versions of that package will be created from each of the tags configured when the repository is added. The repository name in the url will be used as the package name. At the moment tags have to be configured manually from the control panel, and they can be marked as `mutable` or `immutable`. Immutable tags will be only processed once, whereas mutable ones will be processed periodically and reindexed when they change. A repository can have a **maximum of 10 tags** listed. In some cases, adding a single mutable tag like `latest` will be enough to have presence on Artifact Hub. We have plans to add a new API endpoint that will allow publishers to push tags programatically as needed replacing old ones.
+Container images repositories are expected to be hosted in OCI registries. Each repository represents one package in Artifact Hub, and multiple versions of that package will be created from each of the tags configured when the repository is added. The repository name in the url will be used as the package name. At the moment tags have to be configured manually from the control panel, and they can be marked as `mutable` or `immutable`. Immutable tags will be only processed once, whereas mutable ones will be processed periodically and reindexed when they change. A repository can have a **maximum of 10 tags** listed. In many cases, adding a single mutable tag like `latest` will be enough to have presence on Artifact Hub.
 
 To add a container image repository, the url used **must** follow the following format:
 
 - `oci://registry/[namespace]/repository` (example: oci://index.docker.io/artifacthub/ah)
 
-The registry host is required, please use `index.docker.io` when referring to repositories hosted in the Docker Hub. The url should not contain any tag.
+The registry host is required and the url should not contain any tag. Please use `index.docker.io` when referring to repositories hosted in the Docker Hub.
 
 ### Image metadata
 
-For an image tag to be listed on Artifact Hub, it **must** contain some metadata. Depending on the image manifest format, metadata must be provided one way or another: images using OCI manifests must use [annotations](https://github.com/opencontainers/image-spec/blob/main/annotations.md), whereas images using Docker V2 manifests must use [config labels](https://docs.docker.com/engine/reference/builder/#label). Docker V1 manifests are not supported.
+For an image tag to be listed on Artifact Hub, it **must** contain some metadata. Depending on if the image has an index or not, or the image manifest format used, metadata can be provided one way or another:
+
+- Multi-architecture images using the [OCI Index format](https://github.com/opencontainers/image-spec/blob/main/image-index.md) can provide the required metadata [at the index level using annotations](https://github.com/opencontainers/image-spec/blob/main/image-index.md). Metadata at this level takes precedence over metadata at the image level.
+- Images using OCI manifests can use [annotations](https://github.com/opencontainers/image-spec/blob/main/annotations.md) or [config labels](https://docs.docker.com/engine/reference/builder/#label). If both annotations and labels are provided, annotations will take precedence.
+- Docker V2 manifests must use [config labels](https://docs.docker.com/engine/reference/builder/#label).
+- Docker V1 manifests are not supported.
 
 The following annotations/labels are supported at the moment:
 

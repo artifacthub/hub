@@ -5,7 +5,7 @@ import UpdateOrg from './UpdateOrg';
 jest.mock('../../../../../api');
 
 const getMockOrganization = (fixtureId: string): Organization => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/UpdateOrg/${fixtureId}.json`) as Organization;
 };
 
