@@ -172,7 +172,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     <option
                       value="26"
                     >
-                      Radius recipe
+                      Radius recipes
                     </option>
                     <option
                       value="11"
