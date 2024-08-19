@@ -163,6 +163,13 @@ describe('RepositoryIcon', () => {
     expect(icon).toHaveProperty('src', 'http://localhost/static/media/opencost-light.svg');
   });
 
+  it('renders Radius recipe icon', () => {
+    render(<RepositoryIcon kind={RepositoryKind.RadiusRecipe} type="white" />);
+    const icon = screen.getByAltText('Icon');
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveProperty('src', 'http://localhost/static/media/radius-light.svg');
+  });
+
   it('renders empty icon', () => {
     render(<RepositoryIcon kind={101 as RepositoryKind} type="white" />);
     expect(() => screen.getByAltText('Icon')).toThrow();

@@ -120,6 +120,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.OpenCost,
     name: 'OpenCost plugin',
   },
+  {
+    kind: RepositoryKind.RadiusRecipe,
+    name: 'Radius recipe',
+  },
 ];
 
 const Wrapper = styled('span')`

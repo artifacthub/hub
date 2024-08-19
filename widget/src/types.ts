@@ -54,6 +54,7 @@ export enum RepositoryKind {
   TektonStepAction,
   MesheryDesign,
   OpenCost,
+  RadiusRecipe,
 }
 
 export interface SearchResults {

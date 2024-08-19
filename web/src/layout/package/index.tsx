@@ -28,6 +28,7 @@ import {
   Package,
   PackageLink,
   PackageViewsStats,
+  RadiusRecipeData,
   Recommendation,
   RepositoryKind,
   Version,
@@ -467,6 +468,20 @@ const PackageView = () => {
     return policy;
   };
 
+  const getRadiusRecipeFiles = (): { [key: string]: string } | undefined => {
+    let files: { [key: string]: string } | undefined;
+    if (
+      !isUndefined(detail) &&
+      !isNull(detail) &&
+      !isNull(detail.data) &&
+      !isUndefined(detail.data) &&
+      !isUndefined(detail.data[RadiusRecipeData.Recipe])
+    ) {
+      files = detail.data[RadiusRecipeData.Recipe] as { [key: string]: string };
+    }
+    return files;
+  };
+
   const getArgoTemplate = (): string | undefined => {
     let template: string | undefined;
     if (
@@ -578,6 +593,7 @@ const PackageView = () => {
       <>
         {(() => {
           let file: string | undefined;
+          let files: { [key: string]: string } | undefined;
           switch (detail.repository.kind) {
             case RepositoryKind.Krew:
               file = getManifestRaw();
@@ -742,6 +758,56 @@ const PackageView = () => {
                           {file}
                         </SyntaxHighlighter>
                       </div>
+                    </div>
+                  )}
+                </>
+              );
+
+            case RepositoryKind.RadiusRecipe:
+              files = getRadiusRecipeFiles();
+              if (!isUndefined(file)) {
+                additionalTitles += '# Recipe\n';
+              }
+              return (
+                <>
+                  {!isUndefined(files) && (
+                    <div className={`mb-5 ${styles.codeWrapper}`}>
+                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Recipe" />
+                      {Object.keys(files).map((fileName: string) => {
+                        const content = files![fileName];
+                        const extension = fileName.split('.').pop();
+                        return (
+                          <div key={fileName}>
+                            <div className="h5 my-3">{fileName}</div>
+                            <div
+                              className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border border-1 ${styles.manifestWrapper}`}
+                            >
+                              <BlockCodeButtons content={content} filename={fileName} />
+                              <SyntaxHighlighter
+                                language={extension}
+                                style={docco}
+                                customStyle={{
+                                  backgroundColor: 'transparent',
+                                  padding: '1.5rem',
+                                  lineHeight: '1.25rem',
+                                  marginBottom: '0',
+                                  height: '100%',
+                                  fontSize: '80%',
+                                  color: '#636a6e',
+                                }}
+                                lineNumberStyle={{
+                                  color: 'var(--color-black-25)',
+                                  marginRight: '5px',
+                                  fontSize: '0.8rem',
+                                }}
+                                showLineNumbers
+                              >
+                                {content}
+                              </SyntaxHighlighter>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </>
