@@ -288,7 +288,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
   {
     kind: RepositoryKind.RadiusRecipe,
     label: 'radius',
-    name: 'Radius recipe',
+    name: 'Radius recipes',
     singular: 'Radius recipe',
     plural: 'Radius recipes',
     icon: <RepositoryIcon kind={RepositoryKind.RadiusRecipe} className="mw-100 mh-100" />,
