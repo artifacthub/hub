@@ -1621,6 +1621,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/radius/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getRadiusRecipeDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RadiusRecipe"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/tbaction/{repoName}/{packageName}":
     get:
       tags:
@@ -2236,6 +2259,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/OpencostPlugin"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/radius/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getRadiusRecipeVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RadiusRecipe"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -4509,6 +4556,18 @@ components:
                         condition: (evt.num < 0)
     OpencostPlugin:
       $ref: "#/components/schemas/Package"
+    RadiusRecipe:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                recipe:
+                  type: object
+                  nullable: false
+                  additionalProperties: true
     TBActionPackage:
       $ref: "#/components/schemas/Package"
     TektonPipelinePackage:
@@ -5019,6 +5078,7 @@ components:
           * `23` - Tekton stepactions
           * `24` - Meshery designs
           * `25` - Opencost plugins
+          * `26` - Radius recipes
     RepositoryKindParam:
       type: string
       enum:
@@ -5048,6 +5108,7 @@ components:
         - tekton-stepaction
         - meshery
         - opencost
+        - radius
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -5076,6 +5137,7 @@ components:
         * `tekton-stepaction` - Tekton stepactions
         * `meshery` - Meshery designs
         * `opencost` - Opencost plugins
+        * `radius` - Radius recipes
     RepositorySummary:
       type: object
       required:
@@ -5621,6 +5683,7 @@ components:
           * `23` - Tekton stepactions
           * `24` - Meshery designs
           * `25` - Opencost plugins
+          * `26` - Radius recipes
     PackageNameParam:
       in: path
       name: packageName

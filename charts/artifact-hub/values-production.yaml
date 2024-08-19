@@ -119,6 +119,7 @@ tracker:
       requests:
         cpu: 2
         memory: 4000Mi
+  repositoryTimeout: 25m
 
 trivy:
   deploy:

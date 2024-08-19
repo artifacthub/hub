@@ -124,6 +124,9 @@ const (
 
 	// OpenCost represents a repository with OpenCost plugins.
 	OpenCost RepositoryKind = 25
+
+	// Radius represents a repository with Radius recipes.
+	Radius RepositoryKind = 26
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -173,6 +176,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "opa"
 	case OpenCost:
 		return "opencost"
+	case Radius:
+		return "radius"
 	case TBAction:
 		return "tbaction"
 	case TektonPipeline:
@@ -234,6 +239,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return OPA, nil
 	case "opencost":
 		return OpenCost, nil
+	case "radius":
+		return Radius, nil
 	case "tbaction":
 		return TBAction, nil
 	case "tekton-pipeline":

@@ -91,6 +91,10 @@ describe('repoKind', () => {
       expect(methods.getRepoKind('opencost')).toBe(RepositoryKind.OpenCost);
     });
 
+    it('radius', () => {
+      expect(methods.getRepoKind('radius')).toBe(RepositoryKind.RadiusRecipe);
+    });
+
     it('unknown', () => {
       expect(methods.getRepoKind('unknown')).toBeNull();
     });
@@ -183,6 +187,10 @@ describe('repoKind', () => {
 
     it('opencost plugin kind', () => {
       expect(methods.getRepoKindName(RepositoryKind.OpenCost)).toBe('opencost');
+    });
+
+    it('radius recipe kind', () => {
+      expect(methods.getRepoKindName(RepositoryKind.RadiusRecipe)).toBe('radius');
     });
 
     it('unknown kind', () => {

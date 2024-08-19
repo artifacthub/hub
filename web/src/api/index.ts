@@ -95,6 +95,7 @@ class API_CLASS {
     'crds_examples',
     'examples',
     'template',
+    'recipe',
   ];
   private HEADERS = {
     csrf: 'X-Csrf-Token',
