@@ -115,6 +115,10 @@ hub:
       enabled: false
       username: hub
       password: changeme
+    basicAuths:
+      enabled: false
+      users:
+        hub: changeme
     cookie:
       hashKey: default-unsafe-key
       secure: false

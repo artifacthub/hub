@@ -64,6 +64,11 @@ const defaultProps = {
             password: 'changeme',
             username: 'hub',
           },
+          basicAuths: {
+            enabled: false,
+            password: 'changeme',
+            username: 'hub'
+          },
           cacheDir: '',
           configDir: '/home/hub/.cfg',
           cookie: {

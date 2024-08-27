@@ -11,10 +11,16 @@ server:
   shutdownTimeout: 10s
   webBuildPath: ../../web/build
   widgetBuildPath: ../../widget/build
+  # basicAuth is deprecated. Please migrate to `basicAuths`
   basicAuth:
     enabled: false
     username: hub
     password: changeme
+  basicAuths:
+    enabled: false
+    users:
+      hub: changeme
+      hub2: changeme2
   oauth:
     oidc:
       # Dex example app config: https://dexidp.io/docs/getting-started/

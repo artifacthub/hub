@@ -105,10 +105,16 @@ server:
   shutdownTimeout: 10s
   webBuildPath: ../../web/build
   widgetBuildPath: ../../widget/build
+  # basicAuth is deprecated. Please migrate to `basicAuths
   basicAuth:
     enabled: false
     username: hub
     password: changeme
+  basicAuths:
+    enabled: false
+    users:
+      hub: changeme
+      hub2: changeme2
   cookie:
     hashKey: default-unsafe-key
     secure: false

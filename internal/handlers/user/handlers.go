@@ -169,18 +169,39 @@ func (h *Handlers) ApproveSession(w http.ResponseWriter, r *http.Request) {
 
 // BasicAuth is a middleware that provides basic auth support.
 func (h *Handlers) BasicAuth(next http.Handler) http.Handler {
+	basicAuthEnabled := h.cfg.GetBool("server.basicAuth.enabled")
+	basicAuthsEnabled := h.cfg.GetBool("server.basicAuths.enabled")
+	if !basicAuthEnabled && !basicAuthsEnabled {
+		return next
+	}
+
 	validUser := []byte(h.cfg.GetString("server.basicAuth.username"))
 	validPass := []byte(h.cfg.GetString("server.basicAuth.password"))
 	realm := h.cfg.GetString("theme.siteName")
+	users := h.cfg.GetStringMapString("server.basicAuths.users")
 
 	areCredentialsValid := func(user, pass []byte) bool {
-		if subtle.ConstantTimeCompare(user, validUser) != 1 {
-			return false
+		if basicAuthsEnabled {
+			for username, password := range users {
+				if subtle.ConstantTimeCompare(user, []byte(username)) != 1 {
+					continue
+				}
+				if subtle.ConstantTimeCompare(pass, []byte(password)) != 1 {
+					continue
+				}
+				return true
+			}
 		}
-		if subtle.ConstantTimeCompare(pass, validPass) != 1 {
-			return false
+		if basicAuthEnabled {
+			if subtle.ConstantTimeCompare(user, validUser) != 1 {
+				return false
+			}
+			if subtle.ConstantTimeCompare(pass, validPass) != 1 {
+				return false
+			}
+			return true
 		}
-		return true
+		return false
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

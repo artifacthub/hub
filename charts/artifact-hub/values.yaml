@@ -205,6 +205,7 @@ hub:
     # Message of the day severity. The color used for the banner will be based on the severity selected
     # Options: "info", "warning", "error"
     motdSeverity: info
+    # basicAuth is deprecated. Please migrate to `basicAuths`
     basicAuth:
       # Enable Hub basic auth
       enabled: false
@@ -212,6 +213,14 @@ hub:
       username: hub
       # Hub basic auth password
       password: changeme
+    # basicAuths allows multiple credentialed users
+    basicAuths:
+      # Enable Hub basic auths
+      enabled: false
+      # Hub basic auth username and passwords
+      users:
+        hub: changeme
+        hub2: changeme2
     cookie:
       # Hub cookie hash key
       hashKey: default-unsafe-key

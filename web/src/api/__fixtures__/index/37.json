@@ -124,6 +124,12 @@
           "password": "changeme",
           "username": "hub"
         },
+        "basicAuths": {
+          "enabled": false,
+          "users": {
+            "hub": "changeme"
+          }
+        },
         "cacheDir": "",
         "configDir": "/home/hub/.cfg",
         "cookie": {

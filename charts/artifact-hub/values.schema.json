@@ -524,6 +524,26 @@
                                 "enabled"
                             ]
                         },
+                        "basicAuths": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "title": "Enable Hub basic auth",
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "users": {
+                                    "title": "map of auth username and passwords",
+                                    "type": "object",
+                                    "default": {
+                                        "hub": "changeme"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "enabled"
+                            ]
+                        },
                         "cookie": {
                             "type": "object",
                             "properties": {

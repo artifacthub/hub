@@ -168,6 +168,35 @@ func TestBasicAuth(t *testing.T) {
 	})
 }
 
+func TestBasicAuths(t *testing.T) {
+	hw := newHandlersWrapper()
+	hw.cfg.Set("server.basicAuths.enabled", true)
+	hw.cfg.Set("server.basicAuths.users", map[string]string{"test2": "test2"})
+
+	t.Run("without basic auth credentials", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		hw.h.BasicAuth(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+	})
+
+	t.Run("with basic auth credentials", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r.SetBasicAuth("test2", "test2")
+		hw.h.BasicAuth(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+	})
+}
+
 func TestCheckPasswordStrength(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()

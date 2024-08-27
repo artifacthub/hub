@@ -159,7 +159,7 @@ func (h *Handlers) setupRouter() {
 		STSIncludeSubdomains: true,
 		STSPreload:           true,
 	}).Handler)
-	if h.cfg.GetBool("server.basicAuth.enabled") {
+	if h.cfg.GetBool("server.basicAuth.enabled") || h.cfg.GetBool("server.basicAuths.enabled") {
 		r.Use(h.Users.BasicAuth)
 	}
 	r.NotFound(h.Static.Index)
