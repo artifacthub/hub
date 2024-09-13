@@ -38,7 +38,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Lint OpenAPI specs
-        uses: github/super-linter@v6
+        uses: github/super-linter@v7
         env:
           FILTER_REGEX_INCLUDE: docs/api/openapi.yaml
           MULTI_STATUS: false
