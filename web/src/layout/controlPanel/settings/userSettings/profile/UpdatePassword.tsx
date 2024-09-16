@@ -1,9 +1,11 @@
 import classnames from 'classnames';
 import every from 'lodash/every';
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useContext, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 import API from '../../../../../api';
+import { AppCtx, signOut } from '../../../../../context/AppCtx';
 import { ErrorKind, RefInputField } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import compoundErrorMessage from '../../../../../utils/compoundErrorMessage';
@@ -21,6 +23,7 @@ interface FormValidation {
 }
 
 const UpdatePassword = () => {
+  const navigate = useNavigate();
   const form = useRef<HTMLFormElement>(null);
   const oldPasswordInput = useRef<RefInputField>(null);
   const passwordInput = useRef<RefInputField>(null);
@@ -28,9 +31,19 @@ const UpdatePassword = () => {
   const [isSending, setIsSending] = useState(false);
   const [password, setPassword] = useState<Password>({ value: '', isValid: false });
   const [isValidated, setIsValidated] = useState(false);
+  const { dispatch } = useContext(AppCtx);
 
   const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword({ value: e.target.value, isValid: e.currentTarget.checkValidity() });
+  };
+
+  const onSuccess = (): void => {
+    alertDispatcher.postAlert({
+      type: 'success',
+      message: 'Your password has been successfully updated. Please, sign in again.',
+    });
+    dispatch(signOut());
+    navigate('/?modal=login&redirect=/control-panel/settings');
   };
 
   async function updatePassword(oldPassword: string, newPassword: string) {
@@ -40,6 +53,7 @@ const UpdatePassword = () => {
       cleanForm();
       setIsSending(false);
       setIsValidated(false);
+      onSuccess();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
