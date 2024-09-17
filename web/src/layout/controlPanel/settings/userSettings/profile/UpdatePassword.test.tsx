@@ -9,6 +9,13 @@ import UpdatePassword from './UpdatePassword';
 jest.mock('../../../../../api');
 jest.mock('../../../../../utils/alertDispatcher');
 
+const mockUseNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as object),
+  useNavigate: () => mockUseNavigate,
+}));
+
 describe('Update password - user settings', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -48,6 +55,8 @@ describe('Update password - user settings', () => {
       await waitFor(() => {
         expect(API.updatePassword).toBeCalledTimes(1);
         expect(API.updatePassword).toHaveBeenCalledWith('oldpass', 'newpass');
+        expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith('/?modal=login&redirect=/control-panel/settings');
       });
     });
 
