@@ -283,6 +283,12 @@
                             "type": "array",
                             "default": "[]"
                         },
+                        "extraContainers": {
+                            "title": "Extra containers",
+                            "description": "Optionally specify extra list of additional containers for the hub deployment",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "type": "object",
                             "properties": {

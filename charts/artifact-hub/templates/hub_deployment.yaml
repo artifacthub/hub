@@ -94,6 +94,9 @@ spec:
           readinessProbe:
             {{- toYaml .Values.hub.deploy.readinessProbe | nindent 12}}
           {{- end }}
+        {{- if .Values.hub.deploy.extraContainers }}
+          {{- include "chart.tplvalues.render" (dict "value" .Values.hub.deploy.extraContainers "context" $) | nindent 8 }}
+        {{- end }}
       volumes:
         - name: hub-config
           secret:
