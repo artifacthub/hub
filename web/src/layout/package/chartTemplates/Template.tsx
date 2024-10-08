@@ -193,7 +193,7 @@ const Template = (props: Props) => {
             element={<span className={`${styles.tmplDefinedTemplate}  ${styles[`${effective}Theme`]}`}>{word}</span>}
             info={
               <div className="d-flex flex-column p-2">
-                <div className="text-nowrap">
+                <div className={styles.definedTemplate}>
                   Template defined in <span className="fw-bold">{templateInHelper.template}</span> line{' '}
                   <span className="fw-bold">{templateInHelper.line}</span>
                 </div>

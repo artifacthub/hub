@@ -18,6 +18,11 @@
   animation: blinker 1s linear 1;
 }
 
+.definedTemplate {
+  max-width: 480px;
+  min-width: 350px;
+}
+
 @keyframes blinker {
   50% {
     opacity: 1;
