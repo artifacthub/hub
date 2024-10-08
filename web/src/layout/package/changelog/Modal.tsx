@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
@@ -74,6 +75,12 @@ const ChangelogModal = (props: Props) => {
     }
   }, [activeVersionIndex]);
 
+  const removeEmptyVersions = (data: ChangeLog[]): ChangeLog[] => {
+    return data.filter(
+      (item: ChangeLog) => !isNull(item.changes) && !isUndefined(item.changes) && !isEmpty(item.changes)
+    );
+  };
+
   useEffect(() => {
     // We load correct active version after rendering modal
     if (openStatus && changelog && isUndefined(activeVersionIndex)) {
@@ -109,7 +116,7 @@ const ChangelogModal = (props: Props) => {
     try {
       setIsLoading(true);
       setCurrentPkgId(props.packageId);
-      setChangelog(await API.getChangelog(props.packageId));
+      setChangelog(removeEmptyVersions(await API.getChangelog(props.packageId)));
       setIsLoading(false);
       setOpenStatus(true);
     } catch {

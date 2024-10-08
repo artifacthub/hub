@@ -143,7 +143,7 @@ const Content = (props: Props) => {
                               styles[`${change.kind.toString()}ChangeBadge`]
                             )}
                           >
-                            <span className={`position-relative ${styles.badgeIcon}`}>
+                            <span>
                               {(() => {
                                 switch (change.kind) {
                                   case ChangeKind.added:
@@ -163,7 +163,9 @@ const Content = (props: Props) => {
                                 }
                               })()}
                             </span>
-                            <span className="d-none d-md-block ms-1">{change.kind.toString()}</span>
+                            <span className={`d-none d-md-block ms-1 ${styles.badgeContent}`}>
+                              {change.kind.toString()}
+                            </span>
                           </div>
                         </div>
                       ) : (
