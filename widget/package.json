@@ -23,7 +23,7 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.13",
     "@types/lodash": "^4.17.10",
-    "@types/node": "^22.7.4",
+    "@types/node": "^22.7.5",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "babel-plugin-styled-components": "^2.1.4",
@@ -38,7 +38,7 @@
     "prettier": "^3.3.3",
     "react-scripts": "^5.0.1",
     "typescript": "^5.6.2",
-    "typescript-eslint": "^8.8.0",
+    "typescript-eslint": "^8.8.1",
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
