@@ -32,7 +32,7 @@ interface Props {
 }
 
 const SecurityReport = (props: Props) => {
-  const [isOlderThenOneYear, setIsOlderThenOneYear] = useState<boolean>(false);
+  const [isOlderThanOneYear, setIsOlderThanOneYear] = useState<boolean>(true);
 
   const hasSomeWhitelistedContainers = useCallback((): boolean => {
     return props.containers.some((container: ContainerImage) => container.whitelisted);
@@ -51,11 +51,11 @@ const SecurityReport = (props: Props) => {
 
   useEffect(() => {
     const diffInYears = calculateDiffInYears(props.ts);
-    setIsOlderThenOneYear(diffInYears > 1);
+    setIsOlderThanOneYear(diffInYears > 1);
   }, [props.ts]);
 
   // Do not display security reports when version is older than 1 year
-  if (isOlderThenOneYear) return null;
+  if (isOlderThanOneYear) return null;
 
   if (!props.disabledReport) {
     if (isNull(props.summary) || isUndefined(props.summary) || isEmpty(props.summary)) {
