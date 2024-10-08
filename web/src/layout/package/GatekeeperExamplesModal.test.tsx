@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import GatekeeperExamplesModal from './GatekeeperExamplesModal';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const isVisibleItemInContainer = require('../../utils/isVisibleItemInContainer');
 
 jest.mock('../../utils/isVisibleItemInContainer', () => jest.fn());

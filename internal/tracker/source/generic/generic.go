@@ -50,6 +50,10 @@ const (
 	// contains the raw policies.
 	OPAPoliciesKey = "policies"
 
+	// RadiusRecipeKey represents the key used in the package's data field that
+	// contains the raw recipe files.
+	RadiusRecipeKey = "recipe"
+
 	// argoTemplateManifests represents the filename that contains the Argo
 	// template manifests.
 	argoTemplateManifests = "manifests.yaml"
@@ -69,6 +73,18 @@ const (
 	// opaPoliciesSuffix is the suffix that each of the policies files in the
 	// package must use.
 	opaPoliciesSuffix = ".rego"
+
+	// radiusBicepRecipe represents the filename that contains the Radius
+	// recipe file in Bicep format.
+	radiusBicepRecipe = "recipe.bicep"
+
+	// radiusTFRecipe represents the filename that contains the Radius recipe
+	// file in Terraform format (main).
+	radiusTFRecipe = "main.tf"
+
+	// radiusTFRecipeVariables represents the filename that contains the
+	// variables used by the Radius recipe file in Terraform format.
+	radiusTFRecipeVariables = "variables.tf"
 )
 
 // TrackerSource is a hub.TrackerSource implementation used by several kinds
@@ -225,11 +241,13 @@ func PreparePackage(r *hub.Repository, md *hub.PackageMetadata, pkgPath string) 
 	case hub.KubeArmor:
 		kindData, err = prepareKubeArmorData(pkgPath, ignorer)
 	case hub.Kyverno:
-		kindData, err = prepareKyvernoData(pkgPath)
+		kindData, err = prepareKyvernoData(pkgPath, p.Name)
 	case hub.Meshery:
 		kindData, err = prepareMesheryData(pkgPath)
 	case hub.OPA:
 		kindData, err = prepareOPAData(pkgPath, ignorer)
+	case hub.Radius:
+		kindData, err = prepareRadiusData(pkgPath)
 	}
 	if err != nil {
 		return nil, fmt.Errorf("error preparing package %s version %s data: %w", md.Name, md.Version, err)
@@ -359,9 +377,12 @@ func prepareKubeArmorData(pkgPath string, ignorer ignore.IgnoreParser) (map[stri
 
 // prepareKyernoData reads and formats Kyverno specific data available in the
 // path provided, returning the resulting data structure.
-func prepareKyvernoData(pkgPath string) (map[string]interface{}, error) {
+func prepareKyvernoData(pkgPath, pkgName string) (map[string]interface{}, error) {
 	// Read policy file
 	policyPath := path.Join(pkgPath, path.Base(pkgPath)+".yaml")
+	if _, err := os.Stat(policyPath); os.IsNotExist(err) {
+		policyPath = path.Join(pkgPath, pkgName+".yaml")
+	}
 	policy, err := util.ReadRegularFile(policyPath)
 	if err != nil {
 		return nil, fmt.Errorf("error reading kyverno policy file: %w", err)
@@ -404,6 +425,37 @@ func prepareOPAData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]int
 	// Return package data field
 	return map[string]interface{}{
 		OPAPoliciesKey: files,
+	}, nil
+}
+
+// prepareRadiusData reads and formats Radius specific data available in the
+// path provided, returning the resulting data structure.
+func prepareRadiusData(pkgPath string) (map[string]interface{}, error) {
+	// Read recipe files
+	files := make(map[string]string)
+	for _, fileName := range []string{radiusBicepRecipe, radiusTFRecipe, radiusTFRecipeVariables} {
+		filePath := path.Join(pkgPath, fileName)
+		content, err := util.ReadRegularFile(filePath)
+		if err == nil {
+			files[fileName] = string(content)
+		} else if !errors.Is(err, os.ErrNotExist) {
+			return nil, fmt.Errorf("error reading recipe file (%s): %w", fileName, err)
+		}
+	}
+
+	// Check recipe files found
+	_, bicepFound := files[radiusBicepRecipe]
+	_, tfFound := files[radiusTFRecipe]
+	if bicepFound && tfFound {
+		return nil, errors.New("invalid recipe: both bicep and terraform files found")
+	}
+	if len(files) == 0 {
+		return nil, errors.New("no recipe files found")
+	}
+
+	// Return package data field
+	return map[string]interface{}{
+		RadiusRecipeKey: files,
 	}, nil
 }
 

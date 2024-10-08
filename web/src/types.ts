@@ -27,6 +27,7 @@ export enum RepositoryKind {
   TektonStepAction,
   MesheryDesign,
   OpenCost,
+  RadiusRecipe,
 }
 
 export enum PackageCategory {
@@ -81,6 +82,10 @@ export enum Signature {
 export enum VersioningOption {
   Git = 'git',
   Directory = 'directory',
+}
+
+export enum RadiusRecipeData {
+  Recipe = 'recipe',
 }
 
 export interface Repository {
@@ -277,6 +282,7 @@ export interface PackageData {
   [ArgoTemplateData.Version]?: string;
   tasks?: TektonTaskInPipeline[];
   alternativeLocations?: string[];
+  [RadiusRecipeData.Recipe]?: { [key: string]: string };
 }
 
 export interface TektonTaskInPipeline {

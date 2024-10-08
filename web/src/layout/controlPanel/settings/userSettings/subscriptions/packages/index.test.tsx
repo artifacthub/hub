@@ -11,6 +11,7 @@ jest.mock('../../../../../../api');
 jest.mock('../../../../../../utils/alertDispatcher');
 
 const getMockSubscriptions = (fixtureId: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/index/${fixtureId}.json`);
 };
 

@@ -101,6 +101,7 @@ var (
 		hub.OLM,
 		hub.OPA,
 		hub.OpenCost,
+		hub.Radius,
 		hub.TBAction,
 		hub.TektonPipeline,
 		hub.TektonTask,
@@ -304,6 +305,7 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 		hub.OLM,
 		hub.OPA,
 		hub.OpenCost,
+		hub.Radius,
 		hub.TBAction,
 		hub.TektonPipeline,
 		hub.TektonTask,
@@ -487,6 +489,7 @@ func (m *Manager) locateMetadataFile(r *hub.Repository, basePath string) string 
 		hub.OLM,
 		hub.OPA,
 		hub.OpenCost,
+		hub.Radius,
 		hub.TBAction,
 		hub.TektonPipeline,
 		hub.TektonTask,
@@ -567,7 +570,7 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 			}
 		case SchemeIsOCI(u):
 			// Digest is obtained by hashing the list of versions available
-			versions, err := m.tg.Tags(ctx, r, true)
+			versions, err := m.tg.Tags(ctx, r, true, true)
 			if err != nil {
 				return digest, err
 			}
@@ -855,6 +858,7 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 		hub.OLM,
 		hub.OPA,
 		hub.OpenCost,
+		hub.Radius,
 		hub.TBAction,
 		hub.TektonPipeline,
 		hub.TektonTask,

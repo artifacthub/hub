@@ -42,6 +42,7 @@ export interface JSONSchema4Object {
 
 // Workaround for infinite type recursion
 // https://github.com/Microsoft/TypeScript/issues/3496#issuecomment-128553540
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface JSONSchema4Array extends Array<JSONSchema4Type> {}
 
 /**
@@ -278,6 +279,7 @@ export interface JSONSchema6Object {
 
 // Workaround for infinite type recursion
 // https://github.com/Microsoft/TypeScript/issues/3496#issuecomment-128553540
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface JSONSchema6Array extends Array<JSONSchema6Type> {}
 
 /**
@@ -611,6 +613,7 @@ export interface JSONSchema7Object {
 
 // Workaround for infinite type recursion
 // https://github.com/Microsoft/TypeScript/issues/3496#issuecomment-128553540
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface JSONSchema7Array extends Array<JSONSchema7Type> {}
 
 /**

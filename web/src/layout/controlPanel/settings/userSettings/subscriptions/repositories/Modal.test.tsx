@@ -34,10 +34,12 @@ const mockOptOutList: OptOutItem[] = [
 ];
 
 const getMockOrgs = () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require('./__fixtures__/Modal/orgs.json');
 };
 
 const getMockRepos = (repoName?: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/Modal/${repoName || 'user'}.json`);
 };
 

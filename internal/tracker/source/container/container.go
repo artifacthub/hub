@@ -6,10 +6,12 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"maps"
 	"net/http"
 	"net/url"
 	"path"
 	"runtime/debug"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -20,6 +22,7 @@ import (
 	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/google/go-containerregistry/pkg/name"
+	v1 "github.com/google/go-containerregistry/pkg/v1"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
 	"github.com/google/go-containerregistry/pkg/v1/types"
 	"github.com/hashicorp/go-multierror"
@@ -57,6 +60,12 @@ const (
 )
 
 var (
+	// Default platform to use when resolving an index to a child image.
+	defaultPlatform = v1.Platform{
+		Architecture: "amd64",
+		OS:           "linux",
+	}
+
 	// errUnsupportedMediaType indicates that the image media type is not
 	// supported and should not be processed.
 	errUnsupportedMediaType = errors.New("image media type not supported")
@@ -346,79 +355,6 @@ func PreparePackage(
 	return p, nil
 }
 
-// getMetadata returns the metadata available in annotations and labels in the
-// container image identified by the reference provided. Depending on the image
-// media type the metadata will be obtained from annotations or labels.
-func getMetadata(
-	ctx context.Context,
-	cfg *viper.Viper,
-	r *hub.Repository,
-	imageRef string,
-) (map[string]string, error) {
-	// Prepare options for remote operations
-	ref, err := name.ParseReference(imageRef)
-	if err != nil {
-		return nil, err
-	}
-	options := oci.PrepareRemoteOptions(ctx, cfg, ref, r.AuthUser, r.AuthPass)
-
-	// Get image manifest
-	desc, err := remote.Get(ref, options...)
-	if err != nil {
-		return nil, err
-	}
-	image, err := desc.Image()
-	if err != nil {
-		return nil, err
-	}
-	manifest, err := image.Manifest()
-	if err != nil {
-		return nil, err
-	}
-
-	// Prepare metadata from manifest annotations or config labels, based on media type
-	md := make(map[string]string)
-	switch manifest.MediaType {
-	case types.OCIManifestSchema1, "":
-		for k, v := range manifest.Annotations {
-			md[k] = v
-		}
-	case types.DockerManifestSchema2:
-		configFile, err := image.ConfigFile()
-		if err != nil {
-			return nil, err
-		}
-		for k, v := range configFile.Config.Labels {
-			md[k] = v
-		}
-	default:
-		return nil, errUnsupportedMediaType
-	}
-
-	// Get image digest
-	digest, err := image.Digest()
-	if err == nil {
-		md[digestAnnotation] = digest.String()
-	}
-
-	// Get supported platform from images index / manifest list when available
-	index, err := desc.ImageIndex()
-	if err == nil {
-		indexManifest, err := index.IndexManifest()
-		if err == nil {
-			var platforms []string
-			for _, m := range indexManifest.Manifests {
-				if m.Platform != nil {
-					platforms = append(platforms, fmt.Sprintf("%s/%s", m.Platform.OS, m.Platform.Architecture))
-				}
-			}
-			md[platformsAnnotation] = strings.Join(platforms, ",")
-		}
-	}
-
-	return md, nil
-}
-
 // getContent returns the content of the url provided.
 func getContent(
 	ctx context.Context,
@@ -442,4 +378,148 @@ func getContent(
 		return io.ReadAll(resp.Body)
 	}
 	return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
+}
+
+// getMetadata returns the metadata available in the index or image identified
+// by the reference provided.
+func getMetadata(
+	ctx context.Context,
+	cfg *viper.Viper,
+	r *hub.Repository,
+	imageRef string,
+) (map[string]string, error) {
+	// Get reference's remote descriptor
+	ref, err := name.ParseReference(imageRef)
+	if err != nil {
+		return nil, err
+	}
+	options := oci.PrepareRemoteOptions(ctx, cfg, ref, r.AuthUser, r.AuthPass)
+	options = append(options, remote.WithPlatform(defaultPlatform))
+	desc, err := remote.Get(ref, options...)
+	if err != nil {
+		return nil, err
+	}
+
+	// Get metadata and supported platforms from index manifest (if available)
+	var indexManifest *v1.IndexManifest
+	index, err := desc.ImageIndex()
+	if err == nil {
+		indexManifest, _ = index.IndexManifest()
+	}
+	supportedPlatforms := getSupportedPlatforms(indexManifest)
+	md := getMetadataFromIndex(indexManifest)
+
+	// Get metadata from image if it wasn't available in the index
+	if md == nil {
+		// Update descriptor's platform if the default one is not supported
+		if len(supportedPlatforms) > 0 && !slices.Contains(supportedPlatforms, &defaultPlatform) {
+			// We'll pick the first one available in the index
+			options = append(options, remote.WithPlatform(*supportedPlatforms[0]))
+			desc, err = remote.Get(ref, options...)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		image, err := desc.Image()
+		if err != nil {
+			return nil, err
+		}
+		imageManifest, err := image.Manifest()
+		if err != nil {
+			return nil, err
+		}
+		md, err = getMetadataFromImage(image, imageManifest)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	// Add supported platforms to metadata
+	elems := make([]string, len(supportedPlatforms))
+	for _, p := range supportedPlatforms {
+		elems = append(elems, fmt.Sprintf("%s/%s", p.OS, p.Architecture))
+	}
+	if len(elems) > 0 {
+		md[platformsAnnotation] = strings.Join(elems, ",")
+	}
+
+	return md, nil
+}
+
+// containsSomeMetadata checks if the provided map contains some of the
+// required metadata fields.
+func containsSomeMetadata(m map[string]string) bool {
+	for _, key := range requiredMetadata {
+		if _, ok := m[key]; ok {
+			return true
+		}
+	}
+	return false
+}
+
+// getMetadataFromIndex returns the metadata available in the index manifest.
+func getMetadataFromIndex(indexManifest *v1.IndexManifest) map[string]string {
+	var md map[string]string
+	if indexManifest != nil {
+		if indexManifest.MediaType == types.OCIImageIndex {
+			if containsSomeMetadata(indexManifest.Annotations) {
+				md = make(map[string]string)
+				maps.Copy(md, indexManifest.Annotations)
+				md[digestAnnotation] = md[createdAnnotation]
+			}
+		}
+	}
+	return md
+}
+
+// getMetadataFromImage returns the metadata available in the image manifest or
+// config, depending on the manifest media type.
+func getMetadataFromImage(image v1.Image, imageManifest *v1.Manifest) (map[string]string, error) {
+	md := make(map[string]string)
+
+	switch imageManifest.MediaType {
+	case types.OCIManifestSchema1, "":
+		if containsSomeMetadata(imageManifest.Annotations) {
+			maps.Copy(md, imageManifest.Annotations)
+		} else {
+			configFile, err := image.ConfigFile()
+			if err != nil {
+				return nil, err
+			}
+			maps.Copy(md, configFile.Config.Labels)
+		}
+	case types.DockerManifestSchema2:
+		configFile, err := image.ConfigFile()
+		if err != nil {
+			return nil, err
+		}
+		maps.Copy(md, configFile.Config.Labels)
+	default:
+		return nil, errUnsupportedMediaType
+	}
+
+	digest, err := image.Digest()
+	if err == nil {
+		md[digestAnnotation] = digest.String()
+	}
+
+	return md, nil
+}
+
+// getSupportedPlatforms returns the supported platforms available in the index
+// manifest provided.
+func getSupportedPlatforms(indexManifest *v1.IndexManifest) []*v1.Platform {
+	var supportedPlatforms []*v1.Platform
+	if indexManifest != nil {
+		for _, m := range indexManifest.Manifests {
+			if m.Platform != nil && m.Platform.Architecture != "unknown" {
+				supportedPlatforms = append(supportedPlatforms, &v1.Platform{
+					Architecture: m.Platform.Architecture,
+					OS:           m.Platform.OS,
+				})
+			}
+		}
+	}
+	return supportedPlatforms
 }

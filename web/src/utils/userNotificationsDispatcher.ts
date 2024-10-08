@@ -15,7 +15,7 @@ export interface UserNotificationsUpdatesHandler {
 }
 
 const getNotifications = (): UserNotification[] => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const list = require('./notifications.json').notifications;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return list.map((notif: any) => {

@@ -184,6 +184,8 @@ hub:
     extraVolumeMounts: []
     # Optionally specify a node selector for the hub deployment
     nodeSelector: {}
+    # Optionally specify extra list of additional containers for the hub deployment
+    extraContainers: []
   server:
     # Allow adding private repositories to the Hub
     allowPrivateRepositories: false

@@ -3,9 +3,10 @@ import { unified } from 'unified';
 
 import { extractReadmeTOC } from './extractReadmeTOC';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const strip = require('remark-strip-html');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const unlink = require('remark-unlink');
 const processor = unified().use(remarkParse).use(strip).use(unlink).use(extractReadmeTOC);
 

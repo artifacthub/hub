@@ -22,6 +22,8 @@ import (
 	"github.com/artifacthub/hub/internal/tracker/source/krew"
 	"github.com/artifacthub/hub/internal/tracker/source/olm"
 	"github.com/artifacthub/hub/internal/tracker/source/tekton"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/hashicorp/go-multierror"
 	"github.com/spf13/cobra"
 	"helm.sh/helm/v3/pkg/chart/loader"
@@ -63,6 +65,10 @@ type lintOptions struct {
 
 	// path represents the base path to walk looking for packages.
 	path string
+
+	// tektonVersioning represents the versioning option to use when processing
+	// Tekton repositories. Options are: directory or git.
+	tektonVersioning string
 }
 
 // lintReport represents the results of checking all the packages found in the
@@ -91,8 +97,9 @@ func newLintCmd() *cobra.Command {
 			return lint(opts, &output{cmd.OutOrStdout()})
 		},
 	}
-	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: argo-template, backstage, coredns, falco, gatekeeper, headlamp, helm, helm-plugin, inspektor-gadget, kcl, keda-scaler, keptn, knative-client-plugin, krew, kubearmor, kubewarden, kyverno, meshery, olm, opa, opencost, tbaction, tekton-pipeline, tekton-stepaction, tekton-task")
+	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: argo-template, backstage, coredns, falco, gatekeeper, headlamp, helm, helm-plugin, inspektor-gadget, kcl, keda-scaler, keptn, knative-client-plugin, krew, kubearmor, kubewarden, kyverno, meshery, olm, opa, opencost, radius, tbaction, tekton-pipeline, tekton-stepaction, tekton-task")
 	lintCmd.Flags().StringVarP(&opts.path, "path", "p", ".", "repository's packages path")
+	lintCmd.Flags().StringVarP(&opts.tektonVersioning, "tekton-versioning", "", hub.TektonDirBasedVersioning, "tekton versioning option: directory, git")
 	return lintCmd
 }
 
@@ -127,6 +134,7 @@ func lint(opts *lintOptions, out *output) error {
 		hub.Meshery,
 		hub.OPA,
 		hub.OpenCost,
+		hub.Radius,
 		hub.TBAction:
 		report = lintGeneric(opts.path, kind)
 	case hub.Helm:
@@ -134,11 +142,19 @@ func lint(opts *lintOptions, out *output) error {
 	case hub.HelmPlugin:
 		report = lintHelmPlugin(opts.path)
 	case hub.Krew:
-		report = lintKrew(opts.path)
+		var err error
+		report, err = lintKrew(opts.path)
+		if err != nil {
+			return err
+		}
 	case hub.OLM:
 		report = lintOLM(opts.path)
 	case hub.TektonTask, hub.TektonPipeline, hub.TektonStepAction:
-		report = lintTekton(opts.path, kind)
+		var err error
+		report, err = lintTekton(opts.path, kind, opts.tektonVersioning)
+		if err != nil {
+			return err
+		}
 	default:
 		return errors.New("kind not supported yet")
 	}
@@ -296,14 +312,14 @@ func lintHelmPlugin(basePath string) *lintReport {
 
 // lintKrew checks if the Krew plugins available in the path provided are ready
 // to be processed by the Krew tracker source and listed on Artifact Hub.
-func lintKrew(basePath string) *lintReport {
+func lintKrew(basePath string) (*lintReport, error) {
 	report := &lintReport{}
 
 	// Process plugins available in the path provided
 	pluginsPath := filepath.Join(basePath, "plugins")
 	pluginManifestFiles, err := os.ReadDir(pluginsPath)
 	if err != nil {
-		return report
+		return nil, err
 	}
 	for _, file := range pluginManifestFiles {
 		// Only process plugins files
@@ -332,7 +348,7 @@ func lintKrew(basePath string) *lintReport {
 		report.entries = append(report.entries, e)
 	}
 
-	return report
+	return report, nil
 }
 
 // lintOLM checks if the OLM operators available in the path provided are ready
@@ -380,9 +396,22 @@ func lintOLM(basePath string) *lintReport {
 }
 
 // lintTekton checks if the Tekton tasks, pipelines or stepactions available in
-// the path provided are ready to be processed by the Tekton tracker source and
-// listed on Artifact Hub.
-func lintTekton(basePath string, kind hub.RepositoryKind) *lintReport {
+// the catalog provided are ready to be processed by the Tekton tracker source
+// and listed on Artifact Hub.
+func lintTekton(basePath string, kind hub.RepositoryKind, versioning string) (*lintReport, error) {
+	switch versioning {
+	case hub.TektonDirBasedVersioning:
+		return lintTektonDirBasedCatalog(basePath, kind)
+	case hub.TektonGitBasedVersioning:
+		return lintTektonGitBasedCatalog(basePath, kind)
+	default:
+		return nil, errors.New("invalid Tekton versioning option provided")
+	}
+}
+
+// lintTektonDirBasedCatalog checks Tekton repositories that use the directory
+// versioning options.
+func lintTektonDirBasedCatalog(basePath string, kind hub.RepositoryKind) (*lintReport, error) {
 	report := &lintReport{}
 	repository := &hub.Repository{
 		Kind: kind,
@@ -393,7 +422,7 @@ func lintTekton(basePath string, kind hub.RepositoryKind) *lintReport {
 	// Read catalog path to get available packages
 	packages, err := os.ReadDir(basePath)
 	if err != nil {
-		return report
+		return nil, err
 	}
 	for _, p := range packages {
 		// If the path is not a directory, we skip it
@@ -450,7 +479,87 @@ func lintTekton(basePath string, kind hub.RepositoryKind) *lintReport {
 		}
 	}
 
-	return report
+	return report, nil
+}
+
+// lintTektonGitBasedCatalog checks Tekton repositories that use the git
+// versioning options.
+func lintTektonGitBasedCatalog(basePath string, kind hub.RepositoryKind) (*lintReport, error) {
+	report := &lintReport{}
+	repository := &hub.Repository{
+		Kind: kind,
+		URL:  "https://github.com/user/repo/path",
+		Data: json.RawMessage(fmt.Sprintf(`{"versioning": "%s"}`, hub.TektonGitBasedVersioning)),
+	}
+
+	// Open git repository and fetch all tags available
+	wt, tags, err := tekton.OpenGitRepository(basePath)
+	if err != nil {
+		return nil, err
+	}
+
+	// Read packages available in the catalog for each tag/version
+	_ = tags.ForEach(func(tag *plumbing.Reference) error {
+		// Skip tags that cannot be parsed as ~valid semver
+		sv, err := semver.NewVersion(tag.Name().Short())
+		if err != nil {
+			return nil
+		}
+
+		// Checkout version tag
+		if err := wt.Checkout(&git.CheckoutOptions{
+			Hash: tag.Hash(),
+		}); err != nil {
+			return nil
+		}
+
+		// Process version packages
+		packages, err := os.ReadDir(basePath)
+		if err != nil {
+			return nil
+		}
+		for _, p := range packages {
+			// If the path is not a directory, we skip it
+			if !p.IsDir() {
+				continue
+			}
+
+			// Initialize report entry. If a package is found in the current path,
+			// errors found while processing it will be added to the report.
+			pkgName := p.Name()
+			pkgPath := path.Join(basePath, pkgName)
+			e := &lintReportEntry{
+				path: pkgPath,
+			}
+
+			// Get package manifest
+			manifest, manifestRaw, err := tekton.GetManifest(repository.Kind, pkgName, pkgPath)
+			if err != nil {
+				e.result = multierror.Append(e.result, err)
+			} else {
+				// Prepare package version
+				e.pkg, err = tekton.PreparePackage(&tekton.PreparePackageInput{
+					R:           repository,
+					Tag:         tag.Name().Short(),
+					Manifest:    manifest,
+					ManifestRaw: manifestRaw,
+					BasePath:    basePath,
+					PkgName:     pkgName,
+					PkgPath:     pkgPath,
+					PkgVersion:  sv.String(),
+				})
+				if err != nil {
+					e.result = multierror.Append(e.result, err)
+				}
+			}
+
+			report.entries = append(report.entries, e)
+		}
+
+		return nil
+	})
+
+	return report, nil
 }
 
 // output represents a wrapper around an io.Writer used to print lint reports.
@@ -653,6 +762,7 @@ func (out *output) printPkgDetails(pkg *hub.Package) {
 		hub.Meshery,
 		hub.OPA,
 		hub.OpenCost,
+		hub.Radius,
 		hub.TBAction:
 
 		// Install

@@ -24,7 +24,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const getMockStats = (fixtureId: string): Stats => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/index/${fixtureId}.json`) as Stats;
 };
 
@@ -127,7 +127,7 @@ describe('Home index', () => {
       await waitFor(() => expect(API.getStats).toHaveBeenCalledTimes(1));
 
       const links = await screen.findAllByRole('button');
-      expect(links).toHaveLength(29);
+      expect(links).toHaveLength(30);
 
       expect(links[2]).toHaveProperty('href', 'https://github.com/artifacthub/hub');
       expect(links[3]).toHaveProperty('href', 'https://cloud-native.slack.com/channels/artifact-hub');
@@ -157,10 +157,11 @@ describe('Home index', () => {
       expect(links[23]).toHaveProperty('href', 'https://github.com/operator-framework');
       expect(links[24]).toHaveProperty('href', 'https://www.openpolicyagent.org/');
       expect(links[25]).toHaveProperty('href', 'https://www.opencost.io/');
-      expect(links[26]).toHaveProperty('href', 'https://tekton.dev/');
-      expect(links[27]).toHaveProperty('href', 'https://tinkerbell.org/');
+      expect(links[26]).toHaveProperty('href', 'https://radapp.io/');
+      expect(links[27]).toHaveProperty('href', 'https://tekton.dev/');
+      expect(links[28]).toHaveProperty('href', 'https://tinkerbell.org/');
 
-      expect(links[28]).toHaveProperty('href', 'https://www.cncf.io/projects/');
+      expect(links[29]).toHaveProperty('href', 'https://www.cncf.io/projects/');
     });
   });
 });

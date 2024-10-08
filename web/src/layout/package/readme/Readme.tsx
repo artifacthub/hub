@@ -237,7 +237,7 @@ const AVAILABLE_LANGUAGES = [
   'zephir',
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const EmojiConvertor = require('emoji-js');
 const emoji = new EmojiConvertor();
 

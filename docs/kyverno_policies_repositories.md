@@ -21,14 +21,17 @@ path/to/packages
 ├── package1
 │   ├── 1.0.0
 │   │   ├── README.md
-│   │   └── artifacthub-pkg.yml
+│   │   ├── artifacthub-pkg.yml
+│   │   └── package1.yaml  # (policy file)
 │   └── 2.0.0
 │       ├── README.md
-│       └── artifacthub-pkg.yml
+│       ├── artifacthub-pkg.yml
+│       └── package1.yaml  # (policy file)
 └── package2
     └── 1.0.0
         ├── README.md
-        └── artifacthub-pkg.yml
+        ├── artifacthub-pkg.yml
+        └── package2.yaml  # (policy file)
 ```
 
 This structure is flexible, and in some cases it can be greatly simplified. Nested directories are also supported. In the case of a single package with a single version available at a time (the publisher doesn't want to make previous ones available, for example), the structure could look like this:
@@ -39,7 +42,8 @@ path/to/packages
 ├── artifacthub-repo.yml
 └── package1
     ├── README.md
-    └── artifacthub-pkg.yml
+    ├── artifacthub-pkg.yml
+    └── package1.yaml  # (policy file)
 ```
 
 In the previous case, even the `package1` directory could be omitted. The reason is that both packages names and versions are read from the `artifacthub-pkg.yml` metadata file, so directories names are not used at all.

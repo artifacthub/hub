@@ -19,6 +19,7 @@ module.exports = [
       'simple-import-sort': simpleImportSort,
     },
     rules: {
+      '@typescript-eslint/no-require-imports': 'error',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
     },

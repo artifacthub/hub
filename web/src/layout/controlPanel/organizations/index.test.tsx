@@ -10,6 +10,7 @@ import OrganizationsSection from './index';
 jest.mock('../../../api');
 
 const getMockOrganizations = (fixtureId: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/index/${fixtureId}.json`);
 };
 

@@ -9,6 +9,7 @@ import UserContext from './UserContext';
 jest.mock('../../api');
 
 const getMockOrgs = (fixtureId: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/UserContext/${fixtureId}.json`);
 };
 

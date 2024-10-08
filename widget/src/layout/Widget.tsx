@@ -101,6 +101,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'meshery';
     case RepositoryKind.OpenCost:
       return 'opencost';
+    case RepositoryKind.RadiusRecipe:
+      return 'radius';
     default:
       return null;
   }

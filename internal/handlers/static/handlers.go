@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -116,6 +117,7 @@ func (h *Handlers) Image(w http.ResponseWriter, r *http.Request) {
 
 	// Set headers and write image data to response writer
 	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(StaticCacheMaxAge))
+	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
 	if svg.Is(data) {
 		w.Header().Set("Content-Type", "image/svg+xml")
 	} else {

@@ -286,6 +286,15 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     active: true,
   },
   {
+    kind: RepositoryKind.RadiusRecipe,
+    label: 'radius',
+    name: 'Radius recipes',
+    singular: 'Radius recipe',
+    plural: 'Radius recipes',
+    icon: <RepositoryIcon kind={RepositoryKind.RadiusRecipe} className="mw-100 mh-100" />,
+    active: true,
+  },
+  {
     kind: RepositoryKind.TektonPipeline,
     label: 'tekton-pipeline',
     name: 'Tekton pipelines',
@@ -822,7 +831,7 @@ export const CVSS_V3_VECTORS: { [key: string]: CVSSVectorMetric[] } = {
 export const OCI_PREFIX = 'oci://';
 
 export const PKG_DETAIL_PATH =
-  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|kcl|headlamp|inspektor-gadget|tekton-stepaction|meshery|opencost|container)\//;
+  /^\/packages\/(helm|falco|opa|olm|tbaction|krew|helm-plugin|tekton-task|keda-scaler|coredns|keptn|tekton-pipeline|kubewarden|gatekeeper|kyverno|knative-client-plugin|backstage|argo-template|kubearmor|kcl|headlamp|inspektor-gadget|tekton-stepaction|meshery|opencost|radius|container)\//;
 
 export const HOME_ROUTES = [
   '/verify-email',

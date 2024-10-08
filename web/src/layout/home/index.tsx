@@ -233,7 +233,7 @@ const HomeView = () => {
                 kubectl plugins, Tekton tasks, pipelines and stepactions, KEDA scalers, CoreDNS plugins, Keptn
                 integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage
                 plugins, Argo templates, KubeArmor policies, KCL modules, Headlamp plugins, Inspektor gadgets, Meshery
-                designs and OpenCost plugins.
+                designs, OpenCost plugins and Radius recipes.
                 <div className="py-0 py-lg-5">
                   <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
@@ -458,8 +458,6 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
-                  </div>
-                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
                       href="https://www.opencost.io"
                       className={`col ${styles.iconLink}`}
@@ -469,6 +467,16 @@ const HomeView = () => {
                         <RepositoryIcon kind={RepositoryKind.OpenCost} type="white" className={styles.aboutIcon} />
                         <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
                           <small>OpenCost plugins</small>
+                        </div>
+                      </div>
+                    </ExternalLink>
+                  </div>
+                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
+                    <ExternalLink href="https://radapp.io" className={`col ${styles.iconLink}`} label="Radius site">
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.RadiusRecipe} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Radius recipes</small>
                         </div>
                       </div>
                     </ExternalLink>

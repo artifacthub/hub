@@ -15,6 +15,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const getMockStarredPackages = (fixtureId: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/index/${fixtureId}.json`);
 };
 

@@ -537,6 +537,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.RadiusRecipe:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/radius-recipes"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Radius recipes
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -570,6 +581,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.TektonStepAction:
               case RepositoryKind.MesheryDesign:
               case RepositoryKind.OpenCost:
+              case RepositoryKind.RadiusRecipe:
                 return (
                   <>
                     <p
@@ -967,6 +979,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.TektonStepAction,
               RepositoryKind.MesheryDesign,
               RepositoryKind.OpenCost,
+              RepositoryKind.RadiusRecipe,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -1120,6 +1133,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.TektonStepAction,
               RepositoryKind.MesheryDesign,
               RepositoryKind.OpenCost,
+              RepositoryKind.RadiusRecipe,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">
