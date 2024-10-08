@@ -65,8 +65,8 @@
   background-color: #df2a29;
 }
 
-.badgeIcon {
-  top: -1px;
+.badgeContent {
+  margin-top: 1px;
 }
 
 .lastVersion {
