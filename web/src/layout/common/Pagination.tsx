@@ -84,7 +84,7 @@ const Pagination = (props: Props) => {
             content={
               <>
                 <span className="d-none d-sm-block">Previous</span>
-                <span className={`d-block d-sm-none ${styles.btnIcon}`}>
+                <span className="d-block d-sm-none">
                   <FaCaretLeft />
                 </span>
               </>
@@ -120,7 +120,7 @@ const Pagination = (props: Props) => {
             content={
               <>
                 <span className="d-none d-sm-block">Next</span>
-                <span className={`d-block d-sm-none ${styles.btnIcon}`}>
+                <span className="d-block d-sm-none">
                   <FaCaretRight />
                 </span>
               </>
