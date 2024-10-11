@@ -22,7 +22,8 @@ returns setof json as $$
         from snapshot s
         join package p using (package_id)
         join repository r using (repository_id)
-        where containers_images is not null
+        where s.containers_images is not null
+        and jsonb_array_length(s.containers_images) <= 15
         and r.scanner_disabled = false
         and s.ts > (current_timestamp - '1 year'::interval)
         and (
