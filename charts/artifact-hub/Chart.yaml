@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.
 type: application
-version: 1.19.1-3
-appVersion: 1.19.0
+version: 1.20.0
+appVersion: 1.20.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -48,47 +48,51 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Support for OpenCost plugins
+      description: Support for Radius recipes
     - kind: added
-      description: GitHub flavored alerts in README files
+      description: Display signed badge for Inspektor Gadget artifacts
     - kind: added
-      description: ah lint now supports git versioning in Tekton packages
+      description: Populate chart labels for all resources
+    - kind: added
+      description: Allow adding extra containers to the hub pod from the chart
     - kind: changed
-      description: Improve container image tracker source
+      description: Update db migration script to support pg_partman 5
     - kind: changed
-      description: Sort ah lint output leaving errors at the end
+      description: Banner frame style
     - kind: changed
-      description: Update homepage for Incubation promotion
+      description: Bump Alpine to 3.20.3
     - kind: changed
-      description: Improve invalid org name error message
+      description: Bump Go to 1.23.1
     - kind: changed
-      description: Disable chunked transfer encoding
+      description: Bump Trivy to 0.56.1
     - kind: changed
-      description: Bump Go to 1.22.4
-    - kind: changed
-      description: Bump Alpine to 3.20.1
+      description: Bump OPM to 1.47.0
     - kind: changed
       description: Upgrade backend and frontend dependencies
     - kind: fixed
-      description: Issue handling invalid CSRF token in webapp
+      description: Do not render outdated security reports summary
     - kind: fixed
-      description: Detect versions with build md in Helm OCI repos
+      description: Pagination style on mobile devices
     - kind: fixed
-      description: Issue reading Kyverno policy files
+      description: Issue with long texts on templates tooltips
     - kind: fixed
-      description: Some input patterns in modals
+      description: Hide versions with no changes in changelog
     - kind: fixed
-      description: Issue rendering some values schema definitions
+      description: Invalid Dockerfile reference in dev.md
+    - kind: fixed
+      description: Typo in repositories modal
+    - kind: security
+      description: Remove user sessions when password is updated
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.19.0
+      image: artifacthub/db-migrator:v1.20.0
     - name: hub
-      image: artifacthub/hub:v1.19.0
+      image: artifacthub/hub:v1.20.0
     - name: tracker
-      image: artifacthub/tracker:v1.19.0
+      image: artifacthub/tracker:v1.20.0
     - name: scanner
-      image: artifacthub/scanner:v1.19.0
+      image: artifacthub/scanner:v1.20.0
     - name: trivy
       image: aquasec/trivy:0.56.1
   artifacthub.io/links: |
