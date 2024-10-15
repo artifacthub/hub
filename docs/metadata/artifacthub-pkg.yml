@@ -22,22 +22,22 @@ containsSecurityUpdates: Whether this package version contains security updates 
 operator: Whether this package is an Operator (optional, boolean)
 deprecated: Whether this package is deprecated (optional, boolean)
 prerelease: Whether this package version is a pre-release (optional, boolean)
-keywords: # (optional)
+keywords: # (optional)
   - A list of keywords about this package
   - Using one or more categories names as keywords will improve package visibility
 links: # (optional)
   - name: Title of the link (required for each link)
     url: URL of the link (required for each link)
-readme: | # (optional, can be provided from a README.md file as well)
+readme: | # (optional, can be provided from a README.md file as well)
   Package documentation in markdown format
 
   Content added here will be rendered on Artifact Hub
-install: | # (optional)
+install: | # (optional)
   Brief install instructions in markdown format
 
   Content added here will be displayed when the INSTALL button on the package details page is clicked.
 changes: # (optional - it is also possible to provide a list of strings with just the descriptions instead of using objects)
-  - kind: added # Supported kinds are: added, changed, deprecated, removed, fixed and security
+  - kind: added # Supported kinds are: added, changed, deprecated, removed, fixed and security
     description: cool feature
     links:
       - name: GitHub Issue
@@ -52,10 +52,10 @@ changes: # (optional - it is also possible to provide a list of strings with jus
 maintainers: # (optional)
   - name: The maintainer name (required for each maintainer)
     email: The maintainer email (required for each maintainer)
-provider: # (optional)
+provider: # (optional)
   name: The name of the individual, company, or service that provides this package
-ignore: # (optional, used to ignore some falco rules or opa policies files in a package)
-  - lib # Entries use .gitignore syntax)
+ignore: # (optional, used to ignore some falco rules or opa policies files in a package)
+  - lib # Entries use .gitignore syntax)
 recommendations: # (optional, list of recommended packages)
   - url: https://artifacthub.io/packages/helm/artifact-hub/artifact-hub
 screenshots: # (optional, list of screenshots)
