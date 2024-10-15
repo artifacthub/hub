@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { SecurityReport, VulnerabilitySeverity } from '../types';
 import checkIfOldVulnerabilities from './checkIfOldVulnerabilities';
 
@@ -55,7 +57,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2022-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(6, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -104,7 +106,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2022-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(6, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -153,7 +155,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2022-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(6, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -211,7 +213,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2022-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(26, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -260,7 +262,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2020-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(26, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -309,7 +311,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2022-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(26, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -367,7 +369,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2022-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(26, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -416,7 +418,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2020-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(26, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -465,7 +467,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2022-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(6, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -523,7 +525,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2020-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(26, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -572,7 +574,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2020-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(26, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -621,7 +623,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2022-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(6, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -679,7 +681,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2022-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(26, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -728,7 +730,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2022-10-14T15:15:00Z',
+                  PublishedDate: moment().subtract(6, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
@@ -777,7 +779,7 @@ const tests: Test[] = [
                   Description:
                     'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
                   FixedVersion: '0.3.8',
-                  PublishedDate: '2022-08-14T15:15:00Z',
+                  PublishedDate: moment().subtract(26, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
                   SeveritySource: 'nvd',
                   VulnerabilityID: 'CVE-2022-32149',
                   InstalledVersion: 'v0.3.7',
