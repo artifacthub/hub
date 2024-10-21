@@ -8,7 +8,7 @@ WORKDIR /go/src/github.com/artifacthub/hub/cmd/hub
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /hub .
 
 # Build frontend
-FROM node:18-alpine3.20 AS frontend-builder
+FROM node:23-alpine3.20 AS frontend-builder
 RUN apk --no-cache add jq
 WORKDIR /web
 COPY web .
@@ -17,7 +17,7 @@ RUN yarn install
 RUN yarn build
 
 # Build widget
-FROM node:18-alpine3.20 AS widget-builder
+FROM node:23-alpine3.20 AS widget-builder
 WORKDIR /widget
 COPY widget .
 ENV NODE_OPTIONS=--max_old_space_size=4096
