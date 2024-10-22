@@ -32,7 +32,8 @@ const (
 	img-src 'self' data: https:;
 	manifest-src 'self';
 	script-src 'self' https://www.google-analytics.com;
-	style-src 'self' 'unsafe-inline'
+	style-src 'self' 'unsafe-inline';
+	frame-ancestors 'none';
 	`
 
 	indexCacheMaxAge = 5 * time.Minute
