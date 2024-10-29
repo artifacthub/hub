@@ -1,3 +1,10 @@
+import ApexCharts from 'apexcharts';
+
+declare global {
+  interface Window {
+    ApexCharts: typeof ApexCharts;
+  }
+}
 import moment from 'moment';
 import { useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
@@ -5,6 +12,8 @@ import ReactApexChart from 'react-apexcharts';
 import useBreakpointDetect from '../../hooks/useBreakpointDetect';
 import getMetaTag from '../../utils/getMetaTag';
 import prettifyNumber from '../../utils/prettifyNumber';
+
+window.ApexCharts = ApexCharts;
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
