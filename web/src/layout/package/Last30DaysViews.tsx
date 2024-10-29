@@ -1,3 +1,4 @@
+import { ApexOptions } from 'apexcharts';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
@@ -53,7 +54,7 @@ const Last30DaysViews = (props: Props) => {
     }
   };
 
-  const getSparkLineConfig = (): ApexCharts.ApexOptions => {
+  const getSparkLineConfig = (): ApexOptions => {
     return {
       chart: {
         type: 'area',

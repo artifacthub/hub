@@ -1,3 +1,4 @@
+import { ApexOptions } from 'apexcharts';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
@@ -82,7 +83,7 @@ const PackagesViewsStats = (props: Props) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [series, setSeries] = useState<any[]>([]);
 
-  const getStackedChartConfig = (): ApexCharts.ApexOptions => {
+  const getStackedChartConfig = (): ApexOptions => {
     return {
       chart: {
         id: 'pkg-views',

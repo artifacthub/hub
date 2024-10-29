@@ -1,3 +1,4 @@
+import { ApexOptions } from 'apexcharts';
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
@@ -66,7 +67,7 @@ const StatsView = () => {
     }
   }, [effective, activeTheme]);
 
-  const getAreaChartConfig = (title: string, withAnnotations?: boolean): ApexCharts.ApexOptions => {
+  const getAreaChartConfig = (title: string, withAnnotations?: boolean): ApexOptions => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const annotations: any[] =
       withAnnotations && !whiteLabel
@@ -208,7 +209,7 @@ const StatsView = () => {
     monthlyFormatter: boolean,
     dataLength: number,
     lastBarDate?: number
-  ): ApexCharts.ApexOptions => {
+  ): ApexOptions => {
     const getBarColors = (): string[] => {
       if (dataLength > 0) {
         const isCurrent = !isUndefined(lastBarDate)
