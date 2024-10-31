@@ -3921,21 +3921,20 @@ components:
               data.roles[role].users[_] == input.user
             }
         policy_data:
-          type: object
+          type: string
           nullable: false
-          additionalProperties: true
-          example:
-            roles:
-              owner:
-                users:
-                  - user1
-              customRole1:
-                users:
-                  - member1
-                  - member2
-                allowed_actions:
-                  - addOrganizationMember
-                  - addOrganizationRepository
+          example: |
+            {
+              "roles": {
+                "owner": {
+                  "users": ["user1"]
+                },
+                "customRole1": {
+                  "users": ["member1", "member2"],
+                  "allowed_actions": ["addOrganizationMember", "addOrganizationRepository"]
+                }
+              }
+            }
     ChangelogItemKind:
       type: string
       enum:
