@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/url"
 	"time"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -31,8 +32,8 @@ var (
 func SetupDB(cfg *viper.Viper) (*pgxpool.Pool, error) {
 	// Setup pool config
 	url := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
-		cfg.GetString("db.user"),
-		cfg.GetString("db.password"),
+		url.QueryEscape(cfg.GetString("db.user")),
+		url.QueryEscape(cfg.GetString("db.password")),
 		cfg.GetString("db.host"),
 		cfg.GetString("db.port"),
 		cfg.GetString("db.database"),
