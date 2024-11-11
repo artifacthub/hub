@@ -67,7 +67,7 @@ describe('SignKeyInfo', () => {
       expect(screen.getByText('Fingerprint')).toBeInTheDocument();
       expect(await screen.findByText('0011223344')).toBeInTheDocument();
       expect(screen.getByText('URL')).toBeInTheDocument();
-      expect(screen.getByText('https://key.url')).toBeInTheDocument();
+      expect(await screen.findByText('https://key.url')).toBeInTheDocument();
       expect(screen.getByText('Close')).toBeInTheDocument();
       expect(screen.getAllByRole('button', { name: 'Copy command to clipboard' })).toHaveLength(2);
     });
