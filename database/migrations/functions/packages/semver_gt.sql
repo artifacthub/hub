@@ -5,8 +5,8 @@ declare
     semver_regexp text := '(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?';
     v1_parts text[] = regexp_match(p_v1, semver_regexp);
     v2_parts text[] = regexp_match(p_v2, semver_regexp);
-    v1 int[] := v1_parts[1:3]::int[];
-    v2 int[] := v2_parts[1:3]::int[];
+    v1 bigint[] := v1_parts[1:3]::bigint[];
+    v2 bigint[] := v2_parts[1:3]::bigint[];
     v1_prerelease text := v1_parts[4];
     v2_prerelease text := v2_parts[4];
 begin
