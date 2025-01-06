@@ -92,7 +92,10 @@ dbMigrator:
     extraPodLabels: {}
     # Limits the lifetime of the job after it has finished execution
     ttlSecondsAfterFinished: null
+    automountServiceAccountToken: true
+    serviceAccountName: default
     securityContext: {}
+    containerSecurityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
@@ -141,6 +144,7 @@ hub:
       # Hub image repository (without the tag)
       repository: artifacthub/hub
     securityContext: {}
+    containerSecurityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.
@@ -164,6 +168,7 @@ hub:
         #   requests:
         #     cpu: 100m
         #     memory: 128Mi
+        securityContext: {}
       checkDbIsReady:
         resources: {}
         # If you do want to specify resources, uncomment the following
@@ -174,6 +179,7 @@ hub:
         #   requests:
         #     cpu: 100m
         #     memory: 128Mi
+        securityContext: {}
     # Optionally specify extra list of additional labels for the hub deployment
     extraDeploymentLabels: {}
     # Optionally specify extra list of additional labels for hub pods
@@ -313,6 +319,8 @@ scanner:
       # Scanner image repository (without the tag)
       repository: artifacthub/scanner
     securityContext: {}
+    containerSecurityContext: {}
+    serviceAccountName: default
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.

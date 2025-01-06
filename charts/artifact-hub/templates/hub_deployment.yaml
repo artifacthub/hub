@@ -56,12 +56,20 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- with .Values.hub.deploy.initContainers.checkDbMigrator.securityContext }}
+          securityContext:
+            {{-  toYaml . | nindent 12 }}
+          {{- end }}
           command: ['kubectl', 'wait', '--namespace={{ .Release.Namespace }}', '--for=condition=complete', 'job/{{ include "chart.resourceNamePrefix" . }}db-migrator-install', '--timeout=60s']
         {{- end }}
       containers:
         - name: hub
           image: {{ .Values.hub.deploy.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
           imagePullPolicy: {{ .Values.pullPolicy }}
+          {{- with .Values.hub.deploy.containerSecurityContext }}
+          securityContext:
+            {{-  toYaml . | nindent 12 }}
+          {{- end }}
           {{- if .Values.hub.server.cacheDir }}
           env:
             - name: XDG_CACHE_HOME
