@@ -357,6 +357,8 @@ tracker:
       # Tracker image repository (without the tag)
       repository: artifacthub/tracker
     securityContext: {}
+    containerSecurityContext: {}
+    serviceAccountName: default
     resources: {}
     # If you do want to specify resources, uncomment the following
     # lines and adjust them as necessary.

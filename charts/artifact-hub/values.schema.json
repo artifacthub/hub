@@ -1200,6 +1200,17 @@
                             "type": "object",
                             "default": {},
                             "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.SecurityContext"
+                        },
+                        "containerSecurityContext": {
+                            "title": "Scanner container security context",
+                            "type": "object",
+                            "default": {},
+                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.SecurityContext"
+                        },
+                        "serviceAccountName": {
+                            "title": "Service account name",
+                            "type": "string",
+                            "default": "default"
                         }
                     },
                     "required": [
