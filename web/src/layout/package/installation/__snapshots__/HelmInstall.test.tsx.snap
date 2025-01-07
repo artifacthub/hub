@@ -157,7 +157,7 @@ exports[`HelmInstall creates snapshot 1`] = `
      command if you need to.
   </div>
   <div
-    class="mt-2 d-flex flex-row justify-content-between align-items-baseline"
+    class="mt-2"
   >
     <a
       aria-label="Download Helm"

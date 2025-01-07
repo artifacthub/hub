@@ -48,11 +48,18 @@ describe('HelmInstall', () => {
     it('renders component with content url', () => {
       render(<HelmInstall {...defaultProps} contentUrl="http://content.url" />);
 
-      expect(screen.getByText(/You can also download this package's content directly using/)).toBeInTheDocument();
-      const contentUrl = screen.getAllByRole('button')[3];
+      expect(screen.getByText(/You can also download this package's content using/)).toBeInTheDocument();
+      const contentUrl = screen.getAllByRole('button')[2];
       expect(contentUrl).toBeInTheDocument();
       expect(contentUrl).toHaveTextContent('this link');
       expect(contentUrl).toHaveProperty('href', 'http://content.url/');
+    });
+
+    it('renders component with oci url', async () => {
+      render(<HelmInstall {...defaultProps} contentUrl="oci://content.url:0.0.1" />);
+
+      expect(screen.getByText(/You can also download this package's content using/)).toBeInTheDocument();
+      expect(await screen.findByText('helm pull oci://content.url --version 0.0.1')).toBeInTheDocument();
     });
 
     it('renders private repo', () => {
