@@ -35,12 +35,14 @@ insert into package (
     name,
     latest_version,
     official,
+    stars,
     repository_id
 ) values (
     :'package1ID',
     'package1',
     '1.0.0',
     true,
+    15,
     :'repo1ID'
 );
 insert into package__maintainer (package_id, maintainer_id)
@@ -68,11 +70,13 @@ insert into package (
     package_id,
     name,
     latest_version,
+    stars,
     repository_id
 ) values (
     :'package2ID',
     'package2',
     '1.0.0',
+    10,
     :'repo2ID'
 );
 insert into snapshot (
@@ -90,11 +94,13 @@ insert into package (
     package_id,
     name,
     latest_version,
+    stars,
     repository_id
 ) values (
     :'package3ID',
     'package3',
     '1.0.0',
+    5,
     :'repo3ID'
 );
 insert into snapshot (
@@ -131,6 +137,7 @@ select is(
                 }
             ],
             "official": true,
+            "stars": 15,
             "repository": {
                 "name": "repo1",
                 "url": "https://repo1.com",
@@ -147,6 +154,7 @@ select is(
         {
             "name": "package2",
             "latest_version": "1.0.0",
+            "stars": 10,
             "repository": {
                 "name": "repo2",
                 "url": "https://repo2.com"
