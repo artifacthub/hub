@@ -16,6 +16,7 @@ returns setof json as $$
             where pm.package_id = p.package_id
         ),
         'official', p.official,
+        'stars', p.stars,
         'repository', json_build_object(
             'name', r.name,
             'url', r.url,
