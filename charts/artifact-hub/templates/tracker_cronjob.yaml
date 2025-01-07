@@ -26,6 +26,7 @@ spec:
             {{- toYaml . | nindent 12 }}
         {{- end }}
         spec:
+          serviceAccountName: {{ .Values.tracker.cronjob.serviceAccountName }}
           {{- with .Values.imagePullSecrets }}
           imagePullSecrets:
             {{- toYaml . | nindent 12 }}
@@ -45,6 +46,10 @@ spec:
             - name: tracker
               image: {{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
               imagePullPolicy: {{ .Values.pullPolicy }}
+              {{- with .Values.tracker.cronjob.containerSecurityContext }}
+              securityContext:
+                {{-  toYaml . | nindent 16 }}
+              {{- end }}
               {{- with .Values.tracker.cronjob.resources }}
               resources:
                 {{- toYaml . | nindent 16 }}

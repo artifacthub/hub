@@ -17,6 +17,7 @@ metadata:
 {{- end }}
 spec:
   ttlSecondsAfterFinished: {{ .Values.dbMigrator.job.ttlSecondsAfterFinished }}
+  automountServiceAccountToken: {{ .Values.dbMigrator.job.automountServiceAccountToken }}
   template:
     metadata:
       labels:
@@ -25,6 +26,7 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
     spec:
+      serviceAccountName: {{ .Values.dbMigrator.job.serviceAccountName }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -44,6 +46,10 @@ spec:
         - name: db-migrator
           image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag | default (printf "v%s" .Chart.AppVersion) }}
           imagePullPolicy: {{ .Values.pullPolicy }}
+          {{- with .Values.dbMigrator.job.containerSecurityContext }}
+          securityContext:
+            {{-  toYaml . | nindent 12 }}
+          {{- end }}
           {{- with .Values.dbMigrator.job.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
