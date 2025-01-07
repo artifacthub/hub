@@ -1,4 +1,5 @@
 import { Repository } from '../../../types';
+import { OCI_PREFIX } from '../../../utils/data';
 import ExternalLink from '../../common/ExternalLink';
 import CommandBlock from './CommandBlock';
 import styles from './ContentInstall.module.css';
@@ -14,6 +15,11 @@ interface Props {
 
 const HelmInstall = (props: Props) => {
   const getInstallationVersionInfo = (installCmd: string) => {
+    const compoundOCICommand = (contentUrl: string): string => {
+      const index = contentUrl.lastIndexOf(':');
+      return `helm pull ${contentUrl.substring(0, index)} --version ${contentUrl.substring(index + 1)}`;
+    };
+
     return (
       <>
         <CommandBlock
@@ -31,19 +37,18 @@ const HelmInstall = (props: Props) => {
           command if you need to.
         </div>
 
-        <div className="mt-2 d-flex flex-row justify-content-between align-items-baseline">
-          <ExternalLink
-            href="https://helm.sh/docs/intro/quickstart/"
-            className="btn btn-link ps-0"
-            label="Download Helm"
-          >
-            Need Helm?
-          </ExternalLink>
-
-          {props.contentUrl && (
-            <div className="d-none d-lg-block">
-              <small className="text-muted ps-2">
-                You can also download this package's content directly using{' '}
+        {props.contentUrl && (
+          <div className="d-none d-lg-block mt-2">
+            {props.contentUrl.startsWith(OCI_PREFIX) ? (
+              <div className="mt-4">
+                <CommandBlock
+                  command={compoundOCICommand(props.contentUrl)}
+                  title="You can also download this package's content using this command"
+                />
+              </div>
+            ) : (
+              <small className="text-muted">
+                You can also download this package's content using{' '}
                 <ExternalLink
                   href={props.contentUrl}
                   className="text-secondary fw-bold"
@@ -54,8 +59,18 @@ const HelmInstall = (props: Props) => {
                 </ExternalLink>
                 .
               </small>
-            </div>
-          )}
+            )}
+          </div>
+        )}
+
+        <div className="mt-2">
+          <ExternalLink
+            href="https://helm.sh/docs/intro/quickstart/"
+            className="btn btn-link ps-0"
+            label="Download Helm"
+          >
+            Need Helm?
+          </ExternalLink>
         </div>
       </>
     );

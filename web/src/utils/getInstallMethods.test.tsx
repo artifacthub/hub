@@ -94,6 +94,84 @@ const tests: Tests[] = [
     },
   },
   {
+    title: 'Helm package with oci content url',
+    input: {
+      pkg: {
+        packageId: 'id',
+        name: 'test',
+        normalizedName: 'test',
+        displayName: 'test',
+        description: 'desc',
+        logoImageId: 'img',
+        deprecated: false,
+        signed: false,
+        ts: 1574121600,
+        isOperator: false,
+        version: '0.11.0',
+        availableVersions: [
+          { version: '0.6.0', ts: 1600841229, containsSecurityUpdates: false, prerelease: false },
+          { version: '0.5.0', ts: 1599125273, containsSecurityUpdates: false, prerelease: false },
+        ],
+        appVersion: '0.11.0',
+        contentUrl: 'oci://registry-1.docker.io/test/test:0.11.0',
+        repository: {
+          repositoryId: 'd2b93c16-4f70-43e7-b50c-0dccb4c82756',
+          name: 'repo-test',
+          url: 'https://test/charts/',
+          private: false,
+          kind: 0,
+          verifiedPublisher: false,
+          official: false,
+          userAlias: 'user',
+        },
+      },
+    },
+    output: {
+      methods: [
+        {
+          label: 'v3',
+          title: 'Helm v3',
+          kind: 1,
+          props: {
+            name: 'test',
+            version: '0.11.0',
+            repository: {
+              repositoryId: 'd2b93c16-4f70-43e7-b50c-0dccb4c82756',
+              name: 'repo-test',
+              url: 'https://test/charts/',
+              private: false,
+              kind: 0,
+              verifiedPublisher: false,
+              official: false,
+              userAlias: 'user',
+            },
+            contentUrl: 'oci://registry-1.docker.io/test/test:0.11.0',
+          },
+        },
+        {
+          label: 'v2',
+          title: 'Helm v2',
+          kind: 1,
+          props: {
+            name: 'test',
+            version: '0.11.0',
+            repository: {
+              repositoryId: 'd2b93c16-4f70-43e7-b50c-0dccb4c82756',
+              name: 'repo-test',
+              url: 'https://test/charts/',
+              private: false,
+              kind: 0,
+              verifiedPublisher: false,
+              official: false,
+              userAlias: 'user',
+            },
+            contentUrl: 'oci://registry-1.docker.io/test/test:0.11.0',
+          },
+        },
+      ],
+    },
+  },
+  {
     title: 'Helm OCI package',
     input: {
       pkg: {
