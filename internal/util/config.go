@@ -26,5 +26,14 @@ func SetupConfig(cmd string) (*viper.Viper, error) {
 	cfg.SetEnvKeyReplacer(strings.NewReplacer("-", "_", ".", "_"))
 	cfg.AutomaticEnv()
 
+	// Set some defaults
+	cfg.SetDefault("db.database", "hub")
+	cfg.SetDefault("db.host", "localhost")
+	cfg.SetDefault("db.port", "5432")
+	cfg.SetDefault("db.user", "postgres")
+	cfg.SetDefault("images.store", "pg")
+	cfg.SetDefault("log.level", "debug")
+	cfg.SetDefault("log.pretty", true)
+
 	return cfg, nil
 }
