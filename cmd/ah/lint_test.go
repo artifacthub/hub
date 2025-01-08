@@ -130,7 +130,6 @@ func TestLintCmd(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(fmt.Sprintf("%s: %s", tc.kind, tc.desc), func(t *testing.T) {
 			t.Parallel()
 

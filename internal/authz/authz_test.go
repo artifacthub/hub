@@ -232,7 +232,6 @@ func TestAuthorize(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			err := az.Authorize(context.Background(), tc.input)
@@ -322,7 +321,6 @@ func TestGetAllowedActions(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			allowedActions, _ := az.GetAllowedActions(context.Background(), tc.userID, tc.orgName)
@@ -460,7 +458,6 @@ func TestWillUserBeLockedOut(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			policyDataJSON, _ := json.Marshal(tc.policyData)
@@ -496,7 +493,6 @@ func TestIsPredefinedPolicyValid(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			valid := IsPredefinedPolicyValid(tc.predefinedPolicy)
@@ -538,7 +534,6 @@ func TestIsActionAllowed(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			allowed := IsActionAllowed(tc.allowedActions, tc.action)
@@ -585,7 +580,6 @@ func TestAreActionsAllowed(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			allowed := AreActionsAllowed(tc.allowedActions, tc.actions)

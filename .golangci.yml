@@ -3,9 +3,9 @@ linters:
   enable:
     - asciicheck
     - bodyclose
+    - copyloopvar
     - errcheck
     - errorlint
-    - exportloopref
     - goconst
     - gocritic
     - goimports

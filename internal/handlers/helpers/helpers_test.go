@@ -36,7 +36,6 @@ func TestBuildCacheControlHeader(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			cacheControlHeader := BuildCacheControlHeader(tc.cacheMaxAge)
@@ -114,7 +113,6 @@ func TestGetPagination(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			p, err := GetPagination(tc.qs, tc.defaultLimit, tc.maxLimit)
@@ -149,7 +147,6 @@ func TestRenderJSON(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			w := httptest.NewRecorder()
@@ -204,7 +201,6 @@ func TestRenderErrorJSON(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			w := httptest.NewRecorder()
@@ -246,7 +242,6 @@ func TestRenderErrorWithCodeJSON(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			w := httptest.NewRecorder()

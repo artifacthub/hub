@@ -1110,7 +1110,6 @@ fingerprint: 0011223344
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			err := EnrichPackageFromAnnotations(tc.pkg, tc.annotations)

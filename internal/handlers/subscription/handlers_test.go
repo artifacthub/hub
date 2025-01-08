@@ -49,7 +49,6 @@ func TestAdd(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -97,7 +96,6 @@ func TestAdd(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -141,7 +139,6 @@ func TestAddOptOut(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -189,7 +186,6 @@ func TestAddOptOut(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -243,7 +239,6 @@ func TestDelete(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.desc, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -288,7 +283,6 @@ func TestDelete(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -334,7 +328,6 @@ func TestDeleteOptOut(t *testing.T) {
 		},
 	}
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.description, func(t *testing.T) {
 			t.Parallel()
 			w := httptest.NewRecorder()
@@ -377,7 +370,6 @@ func TestGetByPackage(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.smErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()

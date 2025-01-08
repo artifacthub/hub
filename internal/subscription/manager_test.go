@@ -49,7 +49,6 @@ func TestAdd(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil)
@@ -123,7 +122,6 @@ func TestAddOptOut(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil)
@@ -196,7 +194,6 @@ func TestDelete(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil)
@@ -260,7 +257,6 @@ func TestDeleteOptOut(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil)

@@ -57,7 +57,6 @@ func TestAdd(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -106,7 +105,6 @@ func TestAdd(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -149,7 +147,6 @@ func TestAddMember(t *testing.T) {
 		},
 	}
 	for _, tc := range testCases {
-		tc := tc
 		var desc string
 		if tc.omErr != nil {
 			desc = tc.omErr.Error()
@@ -217,7 +214,6 @@ func TestCheckAvailability(t *testing.T) {
 				},
 			}
 			for _, tc := range testCases {
-				tc := tc
 				t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
 					t.Parallel()
 					w := httptest.NewRecorder()
@@ -292,7 +288,6 @@ func TestConfirmMembership(t *testing.T) {
 		},
 	}
 	for _, tc := range testCases {
-		tc := tc
 		var desc string
 		if tc.omErr != nil {
 			desc = tc.omErr.Error()
@@ -345,7 +340,6 @@ func TestDelete(t *testing.T) {
 		},
 	}
 	for _, tc := range testCases {
-		tc := tc
 		var desc string
 		if tc.omErr != nil {
 			desc = tc.omErr.Error()
@@ -398,7 +392,6 @@ func TestDeleteMember(t *testing.T) {
 		},
 	}
 	for _, tc := range testCases {
-		tc := tc
 		var desc string
 		if tc.omErr != nil {
 			desc = tc.omErr.Error()
@@ -451,7 +444,6 @@ func TestGet(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.omErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -517,7 +509,6 @@ func TestGetAuthorizationPolicy(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.omErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -632,7 +623,6 @@ func TestGetMembers(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.omErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -716,7 +706,6 @@ func TestUpdate(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -771,7 +760,6 @@ func TestUpdate(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -823,7 +811,6 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -879,7 +866,6 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()

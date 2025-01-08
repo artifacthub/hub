@@ -793,7 +793,6 @@ func TestGetStarsJSON(t *testing.T) {
 			{"invalid package id", "pkgID"},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 				_, err := m.GetStarsJSON(ctx, tc.packageID)
@@ -939,7 +938,6 @@ func TestGetViewsJSON(t *testing.T) {
 			{"invalid package id", "pkgID"},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 				_, err := m.GetViewsJSON(ctx, tc.packageID)
@@ -1141,7 +1139,6 @@ func TestRegister(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil)
@@ -1243,7 +1240,6 @@ func TestSearchJSON(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil)
@@ -1332,7 +1328,6 @@ func TestToggleStar(t *testing.T) {
 			{"invalid package id", "pkgID"},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil)
@@ -1413,7 +1408,6 @@ func TestUpdateSnapshotSecurityReport(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil)
@@ -1483,7 +1477,6 @@ func TestUnregister(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(nil)
@@ -1538,7 +1531,6 @@ func TestBuildKey(t *testing.T) {
 		},
 	}
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.expectedKey, func(t *testing.T) {
 			t.Parallel()
 			assert.Equal(t, tc.expectedKey, BuildKey(tc.p))
@@ -1564,7 +1556,6 @@ func TestParseKey(t *testing.T) {
 		},
 	}
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.key, func(t *testing.T) {
 			t.Parallel()
 			name, version := ParseKey(tc.key)

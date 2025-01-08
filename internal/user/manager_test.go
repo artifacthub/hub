@@ -63,7 +63,6 @@ func TestApproveSession(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil)
@@ -158,7 +157,6 @@ func TestCheckAvailability(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil)
@@ -182,7 +180,6 @@ func TestCheckAvailability(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
 				t.Parallel()
 				tc.dbQuery = fmt.Sprintf("select not exists (%s)", tc.dbQuery)
@@ -233,7 +230,6 @@ func TestCheckCredentials(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil)
@@ -321,7 +317,6 @@ func TestCheckSession(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil)
@@ -427,7 +422,6 @@ func TestDeleteSession(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil)
@@ -453,7 +447,6 @@ func TestDeleteSession(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
@@ -920,7 +913,6 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				es := &email.SenderMock{}
@@ -948,7 +940,6 @@ func TestRegisterPasswordResetCode(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
@@ -996,7 +987,6 @@ func TestRegisterSession(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil)
@@ -1068,7 +1058,6 @@ func TestRegisterUser(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				es := &email.SenderMock{}
@@ -1097,7 +1086,6 @@ func TestRegisterUser(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
@@ -1169,7 +1157,6 @@ func TestResetPassword(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				es := &email.SenderMock{}
@@ -1196,7 +1183,6 @@ func TestResetPassword(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
@@ -1225,7 +1211,6 @@ func TestResetPassword(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
@@ -1338,7 +1323,6 @@ func TestUpdatePassword(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil)
@@ -1423,7 +1407,6 @@ func TestUpdateProfile(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil)
@@ -1508,7 +1491,6 @@ func TestVerifyPasswordResetCode(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil)
@@ -1534,7 +1516,6 @@ func TestVerifyPasswordResetCode(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}

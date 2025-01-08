@@ -76,8 +76,6 @@ func TestImage(t *testing.T) {
 			{"testdata/image.svg", "image/svg+xml"},
 		}
 		for i, tc := range testCases {
-			i := i
-			tc := tc
 			t.Run(fmt.Sprintf("Test %d: %s", i, tc.expectedContentType), func(t *testing.T) {
 				t.Parallel()
 				imgData, err := os.ReadFile(tc.imgPath)

@@ -230,7 +230,6 @@ func TestSetupSource(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(fmt.Sprintf("Test case %d", i), func(t *testing.T) {
 			t.Parallel()
 
@@ -443,7 +442,6 @@ func TestShouldIgnorePackage(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(fmt.Sprintf("Test case %d", i), func(t *testing.T) {
 			t.Parallel()
 

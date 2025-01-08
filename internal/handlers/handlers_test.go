@@ -93,7 +93,6 @@ func TestRealIP(t *testing.T) {
 		},
 	}
 	for _, tc := range testCases {
-		tc := tc
 		desc := fmt.Sprintf("XFF: %s Index: %d", tc.xForwardedFor, tc.xffIndex)
 		t.Run(desc, func(t *testing.T) {
 			t.Parallel()
