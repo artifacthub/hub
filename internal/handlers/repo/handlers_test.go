@@ -60,7 +60,6 @@ func TestAdd(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -115,7 +114,6 @@ func TestAdd(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -205,7 +203,6 @@ func TestCheckAvailability(t *testing.T) {
 				},
 			}
 			for _, tc := range testCases {
-				tc := tc
 				t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
 					t.Parallel()
 					w := httptest.NewRecorder()
@@ -302,7 +299,6 @@ func TestClaimOwnership(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -373,7 +369,6 @@ func TestDelete(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.rmErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -407,7 +402,6 @@ func TestSearch(t *testing.T) {
 			{"invalid kind (one of them)", "kind=0&kind=z"},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(fmt.Sprintf("%s: %s", tc.desc, tc.params), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -565,7 +559,6 @@ func TestTransfer(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -616,7 +609,6 @@ func TestUpdate(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -669,7 +661,6 @@ func TestUpdate(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()

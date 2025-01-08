@@ -110,7 +110,6 @@ func TestTracker(t *testing.T) {
 			},
 		}
 		for _, r := range repositories {
-			r := r
 			t.Run(r.RepositoryID, func(t *testing.T) {
 				t.Parallel()
 

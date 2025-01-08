@@ -153,7 +153,6 @@ func TestGenerateChangelogMD(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -342,7 +341,6 @@ func TestGet(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -954,7 +952,6 @@ func TestGetStars(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -1065,7 +1062,6 @@ func TestGetSummary(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -1200,7 +1196,6 @@ func TestGetViews(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -1270,7 +1265,6 @@ func TestInjectIndexMeta(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			w := httptest.NewRecorder()
@@ -1312,7 +1306,6 @@ func TestRssFeed(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -1394,7 +1387,6 @@ func TestRssFeed(t *testing.T) {
 			},
 		}
 		for i, tc := range testCases {
-			tc := tc
 			t.Run(strconv.Itoa(i), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -1437,7 +1429,6 @@ func TestSearch(t *testing.T) {
 			{"invalid deprecated", "deprecated=z"},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(fmt.Sprintf("%s: %s", tc.desc, tc.params), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -1610,7 +1601,6 @@ func TestToggleStar(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -1791,7 +1781,6 @@ func TestGetChartArchive(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 
@@ -2223,7 +2212,6 @@ func TestBuildURL(t *testing.T) {
 		},
 	}
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.expectedPkgURL, func(t *testing.T) {
 			pkgURL := BuildURL(baseURL, tc.p, tc.version)
 			assert.Equal(t, tc.expectedPkgURL, pkgURL)

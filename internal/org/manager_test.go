@@ -61,7 +61,6 @@ func TestAdd(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil, nil)
@@ -124,7 +123,6 @@ func TestAddMember(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil, nil)
@@ -165,7 +163,6 @@ func TestAddMember(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
@@ -205,7 +202,6 @@ func TestAddMember(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
@@ -248,7 +244,6 @@ func TestCheckAvailability(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil, nil)
@@ -272,7 +267,6 @@ func TestCheckAvailability(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
 				t.Parallel()
 				tc.dbQuery = fmt.Sprintf("select not exists (%s)", tc.dbQuery)
@@ -442,7 +436,6 @@ func TestDeleteMember(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil, nil)
@@ -527,7 +520,6 @@ func TestDeleteMember(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
@@ -618,7 +610,6 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
@@ -762,7 +753,6 @@ func TestGetMembersJSON(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
@@ -821,7 +811,6 @@ func TestUpdate(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				m := NewManager(cfg, nil, nil, nil)
@@ -886,7 +875,6 @@ func TestUpdate(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}
@@ -1020,7 +1008,6 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				t.Parallel()
 				az := &authz.AuthorizerMock{}
@@ -1083,7 +1070,6 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				db := &tests.DBMock{}

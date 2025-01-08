@@ -92,7 +92,6 @@ func TestParseChangesAnnotation(t *testing.T) {
 		},
 	}
 	for i, tc := range testCases {
-		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			changes, err := ParseChangesAnnotation(tc.annotation)

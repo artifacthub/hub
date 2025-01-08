@@ -49,7 +49,6 @@ func TestApproveSession(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.desc, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -190,7 +189,6 @@ func TestCheckPasswordStrength(t *testing.T) {
 			"weak12",
 		}
 		for _, pw := range passwords {
-			pw := pw
 			t.Run(pw, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -215,7 +213,6 @@ func TestCheckPasswordStrength(t *testing.T) {
 			"yet123-another-ONE",
 		}
 		for _, pw := range passwords {
-			pw := pw
 			t.Run(pw, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -271,7 +268,6 @@ func TestCheckAvailability(t *testing.T) {
 				},
 			}
 			for _, tc := range testCases {
-				tc := tc
 				t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
 					t.Parallel()
 					w := httptest.NewRecorder()
@@ -414,7 +410,6 @@ func TestDisableTFA(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.desc, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -479,7 +474,6 @@ func TestEnableTFA(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.desc, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -847,7 +841,6 @@ func TestLogout(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -885,7 +878,6 @@ func TestLogout(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -951,7 +943,6 @@ func TestOauthCallback(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -1118,7 +1109,6 @@ func TestRegisterUser(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -1177,7 +1167,6 @@ func TestRegisterUser(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -1227,7 +1216,6 @@ func TestRegisterUser(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -1268,7 +1256,6 @@ func TestRequireLogin(t *testing.T) {
 				},
 			}
 			for i, tc := range testCases {
-				tc := tc
 				t.Run(strconv.Itoa(i), func(t *testing.T) {
 					t.Parallel()
 					w := httptest.NewRecorder()
@@ -1682,7 +1669,6 @@ func TestUpdateProfile(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.desc, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -1763,7 +1749,6 @@ func TestVerifyEmail(t *testing.T) {
 		},
 	}
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.description, func(t *testing.T) {
 			t.Parallel()
 			w := httptest.NewRecorder()
@@ -1820,7 +1805,6 @@ func TestVerifyPasswordResetCode(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()

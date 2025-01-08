@@ -30,7 +30,6 @@ func TestVersionCmd(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.name, func(t *testing.T) {
 			// Prepare command and execute it
 			version = tc.version

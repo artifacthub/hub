@@ -59,7 +59,6 @@ func TestAdd(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -117,7 +116,6 @@ func TestAdd(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -165,7 +163,6 @@ func TestDelete(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -230,7 +227,6 @@ func TestGet(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -325,7 +321,6 @@ func TestGetOwnedByOrg(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -414,7 +409,6 @@ func TestTriggerTest(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -455,7 +449,6 @@ func TestTriggerTest(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.err, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -565,7 +558,6 @@ func TestTriggerTest(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.id, func(t *testing.T) {
 				t.Parallel()
 				ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -627,7 +619,6 @@ func TestUpdate(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
@@ -685,7 +676,6 @@ func TestUpdate(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()

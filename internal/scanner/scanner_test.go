@@ -51,7 +51,6 @@ func TestScan(t *testing.T) {
 			},
 		}
 		for _, tc := range testCases {
-			tc := tc
 			t.Run(tc.scanError.Error(), func(t *testing.T) {
 				t.Parallel()
 				ecMock := &repo.ErrorsCollectorMock{}
