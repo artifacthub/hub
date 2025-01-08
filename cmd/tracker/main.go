@@ -19,6 +19,7 @@ import (
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -31,6 +32,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("configuration setup failed")
 	}
+	setCfgDefaults(cfg)
 	fields := map[string]interface{}{"cmd": "tracker"}
 	if err := util.SetupLogger(cfg, fields); err != nil {
 		log.Fatal().Err(err).Msg("logger setup failed")
@@ -92,8 +94,6 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("error getting repositories")
 	}
-	cfg.SetDefault("tracker.concurrency", 1)
-	cfg.SetDefault("tracker.repositoryTimeout", 15*time.Minute)
 	limiter := make(chan struct{}, cfg.GetInt("tracker.concurrency"))
 	var wg sync.WaitGroup
 L:
@@ -139,4 +139,11 @@ L:
 	wg.Wait()
 	ec.Flush()
 	log.Info().Msg("tracker finished")
+}
+
+// setCfgDefaults sets the default values for some configuration options.
+func setCfgDefaults(cfg *viper.Viper) {
+	cfg.SetDefault("tracker.categoryModelPath", "../../ml/category/model")
+	cfg.SetDefault("tracker.concurrency", 1)
+	cfg.SetDefault("tracker.repositoryTimeout", 15*time.Minute)
 }

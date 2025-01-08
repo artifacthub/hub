@@ -29,6 +29,7 @@ import (
 	"github.com/artifacthub/hub/internal/webhook"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 func main() {
@@ -37,6 +38,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("configuration setup failed")
 	}
+	setCfgDefaults(cfg)
 	fields := map[string]interface{}{"cmd": "hub"}
 	if err := util.SetupLogger(cfg, fields); err != nil {
 		log.Fatal().Err(err).Msg("logger setup failed")
@@ -156,4 +158,25 @@ func main() {
 		return
 	}
 	log.Info().Msg("hub server stopped")
+}
+
+// setCfgDefaults sets the default values for some configuration options.
+func setCfgDefaults(cfg *viper.Viper) {
+	cfg.SetDefault("server.addr", "0.0.0.0:8000")
+	cfg.SetDefault("server.allowUserSignUp", true)
+	cfg.SetDefault("server.baseURL", "http://localhost:8000")
+	cfg.SetDefault("server.cookie.hashKey", "sample hash key")
+	cfg.SetDefault("server.csrf.authKey", "sample auth key")
+	cfg.SetDefault("server.metricsAddr", "0.0.0.0:8001")
+	cfg.SetDefault("server.shutdownTimeout", 10*time.Second)
+	cfg.SetDefault("server.webBuildPath", "../../web/build")
+	cfg.SetDefault("server.widgetBuildPath", "../../widget/build")
+	cfg.SetDefault("theme.colors.primary", "#417598")
+	cfg.SetDefault("theme.colors.secondary", "#2D4857")
+	cfg.SetDefault("theme.images.appleTouchIcon192", "/static/media/logo192_v2.png")
+	cfg.SetDefault("theme.images.appleTouchIcon512", "/static/media/logo512_v2.png")
+	cfg.SetDefault("theme.images.openGraphImage", "/static/media/artifactHub_v2.png")
+	cfg.SetDefault("theme.images.shortcutIcon", "/static/media/logo_v2.png")
+	cfg.SetDefault("theme.images.websiteLogo", "/static/media/logo/artifacthub-brand-white.svg")
+	cfg.SetDefault("theme.siteName", "Artifact hub")
 }

@@ -16,6 +16,7 @@ import (
 	"github.com/artifacthub/hub/internal/scanner"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 func main() {
@@ -24,6 +25,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("configuration setup failed")
 	}
+	setCfgDefaults(cfg)
 	fields := map[string]interface{}{"cmd": "scanner"}
 	if err := util.SetupLogger(cfg, fields); err != nil {
 		log.Fatal().Err(err).Msg("logger setup failed")
@@ -65,7 +67,6 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("error getting snapshots to scan")
 	}
-	cfg.SetDefault("scanner.concurrency", 1)
 	limiter := make(chan struct{}, cfg.GetInt("scanner.concurrency"))
 	var wg sync.WaitGroup
 L:
@@ -104,4 +105,10 @@ L:
 	wg.Wait()
 	ec.Flush()
 	log.Info().Msg("scanner finished")
+}
+
+// setCfgDefaults sets the default values for some configuration options.
+func setCfgDefaults(cfg *viper.Viper) {
+	cfg.SetDefault("scanner.concurrency", 1)
+	cfg.SetDefault("scanner.trivyURL", "http://localhost:8081")
 }
