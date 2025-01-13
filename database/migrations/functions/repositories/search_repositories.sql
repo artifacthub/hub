@@ -40,6 +40,7 @@ begin
             r.last_tracking_ts,
             r.last_tracking_errors,
             r.data as repository_data,
+            r.packages_deletion_protection,
             u.alias as user_alias,
             o.name as organization_name,
             o.display_name as organization_display_name
@@ -86,6 +87,7 @@ begin
             'last_tracking_ts', floor(extract(epoch from last_tracking_ts)),
             'last_tracking_errors', last_tracking_errors,
             'data', repository_data,
+            'packages_deletion_protection', packages_deletion_protection,
             'user_alias', user_alias,
             'organization_name', organization_name,
             'organization_display_name', organization_display_name
