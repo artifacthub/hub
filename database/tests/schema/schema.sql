@@ -184,6 +184,7 @@ select columns_are('repository', array[
     'digest',
     'created_at',
     'data',
+    'packages_deletion_protection',
     'repository_kind_id',
     'user_id',
     'organization_id'

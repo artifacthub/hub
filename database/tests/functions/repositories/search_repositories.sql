@@ -43,6 +43,7 @@ insert into repository (
     auth_pass,
     last_tracking_ts,
     last_tracking_errors,
+    packages_deletion_protection,
     repository_kind_id,
     organization_id
 ) values (
@@ -55,6 +56,7 @@ insert into repository (
     'pass',
     '1970-01-01 00:00:00 UTC',
     'error1\nerror2\nerror3',
+    true,
     0,
     :'org1ID'
 );
@@ -126,6 +128,7 @@ select results_eq(
                     "scanner_disabled": false,
                     "last_tracking_ts": 0,
                     "last_tracking_errors": "error1\\nerror2\\nerror3",
+                    "packages_deletion_protection": true,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 },
@@ -358,6 +361,7 @@ select results_eq(
                     "scanner_disabled": false,
                     "last_tracking_ts": 0,
                     "last_tracking_errors": "error1\\nerror2\\nerror3",
+                    "packages_deletion_protection": true,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }

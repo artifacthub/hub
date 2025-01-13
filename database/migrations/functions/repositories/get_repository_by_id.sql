@@ -22,6 +22,7 @@ returns setof json as $$
         'last_tracking_ts', floor(extract(epoch from r.last_tracking_ts)),
         'last_tracking_errors', r.last_tracking_errors,
         'data', r.data,
+        'packages_deletion_protection', r.packages_deletion_protection,
         'user_alias', u.alias,
         'organization_name', o.name,
         'organization_display_name', o.display_name
