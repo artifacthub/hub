@@ -548,6 +548,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.Bootc:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/bootable-containers"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Bootable containers
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -582,6 +593,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.MesheryDesign:
               case RepositoryKind.OpenCost:
               case RepositoryKind.RadiusRecipe:
+              case RepositoryKind.Bootc:
                 return (
                   <>
                     <p
@@ -980,6 +992,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.MesheryDesign,
               RepositoryKind.OpenCost,
               RepositoryKind.RadiusRecipe,
+              RepositoryKind.Bootc,
             ].includes(selectedKind) && (
               <div>
                 <InputField
@@ -1134,6 +1147,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.MesheryDesign,
               RepositoryKind.OpenCost,
               RepositoryKind.RadiusRecipe,
+              RepositoryKind.Bootc,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

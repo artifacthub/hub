@@ -28,6 +28,7 @@ export enum RepositoryKind {
   MesheryDesign,
   OpenCost,
   RadiusRecipe,
+  Bootc,
 }
 
 export enum PackageCategory {

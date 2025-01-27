@@ -6,6 +6,7 @@ The following repositories kinds are supported at the moment:
 
 - [Argo templates repositories](https://github.com/artifacthub/hub/blob/master/docs/argo_templates_repositories.md)
 - [Backstage plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/backstage_plugins_repositories.md)
+- [Bootable containers repositories](https://github.com/artifacthub/hub/blob/master/docs/bootable_containers_repositories.md)
 - [Containers images repositories](https://github.com/artifacthub/hub/blob/master/docs/container_images_repositories.md)
 - [CoreDNS plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/coredns_plugins_repositories.md)
 - [Falco rules repositories](https://github.com/artifacthub/hub/blob/master/docs/falco_rules_repositories.md)

@@ -81,6 +81,8 @@ const Image = (props: Props) => {
           return '/static/media/placeholder_pkg_opencost.png';
         case RepositoryKind.RadiusRecipe:
           return '/static/media/placeholder_pkg_radius.png';
+        case RepositoryKind.Bootc:
+          return '/static/media/placeholder_pkg_bootc.png';
         default:
           return PLACEHOLDER_SRC;
       }

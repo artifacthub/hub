@@ -2,7 +2,7 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.
 type: application
-version: 1.21.0-4
+version: 1.21.0-5
 appVersion: 1.20.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
@@ -33,6 +33,7 @@ keywords:
   - meshery
   - opencost
   - radius
+  - bootable containers
 maintainers:
   - name: Sergio
     email: tegioz@icloud.com

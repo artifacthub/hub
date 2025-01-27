@@ -32,6 +32,7 @@ const Signed = (props: Props) => {
     RepositoryKind.TektonPipeline,
     RepositoryKind.TektonTask,
     RepositoryKind.TektonStepAction,
+    RepositoryKind.Bootc,
   ].includes(props.repoKind);
 
   return (

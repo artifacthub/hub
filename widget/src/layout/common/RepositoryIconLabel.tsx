@@ -124,6 +124,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.RadiusRecipe,
     name: 'Radius recipe',
   },
+  {
+    kind: RepositoryKind.Bootc,
+    name: 'Bootable container',
+  },
 ];
 
 const Wrapper = styled('span')`

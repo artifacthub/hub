@@ -569,7 +569,8 @@ select results_eq(
         (23, 'Tekton stepactions'),
         (24, 'Meshery designs'),
         (25, 'OpenCost plugins'),
-        (26, 'Radius recipes')
+        (26, 'Radius recipes'),
+        (27, 'Bootable containers')
     $$,
     'Repository kinds should exist'
 );

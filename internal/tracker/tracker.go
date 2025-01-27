@@ -186,6 +186,7 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 	case
 		hub.ArgoTemplate,
 		hub.Backstage,
+		hub.Bootc,
 		hub.CoreDNS,
 		hub.Falco,
 		hub.Gatekeeper,
