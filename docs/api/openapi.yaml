@@ -1161,6 +1161,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/bootc/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getBootableContainersDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BootableContainer"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/container/{repoName}/{packageName}":
     get:
       tags:
@@ -1779,6 +1802,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BackstagePlugin"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/bootc/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getBootableContainersVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BootableContainer"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -4052,6 +4099,8 @@ components:
                   example: "1.5.0"
     BackstagePlugin:
       $ref: "#/components/schemas/Package"
+    BootableContainer:
+      $ref: "#/components/schemas/Package"
     ContainerImage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -5049,6 +5098,12 @@ components:
         - 19
         - 20
         - 21
+        - 22
+        - 23
+        - 24
+        - 25
+        - 26
+        - 27
       description: |
         Repository kind:
           * `0` - Helm charts
@@ -5078,6 +5133,7 @@ components:
           * `24` - Meshery designs
           * `25` - Opencost plugins
           * `26` - Radius recipes
+          * `27` - Bootable containers
     RepositoryKindParam:
       type: string
       enum:
@@ -5108,6 +5164,7 @@ components:
         - meshery
         - opencost
         - radius
+        - bootc
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -5137,6 +5194,7 @@ components:
         * `meshery` - Meshery designs
         * `opencost` - Opencost plugins
         * `radius` - Radius recipes
+        * `bootc` - Bootable containers
     RepositorySummary:
       type: object
       required:
@@ -5683,6 +5741,7 @@ components:
           * `24` - Meshery designs
           * `25` - Opencost plugins
           * `26` - Radius recipes
+          * `27` - Bootable containers
     PackageNameParam:
       in: path
       name: packageName

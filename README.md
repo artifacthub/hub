@@ -16,6 +16,7 @@ At the moment, the following artifacts kinds are supported *(with plans to suppo
 
 - [Argo templates](https://argoproj.github.io/argo-workflows/)
 - [Backstage plugins](https://backstage.io)
+- [Bootable containers](https://containers.github.io/bootc/)
 - [Containers images](https://opencontainers.org)
 - [CoreDNS plugins](https://coredns.io/)
 - [Falco configurations](https://falco.org/)

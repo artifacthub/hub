@@ -8,6 +8,7 @@ mkdir -p docs/www/content/topics/repositories
 cat docs/www/headers/repositories docs/repositories.md > docs/www/content/topics/repositories/_index.md
 cat docs/www/headers/argo_templates_repositories docs/argo_templates_repositories.md > docs/www/content/topics/repositories/argo-templates.md
 cat docs/www/headers/backstage_plugins_repositories docs/backstage_plugins_repositories.md > docs/www/content/topics/repositories/backstage-plugins.md
+cat docs/www/headers/bootable_containers_repositories docs/bootable_containers_repositories.md > docs/www/content/topics/repositories/bootable-containers.md
 cat docs/www/headers/container_images_repositories docs/container_images_repositories.md > docs/www/content/topics/repositories/container-images.md
 cat docs/www/headers/coredns_plugins_repositories docs/coredns_plugins_repositories.md > docs/www/content/topics/repositories/coredns-plugins.md
 cat docs/www/headers/falco_rules_repositories docs/falco_rules_repositories.md > docs/www/content/topics/repositories/falco-rules.md

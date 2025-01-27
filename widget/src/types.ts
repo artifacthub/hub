@@ -55,6 +55,7 @@ export enum RepositoryKind {
   MesheryDesign,
   OpenCost,
   RadiusRecipe,
+  Bootc,
 }
 
 export interface SearchResults {

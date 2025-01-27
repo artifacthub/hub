@@ -127,6 +127,9 @@ const (
 
 	// Radius represents a repository with Radius recipes.
 	Radius RepositoryKind = 26
+
+	// Bootc represents a repository with Bootable containers.
+	Bootc RepositoryKind = 27
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -136,6 +139,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "argo-template"
 	case Backstage:
 		return "backstage"
+	case Bootc:
+		return "bootc"
 	case Container:
 		return "container"
 	case CoreDNS:
@@ -199,6 +204,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return ArgoTemplate, nil
 	case "backstage":
 		return Backstage, nil
+	case "bootc":
+		return Bootc, nil
 	case "container":
 		return Container, nil
 	case "coredns":

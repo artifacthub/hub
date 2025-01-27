@@ -97,7 +97,7 @@ func newLintCmd() *cobra.Command {
 			return lint(opts, &output{cmd.OutOrStdout()})
 		},
 	}
-	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: argo-template, backstage, coredns, falco, gatekeeper, headlamp, helm, helm-plugin, inspektor-gadget, kcl, keda-scaler, keptn, knative-client-plugin, krew, kubearmor, kubewarden, kyverno, meshery, olm, opa, opencost, radius, tbaction, tekton-pipeline, tekton-stepaction, tekton-task")
+	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: argo-template, backstage, bootc, coredns, falco, gatekeeper, headlamp, helm, helm-plugin, inspektor-gadget, kcl, keda-scaler, keptn, knative-client-plugin, krew, kubearmor, kubewarden, kyverno, meshery, olm, opa, opencost, radius, tbaction, tekton-pipeline, tekton-stepaction, tekton-task")
 	lintCmd.Flags().StringVarP(&opts.path, "path", "p", ".", "repository's packages path")
 	lintCmd.Flags().StringVarP(&opts.tektonVersioning, "tekton-versioning", "", hub.TektonDirBasedVersioning, "tekton versioning option: directory, git")
 	return lintCmd
@@ -119,6 +119,7 @@ func lint(opts *lintOptions, out *output) error {
 	case
 		hub.ArgoTemplate,
 		hub.Backstage,
+		hub.Bootc,
 		hub.CoreDNS,
 		hub.Falco,
 		hub.Gatekeeper,
@@ -747,6 +748,7 @@ func (out *output) printPkgDetails(pkg *hub.Package) {
 	case
 		hub.ArgoTemplate,
 		hub.Backstage,
+		hub.Bootc,
 		hub.CoreDNS,
 		hub.Falco,
 		hub.Gatekeeper,

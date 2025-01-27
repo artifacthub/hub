@@ -610,6 +610,88 @@ func TestValidatePackageMetadata(t *testing.T) {
 					`only "gadget" and "gadget-alternative-location" images can be provided`,
 				},
 			},
+			{
+				hub.Bootc,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+				},
+				[]string{
+					`"bootc" image not provided`,
+				},
+			},
+			{
+				hub.Bootc,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "something",
+							Image: "registry.io/namespace/something:tag",
+						},
+					},
+				},
+				[]string{
+					`"bootc" image not provided`,
+				},
+			},
+			{
+				hub.Bootc,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "bootc",
+							Image: "registry.io/namespace/bootc:tag",
+						},
+						{
+							Name:  "something",
+							Image: "registry.io/namespace/something:tag",
+						},
+					},
+				},
+				[]string{
+					`only "bootc" and "bootc-alternative-location" images can be provided`,
+				},
+			},
+			{
+				hub.Bootc,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "bootc",
+							Image: "registry.io/namespace/bootc:tag",
+						},
+						{
+							Name:  "bootc-alternative-location",
+							Image: "registry2.io/namespace/bootc:tag",
+						},
+						{
+							Name:  "something",
+							Image: "registry.io/namespace/something:tag",
+						},
+					},
+				},
+				[]string{
+					`only "bootc" and "bootc-alternative-location" images can be provided`,
+				},
+			},
 		}
 		for i, tc := range testCases {
 			t.Run(strconv.Itoa(i), func(t *testing.T) {
@@ -765,6 +847,65 @@ func TestValidatePackageMetadata(t *testing.T) {
 						{
 							Name:  "gadget",
 							Image: "registry.io/namespace/gadget:tag",
+						},
+					},
+				},
+			},
+			{
+				hub.Bootc,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Category:    "security",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "bootc",
+							Image: "registry.io/namespace/bootc:tag",
+						},
+					},
+				},
+			},
+			{
+				hub.Bootc,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Category:    "security",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "bootc",
+							Image: "registry.io/namespace/bootc:tag",
+						},
+						{
+							Name:  "bootc-alternative-location",
+							Image: "registry2.io/namespace/bootc:tag",
+						},
+					},
+				},
+			},
+			{
+				hub.Bootc,
+				&hub.PackageMetadata{
+					Version:     "1.0.0",
+					Name:        "pkg1",
+					DisplayName: "Package 1",
+					CreatedAt:   "2006-01-02T15:04:05Z",
+					Description: "description",
+					Category:    "security",
+					ContainersImages: []*hub.ContainerImage{
+						{
+							Name:  "bootc-alternative-location",
+							Image: "registry2.io/namespace/bootc:tag",
+						},
+						{
+							Name:  "bootc",
+							Image: "registry.io/namespace/bootc:tag",
 						},
 					},
 				},

@@ -117,6 +117,10 @@ const ICONS = {
     default: '/static/media/radius.svg',
     white: '/static/media/radius-light.svg',
   },
+  [RepositoryKind.Bootc]: {
+    default: '/static/media/bootc.svg',
+    white: '/static/media/bootc-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

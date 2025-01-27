@@ -56,6 +56,8 @@ const getRepoKind = (repoName: string): RepositoryKind | null => {
       return RepositoryKind.OpenCost;
     case 'radius':
       return RepositoryKind.RadiusRecipe;
+    case 'bootc':
+      return RepositoryKind.Bootc;
     default:
       return null;
   }
@@ -117,6 +119,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'opencost';
     case RepositoryKind.RadiusRecipe:
       return 'radius';
+    case RepositoryKind.Bootc:
+      return 'bootc';
     default:
       return null;
   }

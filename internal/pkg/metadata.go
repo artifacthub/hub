@@ -16,6 +16,14 @@ import (
 )
 
 const (
+	// bootcImage represents the name that must be used for the container image
+	// in a Bootable container package.
+	bootcImage = "bootc"
+
+	// bootcImageAlternativeLoc represents the name that must be used for the
+	// container image alternative location in a Bootable container package.
+	bootcImageAlternativeLoc = "bootc-alternative-location"
+
 	// gadgetImage represents the name that must be used for the gadget image
 	// in an Inspektor gadget package.
 	gadgetImage = "gadget"
@@ -255,6 +263,33 @@ func ValidateContainersImages(kind hub.RepositoryKind, images []*hub.ContainerIm
 
 	// Repository kind specific validation
 	switch kind {
+	case hub.Bootc:
+		// Bootable container image is required
+		if len(images) == 0 || (len(images) == 1 && images[0].Name != bootcImage) {
+			errs = multierror.Append(errs, fmt.Errorf(`"%s" image not provided`, bootcImage))
+		}
+
+		// A second container image pointing to an alternative location may be provided
+		if len(images) == 2 {
+			imagesNames := []string{images[0].Name, images[1].Name}
+			sort.Strings(imagesNames)
+			if imagesNames[0] != bootcImage || imagesNames[1] != bootcImageAlternativeLoc {
+				errs = multierror.Append(errs, fmt.Errorf(
+					`only "%s" and "%s" images can be provided`,
+					bootcImage,
+					bootcImageAlternativeLoc,
+				))
+			}
+		}
+
+		// Providing more than two images is not allowed
+		if len(images) > 2 {
+			errs = multierror.Append(errs, fmt.Errorf(
+				`only "%s" and "%s" images can be provided`,
+				bootcImage,
+				bootcImageAlternativeLoc,
+			))
+		}
 	case hub.InspektorGadget:
 		// Gadget image is required
 		if len(images) == 0 || (len(images) == 1 && images[0].Name != gadgetImage) {

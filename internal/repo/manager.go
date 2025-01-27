@@ -81,6 +81,7 @@ var (
 	validRepositoryKinds = []hub.RepositoryKind{
 		hub.ArgoTemplate,
 		hub.Backstage,
+		hub.Bootc,
 		hub.Container,
 		hub.CoreDNS,
 		hub.Falco,
@@ -287,6 +288,7 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 	case
 		hub.ArgoTemplate,
 		hub.Backstage,
+		hub.Bootc,
 		hub.CoreDNS,
 		hub.Falco,
 		hub.Gatekeeper,
@@ -471,6 +473,7 @@ func (m *Manager) locateMetadataFile(r *hub.Repository, basePath string) string 
 	case
 		hub.ArgoTemplate,
 		hub.Backstage,
+		hub.Bootc,
 		hub.CoreDNS,
 		hub.Falco,
 		hub.Gatekeeper,
@@ -840,6 +843,7 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 	case
 		hub.ArgoTemplate,
 		hub.Backstage,
+		hub.Bootc,
 		hub.CoreDNS,
 		hub.Falco,
 		hub.Gatekeeper,

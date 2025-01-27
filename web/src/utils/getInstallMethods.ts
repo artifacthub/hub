@@ -117,6 +117,7 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
         case RepositoryKind.MesheryDesign:
         case RepositoryKind.OpenCost:
         case RepositoryKind.RadiusRecipe:
+        case RepositoryKind.Bootc:
           if (isUndefined(pkg.install)) {
             output.errorMessage = 'This package does not include installation instructions yet.';
             hasError = true;
