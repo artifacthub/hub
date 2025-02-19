@@ -12,9 +12,9 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/jackc/pgx/v4"
-	"github.com/open-policy-agent/opa/ast"
-	"github.com/open-policy-agent/opa/rego"
-	"github.com/open-policy-agent/opa/storage/inmem"
+	"github.com/open-policy-agent/opa/ast"           // nolint:staticcheck // SA1019 (deprecated)
+	"github.com/open-policy-agent/opa/rego"          // nolint:staticcheck // SA1019 (deprecated)
+	"github.com/open-policy-agent/opa/storage/inmem" // nolint:staticcheck // SA1019 (deprecated)
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
