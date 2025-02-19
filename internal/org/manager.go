@@ -15,7 +15,7 @@ import (
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
-	"github.com/open-policy-agent/opa/ast"
+	"github.com/open-policy-agent/opa/ast" // nolint:staticcheck // SA1019 (deprecated)
 	"github.com/satori/uuid"
 	"github.com/spf13/viper"
 )
