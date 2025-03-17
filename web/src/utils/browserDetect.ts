@@ -1,19 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const parser = require('ua-parser-js');
-
 class BrowserDetect {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private ua: any = {};
+  isSafariBrowser: boolean = false;
 
   public init() {
-    this.ua = parser(navigator.userAgent);
+    this.isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
   }
 
   public isSafari(): boolean {
-    if (this.ua.browser.name.includes('Safari')) {
-      return true;
-    }
-    return false;
+    return this.isSafariBrowser;
   }
 }
 
