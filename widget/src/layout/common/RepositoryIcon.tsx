@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { RepositoryKind } from '../../types';
 import SVGIcons from './SVGIcons';
 
@@ -8,7 +9,7 @@ interface Props {
 }
 
 interface IconsList {
-  [key: number]: JSX.Element;
+  [key: number]: ReactElement;
 }
 
 const ICONS: IconsList = {
