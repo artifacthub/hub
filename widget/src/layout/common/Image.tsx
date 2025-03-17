@@ -1,5 +1,5 @@
 import { isNull, isUndefined } from 'lodash';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 
 import { RepositoryKind } from '../../types';
@@ -8,7 +8,7 @@ interface Props {
   baseUrl: string;
   imageId?: string | null;
   alt: string;
-  placeholderIcon?: JSX.Element;
+  placeholderIcon?: ReactElement;
   kind?: RepositoryKind;
 }
 
