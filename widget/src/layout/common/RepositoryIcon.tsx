@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+
 import { RepositoryKind } from '../../types';
 import SVGIcons from './SVGIcons';
 
