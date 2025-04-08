@@ -18,7 +18,7 @@ To add a repository stored in a OCI registry, the url used **must** follow the f
 
 Each of the chart versions are expected to match an OCI reference tag, which are expected to be valid [semver](https://semver.org) versions. OCI specific installation instructions will be provided in the Artifact Hub UI when appropriate (only for Helm >=3.7). For additional information about Helm OCI support, please see the [HIP-0006](https://github.com/helm/community/blob/master/hips/hip-0006.md).
 
-There is an extra Artifact Hub specific metadata file named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified publisher](https://github.com/artifacthub/hub/blob/master/docs/repositories.md#verified-publisher) or [Ownership claim](https://github.com/artifacthub/hub/blob/master/docs/repositories.md#ownership-claim). Once your repository metadata file is ready, you can push it to the OCI registry using [oras](https://oras.land/cli/):
+There is an extra Artifact Hub specific metadata file named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified publisher](https://github.com/artifacthub/hub/blob/master/docs/repositories.md#verified-publisher) or [Ownership claim](https://github.com/artifacthub/hub/blob/master/docs/repositories.md#ownership-claim). Once your repository metadata file is ready, you can push it to the OCI registry using [oras](https://oras.land/docs/commands/use_oras_cli):
 
 ```bash
 oras push \
