@@ -181,7 +181,7 @@ func (m *Manager) ApproveSession(ctx context.Context, sessionID, passcode string
 		return err
 	}
 	validRecoveryCodeProvided := isValidRecoveryCode(c.RecoveryCodes, passcode)
-	if !(totp.Validate(passcode, key.Secret()) || validRecoveryCodeProvided) {
+	if !totp.Validate(passcode, key.Secret()) && !validRecoveryCodeProvided {
 		return errInvalidTFAPasscode
 	}
 
@@ -373,7 +373,7 @@ func (m *Manager) DisableTFA(ctx context.Context, passcode string) error {
 	if err != nil {
 		return err
 	}
-	if !(totp.Validate(passcode, key.Secret()) || isValidRecoveryCode(c.RecoveryCodes, passcode)) {
+	if !totp.Validate(passcode, key.Secret()) && !isValidRecoveryCode(c.RecoveryCodes, passcode) {
 		return errInvalidTFAPasscode
 	}
 

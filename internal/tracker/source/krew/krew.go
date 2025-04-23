@@ -97,7 +97,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		p, err := PreparePackage(s.i.Repository, manifest, manifestRaw)
 		if err != nil {
 			s.warn(fmt.Errorf("error preparing package %s version %s: %w",
-				manifest.ObjectMeta.Name,
+				manifest.Name,
 				manifest.Spec.Version,
 				err,
 			))
@@ -136,7 +136,7 @@ func GetManifest(pluginManifestPath string) (*index.Plugin, []byte, error) {
 func validateManifest(manifest *index.Plugin) error {
 	var errs *multierror.Error
 
-	if manifest.ObjectMeta.Name == "" {
+	if manifest.Name == "" {
 		errs = multierror.Append(errs, errors.New("name not provided"))
 	}
 	if manifest.Spec.Version == "" {
@@ -154,7 +154,7 @@ func validateManifest(manifest *index.Plugin) error {
 // PreparePackage prepares a package version using the plugin manifest provided.
 func PreparePackage(r *hub.Repository, manifest *index.Plugin, manifestRaw []byte) (*hub.Package, error) {
 	// Validate plugin manifest
-	name := manifest.ObjectMeta.Name
+	name := manifest.Name
 	if err := validateManifest(manifest); err != nil {
 		return nil, fmt.Errorf("invalid manifest for plugin (%s) version (%s): %w", name, manifest.Spec.Version, err)
 	}

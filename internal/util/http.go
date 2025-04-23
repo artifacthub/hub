@@ -65,7 +65,7 @@ func setupRestrictedHTTPClient(timeout time.Duration) hub.HTTPClient {
 // checkRestrictions checks if a connection to the provided network and address
 // should be restricted.
 func checkRestrictions(network string, address string, conn syscall.RawConn) error {
-	if !(network == "tcp4" || network == "tcp6") {
+	if network != "tcp4" && network != "tcp6" {
 		return ErrRestrictedConnection
 	}
 	host, _, err := net.SplitHostPort(address)
