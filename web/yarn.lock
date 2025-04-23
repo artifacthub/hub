@@ -1854,6 +1854,13 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
+"@primer/octicons@^19.15.1":
+  version "19.15.1"
+  resolved "https://registry.yarnpkg.com/@primer/octicons/-/octicons-19.15.1.tgz#03492156ffac5171ec5d0c9fb1a018203a4cdc56"
+  integrity sha512-2cFLIrfbNvfeAPxmJTr/k7/b5QvIxqM7MeroGrXojDodA2yB1nXyt91Xhu9+2e0CL5ZAe3Vd2/fEf9N9EUiX9A==
+  dependencies:
+    object-assign "^4.1.1"
+
 "@remix-run/router@1.23.0":
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.23.0.tgz#35390d0e7779626c026b11376da6789eb8389242"
@@ -5925,7 +5932,7 @@ hasown@^2.0.2:
   dependencies:
     function-bind "^1.1.2"
 
-hast-util-from-html@^2.0.1:
+hast-util-from-html@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/hast-util-from-html/-/hast-util-from-html-2.0.3.tgz#485c74785358beb80c4ba6346299311ac4c49c82"
   integrity sha512-CUSRHXyKjzHov8yKsQjGOElXy/3EKpyX56ELnkHH34vDVw1N1XSQ1ZcAvTyAPtGqLTuKP/uxM+aLkSPqF/EtMw==
@@ -9911,12 +9918,13 @@ regjsparser@^0.12.0:
   dependencies:
     jsesc "~3.0.2"
 
-rehype-github-alerts@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/rehype-github-alerts/-/rehype-github-alerts-3.0.0.tgz#f86c235acdc3fa8b2dd0cd1a60cfd91e4616663e"
-  integrity sha512-m8Lm+V0Ee0T9JqaLN0eBqtyUSfMUDFhAOIjbvoAQfI6EKtxKsIGWP6PaQE01UBHat0K7dBtnaeyCmJuUO7ylHg==
+rehype-github-alerts@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/rehype-github-alerts/-/rehype-github-alerts-4.1.1.tgz#94262c3eebe00ae2790ae847938f881c73162546"
+  integrity sha512-4i9Oj/LPeU3GaBeqPRqdon4s0+mSHsRnMO7hMZs1YOtHtGG10dSghkvY0EsB8LYbZ9qkLF36J2RNXmcMfAcmqQ==
   dependencies:
-    hast-util-from-html "^2.0.1"
+    "@primer/octicons" "^19.15.1"
+    hast-util-from-html "^2.0.3"
     hast-util-is-element "^3.0.0"
     unist-util-visit "^5.0.0"
 
