@@ -27,7 +27,7 @@ jobs:
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v7
         with:
-          version: v1.64.5
+          version: v2.3.4
           args: --timeout 10m
 
   linter-openapi:
