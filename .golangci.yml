@@ -1,5 +1,6 @@
+version: "2"
 linters:
-  disable-all: true
+  default: none
   enable:
     - asciicheck
     - bodyclose
@@ -8,9 +9,7 @@ linters:
     - errorlint
     - goconst
     - gocritic
-    - goimports
     - gosec
-    - gosimple
     - govet
     - ineffassign
     - misspell
@@ -18,20 +17,36 @@ linters:
     - prealloc
     - revive
     - staticcheck
-    - stylecheck
-    - typecheck
     - unconvert
     - unparam
     - unused
-  fast: false
-
-linters-settings:
-  gocritic:
-    disabled-checks:
-      - singleCaseSwitch
-  goconst:
-    min-occurrences: 5
-  revive:
-    rules:
-      - name: unused-parameter
-        disabled: true
+  settings:
+    goconst:
+      min-occurrences: 5
+    gocritic:
+      disabled-checks:
+        - singleCaseSwitch
+    revive:
+      rules:
+        - name: unused-parameter
+          disabled: true
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
