@@ -10,7 +10,7 @@ permissions: read-all
 
 jobs:
   linter-backend:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,7 +31,7 @@ jobs:
           args: --timeout 10m
 
   linter-openapi:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
           VALIDATE_OPENAPI: true
 
   linter-artifacthub:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container:
       image: artifacthub/ah
       options: --user root
@@ -58,7 +58,7 @@ jobs:
         run: ah lint
 
   linter-clomonitor:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
     container:
@@ -71,7 +71,7 @@ jobs:
         run: clomonitor-linter --path . --url https://github.com/artifacthub/hub
 
   tests-database:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container:
       image: artifacthub/db-tests
     services:
@@ -97,7 +97,7 @@ jobs:
         run: PGPASSWORD=tests pg_prove --host postgres --dbname tests --username tests --verbose schema/*.sql functions/*/*.sql
 
   tests-backend:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -122,7 +122,7 @@ jobs:
         run: go test -cover -race -v -mod=readonly ./...
 
   tests-frontend:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       NODE_OPTIONS: --max_old_space_size=4096
     steps:
@@ -149,7 +149,7 @@ jobs:
         run: yarn test --watchAll=false --passWithNoTests --verbose --maxWorkers=4
 
   tests-widget:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       NODE_OPTIONS: --max_old_space_size=4096
     steps:
@@ -176,7 +176,7 @@ jobs:
         run: yarn test --watchAll=false --passWithNoTests --verbose --maxWorkers=4
 
   build-backend:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -208,7 +208,7 @@ jobs:
         run: go build -v
 
   build-frontend:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       NODE_OPTIONS: --max_old_space_size=4096
     steps:
@@ -229,7 +229,7 @@ jobs:
         run: yarn build
 
   build-widget:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       NODE_OPTIONS: --max_old_space_size=4096
     steps:
