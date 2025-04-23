@@ -17,7 +17,7 @@ FROM golang:1.24-bullseye AS opm-installer
 WORKDIR /tmp
 RUN git clone https://github.com/operator-framework/operator-registry
 WORKDIR /tmp/operator-registry/cmd/opm
-RUN git checkout v1.47.0
+RUN git checkout v1.51.0
 RUN go install
 
 # Final stage
