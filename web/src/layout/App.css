@@ -71,16 +71,32 @@ select:focus {
   color: var(--github-alert-note-color);
 }
 
+.markdown-alert-note .markdown-alert-title svg {
+  fill: var(--github-alert-note-color);
+}
+
 .markdown-alert-tip .markdown-alert-title {
   color: var(--github-alert-tip-color);
+}
+
+.markdown-alert-tip .markdown-alert-title svg {
+  fill: var(--github-alert-tip-color);
 }
 
 .markdown-alert-important .markdown-alert-title {
   color: var(--github-alert-important-color);
 }
 
+.markdown-alert-important .markdown-alert-title svg {
+  fill: var(--github-alert-important-color);
+}
+
 .markdown-alert-warning .markdown-alert-title {
   color: var(--github-alert-warning-color);
+}
+
+.markdown-alert-warning .markdown-alert-title svg {
+  fill: var(--github-alert-warning-color);
 }
 
 .markdown-alert-caution .markdown-alert-title {

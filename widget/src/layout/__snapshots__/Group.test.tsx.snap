@@ -3,64 +3,64 @@
 exports[`Group creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="sc-iXqmyu bxPAMP"
+    class="sc-iMGFoU gAQDFH"
     data-testid="wrapper"
   >
     <div
-      class="sc-dJkDXt hkiWJV"
+      class="sc-dTUlgT byBeVY"
     >
       <div
-        class="sc-hRDKVd ecFmRV"
+        class="sc-icnseD cjmgrK"
         color="#417598"
         data-testid="mainWrapper"
       >
         <div
-          class="sc-jBIHhB kXanZa"
+          class="sc-jMsorb czsAnc"
           data-testid="cardWrapper"
         >
           <a
-            class="sc-cMqPwU eTMcbF"
+            class="sc-cXawGu icsyhx"
             href="https://localhost:8000/packages/helm/artifact-hub/artifact-hub"
             rel="noopener noreferrer"
             target="_blank"
           >
             <div
-              class="sc-deSjom bzevsE groupedItem"
+              class="sc-cUiCeM czetNE groupedItem"
               data-testid="cardBody"
             >
               <div
-                class="sc-dkBYrC rXbre"
+                class="sc-cZSric Mhzan"
               >
                 <div
-                  class="sc-cSaEAk fbEpUP"
+                  class="sc-dcKlJK haUTHO"
                 >
                   <img
                     alt="Logo artifact-hub"
-                    class="sc-dVBluf dVXzIV"
+                    class="sc-dKREkF iJrFLl"
                     src="https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111"
                     srcset="https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111@1x 1x, https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111@2x 2x, https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111@3x 3x, https://localhost:8000/image/3cfb161e-2652-43b9-ada1-c1ced4b20111@4x 4x"
                   />
                 </div>
                 <div
-                  class="sc-jZTQcj dYnrqx"
+                  class="sc-jPkiSJ bDsMfu"
                 >
                   <div
-                    class="sc-kXOizl bzLIJL"
+                    class="sc-lixPIL fHylm"
                   >
                     <div
-                      class="sc-eiwqOE sc-dPKAra hWVWeE eYXePD"
+                      class="sc-etfXYe sc-dFaThA dWWphJ fsLXDm"
                     >
                       artifact-hub
                     </div>
                     <div
-                      class="sc-bCjwNj JzIZY"
+                      class="sc-brzPDJ cbFlua"
                     >
                       <div
-                        class="sc-fuExOL gjwqbx"
+                        class="sc-fjUQFl fnGEyg"
                       >
                         <div
                           aria-hidden="true"
-                          class="sc-fLDLck hNlXKn"
+                          class="sc-fWnslK efjtMM"
                           data-testid="iconWrapper"
                         >
                           <svg
@@ -82,7 +82,7 @@ exports[`Group creates snapshot 1`] = `
                         </div>
                       </div>
                       <div
-                        class="sc-gjXmFk llSzIm"
+                        class="sc-guGTOK gyILCw"
                       >
                         26
                       </div>
@@ -90,10 +90,10 @@ exports[`Group creates snapshot 1`] = `
                   </div>
                   <div>
                     <div
-                      class="sc-eiwqOE sc-hUAZgl hWVWeE faxDGi"
+                      class="sc-etfXYe sc-ifkGpL dWWphJ fHVTgG"
                     >
                       <span
-                        class="sc-fAomSb cvaafY"
+                        class="sc-fpEFIB fBqdLk"
                       >
                         Version:
                       </span>
@@ -103,19 +103,19 @@ exports[`Group creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="sc-gpHbIA iGboTw"
+                class="sc-gAqISa ewEhPD"
               >
                 <span
-                  class="sc-jbAkgO cbLPqa"
+                  class="sc-iQQCXo kyLtWv"
                 >
                   <div>
                     <div
-                      class="sc-kfeOyU gWYhNB"
+                      class="sc-kpOvIu dpRMHS"
                       data-testid="repoIcon"
                     >
                       <div
                         aria-hidden="true"
-                        class="sc-fLDLck hNlXKn"
+                        class="sc-fWnslK efjtMM"
                         data-testid="iconWrapper"
                       >
                         <svg
@@ -139,31 +139,31 @@ exports[`Group creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="sc-gNZgCX kxpGbk"
+                    class="sc-gDpztx kqpgfs"
                   >
                     Helm chart
                   </div>
                 </span>
                 <small
-                  class="sc-gQJZgv bgeALg"
+                  class="sc-gGarWV iHKeWT"
                 >
                   Updated 3 hours ago
                 </small>
               </div>
               <div
-                class="sc-dVupuq fEFa-dy"
+                class="sc-dKKIkQ gUSRUk"
               >
                 Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.
               </div>
               <div
-                class="sc-hORkcV gvokuq"
+                class="sc-hZARmv cXvdwl"
               >
                 <div
-                  class="sc-dycHyt bMxXfo verified"
+                  class="sc-dIMoHT jrTpZC verified"
                 >
                   <div
                     aria-hidden="true"
-                    class="sc-fLDLck hNlXKn"
+                    class="sc-fWnslK efjtMM"
                     data-testid="iconWrapper"
                   >
                     <svg
@@ -185,11 +185,11 @@ exports[`Group creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="sc-dycHyt bMxXfo official"
+                  class="sc-dIMoHT jrTpZC official"
                 >
                   <div
                     aria-hidden="true"
-                    class="sc-fLDLck hNlXKn"
+                    class="sc-fWnslK efjtMM"
                     data-testid="iconWrapper"
                   >
                     <svg
@@ -212,10 +212,10 @@ exports[`Group creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="sc-eiwqOE sc-flQbIK hWVWeE ihFYzh"
+                class="sc-etfXYe sc-fbguzk dWWphJ bVKcNz"
               >
                 <span
-                  class="sc-fAomSb cvaafY"
+                  class="sc-fpEFIB fBqdLk"
                 >
                   Published by:
                 </span>
@@ -226,57 +226,57 @@ exports[`Group creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="sc-hRDKVd ecFmRV"
+        class="sc-icnseD cjmgrK"
         color="#417598"
         data-testid="mainWrapper"
       >
         <div
-          class="sc-jBIHhB kXanZa"
+          class="sc-jMsorb czsAnc"
           data-testid="cardWrapper"
         >
           <a
-            class="sc-cMqPwU eTMcbF"
+            class="sc-cXawGu icsyhx"
             href="https://localhost:8000/packages/helm/s4nhub-helm-charts/hub-scala-base"
             rel="noopener noreferrer"
             target="_blank"
           >
             <div
-              class="sc-deSjom bzevsE groupedItem"
+              class="sc-cUiCeM czetNE groupedItem"
               data-testid="cardBody"
             >
               <div
-                class="sc-dkBYrC rXbre"
+                class="sc-cZSric Mhzan"
               >
                 <div
-                  class="sc-cSaEAk fbEpUP"
+                  class="sc-dcKlJK haUTHO"
                 >
                   <img
                     alt="Logo hub-scala-base"
-                    class="sc-dVBluf dVXzIV"
+                    class="sc-dKREkF iJrFLl"
                     data-testid="placeholderImg"
                     src="https://localhost:8000/static/media/placeholder_pkg_helm.png"
                   />
                 </div>
                 <div
-                  class="sc-jZTQcj dYnrqx"
+                  class="sc-jPkiSJ bDsMfu"
                 >
                   <div
-                    class="sc-kXOizl bzLIJL"
+                    class="sc-lixPIL fHylm"
                   >
                     <div
-                      class="sc-eiwqOE sc-dPKAra hWVWeE eYXePD"
+                      class="sc-etfXYe sc-dFaThA dWWphJ fsLXDm"
                     >
                       hub-scala-base
                     </div>
                     <div
-                      class="sc-bCjwNj JzIZY"
+                      class="sc-brzPDJ cbFlua"
                     >
                       <div
-                        class="sc-fuExOL gjwqbx"
+                        class="sc-fjUQFl fnGEyg"
                       >
                         <div
                           aria-hidden="true"
-                          class="sc-fLDLck hNlXKn"
+                          class="sc-fWnslK efjtMM"
                           data-testid="iconWrapper"
                         >
                           <svg
@@ -298,7 +298,7 @@ exports[`Group creates snapshot 1`] = `
                         </div>
                       </div>
                       <div
-                        class="sc-gjXmFk llSzIm"
+                        class="sc-guGTOK gyILCw"
                       >
                         0
                       </div>
@@ -306,10 +306,10 @@ exports[`Group creates snapshot 1`] = `
                   </div>
                   <div>
                     <div
-                      class="sc-eiwqOE sc-hUAZgl hWVWeE faxDGi"
+                      class="sc-etfXYe sc-ifkGpL dWWphJ fHVTgG"
                     >
                       <span
-                        class="sc-fAomSb cvaafY"
+                        class="sc-fpEFIB fBqdLk"
                       >
                         Version:
                       </span>
@@ -319,19 +319,19 @@ exports[`Group creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="sc-gpHbIA iGboTw"
+                class="sc-gAqISa ewEhPD"
               >
                 <span
-                  class="sc-jbAkgO cbLPqa"
+                  class="sc-iQQCXo kyLtWv"
                 >
                   <div>
                     <div
-                      class="sc-kfeOyU gWYhNB"
+                      class="sc-kpOvIu dpRMHS"
                       data-testid="repoIcon"
                     >
                       <div
                         aria-hidden="true"
-                        class="sc-fLDLck hNlXKn"
+                        class="sc-fWnslK efjtMM"
                         data-testid="iconWrapper"
                       >
                         <svg
@@ -355,27 +355,27 @@ exports[`Group creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="sc-gNZgCX kxpGbk"
+                    class="sc-gDpztx kqpgfs"
                   >
                     Helm chart
                   </div>
                 </span>
                 <small
-                  class="sc-gQJZgv bgeALg"
+                  class="sc-gGarWV iHKeWT"
                 >
                   Updated 3 hours ago
                 </small>
               </div>
               <div
-                class="sc-dVupuq fEFa-dy"
+                class="sc-dKKIkQ gUSRUk"
               >
                 Toolkit for creating Helm Charts for Hub Services (Scala)
               </div>
               <div
-                class="sc-eiwqOE sc-flQbIK hWVWeE ihFYzh"
+                class="sc-etfXYe sc-fbguzk dWWphJ bVKcNz"
               >
                 <span
-                  class="sc-fAomSb cvaafY"
+                  class="sc-fpEFIB fBqdLk"
                 >
                   Published by:
                 </span>
@@ -386,57 +386,57 @@ exports[`Group creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="sc-hRDKVd ecFmRV"
+        class="sc-icnseD cjmgrK"
         color="#417598"
         data-testid="mainWrapper"
       >
         <div
-          class="sc-jBIHhB kXanZa"
+          class="sc-jMsorb czsAnc"
           data-testid="cardWrapper"
         >
           <a
-            class="sc-cMqPwU eTMcbF"
+            class="sc-cXawGu icsyhx"
             href="https://localhost:8000/packages/helm/wyrihaximusnet/docker-hub-exporter"
             rel="noopener noreferrer"
             target="_blank"
           >
             <div
-              class="sc-deSjom bzevsE groupedItem"
+              class="sc-cUiCeM czetNE groupedItem"
               data-testid="cardBody"
             >
               <div
-                class="sc-dkBYrC rXbre"
+                class="sc-cZSric Mhzan"
               >
                 <div
-                  class="sc-cSaEAk fbEpUP"
+                  class="sc-dcKlJK haUTHO"
                 >
                   <img
                     alt="Logo docker-hub-exporter"
-                    class="sc-dVBluf dVXzIV"
+                    class="sc-dKREkF iJrFLl"
                     src="https://localhost:8000/image/180db85c-51c6-4f33-b341-27ec236e6d87"
                     srcset="https://localhost:8000/image/180db85c-51c6-4f33-b341-27ec236e6d87@1x 1x, https://localhost:8000/image/180db85c-51c6-4f33-b341-27ec236e6d87@2x 2x, https://localhost:8000/image/180db85c-51c6-4f33-b341-27ec236e6d87@3x 3x, https://localhost:8000/image/180db85c-51c6-4f33-b341-27ec236e6d87@4x 4x"
                   />
                 </div>
                 <div
-                  class="sc-jZTQcj dYnrqx"
+                  class="sc-jPkiSJ bDsMfu"
                 >
                   <div
-                    class="sc-kXOizl bzLIJL"
+                    class="sc-lixPIL fHylm"
                   >
                     <div
-                      class="sc-eiwqOE sc-dPKAra hWVWeE eYXePD"
+                      class="sc-etfXYe sc-dFaThA dWWphJ fsLXDm"
                     >
                       docker-hub-exporter
                     </div>
                     <div
-                      class="sc-bCjwNj JzIZY"
+                      class="sc-brzPDJ cbFlua"
                     >
                       <div
-                        class="sc-fuExOL gjwqbx"
+                        class="sc-fjUQFl fnGEyg"
                       >
                         <div
                           aria-hidden="true"
-                          class="sc-fLDLck hNlXKn"
+                          class="sc-fWnslK efjtMM"
                           data-testid="iconWrapper"
                         >
                           <svg
@@ -458,7 +458,7 @@ exports[`Group creates snapshot 1`] = `
                         </div>
                       </div>
                       <div
-                        class="sc-gjXmFk llSzIm"
+                        class="sc-guGTOK gyILCw"
                       >
                         0
                       </div>
@@ -466,10 +466,10 @@ exports[`Group creates snapshot 1`] = `
                   </div>
                   <div>
                     <div
-                      class="sc-eiwqOE sc-hUAZgl hWVWeE faxDGi"
+                      class="sc-etfXYe sc-ifkGpL dWWphJ fHVTgG"
                     >
                       <span
-                        class="sc-fAomSb cvaafY"
+                        class="sc-fpEFIB fBqdLk"
                       >
                         Version:
                       </span>
@@ -479,19 +479,19 @@ exports[`Group creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="sc-gpHbIA iGboTw"
+                class="sc-gAqISa ewEhPD"
               >
                 <span
-                  class="sc-jbAkgO cbLPqa"
+                  class="sc-iQQCXo kyLtWv"
                 >
                   <div>
                     <div
-                      class="sc-kfeOyU gWYhNB"
+                      class="sc-kpOvIu dpRMHS"
                       data-testid="repoIcon"
                     >
                       <div
                         aria-hidden="true"
-                        class="sc-fLDLck hNlXKn"
+                        class="sc-fWnslK efjtMM"
                         data-testid="iconWrapper"
                       >
                         <svg
@@ -515,31 +515,31 @@ exports[`Group creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="sc-gNZgCX kxpGbk"
+                    class="sc-gDpztx kqpgfs"
                   >
                     Helm chart
                   </div>
                 </span>
                 <small
-                  class="sc-gQJZgv bgeALg"
+                  class="sc-gGarWV iHKeWT"
                 >
                   Updated 3 hours ago
                 </small>
               </div>
               <div
-                class="sc-dVupuq fEFa-dy"
+                class="sc-dKKIkQ gUSRUk"
               >
                 Docker Hub Exporter
               </div>
               <div
-                class="sc-hORkcV gvokuq"
+                class="sc-hZARmv cXvdwl"
               >
                 <div
-                  class="sc-dycHyt bMxXfo verified"
+                  class="sc-dIMoHT jrTpZC verified"
                 >
                   <div
                     aria-hidden="true"
-                    class="sc-fLDLck hNlXKn"
+                    class="sc-fWnslK efjtMM"
                     data-testid="iconWrapper"
                   >
                     <svg
@@ -562,10 +562,10 @@ exports[`Group creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="sc-eiwqOE sc-flQbIK hWVWeE ihFYzh"
+                class="sc-etfXYe sc-fbguzk dWWphJ bVKcNz"
               >
                 <span
-                  class="sc-fAomSb cvaafY"
+                  class="sc-fpEFIB fBqdLk"
                 >
                   Published by:
                 </span>
@@ -576,57 +576,57 @@ exports[`Group creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="sc-hRDKVd ecFmRV"
+        class="sc-icnseD cjmgrK"
         color="#417598"
         data-testid="mainWrapper"
       >
         <div
-          class="sc-jBIHhB kXanZa"
+          class="sc-jMsorb czsAnc"
           data-testid="cardWrapper"
         >
           <a
-            class="sc-cMqPwU eTMcbF"
+            class="sc-cXawGu icsyhx"
             href="https://localhost:8000/packages/helm/s4nhub-helm-charts/e2e-test-runner"
             rel="noopener noreferrer"
             target="_blank"
           >
             <div
-              class="sc-deSjom bzevsE groupedItem"
+              class="sc-cUiCeM czetNE groupedItem"
               data-testid="cardBody"
             >
               <div
-                class="sc-dkBYrC rXbre"
+                class="sc-cZSric Mhzan"
               >
                 <div
-                  class="sc-cSaEAk fbEpUP"
+                  class="sc-dcKlJK haUTHO"
                 >
                   <img
                     alt="Logo e2e-test-runner"
-                    class="sc-dVBluf dVXzIV"
+                    class="sc-dKREkF iJrFLl"
                     data-testid="placeholderImg"
                     src="https://localhost:8000/static/media/placeholder_pkg_helm.png"
                   />
                 </div>
                 <div
-                  class="sc-jZTQcj dYnrqx"
+                  class="sc-jPkiSJ bDsMfu"
                 >
                   <div
-                    class="sc-kXOizl bzLIJL"
+                    class="sc-lixPIL fHylm"
                   >
                     <div
-                      class="sc-eiwqOE sc-dPKAra hWVWeE eYXePD"
+                      class="sc-etfXYe sc-dFaThA dWWphJ fsLXDm"
                     >
                       e2e-test-runner
                     </div>
                     <div
-                      class="sc-bCjwNj JzIZY"
+                      class="sc-brzPDJ cbFlua"
                     >
                       <div
-                        class="sc-fuExOL gjwqbx"
+                        class="sc-fjUQFl fnGEyg"
                       >
                         <div
                           aria-hidden="true"
-                          class="sc-fLDLck hNlXKn"
+                          class="sc-fWnslK efjtMM"
                           data-testid="iconWrapper"
                         >
                           <svg
@@ -648,7 +648,7 @@ exports[`Group creates snapshot 1`] = `
                         </div>
                       </div>
                       <div
-                        class="sc-gjXmFk llSzIm"
+                        class="sc-guGTOK gyILCw"
                       >
                         0
                       </div>
@@ -656,10 +656,10 @@ exports[`Group creates snapshot 1`] = `
                   </div>
                   <div>
                     <div
-                      class="sc-eiwqOE sc-hUAZgl hWVWeE faxDGi"
+                      class="sc-etfXYe sc-ifkGpL dWWphJ fHVTgG"
                     >
                       <span
-                        class="sc-fAomSb cvaafY"
+                        class="sc-fpEFIB fBqdLk"
                       >
                         Version:
                       </span>
@@ -669,19 +669,19 @@ exports[`Group creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="sc-gpHbIA iGboTw"
+                class="sc-gAqISa ewEhPD"
               >
                 <span
-                  class="sc-jbAkgO cbLPqa"
+                  class="sc-iQQCXo kyLtWv"
                 >
                   <div>
                     <div
-                      class="sc-kfeOyU gWYhNB"
+                      class="sc-kpOvIu dpRMHS"
                       data-testid="repoIcon"
                     >
                       <div
                         aria-hidden="true"
-                        class="sc-fLDLck hNlXKn"
+                        class="sc-fWnslK efjtMM"
                         data-testid="iconWrapper"
                       >
                         <svg
@@ -705,27 +705,27 @@ exports[`Group creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="sc-gNZgCX kxpGbk"
+                    class="sc-gDpztx kqpgfs"
                   >
                     Helm chart
                   </div>
                 </span>
                 <small
-                  class="sc-gQJZgv bgeALg"
+                  class="sc-gGarWV iHKeWT"
                 >
                   Updated 3 hours ago
                 </small>
               </div>
               <div
-                class="sc-dVupuq fEFa-dy"
+                class="sc-dKKIkQ gUSRUk"
               >
                 Helm Chart for running e2e tests from pipeline
               </div>
               <div
-                class="sc-eiwqOE sc-flQbIK hWVWeE ihFYzh"
+                class="sc-etfXYe sc-fbguzk dWWphJ bVKcNz"
               >
                 <span
-                  class="sc-fAomSb cvaafY"
+                  class="sc-fpEFIB fBqdLk"
                 >
                   Published by:
                 </span>
@@ -736,57 +736,57 @@ exports[`Group creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="sc-hRDKVd ecFmRV"
+        class="sc-icnseD cjmgrK"
         color="#417598"
         data-testid="mainWrapper"
       >
         <div
-          class="sc-jBIHhB kXanZa"
+          class="sc-jMsorb czsAnc"
           data-testid="cardWrapper"
         >
           <a
-            class="sc-cMqPwU eTMcbF"
+            class="sc-cXawGu icsyhx"
             href="https://localhost:8000/packages/helm/s4nhub-helm-charts/fluentd-elasticsearch"
             rel="noopener noreferrer"
             target="_blank"
           >
             <div
-              class="sc-deSjom bzevsE groupedItem"
+              class="sc-cUiCeM czetNE groupedItem"
               data-testid="cardBody"
             >
               <div
-                class="sc-dkBYrC rXbre"
+                class="sc-cZSric Mhzan"
               >
                 <div
-                  class="sc-cSaEAk fbEpUP"
+                  class="sc-dcKlJK haUTHO"
                 >
                   <img
                     alt="Logo fluentd-elasticsearch"
-                    class="sc-dVBluf dVXzIV"
+                    class="sc-dKREkF iJrFLl"
                     data-testid="placeholderImg"
                     src="https://localhost:8000/static/media/placeholder_pkg_helm.png"
                   />
                 </div>
                 <div
-                  class="sc-jZTQcj dYnrqx"
+                  class="sc-jPkiSJ bDsMfu"
                 >
                   <div
-                    class="sc-kXOizl bzLIJL"
+                    class="sc-lixPIL fHylm"
                   >
                     <div
-                      class="sc-eiwqOE sc-dPKAra hWVWeE eYXePD"
+                      class="sc-etfXYe sc-dFaThA dWWphJ fsLXDm"
                     >
                       fluentd-elasticsearch
                     </div>
                     <div
-                      class="sc-bCjwNj JzIZY"
+                      class="sc-brzPDJ cbFlua"
                     >
                       <div
-                        class="sc-fuExOL gjwqbx"
+                        class="sc-fjUQFl fnGEyg"
                       >
                         <div
                           aria-hidden="true"
-                          class="sc-fLDLck hNlXKn"
+                          class="sc-fWnslK efjtMM"
                           data-testid="iconWrapper"
                         >
                           <svg
@@ -808,7 +808,7 @@ exports[`Group creates snapshot 1`] = `
                         </div>
                       </div>
                       <div
-                        class="sc-gjXmFk llSzIm"
+                        class="sc-guGTOK gyILCw"
                       >
                         0
                       </div>
@@ -816,10 +816,10 @@ exports[`Group creates snapshot 1`] = `
                   </div>
                   <div>
                     <div
-                      class="sc-eiwqOE sc-hUAZgl hWVWeE faxDGi"
+                      class="sc-etfXYe sc-ifkGpL dWWphJ fHVTgG"
                     >
                       <span
-                        class="sc-fAomSb cvaafY"
+                        class="sc-fpEFIB fBqdLk"
                       >
                         Version:
                       </span>
@@ -829,19 +829,19 @@ exports[`Group creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="sc-gpHbIA iGboTw"
+                class="sc-gAqISa ewEhPD"
               >
                 <span
-                  class="sc-jbAkgO cbLPqa"
+                  class="sc-iQQCXo kyLtWv"
                 >
                   <div>
                     <div
-                      class="sc-kfeOyU gWYhNB"
+                      class="sc-kpOvIu dpRMHS"
                       data-testid="repoIcon"
                     >
                       <div
                         aria-hidden="true"
-                        class="sc-fLDLck hNlXKn"
+                        class="sc-fWnslK efjtMM"
                         data-testid="iconWrapper"
                       >
                         <svg
@@ -865,27 +865,27 @@ exports[`Group creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="sc-gNZgCX kxpGbk"
+                    class="sc-gDpztx kqpgfs"
                   >
                     Helm chart
                   </div>
                 </span>
                 <small
-                  class="sc-gQJZgv bgeALg"
+                  class="sc-gGarWV iHKeWT"
                 >
                   Updated 3 hours ago
                 </small>
               </div>
               <div
-                class="sc-dVupuq fEFa-dy"
+                class="sc-dKKIkQ gUSRUk"
               >
                 A Helm chart for fluentd-elasticsearch
               </div>
               <div
-                class="sc-eiwqOE sc-flQbIK hWVWeE ihFYzh"
+                class="sc-etfXYe sc-fbguzk dWWphJ bVKcNz"
               >
                 <span
-                  class="sc-fAomSb cvaafY"
+                  class="sc-fpEFIB fBqdLk"
                 >
                   Published by:
                 </span>
