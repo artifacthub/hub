@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.
 type: application
-version: 1.21.0-5
-appVersion: 1.20.0
+version: 1.21.0
+appVersion: 1.21.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -49,51 +49,53 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Support for Radius recipes
+      description: Support for Bootable containers images
     - kind: added
-      description: Display signed badge for Inspektor Gadget artifacts
+      description: Deletion protection experimental feature
     - kind: added
-      description: Populate chart labels for all resources
-    - kind: added
-      description: Allow adding extra containers to the hub pod from the chart
+      description: Include packages stars in nova dump
     - kind: changed
-      description: Update db migration script to support pg_partman 5
+      description: Improve Artifact Hub Helm chart
     - kind: changed
-      description: Banner frame style
+      description: Improve Helm installation instructions modal
     - kind: changed
-      description: Bump Alpine to 3.20.3
+      description: Add some default configuration values for cmds
     - kind: changed
-      description: Bump Go to 1.23.1
+      description: Do not scan versions with more than 15 images
     - kind: changed
-      description: Bump Trivy to 0.56.1
+      description: Update semver db functions to use 64 bits integers
     - kind: changed
-      description: Bump OPM to 1.47.0
+      description: Update Trivy default image
+    - kind: changed
+      description: Bump Alpine to 3.21.3
+    - kind: changed
+      description: Bump Go to 1.24.2
+    - kind: changed
+      description: Bump OPM to 1.51.0
     - kind: changed
       description: Upgrade backend and frontend dependencies
     - kind: fixed
-      description: Do not render outdated security reports summary
+      description: Check if db extension exists before creating it
     - kind: fixed
-      description: Pagination style on mobile devices
+      description: URL encode db username and password
     - kind: fixed
-      description: Issue with long texts on templates tooltips
+      description: Policy data format in API docs
     - kind: fixed
-      description: Hide versions with no changes in changelog
+      description: Link to ORAS CLI documentation
     - kind: fixed
-      description: Invalid Dockerfile reference in dev.md
-    - kind: fixed
-      description: Typo in repositories modal
+      description: Some frontend unit tests
     - kind: security
-      description: Remove user sessions when password is updated
+      description: Add frame-ancestors directive to CSP
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.20.0
+      image: artifacthub/db-migrator:v1.21.0
     - name: hub
-      image: artifacthub/hub:v1.20.0
+      image: artifacthub/hub:v1.21.0
     - name: tracker
-      image: artifacthub/tracker:v1.20.0
+      image: artifacthub/tracker:v1.21.0
     - name: scanner
-      image: artifacthub/scanner:v1.20.0
+      image: artifacthub/scanner:v1.21.0
     - name: trivy
       image: aquasec/trivy:0.56.1
   artifacthub.io/links: |
