@@ -15,7 +15,7 @@ require (
 	github.com/go-git/go-git/v5 v5.16.0
 	github.com/google/go-containerregistry v0.20.3
 	github.com/google/go-github v17.0.0+incompatible
-	github.com/gorilla/csrf v1.7.2
+	github.com/gorilla/csrf v1.7.3
 	github.com/gorilla/feeds v1.2.0
 	github.com/gorilla/securecookie v1.1.2
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
@@ -26,7 +26,7 @@ require (
 	github.com/mitchellh/hashstructure/v2 v2.0.2
 	github.com/open-policy-agent/opa v1.3.0
 	github.com/opencontainers/image-spec v1.1.1
-	github.com/operator-framework/api v0.30.0
+	github.com/operator-framework/api v0.31.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pquerna/otp v1.4.0
 	github.com/prometheus/client_golang v1.22.0
@@ -341,8 +341,8 @@ require (
 	gopkg.in/neurosnap/sentences.v1 v1.0.7 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	k8s.io/api v0.32.3 // indirect
-	k8s.io/apiextensions-apiserver v0.32.2 // indirect
-	k8s.io/apiserver v0.32.2 // indirect
+	k8s.io/apiextensions-apiserver v0.32.3 // indirect
+	k8s.io/apiserver v0.32.3 // indirect
 	k8s.io/cli-runtime v0.32.3 // indirect
 	k8s.io/client-go v11.0.0+incompatible // indirect
 	k8s.io/component-base v0.32.3 // indirect
