@@ -19,6 +19,11 @@ exports[`VersionInRow creates snapshot 1`] = `
             </button>
           </div>
         </td>
+        <td>
+          <span>
+            -
+          </span>
+        </td>
         <td
           class="text-nowrap"
         >

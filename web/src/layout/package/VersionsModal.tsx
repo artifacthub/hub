@@ -19,8 +19,14 @@ const VersionsModal = (props: Props) => {
   return (
     <>
       <div role="list">
-        <div className="d-none d-md-block">{props.items.slice(0, 3)}</div>
-        <div className="d-block d-md-none">{props.items.slice(0, 5)}</div>
+        {props.items.length > 3 ? (
+          <>
+            <div className="d-none d-md-block">{props.items.slice(0, 3)}</div>
+            <div className="d-block d-md-none">{props.items.slice(0, 5)}</div>
+          </>
+        ) : (
+          <div>{props.items}</div>
+        )}
       </div>
 
       <div className="d-none d-md-flex flex-row align-items-baseline">

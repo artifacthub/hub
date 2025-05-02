@@ -36,9 +36,9 @@ import Maintainers from './Maintainers';
 import Platforms from './Platforms';
 import SecurityReport from './securityReport';
 import TasksInPipeline from './TasksInPipeline';
-import VersionsModal from './VersionsModal';
-import VersionInRow from './VersionInRow';
 import Version from './Version';
+import VersionInRow from './VersionInRow';
+import VersionsModal from './VersionsModal';
 
 interface Props {
   package: Package;

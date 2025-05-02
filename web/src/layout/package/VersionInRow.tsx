@@ -68,7 +68,9 @@ const VersionInRow = (props: Props) => {
           )}
         </div>
       </td>
-      <td>{props.appVersion && <span>{props.appVersion}</span>}</td>
+      <td>
+        <span>{props.appVersion || '-'}</span>
+      </td>
       <td className="text-nowrap">
         <span className="text-muted px-1">{formattedDate}</span>
       </td>
