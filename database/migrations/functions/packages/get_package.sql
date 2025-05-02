@@ -53,6 +53,7 @@ begin
         'available_versions', (
             select json_agg(json_build_object(
                 'version', version,
+                'app_version', app_version,
                 'contains_security_updates', contains_security_updates,
                 'prerelease', prerelease,
                 'ts', floor(extract(epoch from ts))
