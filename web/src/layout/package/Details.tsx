@@ -19,7 +19,6 @@ import {
 } from '../../types';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import RSSLinkTitle from '../common/RSSLinkTitle';
-import SeeAllModal from '../common/SeeAllModal';
 import SmallTitle from '../common/SmallTitle';
 import CapabilityLevel from './CapabilityLevel';
 import ContainerAlternativeLocations from './ContainerAlternativeLocations';
@@ -37,8 +36,9 @@ import Maintainers from './Maintainers';
 import Platforms from './Platforms';
 import SecurityReport from './securityReport';
 import TasksInPipeline from './TasksInPipeline';
-import Version from './Version';
+import VersionsModal from './VersionsModal';
 import VersionInRow from './VersionInRow';
+import Version from './Version';
 
 interface Props {
   package: Package;
@@ -101,16 +101,18 @@ const Details = (props: Props) => {
     props.sortedVersions.forEach((av_version: VersionData, index: number) => {
       const linkedChannels = getLinkedChannelsToVersion(av_version.version);
 
-      items.push(
-        <Version
-          key={`${av_version.version}_${index}`}
-          isActive={av_version.version === props.package.version}
-          {...av_version}
-          linkedChannels={linkedChannels}
-          normalizedName={props.package.normalizedName}
-          repository={props.package.repository}
-        />
-      );
+      if (index <= 5) {
+        items.push(
+          <Version
+            key={`${av_version.version}_${index}`}
+            isActive={av_version.version === props.package.version}
+            {...av_version}
+            linkedChannels={linkedChannels}
+            normalizedName={props.package.normalizedName}
+            repository={props.package.repository}
+          />
+        );
+      }
 
       itemsForModal.push(
         <VersionInRow
@@ -132,6 +134,9 @@ const Details = (props: Props) => {
             <tr className={styles.tableTitle}>
               <th scope="col">
                 <span className="px-1">Version</span>
+              </th>
+              <th scope="col">
+                <span className="px-1">App version</span>
               </th>
               <th scope="col" className={styles.releasedCell}>
                 <span className="px-1">Released</span>
@@ -227,7 +232,7 @@ const Details = (props: Props) => {
           <p data-testid="versions">-</p>
         ) : (
           <div className="mb-3" data-testid="versions">
-            <SeeAllModal
+            <VersionsModal
               title={getVersionsTitle(props.package.repository.kind)}
               {...versions}
               packageId={props.package.packageId}

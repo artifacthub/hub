@@ -8,6 +8,7 @@ import styles from './VersionInRow.module.css';
 interface Props {
   isActive: boolean;
   version: string;
+  appVersion?: string;
   containsSecurityUpdates: boolean;
   prerelease: boolean;
   linkedChannels?: string[];
@@ -67,6 +68,7 @@ const VersionInRow = (props: Props) => {
           )}
         </div>
       </td>
+      <td>{props.appVersion && <span>{props.appVersion}</span>}</td>
       <td className="text-nowrap">
         <span className="text-muted px-1">{formattedDate}</span>
       </td>
