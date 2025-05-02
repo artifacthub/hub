@@ -301,12 +301,14 @@ select is(
         "available_versions": [
             {
                 "version": "1.0.0",
+                "app_version": "12.1.0",
                 "contains_security_updates": true,
                 "prerelease": true,
                 "ts": 1592299234
             },
             {
                 "version": "0.0.9",
+                "app_version": "12.0.0",
                 "contains_security_updates": false,
                 "prerelease": false,
                 "ts": 1592299233
@@ -450,12 +452,14 @@ select is(
         "available_versions": [
             {
                 "version": "1.0.0",
+                "app_version": "12.1.0",
                 "contains_security_updates": true,
                 "prerelease": true,
                 "ts": 1592299234
             },
             {
                 "version": "0.0.9",
+                "app_version": "12.0.0",
                 "contains_security_updates": false,
                 "prerelease": false,
                 "ts": 1592299233
@@ -589,12 +593,14 @@ select is(
         "available_versions": [
             {
                 "version": "1.0.0",
+                "app_version": "12.1.0",
                 "contains_security_updates": true,
                 "prerelease": true,
                 "ts": 1592299234
             },
             {
                 "version": "0.0.9",
+                "app_version": "12.0.0",
                 "contains_security_updates": false,
                 "prerelease": false,
                 "ts": 1592299233
