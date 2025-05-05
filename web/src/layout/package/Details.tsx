@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import uniq from 'lodash/uniq';
+import compact from 'lodash/compact';
 import { useCallback, useEffect, useState } from 'react';
 
 import {
@@ -56,6 +57,7 @@ interface Props {
 interface VersionsProps {
   items: JSX.Element[];
   itemsForModal: JSX.Element[] | JSX.Element;
+  itemsSortedAppVersionForModal: JSX.Element[] | JSX.Element;
 }
 
 const getVersionsTitle = (repoKind: RepositoryKind): string => {
@@ -70,98 +72,6 @@ const getVersionsTitle = (repoKind: RepositoryKind): string => {
 };
 
 const Details = (props: Props) => {
-  const getAllVersions = useCallback((): VersionsProps => {
-    const items: JSX.Element[] = [];
-    const itemsForModal: JSX.Element[] = [];
-
-    const getLinkedChannelsToVersion = (version: string): string[] | undefined => {
-      let linked: string[] | undefined;
-      if (props.channels) {
-        const channels: string[] = [];
-        props.channels.forEach((ch: Channel) => {
-          if (ch.version === version) {
-            channels.push(ch.name);
-          }
-        });
-        // Sort channels: using defaultChannel as first one
-        if (channels.length > 0) {
-          const sortedChannels = uniq(channels).sort((a, b) => {
-            if (a === props.package.defaultChannel) return -1;
-            if (b === props.package.defaultChannel) return 1;
-            return 0;
-          });
-
-          linked = sortedChannels;
-        }
-      }
-
-      return linked;
-    };
-
-    props.sortedVersions.forEach((av_version: VersionData, index: number) => {
-      const linkedChannels = getLinkedChannelsToVersion(av_version.version);
-
-      if (index <= 5) {
-        items.push(
-          <Version
-            key={`${av_version.version}_${index}`}
-            isActive={av_version.version === props.package.version}
-            {...av_version}
-            linkedChannels={linkedChannels}
-            normalizedName={props.package.normalizedName}
-            repository={props.package.repository}
-          />
-        );
-      }
-
-      itemsForModal.push(
-        <VersionInRow
-          key={`${av_version.version}_inline_${index}`}
-          isActive={av_version.version === props.package.version}
-          {...av_version}
-          linkedChannels={linkedChannels}
-          normalizedName={props.package.normalizedName}
-          repository={props.package.repository}
-        />
-      );
-    });
-
-    return {
-      items,
-      itemsForModal: (
-        <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
-          <thead>
-            <tr className={styles.tableTitle}>
-              <th scope="col">
-                <span className="px-1">Version</span>
-              </th>
-              <th scope="col">
-                <span className="px-1">App version</span>
-              </th>
-              <th scope="col" className={styles.releasedCell}>
-                <span className="px-1">Released</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody className={styles.body}>{itemsForModal}</tbody>
-        </table>
-      ),
-    };
-  }, [
-    props.channels,
-    props.package.normalizedName,
-    props.package.repository,
-    props.package.version,
-    props.sortedVersions,
-    props.package.defaultChannel,
-  ]);
-
-  const [versions, setVersions] = useState<VersionsProps>(getAllVersions());
-
-  useEffect(() => {
-    setVersions(getAllVersions());
-  }, [props.package.version, props.package.packageId, getAllVersions]);
-
   return (
     <>
       {(() => {
@@ -234,9 +144,9 @@ const Details = (props: Props) => {
           <div className="mb-3" data-testid="versions">
             <VersionsModal
               title={getVersionsTitle(props.package.repository.kind)}
-              {...versions}
-              packageId={props.package.packageId}
-              version={props.package.version}
+              package={props.package}
+              sortedVersions={props.sortedVersions}
+              channels={props.channels}
             />
           </div>
         )}

@@ -1,31 +1,165 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import { HiPlusCircle } from 'react-icons/hi';
-
+import { Channel, Package, Version as VersionData } from '../../types';
 import Modal from '../common/Modal';
 import styles from './VersionsModal.module.css';
+import uniq from 'lodash/uniq';
+import compact from 'lodash/compact';
+import Version from './Version';
+import VersionInRow from './VersionInRow';
+import sortVersions from '../../utils/sortVersions';
+import { FaCaretDown } from 'react-icons/fa';
+import classNames from 'classnames';
 
 interface Props {
-  packageId?: string;
-  version?: string;
+  package: Package;
+  sortedVersions: VersionData[];
   title: string;
-  visibleItems?: number;
+  channels?: Channel[] | null;
+}
+
+interface VersionsProps {
   items: JSX.Element[];
-  itemsForModal?: JSX.Element[] | JSX.Element;
+  itemsForModal: JSX.Element[] | JSX.Element;
+  itemsSortedAppVersionForModal: JSX.Element[] | JSX.Element;
 }
 
 const VersionsModal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState(false);
+  const [sortedBy, setSortedBy] = useState<string>('version');
+  const getAllVersions = useCallback((): VersionsProps => {
+    const items: JSX.Element[] = [];
+    const itemsForModal: JSX.Element[] = [];
+    const itemsSortedAppVersionForModal: JSX.Element[] = [];
+
+    const sortedAppVersions: string[] = props.package.availableVersions
+      ? sortVersions(
+          uniq(
+            compact(
+              props.package.availableVersions!.map((version: VersionData) => {
+                if (version.appVersion) {
+                  return version.appVersion;
+                }
+              })
+            )
+          )
+        )
+      : [];
+
+    const getLinkedChannelsToVersion = (version: string): string[] | undefined => {
+      let linked: string[] | undefined;
+      if (props.channels) {
+        const channels: string[] = [];
+        props.channels.forEach((ch: Channel) => {
+          if (ch.version === version) {
+            channels.push(ch.name);
+          }
+        });
+        // Sort channels: using defaultChannel as first one
+        if (channels.length > 0) {
+          const sortedChannels = uniq(channels).sort((a, b) => {
+            if (a === props.package.defaultChannel) return -1;
+            if (b === props.package.defaultChannel) return 1;
+            return 0;
+          });
+
+          linked = sortedChannels;
+        }
+      }
+
+      return linked;
+    };
+
+    props.sortedVersions.forEach((av_version: VersionData, index: number) => {
+      const linkedChannels = getLinkedChannelsToVersion(av_version.version);
+
+      if (index <= 5) {
+        items.push(
+          <Version
+            key={`${av_version.version}_${index}`}
+            isActive={av_version.version === props.package.version}
+            {...av_version}
+            linkedChannels={linkedChannels}
+            normalizedName={props.package.normalizedName}
+            repository={props.package.repository}
+          />
+        );
+      }
+
+      itemsForModal.push(
+        <VersionInRow
+          key={`${av_version.version}_inline_${index}`}
+          isActive={av_version.version === props.package.version}
+          {...av_version}
+          linkedChannels={linkedChannels}
+          normalizedName={props.package.normalizedName}
+          repository={props.package.repository}
+          onClick={() => setOpenStatus(false)}
+        />
+      );
+    });
+
+    if (sortedAppVersions.length === 0) {
+      itemsSortedAppVersionForModal.push(...itemsForModal);
+    } else {
+      sortedAppVersions.forEach((appVersion: string, index: number) => {
+        const versions = props.sortedVersions.filter((version: VersionData) => version.appVersion === appVersion);
+        versions.forEach((av_version: VersionData) => {
+          const linkedChannels = getLinkedChannelsToVersion(av_version.version);
+
+          itemsSortedAppVersionForModal.push(
+            <VersionInRow
+              key={`${av_version.version}_inline_${index}`}
+              isActive={av_version.version === props.package.version}
+              {...av_version}
+              linkedChannels={linkedChannels}
+              normalizedName={props.package.normalizedName}
+              repository={props.package.repository}
+              onClick={() => setOpenStatus(false)}
+            />
+          );
+        });
+      });
+    }
+
+    return {
+      items,
+      itemsForModal: itemsForModal,
+      itemsSortedAppVersionForModal: itemsSortedAppVersionForModal,
+    };
+  }, [
+    props.channels,
+    props.package.normalizedName,
+    props.package.repository,
+    props.package.version,
+    props.sortedVersions,
+    props.package.defaultChannel,
+  ]);
+
+  const [versions, setVersions] = useState<VersionsProps>(getAllVersions());
+
+  useEffect(() => {
+    setVersions(getAllVersions());
+  }, [props.package.packageId, props.package.version]);
+
+  const handleSortByChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSortedBy(event.target.value);
+  };
+
+  if (versions.items.length === 0) {
+    return null;
+  }
 
   return (
     <>
       <div role="list">
-        {props.items.length > 3 ? (
+        {versions.items.length > 3 ? (
           <>
-            <div className="d-none d-md-block">{props.items.slice(0, 3)}</div>
-            <div className="d-block d-md-none">{props.items.slice(0, 5)}</div>
+            <div className="d-none d-md-block">{versions.items.slice(0, 3)}</div>
+            <div className="d-block d-md-none">{versions.items.slice(0, 5)}</div>
           </>
         ) : (
-          <div>{props.items}</div>
+          <div>{versions.items}</div>
         )}
       </div>
 
@@ -41,7 +175,7 @@ const VersionsModal = (props: Props) => {
           </div>
         </button>
 
-        <div className={`text-muted position-relative ${styles.summary}`}>({props.items.length})</div>
+        <div className={`text-muted position-relative ${styles.summary}`}>({versions.items.length})</div>
       </div>
 
       <Modal
@@ -53,7 +187,58 @@ const VersionsModal = (props: Props) => {
         footerClassName={styles.modalFooter}
         size="lg"
       >
-        <div className="my-3 mw-100">{props.itemsForModal}</div>
+        <div className="my-3 mw-100">
+          <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
+            <thead>
+              <tr className={styles.tableTitle}>
+                <th scope="col">
+                  <button
+                    onClick={() => setSortedBy('version')}
+                    className="d-flex flex-row justify-content-between btn btn-link text-reset w-100 p-0 m-0 fw-bold"
+                    type="button"
+                  >
+                    <div className="px-3">Version</div>
+                    <div
+                      className={classNames({
+                        visible: sortedBy === 'version',
+                        invisible: sortedBy !== 'version',
+                      })}
+                    >
+                      <FaCaretDown />
+                    </div>
+                  </button>
+                </th>
+                <th scope="col">
+                  <button
+                    onClick={() => setSortedBy('appVersion')}
+                    className="d-flex flex-row justify-content-between btn btn-link text-reset w-100 p-0 m-0 fw-bold"
+                    type="button"
+                  >
+                    <div className="px-3">App version</div>
+                    <div
+                      className={classNames({
+                        visible: sortedBy === 'appVersion',
+                        invisible: sortedBy !== 'appVersion',
+                      })}
+                    >
+                      <FaCaretDown />
+                    </div>
+                  </button>
+                </th>
+                <th scope="col" className={styles.releasedCell}>
+                  <span className="px-3">Released</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className={styles.body}>
+              {sortedBy === 'appVersion' ? (
+                <>{versions.itemsSortedAppVersionForModal}</>
+              ) : (
+                <>{versions.itemsForModal}</>
+              )}
+            </tbody>
+          </table>
+        </div>
       </Modal>
     </>
   );
