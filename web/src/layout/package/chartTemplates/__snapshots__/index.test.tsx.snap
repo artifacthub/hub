@@ -948,24 +948,6 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                       class="position-relative h-100 mh-100 border border-1 templateWrapper"
                     >
                       <div
-                        class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
-                      >
-                        <div
-                          class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-                        >
-                          <div
-                            class="wave"
-                            role="status"
-                          >
-                            <span
-                              class="visually-hidden"
-                            >
-                              Loading...
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div
                         class="position-absolute d-flex flex-row wrapper undefined"
                       >
                         <div

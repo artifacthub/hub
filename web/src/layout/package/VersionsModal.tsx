@@ -1,15 +1,16 @@
-import { useState, useEffect, useCallback, ChangeEvent } from 'react';
-import { HiPlusCircle } from 'react-icons/hi';
-import { Channel, Package, Version as VersionData } from '../../types';
-import Modal from '../common/Modal';
-import styles from './VersionsModal.module.css';
-import uniq from 'lodash/uniq';
+import classNames from 'classnames';
 import compact from 'lodash/compact';
+import uniq from 'lodash/uniq';
+import { useCallback, useEffect, useState } from 'react';
+import { FaCaretDown } from 'react-icons/fa';
+import { HiPlusCircle } from 'react-icons/hi';
+
+import { Channel, Package, Version as VersionData } from '../../types';
+import sortVersions from '../../utils/sortVersions';
+import Modal from '../common/Modal';
 import Version from './Version';
 import VersionInRow from './VersionInRow';
-import sortVersions from '../../utils/sortVersions';
-import { FaCaretDown } from 'react-icons/fa';
-import classNames from 'classnames';
+import styles from './VersionsModal.module.css';
 
 interface Props {
   package: Package;
@@ -141,10 +142,6 @@ const VersionsModal = (props: Props) => {
   useEffect(() => {
     setVersions(getAllVersions());
   }, [props.package.packageId, props.package.version]);
-
-  const handleSortByChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSortedBy(event.target.value);
-  };
 
   if (versions.items.length === 0) {
     return null;

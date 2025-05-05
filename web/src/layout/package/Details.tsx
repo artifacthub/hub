@@ -1,9 +1,6 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import uniq from 'lodash/uniq';
-import compact from 'lodash/compact';
-import { useCallback, useEffect, useState } from 'react';
 
 import {
   ArgoTemplateData,
@@ -37,8 +34,6 @@ import Maintainers from './Maintainers';
 import Platforms from './Platforms';
 import SecurityReport from './securityReport';
 import TasksInPipeline from './TasksInPipeline';
-import Version from './Version';
-import VersionInRow from './VersionInRow';
 import VersionsModal from './VersionsModal';
 
 interface Props {
@@ -52,12 +47,6 @@ interface Props {
   eventId?: string | null;
   viewsStats?: PackageViewsStats;
   version?: string;
-}
-
-interface VersionsProps {
-  items: JSX.Element[];
-  itemsForModal: JSX.Element[] | JSX.Element;
-  itemsSortedAppVersionForModal: JSX.Element[] | JSX.Element;
 }
 
 const getVersionsTitle = (repoKind: RepositoryKind): string => {
