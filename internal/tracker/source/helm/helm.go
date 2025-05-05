@@ -569,9 +569,9 @@ func extractContainersImages(chrt *chart.Chart) (images []string, err error) {
 		Log: func(string, ...interface{}) {},
 	})
 	install.KubeVersion = &chartutil.KubeVersion{
-		Version: "1.22",
+		Version: "1.29",
 		Major:   "1",
-		Minor:   "22",
+		Minor:   "29",
 	}
 	install.ReleaseName = "release-name"
 	install.DryRun = true
