@@ -8,6 +8,14 @@
   top: -1px;
 }
 
+.versionCell {
+  width: 480px;
+}
+
+.appVersionCell {
+  width: 300px;
+}
+
 @media only screen and (max-height: 700px) {
   .modalFooter {
     display: none;

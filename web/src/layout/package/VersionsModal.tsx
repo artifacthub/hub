@@ -105,9 +105,6 @@ const VersionsModal = (props: Props) => {
     } else {
       sortedAppVersions.forEach((appVersion: string, index: number) => {
         const versions = props.sortedVersions.filter((version: VersionData) => version.appVersion === appVersion);
-
-        console.log('versions', versions);
-
         versions.forEach((av_version: VersionData) => {
           const linkedChannels = getLinkedChannelsToVersion(av_version.version);
 
@@ -163,6 +160,12 @@ const VersionsModal = (props: Props) => {
         )}
       </div>
 
+      {props.sortedVersions.length > 5 && (
+        <div className={`d-block d-md-none ${styles.legend}`}>
+          <small className="text-muted fst-italic">Displaying only the first 5 entries</small>
+        </div>
+      )}
+
       <div className="d-none d-md-flex flex-row align-items-baseline">
         <button
           className={`btn btn-link ps-0 pe-1 position-relative text-primary ${styles.btn}`}
@@ -175,7 +178,7 @@ const VersionsModal = (props: Props) => {
           </div>
         </button>
 
-        <div className={`text-muted position-relative ${styles.summary}`}>({versions.items.length})</div>
+        <div className={`text-muted position-relative ${styles.summary}`}>({props.sortedVersions.length})</div>
       </div>
 
       <Modal
@@ -191,7 +194,7 @@ const VersionsModal = (props: Props) => {
           <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>
             <thead>
               <tr className={styles.tableTitle}>
-                <th scope="col">
+                <th scope="col" className={styles.versionCell}>
                   <button
                     onClick={() => setSortedBy('version')}
                     className="d-flex flex-row justify-content-between btn btn-link text-reset w-100 p-0 m-0 fw-bold"
@@ -210,7 +213,7 @@ const VersionsModal = (props: Props) => {
                     </div>
                   </button>
                 </th>
-                <th scope="col">
+                <th scope="col" className={styles.appVersionCell}>
                   <button
                     onClick={() => setSortedBy('appVersion')}
                     className="d-flex flex-row justify-content-between btn btn-link text-reset w-100 p-0 m-0 fw-bold"
