@@ -46,7 +46,7 @@ const VersionInRow = (props: Props) => {
           ) : (
             <button
               onClick={() => openPackagePage()}
-              className={`btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block text-start ${styles.versionBtn}`}
+              className="btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block text-start"
               aria-label={`Open version ${props.version}`}
             >
               {props.version}
