@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-import VersionsModal from './VersionsModal';
-import { Package } from '../../types';
 import { BrowserRouter as Router } from 'react-router-dom';
+
+import { Package } from '../../types';
+import VersionsModal from './VersionsModal';
 
 const getMockPackage = (fixtureId: string): Package => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
