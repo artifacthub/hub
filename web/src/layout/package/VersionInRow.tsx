@@ -8,12 +8,14 @@ import styles from './VersionInRow.module.css';
 interface Props {
   isActive: boolean;
   version: string;
+  appVersion?: string;
   containsSecurityUpdates: boolean;
   prerelease: boolean;
   linkedChannels?: string[];
   ts: number;
   normalizedName: string;
   repository: Repository;
+  onClick?: () => void;
 }
 
 const VersionInRow = (props: Props) => {
@@ -21,6 +23,10 @@ const VersionInRow = (props: Props) => {
   const location = useLocation();
 
   const openPackagePage = () => {
+    if (props.onClick) {
+      props.onClick();
+    }
+
     navigate(
       {
         pathname: buildPackageURL(props.normalizedName, props.repository, props.version, true),
@@ -32,9 +38,9 @@ const VersionInRow = (props: Props) => {
   const formattedDate = moment.unix(props.ts!).format('D MMM, YYYY');
 
   return (
-    <tr>
-      <td className={`w-75 ${styles.versionCell}`}>
-        <div className="d-flex flex-row align-items-center px-1 overflow-auto">
+    <tr data-testid="tr-version-row">
+      <td className={styles.versionCell}>
+        <div className={`d-flex flex-row align-items-center px-3 overflow-auto ${styles.truncateWrapper}`}>
           {props.isActive ? (
             <div className={`${styles.activeVersion} text-truncate`}>{props.version}</div>
           ) : (
@@ -67,8 +73,11 @@ const VersionInRow = (props: Props) => {
           )}
         </div>
       </td>
+      <td>
+        <span className="px-3">{props.appVersion || ''}</span>
+      </td>
       <td className="text-nowrap">
-        <span className="text-muted px-1">{formattedDate}</span>
+        <span className="text-muted px-3">{formattedDate}</span>
       </td>
     </tr>
   );

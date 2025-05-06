@@ -1,0 +1,24 @@
+.btn {
+  font-size: 90%;
+  left: -1px;
+}
+
+.summary {
+  font-size: 70%;
+  top: -1px;
+}
+
+@media only screen and (max-height: 700px) {
+  .modalFooter {
+    display: none;
+  }
+
+  .title {
+    font-size: 1.35rem;
+  }
+}
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}

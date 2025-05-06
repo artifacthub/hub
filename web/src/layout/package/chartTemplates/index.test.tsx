@@ -63,7 +63,8 @@ describe('ChartTemplatesModal', () => {
       expect(API.getChartTemplates).toHaveBeenCalledTimes(1);
     });
 
-    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+    expect(await screen.findByRole('status')).not.toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 

@@ -209,6 +209,7 @@ export interface ContainerImage {
 
 export interface Version {
   version: string;
+  appVersion?: string;
   containsSecurityUpdates: boolean;
   prerelease: boolean;
   ts: number;

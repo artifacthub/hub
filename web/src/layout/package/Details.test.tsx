@@ -271,7 +271,7 @@ describe('Details', () => {
         </Router>
       );
 
-      expect(screen.getByText('Versions')).toBeInTheDocument();
+      expect(screen.getAllByText('Versions')).toHaveLength(2);
       mockPackage.availableVersions!.forEach((vs: Version) => {
         expect(screen.getByText(vs.version)).toBeInTheDocument();
       });
@@ -322,7 +322,7 @@ describe('Details', () => {
         </Router>
       );
 
-      expect(screen.getByText('Versions')).toBeInTheDocument();
+      expect(screen.getAllByText('Versions')).toHaveLength(2);
       expect(screen.getByText('1.0.0')).toBeInTheDocument();
 
       expect(screen.getByText('Provider')).toBeInTheDocument();
@@ -380,7 +380,7 @@ describe('Details', () => {
         </Router>
       );
 
-      expect(screen.getByText('Versions')).toBeInTheDocument();
+      expect(screen.getAllByText('Versions')).toHaveLength(2);
       expect(screen.getByText('Pipeline minimal version')).toBeInTheDocument();
       expect(screen.getByText('Keywords')).toBeInTheDocument();
 
@@ -399,7 +399,7 @@ describe('Details', () => {
         </Router>
       );
 
-      expect(screen.getByText('Versions')).toBeInTheDocument();
+      expect(screen.getAllByText('Versions')).toHaveLength(2);
       expect(screen.getByText('Pipeline minimal version')).toBeInTheDocument();
       expect(screen.getByText('Tasks')).toBeInTheDocument();
       expect(screen.getAllByText('Run After:')).toHaveLength(2);
@@ -419,7 +419,7 @@ describe('Details', () => {
         </Router>
       );
 
-      expect(screen.getByText('Versions')).toBeInTheDocument();
+      expect(screen.getAllByText('Versions')).toHaveLength(2);
       expect(screen.getByText('Workflows version')).toBeInTheDocument();
       expect(screen.getByTestId('argoVersion')).toBeInTheDocument();
     });
