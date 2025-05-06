@@ -38,7 +38,7 @@ const VersionInRow = (props: Props) => {
   const formattedDate = moment.unix(props.ts!).format('D MMM, YYYY');
 
   return (
-    <tr>
+    <tr data-testid="tr-version-row">
       <td className={styles.versionCell}>
         <div className={`d-flex flex-row align-items-center px-3 overflow-auto ${styles.truncateWrapper}`}>
           {props.isActive ? (

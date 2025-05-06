@@ -105,6 +105,9 @@ const VersionsModal = (props: Props) => {
     } else {
       sortedAppVersions.forEach((appVersion: string, index: number) => {
         const versions = props.sortedVersions.filter((version: VersionData) => version.appVersion === appVersion);
+
+        console.log('versions', versions);
+
         versions.forEach((av_version: VersionData) => {
           const linkedChannels = getLinkedChannelsToVersion(av_version.version);
 
@@ -193,9 +196,11 @@ const VersionsModal = (props: Props) => {
                     onClick={() => setSortedBy('version')}
                     className="d-flex flex-row justify-content-between btn btn-link text-reset w-100 p-0 m-0 fw-bold"
                     type="button"
+                    aria-label="Sort by version"
                   >
                     <div className="px-3">Version</div>
                     <div
+                      data-testid="sort-version-icon"
                       className={classNames({
                         visible: sortedBy === 'version',
                         invisible: sortedBy !== 'version',
@@ -210,9 +215,11 @@ const VersionsModal = (props: Props) => {
                     onClick={() => setSortedBy('appVersion')}
                     className="d-flex flex-row justify-content-between btn btn-link text-reset w-100 p-0 m-0 fw-bold"
                     type="button"
+                    aria-label="Sort by app version"
                   >
                     <div className="px-3">App version</div>
                     <div
+                      data-testid="sort-app-version-icon"
                       className={classNames({
                         visible: sortedBy === 'appVersion',
                         invisible: sortedBy !== 'appVersion',

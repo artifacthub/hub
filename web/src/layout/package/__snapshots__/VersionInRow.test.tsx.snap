@@ -4,7 +4,9 @@ exports[`VersionInRow creates snapshot 1`] = `
 <DocumentFragment>
   <table>
     <tbody>
-      <tr>
+      <tr
+        data-testid="tr-version-row"
+      >
         <td
           class="versionCell"
         >
