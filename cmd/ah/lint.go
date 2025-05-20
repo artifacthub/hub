@@ -97,7 +97,7 @@ func newLintCmd() *cobra.Command {
 			return lint(opts, &output{cmd.OutOrStdout()})
 		},
 	}
-	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: argo-template, backstage, bootc, coredns, falco, gatekeeper, headlamp, helm, helm-plugin, inspektor-gadget, kcl, keda-scaler, keptn, knative-client-plugin, krew, kubearmor, kubewarden, kyverno, meshery, olm, opa, opencost, radius, tbaction, tekton-pipeline, tekton-stepaction, tekton-task")
+	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: argo-template, backstage, bootc, coredns, falco, gatekeeper, headlamp, helm, helm-plugin, inspektor-gadget, kagent, kcl, keda-scaler, keptn, knative-client-plugin, krew, kubearmor, kubewarden, kyverno, meshery, olm, opa, opencost, radius, tbaction, tekton-pipeline, tekton-stepaction, tekton-task")
 	lintCmd.Flags().StringVarP(&opts.path, "path", "p", ".", "repository's packages path")
 	lintCmd.Flags().StringVarP(&opts.tektonVersioning, "tekton-versioning", "", hub.TektonDirBasedVersioning, "tekton versioning option: directory, git")
 	return lintCmd
@@ -138,8 +138,8 @@ func lint(opts *lintOptions, out *output) error {
 		hub.Radius,
 		hub.TBAction:
 		report = lintGeneric(opts.path, kind)
-	case hub.Helm:
-		report = lintHelm(opts.path)
+	case hub.Helm, hub.Kagent:
+		report = lintHelm(opts.path, kind)
 	case hub.HelmPlugin:
 		report = lintHelmPlugin(opts.path)
 	case hub.Krew:
@@ -216,7 +216,7 @@ func lintGeneric(basePath string, kind hub.RepositoryKind) *lintReport {
 
 // lintHelm checks if the Helm charts available in the path provided are ready
 // to be processed by the Helm tracker source and listed on Artifact Hub.
-func lintHelm(basePath string) *lintReport {
+func lintHelm(basePath string, kind hub.RepositoryKind) *lintReport {
 	report := &lintReport{}
 
 	// Walk the path provided looking for available charts
@@ -252,7 +252,7 @@ func lintHelm(basePath string) *lintReport {
 			Name:       chrt.Metadata.Name,
 			Version:    chrt.Metadata.Version,
 			LogoURL:    chrt.Metadata.Icon,
-			Repository: &hub.Repository{Kind: hub.Helm},
+			Repository: &hub.Repository{Kind: kind},
 		}
 		helm.EnrichPackageFromChart(e.pkg, chrt)
 		err = helm.EnrichPackageFromAnnotations(e.pkg, chrt.Metadata.Annotations)
@@ -788,7 +788,7 @@ func (out *output) printPkgDetails(pkg *hub.Package) {
 				fmt.Fprintf(out, "  - %s\n", name)
 			}
 		}
-	case hub.Helm:
+	case hub.Helm, hub.Kagent:
 		out.print("Sign key", pkg.SignKey)
 
 		// Values schema

@@ -90,6 +90,7 @@ var (
 		hub.Helm,
 		hub.HelmPlugin,
 		hub.InspektorGadget,
+		hub.Kagent,
 		hub.KCL,
 		hub.KedaScaler,
 		hub.Keptn,
@@ -462,7 +463,7 @@ func (m *Manager) locateMetadataFile(r *hub.Repository, basePath string) string 
 	switch r.Kind {
 	case hub.Container:
 		mdFile = r.URL
-	case hub.Helm:
+	case hub.Helm, hub.Kagent:
 		switch u.Scheme {
 		case "http", "https":
 			u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
@@ -562,7 +563,7 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 	u, _ := url.Parse(r.URL)
 
 	switch {
-	case r.Kind == hub.Helm:
+	case r.Kind == hub.Helm || r.Kind == hub.Kagent:
 		switch {
 		case SchemeIsHTTP(u):
 			// Digest is obtained by hashing the repository index.yaml file
@@ -833,7 +834,7 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 		if !SchemeIsOCI(u) {
 			return errors.New("invalid url format")
 		}
-	case hub.Helm:
+	case hub.Helm, hub.Kagent:
 		if SchemeIsHTTP(u) {
 			if _, _, err := m.il.LoadIndex(r); err != nil {
 				log.Error().Err(err).Str("url", r.URL).Msg("error loading index")
