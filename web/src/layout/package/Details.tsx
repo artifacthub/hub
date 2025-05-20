@@ -157,7 +157,6 @@ const Details = (props: Props) => {
 
         switch (props.package.repository.kind) {
           case RepositoryKind.Helm:
-          case RepositoryKind.Kagent:
             return (
               <>
                 {props.package.data && (
@@ -181,6 +180,20 @@ const Details = (props: Props) => {
                       </div>
                     )}
                   </>
+                )}
+              </>
+            );
+
+          case RepositoryKind.Kagent:
+            return (
+              <>
+                {props.package.data && props.package.data.kubeVersion && (
+                  <div>
+                    <SmallTitle text="Kubernetes version" />
+                    <p data-testid="kubeVersion" className={`text-truncate ${styles.text}`}>
+                      {props.package.data.kubeVersion}
+                    </p>
+                  </div>
                 )}
               </>
             );

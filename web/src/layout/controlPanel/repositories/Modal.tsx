@@ -605,7 +605,6 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.OpenCost:
               case RepositoryKind.RadiusRecipe:
               case RepositoryKind.Bootc:
-              case RepositoryKind.Kagent:
                 return (
                   <>
                     <p
