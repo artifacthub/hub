@@ -128,6 +128,10 @@ const REPOSITORY_KINDS: RepoKindDef[] = [
     kind: RepositoryKind.Bootc,
     name: 'Bootable container',
   },
+  {
+    kind: RepositoryKind.Kagent,
+    name: 'Kagent agent',
+  },
 ];
 
 const Wrapper = styled('span')`

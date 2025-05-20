@@ -85,6 +85,7 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
           }
           break;
         case RepositoryKind.Helm:
+        case RepositoryKind.Kagent:
           if (pkg.data && pkg.data.type && pkg.data.type === HelmChartType.Library) {
             output.errorMessage = 'A library chart is not installable';
             hasError = true;
@@ -142,6 +143,7 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
 
     switch (pkg.repository.kind) {
       case RepositoryKind.Helm:
+      case RepositoryKind.Kagent:
         if (pkg.repository.url.startsWith(OCI_PREFIX)) {
           output.methods.push({
             label: 'v3',

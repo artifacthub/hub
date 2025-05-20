@@ -559,6 +559,17 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.Kagent:
+        link = (
+          <ExternalLink
+            href="/docs/topics/repositories/kagent-agents"
+            className="text-primary fw-bold"
+            label="Open documentation"
+          >
+            Kagent agents
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -594,6 +605,7 @@ const RepositoryModal = (props: Props) => {
               case RepositoryKind.OpenCost:
               case RepositoryKind.RadiusRecipe:
               case RepositoryKind.Bootc:
+              case RepositoryKind.Kagent:
                 return (
                   <>
                     <p
@@ -667,6 +679,7 @@ const RepositoryModal = (props: Props) => {
   const getURLPattern = (): string | undefined => {
     switch (selectedKind) {
       case RepositoryKind.Helm:
+      case RepositoryKind.Kagent:
         return undefined;
       case RepositoryKind.OLM:
         return `^((https?://)|${OCI_PREFIX}).*`;
@@ -682,6 +695,7 @@ const RepositoryModal = (props: Props) => {
       {(() => {
         switch (selectedKind) {
           case RepositoryKind.Helm:
+          case RepositoryKind.Kagent:
           case RepositoryKind.Container:
             return (
               <div className="row">
@@ -1148,6 +1162,7 @@ const RepositoryModal = (props: Props) => {
               RepositoryKind.OpenCost,
               RepositoryKind.RadiusRecipe,
               RepositoryKind.Bootc,
+              RepositoryKind.Kagent,
             ].includes(selectedKind) && (
               <div className="mt-4 mb-3">
                 <div className="form-check form-switch ps-0">

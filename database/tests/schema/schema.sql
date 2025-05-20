@@ -570,7 +570,8 @@ select results_eq(
         (24, 'Meshery designs'),
         (25, 'OpenCost plugins'),
         (26, 'Radius recipes'),
-        (27, 'Bootable containers')
+        (27, 'Bootable containers'),
+        (28, 'Kagent agents')
     $$,
     'Repository kinds should exist'
 );

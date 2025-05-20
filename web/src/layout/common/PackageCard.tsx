@@ -274,7 +274,7 @@ const PackageCard = (props: Props) => {
                 <div className="d-flex flex-row ms-auto">
                   {props.package.deprecated && <Deprecated className="d-inline mt-3 ms-2" />}
                   {(props.package.cncf || props.package.repository.cncf) && <CNCF className="d-inline mt-3 ms-2" />}
-                  {props.package.repository.kind === RepositoryKind.Helm && (
+                  {[RepositoryKind.Helm, RepositoryKind.Kagent].includes(props.package.repository.kind) && (
                     <ValuesSchemaBadge
                       hasValuesSchema={props.package.hasValuesSchema || false}
                       className="d-inline mt-3 ms-2"

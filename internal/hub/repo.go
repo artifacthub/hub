@@ -130,6 +130,9 @@ const (
 
 	// Bootc represents a repository with Bootable containers.
 	Bootc RepositoryKind = 27
+
+	// Kagent represents a repository with Kagent agents.
+	Kagent RepositoryKind = 28
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -157,6 +160,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "helm-plugin"
 	case InspektorGadget:
 		return "inspektor-gadget"
+	case Kagent:
+		return "kagent"
 	case KCL:
 		return "kcl"
 	case KedaScaler:
@@ -222,6 +227,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return HelmPlugin, nil
 	case "inspektor-gadget":
 		return InspektorGadget, nil
+	case "kagent":
+		return Kagent, nil
 	case "kcl":
 		return KCL, nil
 	case "keda-scaler":

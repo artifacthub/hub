@@ -115,6 +115,11 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       Inspektor gadgets
                     </option>
                     <option
+                      value="28"
+                    >
+                      Kagent agents
+                    </option>
+                    <option
                       value="20"
                     >
                       KCL modules

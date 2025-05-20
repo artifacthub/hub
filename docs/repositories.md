@@ -14,6 +14,7 @@ The following repositories kinds are supported at the moment:
 - [Helm charts repositories](https://github.com/artifacthub/hub/blob/master/docs/helm_charts_repositories.md)
 - [Helm plugins repositories](https://github.com/artifacthub/hub/blob/master/docs/helm_plugins_repositories.md)
 - [Inspektor gadgets repositories](https://github.com/artifacthub/hub/blob/master/docs/inspektor_gadgets_repositories.md)
+- [Kagent agents repositories](https://github.com/artifacthub/hub/blob/master/docs/kagents_agents_repositories.md)
 - [KCL modules repositories](https://github.com/artifacthub/hub/blob/master/docs/kcl_modules_repositories.md)
 - [KEDA scalers repositories](https://github.com/artifacthub/hub/blob/master/docs/keda_scalers_repositories.md)
 - [Keptn integrations repositories](https://github.com/artifacthub/hub/blob/master/docs/keptn_integrations_repositories.md)

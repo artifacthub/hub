@@ -233,7 +233,7 @@ const HomeView = () => {
                 kubectl plugins, Tekton tasks, pipelines and stepactions, KEDA scalers, CoreDNS plugins, Keptn
                 integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage
                 plugins, Argo templates, KubeArmor policies, KCL modules, Headlamp plugins, Inspektor gadgets, Meshery
-                designs, OpenCost plugins, Radius recipes and Bootable Containers.
+                designs, OpenCost plugins, Radius recipes, Bootable Containers and Kagent agents.
                 <div className="py-0 py-lg-5">
                   <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
@@ -342,6 +342,20 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
+                    <ExternalLink
+                      href="https://kagent.dev/agents"
+                      className={`col ${styles.iconLink}`}
+                      label="Open Kagent agents web"
+                    >
+                      <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                        <RepositoryIcon kind={RepositoryKind.Kagent} type="white" className={styles.aboutIcon} />
+                        <div className={`d-none d-sm-block text-light mt-2 ${styles.legendIcon}`}>
+                          <small>Kagent agents</small>
+                        </div>
+                      </div>
+                    </ExternalLink>
+                  </div>
+                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink href="https://kcl-lang.io" className={`col ${styles.iconLink}`} label="Open KCL site">
                       <div className="d-flex flex-column justify-content-between align-items-center h-100">
                         <RepositoryIcon kind={RepositoryKind.KCL} type="white" className={styles.aboutIcon} />
@@ -350,8 +364,6 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
-                  </div>
-                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink href="https://keda.sh" className={`col ${styles.iconLink}`} label="Open KEDA site">
                       <div className="d-flex flex-column justify-content-between align-items-center h-100">
                         <RepositoryIcon kind={RepositoryKind.KedaScaler} type="white" className={styles.aboutIcon} />
@@ -396,6 +408,8 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
+                  </div>
+                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
                       href="https://kubearmor.io"
                       className={`col ${styles.iconLink}`}
@@ -408,8 +422,6 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
-                  </div>
-                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
                       href="https://www.kubewarden.io"
                       className={`col ${styles.iconLink}`}
@@ -458,6 +470,8 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
+                  </div>
+                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
                       href="https://www.openpolicyagent.org"
                       className={`col ${styles.iconLink}`}
@@ -470,8 +484,6 @@ const HomeView = () => {
                         </div>
                       </div>
                     </ExternalLink>
-                  </div>
-                  <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around">
                     <ExternalLink
                       href="https://www.opencost.io"
                       className={`col ${styles.iconLink}`}

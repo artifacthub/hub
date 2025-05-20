@@ -56,7 +56,7 @@ const hasBadges = (packages: PackageSummary[] | null): boolean => {
         pkg.official ||
         pkg.repository.official ||
         pkg.repository.verifiedPublisher ||
-        (pkg.repository.kind === RepositoryKind.Helm && pkg.hasValuesSchema)
+        ([RepositoryKind.Helm, RepositoryKind.Kagent].includes(pkg.repository.kind) && pkg.hasValuesSchema)
     );
   }
 

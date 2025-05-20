@@ -84,6 +84,8 @@ const Image = (props: Props) => {
           return '/static/media/placeholder_pkg_radius.png';
         case RepositoryKind.Bootc:
           return '/static/media/placeholder_pkg_bootc.png';
+        case RepositoryKind.Kagent:
+          return '/static/media/placeholder_pkg_kagent.png';
         default:
           return PLACEHOLDER_SRC;
       }
