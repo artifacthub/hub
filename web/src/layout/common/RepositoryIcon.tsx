@@ -121,6 +121,10 @@ const ICONS = {
     default: '/static/media/bootc.svg',
     white: '/static/media/bootc-light.svg',
   },
+  [RepositoryKind.Kagent]: {
+    default: '/static/media/kagent.svg',
+    white: '/static/media/kagent-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

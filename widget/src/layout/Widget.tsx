@@ -105,6 +105,8 @@ const getRepoKindName = (repoKind: RepositoryKind): string | null => {
       return 'radius';
     case RepositoryKind.Bootc:
       return 'bootc';
+    case RepositoryKind.Kagent:
+      return 'kagent';
     default:
       return null;
   }
@@ -477,15 +479,15 @@ export default function Widget(props: Props) {
                 {(packageSummary.official ||
                   packageSummary.repository.official ||
                   packageSummary.repository.verifiedPublisher ||
-                  (packageSummary.repository.kind === RepositoryKind.Helm && packageSummary.hasValuesSchema)) && (
+                  ([RepositoryKind.Helm, RepositoryKind.Kagent].includes(packageSummary.repository.kind) &&
+                    packageSummary.hasValuesSchema)) && (
                   <BadgesWrapper>
                     {packageSummary.deprecated && <Label type="deprecated" />}
 
                     {(packageSummary.cncf || packageSummary.repository.cncf) && <Label type="cncf" />}
 
-                    {packageSummary.repository.kind === RepositoryKind.Helm && packageSummary.hasValuesSchema && (
-                      <Label type="valuesSchema" />
-                    )}
+                    {[RepositoryKind.Helm, RepositoryKind.Kagent].includes(packageSummary.repository.kind) &&
+                      packageSummary.hasValuesSchema && <Label type="valuesSchema" />}
 
                     {packageSummary.signed && <Label type="signed" />}
 

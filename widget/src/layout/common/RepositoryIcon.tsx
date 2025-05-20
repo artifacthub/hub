@@ -42,6 +42,7 @@ const ICONS: IconsList = {
   [RepositoryKind.OpenCost]: <SVGIcons name="opencost" />,
   [RepositoryKind.RadiusRecipe]: <SVGIcons name="radius" />,
   [RepositoryKind.Bootc]: <SVGIcons name="bootc" />,
+  [RepositoryKind.Kagent]: <SVGIcons name="kagent" />,
 };
 
 const RepositoryIcon = (props: Props) => (

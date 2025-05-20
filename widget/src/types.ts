@@ -56,6 +56,7 @@ export enum RepositoryKind {
   OpenCost,
   RadiusRecipe,
   Bootc,
+  Kagent,
 }
 
 export interface SearchResults {

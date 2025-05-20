@@ -29,6 +29,7 @@ export enum RepositoryKind {
   OpenCost,
   RadiusRecipe,
   Bootc,
+  Kagent,
 }
 
 export enum PackageCategory {

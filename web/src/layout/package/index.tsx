@@ -1000,7 +1000,7 @@ const PackageView = () => {
                       <div className="d-flex flex-row mt-3 me-4">
                         {detail.deprecated && <Deprecated className="me-2" dropdownAlignment="start" />}
                         {(detail.cncf || detail.repository.cncf) && <CNCF className="me-2" dropdownAlignment="start" />}
-                        {detail.repository.kind === RepositoryKind.Helm && (
+                        {[RepositoryKind.Helm, RepositoryKind.Kagent].includes(detail.repository.kind) && (
                           <ValuesSchemaBagde
                             hasValuesSchema={detail.hasValuesSchema || false}
                             className="me-2"
@@ -1214,6 +1214,7 @@ const PackageView = () => {
                                 );
 
                               case RepositoryKind.Helm:
+                              case RepositoryKind.Kagent:
                                 return (
                                   <>
                                     <div className="mb-2">

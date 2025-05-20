@@ -1368,6 +1368,29 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/kagent/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      description: Get package details
+      operationId: getKagentPackageDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KagentPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/kcl/{repoName}/{packageName}":
     get:
       tags:
@@ -2018,6 +2041,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/InspektorGadgetPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/kagent/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      description: Get package version details
+      operationId: getKagentVersionDetails
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KagentPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -4321,6 +4368,94 @@ components:
                   example: "sha256:123456..."
     InspektorGadgetPackage:
       $ref: "#/components/schemas/Package"
+    KagentPackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            sign_key:
+              type: object
+              nullable: false
+              properties:
+                fingerprint:
+                  type: string
+                  nullable: false
+                  example: "0011223344"
+                url:
+                  type: string
+                  format: uri
+                  example: https://key.url
+            crds:
+              type: array
+              nullable: false
+              items:
+                type: object
+                required:
+                  - kind
+                  - name
+                  - version
+                  - description
+                  - displayName
+                properties:
+                  kind:
+                    type: string
+                    nullable: false
+                  name:
+                    type: string
+                    nullable: false
+                  version:
+                    type: string
+                    nullable: false
+                  description:
+                    type: string
+                    nullable: false
+                  displayName:
+                    type: string
+                    nullable: false
+            crds_examples:
+              type: array
+              nullable: false
+              items:
+                type: object
+                additionalProperties: true
+            data:
+              type: object
+              nullable: false
+              properties:
+                apiVersion:
+                  type: string
+                  example: v2
+                  nullable: false
+                type:
+                  type: string
+                  example: application
+                  nullable: false
+                kubeVersion:
+                  type: string
+                  example: ">=1.16.0-0"
+                  nullable: false
+                dependencies:
+                  type: array
+                  items:
+                    type: object
+                    nullable: false
+                    required:
+                      - name
+                      - version
+                      - repository
+                    properties:
+                      name:
+                        type: string
+                        nullable: false
+                        example: mysql
+                      version:
+                        type: string
+                        nullable: false
+                        example: 1.6.4
+                      repository:
+                        type: string
+                        nullable: false
+                        example: "http://repo.url"
     KCLPackage:
       $ref: "#/components/schemas/Package"
     KedaScalerPackage:
@@ -5134,6 +5269,7 @@ components:
           * `25` - Opencost plugins
           * `26` - Radius recipes
           * `27` - Bootable containers
+          * `28` - Kagent agents
     RepositoryKindParam:
       type: string
       enum:
@@ -5165,6 +5301,7 @@ components:
         - opencost
         - radius
         - bootc
+        - kagent
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -5195,6 +5332,7 @@ components:
         * `opencost` - Opencost plugins
         * `radius` - Radius recipes
         * `bootc` - Bootable containers
+        * `kagent` - Kagent agents
     RepositorySummary:
       type: object
       required:
@@ -5742,6 +5880,7 @@ components:
           * `25` - Opencost plugins
           * `26` - Radius recipes
           * `27` - Bootable containers
+          * `28` - Kagent agents
     PackageNameParam:
       in: path
       name: packageName

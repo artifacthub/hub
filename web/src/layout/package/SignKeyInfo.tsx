@@ -33,7 +33,11 @@ const SignKeyInfo = (props: Props) => {
   };
 
   const onOpen = useCallback(() => {
-    if (props.signed && props.repoKind === RepositoryKind.Helm && !isUndefined(props.signKey)) {
+    if (
+      props.signed &&
+      [RepositoryKind.Helm, RepositoryKind.Kagent].includes(props.repoKind) &&
+      !isUndefined(props.signKey)
+    ) {
       setOpenStatus(true);
       navigate('?modal=key-info', {
         state: location.state,
@@ -54,7 +58,7 @@ const SignKeyInfo = (props: Props) => {
   if (
     isNull(props.signed) ||
     !props.signed ||
-    props.repoKind !== RepositoryKind.Helm ||
+    ![RepositoryKind.Helm, RepositoryKind.Kagent].includes(props.repoKind) ||
     (isUndefined(props.signKey) && onlyCosignSignature)
   )
     return null;

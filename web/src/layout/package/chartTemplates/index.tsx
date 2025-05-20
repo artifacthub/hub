@@ -118,7 +118,7 @@ const ChartTemplatesModal = (props: Props) => {
 
   useEffect(() => {
     if (props.visibleChartTemplates) {
-      if (!openStatus && props.repoKind === RepositoryKind.Helm) {
+      if (!openStatus && [RepositoryKind.Helm, RepositoryKind.Kagent].includes(props.repoKind)) {
         onOpenModal();
       } else {
         cleanUrl();
@@ -132,7 +132,7 @@ const ChartTemplatesModal = (props: Props) => {
     }
   }, [props.packageId]);
 
-  if (props.repoKind !== RepositoryKind.Helm) return null;
+  if (![RepositoryKind.Helm, RepositoryKind.Kagent].includes(props.repoKind)) return null;
 
   async function getChartTemplates() {
     try {

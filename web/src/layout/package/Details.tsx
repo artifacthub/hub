@@ -52,6 +52,7 @@ interface Props {
 const getVersionsTitle = (repoKind: RepositoryKind): string => {
   switch (repoKind) {
     case RepositoryKind.Helm:
+    case RepositoryKind.Kagent:
       return 'Chart versions';
     case RepositoryKind.Container:
       return 'Tags';
@@ -81,6 +82,7 @@ const Details = (props: Props) => {
           case RepositoryKind.OpenCost:
           case RepositoryKind.RadiusRecipe:
           case RepositoryKind.Bootc:
+          case RepositoryKind.Kagent:
             return (
               <>
                 {props.package.appVersion && (
@@ -155,6 +157,7 @@ const Details = (props: Props) => {
 
         switch (props.package.repository.kind) {
           case RepositoryKind.Helm:
+          case RepositoryKind.Kagent:
             return (
               <>
                 {props.package.data && (
