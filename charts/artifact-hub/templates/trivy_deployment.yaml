@@ -34,6 +34,10 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.trivy.deploy.tolerations }}
+      tolerations:
+        {{- toYaml .Values.trivy.deploy.tolerations | nindent 8 }}
+      {{- end }}
       containers:
         - name: trivy
           image: {{ .Values.trivy.deploy.image }}

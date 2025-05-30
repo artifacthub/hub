@@ -39,6 +39,10 @@ spec:
           nodeSelector:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- if .Values.tracker.cronjob.tolerations }}
+          tolerations:
+            {{- toYaml .Values.tracker.cronjob.tolerations | nindent 12 }}
+          {{- end }}
           restartPolicy: Never
           initContainers:
             - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 14 }}

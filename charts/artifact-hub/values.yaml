@@ -107,6 +107,7 @@ dbMigrator:
     #     memory: 128Mi
     # Optionally specify a node selector for the dbMigrator pod
     nodeSelector: {}
+    tolerations: []
   # Load demo user and sample repositories
   loadSampleData: true
   # Directory path where the configuration files should be mounted
@@ -192,6 +193,7 @@ hub:
     nodeSelector: {}
     # Optionally specify extra list of additional containers for the hub deployment
     extraContainers: []
+    tolerations: []
   server:
     # Allow adding private repositories to the Hub
     allowPrivateRepositories: false
@@ -340,6 +342,7 @@ scanner:
     extraVolumeMounts: []
     # Optionally specify a node selector for the scanner cronjob
     nodeSelector: {}
+    tolerations: []
   # Number of snapshots to process concurrently
   concurrency: 3
   # Trivy server url. Defaults to the Trivy service's internal URL
@@ -378,6 +381,7 @@ tracker:
     extraVolumeMounts: []
     # Optionally specify a node selector for the tracker cronjob
     nodeSelector: {}
+    tolerations: []
   # Cache directory path. If set, the cache directory for the Helm client will be explicitly set (otherwise defaults
   # to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir)
   cacheDir: ""
@@ -419,6 +423,7 @@ trivy:
     extraVolumeMounts: []
     # Optionally specify a node selector for the trivy deployment
     nodeSelector: {}
+    tolerations: []
   persistence:
     enabled: false
     size: 10Gi
