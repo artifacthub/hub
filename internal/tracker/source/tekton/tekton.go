@@ -9,6 +9,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/Masterminds/semver/v3"
@@ -86,6 +87,10 @@ const (
 var (
 	// errInvalidAnnotation indicates that the annotation provided is not valid.
 	errInvalidAnnotation = errors.New("invalid annotation")
+
+	// parameterizedImageRE is a regexp used to check if an image contains
+	// parameters.
+	parameterizedImageRE = regexp.MustCompile(`\$\(.+\)`)
 )
 
 // TrackerSource is a hub.TrackerSource implementation for Tekton repositories.
@@ -459,6 +464,12 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 	uniqueImages := make(map[string]struct{})
 	for _, step := range steps {
 		if step.Image != "" {
+			// Ignore parameterized images
+			if parameterizedImageRE.MatchString(step.Image) {
+				continue
+			}
+
+			// If the image is not already included, add it to the list
 			if _, ok := uniqueImages[step.Image]; !ok {
 				uniqueImages[step.Image] = struct{}{}
 				containerImages = append(containerImages, &hub.ContainerImage{Image: step.Image})

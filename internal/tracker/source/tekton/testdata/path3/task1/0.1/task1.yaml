@@ -38,6 +38,9 @@ spec:
       description: this is the hello image
       type: string
       default: bash:latest
+    - name: parameterized-image-no-default
+      description: this is another parameterized image with no default value
+      type: string
   steps:
     - name: step1
       image: $(params.hello-image)
@@ -47,3 +50,5 @@ spec:
       image: alphine
       script: |
         echo 'world'
+    - name: step3
+      image: $(params.parameterized-image-no-default)
