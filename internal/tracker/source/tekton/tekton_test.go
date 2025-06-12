@@ -85,7 +85,7 @@ func TestTrackerSource(t *testing.T) {
 			Version:     "0.1.0",
 			Provider:    "Some organization",
 			ContentURL:  "https://github.com/user/repo/raw/master/path/task1/0.1/task1.yaml",
-			Digest:      "99b464c163ea05e772c78eaee51cc82cb79454efd4116c96572f71221c3402e6",
+			Digest:      "7dfdce0ad1778d5c9b92115e23b92308bad5b27b0c514fa19f7a12f9ea8be4a9",
 			Repository:  i.Repository,
 			License:     "Apache-2.0",
 			Links: []*hub.Link{
