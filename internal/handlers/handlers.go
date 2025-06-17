@@ -33,15 +33,15 @@ import (
 	"github.com/unrolled/secure"
 )
 
+// csrfHeader is the key of the header used for the CSRF token.
 const csrfHeader = "X-CSRF-Token"
 
-var (
-	xForwardedFor = http.CanonicalHeaderKey("X-Forwarded-For")
+// WebhooksHTTPClientTimeout represents the timeout of the http client used
+// to handle the webhooks requests.
+const WebhooksHTTPClientTimeout = 60 * time.Second
 
-	// WebhooksHTTPClientTimeout represents the timeout of the http client used
-	// to handle the webhooks requests.
-	WebhooksHTTPClientTimeout = 60 * time.Second
-)
+// xForwardedFor is the key for the X-Forwarded-For header.
+var xForwardedFor = http.CanonicalHeaderKey("X-Forwarded-For")
 
 // Services is a wrapper around several internal services used by the handlers.
 type Services struct {

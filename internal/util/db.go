@@ -16,17 +16,13 @@ import (
 	"github.com/spf13/viper"
 )
 
-const (
-	// DBLockKeyUpdatePackagesViews represents the lock key used when updating
-	// the packages views counters in the database.
-	DBLockKeyUpdatePackagesViews = 1
-)
+// the packages views counters in the database.
+// DBLockKeyUpdatePackagesViews represents the lock key used when updating
+const DBLockKeyUpdatePackagesViews = 1
 
-var (
-	// ErrDBInsufficientPrivilege indicates that the user does not have the
-	// required privilege to perform the operation.
-	ErrDBInsufficientPrivilege = errors.New("ERROR: insufficient_privilege (SQLSTATE 42501)")
-)
+// ErrDBInsufficientPrivilege indicates that the user does not have the
+// required privilege to perform the operation.
+var ErrDBInsufficientPrivilege = errors.New("ERROR: insufficient_privilege (SQLSTATE 42501)")
 
 // SetupDB creates a database connection pool using the configuration provided.
 func SetupDB(cfg *viper.Viper) (*pgxpool.Pool, error) {

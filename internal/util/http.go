@@ -12,15 +12,13 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 )
 
-var (
-	// ErrRestrictedConnection error indicates that connections to the provided
-	// address are restricted.
-	ErrRestrictedConnection = errors.New("restricted connection")
+// HTTPClientDefaultTimeout represents the default timeout used for http
+// clients.
+const HTTPClientDefaultTimeout = 10 * time.Second
 
-	// HTTPClientDefaultTimeout represents the default timeout used for http
-	// clients.
-	HTTPClientDefaultTimeout = 10 * time.Second
-)
+// ErrRestrictedConnection error indicates that connections to the provided
+// address are restricted.
+var ErrRestrictedConnection = errors.New("restricted connection")
 
 // SetupHTTPClient is a helper that returns an http client. If restricted is
 // set to true, the http client won't be able to make requests to a set of

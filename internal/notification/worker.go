@@ -5,7 +5,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net/http"
 	"strings"
 	"sync"
 	"text/template"
@@ -13,6 +12,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/handlers/pkg"
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/jackc/pgx/v4"
@@ -174,7 +174,10 @@ func (w *Worker) deliverWebhookNotification(ctx context.Context, n *hub.Notifica
 	}
 
 	// Call webhook endpoint
-	req, _ := http.NewRequest("POST", n.Webhook.URL, &payload)
+	req, err := httpw.NewRequest("POST", n.Webhook.URL, &payload)
+	if err != nil {
+		return err
+	}
 	req.Header.Set("Content-Type", contentType)
 	req.Header.Set("X-ArtifactHub-Secret", n.Webhook.Secret)
 	resp, err := w.svc.HTTPClient.Do(req)

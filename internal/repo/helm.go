@@ -8,6 +8,7 @@ import (
 	"path"
 	"time"
 
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/artifacthub/hub/internal/hub"
 	"helm.sh/helm/v3/pkg/getter"
 	helmrepo "helm.sh/helm/v3/pkg/repo"
@@ -34,7 +35,10 @@ func (l *HelmIndexLoader) LoadIndex(r *hub.Repository) (*helmrepo.IndexFile, str
 		{
 			Schemes: []string{"http", "https"},
 			New: func(options ...getter.Option) (getter.Getter, error) {
-				return getter.NewHTTPGetter(getter.WithTimeout(10 * time.Second))
+				return getter.NewHTTPGetter(
+					getter.WithTimeout(10*time.Second),
+					getter.WithUserAgent(httpw.UserAgent),
+				)
 			},
 		},
 	}

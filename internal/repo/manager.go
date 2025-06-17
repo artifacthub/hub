@@ -16,6 +16,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/util"
@@ -516,7 +517,10 @@ func (m *Manager) readMetadataFile(mdFile, username, password string) ([]byte, e
 			return nil, fmt.Errorf("error reading repository metadata file: %w", err)
 		}
 	} else {
-		req, _ := http.NewRequest("GET", mdFile, nil)
+		req, err := httpw.NewRequest("GET", mdFile, nil)
+		if err != nil {
+			return nil, err
+		}
 		if username != "" || password != "" {
 			req.SetBasicAuth(username, password)
 		}

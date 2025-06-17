@@ -17,6 +17,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/artifacthub/hub/internal/oci"
@@ -361,7 +362,7 @@ func getContent(
 	hc hub.HTTPClient,
 	u string,
 ) ([]byte, error) {
-	req, err := http.NewRequest("GET", u, nil)
+	req, err := httpw.NewRequest("GET", u, nil)
 	if err != nil {
 		return nil, err
 	}
