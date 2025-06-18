@@ -9,6 +9,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
@@ -300,7 +301,7 @@ func TestTrackerSource(t *testing.T) {
 				},
 			},
 		}, "", nil)
-		req, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
+		req, _ := httpw.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
 		req.Header.Set("Accept-Encoding", "identity")
 		sw.Hc.On("Do", req).Return(nil, tests.ErrFake)
 		expectedErr := "error preparing package: error loading chart (https://repo.url/pkg1-1.0.0.tgz): fake error for tests (package: pkg1 version: 1.0.0)"
@@ -342,7 +343,7 @@ func TestTrackerSource(t *testing.T) {
 				},
 			},
 		}, "", nil)
-		req, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
+		req, _ := httpw.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
 		req.Header.Set("Accept-Encoding", "identity")
 		sw.Hc.On("Do", req).Return(&http.Response{
 			Body:       io.NopCloser(strings.NewReader("")),
@@ -416,13 +417,13 @@ func TestTrackerSource(t *testing.T) {
 			},
 		}, "", nil)
 		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
-		reqChart, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
+		reqChart, _ := httpw.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
 		reqChart.Header.Set("Accept-Encoding", "identity")
 		sw.Hc.On("Do", reqChart).Return(&http.Response{
 			Body:       f,
 			StatusCode: http.StatusOK,
 		}, nil)
-		reqProv, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz.prov", nil)
+		reqProv, _ := httpw.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz.prov", nil)
 		sw.Hc.On("Do", reqProv).Return(&http.Response{
 			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
@@ -473,13 +474,13 @@ func TestTrackerSource(t *testing.T) {
 			},
 		}, "", nil)
 		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
-		reqChart, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
+		reqChart, _ := httpw.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz", nil)
 		reqChart.Header.Set("Accept-Encoding", "identity")
 		sw.Hc.On("Do", reqChart).Return(&http.Response{
 			Body:       f,
 			StatusCode: http.StatusOK,
 		}, nil)
-		reqProv, _ := http.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz.prov", nil)
+		reqProv, _ := httpw.NewRequest("GET", "https://repo.url/pkg1-1.0.0.tgz.prov", nil)
 		sw.Hc.On("Do", reqProv).Return(&http.Response{
 			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,

@@ -11,6 +11,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -77,7 +78,7 @@ func TestDownload(t *testing.T) {
 	t.Run("request failed", func(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
-		req, _ := http.NewRequest("GET", imageURL, nil)
+		req, _ := httpw.NewRequest("GET", imageURL, nil)
 		hc.On("Do", req).Return(nil, tests.ErrFake)
 
 		data, err := Download(ctx, hc, imageURL)
@@ -89,7 +90,7 @@ func TestDownload(t *testing.T) {
 	t.Run("unexpected status code received", func(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
-		req, _ := http.NewRequest("GET", imageURL, nil)
+		req, _ := httpw.NewRequest("GET", imageURL, nil)
 		hc.On("Do", req).Return(&http.Response{
 			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
@@ -104,7 +105,7 @@ func TestDownload(t *testing.T) {
 	t.Run("request succeeded", func(t *testing.T) {
 		t.Parallel()
 		hc := &tests.HTTPClientMock{}
-		req, _ := http.NewRequest("GET", imageURL, nil)
+		req, _ := httpw.NewRequest("GET", imageURL, nil)
 		hc.On("Do", req).Return(&http.Response{
 			Body:       io.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusOK,

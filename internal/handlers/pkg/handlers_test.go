@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/artifacthub/hub/internal/handlers/helpers"
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
@@ -46,7 +47,7 @@ func TestAddProductionUsage(t *testing.T) {
 	t.Run("error adding production usage entry", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("POST", "/", nil)
+		r, _ := httpw.NewRequest("POST", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
@@ -63,7 +64,7 @@ func TestAddProductionUsage(t *testing.T) {
 	t.Run("add production usage entry succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("POST", "/", nil)
+		r, _ := httpw.NewRequest("POST", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
@@ -89,7 +90,7 @@ func TestDeleteProductionUsage(t *testing.T) {
 	t.Run("error deleting production usage entry", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("POST", "/", nil)
+		r, _ := httpw.NewRequest("POST", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
@@ -106,7 +107,7 @@ func TestDeleteProductionUsage(t *testing.T) {
 	t.Run("delete production usage entry succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("POST", "/", nil)
+		r, _ := httpw.NewRequest("POST", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
@@ -156,7 +157,7 @@ func TestGenerateChangelogMD(t *testing.T) {
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
+				r, _ := httpw.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
@@ -174,7 +175,7 @@ func TestGenerateChangelogMD(t *testing.T) {
 	t.Run("error getting package changelog", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -191,7 +192,7 @@ func TestGenerateChangelogMD(t *testing.T) {
 	t.Run("changelog not found", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -208,7 +209,7 @@ func TestGenerateChangelogMD(t *testing.T) {
 	t.Run("changelog returned formatted as markdown", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -344,7 +345,7 @@ func TestGet(t *testing.T) {
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
+				r, _ := httpw.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
@@ -362,7 +363,7 @@ func TestGet(t *testing.T) {
 	t.Run("get package succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -392,7 +393,7 @@ func TestGetChangelog(t *testing.T) {
 	t.Run("get changelog succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -472,7 +473,7 @@ func TestGetChangelog(t *testing.T) {
 	t.Run("error getting changelog", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -509,7 +510,7 @@ func TestGetChartValues(t *testing.T) {
 	t.Run("get chart archive failed", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -525,12 +526,12 @@ func TestGetChartValues(t *testing.T) {
 	t.Run("get chart archive succeeded, but values not found", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
 		hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
-		tgzReq, _ := http.NewRequest("GET", p1ContentURL, nil)
+		tgzReq, _ := httpw.NewRequest("GET", p1ContentURL, nil)
 		tgzReq = tgzReq.WithContext(r.Context())
 		tgzReq.Header.Set("Accept-Encoding", "identity")
 		f, _ := os.Open("testdata/pkg2-1.0.0.tgz")
@@ -549,12 +550,12 @@ func TestGetChartValues(t *testing.T) {
 	t.Run("get chart archive succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
 		hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
-		tgzReq, _ := http.NewRequest("GET", p1ContentURL, nil)
+		tgzReq, _ := httpw.NewRequest("GET", p1ContentURL, nil)
 		tgzReq = tgzReq.WithContext(r.Context())
 		tgzReq.Header.Set("Accept-Encoding", "identity")
 		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
@@ -599,7 +600,7 @@ func TestGetChartTemplates(t *testing.T) {
 	t.Run("get chart archive failed", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -615,12 +616,12 @@ func TestGetChartTemplates(t *testing.T) {
 	t.Run("get chart archive succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
 		hw.pm.On("Get", r.Context(), getPkgInput).Return(p1, nil)
-		tgzReq, _ := http.NewRequest("GET", p1ContentURL, nil)
+		tgzReq, _ := httpw.NewRequest("GET", p1ContentURL, nil)
 		tgzReq = tgzReq.WithContext(r.Context())
 		tgzReq.Header.Set("Accept-Encoding", "identity")
 		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
@@ -644,7 +645,7 @@ func TestGetHarborReplicationDump(t *testing.T) {
 	t.Run("get harbor replication dump succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("GetHarborReplicationDumpJSON", r.Context()).Return([]byte("dataJSON"), nil)
@@ -664,7 +665,7 @@ func TestGetHarborReplicationDump(t *testing.T) {
 	t.Run("error getting harbor replication dump", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("GetHarborReplicationDumpJSON", r.Context()).Return(nil, tests.ErrFakeDB)
@@ -681,7 +682,7 @@ func TestGetHelmExporterDump(t *testing.T) {
 	t.Run("get helm exporter dump succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("GetHelmExporterDumpJSON", r.Context()).Return([]byte("dataJSON"), nil)
@@ -701,7 +702,7 @@ func TestGetHelmExporterDump(t *testing.T) {
 	t.Run("error getting helm exporter dump", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("GetHelmExporterDumpJSON", r.Context()).Return(nil, tests.ErrFakeDB)
@@ -718,7 +719,7 @@ func TestGetNovaDump(t *testing.T) {
 	t.Run("get nova dump succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("GetNovaDumpJSON", r.Context()).Return([]byte("dataJSON"), nil)
@@ -738,7 +739,7 @@ func TestGetNovaDump(t *testing.T) {
 	t.Run("error getting nova dump", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("GetNovaDumpJSON", r.Context()).Return(nil, tests.ErrFakeDB)
@@ -762,7 +763,7 @@ func TestGetProductionUsage(t *testing.T) {
 	t.Run("get production usage succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -783,7 +784,7 @@ func TestGetProductionUsage(t *testing.T) {
 	t.Run("error getting production usage", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -801,7 +802,7 @@ func TestGetRandom(t *testing.T) {
 	t.Run("get random packages succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("GetRandomJSON", r.Context()).Return([]byte("dataJSON"), nil)
@@ -821,7 +822,7 @@ func TestGetRandom(t *testing.T) {
 	t.Run("error getting random packages", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("GetRandomJSON", r.Context()).Return(nil, tests.ErrFakeDB)
@@ -845,7 +846,7 @@ func TestGetSnapshotSecurityReport(t *testing.T) {
 	t.Run("get snapshot security report succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -866,7 +867,7 @@ func TestGetSnapshotSecurityReport(t *testing.T) {
 	t.Run("error getting snapshot security report", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -884,7 +885,7 @@ func TestGetStarredByUser(t *testing.T) {
 	t.Run("get packages starred by user succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
+		r, _ := httpw.NewRequest("GET", "/?limit=10&offset=1", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
@@ -912,7 +913,7 @@ func TestGetStarredByUser(t *testing.T) {
 	t.Run("error getting packages starred by user", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/?limit=10&offset=1", nil)
+		r, _ := httpw.NewRequest("GET", "/?limit=10&offset=1", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
@@ -955,7 +956,7 @@ func TestGetStars(t *testing.T) {
 			t.Run(tc.err.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
+				r, _ := httpw.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
@@ -974,7 +975,7 @@ func TestGetStars(t *testing.T) {
 	t.Run("get stars succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
@@ -998,7 +999,7 @@ func TestGetStats(t *testing.T) {
 	t.Run("get stats succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("GetStatsJSON", r.Context()).Return([]byte("dataJSON"), nil)
@@ -1018,7 +1019,7 @@ func TestGetStats(t *testing.T) {
 	t.Run("error getting stats", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("GetStatsJSON", r.Context()).Return(nil, tests.ErrFakeDB)
@@ -1065,7 +1066,7 @@ func TestGetSummary(t *testing.T) {
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
+				r, _ := httpw.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
@@ -1083,7 +1084,7 @@ func TestGetSummary(t *testing.T) {
 	t.Run("get package summary succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -1113,7 +1114,7 @@ func TestGetValuesSchema(t *testing.T) {
 	t.Run("get values schema succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -1134,7 +1135,7 @@ func TestGetValuesSchema(t *testing.T) {
 	t.Run("error getting values schema", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -1159,7 +1160,7 @@ func TestGetViews(t *testing.T) {
 	t.Run("get views succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -1199,7 +1200,7 @@ func TestGetViews(t *testing.T) {
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
+				r, _ := httpw.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
@@ -1268,7 +1269,7 @@ func TestInjectIndexMeta(t *testing.T) {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Parallel()
 			w := httptest.NewRecorder()
-			r, _ := http.NewRequest("GET", "/", nil)
+			r, _ := httpw.NewRequest("GET", "/", nil)
 
 			hw := newHandlersWrapper()
 			if tc.err == nil {
@@ -1309,7 +1310,7 @@ func TestRssFeed(t *testing.T) {
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
+				r, _ := httpw.NewRequest("GET", "/", nil)
 
 				hw := newHandlersWrapper()
 				hw.pm.On("Get", r.Context(), mock.Anything).Return(nil, tc.pmErr)
@@ -1390,7 +1391,7 @@ func TestRssFeed(t *testing.T) {
 			t.Run(strconv.Itoa(i), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
+				r, _ := httpw.NewRequest("GET", "/", nil)
 
 				hw := newHandlersWrapper()
 				hw.pm.On("Get", r.Context(), mock.Anything).Return(tc.p, nil)
@@ -1432,7 +1433,7 @@ func TestSearch(t *testing.T) {
 			t.Run(fmt.Sprintf("%s: %s", tc.desc, tc.params), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/?"+tc.params, nil)
+				r, _ := httpw.NewRequest("GET", "/?"+tc.params, nil)
 
 				hw := newHandlersWrapper()
 				hw.h.Search(w, r)
@@ -1447,7 +1448,7 @@ func TestSearch(t *testing.T) {
 	t.Run("invalid search input", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("SearchJSON", r.Context(), mock.Anything).Return(nil, hub.ErrInvalidInput)
@@ -1486,7 +1487,7 @@ func TestSearch(t *testing.T) {
 		v.Add("capabilities", "c1")
 		v.Add("capabilities", "c2")
 		v.Set("sort", "stars")
-		r, _ := http.NewRequest("GET", "/?"+v.Encode(), nil)
+		r, _ := httpw.NewRequest("GET", "/?"+v.Encode(), nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("SearchJSON", r.Context(), &hub.SearchPackageInput{
@@ -1528,7 +1529,7 @@ func TestSearch(t *testing.T) {
 	t.Run("error searching packages", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
+		r, _ := httpw.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("SearchJSON", r.Context(), mock.Anything).Return(nil, tests.ErrFakeDB)
@@ -1545,7 +1546,7 @@ func TestSearchMonocular(t *testing.T) {
 	t.Run("search succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/?q=text", nil)
+		r, _ := httpw.NewRequest("GET", "/?q=text", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("SearchMonocularJSON", r.Context(), "baseURL", "text").Return([]byte("dataJSON"), nil)
@@ -1565,7 +1566,7 @@ func TestSearchMonocular(t *testing.T) {
 	t.Run("search failed", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/?q=text", nil)
+		r, _ := httpw.NewRequest("GET", "/?q=text", nil)
 
 		hw := newHandlersWrapper()
 		hw.pm.On("SearchMonocularJSON", r.Context(), "baseURL", "text").Return(nil, tests.ErrFakeDB)
@@ -1604,7 +1605,7 @@ func TestToggleStar(t *testing.T) {
 			t.Run(tc.err.Error(), func(t *testing.T) {
 				t.Parallel()
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("PUT", "/", nil)
+				r, _ := httpw.NewRequest("PUT", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
@@ -1623,7 +1624,7 @@ func TestToggleStar(t *testing.T) {
 	t.Run("toggle star succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("PUT", "/", nil)
+		r, _ := httpw.NewRequest("PUT", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
@@ -1651,7 +1652,7 @@ func TestTrackView(t *testing.T) {
 	t.Run("track view succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("POST", "/", nil)
+		r, _ := httpw.NewRequest("POST", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -1667,7 +1668,7 @@ func TestTrackView(t *testing.T) {
 	t.Run("error tracking view", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("POST", "/", nil)
+		r, _ := httpw.NewRequest("POST", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
@@ -1786,7 +1787,7 @@ func TestGetChartArchive(t *testing.T) {
 
 				hw := newHandlersWrapper()
 				hw.pm.On("Get", ctx, getPkgInput).Return(p1, nil)
-				tgzReq, _ := http.NewRequest("GET", p1ContentURL, nil)
+				tgzReq, _ := httpw.NewRequest("GET", p1ContentURL, nil)
 				tgzReq = tgzReq.WithContext(ctx)
 				tgzReq.Header.Set("Accept-Encoding", "identity")
 				hw.hc.On("Do", tgzReq).Return(tc.resp, tc.err)
@@ -1819,7 +1820,7 @@ func TestGetChartArchive(t *testing.T) {
 
 		hw := newHandlersWrapper()
 		hw.pm.On("Get", ctx, getPkgInput).Return(p1, nil)
-		tgzReq, _ := http.NewRequest("GET", p1ContentURL, nil)
+		tgzReq, _ := httpw.NewRequest("GET", p1ContentURL, nil)
 		tgzReq = tgzReq.WithContext(ctx)
 		tgzReq.Header.Set("Accept-Encoding", "identity")
 		hw.hc.On("Do", tgzReq).Return(&http.Response{
@@ -1838,7 +1839,7 @@ func TestGetChartArchive(t *testing.T) {
 
 		hw := newHandlersWrapper()
 		hw.pm.On("Get", ctx, getPkgInput).Return(p1, nil)
-		tgzReq, _ := http.NewRequest("GET", p1ContentURL, nil)
+		tgzReq, _ := httpw.NewRequest("GET", p1ContentURL, nil)
 		tgzReq = tgzReq.WithContext(ctx)
 		tgzReq.Header.Set("Accept-Encoding", "identity")
 		f, _ := os.Open("testdata/pkg1-1.0.0.tgz")
@@ -1862,7 +1863,7 @@ func TestGetChartArchive(t *testing.T) {
 			AuthUser: "user",
 			AuthPass: "pass",
 		}, nil)
-		tgzReq, _ := http.NewRequest("GET", p2ContentURL, nil)
+		tgzReq, _ := httpw.NewRequest("GET", p2ContentURL, nil)
 		tgzReq = tgzReq.WithContext(ctx)
 		tgzReq.SetBasicAuth("user", "pass")
 		tgzReq.Header.Set("Accept-Encoding", "identity")
