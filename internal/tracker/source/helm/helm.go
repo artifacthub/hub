@@ -17,6 +17,7 @@ import (
 	"sync"
 
 	"github.com/Masterminds/semver/v3"
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/license"
 	"github.com/artifacthub/hub/internal/oci"
@@ -341,7 +342,10 @@ func (s *TrackerSource) chartHasProvenanceFile(chartURL *url.URL) (bool, error) 
 
 	switch chartURL.Scheme {
 	case "http", "https":
-		req, _ := http.NewRequest("GET", chartURL.String()+".prov", nil)
+		req, err := httpw.NewRequest("GET", chartURL.String()+".prov", nil)
+		if err != nil {
+			return false, err
+		}
 		req = req.WithContext(s.i.Svc.Ctx)
 		if s.i.Repository.AuthUser != "" || s.i.Repository.AuthPass != "" {
 			req.SetBasicAuth(s.i.Repository.AuthUser, s.i.Repository.AuthPass)
@@ -411,15 +415,18 @@ func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOption
 	switch u.Scheme {
 	case "http", "https":
 		// Get chart content
-		req, _ := http.NewRequest("GET", u.String(), nil)
+		hc := o.Hc
+		if hc == nil {
+			hc = util.SetupHTTPClient(false, util.HTTPClientDefaultTimeout)
+		}
+		req, err := httpw.NewRequest("GET", u.String(), nil)
+		if err != nil {
+			return nil, err
+		}
 		req = req.WithContext(ctx)
 		req.Header.Set("Accept-Encoding", "identity")
 		if o.Username != "" || o.Password != "" {
 			req.SetBasicAuth(o.Username, o.Password)
-		}
-		hc := o.Hc
-		if hc == nil {
-			hc = util.SetupHTTPClient(false, util.HTTPClientDefaultTimeout)
 		}
 		resp, err := hc.Do(req)
 		if err != nil {

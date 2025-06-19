@@ -14,6 +14,7 @@ import (
 	"testing"
 
 	"github.com/artifacthub/hub/internal/authz"
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/tests"
@@ -453,8 +454,8 @@ func TestClaimOwnership(t *testing.T) {
 	opaRepoJSON := []byte(`{"kind": 2, "url": "http://repo.url"}`)
 	olmRepoJSON := []byte(`{"kind": 3, "url": "oci://repo.url"}`)
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
-	mdYmlReq, _ := http.NewRequest("GET", "http://repo.url/artifacthub-repo.yml", nil)
-	mdYamlReq, _ := http.NewRequest("GET", "http://repo.url/artifacthub-repo.yaml", nil)
+	mdYmlReq, _ := httpw.NewRequest("GET", "http://repo.url/artifacthub-repo.yml", nil)
+	mdYamlReq, _ := httpw.NewRequest("GET", "http://repo.url/artifacthub-repo.yaml", nil)
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		t.Parallel()
@@ -864,8 +865,8 @@ func TestGetByName(t *testing.T) {
 
 func TestGetMetadata(t *testing.T) {
 	repoURL := "http://url.test"
-	ymlReq, _ := http.NewRequest("GET", "http://url.test/artifacthub-repo.yml", nil)
-	yamlReq, _ := http.NewRequest("GET", "http://url.test/artifacthub-repo.yaml", nil)
+	ymlReq, _ := httpw.NewRequest("GET", "http://url.test/artifacthub-repo.yml", nil)
+	yamlReq, _ := httpw.NewRequest("GET", "http://url.test/artifacthub-repo.yaml", nil)
 	ociRepoURL := "oci://registry/namespace/repo"
 	ociRef := fmt.Sprintf("%s:%s", strings.TrimPrefix(ociRepoURL, hub.RepositoryOCIPrefix), artifacthubTag)
 	expectedMetadata := &hub.RepositoryMetadata{

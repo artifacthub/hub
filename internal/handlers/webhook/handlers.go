@@ -9,6 +9,7 @@ import (
 	"text/template"
 
 	"github.com/artifacthub/hub/internal/handlers/helpers"
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/notification"
 	"github.com/go-chi/chi/v5"
@@ -146,7 +147,11 @@ func (h *Handlers) TriggerTest(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Call webhook endpoint
-	req, _ := http.NewRequest("POST", wh.URL, &payload)
+	req, err := httpw.NewRequest("POST", wh.URL, &payload)
+	if err != nil {
+		helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
+		return
+	}
 	contentType := wh.ContentType
 	if contentType == "" {
 		contentType = notification.DefaultPayloadContentType

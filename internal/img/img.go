@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"strings"
 
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/disintegration/imaging"
 	"github.com/vincent-petithory/dataurl"
 )
@@ -54,7 +55,10 @@ func Download(
 	}
 
 	// Download image using url provided
-	req, _ := http.NewRequest("GET", imageURL, nil)
+	req, err := httpw.NewRequest("GET", imageURL, nil)
+	if err != nil {
+		return nil, err
+	}
 	if _, err := url.Parse(imageURL); err != nil {
 		return nil, err
 	}

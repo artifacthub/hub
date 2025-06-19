@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/Masterminds/semver/v3"
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
@@ -21,6 +22,9 @@ import (
 	"oras.land/oras-go/pkg/oras"
 )
 
+// Cosign represents the cosign signature kind.
+const Cosign = "cosign"
+
 var (
 	// ErrArtifactNotFound indicates that the requested artifact was not found
 	// in the registry.
@@ -29,9 +33,6 @@ var (
 	// ErrLayerNotFound indicates that the requested layer was not found in the
 	// OCI artifact provided.
 	ErrLayerNotFound = errors.New("layer not found")
-
-	// Cosign represents the cosign signature kind.
-	Cosign = "cosign"
 
 	// dockerHubRE is a regexp used to check if the registry used is the Docker
 	// Hub.
@@ -86,11 +87,12 @@ func (p *Puller) PullLayer(
 		ref.String(),
 		memoryStore,
 		"",
-		oras.WithPullEmptyNameAllowed(),
 		oras.WithAllowedMediaTypes([]string{mediaType}),
 		oras.WithLayerDescriptors(func(l []ocispec.Descriptor) {
 			layers = l
 		}),
+		oras.WithPullEmptyNameAllowed(),
+		oras.WithUserAgent(httpw.UserAgent),
 	)
 	if err != nil {
 		if strings.HasSuffix(err.Error(), "not found") { // TODO: https://github.com/oras-project/oras-go/blob/a3ccc872651aac656c04c9a231423161f98e2f64/pkg/content/multireader.go#L55
@@ -213,7 +215,7 @@ func PrepareRemoteOptions(
 	username,
 	password string,
 ) []remote.Option {
-	options := []remote.Option{}
+	options := []remote.Option{remote.WithUserAgent(httpw.UserAgent)}
 	if ctx != nil {
 		options = append(options, remote.WithContext(ctx))
 	}

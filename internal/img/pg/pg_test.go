@@ -10,6 +10,7 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/artifacthub/hub/internal/httpw"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/jackc/pgx/v4"
 	"github.com/spf13/viper"
@@ -44,7 +45,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 		db.On("QueryRow", ctx, getImageIDDBQ, svgImgHash).Return(nil, pgx.ErrNoRows)
 		db.On("QueryRow", ctx, registerImageDBQ, svgImgHash, "svg", svgImgData).Return("svgImgID", nil)
 		hc := &tests.HTTPClientMock{}
-		req, _ := http.NewRequest("GET", svgImgURL, nil)
+		req, _ := httpw.NewRequest("GET", svgImgURL, nil)
 		hc.On("Do", req).Return(&http.Response{
 			Body:       io.NopCloser(bytes.NewReader(svgImgData)),
 			StatusCode: http.StatusOK,
@@ -62,7 +63,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		hc := &tests.HTTPClientMock{}
-		req, _ := http.NewRequest("GET", svgImgURL, nil)
+		req, _ := httpw.NewRequest("GET", svgImgURL, nil)
 		hc.On("Do", req).Return(nil, tests.ErrFake)
 		s := NewImageStore(cfg, db, hc)
 
@@ -96,7 +97,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 		db.On("QueryRow", ctx, getImageIDDBQ, svgImgHash).Return(nil, pgx.ErrNoRows).Once()
 		db.On("QueryRow", ctx, registerImageDBQ, svgImgHash, "svg", svgImgData).Return("svgImgID", nil).Once()
 		hc := &tests.HTTPClientMock{}
-		req, _ := http.NewRequest("GET", svgImgURL, nil)
+		req, _ := httpw.NewRequest("GET", svgImgURL, nil)
 		hc.On("Do", req).Return(&http.Response{
 			Body:       io.NopCloser(bytes.NewReader(svgImgData)),
 			StatusCode: http.StatusOK,
@@ -122,7 +123,7 @@ func TestDownloadAndSaveImage(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
 		hc := &tests.HTTPClientMock{}
-		req, _ := http.NewRequest("GET", svgImgURL, nil)
+		req, _ := httpw.NewRequest("GET", svgImgURL, nil)
 		hc.On("Do", req).Return(nil, tests.ErrFake).Once()
 		s := NewImageStore(cfg, db, hc)
 
