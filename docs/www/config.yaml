@@ -7,6 +7,10 @@ build:
   noJSConfigInAssets: false
   useResourceCacheWhen: fallback
   writeStats: false
+markup:
+  goldmark:
+    extensions:
+      typographer: false
 params:
   AuthorName: Artifact Hub Team
   geekdocSearch: false
