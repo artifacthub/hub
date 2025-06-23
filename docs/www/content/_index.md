@@ -11,6 +11,7 @@ The documentation is organized in the following topics:
 
 | Topic                                                         | Description                                                                                                                                             |
 | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [FAQ](/docs/topics/faq)                                       | Frequently asked questions about Artifact Hub, covering general usage, repository management, troubleshooting, and more.                                |
 | [Repositories guide](/docs/topics/repositories)               | The repositories guide explains how to add repositories to Artifact Hub, as well as other related concepts like Verified publisher or Ownership Claim.  |
 | [Argo annotations](/docs/topics/annotations/argo)             | Describes some custom annotations that allow enriching the existing metadata in Argo templates to improve users' experience in Artifact Hub.            |
 | [Headlamp annotations](/docs/topics/annotations/headlamp)     | Describes some custom annotations that allow enriching the existing metadata in Headlamp plugins to improve users' experience in Artifact Hub.          |
