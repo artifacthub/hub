@@ -1,4 +1,58 @@
-# FAQ
+# FAQ <!-- omit from toc -->
+
+- [General Questions](#general-questions)
+  - [What is Artifact Hub and what does it do?](#what-is-artifact-hub-and-what-does-it-do)
+  - [What artifact kinds does Artifact Hub support?](#what-artifact-kinds-does-artifact-hub-support)
+  - [How do I request support for a new artifact kind?](#how-do-i-request-support-for-a-new-artifact-kind)
+  - [How often does Artifact Hub check repositories for updates?](#how-often-does-artifact-hub-check-repositories-for-updates)
+  - [Can I install applications directly from Artifact Hub?](#can-i-install-applications-directly-from-artifact-hub)
+- [Repository Management](#repository-management)
+  - [How do I add my repository to Artifact Hub?](#how-do-i-add-my-repository-to-artifact-hub)
+  - [How do I become a verified publisher?](#how-do-i-become-a-verified-publisher)
+  - [How can I claim ownership of a repository that someone else added?](#how-can-i-claim-ownership-of-a-repository-that-someone-else-added)
+  - [What are the benefits of claiming repository ownership?](#what-are-the-benefits-of-claiming-repository-ownership)
+  - [Where should I place the artifacthub-repo.yml file?](#where-should-i-place-the-artifacthub-repoyml-file)
+  - [I've added the metadata file but I still can't see the verified publisher status](#ive-added-the-metadata-file-but-i-still-cant-see-the-verified-publisher-status)
+  - [Can I change my repository name after creating it?](#can-i-change-my-repository-name-after-creating-it)
+  - [Why am I getting "There is another repository using this url" error?](#why-am-i-getting-there-is-another-repository-using-this-url-error)
+  - [How do I force my repository to be reprocessed?](#how-do-i-force-my-repository-to-be-reprocessed)
+- [Helm Charts](#helm-charts)
+  - [Is there a single URL I can use to pull all charts from Artifact Hub?](#is-there-a-single-url-i-can-use-to-pull-all-charts-from-artifact-hub)
+  - [What is the source of the README file displayed in Artifact Hub?](#what-is-the-source-of-the-readme-file-displayed-in-artifact-hub)
+  - [How do I add changelog information to my chart?](#how-do-i-add-changelog-information-to-my-chart)
+  - [Why aren't my chart updates appearing?](#why-arent-my-chart-updates-appearing)
+  - [How do I add container images for security scanning?](#how-do-i-add-container-images-for-security-scanning)
+  - [Can I exclude specific images from security scanning?](#can-i-exclude-specific-images-from-security-scanning)
+  - [Why do old chart versions disappear from Artifact Hub?](#why-do-old-chart-versions-disappear-from-artifact-hub)
+  - [How do I add OCI-based Helm charts?](#how-do-i-add-oci-based-helm-charts)
+  - [Can I add my entire OCI registry to Artifact Hub?](#can-i-add-my-entire-oci-registry-to-artifact-hub)
+  - [How do I add the repository metadata file for OCI repositories?](#how-do-i-add-the-repository-metadata-file-for-oci-repositories)
+- [Authentication](#authentication)
+  - [How do I reset my 2FA?](#how-do-i-reset-my-2fa)
+  - [Can I change my email address?](#can-i-change-my-email-address)
+- [Self-hosted Deployments](#self-hosted-deployments)
+  - [How do I install Artifact Hub on my own infrastructure?](#how-do-i-install-artifact-hub-on-my-own-infrastructure)
+  - [Can I use custom OAuth providers?](#can-i-use-custom-oauth-providers)
+  - [How do I enable private repositories?](#how-do-i-enable-private-repositories)
+  - [How do I add repositories to my self-hosted instance?](#how-do-i-add-repositories-to-my-self-hosted-instance)
+  - [What's the demo user for self-hosted instances?](#whats-the-demo-user-for-self-hosted-instances)
+  - [Can I restrict access to my self-hosted instance?](#can-i-restrict-access-to-my-self-hosted-instance)
+- [API and integrations](#api-and-integrations)
+  - [What are the API rate limits?](#what-are-the-api-rate-limits)
+  - [How can I get all charts listed on artifacthub.io without hitting rate limits?](#how-can-i-get-all-charts-listed-on-artifacthubio-without-hitting-rate-limits)
+  - [Is there an endpoint to get security reports?](#is-there-an-endpoint-to-get-security-reports)
+- [Official Status and Verification](#official-status-and-verification)
+  - [How do I get the "Official" status for my packages?](#how-do-i-get-the-official-status-for-my-packages)
+  - [What's the difference between "Verified Publisher" and "Official"?](#whats-the-difference-between-verified-publisher-and-official)
+  - [Do I need to create an organization to get official status?](#do-i-need-to-create-an-organization-to-get-official-status)
+- [Security Reports](#security-reports)
+  - [How does security scanning work?](#how-does-security-scanning-work)
+  - [Why don't I see security reports for my charts?](#why-dont-i-see-security-reports-for-my-charts)
+  - [Can I scan private registry images?](#can-i-scan-private-registry-images)
+- [Getting Help](#getting-help)
+  - [How do I report issues with packages listed on Artifact Hub?](#how-do-i-report-issues-with-packages-listed-on-artifact-hub)
+  - [Where can I find more documentation?](#where-can-i-find-more-documentation)
+  - [How do I report issues or request features for Artifact Hub itself?](#how-do-i-report-issues-or-request-features-for-artifact-hub-itself)
 
 ## General Questions
 
@@ -28,11 +82,11 @@ No, it's not possible to install applications from Artifact Hub. In the package 
 
 ### How do I add my repository to Artifact Hub?
 
-You can add your repository to Artifact Hub from the control panel in the UI after signing in. Please see the [repositories guide](<https://artifacthub.io/docs/topics/repositories/>) for more details about each supported repository kind.
+You can add your repository to Artifact Hub from the control panel in the UI after signing in. Please see the [repositories guide](https://artifacthub.io/docs/topics/repositories/) for more details about each supported repository kind.
 
 ### How do I become a verified publisher?
 
-You need to add a metadata file to the repository including the repository ID listed in the control panel. For more information please see the [verified publisher section](<https://artifacthub.io/docs/topics/repositories/#verified-publisher>) of the repositories guide.
+You need to add a metadata file to the repository including the repository ID listed in the control panel. For more information please see the [verified publisher section](https://artifacthub.io/docs/topics/repositories/#verified-publisher) of the repositories guide.
 
 ### How can I claim ownership of a repository that someone else added?
 
@@ -79,7 +133,7 @@ The README displayed is the one in the chart tgz package. To update it, you can 
 
 ### How do I add changelog information to my chart?
 
-The changes are included as a list of entries using an annotation. Each version is expected to provide only the changes it includes, not the full change log. You can see an example [here](https://artifacthub.io/docs/topics/annotations/helm/).
+The changes are included as a list of entries using an annotation. Each version is expected to provide only the changes it includes, not the full change log. You can see an example in the [Helm annotations documentation](https://artifacthub.io/docs/topics/annotations/helm/).
 
 ### Why aren't my chart updates appearing?
 
@@ -99,7 +153,7 @@ Artifact Hub relies on the repository index, so whenever it's truncated, charts 
 
 ### How do I add OCI-based Helm charts?
 
-For OCI-based Helm charts, you need to setup one Artifact Hub repository per chart. Please see the [OCI support section](<https://artifacthub.io/docs/topics/repositories/helm-charts/#oci-support>) for more details.
+For OCI-based Helm charts, you need to setup one Artifact Hub repository per chart. Please see the [OCI support section](https://artifacthub.io/docs/topics/repositories/helm-charts/#oci-support) for more details.
 
 ### Can I add my entire OCI registry to Artifact Hub?
 
@@ -173,15 +227,15 @@ The `Verified Publisher` status is automated and shows that the publisher has ve
 
 Yes, if the repository or package belongs to an organization or company.
 
-## Security reports
+## Security Reports
 
 ### How does security scanning work?
 
 Security reports are generated using Trivy. The latest package version available is scanned **daily**, whereas previous versions are scanned **weekly**. This happens even if nothing has changed in the package version. Versions released more than one year ago or with more than 15 container images won’t be scanned.
 
-### Why don't I see security reports for my packages?
+### Why don't I see security reports for my charts?
 
-The most frequent cause is that we were not able to automatically detect their images. In this case, you can provide them manually.
+The most frequent cause is that we were not able to automatically detect their images. We try to detect them by applying some regular expressions in the output of a dry-run chart install, using the default values. Unfortunately, this mechanism does not always work: sometimes some of the images cannot be detected this way, and sometimes none are found. When this happens, you can provide the images manually by using the `artifacthub.io/images` annotation in the `Chart.yml` file.
 
 ### Can I scan private registry images?
 
@@ -197,9 +251,9 @@ For issues with the content listed on `artifacthub.io`, it's best to contact the
 
 Check these resources:
 
-- [Artifact Hub documentation](<https://artifacthub.io/docs/>)
-- [Repositories Guide](<https://artifacthub.io/docs/topics/repositories/>)
-- [API Documentation](<https://artifacthub.io/docs/api/>)
+- [Artifact Hub documentation](https://artifacthub.io/docs/)
+- [Repositories Guide](https://artifacthub.io/docs/topics/repositories/)
+- [API Documentation](https://artifacthub.io/docs/api/)
 
 ### How do I report issues or request features for Artifact Hub itself?
 
