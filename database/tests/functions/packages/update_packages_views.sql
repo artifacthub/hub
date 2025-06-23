@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(3);
+select plan(4);
 
 -- Declare some variables
 \set lockKey 1
@@ -95,6 +95,21 @@ select results_eq(
         ('00000000-0000-0000-0000-000000000002'::uuid, '1.0.0', '2021-12-6'::date, 5)
     $$,
     'Third run: one update and four inserts'
+);
+select update_packages_views(:lockKey, '[
+    ["00000000-0000-0000-0000-000000000001", "2.0.0", "2021-12-5", 10],
+    ["00000000-0000-0000-0000-000000000003", "1.0.0", "2021-12-6", 5]
+]');
+select results_eq(
+    'select * from package_views',
+    $$ values
+        ('00000000-0000-0000-0000-000000000001'::uuid, '1.0.0', '2021-12-3'::date, 20),
+        ('00000000-0000-0000-0000-000000000001'::uuid, '1.0.0', '2021-12-5'::date, 10),
+        ('00000000-0000-0000-0000-000000000001'::uuid, '1.0.1', '2021-12-5'::date, 10),
+        ('00000000-0000-0000-0000-000000000002'::uuid, '1.0.0', '2021-12-5'::date, 10),
+        ('00000000-0000-0000-0000-000000000002'::uuid, '1.0.0', '2021-12-6'::date, 5)
+    $$,
+    'Fourth run: some invalid views that will be ignored, no changes'
 );
 
 -- Finish tests and rollback transaction
