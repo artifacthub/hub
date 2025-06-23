@@ -62,7 +62,7 @@ Artifact Hub is a web-based application that enables finding, installing and pub
 
 ### What artifact kinds does Artifact Hub support?
 
-Artifact Hub supports 25+ artifact kinds. Please see the [repositories guide](https://artifacthub.io/docs/topics/repositories/) for a full list and more information about each of them.
+Artifact Hub supports 25+ artifact kinds. Please see the [repositories guide](/docs/topics/repositories/) for a full list and more information about each of them.
 
 ### How do I request support for a new artifact kind?
 
@@ -80,15 +80,15 @@ No, it's not possible to install applications from Artifact Hub. In the package 
 
 ### How do I add my repository to Artifact Hub?
 
-You can add your repository to Artifact Hub from the control panel in the UI after signing in. Please see the [repositories guide](https://artifacthub.io/docs/topics/repositories/) for more details about each supported repository kind.
+You can add your repository to Artifact Hub from the control panel in the UI after signing in. Please see the [repositories guide](/docs/topics/repositories/) for more details about each supported repository kind.
 
 ### How do I become a verified publisher?
 
-You need to add a metadata file to the repository including the repository ID listed in the control panel. For more information please see the [verified publisher section](https://artifacthub.io/docs/topics/repositories/#verified-publisher) of the repositories guide.
+You need to add a metadata file to the repository including the repository ID listed in the control panel. For more information please see the [verified publisher section](/docs/topics/repositories/#verified-publisher) of the repositories guide.
 
 ### How can I claim ownership of a repository that someone else added?
 
-You can claim the ownership of a repository automatically by following [this process](https://artifacthub.io/docs/topics/repositories/#ownership-claim). It's an automated process that doesn't require contacting the current owners - you just need to add a metadata file with your email address.
+You can claim the ownership of a repository automatically by following [this process](/docs/topics/repositories/#ownership-claim). It's an automated process that doesn't require contacting the current owners - you just need to add a metadata file with your email address.
 
 ### What are the benefits of claiming repository ownership?
 
@@ -131,7 +131,7 @@ The README displayed is the one in the chart tgz package. To update it, you can 
 
 ### How do I add changelog information to my chart?
 
-The changes are included as a list of entries using an annotation. Each version is expected to provide only the changes it includes, not the full change log. You can see an example in the [Helm annotations documentation](https://artifacthub.io/docs/topics/annotations/helm/).
+The changes are included as a list of entries using an annotation. Each version is expected to provide only the changes it includes, not the full change log. You can see an example in the [Helm annotations documentation](/docs/topics/annotations/helm/).
 
 ### Why aren't my chart updates appearing?
 
@@ -147,7 +147,7 @@ Artifact Hub relies on the repository index, so whenever it's truncated, charts 
 
 ### How do I add OCI-based Helm charts?
 
-For OCI-based Helm charts, you need to setup one Artifact Hub repository per chart. Please see the [Helm OCI support section](https://artifacthub.io/docs/topics/repositories/helm-charts/#oci-support) for more details.
+For OCI-based Helm charts, you need to setup one Artifact Hub repository per chart. Please see the [Helm OCI support section](/docs/topics/repositories/helm-charts/#oci-support) for more details.
 
 ### Can I add my entire OCI registry to Artifact Hub?
 
@@ -155,7 +155,7 @@ Unfortunately, you need to setup one repository for each chart when using OCI-ba
 
 ### How do I add the repository metadata file for OCI repositories?
 
-The metadata file needs to be pushed to the OCI registry as well, using a special tag. You can find more details in the [Helm OCI support section](https://artifacthub.io/docs/topics/repositories/helm-charts/#oci-support).
+The metadata file needs to be pushed to the OCI registry as well, using a special tag. You can find more details in the [Helm OCI support section](/docs/topics/repositories/helm-charts/#oci-support).
 
 ## Authentication
 
@@ -197,21 +197,21 @@ No, there is no way to restrict the visibility of the content available on Artif
 
 ### What are the API rate limits?
 
-The exact numbers are not documented because they are updated every now and then and vary depending on the endpoint used and the current service status. There are some integration endpoints that allow dumping a lot of content in a single request, which may be handy in some cases (e.g. [Harbor replication endpoint](https://artifacthub.io/docs/api/#/Integrations/getHarborReplicationDump)).
+The exact numbers are not documented because they are updated every now and then and vary depending on the endpoint used and the current service status. There are some integration endpoints that allow dumping a lot of content in a single request, which may be handy in some cases (e.g. [Harbor replication endpoint](/docs/api/#/Integrations/getHarborReplicationDump)).
 
 ### How can I get all charts listed on artifacthub.io without hitting rate limits?
 
-You could use the [Harbor replication endpoint](https://artifacthub.io/docs/api/#/Integrations/getHarborReplicationDump).
+You could use the [Harbor replication endpoint](/docs/api/#/Integrations/getHarborReplicationDump).
 
 ### Is there an endpoint to get security reports?
 
-Yes, you can use [this endpoint](https://artifacthub.io/docs/api/#/Packages/getPackageSecurityReport). The security reports are generated using [Trivy](https://trivy.dev/). We store the full output of Trivy (in json format).
+Yes, you can use [this endpoint](/docs/api/#/Packages/getPackageSecurityReport). The security reports are generated using [Trivy](https://trivy.dev/). We store the full output of Trivy (in json format).
 
 ## Official Status and Verification
 
 ### How do I get the "Official" status for my packages?
 
-Please see: <https://artifacthub.io/docs/topics/repositories/#official-status>. The official status is granted manually and needs to be requested via a GitHub issue.
+Please see: [/docs/topics/repositories/#official-status](/docs/topics/repositories/#official-status). The official status is granted manually and needs to be requested via a GitHub issue.
 
 ### What's the difference between "Verified Publisher" and "Official"?
 
@@ -249,9 +249,9 @@ For issues with the content listed on `artifacthub.io`, it's best to **contact t
 
 Check these resources:
 
-- [Artifact Hub documentation](https://artifacthub.io/docs/)
-- [Repositories Guide](https://artifacthub.io/docs/topics/repositories/)
-- [API Documentation](https://artifacthub.io/docs/api/)
+- [Artifact Hub documentation](/docs)
+- [Repositories Guide](/docs/topics/repositories)
+- [API Documentation](/docs/api)
 
 ### How do I report issues or request features for Artifact Hub itself?
 
