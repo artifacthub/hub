@@ -17,12 +17,11 @@
   - [Why am I getting "There is another repository using this url" error?](#why-am-i-getting-there-is-another-repository-using-this-url-error)
   - [How do I force my repository to be reprocessed?](#how-do-i-force-my-repository-to-be-reprocessed)
 - [Helm Charts](#helm-charts)
-  - [Is there a single URL I can use to pull all charts from Artifact Hub?](#is-there-a-single-url-i-can-use-to-pull-all-charts-from-artifact-hub)
+  - [Can I use Artifact Hub as a single charts repository for all the charts listed on it?](#can-i-use-artifact-hub-as-a-single-charts-repository-for-all-the-charts-listed-on-it)
   - [What is the source of the README file displayed in Artifact Hub?](#what-is-the-source-of-the-readme-file-displayed-in-artifact-hub)
   - [How do I add changelog information to my chart?](#how-do-i-add-changelog-information-to-my-chart)
   - [Why aren't my chart updates appearing?](#why-arent-my-chart-updates-appearing)
   - [How do I add container images for security scanning?](#how-do-i-add-container-images-for-security-scanning)
-  - [Can I exclude specific images from security scanning?](#can-i-exclude-specific-images-from-security-scanning)
   - [Why do old chart versions disappear from Artifact Hub?](#why-do-old-chart-versions-disappear-from-artifact-hub)
   - [How do I add OCI-based Helm charts?](#how-do-i-add-oci-based-helm-charts)
   - [Can I add my entire OCI registry to Artifact Hub?](#can-i-add-my-entire-oci-registry-to-artifact-hub)
@@ -36,7 +35,7 @@
   - [How do I enable private repositories?](#how-do-i-enable-private-repositories)
   - [How do I add repositories to my self-hosted instance?](#how-do-i-add-repositories-to-my-self-hosted-instance)
   - [What's the demo user for self-hosted instances?](#whats-the-demo-user-for-self-hosted-instances)
-  - [Can I restrict access to my self-hosted instance?](#can-i-restrict-access-to-my-self-hosted-instance)
+  - [Can I restrict access to some of the content in my self-hosted instance?](#can-i-restrict-access-to-some-of-the-content-in-my-self-hosted-instance)
 - [API and integrations](#api-and-integrations)
   - [What are the API rate limits?](#what-are-the-api-rate-limits)
   - [How can I get all charts listed on artifacthub.io without hitting rate limits?](#how-can-i-get-all-charts-listed-on-artifacthubio-without-hitting-rate-limits)
@@ -47,6 +46,7 @@
   - [Do I need to create an organization to get official status?](#do-i-need-to-create-an-organization-to-get-official-status)
 - [Security Reports](#security-reports)
   - [How does security scanning work?](#how-does-security-scanning-work)
+  - [Can I exclude specific images from security scanning?](#can-i-exclude-specific-images-from-security-scanning)
   - [Why don't I see security reports for my charts?](#why-dont-i-see-security-reports-for-my-charts)
   - [Can I scan private registry images?](#can-i-scan-private-registry-images)
 - [Getting Help](#getting-help)
@@ -62,13 +62,11 @@ Artifact Hub is a web-based application that enables finding, installing and pub
 
 ### What artifact kinds does Artifact Hub support?
 
-Artifact Hub supports 25+ artifact kinds. Please see the repositories guide for more information about each of them: <https://artifacthub.io/docs/topics/repositories/>
+Artifact Hub supports 25+ artifact kinds. Please see the [repositories guide](https://artifacthub.io/docs/topics/repositories/) for a full list and more information about each of them.
 
 ### How do I request support for a new artifact kind?
 
-The best way is opening an issue in the Artifact Hub GitHub repository. Please see other examples to see how the process works.
-
-Note that Artifact Hub currently only supports vendor neutral artifacts. Everything listed is currently in a foundation and not attached to a single vendor.
+The best way is opening an issue in the Artifact Hub GitHub repository. Please see other examples to see how the process works. Note that Artifact Hub currently only supports vendor neutral artifacts. Everything listed is currently in a foundation and not attached to a single vendor.
 
 ### How often does Artifact Hub check repositories for updates?
 
@@ -119,13 +117,13 @@ A repository can only be added once to Artifact Hub to avoid duplicates. If some
 
 ### How do I force my repository to be reprocessed?
 
-You can force your repository to be processed at any time by updating an existing version or pushing a new one.
+You can force your repository to be processed at any time by updating an existing package version or pushing a new one.
 
 ## Helm Charts
 
-### Is there a single URL I can use to pull all charts from Artifact Hub?
+### Can I use Artifact Hub as a single charts repository for all the charts listed on it?
 
-No, there isn't. Artifact Hub allows you to search for charts available in multiple repositories, but it doesn't store or proxy the content in them, only some metadata.
+No, this is not possible. Artifact Hub allows you to search for charts available in multiple repositories, but it doesn't store or proxy the content in them, only some metadata.
 
 ### What is the source of the README file displayed in Artifact Hub?
 
@@ -143,17 +141,13 @@ The tracker runs every 30 minutes and processes versions that haven't been index
 
 When container images are not defined in the Helm chart annotations, Artifact Hub tries to detect them from the manifests generated by a dry-run install. When the detection isn't accurate, the best way to fix it is by defining the container images manually in the `Chart.yaml` file using the `artifacthub.io/images` annotation.
 
-### Can I exclude specific images from security scanning?
-
-You can whitelist individual images so that they're not scanned for security vulnerabilities using the `artifacthub.io/images` annotation. You can also disable the security scanner for the entire repository from the control panel.
-
 ### Why do old chart versions disappear from Artifact Hub?
 
-Artifact Hub relies on the repository index, so whenever it's truncated, charts not available on it are removed from AH as well. We don't store the artifacts themselves, only some of their metadata.
+Artifact Hub relies on the repository index, so whenever it's truncated, charts not available on it are removed from Artifact Hub as well. We don't store the artifacts themselves, only some of their metadata.
 
 ### How do I add OCI-based Helm charts?
 
-For OCI-based Helm charts, you need to setup one Artifact Hub repository per chart. Please see the [OCI support section](https://artifacthub.io/docs/topics/repositories/helm-charts/#oci-support) for more details.
+For OCI-based Helm charts, you need to setup one Artifact Hub repository per chart. Please see the [Helm OCI support section](https://artifacthub.io/docs/topics/repositories/helm-charts/#oci-support) for more details.
 
 ### Can I add my entire OCI registry to Artifact Hub?
 
@@ -161,7 +155,7 @@ Unfortunately, you need to setup one repository for each chart when using OCI-ba
 
 ### How do I add the repository metadata file for OCI repositories?
 
-The metadata file needs to be pushed to the OCI registry as well, using a special tag. You can find more details here: <https://artifacthub.io/docs/topics/repositories/helm-charts/#oci-support>
+The metadata file needs to be pushed to the OCI registry as well, using a special tag. You can find more details in the [Helm OCI support section](https://artifacthub.io/docs/topics/repositories/helm-charts/#oci-support).
 
 ## Authentication
 
@@ -181,7 +175,7 @@ You can deploy your own Artifact Hub instance using the [official Helm chart](ht
 
 ### Can I use custom OAuth providers?
 
-No, there isn't support for custom OAuth providers at the moment, but you can use an OpenID Connect provider in your own Artifact Hub deployments.
+No, there isn't support for custom OAuth providers at the moment, but you can use an [OpenID Connect provider](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=values-schema&path=hub.server.oauth.oidc) in your Artifact Hub deployments.
 
 ### How do I enable private repositories?
 
@@ -195,7 +189,7 @@ Once you have your Artifact Hub instance up and running, you can add your reposi
 
 When the parameter `dbMigrator.loadSampleData` is set to true (default), a demo user and a couple of sample repositories are registered automatically. The credentials for the demo user are: `demo@artifacthub.io` / `changeme`. You can change the password from the control panel once you log in.
 
-### Can I restrict access to my self-hosted instance?
+### Can I restrict access to some of the content in my self-hosted instance?
 
 No, there is no way to restrict the visibility of the content available on Artifact Hub, even in your own instance.
 
@@ -211,7 +205,7 @@ You could use the [Harbor replication endpoint](https://artifacthub.io/docs/api/
 
 ### Is there an endpoint to get security reports?
 
-Yes, you can use [this endpoint](https://artifacthub.io/docs/api/#/Packages/getPackageSecurityReport). The security reports are generated using Trivy. We store the full output of Trivy (in json format).
+Yes, you can use [this endpoint](https://artifacthub.io/docs/api/#/Packages/getPackageSecurityReport). The security reports are generated using [Trivy](https://trivy.dev/). We store the full output of Trivy (in json format).
 
 ## Official Status and Verification
 
@@ -231,7 +225,11 @@ Yes, if the repository or package belongs to an organization or company.
 
 ### How does security scanning work?
 
-Security reports are generated using Trivy. The latest package version available is scanned **daily**, whereas previous versions are scanned **weekly**. This happens even if nothing has changed in the package version. Versions released more than one year ago or with more than 15 container images won’t be scanned.
+Security reports are generated using [Trivy](https://trivy.dev/). The latest package version available is scanned **daily**, whereas previous versions are scanned **weekly**. This happens even if nothing has changed in the package version. Versions released more than one year ago or with more than 15 container images won’t be scanned.
+
+### Can I exclude specific images from security scanning?
+
+You can whitelist individual images so that they're not scanned for security vulnerabilities. Note that this is only possible when you define your images manually. You can also disable the security scanner for the entire repository from the control panel.
 
 ### Why don't I see security reports for my charts?
 
@@ -245,7 +243,7 @@ No, Artifact Hub does not support scanning images on private registries.
 
 ### How do I report issues with packages listed on Artifact Hub?
 
-For issues with the content listed on `artifacthub.io`, it's best to contact the particular project directly. In the links section of the right panel in the package view, you usually may find some links that can point you to the project's repository or the maintainers' emails.
+For issues with the content listed on `artifacthub.io`, it's best to **contact the particular project directly**. In the links section of the right panel in the package view, you usually may find some links that can point you to the project's repository or the maintainers' emails.
 
 ### Where can I find more documentation?
 
@@ -257,4 +255,4 @@ Check these resources:
 
 ### How do I report issues or request features for Artifact Hub itself?
 
-You can create an [issue](https://github.com/artifacthub/hub/issues) or [discussion](https://github.com/artifacthub/hub/discussions) on the Artifact Hub GitHub repository.
+You can create a [discussion](https://github.com/artifacthub/hub/discussions) or [issue](https://github.com/artifacthub/hub/issues) on the Artifact Hub GitHub repository.
