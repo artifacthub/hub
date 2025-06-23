@@ -211,7 +211,7 @@ Yes, you can use [this endpoint](/docs/api/#/Packages/getPackageSecurityReport).
 
 ### How do I get the "Official" status for my packages?
 
-Please see: [/docs/topics/repositories/#official-status](/docs/topics/repositories/#official-status). The official status is granted manually and needs to be requested via a GitHub issue.
+The official status is granted manually and needs to be requested via a GitHub issue. Please see the [official status section](/docs/topics/repositories/#official-status) in the repositories guide for more details.
 
 ### What's the difference between "Verified Publisher" and "Official"?
 
