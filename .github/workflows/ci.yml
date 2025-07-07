@@ -62,7 +62,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
     container:
-      image: public.ecr.aws/clomonitor/linter:latest
+      image: ghcr.io/cncf/clomonitor/linter:latest
       options: --user root
     steps:
       - name: Checkout code
