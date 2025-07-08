@@ -55,10 +55,15 @@ spec:
               resources:
                 {{- toYaml . | nindent 16 }}
               {{- end }}
-              {{- if .Values.scanner.cacheDir }}
+              {{- if or .Values.scanner.cacheDir .Values.scanner.cronjob.extraEnvVars }}
               env:
+                {{- if .Values.scanner.cacheDir }}
                 - name: TRIVY_CACHE_DIR
                   value: {{ .Values.scanner.cacheDir | quote }}
+                {{- end }}
+                {{- if .Values.scanner.cronjob.extraEnvVars }}
+                  {{- include "chart.tplvalues.render" (dict "value" .Values.scanner.cronjob.extraEnvVars "context" $) | nindent 16 }}
+                {{- end }}
               {{- end }}
               volumeMounts:
                 - name: scanner-config

@@ -54,10 +54,15 @@ spec:
               resources:
                 {{- toYaml . | nindent 16 }}
               {{- end }}
-              {{- if .Values.tracker.cacheDir }}
+              {{- if or .Values.tracker.cacheDir .Values.tracker.cronjob.extraEnvVars }}
               env:
+                {{- if .Values.tracker.cacheDir }}
                 - name: XDG_CACHE_HOME
                   value: {{ .Values.tracker.cacheDir | quote }}
+                {{- end }}
+                {{- if .Values.tracker.cronjob.extraEnvVars }}
+                  {{- include "chart.tplvalues.render" (dict "value" .Values.tracker.cronjob.extraEnvVars "context" $) | nindent 16 }}
+                {{- end }}
               {{- end }}
               volumeMounts:
                 - name: tracker-config

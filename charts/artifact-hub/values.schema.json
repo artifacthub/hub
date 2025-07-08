@@ -305,6 +305,12 @@
                             "type": "array",
                             "default": "[]"
                         },
+                        "extraEnvVars": {
+                            "title": "Extra environment variables",
+                            "description": "Optionally specify extra list of additional environment variables for the hub container",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "type": "object",
                             "properties": {
@@ -1047,6 +1053,12 @@
                             "type": "array",
                             "default": "[]"
                         },
+                        "extraEnvVars": {
+                            "title": "Extra environment variables",
+                            "description": "Optionally specify extra list of additional environment variables for the scanner container",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "type": "object",
                             "properties": {
@@ -1168,6 +1180,12 @@
                         "extraVolumeMounts": {
                             "title": "Extra volume mounts",
                             "description": "Optionally specify extra list of additional volume mounts for the tracker cronjob",
+                            "type": "array",
+                            "default": "[]"
+                        },
+                        "extraEnvVars": {
+                            "title": "Extra environment variables",
+                            "description": "Optionally specify extra list of additional environment variables for the tracker container",
                             "type": "array",
                             "default": "[]"
                         },

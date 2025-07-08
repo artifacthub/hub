@@ -192,6 +192,8 @@ hub:
     nodeSelector: {}
     # Optionally specify extra list of additional containers for the hub deployment
     extraContainers: []
+    # Optionally specify extra list of additional environment variables for the hub container
+    extraEnvVars: []
   server:
     # Allow adding private repositories to the Hub
     allowPrivateRepositories: false
@@ -338,6 +340,8 @@ scanner:
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the scanner cronjob
     extraVolumeMounts: []
+    # Optionally specify extra list of additional environment variables for the scanner container
+    extraEnvVars: []
     # Optionally specify a node selector for the scanner cronjob
     nodeSelector: {}
   # Number of snapshots to process concurrently
@@ -376,6 +380,8 @@ tracker:
     extraVolumes: []
     # Optionally specify extra list of additional volume mounts for the tracker cronjob
     extraVolumeMounts: []
+    # Optionally specify extra list of additional environment variables for the tracker container
+    extraEnvVars: []
     # Optionally specify a node selector for the tracker cronjob
     nodeSelector: {}
   # Cache directory path. If set, the cache directory for the Helm client will be explicitly set (otherwise defaults

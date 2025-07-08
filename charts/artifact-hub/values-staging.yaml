@@ -41,6 +41,9 @@ hub:
       requests:
         cpu: 1
         memory: 1000Mi
+    extraEnvVars:
+      - name: KEY1
+        value: VALUE1
   server:
     bannersURL: https://cncf.github.io/banners/banners.yml
     baseURL: https://staging.artifacthub.io

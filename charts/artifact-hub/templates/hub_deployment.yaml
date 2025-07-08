@@ -70,10 +70,15 @@ spec:
           securityContext:
             {{-  toYaml . | nindent 12 }}
           {{- end }}
-          {{- if .Values.hub.server.cacheDir }}
+          {{- if or .Values.hub.server.cacheDir .Values.hub.deploy.extraEnvVars }}
           env:
+            {{- if .Values.hub.server.cacheDir }}
             - name: XDG_CACHE_HOME
               value: {{ .Values.hub.server.cacheDir | quote }}
+            {{- end }}
+            {{- if .Values.hub.deploy.extraEnvVars }}
+              {{- include "chart.tplvalues.render" (dict "value" .Values.hub.deploy.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
           {{- end }}
           volumeMounts:
             - name: hub-config
