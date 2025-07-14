@@ -20,6 +20,7 @@ jest.mock('rehype-github-alerts', () => () => <div />);
 jest.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));
+jest.mock('../../utils/detectBot', () => jest.fn(() => Promise.resolve(false)));
 
 const getMockPackage = (fixtureId: string): Package => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports

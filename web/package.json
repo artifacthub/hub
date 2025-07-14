@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@analytics/google-analytics-v3": "^0.7.0",
+    "@fingerprintjs/botd": "^1.9.1",
     "analytics": "^0.8.16",
     "apexcharts": "3.49.0",
     "bootstrap": "^5.3.5",
