@@ -34,6 +34,7 @@ import {
   Version,
 } from '../../types';
 import bannerDispatcher from '../../utils/bannerDispatcher';
+import detectBot from '../../utils/detectBot';
 import isFuture from '../../utils/isFuture';
 import isPackageOfficial from '../../utils/isPackageOfficial';
 import { prepareQueryString } from '../../utils/prepareQueryString';
@@ -172,7 +173,11 @@ const PackageView = () => {
 
   async function trackView(pkgID: string, version: string) {
     try {
-      API.trackView(pkgID, version);
+      // Skip tracking for bots and crawlers
+      if (await detectBot()) {
+        return;
+      }
+      await API.trackView(pkgID, version);
     } catch {
       // Do not do anything
     }
