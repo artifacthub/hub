@@ -173,6 +173,7 @@ func (h *Handlers) setupRouter() {
 			csrf.Secure(h.cfg.GetBool("server.csrf.secure")),
 			csrf.Path("/api/v1"),
 			csrf.CookieName("csrf"),
+			csrf.TrustedOrigins(h.cfg.GetStringSlice("server.csrf.trustedOrigins")),
 		))
 		r.Get("/csrf", func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Cache-Control", "no-store")
