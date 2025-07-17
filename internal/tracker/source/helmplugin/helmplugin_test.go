@@ -58,7 +58,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath:   "testdata/path3",
 			Svc:        sw.Svc,
 		}
-		expectedErr := "error getting plugin metadata (path: testdata/path3/plugin.yaml): error validating plugin metadata: 1 error occurred:\n\t* invalid version (semver expected): Invalid Semantic Version\n\n"
+		expectedErr := "error getting plugin metadata (path: testdata/path3/plugin.yaml): error validating plugin metadata: 1 error occurred:\n\t* invalid version (semver expected): invalid semantic version\n\n"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations
