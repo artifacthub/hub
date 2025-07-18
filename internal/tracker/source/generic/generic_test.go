@@ -117,7 +117,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath:   "testdata/path3",
 			Svc:        sw.Svc,
 		}
-		expectedErr := "error getting package metadata (path: testdata/path3): error validating package metadata file: 5 errors occurred:\n\t* invalid metadata: invalid version (semver expected): Invalid Semantic Version\n\t* invalid metadata: name not provided\n\t* invalid metadata: display name not provided\n\t* invalid metadata: createdAt not provided\n\t* invalid metadata: description not provided\n\n"
+		expectedErr := "error getting package metadata (path: testdata/path3): error validating package metadata file: 5 errors occurred:\n\t* invalid metadata: invalid version (semver expected): invalid semantic version\n\t* invalid metadata: name not provided\n\t* invalid metadata: display name not provided\n\t* invalid metadata: createdAt not provided\n\t* invalid metadata: description not provided\n\n"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations

@@ -47,7 +47,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath: "testdata/path2",
 			Svc:      sw.Svc,
 		}
-		expectedErr := "error getting package manifest (path: testdata/path2/task1/0.1): error validating manifest: 1 error occurred:\n\t* invalid version (semver expected): Invalid Semantic Version\n\n"
+		expectedErr := "error getting package manifest (path: testdata/path2/task1/0.1): error validating manifest: 1 error occurred:\n\t* invalid version (semver expected): invalid semantic version\n\n"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations

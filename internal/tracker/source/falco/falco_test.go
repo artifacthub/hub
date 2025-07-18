@@ -75,7 +75,7 @@ func TestTrackerSource(t *testing.T) {
 			BasePath:   "testdata/path3",
 			Svc:        sw.Svc,
 		}
-		expectedErr := "error preparing package: invalid package (test) version (invalid): Invalid Semantic Version"
+		expectedErr := "error preparing package: invalid package (test) version (invalid): invalid semantic version"
 		sw.Ec.On("Append", i.Repository.RepositoryID, expectedErr).Return()
 
 		// Run test and check expectations
