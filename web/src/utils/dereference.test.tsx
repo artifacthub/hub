@@ -2920,7 +2920,7 @@ describe('dereferenceJSONSchema', () => {
       const actual = dereferenceJSONSchema(tests[i].input);
 
       await waitFor(() => {
-        expect(API.getSchemaDef).toBeCalledTimes(tests[i].externalRefs ? 1 : 0);
+        expect(API.getSchemaDef).toHaveBeenCalledTimes(tests[i].externalRefs ? 1 : 0);
       });
 
       expect(actual).toEqual(tests[i].output);

@@ -65,6 +65,11 @@
     flex-basis: calc(100% - 230px - 1.9rem);
     max-width: calc(100% - 230px - 1.9rem);
   }
+
+    .emptyList {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
 }
 
 @media only screen and (min-width: 1400px) {

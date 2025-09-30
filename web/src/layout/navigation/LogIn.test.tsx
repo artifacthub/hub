@@ -75,7 +75,7 @@ describe('LogIn', () => {
       await userEvent.click(btn);
 
       await waitFor(() => {
-        expect(API.login).toBeCalledTimes(1);
+        expect(API.login).toHaveBeenCalledTimes(1);
         expect(API.login).toHaveBeenCalledWith({
           email: 'jsmith@email.com',
           password: 'pass123',

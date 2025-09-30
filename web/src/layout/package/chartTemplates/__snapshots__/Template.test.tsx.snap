@@ -282,8 +282,12 @@ exports[`Template creates snapshot 1`] = `
                       <div
                         class="content"
                       >
-                        # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
+                        <div
+                          class="p-2"
+                        >
+                          # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
 The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -468,8 +472,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
                       <div
                         class="content"
                       >
-                        # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
+                        <div
+                          class="p-2"
+                        >
+                          # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
 The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -832,8 +840,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
                       <div
                         class="content"
                       >
-                        # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
+                        <div
+                          class="p-2"
+                        >
+                          # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
 The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1043,8 +1055,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
                       <div
                         class="content"
                       >
-                        # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
+                        <div
+                          class="p-2"
+                        >
+                          # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
 The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
+                        </div>
                       </div>
                     </div>
                   </div>

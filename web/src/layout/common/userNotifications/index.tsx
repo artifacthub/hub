@@ -1,8 +1,20 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import { ElementType, useContext, useEffect, useState } from 'react';
+import {
+  cloneElement,
+  ComponentPropsWithoutRef,
+  ElementType,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import ReactMarkdown from 'react-markdown';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { github } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { addNewDisplayedNotification, AppCtx, enabledDisplayedNotifications } from '../../../context/AppCtx';
 import useBreakpointDetect from '../../../hooks/useBreakpointDetect';
@@ -11,13 +23,58 @@ import notificationsDispatcher from '../../../utils/userNotificationsDispatcher'
 import styles from './UserNotifications.module.css';
 
 interface HeadingProps {
-  level: number;
-  children?: JSX.Element[];
+  children?: ReactNode;
 }
 
-const Heading: ElementType = (data: HeadingProps) => {
-  const Tag = `h${data.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  return <Tag className={`text-dark lh-1 fw-bold ${styles.header}`}>{data.children}</Tag>;
+interface LinkProps extends ComponentPropsWithoutRef<'a'> {
+  node?: unknown;
+}
+
+const getHeading = (level: number): ElementType => {
+  return (data: HeadingProps) => {
+    const Tag = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    return <Tag className={`text-dark lh-1 fw-bold ${styles.header}`}>{data.children}</Tag>;
+  };
+};
+
+const Link: ElementType = ({ children, target, ...rest }: LinkProps) => (
+  <a {...rest} target={target || '_blank'} rel="noopener noreferrer">
+    {children}
+  </a>
+);
+
+interface CodeProps extends ComponentPropsWithoutRef<'code'> {
+  isInPre?: boolean;
+}
+
+const Code: ElementType = ({ className, children, isInPre }: CodeProps) => {
+  if (!isInPre) {
+    return className ? <code className={className}>{children}</code> : <code>{children}</code>;
+  }
+
+  const match = /language-(\w+)/.exec(className || '');
+
+  return (
+    <SyntaxHighlighter language={match ? match[1] : 'bash'} style={github}>
+      {String(children).replace(/\n$/, '')}
+    </SyntaxHighlighter>
+  );
+};
+
+const mapPreChild = (child: ComponentPropsWithoutRef<'pre'>['children']) => {
+  if (isValidElement<CodeProps>(child)) {
+    return cloneElement<CodeProps>(child as ReactElement<CodeProps>, { isInPre: true });
+  }
+
+  return child;
+};
+
+const Pre: ElementType = (props: ComponentPropsWithoutRef<'pre'> & { node?: unknown }) => {
+  if (Array.isArray(props.children)) {
+    return <>{props.children.map((child) => mapPreChild(child))}</>;
+  }
+
+  return <>{mapPreChild(props.children)}</>;
 };
 
 const ANIMATION_TIME = 300; //300ms
@@ -126,20 +183,23 @@ const UserNotificationsController: ElementType = () => {
                 </div>
               </div>
               <span>
-                <ReactMarkdown
-                  className={styles.content}
-                  children={notification.body}
-                  components={{
-                    h1: Heading,
-                    h2: Heading,
-                    h3: Heading,
-                    h4: Heading,
-                    h5: Heading,
-                    h6: Heading,
-                  }}
-                  linkTarget="_blank"
-                  skipHtml
-                />
+                <div className={styles.content}>
+                  <ReactMarkdown
+                    children={notification.body}
+                    components={{
+                      pre: Pre,
+                      code: Code,
+                      h1: getHeading(1),
+                      h2: getHeading(2),
+                      h3: getHeading(3),
+                      h4: getHeading(4),
+                      h5: getHeading(5),
+                      h6: getHeading(6),
+                      a: Link,
+                    }}
+                    skipHtml
+                  />
+                </div>
               </span>
             </div>
           </div>

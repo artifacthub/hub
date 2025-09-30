@@ -20,10 +20,15 @@
   box-shadow: none;
 }
 
+.expandedCell {
+  overflow-wrap: anywhere;
+  max-width: 0px;
+}
+
 /* Markdown */
 
 .mdHeader {
-  font-size: 55%;
+  font-size: 0.75rem;
 }
 
 .md p code {

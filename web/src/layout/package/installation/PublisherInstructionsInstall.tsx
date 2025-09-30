@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { ElementType, useState } from 'react';
+import { cloneElement, ElementType, isValidElement, ReactElement, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -12,13 +12,16 @@ interface Props {
 }
 
 interface CodeProps {
-  inline: boolean;
+  inline?: boolean;
+  node?: {
+    type?: string;
+  };
+  isInPre?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
 
 interface HeadingProps {
-  level: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
@@ -30,7 +33,8 @@ interface ImageProps {
 
 interface LinkProps {
   href: string;
-  target: string;
+  target?: string;
+  node?: unknown;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
@@ -41,7 +45,9 @@ interface TableProps {
 
 const PublisherInstructionsInstall = (props: Props) => {
   const Code: ElementType = (props: CodeProps) => {
-    if (props.inline) {
+    const isInline = !props.isInPre && (props.inline === true || props.node?.type === 'inlineCode');
+
+    if (isInline) {
       return <code className={`border border-1 ${styles.inlineCode}`}>{props.children}</code>;
     }
     if (props.children) {
@@ -52,17 +58,31 @@ const PublisherInstructionsInstall = (props: Props) => {
     }
   };
 
-  const Pre: ElementType = (props: CodeProps) => {
-    return <>{props.children}</>;
+  const mapPreChild = (child: CodeProps['children']) => {
+    if (isValidElement<CodeProps>(child)) {
+      return cloneElement<CodeProps>(child as ReactElement<CodeProps>, { isInPre: true });
+    }
+
+    return child;
   };
 
-  const Heading: ElementType = (props: HeadingProps) => (
-    <div className="my-2">
-      <div className={`h${props.level} text-muted pt-2 pb-1`}>
-        <div className={styles.mdHeader}>{props.children}</div>
+  const Pre: ElementType = (props: CodeProps) => {
+    if (Array.isArray(props.children)) {
+      return <>{props.children.map((child) => mapPreChild(child))}</>;
+    }
+
+    return <>{mapPreChild(props.children)}</>;
+  };
+
+  const getHeading = (level: number): ElementType => {
+    return (props: HeadingProps) => (
+      <div className="my-2">
+        <div className={`h${level} text-muted pt-2 pb-1`}>
+          <div className={styles.mdHeader}>{props.children}</div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const Table: ElementType = (data: TableProps) => (
     <div className="w-100 overflow-auto">
@@ -88,7 +108,7 @@ const PublisherInstructionsInstall = (props: Props) => {
   const Link: ElementType = (data: LinkProps) => {
     // Only absolute link
     return /^https?:/.test(data.href) ? (
-      <a href={data.href} target={data.target} rel="noopener noreferrer" className="text-primary">
+      <a href={data.href} target={data.target || '_blank'} rel="noopener noreferrer" className="text-primary">
         {data.children}
       </a>
     ) : null;
@@ -97,26 +117,26 @@ const PublisherInstructionsInstall = (props: Props) => {
   return (
     <ErrorBoundary message="Something went wrong rendering the install instructions of this package.">
       <span data-testid="readme">
-        <ReactMarkdown
-          className={`mt-3 mb-5 ${styles.md}`}
-          children={props.install}
-          linkTarget="_blank"
-          remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-          skipHtml
-          components={{
-            pre: Pre,
-            code: Code,
-            img: Image,
-            a: Link,
-            h1: Heading,
-            h2: Heading,
-            h3: Heading,
-            h4: Heading,
-            h5: Heading,
-            h6: Heading,
-            table: Table,
-          }}
-        />
+        <div className={`mt-3 mb-5 ${styles.md}`}>
+          <ReactMarkdown
+            children={props.install}
+            remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+            skipHtml
+            components={{
+              pre: Pre,
+              code: Code,
+              img: Image,
+              a: Link,
+              h1: getHeading(1),
+              h2: getHeading(2),
+              h3: getHeading(3),
+              h4: getHeading(4),
+              h5: getHeading(5),
+              h6: getHeading(6),
+              table: Table,
+            }}
+          />
+        </div>
       </span>
     </ErrorBoundary>
   );
