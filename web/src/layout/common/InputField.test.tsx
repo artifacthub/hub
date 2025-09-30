@@ -148,7 +148,7 @@ describe('InputField', () => {
       });
 
       await waitFor(() => {
-        expect(API.checkAvailability).toBeCalledTimes(1);
+        expect(API.checkAvailability).toHaveBeenCalledTimes(1);
       });
 
       await waitFor(() => {
@@ -180,7 +180,7 @@ describe('InputField', () => {
       });
 
       await waitFor(() => {
-        expect(API.checkAvailability).toBeCalledTimes(1);
+        expect(API.checkAvailability).toHaveBeenCalledTimes(1);
       });
 
       const invalidText = await screen.findByText(defaultProps.invalidText.customError);
@@ -241,7 +241,7 @@ describe('InputField', () => {
         input.blur();
       });
       await waitFor(() => {
-        expect(API.checkAvailability).toBeCalledTimes(1);
+        expect(API.checkAvailability).toHaveBeenCalledTimes(1);
       });
       expect(await screen.findByTestId(`${defaultProps.name}Input`)).toBeValid();
     });
@@ -270,7 +270,7 @@ describe('InputField', () => {
       });
 
       await waitFor(() => {
-        expect(API.checkAvailability).toBeCalledTimes(1);
+        expect(API.checkAvailability).toHaveBeenCalledTimes(1);
       });
 
       const invalidText = await screen.findByText(defaultProps.invalidText.customError);
@@ -308,7 +308,7 @@ describe('InputField', () => {
       });
 
       await waitFor(() => {
-        expect(API.checkPasswordStrength).toBeCalledTimes(1);
+        expect(API.checkPasswordStrength).toHaveBeenCalledTimes(1);
         expect(API.checkPasswordStrength).toHaveBeenCalledWith('abc123');
       });
 
@@ -332,7 +332,7 @@ describe('InputField', () => {
       });
 
       await waitFor(() => {
-        expect(API.checkPasswordStrength).toBeCalledTimes(1);
+        expect(API.checkPasswordStrength).toHaveBeenCalledTimes(1);
         expect(API.checkPasswordStrength).toHaveBeenCalledWith('abc123');
       });
 

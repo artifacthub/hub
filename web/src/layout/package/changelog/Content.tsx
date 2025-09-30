@@ -89,7 +89,9 @@ const Content = (props: Props) => {
               <div
                 className="d-inline-block d-md-flex flex-row align-items-baseline border-bottom border-1 w-100 mb-3 pb-2"
                 id={`changelog-${index}`}
-                ref={(el) => (versionsRef.current[index] = el)}
+                ref={(el) => {
+                  versionsRef.current[index] = el;
+                }}
               >
                 <div className={`d-flex flex-row align-items-baseline ${styles.versionWrapper}`}>
                   <button

@@ -3,7 +3,18 @@ import isArray from 'lodash/isArray';
 import isNull from 'lodash/isNull';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
-import { ElementType, memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import {
+  cloneElement,
+  ElementType,
+  isValidElement,
+  memo,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { github } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
@@ -11,6 +22,7 @@ import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import remarkGfm from 'remark-gfm';
 
 import useBreakpointDetect from '../../../hooks/useBreakpointDetect';
+import checkCodeLanguage from '../../../utils/checkCodeLanguage';
 import AnchorHeader from '../../common/AnchorHeader';
 import styles from './Readme.module.css';
 
@@ -21,8 +33,12 @@ interface Props {
 }
 
 interface CodeProps {
-  className: string;
-  inline: boolean;
+  className?: string;
+  inline?: boolean;
+  node?: {
+    type?: string;
+  };
+  isInPre?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
@@ -34,241 +50,37 @@ interface ImageProps {
 
 interface LinkProps {
   href: string;
-  target: string;
+  target?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
 
 interface BasicProps {
-  children: JSX.Element | JSX.Element[];
+  children: ReactNode;
   className?: string;
 }
-
-const AVAILABLE_LANGUAGES = [
-  'oneC',
-  'abnf',
-  'accesslog',
-  'actionscript',
-  'ada',
-  'angelscript',
-  'apache',
-  'applescript',
-  'arcade',
-  'arduino',
-  'armasm',
-  'asciidoc',
-  'aspectj',
-  'autohotkey',
-  'autoit',
-  'avrasm',
-  'awk',
-  'axapta',
-  'bash',
-  'basic',
-  'bnf',
-  'brainfuck',
-  'cLike (c-like)',
-  'c',
-  'cal',
-  'capnproto',
-  'ceylon',
-  'clean',
-  'clojureRepl (clojure-repl)',
-  'clojure',
-  'cmake',
-  'coffeescript',
-  'coq',
-  'cos',
-  'cpp',
-  'crmsh',
-  'crystal',
-  'csharp',
-  'csp',
-  'css',
-  'd',
-  'dart',
-  'delphi',
-  'diff',
-  'django',
-  'dns',
-  'dockerfile',
-  'dos',
-  'dsconfig',
-  'dts',
-  'dust',
-  'ebnf',
-  'elixir',
-  'elm',
-  'erb',
-  'erlangRepl',
-  'erlang',
-  'excel',
-  'fix',
-  'flix',
-  'fortran',
-  'fsharp',
-  'gams',
-  'gauss',
-  'gcode',
-  'gherkin',
-  'glsl',
-  'gml',
-  'go',
-  'golo',
-  'gradle',
-  'groovy',
-  'haml',
-  'handlebars',
-  'haskell',
-  'haxe',
-  'hsp',
-  'htmlbars',
-  'http',
-  'hy',
-  'inform7',
-  'ini',
-  'irpf90',
-  'isbl',
-  'java',
-  'javascript',
-  'jbossCli (jboss-cli)',
-  'json',
-  'juliaRepl (julia-repl)',
-  'julia',
-  'kotlin',
-  'lasso',
-  'latex',
-  'ldif',
-  'leaf',
-  'less',
-  'lisp',
-  'livecodeserver',
-  'livescript',
-  'llvm',
-  'lsl',
-  'lua',
-  'makefile',
-  'markdown',
-  'mathematica',
-  'matlab',
-  'maxima',
-  'mel',
-  'mercury',
-  'mipsasm',
-  'mizar',
-  'mojolicious',
-  'monkey',
-  'moonscript',
-  'n1ql',
-  'nginx',
-  'nim',
-  'nix',
-  'nodeRepl (node-repl)',
-  'nsis',
-  'objectivec',
-  'ocaml',
-  'openscad',
-  'oxygene',
-  'parser3',
-  'perl',
-  'pf',
-  'pgsql',
-  'phpTemplate (php-template)',
-  'php',
-  'plaintext',
-  'pony',
-  'powershell',
-  'processing',
-  'profile',
-  'prolog',
-  'properties',
-  'protobuf',
-  'puppet',
-  'purebasic',
-  'pythonRepl',
-  'python',
-  'q',
-  'qml',
-  'r',
-  'reasonml',
-  'rib',
-  'roboconf',
-  'routeros',
-  'rsl',
-  'ruby',
-  'ruleslanguage',
-  'rust',
-  'sas',
-  'scala',
-  'scheme',
-  'scilab',
-  'scss',
-  'shell',
-  'smali',
-  'smalltalk',
-  'sml',
-  'sqf',
-  'sql',
-  'stan',
-  'stata',
-  'step21',
-  'stylus',
-  'subunit',
-  'swift',
-  'taggerscript',
-  'tap',
-  'tcl',
-  'thrift',
-  'tp',
-  'twig',
-  'typescript',
-  'vala',
-  'vbnet',
-  'vbscriptHtml',
-  'vbscript',
-  'verilog',
-  'vhdl',
-  'vim',
-  'x86asm',
-  'xl',
-  'xml',
-  'xquery',
-  'yaml',
-  'zephir',
-];
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const EmojiConvertor = require('emoji-js');
 const emoji = new EmojiConvertor();
-
-const checkCodeLanguage = (language: string | null): string => {
-  let lang = 'text';
-  if (language) {
-    if (AVAILABLE_LANGUAGES.includes(language)) {
-      lang = language;
-    } else if (language === 'console') {
-      lang = 'bash';
-    }
-  }
-  return lang;
-};
 
 const Readme = (props: Props) => {
   useLayoutEffect(() => {
     props.stopPkgLoading();
   }, [props.readme]);
 
-  const Code: ElementType = ({ inline, className, children }: CodeProps) => {
-    const match = /language-(\w+)/.exec(className || '');
-    if (inline) {
-      return <code className={className}>{children}</code>;
-    } else {
-      return (
-        <SyntaxHighlighter language={checkCodeLanguage(match ? match[1] : 'bash')} style={github}>
-          {String(children).replace(/\n$/, '')}
-        </SyntaxHighlighter>
-      );
+  const Code: ElementType = ({ className, children, isInPre }: CodeProps) => {
+    if (!isInPre) {
+      return className ? <code className={className}>{children}</code> : <code>{children}</code>;
     }
+
+    const match = /language-(\w+)/.exec(className || '');
+
+    return (
+      <SyntaxHighlighter language={checkCodeLanguage(match ? match[1] : 'bash')} style={github}>
+        {String(children).replace(/\n$/, '')}
+      </SyntaxHighlighter>
+    );
   };
 
   const Image: ElementType = (data: ImageProps) => {
@@ -316,7 +128,7 @@ const Readme = (props: Props) => {
         // }
         <a
           href={data.href}
-          target={data.target}
+          target={data.target || '_blank'}
           rel="noopener noreferrer"
           className={classnames('text-primary', { 'd-inline': !isContentImage })}
         >
@@ -346,31 +158,43 @@ const Readme = (props: Props) => {
   );
 
   const Paragraph: ElementType = (data: BasicProps) => {
-    if (data.className && data.className === 'markdown-alert-title')
+    if (data.className && data.className === 'markdown-alert-title') {
       return <p className={`fw-semibold ${data.className}`}>{data.children}</p>;
+    }
     const isOneChild = data.children && isArray(data.children) && data.children.length === 1;
     if (isUndefined(data.children)) return null;
-    let content = data.children;
     if (isArray(data.children)) {
-      content = data.children.map((child: JSX.Element) => {
+      const processed = data.children.map((child) => {
         if (isString(child)) {
           return emoji.replace_colons(child);
         }
         return child;
       });
+      const hasElements = processed.some((child) => isValidElement(child));
+      return (
+        <p className={classnames({ 'd-block w-100 h-100': isOneChild && !hasElements }, styles.paragraph)}>
+          {processed}
+        </p>
+      );
     } else if (isString(data.children)) {
-      return emoji.replace_colons(data.children);
+      return <p className={styles.paragraph}>{emoji.replace_colons(data.children)}</p>;
     }
 
-    return <p className={classnames({ 'd-block w-100 h-100': isOneChild }, styles.paragraph)}>{content}</p>;
+    if (isValidElement(data.children)) {
+      return <p className={styles.paragraph}>{data.children}</p>;
+    }
+
+    return <p className={styles.paragraph}>{data.children}</p>;
   };
 
   const Blockquote: ElementType = (data: BasicProps) => {
     return <blockquote className={`text-muted position-relative ${styles.quote}`}>{data.children}</blockquote>;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const Heading: ElementType = (data: any) => <AnchorHeader {...data} scrollIntoView={props.scrollIntoView} />;
+  const getHeadingComponent = (level: number): ElementType => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (data: any) => <AnchorHeader {...data} level={level} scrollIntoView={props.scrollIntoView} />;
+  };
 
   const isElementInView = (id: string) => {
     try {
@@ -381,8 +205,20 @@ const Readme = (props: Props) => {
     }
   };
 
+  const mapPreChild = (child: CodeProps['children']) => {
+    if (isValidElement<CodeProps>(child)) {
+      return cloneElement<CodeProps>(child, { isInPre: true });
+    }
+
+    return child;
+  };
+
   const Pre: ElementType = (props: CodeProps) => {
-    return <>{props.children}</>;
+    if (isArray(props.children)) {
+      return <>{props.children.map((child) => mapPreChild(child))}</>;
+    }
+
+    return <>{mapPreChild(props.children)}</>;
   };
 
   useEffect(() => {
@@ -391,30 +227,30 @@ const Readme = (props: Props) => {
   }, []);
 
   return (
-    <ReactMarkdown
-      className={`mt-3 mb-5 position-relative ${styles.md}`}
-      children={props.readme}
-      linkTarget="_blank"
-      skipHtml
-      remarkPlugins={[[remarkGfm, { tableCellPadding: false }]]}
-      rehypePlugins={[rehypeGithubAlerts]}
-      components={{
-        pre: Pre,
-        code: Code,
-        image: Image,
-        img: Image,
-        a: Link,
-        table: Table,
-        h1: Heading,
-        h2: Heading,
-        h3: Heading,
-        h4: Heading,
-        h5: Heading,
-        h6: Heading,
-        p: Paragraph,
-        blockquote: Blockquote,
-      }}
-    />
+    <div className={`mt-3 mb-5 position-relative ${styles.md}`}>
+      <ReactMarkdown
+        children={props.readme}
+        skipHtml
+        remarkPlugins={[[remarkGfm, { tableCellPadding: false }]]}
+        rehypePlugins={[rehypeGithubAlerts]}
+        components={{
+          pre: Pre,
+          code: Code,
+          image: Image,
+          img: Image,
+          a: Link,
+          table: Table,
+          h1: getHeadingComponent(1),
+          h2: getHeadingComponent(2),
+          h3: getHeadingComponent(3),
+          h4: getHeadingComponent(4),
+          h5: getHeadingComponent(5),
+          h6: getHeadingComponent(6),
+          p: Paragraph,
+          blockquote: Blockquote,
+        }}
+      />
+    </div>
   );
 };
 

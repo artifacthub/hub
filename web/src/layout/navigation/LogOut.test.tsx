@@ -61,7 +61,7 @@ describe('LogOut', () => {
       await userEvent.click(btn);
 
       await waitFor(() => {
-        expect(API.logout).toBeCalledTimes(1);
+        expect(API.logout).toHaveBeenCalledTimes(1);
         expect(mockOnSuccess).toHaveBeenCalledTimes(1);
       });
     });

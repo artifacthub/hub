@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import { createContext, Dispatch, useContext, useEffect, useReducer, useState } from 'react';
+import { createContext, Dispatch, ReactNode, useContext, useEffect, useReducer, useState } from 'react';
 
 import API from '../api';
 import useSystemThemeMode from '../hooks/useSystemThemeMode';
@@ -19,7 +19,7 @@ interface AppState {
 }
 
 interface Props {
-  children: JSX.Element;
+  children: ReactNode;
 }
 
 const initialState: AppState = {

@@ -11,6 +11,7 @@ interface Props {
   title?: string;
   filename?: string;
   btnClassname?: string;
+  withoutCopyBtn?: boolean;
 }
 
 const CommandBlock = (props: Props) => {
@@ -41,7 +42,7 @@ const CommandBlock = (props: Props) => {
       )}
 
       <div className="d-flex align-items-start">
-        <div className={`flex-grow-1 me-3 ${styles.blockWrapper}`}>
+        <div className={`flex-grow-1 ${styles.blockWrapper}`}>
           <SyntaxHighlighter
             language={props.language || 'bash'}
             style={docco}
@@ -53,13 +54,15 @@ const CommandBlock = (props: Props) => {
           </SyntaxHighlighter>
         </div>
 
-        <div>
-          <ButtonCopyToClipboard
-            text={props.command}
-            className={`btn-primary ${styles.copyBtn} ${props.btnClassname}`}
-            label="Copy command to clipboard"
-          />
-        </div>
+        {!props.withoutCopyBtn && (
+          <div className="ms-3">
+            <ButtonCopyToClipboard
+              text={props.command}
+              className={`btn-primary ${styles.copyBtn} ${props.btnClassname}`}
+              label="Copy command to clipboard"
+            />
+          </div>
+        )}
       </div>
     </>
   );

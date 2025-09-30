@@ -53,7 +53,7 @@ describe('Update password - user settings', () => {
       await userEvent.click(btn);
 
       await waitFor(() => {
-        expect(API.updatePassword).toBeCalledTimes(1);
+        expect(API.updatePassword).toHaveBeenCalledTimes(1);
         expect(API.updatePassword).toHaveBeenCalledWith('oldpass', 'newpass');
         expect(mockUseNavigate).toHaveBeenCalledTimes(1);
         expect(mockUseNavigate).toHaveBeenCalledWith('/?modal=login&redirect=/control-panel/settings');
@@ -76,7 +76,7 @@ describe('Update password - user settings', () => {
       await userEvent.click(btn);
 
       await waitFor(() => {
-        expect(API.updatePassword).toBeCalledTimes(1);
+        expect(API.updatePassword).toHaveBeenCalledTimes(1);
         expect(API.updatePassword).toHaveBeenCalledWith('oldpass', 'newpass$^');
       });
     });
@@ -97,7 +97,7 @@ describe('Update password - user settings', () => {
       await userEvent.click(btn);
 
       await waitFor(() => {
-        expect(API.updatePassword).toBeCalledTimes(0);
+        expect(API.updatePassword).toHaveBeenCalledTimes(0);
       });
     });
   });

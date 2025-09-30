@@ -888,7 +888,7 @@ const PackageView = () => {
         </SubNavbar>
       )}
 
-      <div data-testid="mainPackage" className="position-relative flex-grow-1">
+      <div data-testid="mainPackage" className="position-relative flex-grow-1 mainPackage">
         {(isLoadingPackage || isUndefined(detail)) && <Loading spinnerClassName="position-fixed top-50" />}
 
         {!isUndefined(detail) && (
@@ -1463,14 +1463,16 @@ const PackageView = () => {
                               </NoData>
                             </div>
                           ) : (
-                            <ReadmeWrapper
-                              packageName={detail.displayName || detail.name}
-                              supportLink={supportLink}
-                              markdownContent={detail.readme}
-                              scrollIntoView={scrollIntoView}
-                              additionalTitles={isNull(additionalInfo) ? '' : additionalInfo.titles}
-                              stopPkgLoading={stopPkgLoading}
-                            />
+                            <div className={styles.contentWrapper}>
+                              <ReadmeWrapper
+                                packageName={detail.displayName || detail.name}
+                                supportLink={supportLink}
+                                markdownContent={detail.readme}
+                                scrollIntoView={scrollIntoView}
+                                additionalTitles={isNull(additionalInfo) ? '' : additionalInfo.titles}
+                                stopPkgLoading={stopPkgLoading}
+                              />
+                            </div>
                           )}
 
                           {!isNull(additionalInfo) && <>{additionalInfo.content}</>}

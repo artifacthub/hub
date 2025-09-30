@@ -64,7 +64,9 @@ describe('ChartTemplatesModal', () => {
     });
 
     expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
-    expect(await screen.findByRole('status')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 

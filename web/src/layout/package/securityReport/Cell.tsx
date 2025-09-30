@@ -1,14 +1,27 @@
+import isArray from 'lodash/isArray';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
-import { Dispatch, ElementType, SetStateAction, useEffect, useRef } from 'react';
+import {
+  cloneElement,
+  ComponentPropsWithoutRef,
+  Dispatch,
+  ElementType,
+  isValidElement,
+  ReactElement,
+  SetStateAction,
+  useEffect,
+  useRef,
+} from 'react';
 import { FaCaretDown, FaCaretRight, FaLink } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { github } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { Vulnerability, VulnerabilitySeverity } from '../../../types';
+import checkCodeLanguage from '../../../utils/checkCodeLanguage';
 import { SEVERITY_RATING } from '../../../utils/data';
 import isFuture from '../../../utils/isFuture';
 import ExternalLink from '../../common/ExternalLink';
-import CommandBlock from '../installation/CommandBlock';
 import styles from './Cell.module.css';
 import CVSSVector from './CVSSVector';
 
@@ -26,9 +39,18 @@ interface HeadingProps {
 }
 
 interface CodeProps {
-  inline: boolean;
+  className?: string;
+  inline?: boolean;
+  node?: {
+    type?: string;
+  };
+  isInPre?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
+}
+
+interface LinkProps extends ComponentPropsWithoutRef<'a'> {
+  node?: unknown;
 }
 
 const SecurityCell = (props: Props) => {
@@ -67,17 +89,50 @@ const SecurityCell = (props: Props) => {
     </div>
   );
 
-  const Code: ElementType = (props: CodeProps) => {
-    if (props.inline) {
-      return <code className={`border border-1 ${styles.inlineCode}`}>{props.children}</code>;
+  const Code: ElementType = ({ children, className, isInPre }: CodeProps) => {
+    if (!isInPre) {
+      return <code className={`border border-1 ${styles.inlineCode}`}>{children}</code>;
     }
-    if (props.children) {
-      const content = String(props.children).replace(/\n$/, '');
-      return <CommandBlock command={content} />;
-    } else {
+    if (!children) {
       return null;
     }
+
+    const match = /language-(\w+)/.exec(className || '');
+
+    return (
+      <SyntaxHighlighter language={checkCodeLanguage(match ? match[1] : 'bash')} style={github}>
+        {String(children).replace(/\n$/, '')}
+      </SyntaxHighlighter>
+    );
   };
+
+  const mapPreChild = (child: CodeProps['children']) => {
+    if (isValidElement<CodeProps>(child)) {
+      return cloneElement<CodeProps>(child as ReactElement<CodeProps>, { isInPre: true });
+    }
+
+    return child;
+  };
+
+  const Pre: ElementType = (props: CodeProps) => {
+    if (isArray(props.children)) {
+      return <>{props.children.map((child) => mapPreChild(child))}</>;
+    }
+
+    return <>{mapPreChild(props.children)}</>;
+  };
+
+  const MarkdownLink: ElementType = ({ children, target, ...rest }: LinkProps) => (
+    <a {...rest} target={target || '_blank'} rel="noopener noreferrer">
+      {children}
+    </a>
+  );
+
+  const Paragraph: ElementType = ({ children, ...rest }: ComponentPropsWithoutRef<'p'> & { node?: unknown }) => (
+    <p className="text-muted mb-1" {...rest}>
+      {children}
+    </p>
+  );
 
   useEffect(() => {
     // Scrolls content into view when a vulnerability is expanded
@@ -136,7 +191,7 @@ const SecurityCell = (props: Props) => {
 
       {props.isExpanded && (
         <tr data-testid="vulnerabilityDetail" className={styles.noClickableCell}>
-          <td colSpan={6}>
+          <td colSpan={6} className={`overflow-hidden ${styles.expandedCell}`}>
             <div className="m-3">
               {isUndefined(props.vulnerability.title) && isUndefined(props.vulnerability.Description) ? (
                 <div className="fst-italic">Any information about this vulnerability</div>
@@ -147,6 +202,7 @@ const SecurityCell = (props: Props) => {
                     <ReactMarkdown
                       children={props.vulnerability.Description}
                       components={{
+                        pre: Pre,
                         h1: Heading,
                         h2: Heading,
                         h3: Heading,
@@ -154,9 +210,9 @@ const SecurityCell = (props: Props) => {
                         h5: Heading,
                         h6: Heading,
                         code: Code,
-                        p: ({ ...props }) => <p className="text-muted mb-1" {...props} />,
+                        a: MarkdownLink,
+                        p: Paragraph,
                       }}
-                      linkTarget="_blank"
                       skipHtml
                     />
 

@@ -1,7 +1,17 @@
-import { useRef, useState } from 'react';
+import {
+  cloneElement,
+  ComponentPropsWithoutRef,
+  ElementType,
+  isValidElement,
+  ReactElement,
+  useRef,
+  useState,
+} from 'react';
 import { BsFlagFill } from 'react-icons/bs';
 import { FaListUl } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { github } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { TOCEntryItem } from '../../../types';
@@ -9,6 +19,50 @@ import cleanTOCEntry from '../../../utils/cleanTOCEntry';
 import ExternalLink from '../../common/ExternalLink';
 import styles from './TOC.module.css';
 import TOCList from './TOCList';
+
+interface MarkdownLinkProps extends ComponentPropsWithoutRef<'a'> {
+  node?: unknown;
+}
+
+const MarkdownLink: ElementType = ({ children, target, ...rest }: MarkdownLinkProps) => (
+  <a {...rest} target={target || '_blank'} rel="noopener noreferrer">
+    {children}
+  </a>
+);
+
+interface CodeProps extends ComponentPropsWithoutRef<'code'> {
+  isInPre?: boolean;
+}
+
+const Code: ElementType = ({ className, children, isInPre }: CodeProps) => {
+  if (!isInPre) {
+    return className ? <code className={className}>{children}</code> : <code>{children}</code>;
+  }
+
+  const match = /language-(\w+)/.exec(className || '');
+
+  return (
+    <SyntaxHighlighter language={match ? match[1] : 'bash'} style={github}>
+      {String(children).replace(/\n$/, '')}
+    </SyntaxHighlighter>
+  );
+};
+
+const mapPreChild = (child: ComponentPropsWithoutRef<'pre'>['children']) => {
+  if (isValidElement<CodeProps>(child)) {
+    return cloneElement<CodeProps>(child as ReactElement<CodeProps>, { isInPre: true });
+  }
+
+  return child;
+};
+
+const Pre: ElementType = (props: ComponentPropsWithoutRef<'pre'> & { node?: unknown }) => {
+  if (Array.isArray(props.children)) {
+    return <>{props.children.map((child) => mapPreChild(child))}</>;
+  }
+
+  return <>{mapPreChild(props.children)}</>;
+};
 
 interface Props {
   title: string;
@@ -47,7 +101,15 @@ const TOC = (props: Props) => {
         </div>
         <div className={`flex-grow-1 ${styles.minWidth}`}>
           <h1 className={`mb-0 lh-base ${styles.title}`}>
-            <ReactMarkdown children={cleanTOCEntry(props.title)} linkTarget="_blank" skipHtml />
+            <ReactMarkdown
+              children={cleanTOCEntry(props.title)}
+              components={{
+                pre: Pre,
+                code: Code,
+                a: MarkdownLink,
+              }}
+              skipHtml
+            />
           </h1>
         </div>
         {props.supportLink && (
