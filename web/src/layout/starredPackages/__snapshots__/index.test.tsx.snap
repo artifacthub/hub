@@ -211,7 +211,9 @@ exports[`StarredPackagesView creates snapshot 1`] = `
                           <div
                             class="d-flex flex-row mw-100"
                           >
-                            <div>
+                            <div
+                              class="truncateWrapper"
+                            >
                               <div
                                 class="me-0 d-flex flex-row align-items-baseline text-left"
                               >
@@ -267,7 +269,9 @@ exports[`StarredPackagesView creates snapshot 1`] = `
                                 </div>
                               </div>
                             </div>
-                            <div>
+                            <div
+                              class="truncateWrapper"
+                            >
                               <div
                                 class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
                               >
@@ -825,7 +829,9 @@ exports[`StarredPackagesView creates snapshot 1`] = `
                           <div
                             class="d-flex flex-row mw-100"
                           >
-                            <div>
+                            <div
+                              class="truncateWrapper"
+                            >
                               <div
                                 class="me-0 d-flex flex-row align-items-baseline text-left"
                               >
@@ -881,7 +887,9 @@ exports[`StarredPackagesView creates snapshot 1`] = `
                                 </div>
                               </div>
                             </div>
-                            <div>
+                            <div
+                              class="truncateWrapper"
+                            >
                               <div
                                 class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
                               >
@@ -1439,7 +1447,9 @@ exports[`StarredPackagesView creates snapshot 1`] = `
                           <div
                             class="d-flex flex-row mw-100"
                           >
-                            <div>
+                            <div
+                              class="truncateWrapper"
+                            >
                               <div
                                 class="me-0 d-flex flex-row align-items-baseline text-left"
                               >
@@ -1495,7 +1505,9 @@ exports[`StarredPackagesView creates snapshot 1`] = `
                                 </div>
                               </div>
                             </div>
-                            <div>
+                            <div
+                              class="truncateWrapper"
+                            >
                               <div
                                 class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
                               >
@@ -2150,7 +2162,9 @@ exports[`StarredPackagesView creates snapshot 1`] = `
                           <div
                             class="d-flex flex-row mw-100"
                           >
-                            <div>
+                            <div
+                              class="truncateWrapper"
+                            >
                               <div
                                 class="d-flex flex-row align-items-baseline userInfo"
                               >
@@ -2191,7 +2205,9 @@ exports[`StarredPackagesView creates snapshot 1`] = `
                                 </button>
                               </div>
                             </div>
-                            <div>
+                            <div
+                              class="truncateWrapper"
+                            >
                               <div
                                 class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
                               >
@@ -2943,7 +2959,9 @@ exports[`StarredPackagesView creates snapshot 1`] = `
                           <div
                             class="d-flex flex-row mw-100"
                           >
-                            <div>
+                            <div
+                              class="truncateWrapper"
+                            >
                               <div
                                 class="d-flex flex-row align-items-baseline userInfo"
                               >
@@ -2984,7 +3002,9 @@ exports[`StarredPackagesView creates snapshot 1`] = `
                                 </button>
                               </div>
                             </div>
-                            <div>
+                            <div
+                              class="truncateWrapper"
+                            >
                               <div
                                 class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
                               >
