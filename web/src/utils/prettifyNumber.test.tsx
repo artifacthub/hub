@@ -9,6 +9,7 @@ const tests = [
   { number: 1760, result: '1.76k' },
   { number: 30000, result: '30k' },
   { number: 85300, result: '85.3k', digits: 3 },
+  { number: 85300, result: '85k', digits: 0 },
   { number: 59000000, result: '59M' },
   { number: 872389379, result: '872.39M' },
   { number: 76498237927, digits: 3, result: '76.498G' },
