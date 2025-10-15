@@ -30,24 +30,19 @@
   }
 
   .starBtn {
-    height: 26px;
+    height: 27px;
     font-size: 0.75rem;
     padding: 0.15rem 0.5rem !important;
     line-height: 1rem;
-    top: 1px;
   }
 
   .starBadge {
-    height: 26px;
-    line-height: 1rem !important;
+    height: 27px;
+    line-height: 1.25rem !important;
   }
 
   .icon {
     position: relative;
-    top: -1px;
-  }
-
-  .starBtnWrapper {
     top: -1px;
   }
 }
