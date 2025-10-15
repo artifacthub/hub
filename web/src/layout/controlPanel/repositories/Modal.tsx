@@ -612,7 +612,7 @@ const RepositoryModal = (props: Props) => {
                         [styles.animatedWarning]: urlContainsTreeTxt,
                       })}
                     >
-                      Please DO NOT include the git hosting platform specific parts, like
+                      Please DO NOT include the git hosting platform specific parts, like{' '}
                       <span className="fw-bold">tree/branch</span>, just the path to your packages like it would show in
                       the filesystem.
                     </p>
