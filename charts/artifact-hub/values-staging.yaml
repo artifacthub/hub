@@ -91,7 +91,40 @@ hub:
         querystring: "kind=8"
       - name: Keptn integrations
         querystring: "kind=10"
-
+      - name: Tinkerbell actions
+        querystring: "kind=4"
+      - name: CoreDNS plugins
+        querystring: "kind=9"
+      - name: Backstage plugins
+        querystring: "kind=17"
+      - name: Container images
+        querystring: "kind=12"
+      - name: Kyverno policies
+        querystring: "kind=15"
+      - name: Knative clients
+        querystring: "kind=16"
+      - name: Argo templates
+        querystring: "kind=18"
+      - name: KubeArmor policies
+        querystring: "kind=19"
+      - name: KCL modules
+        querystring: "kind=20"
+      - name: Headlamp plugins
+        querystring: "kind=21"
+      - name: Inspektor gadgets
+        querystring: "kind=22"
+      - name: Tekton step actions
+        querystring: "kind=23"
+      - name: Meshery designs
+        querystring: "kind=24"
+      - name: OpenCost plugins
+        querystring: "kind=25"
+      - name: Radius recipes
+        querystring: "kind=26"
+      - name: Bootable containers
+        querystring: "kind=27"
+      - name: Kagent agents
+        querystring: "kind=28"
 scanner:
   cronjob:
     resources:
