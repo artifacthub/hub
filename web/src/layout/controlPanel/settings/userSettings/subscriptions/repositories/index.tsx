@@ -13,6 +13,7 @@ import { REPOSITORY_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../
 import { prepareQueryString } from '../../../../../../utils/prepareQueryString';
 import Loading from '../../../../../common/Loading';
 import Pagination from '../../../../../common/Pagination';
+import PaginationSummary from '../../../../../common/PaginationSummary';
 import RepositoryIcon from '../../../../../common/RepositoryIcon';
 import styles from '../SubscriptionsSection.module.css';
 import OptOutModal from './Modal';
@@ -207,6 +208,14 @@ const RepositoriesSection = (props: Props) => {
           {!isUndefined(optOutList) && optOutList.length > 0 && (
             <div className="row">
               <div className="col-12 col-xxxl-10">
+                {!isUndefined(total) && total > 0 && (
+                  <PaginationSummary
+                    offset={offset}
+                    itemsInPage={optOutList.length}
+                    total={total}
+                    className="mb-3 text-end"
+                  />
+                )}
                 <table className={`table table-bordered table-hover ${styles.table}`} data-testid="repositoriesList">
                   <thead>
                     <tr className={styles.tableTitle}>

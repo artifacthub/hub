@@ -68,6 +68,7 @@ describe('Members section index', () => {
     });
 
     expect(await screen.findByText('Members')).toBeInTheDocument();
+    expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -89,6 +90,7 @@ describe('Members section index', () => {
       });
 
       expect(await screen.findByText('Members')).toBeInTheDocument();
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
     });
 
     it('displays no data component when no members', async () => {
@@ -122,7 +124,9 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      expect(await screen.findAllByTestId('memberCard')).toHaveLength(2);
+      const cards = await screen.findAllByTestId('memberCard');
+      expect(cards).toHaveLength(2);
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
     });
 
     it('renders organization form when add org button is clicked', async () => {

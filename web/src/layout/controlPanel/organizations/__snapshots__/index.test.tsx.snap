@@ -72,7 +72,13 @@ exports[`Organizations section index creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="row mt-4 mt-md-5 gx-0 gx-xxl-4"
+          class="text-muted text-end mt-4 mt-md-5"
+          data-testid="pagination-summary"
+        >
+          1 - 2 of 2 results
+        </div>
+        <div
+          class="row mt-1 mt-md-2 gx-0 gx-xxl-4"
         >
           <div
             class="col-12 col-xxl-6 py-sm-3 py-2 px-0 px-xxl-3"

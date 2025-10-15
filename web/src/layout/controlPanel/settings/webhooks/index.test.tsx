@@ -77,6 +77,7 @@ describe('WebhooksSection', () => {
     });
 
     expect(await screen.findAllByRole('listitem')).toHaveLength(5);
+    expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 5 of 5 results');
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -100,6 +101,7 @@ describe('WebhooksSection', () => {
       expect(await screen.findByText('Webhooks')).toBeInTheDocument();
       expect(screen.getByText('Webhooks notify external services when certain events happen.')).toBeInTheDocument();
       expect(await screen.findAllByRole('listitem')).toHaveLength(5);
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 5 of 5 results');
       expect(screen.getByRole('button', { name: 'Open webhook form' })).toBeInTheDocument();
     });
 
@@ -171,6 +173,7 @@ describe('WebhooksSection', () => {
       });
 
       expect(await screen.findAllByRole('listitem')).toHaveLength(5);
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 5 of 5 results');
     });
 
     it('loads first page when not webhooks in a different one', async () => {
