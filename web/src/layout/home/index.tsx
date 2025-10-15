@@ -230,7 +230,7 @@ const HomeView = () => {
                 Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native
                 packages and configurations. For example, this could include Helm charts and plugins, Falco
                 configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions,
-                kubectl plugins, Tekton tasks, pipelines and stepactions, KEDA scalers, CoreDNS plugins, Keptn
+                Kubectl plugins, Tekton tasks, pipelines and stepactions, KEDA scalers, CoreDNS plugins, Keptn
                 integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage
                 plugins, Argo templates, KubeArmor policies, KCL modules, Headlamp plugins, Inspektor gadgets, Meshery
                 designs, OpenCost plugins, Radius recipes, Bootable Containers and Kagent agents.
