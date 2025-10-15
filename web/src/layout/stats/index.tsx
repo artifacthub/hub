@@ -320,15 +320,19 @@ const StatsView = () => {
           breakpoint: 1400,
           options: {
             dataLabels: {
-              offsetY: monthlyFormatter ? -15 : -12,
+              offsetY: -12,
               style: {
-                fontSize: monthlyFormatter ? '9px' : '7px',
+                fontSize: '7px',
+              },
+              formatter: (value: number) => {
+                if (value === 0) return '';
+                return prettifyNumber(value, 0);
               },
             },
           },
         },
         {
-          breakpoint: 992,
+          breakpoint: 1170,
           options: {
             dataLabels: {
               enabled: false,
@@ -336,8 +340,19 @@ const StatsView = () => {
           },
         },
         {
+          breakpoint: 998,
+          options: {
+            dataLabels: {
+              enabled: true,
+            },
+          },
+        },
+        {
           breakpoint: 768,
           options: {
+            dataLabels: {
+              enabled: false,
+            },
             plotOptions: {
               bar: {
                 borderRadius: 0,

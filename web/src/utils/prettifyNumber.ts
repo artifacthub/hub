@@ -21,7 +21,7 @@ const prettifyNumber = (num: number, digits?: number): string | number => {
       break;
     }
   }
-  return (num / si[i].value).toFixed(digits || DEFAULT_DIGITS).replace(rx, '$1') + si[i].symbol;
+  return (num / si[i].value).toFixed(digits ?? DEFAULT_DIGITS).replace(rx, '$1') + si[i].symbol;
 };
 
 export default prettifyNumber;
