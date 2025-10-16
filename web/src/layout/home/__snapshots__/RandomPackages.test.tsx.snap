@@ -207,7 +207,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                             <div
                               class="d-flex flex-row mw-100"
                             >
-                              <div>
+                              <div
+                                class="truncateWrapper"
+                              >
                                 <div
                                   class="d-flex flex-row align-items-baseline userInfo"
                                 >
@@ -248,7 +250,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   </button>
                                 </div>
                               </div>
-                              <div>
+                              <div
+                                class="truncateWrapper"
+                              >
                                 <div
                                   class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
                                 >
@@ -747,7 +751,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                             <div
                               class="d-flex flex-row mw-100"
                             >
-                              <div>
+                              <div
+                                class="truncateWrapper"
+                              >
                                 <div
                                   class="d-flex flex-row align-items-baseline userInfo"
                                 >
@@ -788,7 +794,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   </button>
                                 </div>
                               </div>
-                              <div>
+                              <div
+                                class="truncateWrapper"
+                              >
                                 <div
                                   class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
                                 >
@@ -1287,7 +1295,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                             <div
                               class="d-flex flex-row mw-100"
                             >
-                              <div>
+                              <div
+                                class="truncateWrapper"
+                              >
                                 <div
                                   class="d-flex flex-row align-items-baseline userInfo"
                                 >
@@ -1328,7 +1338,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   </button>
                                 </div>
                               </div>
-                              <div>
+                              <div
+                                class="truncateWrapper"
+                              >
                                 <div
                                   class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
                                 >
@@ -1827,7 +1839,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                             <div
                               class="d-flex flex-row mw-100"
                             >
-                              <div>
+                              <div
+                                class="truncateWrapper"
+                              >
                                 <div
                                   class="d-flex flex-row align-items-baseline userInfo"
                                 >
@@ -1868,7 +1882,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   </button>
                                 </div>
                               </div>
-                              <div>
+                              <div
+                                class="truncateWrapper"
+                              >
                                 <div
                                   class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
                                 >
@@ -2367,7 +2383,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                             <div
                               class="d-flex flex-row mw-100"
                             >
-                              <div>
+                              <div
+                                class="truncateWrapper"
+                              >
                                 <div
                                   class="d-flex flex-row align-items-baseline userInfo"
                                 >
@@ -2408,7 +2426,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   </button>
                                 </div>
                               </div>
-                              <div>
+                              <div
+                                class="truncateWrapper"
+                              >
                                 <div
                                   class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
                                 >

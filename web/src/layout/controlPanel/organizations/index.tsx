@@ -9,6 +9,7 @@ import { ErrorKind, Organization } from '../../../types';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import Pagination from '../../common/Pagination';
+import PaginationSummary from '../../common/PaginationSummary';
 import OrganizationCard from './Card';
 import OrganizationModal from './Modal';
 import styles from './OrganizationsSection.module.css';
@@ -144,7 +145,15 @@ const OrganizationsSection = (props: Props) => {
                 </NoData>
               ) : (
                 <>
-                  <div className="row mt-4 mt-md-5 gx-0 gx-xxl-4">
+                  {!isUndefined(total) && total > 0 && (
+                    <PaginationSummary
+                      offset={offset}
+                      itemsInPage={organizations.length}
+                      total={total}
+                      className="mt-4 mt-md-5"
+                    />
+                  )}
+                  <div className="row mt-1 mt-md-2 gx-0 gx-xxl-4">
                     {organizations.map((org: Organization, index: number) => (
                       <OrganizationCard
                         key={`org_${org.name}_${index}`}

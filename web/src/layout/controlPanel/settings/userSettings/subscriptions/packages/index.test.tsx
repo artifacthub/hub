@@ -44,6 +44,7 @@ describe('PackagesSection', () => {
     });
 
     expect(await screen.findByText('Kind')).toBeInTheDocument();
+    expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 8 of 8 results');
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -72,6 +73,7 @@ describe('PackagesSection', () => {
       expect(screen.getAllByTestId('userLink')).toHaveLength(1);
       expect(screen.getAllByTestId('orgLink')).toHaveLength(7);
       expect(screen.getAllByTestId('repoLink')).toHaveLength(8);
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 8 of 8 results');
     });
 
     it('opens Add subscription modal', async () => {
@@ -115,6 +117,7 @@ describe('PackagesSection', () => {
         expect(screen.getAllByTestId('subsTableCell')).toHaveLength(8);
         expect(screen.getAllByRole('listitem')).toHaveLength(8);
       });
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 8 of 8 results');
     });
 
     it('does not display list when no packages', async () => {

@@ -76,6 +76,7 @@ import ReadmeWrapper from './readme';
 import RecommendedPackages, { URL_regex } from './RecommendedPackages';
 import RelatedPackages from './RelatedPackages';
 import ScreenshotsModal from './screenshots/Modal';
+import { default as SecurityReportMobileModal } from './securityReport/MobileModal';
 import StarButton from './StarButton';
 import Stats from './Stats';
 import SubscriptionsButton from './SubscriptionsButton';
@@ -1098,6 +1099,10 @@ const PackageView = () => {
                           />
                         </div>
                       )}
+
+                      <SecurityReportMobileModal
+                        visibleSecurityReport={!isNull(visibleModal) && visibleModal === 'security-report'}
+                      />
                     </div>
                   </div>
                 </div>

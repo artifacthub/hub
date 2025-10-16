@@ -173,7 +173,13 @@ exports[`Repository index creates snapshot 1`] = `
          to each of them including the repository ID provided below. This label will let users know that you own or have control over the repository. The repository metadata file must be located at the path used in the repository URL.
       </p>
       <div
-        class="row mt-3 mt-md-4 gx-0 gx-xxl-4"
+        class="text-muted text-end mt-3 mt-md-4"
+        data-testid="pagination-summary"
+      >
+        1 of 1 results
+      </div>
+      <div
+        class="row mt-1 mt-md-2 gx-0 gx-xxl-4"
         data-testid="repoList"
       >
         <div

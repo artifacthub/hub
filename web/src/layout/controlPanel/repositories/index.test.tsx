@@ -69,6 +69,7 @@ describe('Repository index', () => {
     });
 
     expect(await screen.findByRole('button', { name: 'Refresh repositories list' })).toBeInTheDocument();
+    expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 of 1 results');
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -92,6 +93,7 @@ describe('Repository index', () => {
       expect(await screen.findByRole('button', { name: 'Refresh repositories list' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Open claim repository modal' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Open add repository modal' })).toBeInTheDocument();
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 of 1 results');
     });
 
     it('displays no data component when no repositories', async () => {
@@ -128,6 +130,7 @@ describe('Repository index', () => {
         expect(screen.getByTestId('repoList')).toBeInTheDocument();
       });
       expect(screen.getAllByTestId('repoCard')).toHaveLength(3);
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 3 of 3 results');
     });
 
     it('calls getRepositories to click Refresh button', async () => {

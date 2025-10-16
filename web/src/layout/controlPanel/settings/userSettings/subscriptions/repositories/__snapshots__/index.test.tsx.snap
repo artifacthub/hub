@@ -76,6 +76,12 @@ exports[`RepositoriesSection creates snapshot 1`] = `
           <div
             class="col-12 col-xxxl-10"
           >
+            <div
+              class="text-muted text-end mb-3 text-end"
+              data-testid="pagination-summary"
+            >
+              1 - 3 of 3 results
+            </div>
             <table
               class="table table-bordered table-hover table"
               data-testid="repositoriesList"

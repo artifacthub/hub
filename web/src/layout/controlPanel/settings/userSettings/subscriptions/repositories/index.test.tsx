@@ -46,6 +46,7 @@ describe('RepositoriesSection', () => {
     });
 
     expect(await screen.findByText('Kind')).toBeInTheDocument();
+    expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 3 of 3 results');
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -70,6 +71,7 @@ describe('RepositoriesSection', () => {
       expect(screen.getByText('Publisher')).toBeInTheDocument();
       expect(screen.getByText('Tracking errors')).toBeInTheDocument();
       expect(screen.getByText('Scanning errors')).toBeInTheDocument();
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 3 of 3 results');
     });
 
     it('opens Add opt out modal', async () => {
@@ -111,6 +113,7 @@ describe('RepositoriesSection', () => {
       expect(screen.getAllByTestId('userLink')).toHaveLength(2);
       expect(screen.getAllByTestId('orgLink')).toHaveLength(1);
       expect(screen.getAllByTestId('repoLink')).toHaveLength(3);
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 3 of 3 results');
     });
 
     it('does not display list when no packages', async () => {

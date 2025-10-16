@@ -12,6 +12,7 @@ import { prepareQueryString } from '../../../../../../utils/prepareQueryString';
 import Image from '../../../../../common/Image';
 import Loading from '../../../../../common/Loading';
 import Pagination from '../../../../../common/Pagination';
+import PaginationSummary from '../../../../../common/PaginationSummary';
 import RepositoryIcon from '../../../../../common/RepositoryIcon';
 import styles from '../SubscriptionsSection.module.css';
 import SubscriptionModal from './Modal';
@@ -164,6 +165,14 @@ const PackagesSection = (props: Props) => {
         <div className="mt-4 mt-md-5">
           {!isUndefined(packages) && packages.length > 0 && (
             <>
+              {!isUndefined(total) && total > 0 && (
+                <PaginationSummary
+                  offset={offset}
+                  itemsInPage={packages.length}
+                  total={total}
+                  className="mb-3 text-end"
+                />
+              )}
               <div className="d-none d-sm-inline" data-testid="packagesList">
                 <div className="row">
                   <div className="col-12 col-xxxl-10">

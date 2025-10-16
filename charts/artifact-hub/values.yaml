@@ -157,7 +157,7 @@ hub:
     initContainers:
       checkDbMigrator:
         image:
-          repository: bitnami/kubectl
+          repository: bitnamilegacy/kubectl
           # tag: 1.21
         resources: {}
         # If you do want to specify resources, uncomment the following

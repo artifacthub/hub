@@ -6,6 +6,8 @@
 .header h6 {
   line-height: 1.5;
   margin: 25px 0 15px 0;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 .header h1 {

@@ -59,7 +59,9 @@ describe('Organizations section index', () => {
       expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
     });
 
-    expect(await screen.findAllByTestId('organizationCard')).toHaveLength(2);
+    const cards = await screen.findAllByTestId('organizationCard');
+    expect(cards).toHaveLength(2);
+    expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -80,7 +82,9 @@ describe('Organizations section index', () => {
         expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
       });
 
-      expect(await screen.findAllByTestId('organizationCard')).toHaveLength(2);
+      const cards = await screen.findAllByTestId('organizationCard');
+      expect(cards).toHaveLength(2);
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
     });
 
     it('displays no data component when no organizations', async () => {

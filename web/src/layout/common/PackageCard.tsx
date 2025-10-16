@@ -184,7 +184,7 @@ const PackageCard = (props: Props) => {
                       </div>
                     </div>
                     <div ref={infoSection} className="d-flex flex-row mw-100">
-                      <div style={infoStyle[0]}>
+                      <div style={infoStyle[0]} className={styles.truncateWrapper}>
                         {props.package.repository.organizationName && (
                           <OrganizationInfo
                             className={`me-0 d-flex flex-row align-items-baseline text-left`}
@@ -227,7 +227,7 @@ const PackageCard = (props: Props) => {
                           </div>
                         )}
                       </div>
-                      <div style={infoStyle[1]}>
+                      <div className={styles.truncateWrapper} style={infoStyle[1]}>
                         <RepositoryInfo
                           repository={props.package.repository}
                           deprecated={props.package.deprecated}

@@ -44,6 +44,7 @@ describe('API keys section index', () => {
     });
 
     expect(await screen.findAllByTestId('APIKeyCard')).toHaveLength(2);
+    expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -63,6 +64,7 @@ describe('API keys section index', () => {
       });
 
       expect(await screen.findAllByTestId('APIKeyCard')).toHaveLength(2);
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
     });
 
     it('displays no data component when no API keys', async () => {
@@ -130,6 +132,7 @@ describe('API keys section index', () => {
     );
 
     expect(await screen.findAllByTestId('APIKeyCard')).toHaveLength(2);
+    expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
   });
 
   it('loads first page when not api Keys in a different one', async () => {

@@ -90,6 +90,12 @@ exports[`PackagesSection creates snapshot 1`] = `
             class="mt-4 mt-md-5"
           >
             <div
+              class="text-muted text-end mb-3 text-end"
+              data-testid="pagination-summary"
+            >
+              1 - 8 of 8 results
+            </div>
+            <div
               class="d-none d-sm-inline"
               data-testid="packagesList"
             >
