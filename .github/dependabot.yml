@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/web"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     groups:
       web:
         patterns:
@@ -15,7 +15,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/widget"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     groups:
       widget:
         patterns:
@@ -27,7 +27,7 @@ updates:
   - package-ecosystem: gomod
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     ignore:
       - dependency-name: "k8s.io/apimachinery"
       - dependency-name: "k8s.io/client-go"
@@ -42,7 +42,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     groups:
       github-actions:
         patterns:
@@ -51,12 +51,12 @@ updates:
   - package-ecosystem: "docker"
     directory: "/cmd/ah"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
 
   - package-ecosystem: "docker"
     directory: "/cmd/hub"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     ignore:
       - dependency-name: "node"
         versions: ["19-alpine3.19", "20-alpine3.19", "21-alpine3.19", "22-alpine3.19", "22-alpine3.20", "23-alpine3.21"]
@@ -64,14 +64,14 @@ updates:
   - package-ecosystem: "docker"
     directory: "/cmd/scanner"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
 
   - package-ecosystem: "docker"
     directory: "/cmd/tracker"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
 
   - package-ecosystem: "docker"
     directory: "/database/migrations"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
