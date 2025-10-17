@@ -339,7 +339,7 @@
                                                 "repository": {
                                                     "title": "Check DB migrator repository",
                                                     "type": "string",
-                                                    "default": "bitnami/kubectl"
+                                                    "default": "bitnamilegacy/kubectl"
                                                 },
                                                 "tag": {
                                                     "title": "Check DB migrator tag",
