@@ -36,8 +36,8 @@ db:
   host: ""
   port: "5432"
   database: hub
-  user: postgres
-  password: postgres
+  user: hub
+  password: hub
   sslmode: prefer
 
 # Email configuration
@@ -432,15 +432,23 @@ trivy:
 # Values for postgresql chart dependency
 postgresql:
   enabled: true
+  auth:
+    username: hub
+    password: hub
+    database: hub
+  global:
+    security:
+      allowInsecureImages: true
   image:
     repository: artifacthub/postgres
     tag: latest
-  persistence:
-    mountPath: /data
-  postgresqlUsername: postgres
-  postgresqlPassword: postgres
-  postgresqlDatabase: hub
-  postgresqlDataDir: /data/pgdata
+  primary:
+    extraVolumes:
+      - name: run
+        emptyDir: {}
+    extraVolumeMounts:
+      - name: run
+        mountPath: /var/run/postgresql
 
 # Extra objects to deploy (value evaluated as a template)
 extraDeploy: []
