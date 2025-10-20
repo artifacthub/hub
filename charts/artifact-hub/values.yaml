@@ -404,7 +404,7 @@ tracker:
 trivy:
   enabled: true
   deploy:
-    image: aquasec/trivy:0.56.1
+    image: aquasec/trivy:0.67.2
     securityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
