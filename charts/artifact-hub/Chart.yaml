@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.
 type: application
-version: 1.21.1-5
-appVersion: 1.21.0
+version: 1.22.0
+appVersion: 1.22.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -50,53 +50,46 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Support for Bootable containers images
+      description: Support for kagent.dev agents
+      links:
+        - name: GitHub Issue
+          url: https://github.com/artifacthub/hub/issues/4374
     - kind: added
-      description: Deletion protection experimental feature
+      description: Display app version in versions modal
     - kind: added
-      description: Include packages stars in nova dump
+      description: Allow setting extra env vars from chart
+    - kind: added
+      description: FAQ section to the documentation
     - kind: changed
-      description: Improve Artifact Hub Helm chart
+      description: Improve versions table in modal
     - kind: changed
-      description: Improve Helm installation instructions modal
+      description: Set user agent header in outgoing requests
     - kind: changed
-      description: Add some default configuration values for cmds
+      description: Upgrade chart postgresql dependency
     - kind: changed
-      description: Do not scan versions with more than 15 images
+      description: Bump Alpine to 3.22.2
     - kind: changed
-      description: Update semver db functions to use 64 bits integers
+      description: Bump Go to 1.25.3
     - kind: changed
-      description: Update Trivy default image
+      description: Bump Trivy to 0.67.2
     - kind: changed
-      description: Bump Alpine to 3.21.3
-    - kind: changed
-      description: Bump Go to 1.24.2
-    - kind: changed
-      description: Bump OPM to 1.51.0
+      description: Bump OPM to 1.60.0
     - kind: changed
       description: Upgrade backend and frontend dependencies
     - kind: fixed
-      description: Check if db extension exists before creating it
+      description: Ignore parameterized images in Tekton packages
     - kind: fixed
-      description: URL encode db username and password
-    - kind: fixed
-      description: Policy data format in API docs
-    - kind: fixed
-      description: Link to ORAS CLI documentation
-    - kind: fixed
-      description: Some frontend unit tests
-    - kind: security
-      description: Add frame-ancestors directive to CSP
+      description: Issue with data labels on bar charts
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.21.0
+      image: artifacthub/db-migrator:v1.22.0
     - name: hub
-      image: artifacthub/hub:v1.21.0
+      image: artifacthub/hub:v1.22.0
     - name: tracker
-      image: artifacthub/tracker:v1.21.0
+      image: artifacthub/tracker:v1.22.0
     - name: scanner
-      image: artifacthub/scanner:v1.21.0
+      image: artifacthub/scanner:v1.22.0
     - name: trivy
       image: aquasec/trivy:0.67.2
   artifacthub.io/links: |
