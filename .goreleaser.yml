@@ -55,18 +55,18 @@ dockers_v2:
       VERSION: "{{ .Version }}"
       GIT_COMMIT: "{{ .FullCommit }}"
     labels:
-      org.opencontainers.image.description: "Artifact Hub command line tool"
-      org.opencontainers.image.version: "{{ .Version }}"
-      org.opencontainers.image.created: "{{ .CommitDate }}"
-      org.opencontainers.image.documentation: "https://artifacthub.io/docs/topics/cli"
-      org.opencontainers.image.source: "https://github.com/artifacthub/hub/tree/{{ .FullCommit }}/cmd/ah"
-      org.opencontainers.image.vendor: "Artifact Hub"
-      io.artifacthub.package.readme-url: "https://raw.githubusercontent.com/artifacthub/hub/{{ .FullCommit }}/docs/cli.md"
-      io.artifacthub.package.maintainers: '[{"name":"Artifact Hub maintainers","email":"cncf-artifacthub-maintainers@lists.cncf.io"}]'
-      io.artifacthub.package.logo-url: "https://raw.githubusercontent.com/artifacthub/hub/master/docs/logo/logo.svg"
-      io.artifacthub.package.keywords: "artifact hub,cli,lint"
-      io.artifacthub.package.license: "Apache-2.0"
-      io.artifacthub.package.alternative-locations: "public.ecr.aws/artifacthub/ah:{{ .Tag }}"
+      "org.opencontainers.image.description": "Artifact Hub command line tool"
+      "org.opencontainers.image.version": "{{ .Version }}"
+      "org.opencontainers.image.created": "{{ .CommitDate }}"
+      "org.opencontainers.image.documentation": "https://artifacthub.io/docs/topics/cli"
+      "org.opencontainers.image.source": "https://github.com/artifacthub/hub/tree/{{ .FullCommit }}/cmd/ah"
+      "org.opencontainers.image.vendor": "Artifact Hub"
+      "io.artifacthub.package.readme-url": "https://raw.githubusercontent.com/artifacthub/hub/{{ .FullCommit }}/docs/cli.md"
+      "io.artifacthub.package.maintainers": '[{"name":"Artifact Hub maintainers","email":"cncf-artifacthub-maintainers@lists.cncf.io"}]'
+      "io.artifacthub.package.logo-url": "https://raw.githubusercontent.com/artifacthub/hub/master/docs/logo/logo.svg"
+      "io.artifacthub.package.keywords": "artifact hub,cli,lint"
+      "io.artifacthub.package.license": "Apache-2.0"
+      "io.artifacthub.package.alternative-locations": "public.ecr.aws/artifacthub/ah:{{ .Tag }}"
     extra_files:
       - go.mod
       - go.sum
@@ -139,6 +139,13 @@ homebrew_casks:
       name: artifacthubio
       email: hub@artifacthub.io
     binary: ah
+    conflicts:
+      - formula: ah
+    hooks:
+      post:
+        install: |
+          system_command "/usr/bin/xattr",
+                         args: ["-dr", "com.apple.quarantine", "#{staged_path}/ah"]
 
 scoops:
   - description: Artifact Hub command line tool
