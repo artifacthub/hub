@@ -141,6 +141,31 @@ describe('Group', () => {
     expect(screen.getByTestId('wrapper')).toHaveStyle('--color-ah-primary: #131216');
   });
 
+  it('does not repeat search when url stays the same', async () => {
+    const mockGroup = getMockGroup('2');
+    mocked(API).searchPackages.mockResolvedValue(mockGroup);
+
+    const { rerender } = render(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Group {...defaultProps} />
+      </StyleSheetManager>
+    );
+
+    await waitFor(() => {
+      expect(API.searchPackages).toHaveBeenCalledTimes(1);
+    });
+
+    rerender(
+      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
+        <Group {...defaultProps} />
+      </StyleSheetManager>
+    );
+
+    await waitFor(() => {
+      expect(API.searchPackages).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('does not render component', () => {
     it('when package list is empty', async () => {
       const mockGroup = getMockGroup('6');

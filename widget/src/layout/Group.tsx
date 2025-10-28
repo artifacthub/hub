@@ -1,5 +1,5 @@
 import { isNull, isUndefined, some } from 'lodash';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import API from '../api';
@@ -70,6 +70,7 @@ const Group = (props: Props) => {
   const [packagesList, setPackagesList] = useState<PackageSummary[] | undefined | null>();
   const [pkgsWithBadges, setPkgsWithBadges] = useState<boolean>(false);
   const fixedWidthValue = props.width ? `${props.width}px` : undefined;
+  const lastFetchedUrl = useRef<string | undefined>(undefined);
 
   const getMainColor = (): string => {
     let mainColor = DEFAULT_COLOR;
@@ -87,7 +88,15 @@ const Group = (props: Props) => {
   };
 
   useEffect(() => {
+    if (isUndefined(urlParams)) {
+      setIsLoading(false);
+      setPackagesList(null);
+      lastFetchedUrl.current = undefined;
+      return;
+    }
+
     async function fetchPackagesList() {
+      console.log('Fetching packages list for Group widget');
       if (props.url && urlParams) {
         try {
           if (visibleLoading) {
@@ -101,15 +110,19 @@ const Group = (props: Props) => {
             setPackagesList(null);
           }
           setIsLoading(false);
+          lastFetchedUrl.current = props.url;
         } catch {
           setIsLoading(false);
           setPackagesList(null);
+          lastFetchedUrl.current = undefined;
         }
       } else {
         setPackagesList(null);
+        lastFetchedUrl.current = undefined;
       }
     }
-    if (!isUndefined(urlParams)) {
+    if (lastFetchedUrl.current !== props.url) {
+      lastFetchedUrl.current = props.url;
       fetchPackagesList();
     }
   }, [props.url]);
