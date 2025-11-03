@@ -12,6 +12,8 @@ import { AppCtx } from '../../../context/AppCtx';
 import { ChartTemplate, ChartTemplateSpecialType, DefinedTemplate, DefinedTemplatesList } from '../../../types';
 import processHelmTemplate from '../../../utils/processHelmTemplate';
 import AutoresizeTextarea from '../../common/AutoresizeTextarea';
+import builtInDefinitions from './builtIn.json';
+import functionsDefinitions from './functions.json';
 import ParamInfo from './ParamInfo';
 import styles from './Template.module.css';
 
@@ -26,10 +28,6 @@ interface Props {
 }
 
 const HIGHLIGHT_PATTERN = /{{(?!\/\*)(.*?)([^{]|{})*}}/;
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const FUNCTIONS_DEFINITIONS = require('./functions.json');
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const BUILTIN_DEFINITIONS = require('./builtIn.json');
 const SPECIAL_CHARACTERS = /[^|({})-]+/;
 const TOKENIZE_RE = /[^\s"']+|"([^"]*)"|'([^']*)/g;
 const INITIAL_HELPER_COMMENT = /{{\/\*|{{- \/\*/;
@@ -149,12 +147,12 @@ const Template = (props: Props) => {
   };
 
   const renderTemplateFunction = (word: string) => {
-    const definition = FUNCTIONS_DEFINITIONS[word];
+    const definition = functionsDefinitions[word];
     if (definition) {
       return (
         <ParamInfo
           element={<span className={`${styles.tmplFunction} ${styles[`${effective}Theme`]}`}>{word}</span>}
-          info={FUNCTIONS_DEFINITIONS[word]}
+          info={functionsDefinitions[word]}
           isMarkdown
           fixedWidth
         />
@@ -165,12 +163,12 @@ const Template = (props: Props) => {
   };
 
   const renderTemplateBuiltIn = (word: string) => {
-    const definition = BUILTIN_DEFINITIONS[word];
+    const definition = builtInDefinitions[word];
     if (definition) {
       return (
         <ParamInfo
           element={<span className={`${styles.tmplBuiltIn}  ${styles[`${effective}Theme`]}`}>{word}</span>}
-          info={BUILTIN_DEFINITIONS[word]}
+          info={builtInDefinitions[word]}
           isMarkdown
           fixedWidth
         />

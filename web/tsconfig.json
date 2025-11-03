@@ -9,14 +9,16 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
+    "types": ["vite/client", "vitest"],
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src", "decs.d.ts"
-, "public/config-overrides.js"  ]
+    "src",
+    "decs.d.ts"
+  ]
 }

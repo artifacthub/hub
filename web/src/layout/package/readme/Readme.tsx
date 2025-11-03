@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import EmojiConvertor from 'emoji-js';
 import isArray from 'lodash/isArray';
 import isNull from 'lodash/isNull';
 import isString from 'lodash/isString';
@@ -60,8 +61,6 @@ interface BasicProps {
   className?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const EmojiConvertor = require('emoji-js');
 const emoji = new EmojiConvertor();
 
 const Readme = (props: Props) => {

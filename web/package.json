@@ -44,7 +44,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@eslint/js": "^9.36.0",
     "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@testing-library/react-hooks": "^8.0.0",
     "@testing-library/user-event": "^14.6.1",
@@ -60,6 +60,8 @@
     "@types/react-dom": "^19.1.9",
     "@types/react-syntax-highlighter": "^15.5.13",
     "@types/semver": "^7.7.1",
+    "@vitejs/plugin-react": "^5.1.0",
+    "@vitest/coverage-v8": "^4.0.6",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
@@ -68,32 +70,31 @@
     "globals": "^16.4.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-mock": "^30.0.5",
+    "jsdom": "^27.1.0",
     "prettier": "^3.6.2",
-    "react-scripts": "^5.0.1",
     "sass": "^1.93.2",
     "shx": "^0.4.0",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.44.1"
+    "typescript-eslint": "^8.44.1",
+    "vite": "^7.1.12",
+    "vitest": "^4.0.6"
   },
   "resolutions": {
-    "@types/react-syntax-highlighter/**/@types/react": "19.1.13",
-    "react-scripts/**/webpack": "5.101.3",
-    "react-scripts/**/webpack-dev-server": "5.2.2"
+    "@types/react-syntax-highlighter/**/@types/react": "19.1.13"
   },
   "proxy": "http://localhost:8000",
   "scripts": {
     "copy:static": "shx rm -rf src/static && shx mkdir src/static && shx cp -r public/static/* src/static",
-    "start": "yarn copy:static && NODE_OPTIONS=\"--require ./scripts/wds5-compat.cjs --require ./scripts/webpack-source-map-fix.cjs\" DANGEROUSLY_DISABLE_HOST_CHECK=true DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "build": "yarn copy:static && NODE_OPTIONS=\"--require ./scripts/webpack-source-map-fix.cjs\" INLINE_RUNTIME_CHUNK=false IMAGE_INLINE_SIZE_LIMIT=0 DISABLE_ESLINT_PLUGIN=true react-scripts build",
-    "test": "sed -i -e 's/const FORCE_EXIT_DELAY = 500;/const FORCE_EXIT_DELAY = 1000;/g' ./node_modules/jest-worker/build/base/BaseWorkerPool.js && TZ=UTC react-scripts test # See https://github.com/facebook/jest/issues/11354",
-    "test:coverage": "TZ=UTC react-scripts test --coverage --watchAll=false",
-    "eject": "react-scripts eject",
+    "start": "yarn copy:static && vite",
+    "build": "yarn copy:static && vite build",
+    "test": "vitest --run --passWithNoTests",
+    "test:coverage": "vitest run --coverage",
     "lint": "eslint src --max-warnings 0",
     "lint:fix": "eslint src --max-warnings 0 --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "format:diff": "prettier --list-different \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "prettier:fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "isready": "yarn format && yarn lint && yarn test --watchAll=false --passWithNoTests --verbose && yarn build"
+    "isready": "yarn format && yarn lint && yarn test && yarn build"
   },
   "browser": {
     "http": false,
@@ -110,16 +111,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "node_modules/(?!remark-parse)/"
-    ],
-    "moduleNameMapper": {
-      "unist-util-visit-parents/do-not-use-color": "<rootDir>/node_modules/unist-util-visit-parents/lib/color.js",
-      "#minpath": "<rootDir>/node_modules/vfile/lib/minpath.js",
-      "#minproc": "<rootDir>/node_modules/vfile/lib/minproc.js",
-      "#minurl": "<rootDir>/node_modules/vfile/lib/minurl.js"
-    }
   }
 }

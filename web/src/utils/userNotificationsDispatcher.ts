@@ -6,6 +6,7 @@ import isUndefined from 'lodash/isUndefined';
 import { NotificationsPrefs, PathTips, UserNotification } from '../types';
 import { PKG_DETAIL_PATH } from './data';
 import hasToBeDisplayedNewNotification from './hasToBeDisplayedNewNotification';
+import notifications from './notifications.json';
 
 const DEFAULT_START_TIME = 3 * 1000; //3s
 const DEFAULT_DISMISS_TIME = 20 * 1000; //20s
@@ -15,10 +16,8 @@ export interface UserNotificationsUpdatesHandler {
 }
 
 const getNotifications = (): UserNotification[] => {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const list = require('./notifications.json').notifications;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return list.map((notif: any) => {
+  const list = notifications.notifications;
+  return list.map((notif) => {
     const notification: UserNotification = {
       ...notif,
       id: md5(notif.body).toString(),
