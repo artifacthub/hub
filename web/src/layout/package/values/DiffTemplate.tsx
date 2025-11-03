@@ -75,19 +75,22 @@ const DiffTemplate = (props: Props) => {
 
   useEffect(() => {
     const prepareDiff = () => {
+      const sourceLabel = props.diffVersion ?? 'previous';
+      const targetLabel = props.currentVersion ?? 'current';
       const newDiff = createTwoFilesPatch(
-        '  ',
-        '  ',
+        sourceLabel,
+        targetLabel,
         props.compareData,
         props.data,
         props.diffVersion,
         props.currentVersion,
         { context: props.expanded ? Number.MAX_SAFE_INTEGER : 2 }
       );
-      if (newDiff === diffContent) {
+      const diffText = `diff --git a/${sourceLabel} b/${targetLabel}\n${newDiff}`;
+      if (diffText === diffContent) {
         props.removeLoading();
       }
-      setDiffContent(newDiff);
+      setDiffContent(diffText);
     };
 
     prepareDiff();
@@ -97,7 +100,7 @@ const DiffTemplate = (props: Props) => {
     props.removeLoading();
   }, [diffContent]);
 
-  return <>{!isNull(diffContent) && <Changes diffText={`diff --git \n ${diffContent}`} />}</>;
+  return <>{!isNull(diffContent) && <Changes diffText={diffContent} />}</>;
 };
 
 export default DiffTemplate;
