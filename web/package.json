@@ -22,7 +22,7 @@
     "react-apexcharts": "^1.8.0",
     "react-codemirror2": "^8.0.1",
     "react-color": "^2.19.3",
-    "react-diff-view": "3.0.2",
+    "react-diff-view": "3.3.2",
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
     "react-image-crop": "^11.0.6",
@@ -78,9 +78,6 @@
     "typescript-eslint": "^8.46.2",
     "vite": "^7.1.12",
     "vitest": "^4.0.6"
-  },
-  "resolutions": {
-    "@types/react-syntax-highlighter/**/@types/react": "19.2.2"
   },
   "proxy": "http://localhost:8000",
   "scripts": {
