@@ -1,4 +1,116 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SectionPanel > creates snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="px-xs-0 px-sm-3 px-lg-0 my-md-4"
+    role="main"
+  >
+    <div
+      class="d-flex flex-column flex-md-row justify-content-between"
+    >
+      <nav
+        class="mb-4 _sidebar_b82139"
+      >
+        <div
+          class="list-group my-4 my-md-0 me-md-5 _listGroup_b82139"
+        >
+          <span
+            class="w-100"
+          >
+            <button
+              aria-label="Go to section opt0"
+              class="btn btn-link text-reset _link_b82139 d-flex list-group-item list-group-item-action flex-row align-items-center sectionItem _listItem_b82139 _isActive_b82139 fw-bold isActive bg-white"
+              type="button"
+            >
+              <div
+                class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100"
+              >
+                <div
+                  class="d-none d-sm-inline ms-1 ms-sm-2"
+                >
+                  <span
+                    class="d-none d-md-inline"
+                  >
+                    Details 0
+                  </span>
+                  <span
+                    class="d-inline d-md-none"
+                  >
+                    details_0
+                  </span>
+                </div>
+              </div>
+            </button>
+          </span>
+          <span
+            class="w-100"
+          >
+            <button
+              aria-label="Go to section opt1"
+              class="btn btn-link text-reset _link_b82139 d-flex list-group-item list-group-item-action flex-row align-items-center sectionItem _listItem_b82139"
+              type="button"
+            >
+              <div
+                class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100"
+              >
+                <div
+                  class="d-none d-sm-inline ms-1 ms-sm-2"
+                >
+                  <span
+                    class="d-none d-md-inline"
+                  >
+                    Details 1
+                  </span>
+                  <span
+                    class="d-inline d-md-none"
+                  >
+                    details_1
+                  </span>
+                </div>
+              </div>
+            </button>
+          </span>
+          <span
+            class="w-100"
+          >
+            <button
+              aria-label="Go to section opt2"
+              class="btn btn-link text-reset _link_b82139 d-flex list-group-item list-group-item-action flex-row align-items-center sectionItem _listItem_b82139 disabled"
+              disabled=""
+              type="button"
+            >
+              <div
+                class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100"
+              >
+                <div
+                  class="d-none d-sm-inline ms-1 ms-sm-2"
+                >
+                  <span
+                    class="d-none d-md-inline"
+                  >
+                    Details 2
+                  </span>
+                  <span
+                    class="d-inline d-md-none"
+                  >
+                    details_2
+                  </span>
+                </div>
+              </div>
+            </button>
+          </span>
+        </div>
+      </nav>
+      <div
+        class="flex-grow-1 mb-4 _list_b82139"
+      >
+        Content 0
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
 
 exports[`SectionPanel creates snapshot 1`] = `
 <DocumentFragment>

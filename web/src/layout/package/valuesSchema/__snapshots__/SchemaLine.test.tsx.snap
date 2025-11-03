@@ -1,4 +1,142 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SchemaLine > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="row position-relative _wrapper_fd2323"
+    data-testid="schemaLine"
+  >
+    <div
+      class="col-7 border-start border-end border-1 position-relative py-1 user-select-none _content_fd2323 undefined"
+      data-testid="lineContent"
+      role="button"
+    >
+      <div
+        class="level1 font-monospace"
+      >
+        <div
+          class="text-truncate _comment_fd2323"
+        >
+          # Database host
+        </div>
+        <span
+          class=""
+        >
+          host: 
+        </span>
+        <span
+          class="text-warning text-break"
+          data-testid="defaultValue"
+        >
+          <span>
+            ""
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      class="col-5 position-relative py-1 _description_fd2323"
+    >
+      <div
+        class="position-relative w-100"
+      >
+        <div
+          class="_contentWrapper_c8b87c"
+        >
+          <button
+            aria-label="Show detail"
+            class="btn text-reset text-start p-0 position-relative w-100 _btn_c8b87c"
+          >
+            <div
+              class="d-flex flex-column"
+            >
+              <div
+                class="d-flex flex-row align-items-start"
+              >
+                <div
+                  class="pe-2 text-secondary _icon_c8b87c"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 16 16"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="d-flex flex-column flex-grow-1 _content_c8b87c"
+                >
+                  <div
+                    class="fw-bold text-truncate _titleWithRequiredLabel_c8b87c"
+                  >
+                    Database host
+                  </div>
+                  <div
+                    class="d-flex flex-row align-items-start w-100"
+                  >
+                    <div
+                      class="text-nowrap"
+                    >
+                      <small
+                        class="text-muted text-uppercase"
+                      >
+                        Type
+                      </small>
+                      : 
+                      <span
+                        class="ms-1 fw-bold"
+                      >
+                        string
+                      </span>
+                    </div>
+                    <div
+                      class="ms-3 text-truncate"
+                    >
+                      <small
+                        class="text-muted text-uppercase"
+                      >
+                        Default
+                      </small>
+                      : 
+                      <span
+                        class="text-truncate undefined"
+                      >
+                        <span
+                          class="ms-1"
+                        >
+                          <span>
+                            ""
+                          </span>
+                        </span>
+                      </span>
+                    </div>
+                    <div
+                      class="ms-auto ps-2"
+                    >
+                      <span
+                        class="badge badge-sm bg-success text-uppercase position-relative _badge_c8b87c"
+                      >
+                        Required
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`SchemaLine creates snapshot 1`] = `
 <DocumentFragment>

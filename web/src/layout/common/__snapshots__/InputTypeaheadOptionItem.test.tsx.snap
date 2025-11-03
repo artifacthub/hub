@@ -1,4 +1,27 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InputTypeaheadOptionItem > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="me-2 iconClass"
+  >
+    icon
+  </div>
+  <div
+    class="text-truncate"
+  >
+    Option 1
+  </div>
+  <div>
+     
+    <small
+      class="ms-1"
+    >
+      (19)
+    </small>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`InputTypeaheadOptionItem creates snapshot 1`] = `
 <DocumentFragment>

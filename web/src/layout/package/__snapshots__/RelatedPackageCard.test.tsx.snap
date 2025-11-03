@@ -1,4 +1,141 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`RelatedPackageCard > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="card cardWithHover mt-2 w-100 relatedCard undefined"
+    role="listitem"
+  >
+    <a
+      class="text-decoration-none text-reset bg-transparent _link_aa0ff3"
+      data-testid="relatedPackageLink"
+      href="/packages/helm/incubator/test"
+    >
+      <div
+        class="card-body d-flex flex-column _body_aa0ff3"
+      >
+        <div
+          class="d-flex align-items-center flex-grow-1 _truncateWrapper_aa0ff3"
+        >
+          <div
+            class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_aa0ff3"
+          >
+            <img
+              alt="Logo Pretty name"
+              aria-hidden="true"
+              class="_image_aa0ff3"
+              src="/image/imageId"
+              srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
+            />
+          </div>
+          <div
+            class="ms-2 h-100 flex-grow-1 _truncateWrapper_aa0ff3"
+          >
+            <div
+              class="d-flex flex-row justify-content-between"
+            >
+              <div
+                class="text-truncate w-100"
+              >
+                <div
+                  class="d-flex flex-row align-items-center justify-content-between _legend_aa0ff3"
+                >
+                  <div
+                    class="d-none d-md-inline-block"
+                  >
+                    <div
+                      class="d-flex fs-6"
+                    >
+                      <span
+                        class="_badge_c0e9ad fw-bold _badge_aa0ff3"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <div
+                            aria-hidden="true"
+                            class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
+                          >
+                            <img
+                              alt="Icon"
+                              class="mw-100 mh-100 iconLight"
+                              src="/static/media/helm-chart.svg"
+                            />
+                            <img
+                              alt="Icon"
+                              class="mw-100 mh-100 iconDark"
+                              src="/static/media/helm-chart-light.svg"
+                            />
+                          </div>
+                          <div
+                            class="ms-1 _text_c0e9ad"
+                          >
+                            Helm chart
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex d-md-none fs-6"
+                  >
+                    <span
+                      class="_badge_c0e9ad fw-bold _badge_aa0ff3"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          aria-hidden="true"
+                          class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
+                        >
+                          <img
+                            alt="Icon"
+                            class="mw-100 mh-100 iconLight"
+                            src="/static/media/helm-chart.svg"
+                          />
+                          <img
+                            alt="Icon"
+                            class="mw-100 mh-100 iconDark"
+                            src="/static/media/helm-chart-light.svg"
+                          />
+                        </div>
+                        <div
+                          class="ms-1 _text_c0e9ad"
+                        >
+                          Helm chart
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="align-self-end text-truncate card-title mb-2 _title_aa0ff3"
+                >
+                  Pretty name
+                </div>
+                <div
+                  class="card-subtitle align-items-center text-muted _subtitle_aa0ff3"
+                >
+                  <div
+                    class="w-100"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      incubator
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`RelatedPackageCard creates snapshot 1`] = `
 <DocumentFragment>

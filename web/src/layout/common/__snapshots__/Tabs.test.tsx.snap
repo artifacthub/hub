@@ -1,4 +1,81 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tabs > creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <ul
+      class="nav nav-tabs _tabs_ec5be4"
+    >
+      <li
+        class="nav-item"
+      >
+        <button
+          aria-label="Open tab tab1"
+          class="btn nav-item _btn_ec5be4 active btn-primary _active_ec5be4"
+        >
+          <span
+            class="d-none d-sm-block"
+          >
+            Tab 1
+          </span>
+          <span
+            class="d-block d-sm-none"
+          >
+            Tab 1
+          </span>
+        </button>
+      </li>
+      <li
+        class="nav-item"
+      >
+        <button
+          aria-label="Open tab tab2"
+          class="btn nav-item _btn_ec5be4"
+        >
+          <span
+            class="d-none d-sm-block"
+          >
+            Tab 2
+          </span>
+          <span
+            class="d-block d-sm-none"
+          >
+            Tab 2
+          </span>
+        </button>
+      </li>
+      <li
+        class="nav-item"
+      >
+        <button
+          aria-label="Open tab tab3"
+          class="btn nav-item _btn_ec5be4"
+        >
+          <span
+            class="d-none d-sm-block"
+          >
+            Tab 3
+          </span>
+          <span
+            class="d-block d-sm-none"
+          >
+            Tab 3
+          </span>
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="tab-content mt-3"
+  >
+    <div
+      class="tab-pane fade show active"
+    >
+      Content 1
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`Tabs creates snapshot 1`] = `
 <DocumentFragment>

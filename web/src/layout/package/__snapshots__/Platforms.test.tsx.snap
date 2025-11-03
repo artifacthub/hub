@@ -1,4 +1,46 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Platforms > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mt-2 mb-1 undefined"
+    data-testid="smallTitle"
+  >
+    <small
+      class="card-title text-muted text-uppercase"
+    >
+      <span
+        aria-level="5"
+        role="heading"
+      >
+        Supported platforms
+      </span>
+    </small>
+  </div>
+  <div
+    class="mb-3 d-flex flex-row flex-wrap pt-1"
+  >
+    <div
+      class="d-inline badge fw-normal me-2 mb-1 mw-100 text-truncate _badge_ee97b2"
+      data-testid="platformBadge"
+    >
+      darwin
+    </div>
+    <div
+      class="d-inline badge fw-normal me-2 mb-1 mw-100 text-truncate _badge_ee97b2"
+      data-testid="platformBadge"
+    >
+      linux
+    </div>
+    <div
+      class="d-inline badge fw-normal me-2 mb-1 mw-100 text-truncate _badge_ee97b2"
+      data-testid="platformBadge"
+    >
+      windows
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`Platforms creates snapshot 1`] = `
 <DocumentFragment>

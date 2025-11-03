@@ -1,4 +1,232 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OLMInstall > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="my-2"
+  >
+    <small
+      class="text-muted mt-2 mb-1"
+    >
+      Channel
+    </small>
+  </div>
+  <div
+    class="mb-3 w-50"
+  >
+    <select
+      aria-label="channel-select"
+      class="form-select form-select-sm"
+    >
+      <option
+        value="stable"
+      >
+        stable
+      </option>
+      <option
+        value="alpha"
+      >
+        alpha
+      </option>
+    </select>
+  </div>
+  <div
+    class="my-2"
+  >
+    <small
+      class="text-muted mt-2 mb-1"
+    >
+      Install the operator by running the following command:
+    </small>
+  </div>
+  <div
+    class="d-flex align-items-start"
+  >
+    <div
+      class="flex-grow-1 _blockWrapper_c0c294"
+    >
+      <pre
+        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
+      >
+        <code
+          class="language-text"
+          style="white-space: pre;"
+        >
+          <span>
+            cat &lt;&lt;EOF | kubectl apply -f -
+
+          </span>
+          apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-packageName
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: operatorgroup
+  namespace: my-packageName
+spec:
+  targetNamespaces:
+  - my-packageName
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: my-packageName
+  namespace: my-packageName
+spec:
+  channel: stable
+  name: packageName
+  source: operatorhubio-catalog
+  sourceNamespace: olm
+EOF
+        </code>
+      </pre>
+    </div>
+    <div
+      class="ms-3"
+    >
+      <div
+        class="position-relative undefined"
+      >
+        <button
+          aria-label="Copy command to clipboard"
+          class="btn btn-sm btn-primary _copyBtn_c0c294 undefined"
+          type="button"
+        >
+          <div
+            aria-hidden="true"
+            class="d-flex flex-row align-items-center"
+          >
+            <svg
+              fill="none"
+              height="1em"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="13"
+                rx="2"
+                ry="2"
+                width="13"
+                x="9"
+                y="9"
+              />
+              <path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <small>
+    This Operator will be installed in the "
+    <span
+      class="fw-bold"
+    >
+      my-packageName
+    </span>
+    " namespace and will be usable from all namespaces in the cluster.
+  </small>
+  <div
+    class="my-2"
+  >
+    <small
+      class="text-muted mt-2 mb-1"
+    >
+      After install, watch your operator come up using next command:
+    </small>
+  </div>
+  <div
+    class="d-flex align-items-start"
+  >
+    <div
+      class="flex-grow-1 _blockWrapper_c0c294"
+    >
+      <pre
+        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
+      >
+        <code
+          class="language-bash"
+          style="white-space: pre;"
+        >
+          <span>
+            kubectl get csv -n my-packageName
+          </span>
+        </code>
+      </pre>
+    </div>
+    <div
+      class="ms-3"
+    >
+      <div
+        class="position-relative undefined"
+      >
+        <button
+          aria-label="Copy command to clipboard"
+          class="btn btn-sm btn-primary _copyBtn_c0c294 undefined"
+          type="button"
+        >
+          <div
+            aria-hidden="true"
+            class="d-flex flex-row align-items-center"
+          >
+            <svg
+              fill="none"
+              height="1em"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="13"
+                rx="2"
+                ry="2"
+                width="13"
+                x="9"
+                y="9"
+              />
+              <path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <small>
+    To use it, checkout the custom resource definitions (CRDs) introduced by this operator to start using it.
+  </small>
+  <div
+    class="mt-2"
+  >
+    <a
+      aria-label="Download OLM"
+      class="_link_f0e789 btn btn-link ps-0"
+      href="https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md"
+      rel="noopener noreferrer"
+      role="button"
+      tabindex="-1"
+      target="_blank"
+    >
+      Need OLM?
+    </a>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`OLMInstall creates snapshot 1`] = `
 <DocumentFragment>

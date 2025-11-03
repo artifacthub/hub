@@ -1,4 +1,204 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Badge Modal - repositories section > creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop _activeBackdrop_2adcc6"
+      data-testid="modalBackdrop"
+    />
+    <div
+      aria-modal="true"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div
+          class="modal-content border border-3 mx-auto _content_2adcc6"
+        >
+          <div
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
+          >
+            <div
+              class="h3 m-2 flex-grow-1 _title_f6f26f"
+            >
+              Get badge
+            </div>
+            <button
+              aria-label="Close"
+              class="btn-close"
+              type="button"
+            />
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              data-testid="badgeModalContent"
+            >
+              <div>
+                <ul
+                  class="nav nav-tabs _tabs_ec5be4"
+                >
+                  <li
+                    class="nav-item"
+                  >
+                    <button
+                      aria-label="Open tab markdown"
+                      class="btn nav-item _btn_ec5be4 active btn-primary _active_ec5be4"
+                    >
+                      <span
+                        class="d-none d-sm-block"
+                      >
+                        Markdown
+                      </span>
+                      <span
+                        class="d-block d-sm-none"
+                      >
+                        Markdown
+                      </span>
+                    </button>
+                  </li>
+                  <li
+                    class="nav-item"
+                  >
+                    <button
+                      aria-label="Open tab ascii"
+                      class="btn nav-item _btn_ec5be4"
+                    >
+                      <span
+                        class="d-none d-sm-block"
+                      >
+                        AsciiDoc
+                      </span>
+                      <span
+                        class="d-block d-sm-none"
+                      >
+                        AsciiDoc
+                      </span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="tab-content mt-3"
+              >
+                <div
+                  class="tab-pane fade show active"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center justify-content-between mb-2"
+                  >
+                    <div>
+                      <img
+                        alt="Artifact HUB badge"
+                        src="https://img.shields.io/endpoint?url=http://localhost:3000/badge/repository/repoTest"
+                      />
+                    </div>
+                    <div
+                      class="position-relative undefined"
+                    >
+                      <button
+                        aria-label="Copy badge markdown link to clipboard"
+                        class="btn btn-sm btn-primary _btn_a0bd31"
+                        type="button"
+                      >
+                        <div
+                          aria-hidden="true"
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <svg
+                            fill="none"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              height="13"
+                              rx="2"
+                              ry="2"
+                              width="13"
+                              x="9"
+                              y="9"
+                            />
+                            <path
+                              d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                  <pre
+                    style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
+                  >
+                    <code
+                      class="language-bash"
+                      style="white-space: pre;"
+                    >
+                      <span>
+                        [![null](https://img.shields.io/endpoint?url=http://localhost:3000/badge/repository/repoTest)](http://localhost:3000/packages/search?repo=repoTest)
+                      </span>
+                    </code>
+                  </pre>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="overflow-hidden _alertWrapper_1aa3f6"
+                data-testid="alertWrapper"
+              />
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3 undefined"
+          >
+            <button
+              aria-label="Close modal"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <svg
+                  class="me-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                <div>
+                  Close
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`Badge Modal - repositories section creates snapshot 1`] = `
 <DocumentFragment>

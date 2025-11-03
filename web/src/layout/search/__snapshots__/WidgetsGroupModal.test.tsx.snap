@@ -1,4 +1,839 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`WidgetsGroupModal > creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop _activeBackdrop_2adcc6"
+      data-testid="modalBackdrop"
+    />
+    <div
+      aria-modal="true"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable fs-6"
+      >
+        <div
+          class="modal-content border border-3 mx-auto _content_2adcc6"
+        >
+          <div
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
+          >
+            <div
+              class="h3 m-2 flex-grow-1 undefined"
+            >
+              Widgets group
+            </div>
+            <button
+              aria-label="Close"
+              class="btn-close"
+              type="button"
+            />
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="w-100 position-relative"
+            >
+              <label
+                class="form-label fw-bold _label_a9b46a"
+                for="theme"
+              >
+                Theme
+              </label>
+              <div
+                class="d-flex flex-row mb-3"
+              >
+                <div
+                  class="form-check me-4"
+                >
+                  <input
+                    checked=""
+                    class="form-check-input"
+                    id="light"
+                    name="theme"
+                    required=""
+                    type="radio"
+                    value="light"
+                  />
+                  <label
+                    class="form-label text-capitalize form-check-label"
+                    for="light"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <svg
+                        fill="none"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="12"
+                          cy="12"
+                          r="5"
+                        />
+                        <line
+                          x1="12"
+                          x2="12"
+                          y1="1"
+                          y2="3"
+                        />
+                        <line
+                          x1="12"
+                          x2="12"
+                          y1="21"
+                          y2="23"
+                        />
+                        <line
+                          x1="4.22"
+                          x2="5.64"
+                          y1="4.22"
+                          y2="5.64"
+                        />
+                        <line
+                          x1="18.36"
+                          x2="19.78"
+                          y1="18.36"
+                          y2="19.78"
+                        />
+                        <line
+                          x1="1"
+                          x2="3"
+                          y1="12"
+                          y2="12"
+                        />
+                        <line
+                          x1="21"
+                          x2="23"
+                          y1="12"
+                          y2="12"
+                        />
+                        <line
+                          x1="4.22"
+                          x2="5.64"
+                          y1="19.78"
+                          y2="18.36"
+                        />
+                        <line
+                          x1="18.36"
+                          x2="19.78"
+                          y1="5.64"
+                          y2="4.22"
+                        />
+                      </svg>
+                      <span
+                        class="ms-1"
+                      >
+                        light
+                      </span>
+                    </div>
+                  </label>
+                </div>
+                <div
+                  class="form-check me-4"
+                >
+                  <input
+                    class="form-check-input"
+                    id="dark"
+                    name="theme"
+                    required=""
+                    type="radio"
+                    value="dark"
+                  />
+                  <label
+                    class="form-label text-capitalize form-check-label"
+                    for="dark"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <svg
+                        fill="none"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                        />
+                      </svg>
+                      <span
+                        class="ms-1"
+                      >
+                        dark
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div
+                class="mt-4 mb-3"
+              >
+                <div
+                  class="form-check form-switch ps-0"
+                >
+                  <label
+                    class="form-check-label fw-bold _label_a9b46a"
+                    for="header"
+                  >
+                    Header
+                  </label>
+                  <input
+                    class="form-check-input position-absolute ms-2"
+                    id="header"
+                    role="switch"
+                    type="checkbox"
+                    value="true"
+                  />
+                </div>
+                <div
+                  class="form-text text-muted mt-2"
+                >
+                  Display Artifact Hub header at the top of the widget.
+                </div>
+              </div>
+              <div
+                class="mt-4 mb-3"
+              >
+                <div
+                  class="form-check form-switch ps-0"
+                >
+                  <label
+                    class="form-check-label fw-bold _label_a9b46a"
+                    for="stars"
+                  >
+                    Stars
+                  </label>
+                  <input
+                    checked=""
+                    class="form-check-input position-absolute ms-2"
+                    id="stars"
+                    role="switch"
+                    type="checkbox"
+                    value="true"
+                  />
+                </div>
+                <div
+                  class="form-text text-muted mt-2"
+                >
+                  Display number of stars given to the package.
+                </div>
+              </div>
+              <div
+                class="d-flex flex-row"
+              >
+                <div>
+                  <label
+                    class="form-label fw-bold _label_a9b46a"
+                    for="groupWrapperWidthOpt"
+                  >
+                    Container width
+                  </label>
+                  <div
+                    class="d-flex flex-row"
+                  >
+                    <div
+                      class="form-check me-4"
+                    >
+                      <input
+                        checked=""
+                        class="form-check-input"
+                        id="responsive"
+                        name="groupWrapperWidthOpt"
+                        required=""
+                        type="radio"
+                        value="responsive"
+                      />
+                      <label
+                        class="text-capitalize form-check-label"
+                        for="responsive"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 16 16"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707m0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707m-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707"
+                              fill-rule="evenodd"
+                            />
+                          </svg>
+                          <span
+                            class="ms-1"
+                          >
+                            responsive
+                          </span>
+                        </div>
+                      </label>
+                    </div>
+                    <div
+                      class="form-check me-4"
+                    >
+                      <input
+                        class="form-check-input"
+                        id="fixed"
+                        name="groupWrapperWidthOpt"
+                        required=""
+                        type="radio"
+                        value="fixed"
+                      />
+                      <label
+                        class="text-capitalize form-check-label"
+                        for="fixed"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 1024 1024"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M180 176h-60c-4.4 0-8 3.6-8 8v656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V184c0-4.4-3.6-8-8-8zm724 0h-60c-4.4 0-8 3.6-8 8v656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V184c0-4.4-3.6-8-8-8zM785.3 504.3L657.7 403.6a7.23 7.23 0 0 0-11.7 5.7V476H378v-62.8c0-6-7-9.4-11.7-5.7L238.7 508.3a7.14 7.14 0 0 0 0 11.3l127.5 100.8c4.7 3.7 11.7.4 11.7-5.7V548h268v62.8c0 6 7 9.4 11.7 5.7l127.5-100.8c3.8-2.9 3.8-8.5.2-11.4z"
+                            />
+                          </svg>
+                          <span
+                            class="ms-1"
+                          >
+                            fixed
+                          </span>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="position-relative _inputWrapper_a9b46a"
+                />
+              </div>
+              <div
+                class="mt-4 mb-3"
+              >
+                <div
+                  class="form-check form-switch ps-0"
+                >
+                  <label
+                    class="form-check-label fw-bold _label_a9b46a"
+                    for="loading"
+                  >
+                    Loading spinner
+                  </label>
+                  <input
+                    checked=""
+                    class="form-check-input position-absolute ms-2"
+                    id="loading"
+                    role="switch"
+                    type="checkbox"
+                    value="true"
+                  />
+                </div>
+                <div
+                  class="form-text text-muted mt-2"
+                >
+                  Display loading spinner while waiting for search results.
+                </div>
+              </div>
+              <div
+                class="mt-4 mb-3"
+              >
+                <div
+                  class="d-flex flex-row align-items-center"
+                >
+                  <label
+                    class="form-label fw-bold mb-0 _label_a9b46a"
+                    for="color"
+                  >
+                    Color
+                  </label>
+                  <div
+                    class="btn btn-sm btn-light border border-1 p-1 ms-2 _colorInputWrapper_a9b46a"
+                  >
+                    <div
+                      class="_colorInput_a9b46a"
+                      style="background-color: rgb(65, 117, 152);"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="form-text text-muted mt-3 mb-2"
+                >
+                  Color used for widgets border, header and loading spinner.
+                </div>
+                <div
+                  class="pb-2 _colorPickerWrapper_a9b46a"
+                >
+                  <div
+                    class="sketch-picker "
+                    style="width: 200px; padding: 10px 10px 0px; box-sizing: initial; background: rgb(255, 255, 255); border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 8px 16px rgba(0,0,0,.15);"
+                  >
+                    <div
+                      style="width: 100%; padding-bottom: 75%; position: relative; overflow: hidden;"
+                    >
+                      <div
+                        style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; background: rgb(0, 152, 255);"
+                      >
+                        <style>
+                          
+          .saturation-white {
+            background: -webkit-linear-gradient(to right, #fff, rgba(255,255,255,0));
+            background: linear-gradient(to right, #fff, rgba(255,255,255,0));
+          }
+          .saturation-black {
+            background: -webkit-linear-gradient(to top, #000, rgba(0,0,0,0));
+            background: linear-gradient(to top, #000, rgba(0,0,0,0));
+          }
+        
+                        </style>
+                        <div
+                          class="saturation-white"
+                          style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px;"
+                        >
+                          <div
+                            class="saturation-black"
+                            style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px;"
+                          />
+                          <div
+                            style="position: absolute; top: 40.3921568627451%; left: 57.236842105263165%; cursor: default;"
+                          >
+                            <div
+                              style="width: 4px; height: 4px; box-shadow: 0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0,0,0,.3),
+            0 0 1px 2px rgba(0,0,0,.4); border-radius: 50%; -webkit-transform: translate(-2px, -2px); transform: translate(-2px, -2px);"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flexbox-fix"
+                      style="display: flex;"
+                    >
+                      <div
+                        style="padding: 4px 0px; flex: 1 1 0%;"
+                      >
+                        <div
+                          style="position: relative; height: 10px; overflow: hidden;"
+                        >
+                          <div
+                            style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px;"
+                          >
+                            <div
+                              class="hue-horizontal"
+                              style="padding: 0px 2px; position: relative; height: 100%;"
+                            >
+                              <style>
+                                
+            .hue-horizontal {
+              background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0
+                33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+              background: -webkit-linear-gradient(to right, #f00 0%, #ff0
+                17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+            }
+
+            .hue-vertical {
+              background: linear-gradient(to top, #f00 0%, #ff0 17%, #0f0 33%,
+                #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+              background: -webkit-linear-gradient(to top, #f00 0%, #ff0 17%,
+                #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+            }
+          
+                              </style>
+                              <div
+                                style="position: absolute; left: 56.70498084291187%;"
+                              >
+                                <div
+                                  style="margin-top: 1px; width: 4px; border-radius: 1px; height: 8px; box-shadow: 0 0 2px rgba(0, 0, 0, .6); background: rgb(255, 255, 255); -webkit-transform: translateX(-2px); transform: translateX(-2px);"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          style="position: relative; height: 10px; margin-top: 4px; overflow: hidden; display: none;"
+                        >
+                          <div
+                            style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px;"
+                          >
+                            <div
+                              style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; overflow: hidden;"
+                            >
+                              <div
+                                style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; background: url("null");"
+                              />
+                            </div>
+                            <div
+                              style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; background: linear-gradient(to right, rgba(65, 117, 152, 0) 0%, rgb(65, 117, 152) 100%);"
+                            />
+                            <div
+                              style="position: relative; height: 100%; margin: 0px 3px;"
+                            >
+                              <div
+                                style="position: absolute; left: 100%;"
+                              >
+                                <div
+                                  style="width: 4px; border-radius: 1px; height: 8px; box-shadow: 0 0 2px rgba(0, 0, 0, .6); background: rgb(255, 255, 255); margin-top: 1px; -webkit-transform: translateX(-2px); transform: translateX(-2px);"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        style="width: 24px; height: 10px; position: relative; margin-top: 4px; margin-left: 4px; border-radius: 3px;"
+                      >
+                        <div
+                          style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; background: url("null");"
+                        />
+                        <div
+                          style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; border-radius: 2px; background: rgb(65, 117, 152); box-shadow: inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25);"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="flexbox-fix"
+                      style="display: flex; padding-top: 4px;"
+                    >
+                      <div
+                        style="flex: 2 1 0%;"
+                      >
+                        <div
+                          style="position: relative;"
+                        >
+                          <input
+                            id="rc-editable-input-1"
+                            spellcheck="false"
+                            style="width: 80%; padding: 4px 10% 3px; border: medium; box-shadow: inset 0 0 0 1px #ccc; font-size: 11px;"
+                            value="417598"
+                          />
+                          <label
+                            for="rc-editable-input-1"
+                            style="display: block; text-align: center; font-size: 11px; color: rgb(34, 34, 34); padding-top: 3px; padding-bottom: 4px; text-transform: capitalize;"
+                          >
+                            hex
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        style="flex: 1 1 0%; padding-left: 6px;"
+                      >
+                        <div
+                          style="position: relative;"
+                        >
+                          <input
+                            id="rc-editable-input-2"
+                            spellcheck="false"
+                            style="width: 80%; padding: 4px 10% 3px; border: medium; box-shadow: inset 0 0 0 1px #ccc; font-size: 11px;"
+                            value="65"
+                          />
+                          <label
+                            for="rc-editable-input-2"
+                            style="display: block; text-align: center; font-size: 11px; color: rgb(34, 34, 34); padding-top: 3px; padding-bottom: 4px; text-transform: capitalize; cursor: ew-resize;"
+                          >
+                            r
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        style="flex: 1 1 0%; padding-left: 6px;"
+                      >
+                        <div
+                          style="position: relative;"
+                        >
+                          <input
+                            id="rc-editable-input-3"
+                            spellcheck="false"
+                            style="width: 80%; padding: 4px 10% 3px; border: medium; box-shadow: inset 0 0 0 1px #ccc; font-size: 11px;"
+                            value="117"
+                          />
+                          <label
+                            for="rc-editable-input-3"
+                            style="display: block; text-align: center; font-size: 11px; color: rgb(34, 34, 34); padding-top: 3px; padding-bottom: 4px; text-transform: capitalize; cursor: ew-resize;"
+                          >
+                            g
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        style="flex: 1 1 0%; padding-left: 6px;"
+                      >
+                        <div
+                          style="position: relative;"
+                        >
+                          <input
+                            id="rc-editable-input-4"
+                            spellcheck="false"
+                            style="width: 80%; padding: 4px 10% 3px; border: medium; box-shadow: inset 0 0 0 1px #ccc; font-size: 11px;"
+                            value="152"
+                          />
+                          <label
+                            for="rc-editable-input-4"
+                            style="display: block; text-align: center; font-size: 11px; color: rgb(34, 34, 34); padding-top: 3px; padding-bottom: 4px; text-transform: capitalize; cursor: ew-resize;"
+                          >
+                            b
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        style="flex: 1 1 0%; padding-left: 6px; display: none;"
+                      >
+                        <div
+                          style="position: relative;"
+                        >
+                          <input
+                            id="rc-editable-input-5"
+                            spellcheck="false"
+                            style="width: 80%; padding: 4px 10% 3px; border: medium; box-shadow: inset 0 0 0 1px #ccc; font-size: 11px;"
+                            value="100"
+                          />
+                          <label
+                            for="rc-editable-input-5"
+                            style="display: block; text-align: center; font-size: 11px; color: rgb(34, 34, 34); padding-top: 3px; padding-bottom: 4px; text-transform: capitalize; cursor: ew-resize;"
+                          >
+                            a
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flexbox-fix"
+                      style="margin: 0px -10px; padding: 10px 0px 0px 10px; display: flex; flex-wrap: wrap; position: relative;"
+                    >
+                      <div
+                        style="width: 16px; height: 16px; margin: 0px 10px 10px 0px;"
+                      >
+                        <span>
+                          <div
+                            style="background: rgb(65, 117, 152); height: 100%; width: 100%; cursor: pointer; position: relative; outline: none; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);"
+                            tabindex="0"
+                            title="#417598"
+                          />
+                        </span>
+                      </div>
+                      <div
+                        style="width: 16px; height: 16px; margin: 0px 10px 10px 0px;"
+                      >
+                        <span>
+                          <div
+                            style="background: rgb(239, 107, 58); height: 100%; width: 100%; cursor: pointer; position: relative; outline: none; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);"
+                            tabindex="0"
+                            title="#ef6b3a"
+                          />
+                        </span>
+                      </div>
+                      <div
+                        style="width: 16px; height: 16px; margin: 0px 10px 10px 0px;"
+                      >
+                        <span>
+                          <div
+                            style="background: rgb(166, 202, 53); height: 100%; width: 100%; cursor: pointer; position: relative; outline: none; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);"
+                            tabindex="0"
+                            title="#a6ca35"
+                          />
+                        </span>
+                      </div>
+                      <div
+                        style="width: 16px; height: 16px; margin: 0px 10px 10px 0px;"
+                      >
+                        <span>
+                          <div
+                            style="background: rgb(238, 149, 149); height: 100%; width: 100%; cursor: pointer; position: relative; outline: none; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);"
+                            tabindex="0"
+                            title="#ee9595"
+                          />
+                        </span>
+                      </div>
+                      <div
+                        style="width: 16px; height: 16px; margin: 0px 10px 10px 0px;"
+                      >
+                        <span>
+                          <div
+                            style="background: rgb(47, 79, 149); height: 100%; width: 100%; cursor: pointer; position: relative; outline: none; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);"
+                            tabindex="0"
+                            title="#2f4f95"
+                          />
+                        </span>
+                      </div>
+                      <div
+                        style="width: 16px; height: 16px; margin: 0px 10px 10px 0px;"
+                      >
+                        <span>
+                          <div
+                            style="background: rgb(206, 32, 41); height: 100%; width: 100%; cursor: pointer; position: relative; outline: none; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);"
+                            tabindex="0"
+                            title="#ce2029"
+                          />
+                        </span>
+                      </div>
+                      <div
+                        style="width: 16px; height: 16px; margin: 0px 10px 10px 0px;"
+                      >
+                        <span>
+                          <div
+                            style="background: rgb(193, 125, 0); height: 100%; width: 100%; cursor: pointer; position: relative; outline: none; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);"
+                            tabindex="0"
+                            title="#c17d00"
+                          />
+                        </span>
+                      </div>
+                      <div
+                        style="width: 16px; height: 16px; margin: 0px 10px 10px 0px;"
+                      >
+                        <span>
+                          <div
+                            style="background: rgb(114, 106, 149); height: 100%; width: 100%; cursor: pointer; position: relative; outline: none; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);"
+                            tabindex="0"
+                            title="#726a95"
+                          />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="mt-3 mb-2"
+              >
+                <label
+                  class="form-label fw-bold _label_a9b46a"
+                >
+                  Code
+                </label>
+                <div
+                  class="flex-grow-1 me-3 user-select-none undefined"
+                  data-testid="block-content"
+                >
+                  <pre
+                    style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
+                  >
+                    <code
+                      class="language-text"
+                      style="white-space: pre;"
+                    >
+                      <span>
+                        &lt;div class="artifacthub-widget-group" data-url="http://localhost:3000/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="true"  data-loading="true"&gt;&lt;/div&gt;&lt;script async src="http://localhost:3000/artifacthub-widget.js"&gt;&lt;/script&gt;
+                      </span>
+                    </code>
+                  </pre>
+                </div>
+                <div
+                  class="position-relative undefined"
+                >
+                  <button
+                    aria-label="Copy code to clipboard"
+                    class="btn btn-sm btn-outline-secondary px-2 py-1 text-uppercase"
+                    type="button"
+                  >
+                    <div
+                      aria-hidden="true"
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <div
+                        class="me-2"
+                      >
+                        Copy code to clipboard
+                      </div>
+                      <svg
+                        fill="none"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          height="13"
+                          rx="2"
+                          ry="2"
+                          width="13"
+                          x="9"
+                          y="9"
+                        />
+                        <path
+                          d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="overflow-hidden _alertWrapper_1aa3f6"
+                data-testid="alertWrapper"
+              />
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3 undefined"
+          >
+            <button
+              aria-label="Close modal"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <svg
+                  class="me-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                <div>
+                  Close
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`WidgetsGroupModal creates snapshot 1`] = `
 <DocumentFragment>

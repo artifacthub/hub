@@ -1,4 +1,80 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AttachedIconToText > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-flex flex-row flex-wrap undefined"
+    data-testid="attachedIconToTextWrapper"
+    style="font-size: inherit; line-height: 21px;"
+  >
+    <div
+      class="d-inline"
+    >
+      a
+    </div>
+    <div
+      class="d-inline"
+    >
+      b
+    </div>
+    <div
+      class="d-inline"
+    >
+      c
+    </div>
+    <div
+      class="d-inline"
+    >
+      d
+    </div>
+    <div
+      class="d-inline"
+    >
+      e
+    </div>
+    <div
+      class="d-inline"
+    >
+      f
+    </div>
+    <div
+      class="d-inline"
+    >
+      g
+    </div>
+    <div
+      class="d-inline"
+    >
+      h
+    </div>
+    <div
+      class="d-inline"
+    >
+      i
+    </div>
+    <div
+      class="d-inline"
+    >
+      j
+    </div>
+    <div
+      class="d-inline"
+    >
+      k
+    </div>
+    <div
+      class="d-inline"
+    >
+      l
+    </div>
+    <div
+      class="d-inline-block"
+    >
+      icon
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`AttachedIconToText creates snapshot 1`] = `
 <DocumentFragment>

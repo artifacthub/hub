@@ -1,4 +1,613 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CompareTemplatesList > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="h-100 d-flex flex-column overflow-auto pe-2"
+  >
+    <div
+      class="position-relative w-100"
+    >
+      <div
+        class="mb-3 input-group-sm"
+      >
+        <input
+          class="flex-grow-1 form-control ps-3 pe-4 _input_393876"
+          name="CompareChartTemplateInput"
+          placeholder="Search by template or resource kind"
+          spellcheck="false"
+          type="text"
+          value=""
+        />
+        <svg
+          class="text-muted position-absolute _searchIcon_393876"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div>
+      <button
+        aria-label="Show template configmap-authscripts.yaml"
+        aria-pressed="true"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876 activeTemplate _active_393876"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate _templateName_393876"
+            >
+              configmap-authscripts.yaml
+            </div>
+            <div
+              class="ps-2 ms-auto"
+            >
+              <span
+                class="text-success"
+                data-testid="tmpl-added-icon"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 448 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM200 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate border border-1 fw-bold _label_ed385e"
+            >
+              ConfigMap
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        aria-label="Show template configmap-sshconfig.yaml"
+        aria-pressed="false"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate _templateName_393876"
+            >
+              configmap-sshconfig.yaml
+            </div>
+            <div
+              class="ps-2 ms-auto"
+            >
+              <span
+                class="text-success"
+                data-testid="tmpl-added-icon"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 448 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM200 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate border border-1 fw-bold _label_ed385e"
+            >
+              ConfigMap
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        aria-label="Show template configmap.yaml"
+        aria-pressed="false"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate _templateName_393876"
+            >
+              configmap.yaml
+            </div>
+            <div
+              class="ps-2 ms-auto"
+            >
+              <span
+                class="_modifiedIcon_393876"
+                data-testid="tmpl-modified-icon"
+              >
+                <svg
+                  fill="none"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"
+                  />
+                  <path
+                    d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate border border-1 fw-bold _label_ed385e"
+            >
+              ConfigMap
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        aria-label="Show template deployment.yaml"
+        aria-pressed="false"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate _templateName_393876"
+            >
+              deployment.yaml
+            </div>
+            <div
+              class="ps-2 ms-auto"
+            >
+              <span
+                class="_modifiedIcon_393876"
+                data-testid="tmpl-modified-icon"
+              >
+                <svg
+                  fill="none"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"
+                  />
+                  <path
+                    d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate border border-1 fw-bold _label_ed385e"
+            >
+              Deployment
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        aria-label="Show template metrics-service.yaml"
+        aria-pressed="false"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate _templateName_393876"
+            >
+              metrics-service.yaml
+            </div>
+            <div
+              class="ps-2 ms-auto"
+            >
+              <span
+                class="text-success"
+                data-testid="tmpl-added-icon"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 448 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM200 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate border border-1 fw-bold _label_ed385e"
+            >
+              Service
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        aria-label="Show template secret.yaml"
+        aria-pressed="false"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate _templateName_393876"
+            >
+              secret.yaml
+            </div>
+            <div
+              class="ps-2 ms-auto"
+            >
+              <span
+                class="text-success"
+                data-testid="tmpl-added-icon"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 448 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM200 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate border border-1 fw-bold _label_ed385e"
+            >
+              Secret
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        aria-label="Show template servicemonitor.yaml"
+        aria-pressed="false"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate _templateName_393876"
+            >
+              servicemonitor.yaml
+            </div>
+            <div
+              class="ps-2 ms-auto"
+            >
+              <span
+                class="text-success"
+                data-testid="tmpl-added-icon"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 448 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM200 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate border border-1 fw-bold _label_ed385e"
+            >
+              ServiceMonitor
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div>
+      <button
+        aria-label="Show template sample.yaml"
+        aria-pressed="false"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
+      >
+        <div
+          class="d-flex flex-column"
+        >
+          <div
+            class="d-flex flex-row align-items-baseline mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Template:
+              </small>
+            </div>
+            <div
+              class="text-truncate _templateName_393876"
+            >
+              sample.yaml
+            </div>
+            <div
+              class="ps-2 ms-auto"
+            >
+              <div
+                class="text-danger"
+                data-testid="tmpl-deleted-icon"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 448 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM152 232l144 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-144 0c-13.3 0-24-10.7-24-24s10.7-24 24-24z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row mb-1"
+          >
+            <div
+              class="_legend_393876"
+            >
+              <small
+                class="text-muted text-uppercase"
+              >
+                Resource:
+              </small>
+            </div>
+            <span
+              class="text-truncate border border-1 fw-bold _label_ed385e"
+            >
+              Sample
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`CompareTemplatesList creates snapshot 1`] = `
 <DocumentFragment>

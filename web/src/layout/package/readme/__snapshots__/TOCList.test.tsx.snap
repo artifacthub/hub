@@ -1,4 +1,129 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TOCList > creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div>
+      <div
+        class="_dropdownItem_98975a dropdownItem"
+      >
+        <a
+          aria-label="Go to Title 1"
+          aria-selected="false"
+          class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start _btn_98975a _level0_98975a"
+          href="/#title-1"
+          role="option"
+          tabindex="-1"
+        >
+          Title 1
+        </a>
+      </div>
+      <div>
+        <div>
+          <div
+            class="_dropdownItem_98975a dropdownItem"
+          >
+            <a
+              aria-label="Go to Subtitle 1a"
+              aria-selected="false"
+              class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start _btn_98975a _level1_98975a"
+              href="/#subtitle-1a"
+              role="option"
+              tabindex="-1"
+            >
+              Subtitle 1a
+            </a>
+          </div>
+          <div>
+            <div>
+              <div
+                class="_dropdownItem_98975a dropdownItem"
+              >
+                <a
+                  aria-label="Go to Opt 1"
+                  aria-selected="false"
+                  class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start _btn_98975a _level2_98975a"
+                  href="/#opt-1"
+                  role="option"
+                  tabindex="-1"
+                >
+                  Opt 1
+                </a>
+              </div>
+            </div>
+            <div>
+              <div
+                class="_dropdownItem_98975a dropdownItem"
+              >
+                <a
+                  aria-label="Go to Opt 2"
+                  aria-selected="false"
+                  class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start _btn_98975a _level2_98975a"
+                  href="/#opt-2"
+                  role="option"
+                  tabindex="-1"
+                >
+                  Opt 2
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="_dropdownItem_98975a dropdownItem"
+          >
+            <a
+              aria-label="Go to Subtitle 1b"
+              aria-selected="false"
+              class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start _btn_98975a _level1_98975a"
+              href="/#subtitle-1b"
+              role="option"
+              tabindex="-1"
+            >
+              Subtitle 1b
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        class="_dropdownItem_98975a dropdownItem"
+      >
+        <a
+          aria-label="Go to Title 2"
+          aria-selected="false"
+          class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start _btn_98975a _level0_98975a"
+          href="/#title-2"
+          role="option"
+          tabindex="-1"
+        >
+          Title 2
+        </a>
+      </div>
+      <div>
+        <div>
+          <div
+            class="_dropdownItem_98975a dropdownItem"
+          >
+            <a
+              aria-label="Go to Subtitle 2"
+              aria-selected="false"
+              class="btn btn-link d-inline-block w-100 text-decoration-none ms-0 text-muted text-start _btn_98975a _level1_98975a"
+              href="/#subtitle-2"
+              role="option"
+              tabindex="-1"
+            >
+              Subtitle 2
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`TOCList creates snapshot 1`] = `
 <DocumentFragment>

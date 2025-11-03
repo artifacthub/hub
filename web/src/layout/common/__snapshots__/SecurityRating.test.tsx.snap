@@ -1,4 +1,54 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SecurityRating > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="position-relative undefined"
+  >
+    <div
+      data-testid="elementWithTooltip"
+    >
+      <div
+        class="fw-bold undefined"
+      >
+        <div
+          class="d-flex flex-row align-items-center overflow-hidden _labelWrapper_bb12c5 _custom_bb12c5"
+        >
+          <div
+            class="text-center border border-1 border-end-0 position-relative labelIconWrapper _iconWrapper_bb12c5"
+            data-testid="label-wrapper"
+            style="background-color: rgb(150, 0, 3);"
+          >
+            <span
+              class=""
+            >
+              <span
+                class="position-relative _ratingLetter_a64850"
+              >
+                F
+              </span>
+            </span>
+          </div>
+          <div
+            class="text-nowrap border border-1 fw-bold _labelText_bb12c5"
+          >
+            <span
+              class="d-none d-sm-inline"
+            >
+              Images Security Rating
+            </span>
+            <span
+              class="d-inline d-sm-none"
+            >
+              Security Rating
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`SecurityRating creates snapshot 1`] = `
 <DocumentFragment>

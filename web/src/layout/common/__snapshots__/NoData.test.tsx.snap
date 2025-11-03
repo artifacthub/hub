@@ -1,4 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`NoData > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="alert alert-primary ms-auto me-auto my-5 text-center p-4 p-sm-5 border border-1 _wrapper_5dbc1b undefined"
+    role="alert"
+  >
+    <div
+      class="h4"
+    >
+      no data
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`NoData creates snapshot 1`] = `
 <DocumentFragment>

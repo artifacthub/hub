@@ -1,4 +1,65 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`License > creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <span
+      class="visually-hidden"
+    >
+      MIT
+    </span>
+    <a
+      aria-hidden="true"
+      aria-label="Open MIT documentation"
+      class="_link_f0e789 undefined"
+      href="https://choosealicense.com/licenses/mit/"
+      rel="noopener noreferrer"
+      role="button"
+      tabindex="-1"
+      target="_blank"
+    >
+      <div
+        class="d-flex align-items-center mw-100 text-truncate"
+      >
+        <div
+          class="mw-100 text-truncate undefined"
+        >
+          MIT
+        </div>
+        <span
+          class="_smallIcon_a3ecd8 _alignedSmallIcon_a3ecd8"
+        >
+          <svg
+            class="ms-1"
+            fill="none"
+            height="1em"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+            />
+            <polyline
+              points="15 3 21 3 21 9"
+            />
+            <line
+              x1="10"
+              x2="21"
+              y1="14"
+              y2="3"
+            />
+          </svg>
+        </span>
+      </div>
+    </a>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`License creates snapshot 1`] = `
 <DocumentFragment>

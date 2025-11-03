@@ -1,4 +1,187 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SummaryTable > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="w-100 my-4 _tableWrapper_7db815"
+  >
+    <table
+      class="table table-bordered table-md mb-0 _table_7db815"
+    >
+      <thead>
+        <tr
+          class="_tableTitle_7db815"
+        >
+          <th
+            class="w-auto"
+            scope="col"
+          >
+            Image
+          </th>
+          <th
+            class="text-center"
+            scope="col"
+          >
+            Rating
+          </th>
+          <th
+            class="text-center"
+            scope="col"
+          >
+            Type
+          </th>
+          <th
+            class="col text-center text-capitalize"
+          >
+            critical
+          </th>
+          <th
+            class="col text-center text-capitalize"
+          >
+            high
+          </th>
+          <th
+            class="col text-center text-capitalize"
+          >
+            medium
+          </th>
+          <th
+            class="col text-center text-capitalize"
+          >
+            low
+          </th>
+          <th
+            class="col text-center text-capitalize"
+          >
+            unknown
+          </th>
+          <th
+            class="text-center"
+            scope="col"
+          >
+            Total
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td
+            class="align-middle"
+            rowspan="2"
+          >
+            <div
+              class="d-table w-100 _imageNameWrapper_7db815"
+            >
+              <div
+                class="text-truncate"
+              >
+                rook/ceph:v1.1.1
+              </div>
+            </div>
+          </td>
+          <td
+            class="text-center align-middle"
+            rowspan="2"
+          >
+            <div
+              class="d-inline-block"
+            >
+              <div
+                class="position-relative _ratingBadge_7db815"
+              >
+                <div
+                  data-testid="elementWithTooltip"
+                >
+                  <small>
+                    <div
+                      class="badge text-light fw-bold _badge_a64850 _ratingBadge_7db815"
+                      style="background-color: rgb(150, 0, 3);"
+                    >
+                      F
+                    </div>
+                  </small>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td
+            class="_narrowCell_7db815"
+          >
+            Fixable
+          </td>
+          <td
+            class="text-center _narrowCell_7db815"
+          >
+            0
+          </td>
+          <td
+            class="text-center _narrowCell_7db815"
+          >
+            0
+          </td>
+          <td
+            class="text-center _narrowCell_7db815"
+          >
+            0
+          </td>
+          <td
+            class="text-center _narrowCell_7db815"
+          >
+            0
+          </td>
+          <td
+            class="text-center _narrowCell_7db815"
+          >
+            0
+          </td>
+          <td
+            class="text-center fw-bold _narrowCell_7db815"
+          >
+            0
+          </td>
+        </tr>
+        <tr>
+          <td
+            class="_narrowCell_7db815"
+          >
+            All
+          </td>
+          <td
+            class="text-center _narrowCell_7db815"
+          >
+            4
+          </td>
+          <td
+            class="text-center _narrowCell_7db815"
+          >
+            22
+          </td>
+          <td
+            class="text-center _narrowCell_7db815"
+          >
+            461
+          </td>
+          <td
+            class="text-center _narrowCell_7db815"
+          >
+            455
+          </td>
+          <td
+            class="text-center _narrowCell_7db815"
+          >
+            0
+          </td>
+          <td
+            class="text-center fw-bold _narrowCell_7db815"
+          >
+            942
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`SummaryTable creates snapshot 1`] = `
 <DocumentFragment>

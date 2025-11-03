@@ -1,4 +1,281 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SubscriptionModal > creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop _activeBackdrop_2adcc6"
+      data-testid="modalBackdrop"
+    />
+    <div
+      aria-modal="true"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg _modal_2eb1f7"
+      >
+        <div
+          class="modal-content border border-3 mx-auto _content_2adcc6"
+        >
+          <div
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
+          >
+            <div
+              class="h3 m-2 flex-grow-1 _title_2eb1f7"
+            >
+              Add subscription
+            </div>
+            <button
+              aria-label="Close"
+              class="btn-close"
+              type="button"
+            />
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="w-100 position-relative"
+            >
+              <label
+                class="form-label fw-bold _label_2eb1f7"
+                for="kind"
+                id="events-group"
+              >
+                Events
+              </label>
+              <div
+                aria-labelledby="events-group"
+                class="pb-2"
+                role="group"
+              >
+                <div
+                  class="mb-2"
+                >
+                  <div
+                    class="form-check me-sm-2 mb-2 undefined"
+                  >
+                    <input
+                      aria-checked="true"
+                      checked=""
+                      class="form-check-input _input_b7404d"
+                      id="desktop-eventKind-0"
+                      name="eventKind"
+                      tabindex="0"
+                      type="checkbox"
+                      value="0"
+                    />
+                    <label
+                      class="form-check-label _label_b7404d undefined"
+                      data-testid="checkboxLabel"
+                      for="desktop-eventKind-0"
+                    >
+                      <div
+                        class="d-flex align-items-baseline mw-100"
+                      >
+                        <span
+                          class="me-2 position-relative _icon_b7404d"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                            />
+                          </svg>
+                        </span>
+                        <span
+                          class="d-inline-block text-truncate"
+                        >
+                          New releases
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <div
+                  class="mb-2"
+                >
+                  <div
+                    class="form-check me-sm-2 mb-2 undefined"
+                  >
+                    <input
+                      aria-checked="false"
+                      class="form-check-input _input_b7404d"
+                      id="desktop-eventKind-1"
+                      name="eventKind"
+                      tabindex="0"
+                      type="checkbox"
+                      value="1"
+                    />
+                    <label
+                      class="form-check-label _label_b7404d undefined"
+                      data-testid="checkboxLabel"
+                      for="desktop-eventKind-1"
+                    >
+                      <div
+                        class="d-flex align-items-baseline mw-100"
+                      >
+                        <span
+                          class="me-2 position-relative _icon_b7404d"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                            />
+                          </svg>
+                        </span>
+                        <span
+                          class="d-inline-block text-truncate"
+                        >
+                          Security alerts
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="d-flex flex-column mb-3"
+              >
+                <label
+                  class="form-label fw-bold _label_2eb1f7"
+                  for="description"
+                  id="subscriptions-pkg-list"
+                >
+                  Package
+                </label>
+                <small
+                  class="mb-2"
+                >
+                  Select the package you'd like to subscribe to:
+                </small>
+                <div
+                  class="mt-2 _searchWrapper_2eb1f7"
+                >
+                  <div
+                    class="position-relative"
+                  >
+                    <div
+                      class="d-flex flex-row"
+                    >
+                      <div
+                        class="flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative lh-base bg-white searchBar _inputWrapper_1ce6a7"
+                      >
+                        <div
+                          class="d-flex align-items-center _iconWrapper_1ce6a7"
+                          data-testid="searchPkgIcon"
+                        >
+                          <svg
+                            fill="none"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <circle
+                              cx="11"
+                              cy="11"
+                              r="8"
+                            />
+                            <line
+                              x1="21"
+                              x2="16.65"
+                              y1="21"
+                              y2="16.65"
+                            />
+                          </svg>
+                        </div>
+                        <input
+                          aria-label="Search packages"
+                          autocomplete="new-input"
+                          class="flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent _input_1ce6a7"
+                          name="searchInput"
+                          spellcheck="false"
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="overflow-hidden _alertWrapper_1aa3f6"
+                data-testid="alertWrapper"
+              />
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3 undefined"
+          >
+            <button
+              aria-label="Add subscription"
+              class="btn btn-sm btn-outline-secondary"
+              disabled=""
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center text-uppercase"
+              >
+                <svg
+                  class="me-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                  />
+                </svg>
+                <div>
+                  Add
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`SubscriptionModal creates snapshot 1`] = `
 <DocumentFragment>

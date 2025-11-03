@@ -1,4 +1,533 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ContainerAlternativeLocations > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mt-2 mb-1 undefined"
+    data-testid="smallTitle"
+  >
+    <small
+      class="card-title text-muted text-uppercase"
+    >
+      <span
+        aria-level="5"
+        role="heading"
+      >
+        Alternative Locations
+      </span>
+    </small>
+  </div>
+  <div
+    class="mb-3"
+    role="list"
+  >
+    <div
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-center mw-100"
+      >
+        <img
+          alt="Registry icon"
+          class="me-2 _icon_301b6d registryIcon"
+          src="/static/media/registries/github.svg"
+        />
+        <div
+          class="text-truncate text-break _url_301b6d"
+        >
+          GitHub Packages CR
+        </div>
+        <div
+          class="position-relative undefined"
+        >
+          <button
+            aria-label="Copy registry url to clipboard"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
+            type="button"
+          >
+            <div
+              aria-hidden="true"
+              class="d-flex flex-row align-items-center"
+            >
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="13"
+                  rx="2"
+                  ry="2"
+                  width="13"
+                  x="9"
+                  y="9"
+                />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-center mw-100"
+      >
+        <img
+          alt="Registry icon"
+          class="me-2 _icon_301b6d registryIcon"
+          src="/static/media/registries/google.svg"
+        />
+        <div
+          class="text-truncate text-break _url_301b6d"
+        >
+          Google CR
+        </div>
+        <div
+          class="position-relative undefined"
+        >
+          <button
+            aria-label="Copy registry url to clipboard"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
+            type="button"
+          >
+            <div
+              aria-hidden="true"
+              class="d-flex flex-row align-items-center"
+            >
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="13"
+                  rx="2"
+                  ry="2"
+                  width="13"
+                  x="9"
+                  y="9"
+                />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-center mw-100"
+      >
+        <img
+          alt="Registry icon"
+          class="me-2 _icon_301b6d registryIcon"
+          src="/static/media/registries/docker.svg"
+        />
+        <div
+          class="text-truncate text-break _url_301b6d"
+        >
+          Docker Hub
+        </div>
+        <div
+          class="position-relative undefined"
+        >
+          <button
+            aria-label="Copy registry url to clipboard"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
+            type="button"
+          >
+            <div
+              aria-hidden="true"
+              class="d-flex flex-row align-items-center"
+            >
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="13"
+                  rx="2"
+                  ry="2"
+                  width="13"
+                  x="9"
+                  y="9"
+                />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-center mw-100"
+      >
+        <img
+          alt="Registry icon"
+          class="me-2 _icon_301b6d registryIcon"
+          src="/static/media/registries/amazon.svg"
+        />
+        <div
+          class="text-truncate text-break _url_301b6d"
+        >
+          Amazon ECR
+        </div>
+        <div
+          class="position-relative undefined"
+        >
+          <button
+            aria-label="Copy registry url to clipboard"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
+            type="button"
+          >
+            <div
+              aria-hidden="true"
+              class="d-flex flex-row align-items-center"
+            >
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="13"
+                  rx="2"
+                  ry="2"
+                  width="13"
+                  x="9"
+                  y="9"
+                />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-center mw-100"
+      >
+        <img
+          alt="Registry icon"
+          class="me-2 _icon_301b6d registryIcon"
+          src="/static/media/registries/quay.svg"
+        />
+        <div
+          class="text-truncate text-break _url_301b6d"
+        >
+          Quay
+        </div>
+        <div
+          class="position-relative undefined"
+        >
+          <button
+            aria-label="Copy registry url to clipboard"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
+            type="button"
+          >
+            <div
+              aria-hidden="true"
+              class="d-flex flex-row align-items-center"
+            >
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="13"
+                  rx="2"
+                  ry="2"
+                  width="13"
+                  x="9"
+                  y="9"
+                />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-center mw-100"
+      >
+        <img
+          alt="Registry icon"
+          class="me-2 _icon_301b6d registryIcon"
+          src="/static/media/registries/azure.svg"
+        />
+        <div
+          class="text-truncate text-break _url_301b6d"
+        >
+          Azure CR
+        </div>
+        <div
+          class="position-relative undefined"
+        >
+          <button
+            aria-label="Copy registry url to clipboard"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
+            type="button"
+          >
+            <div
+              aria-hidden="true"
+              class="d-flex flex-row align-items-center"
+            >
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="13"
+                  rx="2"
+                  ry="2"
+                  width="13"
+                  x="9"
+                  y="9"
+                />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-center mw-100"
+      >
+        <img
+          alt="Registry icon"
+          class="me-2 _icon_301b6d registryIcon"
+          src="/static/media/registries/bundlebar.svg"
+        />
+        <div
+          class="text-truncate text-break _url_301b6d"
+        >
+          Bundle Bar
+        </div>
+        <div
+          class="position-relative undefined"
+        >
+          <button
+            aria-label="Copy registry url to clipboard"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
+            type="button"
+          >
+            <div
+              aria-hidden="true"
+              class="d-flex flex-row align-items-center"
+            >
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="13"
+                  rx="2"
+                  ry="2"
+                  width="13"
+                  x="9"
+                  y="9"
+                />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-center mw-100"
+      >
+        <img
+          alt="Registry icon"
+          class="me-2 _icon_301b6d registryIcon"
+          src="/static/media/registries/gitlab.svg"
+        />
+        <div
+          class="text-truncate text-break _url_301b6d"
+        >
+          GitLab Registry
+        </div>
+        <div
+          class="position-relative undefined"
+        >
+          <button
+            aria-label="Copy registry url to clipboard"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
+            type="button"
+          >
+            <div
+              aria-hidden="true"
+              class="d-flex flex-row align-items-center"
+            >
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="13"
+                  rx="2"
+                  ry="2"
+                  width="13"
+                  x="9"
+                  y="9"
+                />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      role="listitem"
+    >
+      <div
+        class="d-flex flex-row align-items-center mw-100"
+      >
+        <img
+          alt="Registry icon"
+          class="me-2 _icon_301b6d registryIcon"
+          src="/static/media/registries/unknown.svg"
+        />
+        <div
+          class="text-truncate text-break _url_301b6d"
+        >
+          localhost:5000
+        </div>
+        <div
+          class="position-relative undefined"
+        >
+          <button
+            aria-label="Copy registry url to clipboard"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
+            type="button"
+          >
+            <div
+              aria-hidden="true"
+              class="d-flex flex-row align-items-center"
+            >
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="13"
+                  rx="2"
+                  ry="2"
+                  width="13"
+                  x="9"
+                  y="9"
+                />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`ContainerAlternativeLocations creates snapshot 1`] = `
 <DocumentFragment>

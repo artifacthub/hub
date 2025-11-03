@@ -1,4 +1,27 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Loading > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="position-absolute top-0 bottom-0 start-0 end-0 p-5 _wrapper_b8d820"
+  >
+    <div
+      class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+    >
+      <div
+        class="_wave_b8d820"
+        role="status"
+      >
+        <span
+          class="visually-hidden"
+        >
+          Loading...
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`Loading creates snapshot 1`] = `
 <DocumentFragment>

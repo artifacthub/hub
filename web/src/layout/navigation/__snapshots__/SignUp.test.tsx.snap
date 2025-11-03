@@ -1,4 +1,211 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SignUp > creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop _activeBackdrop_2adcc6"
+      data-testid="modalBackdrop"
+    />
+    <div
+      aria-modal="true"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div
+          class="modal-content border border-3 mx-auto _content_2adcc6 _modal_bf51f5"
+        >
+          <div
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
+          >
+            <div
+              class="h3 m-2 flex-grow-1 text-truncate _title_bf51f5"
+            >
+              Sign up
+            </div>
+            <button
+              aria-label="Close"
+              class="btn-close"
+              type="button"
+            />
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="my-auto"
+            >
+              <div
+                class="h5 mb-5 text-center"
+              >
+                Create your account using your email
+              </div>
+              <div
+                class="d-grid"
+              >
+                <button
+                  aria-label="Open sign up form"
+                  class="btn btn-outline-secondary"
+                  type="button"
+                >
+                  <div
+                    class="d-flex align-items-center"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"
+                      />
+                    </svg>
+                    <div
+                      class="flex-grow-1 text-center"
+                    >
+                      Sign up
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div
+                class="my-5 my-4 position-relative text-center _separator_2a244d"
+              >
+                <span
+                  class="p-3 m-auto bg-white"
+                >
+                  or sign in with
+                </span>
+                <div
+                  class="position-absolute top-50 start-0 end-0 _divider_2a244d"
+                />
+              </div>
+              <div>
+                <div
+                  class="d-flex flex-column mb-1"
+                >
+                  <div
+                    class="d-grid gap-4"
+                  >
+                    <button
+                      aria-label="Sign in with GitHub"
+                      class="btn btn-outline-secondary _btn_2a244d"
+                      type="button"
+                    >
+                      <div
+                        class="d-flex align-items-center"
+                      >
+                        <img
+                          alt="GitHub Logo"
+                          class="lh-base _logo_2a244d"
+                          src="/static/media/github-mark.svg"
+                        />
+                        <div
+                          class="flex-grow-1 text-center"
+                        >
+                          GitHub
+                        </div>
+                      </div>
+                    </button>
+                    <button
+                      aria-label="Sign in with Google"
+                      class="btn btn-outline-secondary _btn_2a244d"
+                      type="button"
+                    >
+                      <div
+                        class="d-flex align-items-center"
+                      >
+                        <img
+                          alt="Google Logo"
+                          class="lh-base _logo_2a244d"
+                          src="/static/media/google.svg"
+                        />
+                        <div
+                          class="flex-grow-1 text-center"
+                        >
+                          Google
+                        </div>
+                      </div>
+                    </button>
+                    <button
+                      aria-label="Sign in with OpenID Connect"
+                      class="btn btn-outline-secondary  _btn_2a244d"
+                      type="button"
+                    >
+                      <div
+                        class="d-flex align-items-center"
+                      >
+                        <img
+                          alt="OpenID Logo"
+                          class="lh-base _logo_2a244d"
+                          src="/static/media/openid.svg"
+                        />
+                        <div
+                          class="flex-grow-1 text-center"
+                        >
+                          OpenID Connect
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="overflow-hidden _alertWrapper_1aa3f6"
+                data-testid="alertWrapper"
+              />
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3 undefined"
+          >
+            <button
+              aria-label="Close modal"
+              class="btn btn-sm btn-outline-secondary text-uppercase"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <svg
+                  class="me-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                <div>
+                  Close
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`SignUp creates snapshot 1`] = `
 <DocumentFragment>

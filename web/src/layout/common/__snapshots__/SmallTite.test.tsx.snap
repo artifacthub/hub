@@ -1,4 +1,24 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SmallTitle > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mt-2 mb-1 undefined"
+    data-testid="smallTitle"
+  >
+    <small
+      class="card-title text-muted text-uppercase"
+    >
+      <span
+        aria-level="5"
+        role="heading"
+      >
+        title
+      </span>
+    </small>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`SmallTitle creates snapshot 1`] = `
 <DocumentFragment>

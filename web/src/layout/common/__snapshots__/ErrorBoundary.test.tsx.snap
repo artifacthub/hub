@@ -1,4 +1,38 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ErrorBoundary > creates error snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="alert alert-primary ms-auto me-auto my-5 text-center p-4 p-sm-5 border border-1 _wrapper_5dbc1b undefined"
+    role="alert"
+  >
+    <div
+      class="h4"
+    >
+      This is a sample text
+      <div
+        class="h6 mt-4"
+      >
+        Please 
+        <a
+          aria-label="GitHub issue"
+          class="_link_f0e789 undefined"
+          href="https://github.com/artifacthub/hub/issues/new/choose"
+          rel="noopener noreferrer"
+          role="button"
+          tabindex="-1"
+          target="_blank"
+        >
+          <u>
+            file an issue
+          </u>
+        </a>
+         in GitHub indicating the URL of the package you are experiencing problems with.
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`ErrorBoundary creates error snapshot 1`] = `
 <DocumentFragment>

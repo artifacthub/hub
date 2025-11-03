@@ -1,4 +1,32 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Alert > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="overflow-hidden _alertWrapper_1aa3f6 _isAlertActive_1aa3f6"
+    data-testid="alertWrapper"
+  >
+    <div
+      class="alert alert-danger mt-3 mb-0"
+      role="alert"
+    >
+      <div
+        class="d-flex flex-row align-items-start justify-content-between"
+      >
+        <div>
+          errorMessage
+        </div>
+        <button
+          aria-label="Close alert"
+          class="btn-close ms-3"
+          data-testid="closeAlertBtn"
+          type="button"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`Alert creates snapshot 1`] = `
 <DocumentFragment>

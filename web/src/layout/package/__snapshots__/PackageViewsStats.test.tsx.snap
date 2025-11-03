@@ -1,4 +1,21 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PackageViewsStats > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mb-5 pb-3"
+  >
+    <span>
+      Views over the last 30 days
+    </span>
+    <div
+      class="card _chartWrapper_c90aa1"
+    >
+      <div />
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`PackageViewsStats creates snapshot 1`] = `
 <DocumentFragment>

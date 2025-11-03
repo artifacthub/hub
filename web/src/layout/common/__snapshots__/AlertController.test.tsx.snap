@@ -1,4 +1,22 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AlertController > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    aria-hidden="true"
+    class="position-relative"
+    tabindex="-1"
+  >
+    <div
+      aria-atomic="true"
+      aria-live="assertive"
+      class="alert alert-dismissible position-fixed alert-warning _alert_1799db fade"
+      data-testid="alertController"
+      role="alert"
+    />
+  </div>
+</DocumentFragment>
+`;
 
 exports[`AlertController creates snapshot 1`] = `
 <DocumentFragment>

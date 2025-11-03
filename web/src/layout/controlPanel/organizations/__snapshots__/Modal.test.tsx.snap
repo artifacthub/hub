@@ -1,4 +1,249 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OrganizationModal - organizations section > creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop _activeBackdrop_2adcc6"
+      data-testid="modalBackdrop"
+    />
+    <div
+      aria-modal="true"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div
+          class="modal-content border border-3 mx-auto _content_2adcc6 _modal_13efaa"
+        >
+          <div
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
+          >
+            <div
+              class="h3 m-2 flex-grow-1 _title_13efaa"
+            >
+              Update organization
+            </div>
+            <button
+              aria-label="Close"
+              class="btn-close"
+              type="button"
+            />
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="w-100"
+            >
+              <form
+                autocomplete="on"
+                class="w-100 needs-validation"
+                data-testid="organizationForm"
+                novalidate=""
+              >
+                <div
+                  class=" mb-4 undefined"
+                >
+                  <div
+                    class="d-flex flex-column"
+                  >
+                    <label
+                      class="form-label _label_ad3bee"
+                      for="logo"
+                    >
+                      <span
+                        class="fw-bold"
+                      >
+                        Logo
+                      </span>
+                      <small
+                        class="ms-1 fst-italic"
+                      >
+                        (Click on the image to update)
+                      </small>
+                    </label>
+                    <div
+                      class="position-relative"
+                    >
+                      <button
+                        aria-label="Add image"
+                        class="btn p-0 overflow-hidden position-relative lh-1 fs-2 _btn_ad3bee"
+                        type="button"
+                      >
+                        <img
+                          alt="Logo"
+                          aria-hidden="true"
+                          class="mh-100 mw-100"
+                          src="/image/1234"
+                          srcset="/image/1234@1x 1x, /image/1234@2x 2x, /image/1234@3x 3x, /image/1234@4x 4x"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                  <input
+                    class="d-none"
+                    id="logo"
+                    name="logo"
+                    type="file"
+                  />
+                </div>
+                <div
+                  class="mb-4 position-relative undefined"
+                >
+                  <label
+                    class="form-label fw-bold _label_d02ded"
+                    for="name"
+                  >
+                    <span
+                      class="fw-bold"
+                    >
+                      Name
+                    </span>
+                    <small
+                      class="ms-1 fst-italic"
+                    >
+                      (Required)
+                    </small>
+                  </label>
+                  <input
+                    autocomplete="off"
+                    class="form-control"
+                    data-testid="nameInput"
+                    id="name"
+                    name="name"
+                    pattern="[a-z0-9\\-]+"
+                    required=""
+                    spellcheck="false"
+                    type="text"
+                    value="orgTest"
+                  />
+                  <div
+                    class="invalid-feedback mt-0 _inputFeedback_d02ded"
+                  >
+                    This field is required
+                  </div>
+                </div>
+                <div
+                  class="mb-4 position-relative undefined"
+                >
+                  <label
+                    class="form-label fw-bold _label_d02ded"
+                    for="displayName"
+                  >
+                    <span
+                      class="fw-bold"
+                    >
+                      Display name
+                    </span>
+                  </label>
+                  <input
+                    class="form-control"
+                    data-testid="displayNameInput"
+                    id="displayName"
+                    name="displayName"
+                    spellcheck="false"
+                    type="text"
+                    value="Org test"
+                  />
+                  <div
+                    class="invalid-feedback mt-0 _inputFeedback_d02ded"
+                  />
+                </div>
+                <div
+                  class="mb-4 position-relative undefined"
+                >
+                  <label
+                    class="form-label fw-bold _label_d02ded"
+                    for="homeUrl"
+                  >
+                    <span
+                      class="fw-bold"
+                    >
+                      Home URL
+                    </span>
+                  </label>
+                  <input
+                    class="form-control"
+                    data-testid="homeUrlInput"
+                    id="homeUrl"
+                    name="homeUrl"
+                    spellcheck="false"
+                    type="url"
+                    value="http://test.org"
+                  />
+                  <div
+                    class="invalid-feedback mt-0 _inputFeedback_d02ded"
+                  >
+                    Please enter a valid url
+                  </div>
+                </div>
+                <div
+                  class=""
+                >
+                  <label
+                    class="form-label fw-bold _label_198562"
+                    for="description"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    class="form-control"
+                    data-testid="descriptionTextarea"
+                    id="description"
+                    name="description"
+                  >
+                    Org description
+                  </textarea>
+                </div>
+              </form>
+            </div>
+            <div>
+              <div
+                class="overflow-hidden _alertWrapper_1aa3f6"
+                data-testid="alertWrapper"
+              />
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3 undefined"
+          >
+            <button
+              aria-label="Update organization"
+              class="btn btn-sm btn-outline-secondary"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center text-uppercase"
+              >
+                <svg
+                  class="me-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                  />
+                </svg>
+                <div>
+                  Update
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`OrganizationModal - organizations section creates snapshot 1`] = `
 <DocumentFragment>

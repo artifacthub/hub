@@ -1,14 +1,12 @@
 import 'react-diff-view/style/index.css';
 
 import classnames from 'classnames';
+import { createTwoFilesPatch } from 'diff';
 import isNull from 'lodash/isNull';
 import { useEffect, useState } from 'react';
 import { Decoration, Diff, Hunk, parseDiff } from 'react-diff-view';
 
 import styles from './DiffTemplate.module.css';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const DiffLibrary = require('diff');
 
 interface Props {
   currentVersion: string;
@@ -77,7 +75,7 @@ const DiffTemplate = (props: Props) => {
 
   useEffect(() => {
     const prepareDiff = () => {
-      const newDiff = DiffLibrary.createTwoFilesPatch(
+      const newDiff = createTwoFilesPatch(
         '  ',
         '  ',
         props.compareData,

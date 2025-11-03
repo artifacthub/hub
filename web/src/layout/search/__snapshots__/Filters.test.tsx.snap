@@ -1,4 +1,818 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Filters > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="_filters_fb9d45"
+  >
+    <div
+      class="d-flex flex-row align-items-baseline"
+    >
+      <div
+        class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
+      >
+        <input
+          aria-checked="false"
+          class="form-check-input _input_b7404d"
+          id="desktop-official-official"
+          name="official"
+          tabindex="0"
+          type="checkbox"
+          value="official"
+        />
+        <label
+          class="form-check-label _label_b7404d mw-100 text-muted"
+          data-testid="checkboxLabel"
+          for="desktop-official-official"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              Official
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="d-none d-md-block"
+      >
+        <div
+          class="position-relative position-relative _tooltipIcon_fb9d45"
+        >
+          <div
+            data-testid="elementWithTooltip"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0V0z"
+                fill="none"
+              />
+              <path
+                d="M11 7h2v2h-2V7zm0 4h2v6h-2v-6zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="d-flex flex-row align-items-baseline"
+    >
+      <div
+        class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
+      >
+        <input
+          aria-checked="false"
+          class="form-check-input _input_b7404d"
+          id="desktop-verifiedPublisher-verifiedPublisher"
+          name="verifiedPublisher"
+          tabindex="0"
+          type="checkbox"
+          value="verifiedPublisher"
+        />
+        <label
+          class="form-check-label _label_b7404d mw-100 text-muted"
+          data-testid="checkboxLabel"
+          for="desktop-verifiedPublisher-verifiedPublisher"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              Verified publishers
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="d-none d-md-block"
+      >
+        <div
+          class="position-relative _tooltipIcon_fb9d45"
+        >
+          <div
+            data-testid="elementWithTooltip"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0V0z"
+                fill="none"
+              />
+              <path
+                d="M11 7h2v2h-2V7zm0 4h2v6h-2v-6zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="d-flex flex-row align-items-baseline"
+    >
+      <div
+        class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
+      >
+        <input
+          aria-checked="false"
+          class="form-check-input _input_b7404d"
+          id="desktop-cncf-cncf"
+          name="cncf"
+          tabindex="0"
+          type="checkbox"
+          value="cncf"
+        />
+        <label
+          class="form-check-label _label_b7404d mw-100 text-muted"
+          data-testid="checkboxLabel"
+          for="desktop-cncf-cncf"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              CNCF
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="d-none d-md-block"
+      >
+        <div
+          class="position-relative _tooltipIcon_fb9d45"
+        >
+          <div
+            data-testid="elementWithTooltip"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0V0z"
+                fill="none"
+              />
+              <path
+                d="M11 7h2v2h-2V7zm0 4h2v6h-2v-6zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mt-1 mt-sm-2 pt-1 _facet_fb9d45"
+      role="menuitem"
+    >
+      <div
+        class="mt-2 mb-1 undefined"
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          <span
+            aria-level="5"
+            class="text-dark fw-bold"
+            id="repo-kind-desktop"
+            role="heading"
+          >
+            Kind
+          </span>
+        </small>
+      </div>
+      <div
+        aria-labelledby="repo-kind-desktop"
+        class="mt-3"
+        role="group"
+      >
+        <div
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-kind-0"
+            name="kind"
+            tabindex="0"
+            type="checkbox"
+            value="0"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-kind-0"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                Helm charts
+              </span>
+              <small
+                class="ps-1"
+              >
+                (1520)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-kind-3"
+            name="kind"
+            tabindex="0"
+            type="checkbox"
+            value="3"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-kind-3"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                OLM operators
+              </span>
+              <small
+                class="ps-1"
+              >
+                (152)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-kind-1"
+            name="kind"
+            tabindex="0"
+            type="checkbox"
+            value="1"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-kind-1"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                Falco rules
+              </span>
+              <small
+                class="ps-1"
+              >
+                (21)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-kind-2"
+            name="kind"
+            tabindex="0"
+            type="checkbox"
+            value="2"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-kind-2"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                OPA policies
+              </span>
+              <small
+                class="ps-1"
+              >
+                (1)
+              </small>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mt-1 mt-sm-2 pt-1 _facet_fb9d45"
+      role="menuitem"
+    >
+      <div
+        class="mt-2 mb-1 undefined"
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          <span
+            aria-level="5"
+            class="text-dark fw-bold"
+            id="repo-category-desktop"
+            role="heading"
+          >
+            Category
+          </span>
+        </small>
+      </div>
+      <div
+        aria-labelledby="repo-category-desktop"
+        class="mt-3"
+        role="group"
+      >
+        <div
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-category-2"
+            name="category"
+            tabindex="0"
+            type="checkbox"
+            value="2"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-category-2"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                Database
+              </span>
+              <small
+                class="ps-1"
+              >
+                (32)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-category-3"
+            name="category"
+            tabindex="0"
+            type="checkbox"
+            value="3"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-category-3"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                Integration & delivery
+              </span>
+              <small
+                class="ps-1"
+              >
+                (10)
+              </small>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mt-2 mt-sm-3 pt-1 _facet_fb9d45"
+      role="menuitem"
+    >
+      <div
+        class="mt-2 mb-1 undefined"
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          <span
+            aria-level="5"
+            class="text-dark fw-bold"
+            id="pkg-license-desktop"
+            role="heading"
+          >
+            License
+          </span>
+        </small>
+      </div>
+      <div
+        aria-labelledby="pkg-license-desktop"
+        class="mt-3"
+        role="group"
+      >
+        <div
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-license-Apache-2.0"
+            name="license"
+            tabindex="0"
+            type="checkbox"
+            value="Apache-2.0"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-license-Apache-2.0"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                Apache-2.0
+              </span>
+              <small
+                class="ps-1"
+              >
+                (3)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-license-MIT"
+            name="license"
+            tabindex="0"
+            type="checkbox"
+            value="MIT"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-license-MIT"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                MIT
+              </span>
+              <small
+                class="ps-1"
+              >
+                (1)
+              </small>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mt-2 mt-sm-3 pt-1 _facet_fb9d45"
+      role="menuitem"
+    >
+      <div
+        class="mt-2 mb-1 undefined"
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          <span
+            aria-level="5"
+            class="text-dark fw-bold"
+            id="pkg-capabilities-desktop"
+            role="heading"
+          >
+            Operator capabilities
+          </span>
+        </small>
+      </div>
+      <div
+        aria-labelledby="pkg-capabilities-desktop"
+        class="mt-3"
+        role="group"
+      >
+        <div
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-capabilities-basic install"
+            name="capabilities"
+            tabindex="0"
+            type="checkbox"
+            value="basic install"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-capabilities-basic install"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                basic install
+              </span>
+              <small
+                class="ps-1"
+              >
+                (73)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-capabilities-seamless upgrades"
+            name="capabilities"
+            tabindex="0"
+            type="checkbox"
+            value="seamless upgrades"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-capabilities-seamless upgrades"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                seamless upgrades
+              </span>
+              <small
+                class="ps-1"
+              >
+                (33)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-capabilities-full lifecycle"
+            name="capabilities"
+            tabindex="0"
+            type="checkbox"
+            value="full lifecycle"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-capabilities-full lifecycle"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                full lifecycle
+              </span>
+              <small
+                class="ps-1"
+              >
+                (25)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-capabilities-deep insights"
+            name="capabilities"
+            tabindex="0"
+            type="checkbox"
+            value="deep insights"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-capabilities-deep insights"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                deep insights
+              </span>
+              <small
+                class="ps-1"
+              >
+                (17)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-capabilities-auto pilot"
+            name="capabilities"
+            tabindex="0"
+            type="checkbox"
+            value="auto pilot"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-capabilities-auto pilot"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                auto pilot
+              </span>
+              <small
+                class="ps-1"
+              >
+                (9)
+              </small>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mt-2 mt-sm-3 pt-1 _facet_fb9d45"
+      role="menuitem"
+    >
+      <div
+        class="mt-2 mb-1 undefined"
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          <span
+            aria-level="5"
+            class="text-dark fw-bold"
+            role="heading"
+          >
+            Others
+          </span>
+        </small>
+      </div>
+      <div
+        class="mt-3"
+      >
+        <div
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-operators-operators"
+            name="operators"
+            tabindex="0"
+            type="checkbox"
+            value="operators"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-operators-operators"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                Only operators
+              </span>
+            </div>
+          </label>
+        </div>
+        <div
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
+        >
+          <input
+            aria-checked="false"
+            class="form-check-input _input_b7404d"
+            id="desktop-deprecated-deprecated"
+            name="deprecated"
+            tabindex="0"
+            type="checkbox"
+            value="deprecated"
+          />
+          <label
+            class="form-check-label _label_b7404d mw-100 text-muted"
+            data-testid="checkboxLabel"
+            for="desktop-deprecated-deprecated"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                Include deprecated
+              </span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`Filters creates snapshot 1`] = `
 <DocumentFragment>

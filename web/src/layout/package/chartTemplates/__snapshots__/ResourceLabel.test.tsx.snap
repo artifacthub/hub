@@ -1,4 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ResourceLabel > creates snapshot 1`] = `
+<DocumentFragment>
+  <span
+    class="text-truncate border border-1 fw-bold _label_ed385e"
+  >
+    Scanner
+  </span>
+</DocumentFragment>
+`;
 
 exports[`ResourceLabel creates snapshot 1`] = `
 <DocumentFragment>

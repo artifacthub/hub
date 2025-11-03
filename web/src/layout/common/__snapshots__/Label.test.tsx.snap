@@ -1,4 +1,22 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Label > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="undefined"
+  >
+    <div
+      class="d-flex flex-row align-items-center overflow-hidden _labelWrapper_bb12c5 _default_bb12c5"
+    >
+      <div
+        class="text-nowrap border border-1 fw-bold _labelText_bb12c5 _labelTextNoIcon_bb12c5"
+      >
+        Label text
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`Label creates snapshot 1`] = `
 <DocumentFragment>

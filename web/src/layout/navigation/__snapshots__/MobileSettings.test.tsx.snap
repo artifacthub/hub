@@ -1,4 +1,443 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MobileSettings > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="btn-group navbar-toggler pe-0 ms-auto border-0 fs-6 bg-transparent _navbarToggler_b738b3"
+  >
+    <aside
+      aria-label="User settings"
+      class="d-inline-block d-lg-none"
+    >
+      <button
+        aria-expanded="false"
+        aria-label="Open sidebar"
+        class="fw-bold text-uppercase position-relative btn position-relative btn text-secondary pe-0 ps-3"
+        type="button"
+      >
+        <div
+          class="d-flex align-items-center justify-content-center"
+        >
+          <div
+            class="rounded-circle d-flex align-items-center justify-content-center lh-1 bg-white _iconWrapper_b738b3"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 496 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"
+              />
+            </svg>
+          </div>
+        </div>
+      </button>
+      <div
+        aria-label="Sidebar"
+        class="sidebar position-fixed top-0 bottom-0 w-75 _sidebar_7fc36f _right_7fc36f"
+        role="complementary"
+      >
+        <div
+          class="d-flex flex-column h-100"
+        >
+          <div
+            class="border-bottom border-1 p-4 pb-3"
+          >
+            <div
+              class="d-flex align-items-center justify-content-between"
+            >
+              <div>
+                <div
+                  class="h6 mb-0 text-dark flex-grow-1"
+                >
+                  Signed in as 
+                  <span
+                    class="fw-bold"
+                  >
+                    test
+                  </span>
+                </div>
+              </div>
+              <div>
+                <button
+                  aria-label="Close sidebar"
+                  class="btn-close _closeBtn_7fc36f"
+                  type="button"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex-grow-1 d-flex _contentWrapper_7fc36f undefined"
+          >
+            <div
+              class="overflow-auto mh-100 w-100 py-3"
+            >
+              <div
+                class="mt-2 mb-1 undefined"
+                data-testid="smallTitle"
+              >
+                <small
+                  class="card-title text-muted text-uppercase"
+                >
+                  <span
+                    aria-level="5"
+                    class="px-4"
+                    role="heading"
+                  >
+                    Theme
+                  </span>
+                </small>
+              </div>
+              <div
+                data-testid="themeOptions"
+              >
+                <div
+                  class="dropdown-item"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      aria-checked="false"
+                      class="form-check-input _input_4ef093"
+                      id="mobile-automatic"
+                      name="automatic"
+                      tabindex="0"
+                      type="radio"
+                      value="automatic"
+                    />
+                    <label
+                      class="form-check-label fw-bold w-100 _label_4ef093"
+                      for="mobile-automatic"
+                    >
+                      <svg
+                        class="mx-1 position-relative _icon_4ef093"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 3.75C0 2.784.784 2 1.75 2h20.5c.966 0 1.75.784 1.75 1.75v16.5A1.75 1.75 0 0 1 22.25 22H1.75A1.75 1.75 0 0 1 0 20.25ZM22.5 7h-21v13.25c0 .138.112.25.25.25h20.5a.25.25 0 0 0 .25-.25Zm-10-3.5v2h10V3.75a.25.25 0 0 0-.25-.25ZM7 3.5v2h4v-2Zm-5.25 0a.25.25 0 0 0-.25.25V5.5h4v-2Z"
+                        />
+                      </svg>
+                      Automatic
+                    </label>
+                  </div>
+                </div>
+                <div
+                  class="dropdown-item"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      aria-checked="true"
+                      checked=""
+                      class="form-check-input _input_4ef093"
+                      id="mobile-light"
+                      name="light"
+                      tabindex="-1"
+                      type="radio"
+                      value="light"
+                    />
+                    <label
+                      class="form-check-label fw-bold w-100 _label_4ef093"
+                      for="mobile-light"
+                    >
+                      <svg
+                        class="mx-1 position-relative _icon_4ef093"
+                        fill="none"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="12"
+                          cy="12"
+                          r="5"
+                        />
+                        <line
+                          x1="12"
+                          x2="12"
+                          y1="1"
+                          y2="3"
+                        />
+                        <line
+                          x1="12"
+                          x2="12"
+                          y1="21"
+                          y2="23"
+                        />
+                        <line
+                          x1="4.22"
+                          x2="5.64"
+                          y1="4.22"
+                          y2="5.64"
+                        />
+                        <line
+                          x1="18.36"
+                          x2="19.78"
+                          y1="18.36"
+                          y2="19.78"
+                        />
+                        <line
+                          x1="1"
+                          x2="3"
+                          y1="12"
+                          y2="12"
+                        />
+                        <line
+                          x1="21"
+                          x2="23"
+                          y1="12"
+                          y2="12"
+                        />
+                        <line
+                          x1="4.22"
+                          x2="5.64"
+                          y1="19.78"
+                          y2="18.36"
+                        />
+                        <line
+                          x1="18.36"
+                          x2="19.78"
+                          y1="5.64"
+                          y2="4.22"
+                        />
+                      </svg>
+                      Light
+                    </label>
+                  </div>
+                </div>
+                <div
+                  class="dropdown-item"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      aria-checked="false"
+                      class="form-check-input _input_4ef093"
+                      id="mobile-dark"
+                      name="dark"
+                      tabindex="-1"
+                      type="radio"
+                      value="dark"
+                    />
+                    <label
+                      class="form-check-label fw-bold w-100 _label_4ef093"
+                      for="mobile-dark"
+                    >
+                      <svg
+                        class="mx-1 position-relative _icon_4ef093"
+                        fill="none"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                        />
+                      </svg>
+                      Dark
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="dropdown-divider my-3"
+              />
+              <a
+                aria-label="Open documentation"
+                class="_link_f0e789 dropdown-item my-2"
+                href="/docs"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_self"
+              >
+                <div
+                  class="d-flex align-items-center"
+                >
+                  <svg
+                    class="me-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    version="1.1"
+                    viewBox="0 0 18 16"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3.5 2h-3c-0.275 0-0.5 0.225-0.5 0.5v11c0 0.275 0.225 0.5 0.5 0.5h3c0.275 0 0.5-0.225 0.5-0.5v-11c0-0.275-0.225-0.5-0.5-0.5zM3 5h-2v-1h2v1z"
+                    />
+                    <path
+                      d="M8.5 2h-3c-0.275 0-0.5 0.225-0.5 0.5v11c0 0.275 0.225 0.5 0.5 0.5h3c0.275 0 0.5-0.225 0.5-0.5v-11c0-0.275-0.225-0.5-0.5-0.5zM8 5h-2v-1h2v1z"
+                    />
+                    <path
+                      d="M11.954 2.773l-2.679 1.35c-0.246 0.124-0.345 0.426-0.222 0.671l4.5 8.93c0.124 0.246 0.426 0.345 0.671 0.222l2.679-1.35c0.246-0.124 0.345-0.426 0.222-0.671l-4.5-8.93c-0.124-0.246-0.426-0.345-0.671-0.222z"
+                    />
+                    <path
+                      d="M14.5 13.5c0 0.276-0.224 0.5-0.5 0.5s-0.5-0.224-0.5-0.5c0-0.276 0.224-0.5 0.5-0.5s0.5 0.224 0.5 0.5z"
+                    />
+                  </svg>
+                  <div>
+                    Documentation
+                  </div>
+                </div>
+              </a>
+              <a
+                class="dropdown-item my-2"
+                href="/stats"
+              >
+                <div
+                  class="d-flex align-items-center"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="me-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 20 20"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm9 4a1 1 0 10-2 0v6a1 1 0 102 0V7zm-3 2a1 1 0 10-2 0v4a1 1 0 102 0V9zm-3 3a1 1 0 10-2 0v1a1 1 0 102 0v-1z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                  <div>
+                    Stats
+                  </div>
+                </div>
+              </a>
+              <a
+                class="dropdown-item my-2"
+                href="/packages/starred"
+              >
+                <div
+                  class="d-flex align-items-center"
+                >
+                  <svg
+                    class="me-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 576 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                    />
+                  </svg>
+                  <div>
+                    Starred packages
+                  </div>
+                </div>
+              </a>
+              <a
+                class="dropdown-item my-2"
+                href="/control-panel"
+              >
+                <div
+                  class="d-flex align-items-center"
+                >
+                  <svg
+                    class="me-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
+                    />
+                  </svg>
+                  <div>
+                    Control Panel
+                  </div>
+                </div>
+              </a>
+              <button
+                aria-label="Sign out"
+                class="dropdown-item my-2"
+              >
+                <div
+                  class="d-flex align-items-center"
+                >
+                  <svg
+                    class="me-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"
+                    />
+                  </svg>
+                  <div>
+                    Sign out
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div
+            class="mt-auto p-4"
+          >
+            <div
+              class="d-flex align-items-center justify-content-between"
+            >
+              <button
+                aria-label="Close"
+                class="ms-auto btn btn-sm btn-outline-secondary text-uppercase"
+                type="button"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`MobileSettings creates snapshot 1`] = `
 <DocumentFragment>

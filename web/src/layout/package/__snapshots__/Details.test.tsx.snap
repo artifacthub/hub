@@ -1,4 +1,936 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Details > renders correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="mt-2 mb-1 undefined"
+      data-testid="smallTitle"
+    >
+      <small
+        class="card-title text-muted text-uppercase"
+      >
+        <span
+          aria-level="5"
+          role="heading"
+        >
+          Application version
+        </span>
+      </small>
+    </div>
+    <p
+      class="text-truncate _text_522701"
+      data-testid="appVersion"
+    >
+      0.5.1
+    </p>
+  </div>
+  <div>
+    <div
+      class="d-flex flex-row align-items-center mt-2 mb-1"
+    >
+      <div
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          Chart versions
+        </small>
+      </div>
+      <small>
+        <a
+          class="badge bg-secondary rssBadge ms-3"
+          href="/api/v1/packages/helm/incubator/undefined/feed/rss"
+          rel="alternate noopener noreferrer"
+          role="button"
+          target="_blank"
+          type="application/rss+xml"
+        >
+          <div
+            class="d-flex flex-row align-items-center"
+          >
+            <svg
+              class="me-1"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"
+              />
+            </svg>
+            <div>
+              RSS
+            </div>
+          </div>
+        </a>
+      </small>
+    </div>
+    <div
+      class="mb-3"
+      data-testid="versions"
+    >
+      <div
+        role="list"
+      >
+        <div>
+          <div
+            class="py-1 py-sm-0 w-100 text-truncate"
+            role="listitem"
+          >
+            <div
+              class="d-flex flex-row align-items-baseline"
+            >
+              <button
+                aria-label="Open version 1.0.0"
+                class="btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-start _version_1facb1"
+              >
+                1.0.0
+              </button>
+              <small
+                class="text-muted"
+              >
+                (1 Jan, 1970)
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="d-none d-md-flex flex-row align-items-baseline"
+      >
+        <button
+          aria-label="See all entries"
+          class="btn btn-link ps-0 pe-1 position-relative text-primary _btn_41a422"
+        >
+          <div
+            class="d-flex flex-row align-items-center"
+          >
+            <svg
+              aria-hidden="true"
+              class="me-1"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 20 20"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                fill-rule="evenodd"
+              />
+            </svg>
+            <span>
+              See all
+            </span>
+          </div>
+        </button>
+        <div
+          class="text-muted position-relative _summary_41a422"
+        >
+          (1)
+        </div>
+      </div>
+      <div>
+        <div
+          aria-modal="false"
+          class="modal _modal_2adcc6"
+          role="dialog"
+        >
+          <div
+            class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+          >
+            <div
+              class="modal-content border border-3 mx-auto _content_2adcc6"
+            >
+              <div
+                class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
+              >
+                <div
+                  class="h3 m-2 flex-grow-1 text-truncate _title_41a422"
+                >
+                  Chart versions
+                </div>
+                <button
+                  aria-label="Close"
+                  class="btn-close"
+                  type="button"
+                />
+              </div>
+              <div
+                class="modal-body p-4 h-100 d-flex flex-column"
+              >
+                <div>
+                  <div
+                    class="overflow-hidden _alertWrapper_1aa3f6"
+                    data-testid="alertWrapper"
+                  />
+                </div>
+              </div>
+              <div
+                class="modal-footer p-3 _modalFooter_41a422"
+              >
+                <button
+                  aria-label="Close modal"
+                  class="btn btn-sm btn-outline-secondary text-uppercase"
+                  type="button"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center"
+                  >
+                    <svg
+                      class="me-2"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                    <div>
+                      Close
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      class="mt-2 mb-1 undefined"
+      data-testid="smallTitle"
+    >
+      <small
+        class="card-title text-muted text-uppercase"
+      >
+        <span
+          aria-level="5"
+          role="heading"
+        >
+          Last year activity
+        </span>
+      </small>
+    </div>
+    <div
+      class="d-flex flex-column w-100 mb-3 _heatMap_7e4fdd"
+      data-testid="lastYearActivity"
+    >
+      <div
+        class="d-flex flex-row justify-content-between w-100"
+      >
+        <div
+          class="position-relative"
+        >
+          <div
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+            data-testid="heatMapCell"
+          />
+          <div
+            class="tooltip popover end-0 _popover_7e4fdd"
+            data-testid="heatMapPopover"
+            role="tooltip"
+          >
+            <div
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+            >
+              Nov'20
+            </div>
+            <div
+              class="popover-body text-nowrap"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+                />
+                Releases: 
+                <span
+                  class="fw-bold ms-2"
+                >
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="position-relative"
+        >
+          <div
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+            data-testid="heatMapCell"
+          />
+          <div
+            class="tooltip popover end-0 _popover_7e4fdd"
+            data-testid="heatMapPopover"
+            role="tooltip"
+          >
+            <div
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+            >
+              Dec'20
+            </div>
+            <div
+              class="popover-body text-nowrap"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+                />
+                Releases: 
+                <span
+                  class="fw-bold ms-2"
+                >
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="position-relative"
+        >
+          <div
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+            data-testid="heatMapCell"
+          />
+          <div
+            class="tooltip popover end-0 _popover_7e4fdd"
+            data-testid="heatMapPopover"
+            role="tooltip"
+          >
+            <div
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+            >
+              Jan'21
+            </div>
+            <div
+              class="popover-body text-nowrap"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+                />
+                Releases: 
+                <span
+                  class="fw-bold ms-2"
+                >
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="position-relative"
+        >
+          <div
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+            data-testid="heatMapCell"
+          />
+          <div
+            class="tooltip popover end-0 _popover_7e4fdd"
+            data-testid="heatMapPopover"
+            role="tooltip"
+          >
+            <div
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+            >
+              Feb'21
+            </div>
+            <div
+              class="popover-body text-nowrap"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+                />
+                Releases: 
+                <span
+                  class="fw-bold ms-2"
+                >
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="position-relative"
+        >
+          <div
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+            data-testid="heatMapCell"
+          />
+          <div
+            class="tooltip popover end-0 _popover_7e4fdd"
+            data-testid="heatMapPopover"
+            role="tooltip"
+          >
+            <div
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+            >
+              Mar'21
+            </div>
+            <div
+              class="popover-body text-nowrap"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+                />
+                Releases: 
+                <span
+                  class="fw-bold ms-2"
+                >
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="position-relative"
+        >
+          <div
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+            data-testid="heatMapCell"
+          />
+          <div
+            class="tooltip popover end-0 _popover_7e4fdd"
+            data-testid="heatMapPopover"
+            role="tooltip"
+          >
+            <div
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+            >
+              Apr'21
+            </div>
+            <div
+              class="popover-body text-nowrap"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+                />
+                Releases: 
+                <span
+                  class="fw-bold ms-2"
+                >
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="position-relative"
+        >
+          <div
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+            data-testid="heatMapCell"
+          />
+          <div
+            class="tooltip popover end-0 _popover_7e4fdd"
+            data-testid="heatMapPopover"
+            role="tooltip"
+          >
+            <div
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+            >
+              May'21
+            </div>
+            <div
+              class="popover-body text-nowrap"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+                />
+                Releases: 
+                <span
+                  class="fw-bold ms-2"
+                >
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="position-relative"
+        >
+          <div
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+            data-testid="heatMapCell"
+          />
+          <div
+            class="tooltip popover end-0 _popover_7e4fdd"
+            data-testid="heatMapPopover"
+            role="tooltip"
+          >
+            <div
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+            >
+              Jun'21
+            </div>
+            <div
+              class="popover-body text-nowrap"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+                />
+                Releases: 
+                <span
+                  class="fw-bold ms-2"
+                >
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="position-relative"
+        >
+          <div
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+            data-testid="heatMapCell"
+          />
+          <div
+            class="tooltip popover end-0 _popover_7e4fdd"
+            data-testid="heatMapPopover"
+            role="tooltip"
+          >
+            <div
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+            >
+              Jul'21
+            </div>
+            <div
+              class="popover-body text-nowrap"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+                />
+                Releases: 
+                <span
+                  class="fw-bold ms-2"
+                >
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="position-relative"
+        >
+          <div
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+            data-testid="heatMapCell"
+          />
+          <div
+            class="tooltip popover end-0 _popover_7e4fdd"
+            data-testid="heatMapPopover"
+            role="tooltip"
+          >
+            <div
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+            >
+              Aug'21
+            </div>
+            <div
+              class="popover-body text-nowrap"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+                />
+                Releases: 
+                <span
+                  class="fw-bold ms-2"
+                >
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="position-relative"
+        >
+          <div
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+            data-testid="heatMapCell"
+          />
+          <div
+            class="tooltip popover end-0 _popover_7e4fdd"
+            data-testid="heatMapPopover"
+            role="tooltip"
+          >
+            <div
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+            >
+              Sep'21
+            </div>
+            <div
+              class="popover-body text-nowrap"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+                />
+                Releases: 
+                <span
+                  class="fw-bold ms-2"
+                >
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="position-relative"
+        >
+          <div
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+            data-testid="heatMapCell"
+          />
+          <div
+            class="tooltip popover end-0 _popover_7e4fdd"
+            data-testid="heatMapPopover"
+            role="tooltip"
+          >
+            <div
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+            >
+              Oct'21
+            </div>
+            <div
+              class="popover-body text-nowrap"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+                />
+                Releases: 
+                <span
+                  class="fw-bold ms-2"
+                >
+                  0
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="d-flex flex-row justify-content-between w-100 _legend_7e4fdd"
+      >
+        <div>
+          <small
+            class="text-muted"
+          >
+            Nov'20
+          </small>
+        </div>
+        <div>
+          <small
+            class="text-muted"
+          >
+            Apr'21
+          </small>
+        </div>
+        <div>
+          <small
+            class="text-muted"
+          >
+            Oct'21
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      class="mt-2 mb-1 undefined"
+      data-testid="smallTitle"
+    >
+      <small
+        class="card-title text-muted text-uppercase"
+      >
+        <span
+          aria-level="5"
+          role="heading"
+        >
+          Last 30 days views
+        </span>
+      </small>
+    </div>
+    <div
+      class="w-100 mb-3 pt-2"
+      data-testid="lastViews"
+    >
+      <div
+        class="d-flex flex-column"
+      >
+        <div>
+          <div
+            class="position-relative border bg-white _chartWrapper_84329d"
+          >
+            <div
+              class="d-flex flex-row align-items-center h-100 w-100"
+            >
+              <small
+                class="w-100 text-center text-muted"
+              >
+                Loading...
+              </small>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row justify-content-between w-100 _legend_84329d"
+          >
+            <div>
+              <small
+                class="text-muted"
+              >
+                23 Sep
+              </small>
+            </div>
+            <div>
+              <small
+                class="text-muted"
+              >
+                08 Oct
+              </small>
+            </div>
+            <div>
+              <small
+                class="text-muted"
+              >
+                23 Oct
+              </small>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row justify-content-between align-items-baseline w-100"
+          >
+            <div
+              class="d-none d-md-block"
+            >
+              <button
+                aria-label="See views chart"
+                class="btn btn-link ps-0 position-relative text-primary _btn_84329d"
+                disabled=""
+              >
+                <div
+                  class="d-flex flex-row align-items-center text-nowrap"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="me-1"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 20 20"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                  <span>
+                    See details
+                  </span>
+                </div>
+              </button>
+            </div>
+            <div
+              class="ms-auto text-truncate _legend_84329d"
+            >
+              <small
+                class="text-muted text-truncate"
+              >
+                (all versions)
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="mt-2 mb-1 undefined"
+    data-testid="smallTitle"
+  >
+    <small
+      class="card-title text-muted text-uppercase"
+    >
+      <span
+        aria-level="5"
+        role="heading"
+      >
+        Links
+      </span>
+    </small>
+  </div>
+  <div
+    class="mb-3"
+  >
+    <div
+      class="py-1 py-sm-0"
+    >
+      <a
+        aria-label="Open Homepage"
+        class="_link_f0e789 d-flex align-items-start mb-1 text-capitalize text-primary"
+        href="https://github.com/chartmuseum/chartmuseum"
+        rel="noopener noreferrer"
+        role="button"
+        tabindex="-1"
+        target="_blank"
+      >
+        <div
+          class="d-flex flex-row align-items-start mw-100"
+        >
+          <svg
+            baseProfile="tiny"
+            class="text-muted me-2 _icon_0ccb12"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            version="1.2"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 3s-6.186 5.34-9.643 8.232c-.203.184-.357.452-.357.768 0 .553.447 1 1 1h2v7c0 .553.447 1 1 1h3c.553 0 1-.448 1-1v-4h4v4c0 .552.447 1 1 1h3c.553 0 1-.447 1-1v-7h2c.553 0 1-.447 1-1 0-.316-.154-.584-.383-.768-3.433-2.892-9.617-8.232-9.617-8.232z"
+            />
+          </svg>
+          <div
+            class="flex-grow-1 text-break _linkText_0ccb12"
+          >
+            Homepage
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div
+    class="mt-2 mb-1 undefined"
+    data-testid="smallTitle"
+  >
+    <small
+      class="card-title text-muted text-uppercase"
+    >
+      <span
+        aria-level="5"
+        id="keywords-list"
+        role="heading"
+      >
+        Keywords
+      </span>
+    </small>
+  </div>
+  <div
+    aria-describedby="keywords-list"
+    class="mb-3"
+    role="list"
+  >
+    <span
+      data-testid="keywords"
+    >
+      <button
+        aria-label="Filter by chartmuseum"
+        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 _badge_30d08c"
+        role="listitem"
+      >
+        <div
+          class="text-truncate"
+        >
+          chartmuseum
+        </div>
+      </button>
+      <button
+        aria-label="Filter by helm"
+        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 _badge_30d08c"
+        role="listitem"
+      >
+        <div
+          class="text-truncate"
+        >
+          helm
+        </div>
+      </button>
+      <button
+        aria-label="Filter by charts repo"
+        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 _badge_30d08c"
+        role="listitem"
+      >
+        <div
+          class="text-truncate"
+        >
+          charts repo
+        </div>
+      </button>
+    </span>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`Details renders correctly 1`] = `
 <DocumentFragment>

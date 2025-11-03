@@ -1,4 +1,73 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CommandBlock > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-flex align-items-start"
+  >
+    <div
+      class="flex-grow-1 _blockWrapper_c0c294"
+    >
+      <pre
+        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
+      >
+        <code
+          class="language-bash"
+          style="white-space: pre;"
+        >
+          <span
+            style="color: rgb(0, 134, 179);"
+          >
+            command
+          </span>
+        </code>
+      </pre>
+    </div>
+    <div
+      class="ms-3"
+    >
+      <div
+        class="position-relative undefined"
+      >
+        <button
+          aria-label="Copy command to clipboard"
+          class="btn btn-sm btn-primary _copyBtn_c0c294 undefined"
+          type="button"
+        >
+          <div
+            aria-hidden="true"
+            class="d-flex flex-row align-items-center"
+          >
+            <svg
+              fill="none"
+              height="1em"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="13"
+                rx="2"
+                ry="2"
+                width="13"
+                x="9"
+                y="9"
+              />
+              <path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`CommandBlock creates snapshot 1`] = `
 <DocumentFragment>

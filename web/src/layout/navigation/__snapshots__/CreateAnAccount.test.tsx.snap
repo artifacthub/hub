@@ -1,4 +1,206 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CreateAnAccount > creates snapshot 1`] = `
+<DocumentFragment>
+  <form
+    autocomplete="on"
+    class="w-100 needs-validation"
+    data-testid="createAnAccountForm"
+    novalidate=""
+  >
+    <div
+      class="mb-4 position-relative undefined"
+    >
+      <label
+        class="form-label fw-bold _label_d02ded"
+        for="alias"
+      >
+        <span
+          class="fw-bold"
+        >
+          Username
+        </span>
+        <small
+          class="ms-1 fst-italic"
+        >
+          (Required)
+        </small>
+      </label>
+      <input
+        autocomplete="username"
+        class="form-control"
+        data-testid="aliasInput"
+        id="alias"
+        name="alias"
+        required=""
+        spellcheck="false"
+        type="text"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
+      >
+        This field is required
+      </div>
+    </div>
+    <div
+      class="mb-4 position-relative undefined"
+    >
+      <label
+        class="form-label fw-bold _label_d02ded"
+        for="email"
+      >
+        <span
+          class="fw-bold"
+        >
+          Email
+        </span>
+        <small
+          class="ms-1 fst-italic"
+        >
+          (Required)
+        </small>
+      </label>
+      <input
+        autocomplete="email"
+        class="form-control"
+        data-testid="emailInput"
+        id="email"
+        name="email"
+        required=""
+        spellcheck="false"
+        type="email"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
+      >
+        This field is required
+      </div>
+    </div>
+    <div
+      class="mb-4 position-relative undefined"
+    >
+      <label
+        class="form-label fw-bold _label_d02ded"
+        for="firstName"
+      >
+        <span
+          class="fw-bold"
+        >
+          First Name
+        </span>
+      </label>
+      <input
+        autocomplete="given-name"
+        class="form-control"
+        data-testid="firstNameInput"
+        id="firstName"
+        name="firstName"
+        spellcheck="false"
+        type="text"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
+      />
+    </div>
+    <div
+      class="mb-4 position-relative undefined"
+    >
+      <label
+        class="form-label fw-bold _label_d02ded"
+        for="lastName"
+      >
+        <span
+          class="fw-bold"
+        >
+          Last Name
+        </span>
+      </label>
+      <input
+        autocomplete="family-name"
+        class="form-control"
+        data-testid="lastNameInput"
+        id="lastName"
+        name="lastName"
+        spellcheck="false"
+        type="text"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
+      />
+    </div>
+    <div
+      class="mb-4 position-relative undefined"
+    >
+      <label
+        class="form-label fw-bold _label_d02ded"
+        for="password"
+      >
+        <span
+          class="fw-bold"
+        >
+          Password
+        </span>
+      </label>
+      <input
+        autocomplete="new-password"
+        class="form-control"
+        data-testid="passwordInput"
+        id="password"
+        name="password"
+        required=""
+        spellcheck="false"
+        type="password"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
+      >
+        This field is required
+      </div>
+    </div>
+    <div
+      class="mb-4 position-relative undefined"
+    >
+      <label
+        class="form-label fw-bold _label_d02ded"
+        for="confirmPassword"
+      >
+        <span
+          class="fw-bold"
+        >
+          Confirm password
+        </span>
+        <small
+          class="ms-1 fst-italic"
+        >
+          (Required)
+        </small>
+      </label>
+      <input
+        autocomplete="new-password"
+        class="form-control"
+        data-testid="confirmPasswordInput"
+        id="confirmPassword"
+        name="confirmPassword"
+        pattern=""
+        required=""
+        spellcheck="false"
+        type="password"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
+      >
+        This field is required
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;
 
 exports[`CreateAnAccount creates snapshot 1`] = `
 <DocumentFragment>

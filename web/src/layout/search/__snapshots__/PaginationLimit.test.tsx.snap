@@ -1,4 +1,39 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Filters > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-flex flex-nowrap align-items-center ms-3"
+  >
+    <label
+      class="form-label me-2 mb-0"
+    >
+      Show:
+    </label>
+    <select
+      aria-label="pagination-limit"
+      class="form-select form-select-sm pe-2 _select_687630"
+    >
+      <option
+        value="20"
+      >
+        20
+      </option>
+      <option
+        value="40"
+      >
+        40
+      </option>
+      <option
+        value="60"
+      >
+        60
+      </option>
+      ;
+    </select>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`Filters creates snapshot 1`] = `
 <DocumentFragment>

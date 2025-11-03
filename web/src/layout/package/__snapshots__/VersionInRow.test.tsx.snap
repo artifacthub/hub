@@ -1,4 +1,43 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`VersionInRow > creates snapshot 1`] = `
+<DocumentFragment>
+  <table>
+    <tbody>
+      <tr
+        data-testid="tr-version-row"
+      >
+        <td>
+          <div
+            class="d-flex flex-row align-items-center px-3 overflow-auto _truncateWrapper_45a823"
+          >
+            <button
+              aria-label="Open version 1.0.1"
+              class="btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block text-start"
+            >
+              1.0.1
+            </button>
+          </div>
+        </td>
+        <td>
+          <span
+            class="px-3"
+          />
+        </td>
+        <td
+          class="text-nowrap"
+        >
+          <span
+            class="text-muted px-3"
+          >
+            1 Jan, 1970
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</DocumentFragment>
+`;
 
 exports[`VersionInRow creates snapshot 1`] = `
 <DocumentFragment>

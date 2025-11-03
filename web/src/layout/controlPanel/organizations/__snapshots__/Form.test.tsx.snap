@@ -1,4 +1,178 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Organization Form - organizations section > creates snapshot 1`] = `
+<DocumentFragment>
+  <form
+    autocomplete="on"
+    class="w-100 needs-validation"
+    data-testid="organizationForm"
+    novalidate=""
+  >
+    <div
+      class=" mb-4 undefined"
+    >
+      <div
+        class="d-flex flex-column"
+      >
+        <label
+          class="form-label _label_ad3bee"
+          for="logo"
+        >
+          <span
+            class="fw-bold"
+          >
+            Logo
+          </span>
+          <small
+            class="ms-1 fst-italic"
+          >
+            (Click on the image to update)
+          </small>
+        </label>
+        <div
+          class="position-relative"
+        >
+          <button
+            aria-label="Add image"
+            class="btn p-0 overflow-hidden position-relative lh-1 fs-2 _btn_ad3bee"
+            type="button"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <input
+        class="d-none"
+        id="logo"
+        name="logo"
+        type="file"
+      />
+    </div>
+    <div
+      class="mb-4 position-relative undefined"
+    >
+      <label
+        class="form-label fw-bold _label_d02ded"
+        for="name"
+      >
+        <span
+          class="fw-bold"
+        >
+          Name
+        </span>
+        <small
+          class="ms-1 fst-italic"
+        >
+          (Required)
+        </small>
+      </label>
+      <input
+        autocomplete="off"
+        class="form-control"
+        data-testid="nameInput"
+        id="name"
+        name="name"
+        pattern="[a-z0-9\\-]+"
+        required=""
+        spellcheck="false"
+        type="text"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
+      >
+        This field is required
+      </div>
+    </div>
+    <div
+      class="mb-4 position-relative undefined"
+    >
+      <label
+        class="form-label fw-bold _label_d02ded"
+        for="displayName"
+      >
+        <span
+          class="fw-bold"
+        >
+          Display name
+        </span>
+      </label>
+      <input
+        class="form-control"
+        data-testid="displayNameInput"
+        id="displayName"
+        name="displayName"
+        spellcheck="false"
+        type="text"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
+      />
+    </div>
+    <div
+      class="mb-4 position-relative undefined"
+    >
+      <label
+        class="form-label fw-bold _label_d02ded"
+        for="homeUrl"
+      >
+        <span
+          class="fw-bold"
+        >
+          Home URL
+        </span>
+      </label>
+      <input
+        class="form-control"
+        data-testid="homeUrlInput"
+        id="homeUrl"
+        name="homeUrl"
+        spellcheck="false"
+        type="url"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
+      >
+        Please enter a valid url
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <label
+        class="form-label fw-bold _label_198562"
+        for="description"
+      >
+        Description
+      </label>
+      <textarea
+        class="form-control"
+        data-testid="descriptionTextarea"
+        id="description"
+        name="description"
+      />
+    </div>
+  </form>
+</DocumentFragment>
+`;
 
 exports[`Organization Form - organizations section creates snapshot 1`] = `
 <DocumentFragment>

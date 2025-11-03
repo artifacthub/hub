@@ -1,4 +1,57 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SearchPackages > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="position-relative"
+  >
+    <div
+      class="d-flex flex-row"
+    >
+      <div
+        class="flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative lh-base bg-white searchBar _inputWrapper_1ce6a7"
+      >
+        <div
+          class="d-flex align-items-center _iconWrapper_1ce6a7"
+          data-testid="searchPkgIcon"
+        >
+          <svg
+            fill="none"
+            height="1em"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="11"
+              cy="11"
+              r="8"
+            />
+            <line
+              x1="21"
+              x2="16.65"
+              y1="21"
+              y2="16.65"
+            />
+          </svg>
+        </div>
+        <input
+          aria-label="Search packages"
+          autocomplete="new-input"
+          class="flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent _input_1ce6a7"
+          name="searchInput"
+          spellcheck="false"
+          type="text"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`SearchPackages creates snapshot 1`] = `
 <DocumentFragment>

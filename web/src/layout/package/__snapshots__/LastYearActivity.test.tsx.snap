@@ -1,4 +1,490 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LastYearActivity > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mt-2 mb-1 undefined"
+    data-testid="smallTitle"
+  >
+    <small
+      class="card-title text-muted text-uppercase"
+    >
+      <span
+        aria-level="5"
+        role="heading"
+      >
+        Last year activity
+      </span>
+    </small>
+  </div>
+  <div
+    class="d-flex flex-column w-100 mb-3 _heatMap_7e4fdd"
+    data-testid="lastYearActivity"
+  >
+    <div
+      class="d-flex flex-row justify-content-between w-100"
+    >
+      <div
+        class="position-relative"
+      >
+        <div
+          class="position-relative border border-1 _heatMapCell_7e4fdd _level3_7e4fdd"
+          data-testid="heatMapCell"
+        />
+        <div
+          class="tooltip popover end-0 _popover_7e4fdd"
+          data-testid="heatMapPopover"
+          role="tooltip"
+        >
+          <div
+            class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+          >
+            Nov'20
+          </div>
+          <div
+            class="popover-body text-nowrap"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <div
+                class="me-2 border border-1 top-0 _marker_7e4fdd _level3_7e4fdd"
+              />
+              Releases: 
+              <span
+                class="fw-bold ms-2"
+              >
+                3
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="position-relative"
+      >
+        <div
+          class="position-relative border border-1 _heatMapCell_7e4fdd _level1_7e4fdd"
+          data-testid="heatMapCell"
+        />
+        <div
+          class="tooltip popover end-0 _popover_7e4fdd"
+          data-testid="heatMapPopover"
+          role="tooltip"
+        >
+          <div
+            class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+          >
+            Dec'20
+          </div>
+          <div
+            class="popover-body text-nowrap"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <div
+                class="me-2 border border-1 top-0 _marker_7e4fdd _level1_7e4fdd"
+              />
+              Releases: 
+              <span
+                class="fw-bold ms-2"
+              >
+                1
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="position-relative"
+      >
+        <div
+          class="position-relative border border-1 _heatMapCell_7e4fdd _level3_7e4fdd"
+          data-testid="heatMapCell"
+        />
+        <div
+          class="tooltip popover end-0 _popover_7e4fdd"
+          data-testid="heatMapPopover"
+          role="tooltip"
+        >
+          <div
+            class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+          >
+            Jan'21
+          </div>
+          <div
+            class="popover-body text-nowrap"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <div
+                class="me-2 border border-1 top-0 _marker_7e4fdd _level3_7e4fdd"
+              />
+              Releases: 
+              <span
+                class="fw-bold ms-2"
+              >
+                3
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="position-relative"
+      >
+        <div
+          class="position-relative border border-1 _heatMapCell_7e4fdd _level2_7e4fdd"
+          data-testid="heatMapCell"
+        />
+        <div
+          class="tooltip popover end-0 _popover_7e4fdd"
+          data-testid="heatMapPopover"
+          role="tooltip"
+        >
+          <div
+            class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+          >
+            Feb'21
+          </div>
+          <div
+            class="popover-body text-nowrap"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <div
+                class="me-2 border border-1 top-0 _marker_7e4fdd _level2_7e4fdd"
+              />
+              Releases: 
+              <span
+                class="fw-bold ms-2"
+              >
+                2
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="position-relative"
+      >
+        <div
+          class="position-relative border border-1 _heatMapCell_7e4fdd _level3_7e4fdd"
+          data-testid="heatMapCell"
+        />
+        <div
+          class="tooltip popover end-0 _popover_7e4fdd"
+          data-testid="heatMapPopover"
+          role="tooltip"
+        >
+          <div
+            class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+          >
+            Mar'21
+          </div>
+          <div
+            class="popover-body text-nowrap"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <div
+                class="me-2 border border-1 top-0 _marker_7e4fdd _level3_7e4fdd"
+              />
+              Releases: 
+              <span
+                class="fw-bold ms-2"
+              >
+                3
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="position-relative"
+      >
+        <div
+          class="position-relative border border-1 _heatMapCell_7e4fdd _level1_7e4fdd"
+          data-testid="heatMapCell"
+        />
+        <div
+          class="tooltip popover end-0 _popover_7e4fdd"
+          data-testid="heatMapPopover"
+          role="tooltip"
+        >
+          <div
+            class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+          >
+            Apr'21
+          </div>
+          <div
+            class="popover-body text-nowrap"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <div
+                class="me-2 border border-1 top-0 _marker_7e4fdd _level1_7e4fdd"
+              />
+              Releases: 
+              <span
+                class="fw-bold ms-2"
+              >
+                1
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="position-relative"
+      >
+        <div
+          class="position-relative border border-1 _heatMapCell_7e4fdd _level3_7e4fdd"
+          data-testid="heatMapCell"
+        />
+        <div
+          class="tooltip popover end-0 _popover_7e4fdd"
+          data-testid="heatMapPopover"
+          role="tooltip"
+        >
+          <div
+            class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+          >
+            May'21
+          </div>
+          <div
+            class="popover-body text-nowrap"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <div
+                class="me-2 border border-1 top-0 _marker_7e4fdd _level3_7e4fdd"
+              />
+              Releases: 
+              <span
+                class="fw-bold ms-2"
+              >
+                4
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="position-relative"
+      >
+        <div
+          class="position-relative border border-1 _heatMapCell_7e4fdd _level1_7e4fdd"
+          data-testid="heatMapCell"
+        />
+        <div
+          class="tooltip popover end-0 _popover_7e4fdd"
+          data-testid="heatMapPopover"
+          role="tooltip"
+        >
+          <div
+            class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+          >
+            Jun'21
+          </div>
+          <div
+            class="popover-body text-nowrap"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <div
+                class="me-2 border border-1 top-0 _marker_7e4fdd _level1_7e4fdd"
+              />
+              Releases: 
+              <span
+                class="fw-bold ms-2"
+              >
+                1
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="position-relative"
+      >
+        <div
+          class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+          data-testid="heatMapCell"
+        />
+        <div
+          class="tooltip popover end-0 _popover_7e4fdd"
+          data-testid="heatMapPopover"
+          role="tooltip"
+        >
+          <div
+            class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+          >
+            Jul'21
+          </div>
+          <div
+            class="popover-body text-nowrap"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <div
+                class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+              />
+              Releases: 
+              <span
+                class="fw-bold ms-2"
+              >
+                0
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="position-relative"
+      >
+        <div
+          class="position-relative border border-1 _heatMapCell_7e4fdd _level1_7e4fdd"
+          data-testid="heatMapCell"
+        />
+        <div
+          class="tooltip popover end-0 _popover_7e4fdd"
+          data-testid="heatMapPopover"
+          role="tooltip"
+        >
+          <div
+            class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+          >
+            Aug'21
+          </div>
+          <div
+            class="popover-body text-nowrap"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <div
+                class="me-2 border border-1 top-0 _marker_7e4fdd _level1_7e4fdd"
+              />
+              Releases: 
+              <span
+                class="fw-bold ms-2"
+              >
+                1
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="position-relative"
+      >
+        <div
+          class="position-relative border border-1 _heatMapCell_7e4fdd _level1_7e4fdd"
+          data-testid="heatMapCell"
+        />
+        <div
+          class="tooltip popover end-0 _popover_7e4fdd"
+          data-testid="heatMapPopover"
+          role="tooltip"
+        >
+          <div
+            class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+          >
+            Sep'21
+          </div>
+          <div
+            class="popover-body text-nowrap"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <div
+                class="me-2 border border-1 top-0 _marker_7e4fdd _level1_7e4fdd"
+              />
+              Releases: 
+              <span
+                class="fw-bold ms-2"
+              >
+                1
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="position-relative"
+      >
+        <div
+          class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
+          data-testid="heatMapCell"
+        />
+        <div
+          class="tooltip popover end-0 _popover_7e4fdd"
+          data-testid="heatMapPopover"
+          role="tooltip"
+        >
+          <div
+            class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
+          >
+            Oct'21
+          </div>
+          <div
+            class="popover-body text-nowrap"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <div
+                class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
+              />
+              Releases: 
+              <span
+                class="fw-bold ms-2"
+              >
+                0
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="d-flex flex-row justify-content-between w-100 _legend_7e4fdd"
+    >
+      <div>
+        <small
+          class="text-muted"
+        >
+          Nov'20
+        </small>
+      </div>
+      <div>
+        <small
+          class="text-muted"
+        >
+          Apr'21
+        </small>
+      </div>
+      <div>
+        <small
+          class="text-muted"
+        >
+          Oct'21
+        </small>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`LastYearActivity creates snapshot 1`] = `
 <DocumentFragment>
