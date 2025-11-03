@@ -1,14 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Organization } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import Card from './Card';
-jest.mock('../../../api');
-jest.mock('../../../utils/alertDispatcher');
+import { vi } from 'vitest';
+vi.mock('../../../api');
+vi.mock('../../../utils/alertDispatcher');
 
 const organizationMock: Organization = {
   name: 'test',
@@ -125,7 +125,7 @@ describe('Organization Card - organization section', () => {
 
   describe('on deleteOrganizationMember error', () => {
     it('API error', async () => {
-      mocked(API).deleteOrganizationMember.mockRejectedValue({
+      vi.mocked(API).deleteOrganizationMember.mockRejectedValue({
         kind: ErrorKind.Other,
       });
       render(
@@ -155,7 +155,7 @@ describe('Organization Card - organization section', () => {
     });
 
     it('calls onAuthError', async () => {
-      mocked(API).deleteOrganizationMember.mockRejectedValue({
+      vi.mocked(API).deleteOrganizationMember.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
       render(

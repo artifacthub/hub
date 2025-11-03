@@ -3,8 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import SampleQueries from './SampleQueries';
+import { vi } from 'vitest';
 
-jest.mock('../../utils/getSampleQueries', () => () => {
+vi.mock('../../utils/getSampleQueries', () => () => {
   return [
     {
       name: 'OLM operators for databases',
@@ -96,7 +97,7 @@ const mockQueries = [
   },
 ];
 
-jest.mock('lodash/sampleSize', () => () => mockQueries);
+vi.mock('lodash/sampleSize', () => () => mockQueries);
 
 describe('SampleQueries', () => {
   afterEach(() => {

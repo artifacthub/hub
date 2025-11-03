@@ -1,14 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ClaimModal from './ClaimOwnershipModal';
-jest.mock('../../../api');
-jest.mock('../../../utils/alertDispatcher');
+import { vi } from 'vitest';
+vi.mock('../../../api');
+vi.mock('../../../utils/alertDispatcher');
 
 const onAuthErrorMock = jest.fn();
 const scrollIntoViewMock = jest.fn();
@@ -78,9 +78,9 @@ describe('Claim Repository Modal - repositories section', () => {
 
   it('creates snapshot', async () => {
     const mockOrganizations = getMockOrganizations('1');
-    mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+    vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
     const mockRepositories = getMockRepositories('1');
-    mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
+    vi.mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -99,9 +99,9 @@ describe('Claim Repository Modal - repositories section', () => {
   describe('Render', () => {
     it('renders component when org is selected in context', async () => {
       const mockOrganizations = getMockOrganizations('1');
-      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
       const mockRepositories = getMockRepositories('1');
-      mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
+      vi.mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
       render(
         <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -137,9 +137,9 @@ describe('Claim Repository Modal - repositories section', () => {
 
     it('renders component when org is not selected in context', async () => {
       const mockOrganizations = getMockOrganizations('1');
-      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
       const mockRepositories = getMockRepositories('1');
-      mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
+      vi.mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
       render(
         <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -175,9 +175,9 @@ describe('Claim Repository Modal - repositories section', () => {
 
     it('displays disabled OCI repos', async () => {
       const mockOrganizations = getMockOrganizations('1');
-      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
       const mockRepositories = getMockRepositories('2');
-      mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
+      vi.mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
 
       render(
         <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -207,10 +207,10 @@ describe('Claim Repository Modal - repositories section', () => {
     describe('Claim repo', () => {
       it('from user', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
-        mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
-        mocked(API).claimRepositoryOwnership.mockResolvedValue(null);
+        vi.mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
+        vi.mocked(API).claimRepositoryOwnership.mockResolvedValue(null);
 
         render(
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -257,10 +257,10 @@ describe('Claim Repository Modal - repositories section', () => {
 
       it('from org', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
-        mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
-        mocked(API).claimRepositoryOwnership.mockResolvedValue(null);
+        vi.mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
+        vi.mocked(API).claimRepositoryOwnership.mockResolvedValue(null);
 
         render(
           <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -306,10 +306,10 @@ describe('Claim Repository Modal - repositories section', () => {
     describe('When claim repo fails', () => {
       it('UnauthorizedError', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
-        mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
-        mocked(API).claimRepositoryOwnership.mockRejectedValue({
+        vi.mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
+        vi.mocked(API).claimRepositoryOwnership.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
 
@@ -347,10 +347,10 @@ describe('Claim Repository Modal - repositories section', () => {
 
       it('default error', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
-        mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
-        mocked(API).claimRepositoryOwnership.mockRejectedValue({
+        vi.mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
+        vi.mocked(API).claimRepositoryOwnership.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 
@@ -395,10 +395,10 @@ describe('Claim Repository Modal - repositories section', () => {
 
       it('with custom error message', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
-        mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
-        mocked(API).claimRepositoryOwnership.mockRejectedValue({
+        vi.mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
+        vi.mocked(API).claimRepositoryOwnership.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'custom error',
         });
@@ -442,10 +442,10 @@ describe('Claim Repository Modal - repositories section', () => {
 
       it('with Forbidden error', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
         const mockRepositories = getMockRepositories('1');
-        mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
-        mocked(API).claimRepositoryOwnership.mockRejectedValue({
+        vi.mocked(API).searchRepositories.mockResolvedValue(mockRepositories);
+        vi.mocked(API).claimRepositoryOwnership.mockRejectedValue({
           kind: ErrorKind.Forbidden,
         });
 
@@ -493,7 +493,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
     describe('When fetchOrganizations fails', () => {
       it('error UnauthorizedError', async () => {
-        mocked(API).getAllUserOrganizations.mockRejectedValue({
+        vi.mocked(API).getAllUserOrganizations.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
 
@@ -513,7 +513,7 @@ describe('Claim Repository Modal - repositories section', () => {
       });
 
       it('default error', async () => {
-        mocked(API).getAllUserOrganizations.mockRejectedValue({
+        vi.mocked(API).getAllUserOrganizations.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 
@@ -543,8 +543,8 @@ describe('Claim Repository Modal - repositories section', () => {
     describe('When searchRepositories fails', () => {
       it('error UnauthorizedError', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
-        mocked(API).searchRepositories.mockRejectedValue({
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).searchRepositories.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
 
@@ -568,8 +568,8 @@ describe('Claim Repository Modal - repositories section', () => {
 
       it('default error', async () => {
         const mockOrganizations = getMockOrganizations('1');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
-        mocked(API).searchRepositories.mockRejectedValue({
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).searchRepositories.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 

@@ -3,8 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import WidgetModal from './WidgetModal';
+import { vi } from 'vitest';
 
-jest.mock('react-color', () => ({
+vi.mock('react-color', () => ({
   SketchPicker: () => <>sketch</>,
 }));
 
@@ -12,13 +13,13 @@ const setOpenStatusMock = jest.fn();
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('react-syntax-highlighter', () => (props: any) => <div>{props.children}</div>);
+vi.mock('react-syntax-highlighter', () => (props: any) => <div>{props.children}</div>);
 
 const defaultProps = {
   packageId: 'id',

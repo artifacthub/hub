@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind } from '../../../types';
 import MemberModal from './Modal';
-jest.mock('../../../api');
+import { vi } from 'vitest';
+vi.mock('../../../api');
 
 const onSuccessMock = jest.fn();
 const onAuthErrorMock = jest.fn();
@@ -65,8 +65,8 @@ describe('Members Modal - members section', () => {
     });
 
     it('calls add organization member', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(true);
-      mocked(API).addOrganizationMember.mockResolvedValue(null);
+      vi.mocked(API).checkAvailability.mockResolvedValue(true);
+      vi.mocked(API).addOrganizationMember.mockResolvedValue(null);
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <MemberModal {...defaultProps} />
@@ -88,8 +88,8 @@ describe('Members Modal - members section', () => {
     });
 
     it('Other api error', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(true);
-      mocked(API).addOrganizationMember.mockRejectedValue({
+      vi.mocked(API).checkAvailability.mockResolvedValue(true);
+      vi.mocked(API).addOrganizationMember.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 
@@ -117,8 +117,8 @@ describe('Members Modal - members section', () => {
     });
 
     it('calls onAuthError when error is UnauthorizedError', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(true);
-      mocked(API).addOrganizationMember.mockRejectedValue({
+      vi.mocked(API).checkAvailability.mockResolvedValue(true);
+      vi.mocked(API).addOrganizationMember.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
       render(

@@ -1,17 +1,17 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
 import { SearchResults } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import SearchBar from './SearchBar';
-jest.mock('../../api');
+import { vi } from 'vitest';
+vi.mock('../../api');
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -102,7 +102,7 @@ describe('SearchBar', () => {
   describe('search packages', () => {
     it('display search results', async () => {
       const mockSearch = getMockSearch('1');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(
         <Router>
@@ -126,7 +126,7 @@ describe('SearchBar', () => {
 
     it("doesn't display results when input is not focused", async () => {
       const mockSearch = getMockSearch('2');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(
         <Router>

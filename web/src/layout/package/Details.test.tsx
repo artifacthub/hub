@@ -6,6 +6,7 @@ import { Package, PackageLink, Version } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import Details from './Details';
+import { vi } from 'vitest';
 
 const getMockPackage = (fixtureId: string): Package => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -14,12 +15,12 @@ const getMockPackage = (fixtureId: string): Package => {
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 
-jest.mock('react-markdown', () => () => <div />);
+vi.mock('react-markdown', () => () => <div />);
 
 const defaultProps = {
   visibleSecurityReport: true,

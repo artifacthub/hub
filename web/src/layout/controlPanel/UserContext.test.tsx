@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import UserContext from './UserContext';
-jest.mock('../../api');
+import { vi } from 'vitest';
+vi.mock('../../api');
 
 const getMockOrgs = (fixtureId: string) => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -77,7 +77,7 @@ describe('UserContext', () => {
 
   it('creates snapshot', async () => {
     const mockOrgs = getMockOrgs('1');
-    mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
+    vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -98,7 +98,7 @@ describe('UserContext', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockOrgs = getMockOrgs('2');
-      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -117,7 +117,7 @@ describe('UserContext', () => {
 
     it('displays spinner to get organizations', async () => {
       const mockOrgs = getMockOrgs('3');
-      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -138,7 +138,7 @@ describe('UserContext', () => {
 
     it('displays dropdown with ctx', async () => {
       const mockOrgs = getMockOrgs('4');
-      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -173,7 +173,7 @@ describe('UserContext', () => {
 
     it('renders only user ctx when no orgs', async () => {
       const mockOrgs = getMockOrgs('5');
-      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -193,7 +193,7 @@ describe('UserContext', () => {
 
     it('calls updateOrg when org ctx button is clicked', async () => {
       const mockOrgs = getMockOrgs('4');
-      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -237,7 +237,7 @@ describe('UserContext', () => {
 
     it('calls unselectOrg when user ctx button is clicked', async () => {
       const mockOrgs = getMockOrgs('4');
-      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       render(
         <AppCtx.Provider value={{ ctx: mockOrgCtx, dispatch: mockDispatch }}>
@@ -267,7 +267,7 @@ describe('UserContext', () => {
 
     it('calls unselectOrg when selectedOrg is not in the list', async () => {
       const mockOrgs = getMockOrgs('4');
-      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
 
       render(
         <AppCtx.Provider value={{ ctx: mockOrgCtx1, dispatch: mockDispatch }}>

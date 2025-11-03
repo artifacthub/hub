@@ -1,13 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 
 import API from '../../../../../../api';
 import { Package, SearchResults } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import SubscriptionModal from './Modal';
-jest.mock('../../../../../../api');
-jest.mock('../../../../../../utils/alertDispatcher');
+import { vi } from 'vitest';
+vi.mock('../../../../../../api');
+vi.mock('../../../../../../utils/alertDispatcher');
 const mockOnSuccess = jest.fn();
 const mockOnClose = jest.fn();
 
@@ -59,7 +59,7 @@ describe('SubscriptionModal', () => {
   describe('Renders some disabled packages', () => {
     it('first 2 disabled', async () => {
       const mockSearch = getMockSearch('3');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('3')} />);
 
@@ -87,7 +87,7 @@ describe('SubscriptionModal', () => {
 
     it('all enabled', async () => {
       const mockSearch = getMockSearch('4');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('4')} />);
 
@@ -108,7 +108,7 @@ describe('SubscriptionModal', () => {
 
     it('all disabled', async () => {
       const mockSearch = getMockSearch('5');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('5')} />);
 
@@ -129,7 +129,7 @@ describe('SubscriptionModal', () => {
 
     it('one disabled', async () => {
       const mockSearch = getMockSearch('6');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('6')} />);
 
@@ -152,8 +152,8 @@ describe('SubscriptionModal', () => {
   describe('calls addSubscription', () => {
     it('when is successful', async () => {
       const mockSearch = getMockSearch('7');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
-      mocked(API).addSubscription.mockResolvedValue('');
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).addSubscription.mockResolvedValue('');
 
       render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('7')} />);
 
@@ -193,8 +193,8 @@ describe('SubscriptionModal', () => {
 
     it('when fails', async () => {
       const mockSearch = getMockSearch('8');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
-      mocked(API).addSubscription.mockRejectedValue({});
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).addSubscription.mockRejectedValue({});
 
       render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('8')} />);
 

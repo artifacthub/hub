@@ -1,23 +1,23 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
 import { ErrorKind, Package, SearchResults } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import PackageView from './index';
+import { vi } from 'vitest';
 
-jest.mock('../../api');
-jest.mock('../../utils/updateMetaIndex');
-jest.mock('react-apexcharts', () => () => <div>Chart</div>);
+vi.mock('../../api');
+vi.mock('../../utils/updateMetaIndex');
+vi.mock('react-apexcharts', () => () => <div>Chart</div>);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('react-markdown', () => (props: any) => {
+vi.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
-jest.mock('remark-gfm', () => () => <div />);
-jest.mock('rehype-github-alerts', () => () => <div />);
-jest.mock('../../utils/bannerDispatcher', () => ({
+vi.mock('remark-gfm', () => () => <div />);
+vi.mock('rehype-github-alerts', () => () => <div />);
+vi.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));
 
@@ -37,7 +37,7 @@ const mockOutletContextData: any = {
 };
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useOutletContext: () => mockOutletContextData,
   useNavigate: () => mockUseNavigate,
@@ -61,7 +61,7 @@ describe('Package index', () => {
 
   it('creates snapshot', async () => {
     const mockPackage = getMockPackage('1');
-    mocked(API).getPackage.mockResolvedValue(mockPackage);
+    vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
     const { asFragment } = render(
       <Router>
@@ -80,8 +80,8 @@ describe('Package index', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockPackage = getMockPackage('2');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
-      mocked(API).trackView.mockResolvedValue(null);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).trackView.mockResolvedValue(null);
 
       render(
         <Router>
@@ -98,7 +98,7 @@ describe('Package index', () => {
 
     it('calls track view', async () => {
       const mockPackage = getMockPackage('19');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -117,8 +117,8 @@ describe('Package index', () => {
 
     it('calls getViews', async () => {
       const mockPackage = getMockPackage('20');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
-      mocked(API).getViews.mockResolvedValue({ '1.0.0': { '2021-12-09': 1 } });
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getViews.mockResolvedValue({ '1.0.0': { '2021-12-09': 1 } });
 
       render(
         <Router>
@@ -141,7 +141,7 @@ describe('Package index', () => {
 
   describe('when getPackage fails', () => {
     it('generic error', async () => {
-      mocked(API).getPackage.mockRejectedValue({
+      vi.mocked(API).getPackage.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 
@@ -161,7 +161,7 @@ describe('Package index', () => {
     });
 
     it('not found package', async () => {
-      mocked(API).getPackage.mockRejectedValue({
+      vi.mocked(API).getPackage.mockRejectedValue({
         kind: ErrorKind.NotFound,
       });
 
@@ -189,7 +189,7 @@ describe('Package index', () => {
   describe('Repository button', () => {
     it('renders repository link', async () => {
       const mockPackage = getMockPackage('5');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -217,7 +217,7 @@ describe('Package index', () => {
   describe('Readme', () => {
     it('does not render it when readme is null and displays no data message', async () => {
       const mockPackage = getMockPackage('7');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -233,7 +233,7 @@ describe('Package index', () => {
 
     it('renders it correctly', async () => {
       const mockPackage = getMockPackage('8');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -254,7 +254,7 @@ describe('Package index', () => {
   describe('Labels', () => {
     it('renders Verified Publisher label', async () => {
       const mockPackage = getMockPackage('9');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -275,7 +275,7 @@ describe('Package index', () => {
   describe('Helm package', () => {
     it('renders CRDs button when are defined', async () => {
       const mockPackage = getMockPackage('10');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -296,7 +296,7 @@ describe('Package index', () => {
   describe('OLM package', () => {
     it('renders CRDs button from crds prop when is defined', async () => {
       const mockPackage = getMockPackage('11');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -317,7 +317,7 @@ describe('Package index', () => {
   describe('Falco rules', () => {
     it('renders rules properly', async () => {
       const mockPackage = getMockPackage('12');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -337,7 +337,7 @@ describe('Package index', () => {
   describe('Tekton task', () => {
     it('renders task properly', async () => {
       const mockPackage = getMockPackage('13');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -364,7 +364,7 @@ describe('Package index', () => {
   describe('Krew kubectl plugin', () => {
     it('renders plugin properly', async () => {
       const mockPackage = getMockPackage('14');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -387,9 +387,9 @@ describe('Package index', () => {
     describe('Render', () => {
       it('renders component', async () => {
         const mockPackage = getMockPackage('15');
-        mocked(API).getPackage.mockResolvedValue(mockPackage);
+        vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
         const mockPackages = getMockRelatedPackages('1');
-        mocked(API).searchPackages.mockResolvedValue(mockPackages);
+        vi.mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
         render(
           <Router>
@@ -416,9 +416,9 @@ describe('Package index', () => {
 
     it('excludes selected package from search results list', async () => {
       const mockPackage = getMockPackage('15');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
       const mockPackages = getMockRelatedPackages('2');
-      mocked(API).searchPackages.mockResolvedValue(mockPackages);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
       render(
         <Router>
@@ -435,9 +435,9 @@ describe('Package index', () => {
 
     it('renders only 8 related packages', async () => {
       const mockPackage = getMockPackage('15');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
       const mockPackages = getMockRelatedPackages('3');
-      mocked(API).searchPackages.mockResolvedValue(mockPackages);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
       render(
         <Router>
@@ -453,9 +453,9 @@ describe('Package index', () => {
     describe('does not render', () => {
       it('when related packages list is empty', async () => {
         const mockPackage = getMockPackage('15');
-        mocked(API).getPackage.mockResolvedValue(mockPackage);
+        vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
         const mockPackages = getMockRelatedPackages('4');
-        mocked(API).searchPackages.mockResolvedValue(mockPackages);
+        vi.mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
         render(
           <Router>
@@ -475,9 +475,9 @@ describe('Package index', () => {
 
       it('when list contains only selected package', async () => {
         const mockPackage = getMockPackage('15');
-        mocked(API).getPackage.mockResolvedValue(mockPackage);
+        vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
         const mockPackages = getMockRelatedPackages('5');
-        mocked(API).searchPackages.mockResolvedValue(mockPackages);
+        vi.mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
         render(
           <Router>
@@ -497,8 +497,8 @@ describe('Package index', () => {
 
       it('when SearchPackages call fails', async () => {
         const mockPackage = getMockPackage('15');
-        mocked(API).getPackage.mockResolvedValue(mockPackage);
-        mocked(API).searchPackages.mockRejectedValue(null);
+        vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
+        vi.mocked(API).searchPackages.mockRejectedValue(null);
 
         render(
           <Router>
@@ -521,7 +521,7 @@ describe('Package index', () => {
   describe('Special section', () => {
     it('renders recommended pkgs', async () => {
       const mockPackage = getMockPackage('16');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -544,7 +544,7 @@ describe('Package index', () => {
 
     it('renders only recommended pkgs with valid urls', async () => {
       const mockPackage = getMockPackage('16a');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -566,7 +566,7 @@ describe('Package index', () => {
 
     it('does not renders recommended pkgs with not valid urls', async () => {
       const mockPackage = getMockPackage('16b');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -585,7 +585,7 @@ describe('Package index', () => {
 
     it('does not render when recommended and production usage are undefined', async () => {
       const mockPackage = getMockPackage('18');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>

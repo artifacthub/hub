@@ -1,10 +1,10 @@
 import { waitFor } from '@testing-library/react';
-import { mocked } from 'jest-mock';
 
 import API from '../api';
 import { JSONSchema } from '../jsonschema';
 import dereferenceJSONSchema from './dereference';
-jest.mock('../api');
+import { vi } from 'vitest';
+vi.mock('../api');
 
 interface Test {
   input: JSONSchema;
@@ -2916,7 +2916,7 @@ const tests: Test[] = [
 describe('dereferenceJSONSchema', () => {
   for (let i = 0; i < tests.length; i++) {
     it('returns dereferenced schema', async () => {
-      mocked(API).getSchemaDef.mockResolvedValue(DEFS);
+      vi.mocked(API).getSchemaDef.mockResolvedValue(DEFS);
       const actual = dereferenceJSONSchema(tests[i].input);
 
       await waitFor(() => {

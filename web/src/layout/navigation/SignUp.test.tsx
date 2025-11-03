@@ -2,7 +2,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import SignUp from './SignUp';
-jest.mock('../../api');
+import { vi } from 'vitest';
+vi.mock('../../api');
 
 const setOpenSignUpMock = jest.fn();
 

@@ -1,21 +1,26 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../../api';
 import { SecurityReport, VulnerabilitySeverity } from '../../../types';
 import SecurityModal from './Modal';
+import { vi } from 'vitest';
 
-jest.mock('../../../api');
-jest.mock('react-markdown', () => () => <div />);
-jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as object),
-  unix: () => ({
-    isAfter: () => false,
-    fromNow: () => '3 hours ago',
-  }),
-}));
+vi.mock('../../../api');
+vi.mock('react-markdown', () => () => <div />);
+vi.mock('moment', async () => {
+  const actual = await vi.importActual<typeof import('moment')>('moment');
+  return {
+    __esModule: true,
+    ...actual,
+    default: actual.default,
+    unix: () => ({
+      isAfter: () => false,
+      fromNow: () => '3 hours ago',
+    }),
+  };
+});
 
 const getMockSecurityReport = (fixtureId: string): SecurityReport => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -24,7 +29,7 @@ const getMockSecurityReport = (fixtureId: string): SecurityReport => {
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -52,7 +57,7 @@ describe('SecurityModal', () => {
 
   it('creates snapshot', async () => {
     const mockReport = getMockSecurityReport('1');
-    mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+    vi.mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
 
     const { asFragment } = render(
       <Router>
@@ -71,7 +76,7 @@ describe('SecurityModal', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockReport = getMockSecurityReport('2');
-      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+      vi.mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
 
       render(
         <Router>
@@ -95,7 +100,7 @@ describe('SecurityModal', () => {
 
     it('opens modal', async () => {
       const mockReport = getMockSecurityReport('3');
-      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+      vi.mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
 
       render(
         <Router>
@@ -131,7 +136,7 @@ describe('SecurityModal', () => {
 
     it('calls again to getSnapshotSecurityReport when version is different', async () => {
       const mockReport = getMockSecurityReport('4');
-      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+      vi.mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
 
       const { rerender } = render(
         <Router>
@@ -171,7 +176,7 @@ describe('SecurityModal', () => {
 
     it('calls to getSnapshotSecurityReport when packageId is different', async () => {
       const mockReport = getMockSecurityReport('5');
-      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+      vi.mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
 
       const { rerender } = render(
         <Router>
@@ -209,7 +214,7 @@ describe('SecurityModal', () => {
 
     it('activates target when report has only one image and one target', async () => {
       const mockReport = getMockSecurityReport('7');
-      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+      vi.mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
 
       render(
         <Router>
@@ -234,7 +239,7 @@ describe('SecurityModal', () => {
 
     it('does not activate target when report has only one image and one target, but not vulnerabilities', async () => {
       const mockReport = getMockSecurityReport('8');
-      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+      vi.mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
 
       render(
         <Router>
@@ -261,7 +266,7 @@ describe('SecurityModal', () => {
 
     it('opens modal', async () => {
       const mockReport = getMockSecurityReport('9');
-      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+      vi.mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
 
       render(
         <Router>

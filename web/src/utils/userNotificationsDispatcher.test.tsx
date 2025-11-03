@@ -2,6 +2,7 @@ import { act, waitFor } from '@testing-library/react';
 
 import { UserNotification } from '../types';
 import userNotificationsDispatcher from './userNotificationsDispatcher';
+import { vi } from 'vitest';
 
 const updateUserNotificationMock = jest.fn();
 
@@ -10,7 +11,7 @@ const notificationSample = {
   body: 'Lorem ipsum',
 };
 
-jest.mock('./notifications.json', () => {
+vi.mock('./notifications.json', () => {
   return {
     notifications: [
       { body: 'Lorem ipsum' },

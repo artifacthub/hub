@@ -1,11 +1,11 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 
 import API from '../../api';
 import { ErrorKind } from '../../types';
 import CreateAnAccount from './CreateAnAccount';
-jest.mock('../../api');
+import { vi } from 'vitest';
+vi.mock('../../api');
 
 const setApiErrorMock = jest.fn();
 
@@ -55,8 +55,8 @@ describe('CreateAnAccount', () => {
     });
 
     it('calls registerUser', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(false);
-      mocked(API).register.mockResolvedValue(null);
+      vi.mocked(API).checkAvailability.mockResolvedValue(false);
+      vi.mocked(API).register.mockResolvedValue(null);
 
       render(<CreateAnAccount {...defaultProps} />);
 
@@ -83,8 +83,8 @@ describe('CreateAnAccount', () => {
     });
 
     it('calls to registerUser after escaping properly password', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(false);
-      mocked(API).register.mockResolvedValue(null);
+      vi.mocked(API).checkAvailability.mockResolvedValue(false);
+      vi.mocked(API).register.mockResolvedValue(null);
 
       render(<CreateAnAccount {...defaultProps} />);
 
@@ -111,8 +111,8 @@ describe('CreateAnAccount', () => {
     });
 
     it('does not call registerUser if alias is not available', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(false);
-      mocked(API).register.mockResolvedValue(null);
+      vi.mocked(API).checkAvailability.mockResolvedValue(false);
+      vi.mocked(API).register.mockResolvedValue(null);
 
       render(<CreateAnAccount {...defaultProps} />);
 
@@ -142,8 +142,8 @@ describe('CreateAnAccount', () => {
 
   describe('when register user fails', () => {
     it('with custom error message', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(false);
-      mocked(API).register.mockRejectedValue({
+      vi.mocked(API).checkAvailability.mockResolvedValue(false);
+      vi.mocked(API).register.mockRejectedValue({
         kind: ErrorKind.Other,
         message: 'custom error',
       });
@@ -171,8 +171,8 @@ describe('CreateAnAccount', () => {
     });
 
     it('default error message', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(false);
-      mocked(API).register.mockRejectedValue({
+      vi.mocked(API).checkAvailability.mockResolvedValue(false);
+      vi.mocked(API).register.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 

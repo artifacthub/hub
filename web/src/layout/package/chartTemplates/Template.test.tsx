@@ -1,12 +1,13 @@
 import { render, screen } from '@testing-library/react';
 
 import Template from './Template';
+import { vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('react-markdown', () => (props: any) => {
+vi.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
-jest.mock('remark-gfm', () => () => <div />);
+vi.mock('remark-gfm', () => () => <div />);
 
 const setIsChangingTemplateMock = jest.fn();
 

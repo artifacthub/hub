@@ -1,15 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
 import { ErrorKind, Stats } from '../../types';
 import HomeView from './index';
-jest.mock('../../api');
-jest.mock('./SearchTip', () => () => <div />);
-jest.mock('../common/SampleQueries', () => () => <div />);
-jest.mock('./RandomPackages', () => () => <div />);
-jest.mock('../../utils/bannerDispatcher', () => ({
+import { vi } from 'vitest';
+vi.mock('../../api');
+vi.mock('./SearchTip', () => () => <div />);
+vi.mock('../common/SampleQueries', () => () => <div />);
+vi.mock('./RandomPackages', () => () => <div />);
+vi.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));
 
@@ -18,7 +18,7 @@ const mockOutletContextData: any = {
   isSearching: false,
 };
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useOutletContext: () => mockOutletContextData,
 }));
@@ -35,7 +35,7 @@ describe('Home index', () => {
 
   it('creates snapshot', async () => {
     const mockStats = getMockStats('1');
-    mocked(API).getStats.mockResolvedValue(mockStats);
+    vi.mocked(API).getStats.mockResolvedValue(mockStats);
 
     const { asFragment } = render(
       <Router>
@@ -54,7 +54,7 @@ describe('Home index', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockStats = getMockStats('2');
-      mocked(API).getStats.mockResolvedValue(mockStats);
+      vi.mocked(API).getStats.mockResolvedValue(mockStats);
 
       render(
         <Router>
@@ -71,7 +71,7 @@ describe('Home index', () => {
 
     it('renders dash symbol when results are 0', async () => {
       const mockStats = getMockStats('4');
-      mocked(API).getStats.mockResolvedValue(mockStats);
+      vi.mocked(API).getStats.mockResolvedValue(mockStats);
 
       render(
         <Router>
@@ -84,7 +84,7 @@ describe('Home index', () => {
     });
 
     it('renders dash symbol when getStats call fails', async () => {
-      mocked(API).getStats.mockRejectedValue({ kind: ErrorKind.Other });
+      vi.mocked(API).getStats.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <Router>
@@ -98,7 +98,7 @@ describe('Home index', () => {
 
     it('renders project definition', async () => {
       const mockStats = getMockStats('5');
-      mocked(API).getStats.mockResolvedValue(mockStats);
+      vi.mocked(API).getStats.mockResolvedValue(mockStats);
 
       render(
         <Router>
@@ -116,7 +116,7 @@ describe('Home index', () => {
   describe('External links', () => {
     it('renders proper links', async () => {
       const mockStats = getMockStats('5');
-      mocked(API).getStats.mockResolvedValue(mockStats);
+      vi.mocked(API).getStats.mockResolvedValue(mockStats);
 
       render(
         <Router>

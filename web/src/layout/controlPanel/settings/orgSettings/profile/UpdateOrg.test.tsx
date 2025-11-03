@@ -2,7 +2,8 @@ import { render, screen } from '@testing-library/react';
 
 import { Organization } from '../../../../../types';
 import UpdateOrg from './UpdateOrg';
-jest.mock('../../../../../api');
+import { vi } from 'vitest';
+vi.mock('../../../../../api');
 
 const getMockOrganization = (fixtureId: string): Organization => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports

@@ -4,11 +4,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { RepositoryKind } from '../../types';
 import Last30DaysViews from './Last30DaysViews';
-jest.mock('react-apexcharts', () => () => <div>Chart</div>);
+import { vi } from 'vitest';
+vi.mock('react-apexcharts', () => () => <div>Chart</div>);
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
   useLocation: () => ({

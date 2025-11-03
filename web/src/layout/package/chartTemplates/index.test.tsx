@@ -1,19 +1,19 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../../api';
 import { ChartTemplatesData, ErrorKind, RepositoryKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ChartTemplatesModal from './index';
-jest.mock('../../../utils/alertDispatcher');
-jest.mock('../../../api');
+import { vi } from 'vitest';
+vi.mock('../../../utils/alertDispatcher');
+vi.mock('../../../api');
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('react-markdown', () => (props: any) => {
+vi.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
-jest.mock('remark-gfm', () => () => <div />);
+vi.mock('remark-gfm', () => () => <div />);
 
 const getMockChartTemplates = (fixtureId: string): ChartTemplatesData => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -22,7 +22,7 @@ const getMockChartTemplates = (fixtureId: string): ChartTemplatesData => {
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -51,7 +51,7 @@ describe('ChartTemplatesModal', () => {
 
   it('creates snapshot', async () => {
     const mockChartTemplates = getMockChartTemplates('1');
-    mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
+    vi.mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
 
     const { asFragment } = render(
       <Router>
@@ -73,7 +73,7 @@ describe('ChartTemplatesModal', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockChartTemplates = getMockChartTemplates('2');
-      mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
+      vi.mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
 
       render(
         <Router>
@@ -91,7 +91,7 @@ describe('ChartTemplatesModal', () => {
 
     it('opens modal', async () => {
       const mockChartTemplates = getMockChartTemplates('3');
-      mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
+      vi.mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
 
       render(
         <Router>
@@ -120,7 +120,7 @@ describe('ChartTemplatesModal', () => {
 
     it('updates path querystring when active template is not available', async () => {
       const mockChartTemplates = getMockChartTemplates('4');
-      mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
+      vi.mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
 
       render(
         <Router>
@@ -143,7 +143,7 @@ describe('ChartTemplatesModal', () => {
 
     it('cleans url when templates list is empty', async () => {
       const mockChartTemplates = getMockChartTemplates('8');
-      mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
+      vi.mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
 
       render(
         <Router>
@@ -161,7 +161,7 @@ describe('ChartTemplatesModal', () => {
 
     it('does not call again to getChartTemplates to open modal when package is the same', async () => {
       const mockChartTemplates = getMockChartTemplates('5');
-      mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
+      vi.mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
 
       render(
         <Router>
@@ -200,7 +200,7 @@ describe('ChartTemplatesModal', () => {
   describe('displays alert', () => {
     it('when package has not any templates', async () => {
       const mockChartTemplates = getMockChartTemplates('6');
-      mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
+      vi.mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
 
       render(
         <Router>
@@ -221,7 +221,7 @@ describe('ChartTemplatesModal', () => {
 
     it('when available templates are not tpl or yaml', async () => {
       const mockChartTemplates = getMockChartTemplates('7');
-      mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
+      vi.mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
 
       render(
         <Router>
@@ -242,7 +242,7 @@ describe('ChartTemplatesModal', () => {
 
     describe('when fails', () => {
       it('on NotFound', async () => {
-        mocked(API).getChartTemplates.mockRejectedValue({
+        vi.mocked(API).getChartTemplates.mockRejectedValue({
           kind: ErrorKind.NotFound,
         });
 
@@ -266,7 +266,7 @@ describe('ChartTemplatesModal', () => {
       });
 
       it('default error', async () => {
-        mocked(API).getChartTemplates.mockRejectedValue({
+        vi.mocked(API).getChartTemplates.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 
@@ -308,7 +308,7 @@ describe('ChartTemplatesModal', () => {
   describe('closes modal', () => {
     it('when a new pkg is open', async () => {
       const mockChartTemplates = getMockChartTemplates('9');
-      mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
+      vi.mocked(API).getChartTemplates.mockResolvedValue(mockChartTemplates);
 
       const { rerender } = render(
         <Router>

@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 
 import SubscriptionsSection from './index';
-jest.mock('./packages', () => () => <div />);
-jest.mock('./repositories', () => () => <div />);
+import { vi } from 'vitest';
+vi.mock('./packages', () => () => <div />);
+vi.mock('./repositories', () => () => <div />);
 
 const defaultProps = {
   onAuthError: jest.fn(),

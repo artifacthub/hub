@@ -1,14 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { MdImage } from 'react-icons/md';
 
 import API from '../../api';
 import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import InputFileField from './InputFileField';
-jest.mock('../../api');
-jest.mock('../../utils/alertDispatcher');
+import { vi } from 'vitest';
+vi.mock('../../api');
+vi.mock('../../utils/alertDispatcher');
 
 const onImageChangeMock = jest.fn();
 const onAuthErrorMock = jest.fn();
@@ -47,7 +47,7 @@ describe('InputFileField', () => {
   });
 
   it('calls saveImage to click saveOriginalBtn button', async () => {
-    mocked(API).saveImage.mockResolvedValue({ imageId: '16782' });
+    vi.mocked(API).saveImage.mockResolvedValue({ imageId: '16782' });
     render(<InputFileField {...defaultProps} />);
     const input = screen.getByLabelText('message');
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });
@@ -65,7 +65,7 @@ describe('InputFileField', () => {
   });
 
   it('calls alertDispatcher when an error occurred to save image', async () => {
-    mocked(API).saveImage.mockRejectedValue({ kind: ErrorKind.Other });
+    vi.mocked(API).saveImage.mockRejectedValue({ kind: ErrorKind.Other });
     render(<InputFileField {...defaultProps} />);
     const input = screen.getByLabelText('message');
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });
@@ -86,7 +86,7 @@ describe('InputFileField', () => {
   });
 
   it('calls onAuthError when UnauthorizedError is returned', async () => {
-    mocked(API).saveImage.mockRejectedValue({
+    vi.mocked(API).saveImage.mockRejectedValue({
       kind: ErrorKind.Unauthorized,
     });
     render(<InputFileField {...defaultProps} />);
@@ -105,7 +105,7 @@ describe('InputFileField', () => {
   });
 
   it('calls alertDispatcher when file is not an image', async () => {
-    mocked(API).saveImage.mockResolvedValue({ imageId: '16782' });
+    vi.mocked(API).saveImage.mockResolvedValue({ imageId: '16782' });
     render(<InputFileField {...defaultProps} />);
     const input = screen.getByLabelText('message');
     const file = new File(['(text)'], 'text.txt', { type: 'text/text' });

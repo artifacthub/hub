@@ -1,19 +1,24 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 
 import API from '../../../../../api';
 import { APIKey, ErrorKind } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import Card from './Card';
-jest.mock('../../../../../api');
-jest.mock('../../../../../utils/alertDispatcher');
-jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as object),
-  unix: () => ({
-    format: () => '2020/06/18 16:35:39 (+00:00)',
-  }),
-}));
+import { vi } from 'vitest';
+vi.mock('../../../../../api');
+vi.mock('../../../../../utils/alertDispatcher');
+vi.mock('moment', async () => {
+  const actual = await vi.importActual<typeof import('moment')>('moment');
+  return {
+    __esModule: true,
+    ...actual,
+    default: actual.default,
+    unix: () => ({
+      format: () => '2020/06/18 16:35:39 (+00:00)',
+    }),
+  };
+});
 
 const APIKeyMock: APIKey = {
   apiKeyId: 'bf28013f-610e-4691-80a2-bd3a673c4b3f',
@@ -89,7 +94,7 @@ describe('API key Card - API keys section', () => {
 
   describe('on deleteAPIKey error', () => {
     it('displays generic error', async () => {
-      mocked(API).deleteAPIKey.mockRejectedValue({
+      vi.mocked(API).deleteAPIKey.mockRejectedValue({
         kind: ErrorKind.Other,
       });
       render(<Card {...defaultProps} />);
@@ -115,7 +120,7 @@ describe('API key Card - API keys section', () => {
     });
 
     it('calls onAuthError', async () => {
-      mocked(API).deleteAPIKey.mockRejectedValue({
+      vi.mocked(API).deleteAPIKey.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
       render(<Card {...defaultProps} />);

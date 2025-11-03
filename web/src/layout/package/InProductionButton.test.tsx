@@ -1,6 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
@@ -8,8 +7,9 @@ import { AppCtx } from '../../context/AppCtx';
 import { ErrorKind, Organization } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import InProductionButton from './InProductionButton';
-jest.mock('../../api');
-jest.mock('../../utils/alertDispatcher');
+import { vi } from 'vitest';
+vi.mock('../../api');
+vi.mock('../../utils/alertDispatcher');
 
 const mockDispatch = jest.fn();
 
@@ -90,7 +90,7 @@ describe('InProductionButton', () => {
 
   it('creates snapshot', async () => {
     const mockProductionUsage = getMockProductionUsage('1');
-    mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
+    vi.mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -114,7 +114,7 @@ describe('InProductionButton', () => {
     describe('when user is signed in', () => {
       it('renders component', async () => {
         const mockProductionUsage = getMockProductionUsage('2');
-        mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
+        vi.mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -168,7 +168,7 @@ describe('InProductionButton', () => {
       });
 
       it('renders empty menu when any orgs', async () => {
-        mocked(API).getProductionUsage.mockResolvedValue([]);
+        vi.mocked(API).getProductionUsage.mockResolvedValue([]);
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -202,8 +202,8 @@ describe('InProductionButton', () => {
 
       it("deletes org from pkg's production users list", async () => {
         const mockProductionUsage = getMockProductionUsage('3');
-        mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
-        mocked(API).deleteProductionUsage.mockResolvedValue(null);
+        vi.mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
+        vi.mocked(API).deleteProductionUsage.mockResolvedValue(null);
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -252,8 +252,8 @@ describe('InProductionButton', () => {
 
       it("adds org to pkg's production users list", async () => {
         const mockProductionUsage = getMockProductionUsage('4');
-        mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
-        mocked(API).addProductionUsage.mockResolvedValue(null);
+        vi.mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
+        vi.mocked(API).addProductionUsage.mockResolvedValue(null);
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -303,7 +303,7 @@ describe('InProductionButton', () => {
 
     describe('when getProductionUsage fails', () => {
       it('with any error', async () => {
-        mocked(API).getProductionUsage.mockRejectedValue({ kind: ErrorKind.Other });
+        vi.mocked(API).getProductionUsage.mockRejectedValue({ kind: ErrorKind.Other });
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -335,7 +335,7 @@ describe('InProductionButton', () => {
       });
 
       it('when user is not authorized', async () => {
-        mocked(API).getProductionUsage.mockRejectedValue({ kind: ErrorKind.Unauthorized });
+        vi.mocked(API).getProductionUsage.mockRejectedValue({ kind: ErrorKind.Unauthorized });
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -366,8 +366,8 @@ describe('InProductionButton', () => {
     describe('when addProductionUsage fails', () => {
       it('with any error', async () => {
         const mockProductionUsage = getMockProductionUsage('5');
-        mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
-        mocked(API).addProductionUsage.mockRejectedValue({ kind: ErrorKind.Other });
+        vi.mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
+        vi.mocked(API).addProductionUsage.mockRejectedValue({ kind: ErrorKind.Other });
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -417,8 +417,8 @@ describe('InProductionButton', () => {
 
       it('when user is not authorized', async () => {
         const mockProductionUsage = getMockProductionUsage('5');
-        mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
-        mocked(API).addProductionUsage.mockRejectedValue({ kind: ErrorKind.Unauthorized });
+        vi.mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
+        vi.mocked(API).addProductionUsage.mockRejectedValue({ kind: ErrorKind.Unauthorized });
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -462,8 +462,8 @@ describe('InProductionButton', () => {
     describe('when deleteProductionUsage fails', () => {
       it('with any error', async () => {
         const mockProductionUsage = getMockProductionUsage('6');
-        mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
-        mocked(API).deleteProductionUsage.mockRejectedValue({ kind: ErrorKind.Other });
+        vi.mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
+        vi.mocked(API).deleteProductionUsage.mockRejectedValue({ kind: ErrorKind.Other });
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -513,8 +513,8 @@ describe('InProductionButton', () => {
 
       it('when user is not authorized', async () => {
         const mockProductionUsage = getMockProductionUsage('6');
-        mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
-        mocked(API).deleteProductionUsage.mockRejectedValue({ kind: ErrorKind.Unauthorized });
+        vi.mocked(API).getProductionUsage.mockResolvedValue(mockProductionUsage);
+        vi.mocked(API).deleteProductionUsage.mockRejectedValue({ kind: ErrorKind.Unauthorized });
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>

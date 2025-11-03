@@ -1,5 +1,78 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`RepositoryIconLabel > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-none d-md-inline-block"
+  >
+    <div
+      class="d-flex fs-6"
+    >
+      <span
+        class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
+      >
+        <div
+          class="d-flex flex-row align-items-center"
+        >
+          <div
+            aria-hidden="true"
+            class="position-relative _icon_c0e9ad undefined"
+          >
+            <img
+              alt="Icon"
+              class="mw-100 mh-100 iconLight"
+              src="/static/media/helm-chart.svg"
+            />
+            <img
+              alt="Icon"
+              class="mw-100 mh-100 iconDark"
+              src="/static/media/helm-chart-light.svg"
+            />
+          </div>
+          <div
+            class="ms-1 _text_c0e9ad"
+          >
+            Helm chart
+          </div>
+        </div>
+      </span>
+    </div>
+  </div>
+  <div
+    class="d-flex d-md-none fs-6"
+  >
+    <span
+      class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
+    >
+      <div
+        class="d-flex flex-row align-items-center"
+      >
+        <div
+          aria-hidden="true"
+          class="position-relative _icon_c0e9ad undefined"
+        >
+          <img
+            alt="Icon"
+            class="mw-100 mh-100 iconLight"
+            src="/static/media/helm-chart.svg"
+          />
+          <img
+            alt="Icon"
+            class="mw-100 mh-100 iconDark"
+            src="/static/media/helm-chart-light.svg"
+          />
+        </div>
+        <div
+          class="ms-1 _text_c0e9ad"
+        >
+          Helm chart
+        </div>
+      </div>
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`RepositoryIconLabel creates snapshot 1`] = `
 <DocumentFragment>
   <div

@@ -1,16 +1,16 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { mocked } from 'jest-mock';
 import ReactRouter, { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import ControlPanelView from './index';
-jest.mock('../../api');
-jest.mock('./repositories', () => () => <div />);
+import { vi } from 'vitest';
+vi.mock('../../api');
+vi.mock('./repositories', () => () => <div />);
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useSearchParams: () => jest.fn(),
   useParams: jest.fn(),
@@ -71,7 +71,7 @@ describe('ControlPanelView', () => {
   });
 
   it('renders correctly', async () => {
-    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
+    vi.mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
@@ -85,7 +85,7 @@ describe('ControlPanelView', () => {
   it('calls navigate when section is undefined', async () => {
     jest.spyOn(ReactRouter, 'useParams').mockReturnValue({ section: 'non-exist' });
 
-    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
+    vi.mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
@@ -101,7 +101,7 @@ describe('ControlPanelView', () => {
   });
 
   it('renders 3 sections on user context', async () => {
-    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
+    vi.mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
@@ -119,7 +119,7 @@ describe('ControlPanelView', () => {
   });
 
   it('renders 3 sections on org context', async () => {
-    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
+    vi.mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
@@ -153,7 +153,7 @@ describe('ControlPanelView', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
 
-    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
+    vi.mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
@@ -184,7 +184,7 @@ describe('ControlPanelView', () => {
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
-    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
+    vi.mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
@@ -215,7 +215,7 @@ describe('ControlPanelView', () => {
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
-    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
+    vi.mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
@@ -248,7 +248,7 @@ describe('ControlPanelView', () => {
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
-    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
+    vi.mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
@@ -277,7 +277,7 @@ describe('ControlPanelView', () => {
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any);
-    mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
+    vi.mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>

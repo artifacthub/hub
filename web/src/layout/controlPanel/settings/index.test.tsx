@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
 import SettingsSection from './index';
+import { vi } from 'vitest';
 
-jest.mock('./userSettings', () => () => <div>user</div>);
-jest.mock('./orgSettings', () => () => <div>org</div>);
+vi.mock('./userSettings', () => () => <div>user</div>);
+vi.mock('./orgSettings', () => () => <div>org</div>);
 
 const defaultProps = {
   activePage: '1',

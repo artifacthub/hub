@@ -1,13 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 
 import API from '../../../api';
 import { ChartTmplTypeFile } from '../../../types';
 import CompareView from './CompareView';
+import { vi } from 'vitest';
 
-jest.mock('../../../api');
-jest.mock('react-markdown', () => () => <div />);
+vi.mock('../../../api');
+vi.mock('react-markdown', () => () => <div />);
 
 const updateUrlMock = jest.fn();
 const itemScrollMock = jest.fn();
@@ -142,7 +142,7 @@ describe('CompareView', () => {
   });
 
   it('creates snapshot', async () => {
-    mocked(API).getChartTemplates.mockResolvedValue(APIData);
+    vi.mocked(API).getChartTemplates.mockResolvedValue(APIData);
     const { asFragment } = render(<CompareView {...defaultProps} />);
 
     await waitFor(() => {
@@ -155,7 +155,7 @@ describe('CompareView', () => {
 
   describe('Render', () => {
     it('renders component', async () => {
-      mocked(API).getChartTemplates.mockResolvedValue(APIData);
+      vi.mocked(API).getChartTemplates.mockResolvedValue(APIData);
       render(<CompareView {...defaultProps} />);
 
       expect(screen.getByRole('status')).toBeInTheDocument();
@@ -177,7 +177,7 @@ describe('CompareView', () => {
     });
 
     it('search templates', async () => {
-      mocked(API).getChartTemplates.mockResolvedValue(APIData);
+      vi.mocked(API).getChartTemplates.mockResolvedValue(APIData);
       render(<CompareView {...defaultProps} />);
 
       await waitFor(() => {
@@ -197,7 +197,7 @@ describe('CompareView', () => {
     });
 
     it('search templates without result', async () => {
-      mocked(API).getChartTemplates.mockResolvedValue(APIData);
+      vi.mocked(API).getChartTemplates.mockResolvedValue(APIData);
       render(<CompareView {...defaultProps} />);
 
       await waitFor(() => {
@@ -218,7 +218,7 @@ describe('CompareView', () => {
     });
 
     it('clicks expand button', async () => {
-      mocked(API).getChartTemplates.mockResolvedValue(APIData);
+      vi.mocked(API).getChartTemplates.mockResolvedValue(APIData);
       render(<CompareView {...defaultProps} />);
 
       await waitFor(() => {
@@ -238,7 +238,7 @@ describe('CompareView', () => {
     });
 
     it('when no changes found between versions', async () => {
-      mocked(API).getChartTemplates.mockResolvedValue({ templates: [], values: {} });
+      vi.mocked(API).getChartTemplates.mockResolvedValue({ templates: [], values: {} });
       render(<CompareView {...defaultProps} templates={[]} />);
 
       expect(screen.getByRole('status')).toBeInTheDocument();

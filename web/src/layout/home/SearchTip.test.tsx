@@ -3,10 +3,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { SEARH_TIPS } from '../../utils/data';
 import SearchTip from './SearchTip';
+import { vi } from 'vitest';
 
 const mockTip = SEARH_TIPS[0];
 
-jest.mock('lodash/sample', () => () => mockTip);
+vi.mock('lodash/sample', () => () => mockTip);
 
 describe('SearchTip', () => {
   afterEach(() => {

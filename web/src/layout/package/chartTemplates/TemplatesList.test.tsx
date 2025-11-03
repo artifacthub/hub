@@ -3,11 +3,12 @@ import userEvent from '@testing-library/user-event';
 
 import { ChartTemplate } from '../../../types';
 import TemplatesList from './TemplatesList';
+import { vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const isVisibleItemInContainer = require('../../../utils/isVisibleItemInContainer');
 
-jest.mock('../../../utils/isVisibleItemInContainer', () => jest.fn());
+vi.mock('../../../utils/isVisibleItemInContainer', () => jest.fn());
 
 const onTemplateChangeMock = jest.fn();
 const scrollIntoViewMock = jest.fn();

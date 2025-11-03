@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 
 import API from '../../../../../api';
 import { APIKey, ErrorKind } from '../../../../../types';
 import Modal from './Modal';
-jest.mock('../../../../../api');
+import { vi } from 'vitest';
+vi.mock('../../../../../api');
 
 const APIKeyMock: APIKey = {
   apiKeyId: 'bf28013f-610e-4691-80a2-bd3a673c4b3f',
@@ -57,7 +57,7 @@ describe('APIKeyModal - API keys section', () => {
 
   describe('Add API key', () => {
     it('calls add API key', async () => {
-      mocked(API).addAPIKey.mockResolvedValue({
+      vi.mocked(API).addAPIKey.mockResolvedValue({
         secret: '1276576',
         apiKeyId: 'id',
       });
@@ -97,7 +97,7 @@ describe('APIKeyModal - API keys section', () => {
     });
 
     it('displays default Api error', async () => {
-      mocked(API).addAPIKey.mockRejectedValue({
+      vi.mocked(API).addAPIKey.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 
@@ -122,7 +122,7 @@ describe('APIKeyModal - API keys section', () => {
     });
 
     it('calls onAuthError when error is UnauthorizedError', async () => {
-      mocked(API).addAPIKey.mockRejectedValue({
+      vi.mocked(API).addAPIKey.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
       render(<Modal {...defaultProps} />);
@@ -142,7 +142,7 @@ describe('APIKeyModal - API keys section', () => {
 
   describe('Update API key', () => {
     it('calls update API key', async () => {
-      mocked(API).updateAPIKey.mockResolvedValue(null);
+      vi.mocked(API).updateAPIKey.mockResolvedValue(null);
       render(<Modal {...defaultProps} apiKey={APIKeyMock} />);
 
       expect(screen.getByText('Update API key')).toBeInTheDocument();
@@ -161,7 +161,7 @@ describe('APIKeyModal - API keys section', () => {
     });
 
     it('displays default Api error', async () => {
-      mocked(API).updateAPIKey.mockRejectedValue({
+      vi.mocked(API).updateAPIKey.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 
@@ -186,7 +186,7 @@ describe('APIKeyModal - API keys section', () => {
     });
 
     it('calls onAuthError when error is UnauthorizedError', async () => {
-      mocked(API).updateAPIKey.mockRejectedValue({
+      vi.mocked(API).updateAPIKey.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
       render(<Modal {...defaultProps} apiKey={APIKeyMock} />);

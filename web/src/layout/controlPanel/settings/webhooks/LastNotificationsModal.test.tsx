@@ -3,7 +3,8 @@ import userEvent from '@testing-library/user-event';
 
 import { WebhookNotification } from '../../../../types';
 import LastNotificationsModal from './LastNotificationsModal';
-jest.mock('../../../../api');
+import { vi } from 'vitest';
+vi.mock('../../../../api');
 
 const getMockNotifications = (fixtureId: string): WebhookNotification[] => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports

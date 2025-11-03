@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
 import { ErrorKind } from '../../types';
 import UserConfirmation from './UserConfirmation';
-jest.mock('../../api');
+import { vi } from 'vitest';
+vi.mock('../../api');
 
 const defaultProps = {
   emailCode: 'code',
@@ -17,7 +17,7 @@ describe('UserConfirmation', () => {
   });
 
   it('creates snapshot', async () => {
-    mocked(API).verifyEmail.mockResolvedValue(null);
+    vi.mocked(API).verifyEmail.mockResolvedValue(null);
 
     const { asFragment } = render(
       <Router>
@@ -34,7 +34,7 @@ describe('UserConfirmation', () => {
   });
 
   it('when email code is valid', async () => {
-    mocked(API).verifyEmail.mockResolvedValue(null);
+    vi.mocked(API).verifyEmail.mockResolvedValue(null);
 
     render(
       <Router>
@@ -60,7 +60,7 @@ describe('UserConfirmation', () => {
 
   describe('when email code is invalid', () => {
     it('with custom error message', async () => {
-      mocked(API).verifyEmail.mockRejectedValue({
+      vi.mocked(API).verifyEmail.mockRejectedValue({
         kind: ErrorKind.Other,
         message: 'custom error',
       });
@@ -78,7 +78,7 @@ describe('UserConfirmation', () => {
     });
 
     it('Code has expired', async () => {
-      mocked(API).verifyEmail.mockRejectedValue({
+      vi.mocked(API).verifyEmail.mockRejectedValue({
         kind: ErrorKind.Other,
         message: 'email verification code has expired.',
       });
@@ -97,7 +97,7 @@ describe('UserConfirmation', () => {
     });
 
     it('default error message', async () => {
-      mocked(API).verifyEmail.mockRejectedValue({
+      vi.mocked(API).verifyEmail.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 

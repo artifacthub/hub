@@ -1,16 +1,16 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
 import { ErrorKind } from '../../types';
 import LogIn from './LogIn';
-jest.mock('../../api');
+import { vi } from 'vitest';
+vi.mock('../../api');
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -56,7 +56,7 @@ describe('LogIn', () => {
     });
 
     it('updates all fields and calls login', async () => {
-      mocked(API).login.mockResolvedValue('true');
+      vi.mocked(API).login.mockResolvedValue('true');
 
       render(
         <Router>
@@ -88,7 +88,7 @@ describe('LogIn', () => {
     });
 
     it('display UnauthorizedError', async () => {
-      mocked(API).login.mockRejectedValue({
+      vi.mocked(API).login.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -122,7 +122,7 @@ describe('LogIn', () => {
     });
 
     it('with custom error message', async () => {
-      mocked(API).login.mockRejectedValue({
+      vi.mocked(API).login.mockRejectedValue({
         kind: ErrorKind.Other,
         message: 'Password not provided',
       });
@@ -157,7 +157,7 @@ describe('LogIn', () => {
     });
 
     it('displays common login error', async () => {
-      mocked(API).login.mockRejectedValue({
+      vi.mocked(API).login.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 

@@ -2,20 +2,26 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Content from './Content';
-jest.mock('../../../api');
+import { vi } from 'vitest';
+vi.mock('../../../api');
 
-jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as object),
-  unix: () => ({
-    isAfter: () => false,
-    fromNow: () => '3 hours ago',
-    format: () => '7 Oct, 2020',
-  }),
-}));
+vi.mock('moment', async () => {
+  const actual = await vi.importActual<typeof import('moment')>('moment');
+  return {
+    __esModule: true,
+    ...actual,
+    default: actual.default,
+    unix: () => ({
+      isAfter: () => false,
+      fromNow: () => '3 hours ago',
+      format: () => '7 Oct, 2020',
+    }),
+  };
+});
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));

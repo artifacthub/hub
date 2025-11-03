@@ -3,15 +3,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { RepositoryKind } from '../../../types';
 import Modal from './Modal';
+import { vi } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('react-markdown', () => (props: any) => {
+vi.mock('react-markdown', () => (props: any) => {
   return <>{props.children}</>;
 });
-jest.mock('remark-gfm', () => () => <div />);
+vi.mock('remark-gfm', () => () => <div />);
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));

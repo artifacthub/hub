@@ -3,10 +3,11 @@ import userEvent from '@testing-library/user-event';
 
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import RepositoryInfo from './RepositoryInfo';
+import { vi } from 'vitest';
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));

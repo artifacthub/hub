@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../../api';
 import { ErrorKind } from '../../../types';
 import UserInvitation from './UserInvitation';
-jest.mock('../../../api');
+import { vi } from 'vitest';
+vi.mock('../../../api');
 
 const defaultProps = {
   orgToConfirm: 'orgTest',
@@ -17,7 +17,7 @@ describe('UserInvitation', () => {
   });
 
   it('creates snapshot', async () => {
-    mocked(API).confirmOrganizationMembership.mockResolvedValue(null);
+    vi.mocked(API).confirmOrganizationMembership.mockResolvedValue(null);
 
     const { asFragment } = render(
       <Router>
@@ -34,7 +34,7 @@ describe('UserInvitation', () => {
   });
 
   it('when org name is valid', async () => {
-    mocked(API).confirmOrganizationMembership.mockResolvedValue(null);
+    vi.mocked(API).confirmOrganizationMembership.mockResolvedValue(null);
 
     render(
       <Router>
@@ -60,7 +60,7 @@ describe('UserInvitation', () => {
 
   describe('when email code is invalid', () => {
     it('with message', async () => {
-      mocked(API).confirmOrganizationMembership.mockRejectedValue({
+      vi.mocked(API).confirmOrganizationMembership.mockRejectedValue({
         kind: ErrorKind.Other,
         message: 'The request sent was not valid',
       });
@@ -79,7 +79,7 @@ describe('UserInvitation', () => {
     });
 
     it('UnauthorizedError', async () => {
-      mocked(API).confirmOrganizationMembership.mockRejectedValue({
+      vi.mocked(API).confirmOrganizationMembership.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -101,7 +101,7 @@ describe('UserInvitation', () => {
     });
 
     it('without message', async () => {
-      mocked(API).confirmOrganizationMembership.mockRejectedValue({
+      vi.mocked(API).confirmOrganizationMembership.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 

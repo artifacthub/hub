@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 
 import API from '../../api';
 import ResetPassword from './ResetPassword';
-jest.mock('../../api');
+import { vi } from 'vitest';
+vi.mock('../../api');
 
 describe('ResetPassword visibleTitle', () => {
   afterEach(() => {
@@ -12,7 +12,7 @@ describe('ResetPassword visibleTitle', () => {
   });
 
   it('creates snapshot', () => {
-    mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
+    vi.mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
 
     const { asFragment } = render(<ResetPassword visibleTitle />);
     expect(asFragment()).toMatchSnapshot();
@@ -34,7 +34,7 @@ describe('ResetPassword visibleTitle', () => {
     });
 
     it('requests password reset code', async () => {
-      mocked(API).requestPasswordResetCode.mockResolvedValue(null);
+      vi.mocked(API).requestPasswordResetCode.mockResolvedValue(null);
 
       render(<ResetPassword visibleTitle />);
 
@@ -56,7 +56,7 @@ describe('ResetPassword visibleTitle', () => {
     });
 
     it('calls onFinish after requesting code if defined', async () => {
-      mocked(API).requestPasswordResetCode.mockResolvedValue(null);
+      vi.mocked(API).requestPasswordResetCode.mockResolvedValue(null);
       const onFinishMock = jest.fn();
 
       render(<ResetPassword visibleTitle onFinish={onFinishMock} />);

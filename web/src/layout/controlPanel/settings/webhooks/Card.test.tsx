@@ -1,6 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../../../api';
@@ -8,8 +7,9 @@ import { AppCtx } from '../../../../context/AppCtx';
 import { ErrorKind, Webhook } from '../../../../types';
 import alertDispatcher from '../../../../utils/alertDispatcher';
 import WebhookCard from './Card';
-jest.mock('../../../../api');
-jest.mock('../../../../utils/alertDispatcher');
+import { vi } from 'vitest';
+vi.mock('../../../../api');
+vi.mock('../../../../utils/alertDispatcher');
 
 const getmockWebhook = (fixtureId: string): Webhook => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -136,7 +136,7 @@ describe('WebhookCard', () => {
 
   describe('on webhook deletion', () => {
     it('when is successful', async () => {
-      mocked(API).deleteWebhook.mockResolvedValue(null);
+      vi.mocked(API).deleteWebhook.mockResolvedValue(null);
 
       const mockWebhook = getmockWebhook('5');
 
@@ -172,7 +172,7 @@ describe('WebhookCard', () => {
     });
 
     it('when context is org', async () => {
-      mocked(API).deleteWebhook.mockResolvedValue(null);
+      vi.mocked(API).deleteWebhook.mockResolvedValue(null);
 
       const mockWebhook = getmockWebhook('6');
 
@@ -207,7 +207,7 @@ describe('WebhookCard', () => {
 
     describe('when fails', () => {
       it('on UnauthorizedError', async () => {
-        mocked(API).deleteWebhook.mockRejectedValue({
+        vi.mocked(API).deleteWebhook.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
 
@@ -238,7 +238,7 @@ describe('WebhookCard', () => {
       });
 
       it('default error', async () => {
-        mocked(API).deleteWebhook.mockRejectedValue({ kind: ErrorKind.Other });
+        vi.mocked(API).deleteWebhook.mockRejectedValue({ kind: ErrorKind.Other });
 
         const mockWebhook = getmockWebhook('8');
 

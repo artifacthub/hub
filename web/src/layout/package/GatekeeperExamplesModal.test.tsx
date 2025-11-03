@@ -3,15 +3,16 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import GatekeeperExamplesModal from './GatekeeperExamplesModal';
+import { vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const isVisibleItemInContainer = require('../../utils/isVisibleItemInContainer');
 
-jest.mock('../../utils/isVisibleItemInContainer', () => jest.fn());
+vi.mock('../../utils/isVisibleItemInContainer', () => jest.fn());
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));

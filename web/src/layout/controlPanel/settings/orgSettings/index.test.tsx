@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
 import OrganizationSettingsSection from './index';
+import { vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('../../../common/SectionPanel', () => (props: any) => <div>{props.defaultSection}</div>);
+vi.mock('../../../common/SectionPanel', () => (props: any) => <div>{props.defaultSection}</div>);
 
 const defaultProps = {
   activePage: null,

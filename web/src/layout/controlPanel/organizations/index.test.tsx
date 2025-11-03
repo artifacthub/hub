@@ -1,13 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind } from '../../../types';
 import OrganizationsSection from './index';
-jest.mock('../../../api');
+import { vi } from 'vitest';
+vi.mock('../../../api');
 
 const getMockOrganizations = (fixtureId: string) => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -45,7 +45,7 @@ describe('Organizations section index', () => {
 
   it('creates snapshot', async () => {
     const mockOrganizations = getMockOrganizations('1');
-    mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+    vi.mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -68,7 +68,7 @@ describe('Organizations section index', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockOrganizations = getMockOrganizations('2');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+      vi.mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -89,7 +89,7 @@ describe('Organizations section index', () => {
 
     it('displays no data component when no organizations', async () => {
       const mockOrganizations = getMockOrganizations('4');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+      vi.mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -108,7 +108,7 @@ describe('Organizations section index', () => {
 
     it('renders organization form when add first org button is clicked', async () => {
       const mockOrganizations = getMockOrganizations('5');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+      vi.mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -137,7 +137,7 @@ describe('Organizations section index', () => {
 
     it('renders organization form when add org button is clicked', async () => {
       const mockOrganizations = getMockOrganizations('6');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+      vi.mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -166,7 +166,7 @@ describe('Organizations section index', () => {
 
   it('renders 2 organization cards', async () => {
     const mockOrganizations = getMockOrganizations('6');
-    mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+    vi.mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
     render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -183,7 +183,7 @@ describe('Organizations section index', () => {
 
   describe('on getUserOrganizations error', () => {
     it('UnauthorizedError', async () => {
-      mocked(API).getUserOrganizations.mockRejectedValue({
+      vi.mocked(API).getUserOrganizations.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -201,7 +201,7 @@ describe('Organizations section index', () => {
     });
 
     it('rest API errors - displays generic error message', async () => {
-      mocked(API).getUserOrganizations.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
+      vi.mocked(API).getUserOrganizations.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>

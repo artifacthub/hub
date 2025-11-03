@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { RepositoryKind, Signature } from '../../types';
 import SignKeyInfo from './SignKeyInfo';
+import { vi } from 'vitest';
 
 const defaultProps = {
   signed: true,
@@ -17,7 +18,7 @@ const defaultProps = {
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
   useLocation: () => ({

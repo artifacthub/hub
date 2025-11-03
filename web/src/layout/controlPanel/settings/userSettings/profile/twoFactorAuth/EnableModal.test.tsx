@@ -1,14 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 
 import API from '../../../../../../api';
 import { ErrorKind, TwoFactorAuth } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import EnableTwoFactorAuthenticationModal from './EnableModal';
-jest.mock('../../../../../../api');
+import { vi } from 'vitest';
+vi.mock('../../../../../../api');
 
-jest.mock('../../../../../../utils/alertDispatcher');
+vi.mock('../../../../../../utils/alertDispatcher');
 
 const scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
@@ -57,8 +57,8 @@ describe('EnableModal', () => {
     });
 
     it('opens modal', async () => {
-      mocked(API).setUpTFA.mockResolvedValue(setUpMock);
-      mocked(API).enableTFA.mockResolvedValue(null);
+      vi.mocked(API).setUpTFA.mockResolvedValue(setUpMock);
+      vi.mocked(API).enableTFA.mockResolvedValue(null);
 
       render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
@@ -121,7 +121,7 @@ describe('EnableModal', () => {
   describe('on error', () => {
     describe('when setUpTFA call fails', () => {
       it('default error', async () => {
-        mocked(API).setUpTFA.mockRejectedValue({ kind: ErrorKind.Other });
+        vi.mocked(API).setUpTFA.mockRejectedValue({ kind: ErrorKind.Other });
 
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
@@ -142,7 +142,7 @@ describe('EnableModal', () => {
       });
 
       it('custom error', async () => {
-        mocked(API).setUpTFA.mockRejectedValue({ kind: ErrorKind.Other, message: 'custom error' });
+        vi.mocked(API).setUpTFA.mockRejectedValue({ kind: ErrorKind.Other, message: 'custom error' });
 
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
@@ -163,7 +163,7 @@ describe('EnableModal', () => {
       });
 
       it('unauthorized', async () => {
-        mocked(API).setUpTFA.mockRejectedValue({ kind: ErrorKind.Unauthorized });
+        vi.mocked(API).setUpTFA.mockRejectedValue({ kind: ErrorKind.Unauthorized });
 
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
@@ -182,8 +182,8 @@ describe('EnableModal', () => {
 
     describe('when enableTFA fails', () => {
       it('default error', async () => {
-        mocked(API).setUpTFA.mockResolvedValue(setUpMock);
-        mocked(API).enableTFA.mockRejectedValue({ kind: ErrorKind.Other });
+        vi.mocked(API).setUpTFA.mockResolvedValue(setUpMock);
+        vi.mocked(API).enableTFA.mockRejectedValue({ kind: ErrorKind.Other });
 
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
@@ -214,8 +214,8 @@ describe('EnableModal', () => {
       });
 
       it('custom error', async () => {
-        mocked(API).setUpTFA.mockResolvedValue(setUpMock);
-        mocked(API).enableTFA.mockRejectedValue({ kind: ErrorKind.Other, message: 'custom error' });
+        vi.mocked(API).setUpTFA.mockResolvedValue(setUpMock);
+        vi.mocked(API).enableTFA.mockRejectedValue({ kind: ErrorKind.Other, message: 'custom error' });
 
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 
@@ -246,8 +246,8 @@ describe('EnableModal', () => {
       });
 
       it('unauthorized', async () => {
-        mocked(API).setUpTFA.mockResolvedValue(setUpMock);
-        mocked(API).enableTFA.mockRejectedValue({ kind: ErrorKind.Unauthorized });
+        vi.mocked(API).setUpTFA.mockResolvedValue(setUpMock);
+        vi.mocked(API).enableTFA.mockRejectedValue({ kind: ErrorKind.Unauthorized });
 
         render(<EnableTwoFactorAuthenticationModal {...defaultProps} />);
 

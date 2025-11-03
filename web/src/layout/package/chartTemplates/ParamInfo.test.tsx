@@ -2,8 +2,9 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import ParamInfo from './ParamInfo';
-jest.mock('react-markdown', () => () => <div />);
-jest.mock('remark-gfm', () => () => <div />);
+import { vi } from 'vitest';
+vi.mock('react-markdown', () => () => <div />);
+vi.mock('remark-gfm', () => () => <div />);
 
 const defaultProps = {
   element: <span>element</span>,

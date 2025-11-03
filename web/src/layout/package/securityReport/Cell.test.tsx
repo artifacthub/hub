@@ -3,8 +3,9 @@ import userEvent from '@testing-library/user-event';
 
 import { VulnerabilitySeverity } from '../../../types';
 import SecurityCell from './Cell';
+import { vi } from 'vitest';
 
-jest.mock('react-markdown', () => () => <div />);
+vi.mock('react-markdown', () => () => <div />);
 
 const mockSetVisibleVulnerability = jest.fn();
 const scrollIntoViewMock = jest.fn();

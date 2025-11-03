@@ -4,9 +4,10 @@ import ReactRouter, { BrowserRouter as Router } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
 import Navbar from './Navbar';
-jest.mock('./MobileSettings', () => () => <div />);
+import { vi } from 'vitest';
+vi.mock('./MobileSettings', () => () => <div />);
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useSearchParams: () => jest.fn(),
 }));

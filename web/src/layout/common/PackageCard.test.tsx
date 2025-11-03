@@ -6,7 +6,8 @@ import { Package } from '../../types';
 import calculateDiffInYears from '../../utils/calculateDiffInYears';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import PackageCard from './PackageCard';
-jest.mock('../../utils/calculateDiffInYears');
+import { vi } from 'vitest';
+vi.mock('../../utils/calculateDiffInYears');
 
 const getMockPackage = (fixtureId: string): Package => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -15,7 +16,7 @@ const getMockPackage = (fixtureId: string): Package => {
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));

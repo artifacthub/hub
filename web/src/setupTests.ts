@@ -31,3 +31,7 @@ const jestShim = Object.assign(Object.create(null), vi, {
 });
 
 (globalThis as Record<string, unknown>).jest = jestShim;
+
+vi.mock('jest-mock', () => ({
+  mocked: vi.mocked,
+}));

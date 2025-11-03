@@ -2,7 +2,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import OAuth from './OAuth';
-jest.mock('../../api');
+import { vi } from 'vitest';
+vi.mock('../../api');
 
 const setIsLoadingMock = jest.fn();
 

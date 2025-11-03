@@ -1,14 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind } from '../../../types';
 import Repository from './index';
-jest.mock('../../../api');
-jest.mock('../../../utils/minutesToNearestInterval', () => () => 3);
+import { vi } from 'vitest';
+vi.mock('../../../api');
+vi.mock('../../../utils/minutesToNearestInterval', () => () => 3);
 
 const getMockRepository = (fixtureId: string) => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -25,7 +25,7 @@ const defaultProps = {
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -54,7 +54,7 @@ describe('Repository index', () => {
 
   it('creates snapshot', async () => {
     const mockRepository = getMockRepository('1');
-    mocked(API).searchRepositories.mockResolvedValue(mockRepository);
+    vi.mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -76,7 +76,7 @@ describe('Repository index', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockRepository = getMockRepository('2');
-      mocked(API).searchRepositories.mockResolvedValue(mockRepository);
+      vi.mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -98,7 +98,7 @@ describe('Repository index', () => {
 
     it('displays no data component when no repositories', async () => {
       const mockRepository = getMockRepository('4');
-      mocked(API).searchRepositories.mockResolvedValue(mockRepository);
+      vi.mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -116,7 +116,7 @@ describe('Repository index', () => {
 
     it('renders list with 3 repositories', async () => {
       const mockRepository = getMockRepository('5');
-      mocked(API).searchRepositories.mockResolvedValue(mockRepository);
+      vi.mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -135,7 +135,7 @@ describe('Repository index', () => {
 
     it('calls getRepositories to click Refresh button', async () => {
       const mockRepository = getMockRepository('6');
-      mocked(API).searchRepositories.mockResolvedValue(mockRepository);
+      vi.mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -155,7 +155,7 @@ describe('Repository index', () => {
     it('calls unselectOrg when repo name is defined and is not into repositories list', async () => {
       const dispatchMock = jest.fn();
       const mockRepository = getMockRepository('7');
-      mocked(API).searchRepositories.mockResolvedValue(mockRepository);
+      vi.mocked(API).searchRepositories.mockResolvedValue(mockRepository);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: dispatchMock }}>
@@ -173,7 +173,7 @@ describe('Repository index', () => {
     it('loads first page when not repositories in a different one', async () => {
       const mockRepository = getMockRepository('8');
 
-      mocked(API).searchRepositories.mockResolvedValue(mockRepository).mockResolvedValueOnce({
+      vi.mocked(API).searchRepositories.mockResolvedValue(mockRepository).mockResolvedValueOnce({
         items: [],
         paginationTotalCount: '3',
       });
@@ -196,7 +196,7 @@ describe('Repository index', () => {
 
   describe('when searchRepositories fails', () => {
     it('on UnauthorizedError', async () => {
-      mocked(API).searchRepositories.mockRejectedValue({
+      vi.mocked(API).searchRepositories.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -218,7 +218,7 @@ describe('Repository index', () => {
     });
 
     it('on error different to UnauthorizedError', async () => {
-      mocked(API).searchRepositories.mockRejectedValue({ kind: ErrorKind.Other });
+      vi.mocked(API).searchRepositories.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>

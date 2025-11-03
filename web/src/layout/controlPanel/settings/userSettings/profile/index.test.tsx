@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
 import { ErrorKind, Profile } from '../../../../../types';
 import UserSettings from './index';
-jest.mock('../../../../../api');
+import { vi } from 'vitest';
+vi.mock('../../../../../api');
 
 const getMockProfile = (fixtureId: string): Profile => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -43,7 +43,7 @@ describe('User settings index', () => {
 
   it('creates snapshot', async () => {
     const mockProfile = getMockProfile('1');
-    mocked(API).getUserProfile.mockResolvedValue(mockProfile);
+    vi.mocked(API).getUserProfile.mockResolvedValue(mockProfile);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -64,7 +64,7 @@ describe('User settings index', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockProfile = getMockProfile('2');
-      mocked(API).getUserProfile.mockResolvedValue(mockProfile);
+      vi.mocked(API).getUserProfile.mockResolvedValue(mockProfile);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -90,7 +90,7 @@ describe('User settings index', () => {
 
   describe('on getUserProfile error', () => {
     it('does not render profile information section if error is different to UnauthorizedError', async () => {
-      mocked(API).getUserProfile.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
+      vi.mocked(API).getUserProfile.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -112,7 +112,7 @@ describe('User settings index', () => {
     });
 
     it('calls onAuthError if error is UnauthorizedError', async () => {
-      mocked(API).getUserProfile.mockRejectedValue({
+      vi.mocked(API).getUserProfile.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 

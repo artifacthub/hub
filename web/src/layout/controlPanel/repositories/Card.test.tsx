@@ -5,14 +5,15 @@ import moment from 'moment';
 import { AppCtx } from '../../../context/AppCtx';
 import { Repository } from '../../../types';
 import Card from './Card';
-jest.mock('../../../api');
-jest.mock('../../../utils/alertDispatcher');
-jest.mock('../../../utils/minutesToNearestInterval', () => () => 3);
-jest.mock('./TransferModal', () => () => <div>Transfer repository</div>);
+import { vi } from 'vitest';
+vi.mock('../../../api');
+vi.mock('../../../utils/alertDispatcher');
+vi.mock('../../../utils/minutesToNearestInterval', () => () => 3);
+vi.mock('./TransferModal', () => () => <div>Transfer repository</div>);
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));

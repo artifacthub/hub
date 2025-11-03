@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
 import { ErrorKind } from '../../types';
 import ResetPasswordModal from './ResetPasswordModal';
-jest.mock('../../api');
+import { vi } from 'vitest';
+vi.mock('../../api');
 
 const scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
@@ -17,7 +17,7 @@ describe('ResetPasswordModal', () => {
   });
 
   it('creates snapshot', async () => {
-    mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
+    vi.mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
 
     const { asFragment } = render(
       <Router>
@@ -35,7 +35,7 @@ describe('ResetPasswordModal', () => {
 
   describe('Render', () => {
     it('renders component', async () => {
-      mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
+      vi.mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
 
       render(
         <Router>
@@ -61,7 +61,7 @@ describe('ResetPasswordModal', () => {
 
     describe('when verifyPasswordResetCode fails', () => {
       it('if code has expired', async () => {
-        mocked(API).verifyPasswordResetCode.mockRejectedValue({
+        vi.mocked(API).verifyPasswordResetCode.mockRejectedValue({
           kind: ErrorKind.Gone,
         });
 
@@ -87,7 +87,7 @@ describe('ResetPasswordModal', () => {
       });
 
       it('custom error', async () => {
-        mocked(API).verifyPasswordResetCode.mockRejectedValue({
+        vi.mocked(API).verifyPasswordResetCode.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'custom error',
         });
@@ -106,7 +106,7 @@ describe('ResetPasswordModal', () => {
       });
 
       it('default error', async () => {
-        mocked(API).verifyPasswordResetCode.mockRejectedValue({
+        vi.mocked(API).verifyPasswordResetCode.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 
@@ -125,8 +125,8 @@ describe('ResetPasswordModal', () => {
     });
 
     it('resets password', async () => {
-      mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
-      mocked(API).resetPassword.mockResolvedValue(null);
+      vi.mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
+      vi.mocked(API).resetPassword.mockResolvedValue(null);
 
       render(
         <Router>
@@ -161,8 +161,8 @@ describe('ResetPasswordModal', () => {
 
     describe('when resetPassword fails', () => {
       it('custom error', async () => {
-        mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
-        mocked(API).resetPassword.mockRejectedValue({
+        vi.mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
+        vi.mocked(API).resetPassword.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'custom error',
         });
@@ -194,8 +194,8 @@ describe('ResetPasswordModal', () => {
       });
 
       it('default error', async () => {
-        mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
-        mocked(API).resetPassword.mockRejectedValue({
+        vi.mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
+        vi.mocked(API).resetPassword.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 

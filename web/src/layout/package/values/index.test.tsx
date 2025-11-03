@@ -1,14 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../../api';
 import { ErrorKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import Values from './';
-jest.mock('../../../api');
-jest.mock('../../../utils/alertDispatcher');
+import { vi } from 'vitest';
+vi.mock('../../../api');
+vi.mock('../../../utils/alertDispatcher');
 
 const mockUseNavigate = jest.fn();
 const scrollToMock = jest.fn();
@@ -17,12 +17,12 @@ const itemScrollMock = jest.fn();
 Object.defineProperty(HTMLElement.prototype, 'scroll', { configurable: true, value: itemScrollMock });
 window.HTMLElement.prototype.scrollTo = scrollToMock;
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 
-jest.mock('react-syntax-highlighter', () => () => <div id="line_59">port:</div>);
+vi.mock('react-syntax-highlighter', () => () => <div id="line_59">port:</div>);
 
 const defaultProps = {
   packageId: 'id',
@@ -215,7 +215,7 @@ describe('Values', () => {
   });
 
   it('creates snapshot', async () => {
-    mocked(API).getChartValues.mockResolvedValue(YAMLSample);
+    vi.mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
     const { asFragment } = render(
       <Router>
@@ -233,7 +233,7 @@ describe('Values', () => {
 
   describe('Render', () => {
     it('renders component', async () => {
-      mocked(API).getChartValues.mockResolvedValue(YAMLSample);
+      vi.mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
       render(
         <Router>
@@ -254,7 +254,7 @@ describe('Values', () => {
     });
 
     it('opens modal', async () => {
-      mocked(API).getChartValues.mockResolvedValue(YAMLSample);
+      vi.mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
       render(
         <Router>
@@ -281,7 +281,7 @@ describe('Values', () => {
     });
 
     it('closes modal', async () => {
-      mocked(API).getChartValues.mockResolvedValue(YAMLSample);
+      vi.mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
       render(
         <Router>
@@ -305,7 +305,7 @@ describe('Values', () => {
     });
 
     it('opens modal with empty values', async () => {
-      mocked(API).getChartValues.mockResolvedValue('');
+      vi.mocked(API).getChartValues.mockResolvedValue('');
 
       render(
         <Router>
@@ -323,7 +323,7 @@ describe('Values', () => {
     });
 
     it('calls again to getChartValues when version is different', async () => {
-      mocked(API).getChartValues.mockResolvedValue(YAMLSample);
+      vi.mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
       const { rerender } = render(
         <Router>
@@ -361,7 +361,7 @@ describe('Values', () => {
     });
 
     it('calls again to getChartValues when packageId is different', async () => {
-      mocked(API).getChartValues.mockResolvedValue(YAMLSample);
+      vi.mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
       const { rerender } = render(
         <Router>
@@ -399,7 +399,7 @@ describe('Values', () => {
     });
 
     it('closes modal when a new pkg is open', async () => {
-      mocked(API).getChartValues.mockResolvedValue(YAMLSample);
+      vi.mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
       const { rerender } = render(
         <Router>
@@ -424,7 +424,7 @@ describe('Values', () => {
 
     describe('search', () => {
       it('renders search bar', async () => {
-        mocked(API).getChartValues.mockResolvedValue(YAMLSample);
+        vi.mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
         render(
           <Router>
@@ -455,7 +455,7 @@ describe('Values', () => {
       });
 
       it('clicks option after searching', async () => {
-        mocked(API).getChartValues.mockResolvedValue(YAMLSample);
+        vi.mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
         render(
           <Router>
@@ -488,7 +488,7 @@ describe('Values', () => {
       });
 
       it('goes to correct position when querystring path is defined', async () => {
-        mocked(API).getChartValues.mockResolvedValue(YAMLSample);
+        vi.mocked(API).getChartValues.mockResolvedValue(YAMLSample);
 
         render(
           <Router>
@@ -510,7 +510,7 @@ describe('Values', () => {
 
     describe('when fails', () => {
       it('on NotFound', async () => {
-        mocked(API).getChartValues.mockRejectedValue({
+        vi.mocked(API).getChartValues.mockRejectedValue({
           kind: ErrorKind.NotFound,
         });
 
@@ -539,7 +539,7 @@ describe('Values', () => {
       });
 
       it('default error', async () => {
-        mocked(API).getChartValues.mockRejectedValue({ kind: ErrorKind.Other });
+        vi.mocked(API).getChartValues.mockRejectedValue({ kind: ErrorKind.Other });
 
         render(
           <Router>

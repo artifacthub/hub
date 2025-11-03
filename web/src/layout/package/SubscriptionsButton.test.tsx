@@ -1,6 +1,5 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
@@ -8,8 +7,9 @@ import { AppCtx } from '../../context/AppCtx';
 import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import SubscriptionsButton from './SubscriptionsButton';
-jest.mock('../../api');
-jest.mock('../../utils/alertDispatcher');
+import { vi } from 'vitest';
+vi.mock('../../api');
+vi.mock('../../utils/alertDispatcher');
 
 const defaultProps = {
   packageId: 'id',
@@ -72,7 +72,7 @@ describe('SubscriptionsButton', () => {
   });
 
   it('creates snapshot', async () => {
-    mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
+    vi.mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -92,8 +92,8 @@ describe('SubscriptionsButton', () => {
   describe('Render', () => {
     describe('when user is signed in', () => {
       it('renders component with active New releases notification', async () => {
-        mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
-        mocked(API).deleteSubscription.mockResolvedValue('');
+        vi.mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
+        vi.mocked(API).deleteSubscription.mockResolvedValue('');
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -134,8 +134,8 @@ describe('SubscriptionsButton', () => {
       });
 
       it('renders component with inactive event notifications', async () => {
-        mocked(API).getPackageSubscriptions.mockResolvedValue([]);
-        mocked(API).addSubscription.mockResolvedValue('');
+        vi.mocked(API).getPackageSubscriptions.mockResolvedValue([]);
+        vi.mocked(API).addSubscription.mockResolvedValue('');
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -162,8 +162,8 @@ describe('SubscriptionsButton', () => {
       });
 
       it('calls to addSubscription with securityAlert event', async () => {
-        mocked(API).getPackageSubscriptions.mockResolvedValue([]);
-        mocked(API).addSubscription.mockResolvedValue('');
+        vi.mocked(API).getPackageSubscriptions.mockResolvedValue([]);
+        vi.mocked(API).addSubscription.mockResolvedValue('');
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -190,7 +190,7 @@ describe('SubscriptionsButton', () => {
       });
 
       it('calls getPackageSubscriptions when a new package is rendered', async () => {
-        mocked(API).getPackageSubscriptions.mockResolvedValue([]);
+        vi.mocked(API).getPackageSubscriptions.mockResolvedValue([]);
 
         const { rerender } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -246,7 +246,7 @@ describe('SubscriptionsButton', () => {
       });
 
       it('when getPackageSubscriptions fails', async () => {
-        mocked(API).getPackageSubscriptions.mockRejectedValue({ kind: ErrorKind.Other });
+        vi.mocked(API).getPackageSubscriptions.mockRejectedValue({ kind: ErrorKind.Other });
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -291,8 +291,8 @@ describe('SubscriptionsButton', () => {
 
     describe('when change subscription fails, returns to previous state', () => {
       xit('with active event', async () => {
-        mocked(API).getPackageSubscriptions.mockResolvedValue([]);
-        mocked(API).addSubscription.mockRejectedValue({ kind: ErrorKind.Other });
+        vi.mocked(API).getPackageSubscriptions.mockResolvedValue([]);
+        vi.mocked(API).addSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -344,8 +344,8 @@ describe('SubscriptionsButton', () => {
     });
 
     xit('with inactive event', async () => {
-      mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
-      mocked(API).deleteSubscription.mockRejectedValue({ kind: ErrorKind.Other });
+      vi.mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
+      vi.mocked(API).deleteSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>

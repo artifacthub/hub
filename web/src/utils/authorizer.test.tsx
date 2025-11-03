@@ -1,10 +1,10 @@
 import { waitFor } from '@testing-library/dom';
-import { mocked } from 'jest-mock';
 
 import API from '../api';
 import { AuthorizerAction } from '../types';
 import authorizer from './authorizer';
-jest.mock('../api');
+import { vi } from 'vitest';
+vi.mock('../api');
 
 const allActions: AuthorizerAction[] = [AuthorizerAction.All];
 const onCompletionMock = jest.fn();
@@ -23,7 +23,7 @@ describe('authorizer', () => {
   });
 
   it('calls to getUserAllowedActions when selectedOrg is defined', async () => {
-    mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
+    vi.mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
     authorizer.init('org1');
 
     await waitFor(() => {
@@ -33,7 +33,7 @@ describe('authorizer', () => {
   });
 
   it('calls onCompletion', async () => {
-    mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
+    vi.mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
     authorizer.init('org1');
     authorizer.getAllowedActionsList(onCompletionMock);
 
@@ -46,7 +46,7 @@ describe('authorizer', () => {
 
   describe('to update context', () => {
     it('calls again to getUserAllowedActions when a new org is defined', async () => {
-      mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
+      vi.mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
       authorizer.init('org1');
 
       await waitFor(() => {
@@ -62,7 +62,7 @@ describe('authorizer', () => {
     });
 
     it('does not call getUserAllowedActions again when selected org is the same', async () => {
-      mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
+      vi.mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
       authorizer.init('org1');
 
       await waitFor(() => {
@@ -77,7 +77,7 @@ describe('authorizer', () => {
     });
 
     it('does not call getUserAllowedActions when not selected org', async () => {
-      mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
+      vi.mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
       authorizer.init('org1');
 
       await waitFor(() => {
@@ -92,7 +92,7 @@ describe('authorizer', () => {
     });
 
     it('calls only one getUserAllowedActions when a new org is selected and previously not selected org', async () => {
-      mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
+      vi.mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
       authorizer.init();
       authorizer.updateCtx('org1');
 
@@ -105,7 +105,7 @@ describe('authorizer', () => {
 
   describe('check authorizated actions', () => {
     it('calls getUserAllowedActions when selected org is different to saved one', async () => {
-      mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
+      vi.mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
       authorizer.init('org1');
 
       await waitFor(() => {
@@ -126,7 +126,7 @@ describe('authorizer', () => {
     });
 
     it('returns true when all actions are allowed', async () => {
-      mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
+      vi.mocked(API).getUserAllowedActions.mockResolvedValue(allActions);
       authorizer.init('org1');
 
       await waitFor(() => {

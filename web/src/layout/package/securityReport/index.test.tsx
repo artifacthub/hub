@@ -4,7 +4,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { RepositoryKind } from '../../../types';
 import calculateDiffInYears from '../../../utils/calculateDiffInYears';
 import SecurityReport from './index';
-jest.mock('../../../utils/calculateDiffInYears');
+import { vi } from 'vitest';
+vi.mock('../../../utils/calculateDiffInYears');
 
 const defaultProps = {
   repoKind: RepositoryKind.Helm,
@@ -32,12 +33,12 @@ const defaultProps = {
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 
-jest.mock('react-markdown', () => () => <div />);
+vi.mock('react-markdown', () => () => <div />);
 
 describe('SecurityReport', () => {
   beforeEach(() => {

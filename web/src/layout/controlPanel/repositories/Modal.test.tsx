@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Repository, RepositoryKind } from '../../../types';
 import Modal from './Modal';
-jest.mock('../../../api');
+import { vi } from 'vitest';
+vi.mock('../../../api');
 
 const onAuthErrorMock = jest.fn();
 const onSuccessMock = jest.fn();
@@ -137,9 +137,9 @@ describe('Repository Modal - repositories section', () => {
           writable: true,
         });
 
-        mocked(API).checkAvailability.mockResolvedValue(false);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addRepository.mockResolvedValue(null);
+        vi.mocked(API).checkAvailability.mockResolvedValue(false);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).addRepository.mockResolvedValue(null);
         render(<Modal {...defaultProps} />);
 
         expect(screen.getByText('Add repository')).toBeInTheDocument();
@@ -176,9 +176,9 @@ describe('Repository Modal - repositories section', () => {
           writable: true,
         });
 
-        mocked(API).checkAvailability.mockResolvedValue(false);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addRepository.mockResolvedValue(null);
+        vi.mocked(API).checkAvailability.mockResolvedValue(false);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).addRepository.mockResolvedValue(null);
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Modal {...defaultProps} />
@@ -212,9 +212,9 @@ describe('Repository Modal - repositories section', () => {
       });
 
       it('displays default Api error', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(false);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addRepository.mockRejectedValue({
+        vi.mocked(API).checkAvailability.mockResolvedValue(false);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).addRepository.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 
@@ -239,9 +239,9 @@ describe('Repository Modal - repositories section', () => {
       });
 
       it('displays custom Api error', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(false);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addRepository.mockRejectedValue({
+        vi.mocked(API).checkAvailability.mockResolvedValue(false);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).addRepository.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'custom error',
         });
@@ -265,9 +265,9 @@ describe('Repository Modal - repositories section', () => {
       });
 
       it('calls onAuthError when error is UnauthorizedError', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(false);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addRepository.mockRejectedValue({
+        vi.mocked(API).checkAvailability.mockResolvedValue(false);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).addRepository.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
         render(<Modal {...defaultProps} />);
@@ -287,9 +287,9 @@ describe('Repository Modal - repositories section', () => {
 
     describe('Update repository', () => {
       it('calls update repository', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(true);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).updateRepository.mockResolvedValue(null);
+        vi.mocked(API).checkAvailability.mockResolvedValue(true);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).updateRepository.mockResolvedValue(null);
         render(<Modal {...defaultProps} repository={repoMock} />);
 
         expect(screen.getByText('Update repository')).toBeInTheDocument();
@@ -314,9 +314,9 @@ describe('Repository Modal - repositories section', () => {
       });
 
       it('calls update repository for org', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(true);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).updateRepository.mockResolvedValue(null);
+        vi.mocked(API).checkAvailability.mockResolvedValue(true);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).updateRepository.mockResolvedValue(null);
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Modal {...defaultProps} repository={repoMock} />
@@ -343,9 +343,9 @@ describe('Repository Modal - repositories section', () => {
       });
 
       it('displays default Api error', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(true);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).updateRepository.mockRejectedValue({
+        vi.mocked(API).checkAvailability.mockResolvedValue(true);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).updateRepository.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 
@@ -370,9 +370,9 @@ describe('Repository Modal - repositories section', () => {
       });
 
       it('displays custom Api error message', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(true);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).updateRepository.mockRejectedValue({
+        vi.mocked(API).checkAvailability.mockResolvedValue(true);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).updateRepository.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'custom error',
         });
@@ -396,8 +396,8 @@ describe('Repository Modal - repositories section', () => {
       });
 
       it('calls onAuthError when error is UnauthorizedError', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(true);
-        mocked(API).updateRepository.mockRejectedValue({
+        vi.mocked(API).checkAvailability.mockResolvedValue(true);
+        vi.mocked(API).updateRepository.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
         render(<Modal {...defaultProps} repository={repoMock} />);
@@ -417,9 +417,9 @@ describe('Repository Modal - repositories section', () => {
 
     describe('Disable repository', () => {
       it('new repo', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(false);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addRepository.mockResolvedValue(null);
+        vi.mocked(API).checkAvailability.mockResolvedValue(false);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).addRepository.mockResolvedValue(null);
         render(<Modal {...defaultProps} />);
 
         expect(screen.getByText('Add repository')).toBeInTheDocument();
@@ -461,9 +461,9 @@ describe('Repository Modal - repositories section', () => {
 
       describe('existing repo', () => {
         it('confirms action', async () => {
-          mocked(API).checkAvailability.mockResolvedValue(true);
-          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-          mocked(API).updateRepository.mockResolvedValue(null);
+          vi.mocked(API).checkAvailability.mockResolvedValue(true);
+          vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          vi.mocked(API).updateRepository.mockResolvedValue(null);
 
           render(
             <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -506,9 +506,9 @@ describe('Repository Modal - repositories section', () => {
         });
 
         it('does not confirm action', async () => {
-          mocked(API).checkAvailability.mockResolvedValue(true);
-          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-          mocked(API).updateRepository.mockResolvedValue(null);
+          vi.mocked(API).checkAvailability.mockResolvedValue(true);
+          vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          vi.mocked(API).updateRepository.mockResolvedValue(null);
 
           render(
             <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -551,9 +551,9 @@ describe('Repository Modal - repositories section', () => {
         });
 
         it('does not render confirmation info', async () => {
-          mocked(API).checkAvailability.mockResolvedValue(true);
-          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-          mocked(API).updateRepository.mockResolvedValue(null);
+          vi.mocked(API).checkAvailability.mockResolvedValue(true);
+          vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          vi.mocked(API).updateRepository.mockResolvedValue(null);
 
           render(
             <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -610,9 +610,9 @@ describe('Repository Modal - repositories section', () => {
           writable: true,
         });
 
-        mocked(API).checkAvailability.mockResolvedValue(false);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addRepository.mockResolvedValue(null);
+        vi.mocked(API).checkAvailability.mockResolvedValue(false);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).addRepository.mockResolvedValue(null);
         render(<Modal {...defaultProps} />);
 
         expect(screen.getByText('Add repository')).toBeInTheDocument();
@@ -654,9 +654,9 @@ describe('Repository Modal - repositories section', () => {
             writable: true,
           });
 
-          mocked(API).checkAvailability.mockResolvedValue(true);
-          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-          mocked(API).updateRepository.mockResolvedValue(null);
+          vi.mocked(API).checkAvailability.mockResolvedValue(true);
+          vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          vi.mocked(API).updateRepository.mockResolvedValue(null);
           render(<Modal {...defaultProps} repository={{ ...repoMock, private: true }} />);
 
           expect(screen.getByText('Update repository')).toBeInTheDocument();
@@ -698,9 +698,9 @@ describe('Repository Modal - repositories section', () => {
             writable: true,
           });
 
-          mocked(API).checkAvailability.mockResolvedValue(true);
-          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-          mocked(API).updateRepository.mockResolvedValue(null);
+          vi.mocked(API).checkAvailability.mockResolvedValue(true);
+          vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          vi.mocked(API).updateRepository.mockResolvedValue(null);
           render(<Modal {...defaultProps} repository={{ ...repoMock, private: true }} />);
 
           expect(screen.getByText('Update repository')).toBeInTheDocument();
@@ -741,9 +741,9 @@ describe('Repository Modal - repositories section', () => {
             writable: true,
           });
 
-          mocked(API).checkAvailability.mockResolvedValue(true);
-          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-          mocked(API).updateRepository.mockResolvedValue(null);
+          vi.mocked(API).checkAvailability.mockResolvedValue(true);
+          vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          vi.mocked(API).updateRepository.mockResolvedValue(null);
           render(<Modal {...defaultProps} repository={{ ...repoMock, private: true }} />);
 
           expect(screen.getByText('Update repository')).toBeInTheDocument();
@@ -788,9 +788,9 @@ describe('Repository Modal - repositories section', () => {
             writable: true,
           });
 
-          mocked(API).checkAvailability.mockResolvedValue(true);
-          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-          mocked(API).updateRepository.mockResolvedValue(null);
+          vi.mocked(API).checkAvailability.mockResolvedValue(true);
+          vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          vi.mocked(API).updateRepository.mockResolvedValue(null);
           render(<Modal {...defaultProps} repository={{ ...repoMock1, private: true }} />);
 
           expect(screen.getByText('Update repository')).toBeInTheDocument();
@@ -837,9 +837,9 @@ describe('Repository Modal - repositories section', () => {
             writable: true,
           });
 
-          mocked(API).checkAvailability.mockResolvedValue(true);
-          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-          mocked(API).updateRepository.mockResolvedValue(null);
+          vi.mocked(API).checkAvailability.mockResolvedValue(true);
+          vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          vi.mocked(API).updateRepository.mockResolvedValue(null);
           render(<Modal {...defaultProps} repository={{ ...repoMock1, private: true }} />);
 
           expect(screen.getByText('Update repository')).toBeInTheDocument();
@@ -878,9 +878,9 @@ describe('Repository Modal - repositories section', () => {
             writable: true,
           });
 
-          mocked(API).checkAvailability.mockResolvedValue(true);
-          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-          mocked(API).updateRepository.mockResolvedValue(null);
+          vi.mocked(API).checkAvailability.mockResolvedValue(true);
+          vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          vi.mocked(API).updateRepository.mockResolvedValue(null);
           render(<Modal {...defaultProps} repository={{ ...repoMock1, private: true }} />);
 
           expect(screen.getByText('Update repository')).toBeInTheDocument();

@@ -1,13 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 
 import API from '../../api';
 import { SearchResults } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import SearchPackages from './SearchPackages';
-jest.mock('../../api');
-jest.mock('../../utils/alertDispatcher');
+import { vi } from 'vitest';
+vi.mock('../../api');
+vi.mock('../../utils/alertDispatcher');
 
 const getMockSearch = (fixtureId: string): SearchResults => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -37,7 +37,7 @@ describe('SearchPackages', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockSearch = getMockSearch('1');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(<SearchPackages {...defaultProps} />);
 
@@ -56,7 +56,7 @@ describe('SearchPackages', () => {
 
     it('selects package', async () => {
       const mockSearch = getMockSearch('1');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(<SearchPackages {...defaultProps} />);
 
@@ -80,7 +80,7 @@ describe('SearchPackages', () => {
     });
 
     it('when searchPackage fails', async () => {
-      mocked(API).searchPackages.mockRejectedValue('');
+      vi.mocked(API).searchPackages.mockRejectedValue('');
 
       render(<SearchPackages {...defaultProps} />);
 
@@ -105,7 +105,7 @@ describe('SearchPackages', () => {
 
     it('renders disabled package', async () => {
       const mockSearch = getMockSearch('2');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(<SearchPackages {...defaultProps} disabledPackages={[mockSearch.packages![0].packageId]} />);
 
@@ -130,7 +130,7 @@ describe('SearchPackages', () => {
 
     it('calls again searchPackages', async () => {
       const mockSearch = getMockSearch('3');
-      mocked(API)
+      vi.mocked(API)
         .searchPackages.mockResolvedValue({ packages: [], facets: [], paginationTotalCount: '0' })
         .mockResolvedValueOnce(mockSearch);
 
