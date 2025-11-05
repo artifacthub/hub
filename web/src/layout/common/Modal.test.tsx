@@ -5,8 +5,10 @@ import { vi } from 'vitest';
 import Modal from './Modal';
 import styles from './Modal.module.css';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-vi.mock('./Alert', () => (props: any) => <div>{props.message}</div>);
+vi.mock('./Alert', () => ({
+  __esModule: true,
+  default: (props: { message: string }) => <div>{props.message}</div>,
+}));
 
 const onCloseMock = jest.fn();
 const cleanErrorMock = jest.fn();

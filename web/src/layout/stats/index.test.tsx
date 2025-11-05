@@ -8,7 +8,10 @@ import { AppCtx } from '../../context/AppCtx';
 import { AHStats, ErrorKind } from '../../types';
 import StatsView from './index';
 vi.mock('../../api');
-vi.mock('./BrushChart', () => () => <div>Chart</div>);
+vi.mock('./BrushChart', () => ({
+  __esModule: true,
+  default: () => <div>Chart</div>,
+}));
 vi.mock('react-apexcharts', () => ({
   __esModule: true,
   default: () => <div>Chart</div>,

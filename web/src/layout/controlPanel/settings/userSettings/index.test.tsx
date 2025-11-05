@@ -3,8 +3,10 @@ import { vi } from 'vitest';
 
 import UserSettingsSection from './index';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-vi.mock('../../../common/SectionPanel', () => (props: any) => <div>{props.defaultSection}</div>);
+vi.mock('../../../common/SectionPanel', () => ({
+  __esModule: true,
+  default: (props: { defaultSection: string }) => <div>{props.defaultSection}</div>,
+}));
 
 const defaultProps = {
   activePage: null,

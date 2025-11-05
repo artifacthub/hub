@@ -7,11 +7,3 @@ exports[`UserSettingsSection > renders correctly 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`UserSettingsSection renders correctly 1`] = `
-<DocumentFragment>
-  <div>
-    profile
-  </div>
-</DocumentFragment>
-`;

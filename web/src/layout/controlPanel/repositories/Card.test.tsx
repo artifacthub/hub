@@ -11,7 +11,10 @@ vi.mock('../../../utils/alertDispatcher');
 vi.mock('../../../utils/minutesToNearestInterval', () => ({
   default: () => 3,
 }));
-vi.mock('./TransferModal', () => () => <div>Transfer repository</div>);
+vi.mock('./TransferModal', () => ({
+  __esModule: true,
+  default: () => <div>Transfer repository</div>,
+}));
 
 const mockUseNavigate = jest.fn();
 

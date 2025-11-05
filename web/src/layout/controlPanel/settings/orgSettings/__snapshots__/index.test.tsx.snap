@@ -7,11 +7,3 @@ exports[`OrganizationSettingsSection > creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`OrganizationSettingsSection creates snapshot 1`] = `
-<DocumentFragment>
-  <div>
-    profile
-  </div>
-</DocumentFragment>
-`;

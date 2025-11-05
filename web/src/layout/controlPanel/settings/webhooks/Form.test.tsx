@@ -8,8 +8,10 @@ import { AppCtx } from '../../../../context/AppCtx';
 import { ErrorKind, SearchResults, Webhook } from '../../../../types';
 import WebhookForm from './Form';
 vi.mock('../../../../api');
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-vi.mock('../../../common/Alert', () => (props: any) => <div>{props.message}</div>);
+vi.mock('../../../common/Alert', () => ({
+  __esModule: true,
+  default: (props: { message: string }) => <div>{props.message}</div>,
+}));
 
 const getMockWebhook = (fixtureId: string): Webhook => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
