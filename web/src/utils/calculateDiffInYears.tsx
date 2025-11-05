@@ -1,5 +1,5 @@
-import isUndefined from 'lodash/isUndefined';
 import { differenceInMilliseconds, fromUnixTime } from 'date-fns';
+import isUndefined from 'lodash/isUndefined';
 
 const calculateDiffInYears = (pastDate: number, currentDate?: number): number => {
   const referenceDate = !isUndefined(currentDate) ? fromUnixTime(currentDate) : new Date();

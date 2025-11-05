@@ -1,6 +1,6 @@
+import { formatDistanceToNow } from 'date-fns';
 import isArray from 'lodash/isArray';
 import isUndefined from 'lodash/isUndefined';
-import { formatDistanceToNow } from 'date-fns';
 import {
   cloneElement,
   ComponentPropsWithoutRef,

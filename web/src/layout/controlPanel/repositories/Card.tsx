@@ -1,7 +1,7 @@
 import classnames from 'classnames';
+import { format, formatDistanceToNow, fromUnixTime } from 'date-fns';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import { format, formatDistanceToNow, fromUnixTime } from 'date-fns';
 import {
   Dispatch,
   MouseEvent as ReactMouseEvent,
@@ -103,9 +103,7 @@ const RepositoryCard = (props: Props) => {
     const content = (
       <>
         {!isFuture(props.repository.lastTrackingTs!) && (
-          <span>
-            {formatDistanceToNow(fromUnixTime(props.repository.lastTrackingTs!), { addSuffix: true })}
-          </span>
+          <span>{formatDistanceToNow(fromUnixTime(props.repository.lastTrackingTs!), { addSuffix: true })}</span>
         )}
         {hasErrors ? (
           <>
@@ -223,9 +221,7 @@ const RepositoryCard = (props: Props) => {
     const content = (
       <>
         {!isFuture(props.repository.lastScanningTs!) && (
-          <span>
-            {formatDistanceToNow(fromUnixTime(props.repository.lastScanningTs!), { addSuffix: true })}
-          </span>
+          <span>{formatDistanceToNow(fromUnixTime(props.repository.lastScanningTs!), { addSuffix: true })}</span>
         )}
         {hasScanningErrors ? (
           <FaExclamation className="mx-2 text-warning" />

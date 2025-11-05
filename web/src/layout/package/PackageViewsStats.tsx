@@ -1,7 +1,7 @@
 import { ApexOptions } from 'apexcharts';
+import { format } from 'date-fns';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
-import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import semver from 'semver';
