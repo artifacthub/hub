@@ -6,8 +6,8 @@ import { vi } from 'vitest';
 import API from '../../../../../../api';
 import { ErrorKind } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
-import RepositoriesSection from './index';
 import modalStyles from '../../../../../common/Modal.module.css';
+import RepositoriesSection from './index';
 
 vi.mock('../../../../../../api');
 vi.mock('../../../../../../utils/alertDispatcher');

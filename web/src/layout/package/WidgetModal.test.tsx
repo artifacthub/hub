@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import type { ReactNode } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
 
@@ -14,14 +15,12 @@ vi.mock('react-router-dom', () => ({
   useNavigate: () => mockUseNavigate,
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 vi.mock('react-color', () => ({
   SketchPicker: () => <>sketch</>,
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 vi.mock('react-syntax-highlighter', () => ({
-  default: (props: any) => (
+  default: ({ children }: { children?: ReactNode }) => (
     <pre
       style={{
         display: 'block',
@@ -39,7 +38,7 @@ vi.mock('react-syntax-highlighter', () => ({
       }}
     >
       <code className="language-text" style={{ whiteSpace: 'pre' }}>
-        <span>{props.children}</span>
+        <span>{children}</span>
       </code>
     </pre>
   ),
@@ -57,7 +56,12 @@ const defaultProps = {
   setOpenStatus: setOpenStatusMock,
 };
 
-const expectedWidgetCode = (theme: string, header: boolean, responsive: boolean, description = defaultProps.packageDescription) => {
+const expectedWidgetCode = (
+  theme: string,
+  header: boolean,
+  responsive: boolean,
+  description = defaultProps.packageDescription
+) => {
   const url = `${window.location.origin}${window.location.pathname}`;
   const headerValue = header ? 'true' : 'false';
   const responsiveValue = responsive ? 'true' : 'false';
@@ -95,9 +99,7 @@ describe('WidgetModal', () => {
       expect(screen.getByRole('switch', { name: 'Stars' })).toBeChecked();
       expect(screen.getByText('Display number of stars given to the package.')).toBeInTheDocument();
       expect(screen.getByText('Code')).toBeInTheDocument();
-      expect(screen.getByTestId('block-content')).toHaveTextContent(
-        expectedWidgetCode('light', true, false)
-      );
+      expect(screen.getByTestId('block-content')).toHaveTextContent(expectedWidgetCode('light', true, false));
     });
 
     it('when not white label', () => {
@@ -120,16 +122,12 @@ describe('WidgetModal', () => {
         </Router>
       );
 
-      expect(screen.getByTestId('block-content')).toHaveTextContent(
-        expectedWidgetCode('light', true, false)
-      );
+      expect(screen.getByTestId('block-content')).toHaveTextContent(expectedWidgetCode('light', true, false));
 
       await userEvent.click(screen.getByText('dark'));
       await userEvent.click(screen.getByText('Responsive'));
 
-      expect(screen.getByTestId('block-content')).toHaveTextContent(
-        expectedWidgetCode('dark', true, true)
-      );
+      expect(screen.getByTestId('block-content')).toHaveTextContent(expectedWidgetCode('dark', true, true));
     });
   });
 });

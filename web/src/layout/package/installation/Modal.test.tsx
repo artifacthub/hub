@@ -1,14 +1,15 @@
 import { render, screen } from '@testing-library/react';
+import type { ReactNode } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
 
 import { RepositoryKind } from '../../../types';
-import Modal from './Modal';
 import modalStyles from '../../common/Modal.module.css';
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+import Modal from './Modal';
+
 vi.mock('react-markdown', () => ({
-  default: (props: any) => {
-    return <>{props.children}</>;
+  default: ({ children }: { children?: ReactNode }) => {
+    return <>{children}</>;
   },
 }));
 vi.mock('remark-gfm', () => ({

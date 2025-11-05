@@ -113,20 +113,20 @@ describe('SecurityModal', () => {
       expect(await screen.findByText('Vulnerabilities details')).toBeInTheDocument();
     });
 
-  it('renders last scan time', () => {
-    const dateNowSpy = jest.spyOn(Date, 'now').mockReturnValue(1603804873 * 1000 + 3 * 60 * 60 * 1000);
+    it('renders last scan time', () => {
+      const dateNowSpy = jest.spyOn(Date, 'now').mockReturnValue(1603804873 * 1000 + 3 * 60 * 60 * 1000);
 
-    render(
-      <Router>
-        <SecurityModal {...defaultProps} createdAt={1603804873} />
-      </Router>
-    );
+      render(
+        <Router>
+          <SecurityModal {...defaultProps} createdAt={1603804873} />
+        </Router>
+      );
 
-    expect(screen.getByText('Last scan:')).toBeInTheDocument();
-    expect(screen.getByText(/3 hours ago/i)).toBeInTheDocument();
+      expect(screen.getByText('Last scan:')).toBeInTheDocument();
+      expect(screen.getByText(/3 hours ago/i)).toBeInTheDocument();
 
-    dateNowSpy.mockRestore();
-  });
+      dateNowSpy.mockRestore();
+    });
 
     it('calls again to getSnapshotSecurityReport when version is different', async () => {
       const mockReport = getMockSecurityReport('4');

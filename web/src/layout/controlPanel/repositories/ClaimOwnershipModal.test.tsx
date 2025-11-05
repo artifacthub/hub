@@ -6,6 +6,7 @@ import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
+import searchStyles from '../../common/SearchRepositories.module.css';
 import ClaimModal from './ClaimOwnershipModal';
 vi.mock('../../../api');
 vi.mock('../../../utils/alertDispatcher');
@@ -201,7 +202,7 @@ describe('Claim Repository Modal - repositories section', () => {
 
       const buttons = await screen.findAllByTestId('repoItem');
       expect(buttons).toHaveLength(6);
-      expect(buttons[2]).toHaveClass('disabledCell');
+      expect(buttons[2]).toHaveClass(searchStyles.disabledCell);
     });
 
     describe('Claim repo', () => {

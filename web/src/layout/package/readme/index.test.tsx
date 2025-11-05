@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
+import type { ReactNode } from 'react';
 import { vi } from 'vitest';
 
 import ReadmeWrapper from './index';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 vi.mock('react-markdown', () => ({
-  default: (props: any) => {
-    return <>{props.children}</>;
+  default: ({ children }: { children?: ReactNode }) => {
+    return <>{children}</>;
   },
 }));
 vi.mock('remark-gfm', () => ({

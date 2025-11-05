@@ -1,19 +1,20 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import type { ReactNode } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
 
 import API from '../../../api';
 import { ChartTemplatesData, ErrorKind, RepositoryKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
-import ChartTemplatesModal from './index';
 import modalStyles from '../../common/Modal.module.css';
+import ChartTemplatesModal from './index';
 vi.mock('../../../utils/alertDispatcher');
 vi.mock('../../../api');
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 vi.mock('react-markdown', () => ({
-  default: (props: any) => {
-    return <>{props.children}</>;
+  default: ({ children }: { children?: ReactNode }) => {
+    return <>{children}</>;
   },
 }));
 vi.mock('remark-gfm', () => ({

@@ -1,8 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import type { ReactNode } from 'react';
 import { vi } from 'vitest';
 
-const mockOutletContextData: any = {
+const mockOutletContextData = {
   setIsLoading: jest.fn(),
 };
 const mockUseNavigate = jest.fn();
@@ -39,10 +40,10 @@ vi.mock('../../utils/updateMetaIndex');
 vi.mock('react-apexcharts', () => ({
   default: () => <div>Chart</div>,
 }));
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 vi.mock('react-markdown', () => ({
-  default: (props: any) => {
-    return <>{props.children}</>;
+  default: ({ children }: { children?: ReactNode }) => {
+    return <>{children}</>;
   },
 }));
 vi.mock('remark-gfm', () => ({
@@ -66,8 +67,7 @@ const getMockRelatedPackages = (fixtureId: string): SearchResults => {
 };
 
 describe('Package index', () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let dateNowSpy: any;
+  let dateNowSpy: jest.SpyInstance<number, []>;
 
   beforeEach(() => {
     dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1634969145000);

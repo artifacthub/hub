@@ -62,7 +62,7 @@ describe('PackageCard', () => {
       );
       const image = screen.getByAltText(`Logo ${mockPackage.displayName}`);
       expect(image).toBeInTheDocument();
-      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/placeholder_pkg_helm.png');
+      expect((image as HTMLImageElement).src).toBe(`${window.location.origin}/static/media/placeholder_pkg_helm.png`);
     });
   });
 
@@ -104,7 +104,7 @@ describe('PackageCard', () => {
       const icons = screen.getAllByAltText('Icon');
       expect(icons).toHaveLength(12);
       expect(icons[0]).toBeInTheDocument();
-      expect((icons[0] as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
+      expect((icons[0] as HTMLImageElement).src).toBe(`${window.location.origin}/static/media/helm-chart.svg`);
       await userEvent.click(buttons[0]!);
 
       await waitFor(() => {

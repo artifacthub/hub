@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom/vitest';
 
-import { cleanup } from '@testing-library/react';
 import { createRequire } from 'node:module';
+
+import { cleanup } from '@testing-library/react';
 import { afterEach, vi } from 'vitest';
 
 const noop = () => {};
@@ -19,8 +20,8 @@ process.stderr.write = (
     typeof chunk === 'string'
       ? chunk
       : typeof encoding === 'string'
-      ? Buffer.from(chunk).toString(encoding)
-      : Buffer.from(chunk).toString();
+        ? Buffer.from(chunk).toString(encoding)
+        : Buffer.from(chunk).toString();
   if (decoded.includes('Warning: `--localstorage-file` was provided without a valid path')) {
     return true;
   }
