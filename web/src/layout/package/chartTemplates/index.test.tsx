@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { ChartTemplatesData, ErrorKind, RepositoryKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ChartTemplatesModal from './index';
-import { vi } from 'vitest';
 vi.mock('../../../utils/alertDispatcher');
 vi.mock('../../../api');
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

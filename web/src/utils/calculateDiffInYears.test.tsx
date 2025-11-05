@@ -28,21 +28,21 @@ const tests: Test[] = [
       pastDate: 1643796986,
       currentDate: 1671099389,
     },
-    output: 0.868,
+    output: 0.865,
   },
   {
     input: {
       pastDate: 1631960186,
       currentDate: 1671099389,
     },
-    output: 1.242,
+    output: 1.24,
   },
   {
     input: {
       pastDate: 1602088526,
       currentDate: 1671099389,
     },
-    output: 2.188,
+    output: 2.187,
   },
 ];
 

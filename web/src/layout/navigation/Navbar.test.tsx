@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ReactRouter, { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { AppCtx } from '../../context/AppCtx';
 import Navbar from './Navbar';
-import { vi } from 'vitest';
 vi.mock('./MobileSettings', () => () => <div />);
 
 vi.mock('react-router-dom', () => ({

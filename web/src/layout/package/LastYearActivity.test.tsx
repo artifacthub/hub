@@ -8,6 +8,9 @@ const getMockVersions = (fixtureId: string): Version[] => {
   return require(`./__fixtures__/LastYearActivity/${fixtureId}.json`) as Version[];
 };
 
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
+
 describe('LastYearActivity', () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let dateNowSpy: any;
@@ -43,18 +46,18 @@ describe('LastYearActivity', () => {
 
       const cells = screen.getAllByTestId('heatMapCell');
       expect(cells).toHaveLength(12);
-      expect(cells[0]).toHaveClass('level3');
-      expect(cells[1]).toHaveClass('level1');
-      expect(cells[2]).toHaveClass('level3');
-      expect(cells[3]).toHaveClass('level2');
-      expect(cells[4]).toHaveClass('level3');
-      expect(cells[5]).toHaveClass('level1');
-      expect(cells[6]).toHaveClass('level3');
-      expect(cells[7]).toHaveClass('level1');
-      expect(cells[8]).toHaveClass('level0');
-      expect(cells[9]).toHaveClass('level1');
-      expect(cells[10]).toHaveClass('level1');
-      expect(cells[11]).toHaveClass('level0');
+      expect(hasClassContaining(cells[0], 'level3')).toBe(true);
+      expect(hasClassContaining(cells[1], 'level1')).toBe(true);
+      expect(hasClassContaining(cells[2], 'level3')).toBe(true);
+      expect(hasClassContaining(cells[3], 'level2')).toBe(true);
+      expect(hasClassContaining(cells[4], 'level3')).toBe(true);
+      expect(hasClassContaining(cells[5], 'level1')).toBe(true);
+      expect(hasClassContaining(cells[6], 'level3')).toBe(true);
+      expect(hasClassContaining(cells[7], 'level1')).toBe(true);
+      expect(hasClassContaining(cells[8], 'level0')).toBe(true);
+      expect(hasClassContaining(cells[9], 'level1')).toBe(true);
+      expect(hasClassContaining(cells[10], 'level1')).toBe(true);
+      expect(hasClassContaining(cells[11], 'level0')).toBe(true);
 
       const popovers = screen.getAllByTestId('heatMapPopover');
       expect(popovers).toHaveLength(12);
@@ -78,18 +81,7 @@ describe('LastYearActivity', () => {
 
       const cells = screen.getAllByTestId('heatMapCell');
       expect(cells).toHaveLength(12);
-      expect(cells[0]).toHaveClass('level0');
-      expect(cells[1]).toHaveClass('level0');
-      expect(cells[2]).toHaveClass('level0');
-      expect(cells[3]).toHaveClass('level0');
-      expect(cells[4]).toHaveClass('level0');
-      expect(cells[5]).toHaveClass('level0');
-      expect(cells[6]).toHaveClass('level0');
-      expect(cells[7]).toHaveClass('level0');
-      expect(cells[8]).toHaveClass('level0');
-      expect(cells[9]).toHaveClass('level0');
-      expect(cells[10]).toHaveClass('level0');
-      expect(cells[11]).toHaveClass('level0');
+      cells.forEach((cell) => expect(hasClassContaining(cell, 'level0')).toBe(true));
 
       const popovers = screen.getAllByTestId('heatMapPopover');
       expect(popovers).toHaveLength(12);
@@ -113,18 +105,8 @@ describe('LastYearActivity', () => {
 
       const cells = screen.getAllByTestId('heatMapCell');
       expect(cells).toHaveLength(12);
-      expect(cells[0]).toHaveClass('level4');
-      expect(cells[1]).toHaveClass('level4');
-      expect(cells[2]).toHaveClass('level4');
-      expect(cells[3]).toHaveClass('level4');
-      expect(cells[4]).toHaveClass('level4');
-      expect(cells[5]).toHaveClass('level4');
-      expect(cells[6]).toHaveClass('level4');
-      expect(cells[7]).toHaveClass('level4');
-      expect(cells[8]).toHaveClass('level4');
-      expect(cells[9]).toHaveClass('level4');
-      expect(cells[10]).toHaveClass('level4');
-      expect(cells[11]).toHaveClass('level3');
+      cells.slice(0, 11).forEach((cell) => expect(hasClassContaining(cell, 'level4')).toBe(true));
+      expect(hasClassContaining(cells[11], 'level3')).toBe(true);
 
       const popovers = screen.getAllByTestId('heatMapPopover');
       expect(popovers).toHaveLength(12);

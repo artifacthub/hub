@@ -1,9 +1,9 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { ErrorKind, ResourceKind } from '../../types';
 import InputField from './InputField';
-import { vi } from 'vitest';
 vi.mock('../../api');
 
 const onChangeMock = jest.fn();
@@ -124,7 +124,7 @@ describe('InputField', () => {
   });
 
   describe('calls checkAvailability', () => {
-    xit('value is available', async () => {
+    it.skip('value is available', async () => {
       vi.mocked(API).checkAvailability.mockResolvedValue(true);
 
       render(
@@ -188,7 +188,7 @@ describe('InputField', () => {
       expect(input).toBeInvalid();
     });
 
-    xit('checkAvailability validation is ignored when error is different to NotFoundResponse', async () => {
+    it.skip('checkAvailability validation is ignored when error is different to NotFoundResponse', async () => {
       vi.mocked(API).checkAvailability.mockResolvedValue(true);
 
       render(

@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import SectionPanel from './SectionPanel';
-import { vi } from 'vitest';
 
 const mockUseNavigate = jest.fn();
 

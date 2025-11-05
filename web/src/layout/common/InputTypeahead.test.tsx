@@ -46,6 +46,9 @@ const itemScrollMock = jest.fn();
 
 Object.defineProperty(HTMLElement.prototype, 'scroll', { configurable: true, value: itemScrollMock });
 
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
+
 describe('InputTypeahead', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -161,7 +164,10 @@ describe('InputTypeahead', () => {
       await userEvent.type(screen.getByPlaceholderText('Search test'), '{arrowdown}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
-      expect(options[0]).toHaveClass('dropdown-item option selected highlighted');
+      expect(options[0]).toHaveClass('dropdown-item');
+      expect(hasClassContaining(options[0], 'option')).toBe(true);
+      expect(hasClassContaining(options[0], 'selected')).toBe(true);
+      expect(hasClassContaining(options[0], 'highlighted')).toBe(true);
     });
 
     it('highlightes last option', async () => {
@@ -173,7 +179,9 @@ describe('InputTypeahead', () => {
       await userEvent.type(screen.getByPlaceholderText('Search test'), '{arrowup}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
-      expect(options[3]).toHaveClass('dropdown-item option highlighted');
+      expect(options[3]).toHaveClass('dropdown-item');
+      expect(hasClassContaining(options[3], 'option')).toBe(true);
+      expect(hasClassContaining(options[3], 'highlighted')).toBe(true);
     });
 
     it('highlightes first option and unselects it', async () => {
@@ -186,7 +194,10 @@ describe('InputTypeahead', () => {
       await userEvent.type(input, '{arrowdown}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
-      expect(options[0]).toHaveClass('dropdown-item option selected highlighted');
+      expect(options[0]).toHaveClass('dropdown-item');
+      expect(hasClassContaining(options[0], 'option')).toBe(true);
+      expect(hasClassContaining(options[0], 'selected')).toBe(true);
+      expect(hasClassContaining(options[0], 'highlighted')).toBe(true);
 
       await userEvent.type(input, '{enter}');
       expect(onChangeMock).toHaveBeenCalledTimes(1);
@@ -203,7 +214,9 @@ describe('InputTypeahead', () => {
       await userEvent.type(input, '{arrowup}');
 
       expect(itemScrollMock).toHaveBeenCalledTimes(1);
-      expect(options[3]).toHaveClass('dropdown-item option highlighted');
+      expect(options[3]).toHaveClass('dropdown-item');
+      expect(hasClassContaining(options[3], 'option')).toBe(true);
+      expect(hasClassContaining(options[3], 'highlighted')).toBe(true);
 
       await userEvent.type(input, '{enter}');
       expect(onChangeMock).toHaveBeenCalledTimes(1);

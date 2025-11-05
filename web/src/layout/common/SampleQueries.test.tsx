@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import SampleQueries from './SampleQueries';
-import { vi } from 'vitest';
 
 vi.mock('../../utils/getSampleQueries', () => () => {
   return [

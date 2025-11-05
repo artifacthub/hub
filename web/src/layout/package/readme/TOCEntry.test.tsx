@@ -17,6 +17,9 @@ const defaultProps = {
   scrollIntoView: scrollIntoViewMock,
 };
 
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
+
 describe('TOCEntry', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -41,8 +44,8 @@ describe('TOCEntry', () => {
 
       const link = screen.getByText('Installing the Chart');
       expect(link).toBeInTheDocument();
-      expect(link).toHaveClass('level1');
-      expect(link).toHaveProperty('href', 'http://localhost/#installing-the-chart');
+      expect(hasClassContaining(link, 'level1')).toBe(true);
+      expect(link.getAttribute('href')).toBe('/#installing-the-chart');
     });
 
     it('clicks link', async () => {

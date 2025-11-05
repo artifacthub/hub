@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import SettingsSection from './index';
-import { vi } from 'vitest';
 
 vi.mock('./userSettings', () => () => <div>user</div>);
 vi.mock('./orgSettings', () => () => <div>org</div>);

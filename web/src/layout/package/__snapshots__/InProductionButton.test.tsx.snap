@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`InProductionButton creates snapshot 1`] = `
+exports[`InProductionButton > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-none d-lg-block position-relative ms-2"
@@ -14,7 +14,7 @@ exports[`InProductionButton creates snapshot 1`] = `
         <button
           aria-expanded="true"
           aria-label="Open organizations menu"
-          class="btn btn-outline-primary p-0 position-relative lh-1 fs-5 iconWrapper"
+          class="btn btn-outline-primary p-0 position-relative lh-1 fs-5 _iconWrapper_fba2bb"
           type="button"
         >
           <div
@@ -38,24 +38,24 @@ exports[`InProductionButton creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="dropdown-menu dropdown-menu-end p-0 dropdown show"
+      class="dropdown-menu dropdown-menu-end p-0 _dropdown_fba2bb show"
       role="menu"
     >
       <div
-        class="dropdown-arrow arrow darkArrow"
+        class="dropdown-arrow _arrow_fba2bb _darkArrow_fba2bb"
       />
       <div>
         <div
-          class="p-3 border-bottom border-1 title"
+          class="p-3 border-bottom border-1 _title_fba2bb"
         >
           Select which of your organizations are using this package in production
         </div>
         <div
-          class="overflow-auto buttonsWrapper"
+          class="overflow-auto _buttonsWrapper_fba2bb"
         >
           <button
             aria-label="Delete Artifact Hub organization from package's production users list"
-            class="dropdownItem dropdownItem btn p-3 rounded-0 w-100"
+            class="_dropdownItem_fba2bb dropdownItem btn p-3 rounded-0 w-100"
           >
             <div
               class="d-flex flex-row align-items-start w-100 justify-content-between"
@@ -83,7 +83,7 @@ exports[`InProductionButton creates snapshot 1`] = `
                 </span>
               </div>
               <div
-                class="d-flex flex-column flex-grow-1 growWidth"
+                class="d-flex flex-column flex-grow-1 _growWidth_fba2bb"
               >
                 <div
                   class="d-flex flex-row align-items-center"
@@ -92,12 +92,12 @@ exports[`InProductionButton creates snapshot 1`] = `
                     class="me-2"
                   >
                     <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                      class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_fba2bb"
                     >
                       <img
                         alt="Artifact Hub"
                         aria-hidden="true"
-                        class="m-auto image"
+                        class="m-auto _image_fba2bb"
                         src="/image/29a1adeb-4184-4ac1-8727-7307e14dd3e1"
                         srcset="/image/29a1adeb-4184-4ac1-8727-7307e14dd3e1@1x 1x, /image/29a1adeb-4184-4ac1-8727-7307e14dd3e1@2x 2x, /image/29a1adeb-4184-4ac1-8727-7307e14dd3e1@3x 3x, /image/29a1adeb-4184-4ac1-8727-7307e14dd3e1@4x 4x"
                       />
@@ -114,7 +114,7 @@ exports[`InProductionButton creates snapshot 1`] = `
           </button>
           <button
             aria-label="Add Org test organization to package's production users list"
-            class="dropdownItem dropdownItem btn p-3 rounded-0 w-100"
+            class="_dropdownItem_fba2bb dropdownItem btn p-3 rounded-0 w-100"
           >
             <div
               class="d-flex flex-row align-items-start w-100 justify-content-between"
@@ -141,7 +141,7 @@ exports[`InProductionButton creates snapshot 1`] = `
                 </span>
               </div>
               <div
-                class="d-flex flex-column flex-grow-1 growWidth"
+                class="d-flex flex-column flex-grow-1 _growWidth_fba2bb"
               >
                 <div
                   class="d-flex flex-row align-items-center"
@@ -150,12 +150,12 @@ exports[`InProductionButton creates snapshot 1`] = `
                     class="me-2"
                   >
                     <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                      class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_fba2bb"
                     >
                       <img
                         alt="Org test"
                         aria-hidden="true"
-                        class="m-auto image"
+                        class="m-auto _image_fba2bb"
                         src="/image/e1414600-6bbf-48a2-bf2b-dd1089bae95c"
                         srcset="/image/e1414600-6bbf-48a2-bf2b-dd1089bae95c@1x 1x, /image/e1414600-6bbf-48a2-bf2b-dd1089bae95c@2x 2x, /image/e1414600-6bbf-48a2-bf2b-dd1089bae95c@3x 3x, /image/e1414600-6bbf-48a2-bf2b-dd1089bae95c@4x 4x"
                       />
@@ -172,7 +172,7 @@ exports[`InProductionButton creates snapshot 1`] = `
           </button>
           <button
             aria-label="Add test1 organization to package's production users list"
-            class="dropdownItem dropdownItem btn p-3 rounded-0 w-100"
+            class="_dropdownItem_fba2bb dropdownItem btn p-3 rounded-0 w-100"
           >
             <div
               class="d-flex flex-row align-items-start w-100 justify-content-between"
@@ -199,7 +199,7 @@ exports[`InProductionButton creates snapshot 1`] = `
                 </span>
               </div>
               <div
-                class="d-flex flex-column flex-grow-1 growWidth"
+                class="d-flex flex-column flex-grow-1 _growWidth_fba2bb"
               >
                 <div
                   class="d-flex flex-row align-items-center"
@@ -208,10 +208,9 @@ exports[`InProductionButton creates snapshot 1`] = `
                     class="me-2"
                   >
                     <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                      class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_fba2bb"
                     >
                       <svg
-                        class="orgIcon"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"

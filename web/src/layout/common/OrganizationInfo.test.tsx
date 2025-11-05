@@ -1,11 +1,11 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { Organization } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import OrganizationInfo from './OrganizationInfo';
-import { vi } from 'vitest';
 vi.mock('../../api');
 
 const defaultProps = {
@@ -76,7 +76,7 @@ describe('OrganizationInfo', () => {
     expect(screen.getByAltText(mockOrganization.displayName!)).toBeInTheDocument();
     expect(screen.getByAltText(mockOrganization.displayName!)).toHaveProperty(
       'src',
-      `http://localhost/image/${mockOrganization.logoImageId!}`
+      `${window.location.origin}/image/${mockOrganization.logoImageId!}`
     );
     expect(screen.getByText(mockOrganization.description!)).toBeInTheDocument();
 
@@ -84,7 +84,7 @@ describe('OrganizationInfo', () => {
       jest.advanceTimersByTime(100);
     });
 
-    expect(await screen.findByRole('complementary')).toHaveClass('show');
+    expect((await screen.findByRole('complementary')).className.includes('show')).toBe(true);
 
     await user.unhover(screen.getByLabelText('Organization info'));
 
@@ -92,7 +92,7 @@ describe('OrganizationInfo', () => {
       jest.advanceTimersByTime(50);
     });
 
-    expect(await screen.findByRole('complementary')).not.toHaveClass('show');
+    expect((await screen.findByRole('complementary')).className.includes('show')).toBe(false);
 
     jest.useRealTimers();
   });
@@ -116,7 +116,7 @@ describe('OrganizationInfo', () => {
       jest.advanceTimersByTime(100);
     });
 
-    expect(await screen.findByRole('complementary')).toHaveClass('show');
+    expect((await screen.findByRole('complementary')).className.includes('show')).toBe(true);
 
     await user.unhover(screen.getByRole('complementary'));
 
@@ -124,7 +124,7 @@ describe('OrganizationInfo', () => {
       jest.advanceTimersByTime(50);
     });
 
-    expect(await screen.findByRole('complementary')).not.toHaveClass('show');
+    expect((await screen.findByRole('complementary')).className.includes('show')).toBe(false);
 
     jest.useRealTimers();
   });

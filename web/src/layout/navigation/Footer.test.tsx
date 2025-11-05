@@ -3,6 +3,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import Footer from './Footer';
 
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
+
 describe('Footer', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -59,7 +62,7 @@ describe('Footer', () => {
       );
 
       const footer = screen.getByRole('contentinfo');
-      expect(footer).toHaveClass('invisibleFooter');
+      expect(hasClassContaining(footer, 'invisibleFooter')).toBe(true);
     });
   });
 });

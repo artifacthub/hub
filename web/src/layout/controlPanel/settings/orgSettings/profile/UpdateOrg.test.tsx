@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import { Organization } from '../../../../../types';
 import UpdateOrg from './UpdateOrg';
-import { vi } from 'vitest';
 vi.mock('../../../../../api');
 
 const getMockOrganization = (fixtureId: string): Organization => {

@@ -209,6 +209,17 @@ const tests2: TestGetSeriesWithTimestamp[] = [
   },
 ];
 
+const mockNow = new Date('2021-12-14T00:00:00Z').getTime();
+let dateNowSpy: jest.SpyInstance;
+
+beforeEach(() => {
+  dateNowSpy = jest.spyOn(Date, 'now').mockReturnValue(mockNow);
+});
+
+afterEach(() => {
+  dateNowSpy.mockRestore();
+});
+
 const tests3: TestSumViews[] = [
   { data: {}, result: [] },
   {

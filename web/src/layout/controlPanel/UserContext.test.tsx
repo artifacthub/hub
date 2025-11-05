@@ -1,11 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
+import { Organization } from '../../types';
 import UserContext from './UserContext';
-import { vi } from 'vitest';
 vi.mock('../../api');
 
 const getMockOrgs = (fixtureId: string) => {
@@ -117,7 +118,12 @@ describe('UserContext', () => {
 
     it('displays spinner to get organizations', async () => {
       const mockOrgs = getMockOrgs('3');
-      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrgs);
+      let resolvePromise: ((value: Organization[]) => void) | undefined;
+      vi.mocked(API).getAllUserOrganizations.mockReturnValue(
+        new Promise((resolve) => {
+          resolvePromise = resolve;
+        })
+      );
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -127,7 +133,9 @@ describe('UserContext', () => {
         </AppCtx.Provider>
       );
 
-      expect(await screen.findByRole('status')).toBeInTheDocument();
+      expect(screen.getByRole('status')).toBeInTheDocument();
+
+      resolvePromise!(mockOrgs);
 
       await waitFor(() => {
         expect(API.getAllUserOrganizations).toHaveBeenCalledTimes(1);

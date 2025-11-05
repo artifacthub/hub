@@ -15,19 +15,3 @@ exports[`SubscriptionSwitch > renders correctly 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`SubscriptionSwitch renders correctly 1`] = `
-<DocumentFragment>
-  <div
-    class="form-switch"
-  >
-    <input
-      class="form-check-input checkbox"
-      data-testid="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4_input"
-      id="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4"
-      role="switch"
-      type="checkbox"
-    />
-  </div>
-</DocumentFragment>
-`;

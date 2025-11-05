@@ -21,25 +21,3 @@ exports[`ActionBtn > creates snapshot 1`] = `
   </span>
 </DocumentFragment>
 `;
-
-exports[`ActionBtn creates snapshot 1`] = `
-<DocumentFragment>
-  <span
-    class="position-relative"
-  >
-    <button
-      aria-label="Action"
-      class=""
-      type="button"
-    >
-      <div
-        class="d-flex flex-row align-items-center undefined"
-      >
-        <div>
-          button content
-        </div>
-      </div>
-    </button>
-  </span>
-</DocumentFragment>
-`;

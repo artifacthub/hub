@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import { AppCtx } from '../../../context/AppCtx';
 import { UserNotification } from '../../../types';
 import userNotificationsDispatcher from '../../../utils/userNotificationsDispatcher';
 import UserNotificationsController from './index';
-import { vi } from 'vitest';
 vi.mock('react-markdown', () => () => <div />);
 vi.mock('remark-gfm', () => () => <div />);
 vi.mock('../../../utils/userNotificationsDispatcher', () => ({

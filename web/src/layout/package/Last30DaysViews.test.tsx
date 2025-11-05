@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { RepositoryKind } from '../../types';
 import Last30DaysViews from './Last30DaysViews';
-import { vi } from 'vitest';
 vi.mock('react-apexcharts', () => () => <div>Chart</div>);
 
 const mockUseNavigate = jest.fn();

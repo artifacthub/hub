@@ -1,14 +1,23 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { ErrorKind, Stats } from '../../types';
 import HomeView from './index';
-import { vi } from 'vitest';
 vi.mock('../../api');
-vi.mock('./SearchTip', () => () => <div />);
-vi.mock('../common/SampleQueries', () => () => <div />);
-vi.mock('./RandomPackages', () => () => <div />);
+vi.mock('./SearchTip', () => ({
+  __esModule: true,
+  default: () => <div />,
+}));
+vi.mock('../common/SampleQueries', () => ({
+  __esModule: true,
+  default: () => <div />,
+}));
+vi.mock('./RandomPackages', () => ({
+  __esModule: true,
+  default: () => <div />,
+}));
 vi.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));
@@ -18,10 +27,15 @@ const mockOutletContextData: any = {
   isSearching: false,
 };
 
-vi.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useOutletContext: () => mockOutletContextData,
-}));
+vi.mock('react-router-dom', () => {
+  const actual = jest.requireActual('react-router-dom');
+  return {
+    __esModule: true,
+    ...actual,
+    default: actual,
+    useOutletContext: () => mockOutletContextData,
+  };
+});
 
 const getMockStats = (fixtureId: string): Stats => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -134,7 +148,7 @@ describe('Home index', () => {
       expect(links[4]).toHaveProperty('href', 'https://twitter.com/cncfartifacthub');
 
       // Docs link
-      expect(links[5]).toHaveProperty('href', 'http://localhost/docs/topics/repositories');
+      expect(new URL(links[5].href).pathname).toBe('/docs/topics/repositories');
 
       // Packages
       expect(links[6]).toHaveProperty('href', 'https://argoproj.github.io/argo-workflows/');

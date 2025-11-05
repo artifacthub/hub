@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Repository, RepositoryKind } from '../../../types';
 import Modal from './Modal';
-import { vi } from 'vitest';
 vi.mock('../../../api');
 
 const onAuthErrorMock = jest.fn();
@@ -20,6 +20,9 @@ const defaultProps = {
   onSuccess: onSuccessMock,
   onClose: jest.fn(),
 };
+
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
 
 const repoMock: Repository = {
   kind: 0,
@@ -125,9 +128,8 @@ describe('Repository Modal - repositories section', () => {
 
       await userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'https://github.com/test/tree/test');
 
-      expect(await screen.findByText(/Please DO NOT include the git hosting platform specific parts/)).toHaveClass(
-        'animatedWarning'
-      );
+      const warning = await screen.findByText(/Please DO NOT include the git hosting platform specific parts/);
+      expect(hasClassContaining(warning, 'animatedWarning')).toBe(true);
     });
 
     describe('Add repo', () => {

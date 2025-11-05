@@ -2,6 +2,9 @@ import { render, screen } from '@testing-library/react';
 
 import StarBadge from './StarBadge';
 
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
+
 describe('StarBadge', () => {
   it('creates snapshot', () => {
     const { asFragment } = render(<StarBadge starsNumber={1} />);
@@ -17,7 +20,7 @@ describe('StarBadge', () => {
   it('renders xs size', () => {
     render(<StarBadge starsNumber={1} size="xs" />);
     const el = screen.getByTestId('starBadge');
-    expect(el).toHaveClass('size-xs');
+    expect(hasClassContaining(el, 'size-xs')).toBe(true);
   });
 
   describe('does not render component', () => {

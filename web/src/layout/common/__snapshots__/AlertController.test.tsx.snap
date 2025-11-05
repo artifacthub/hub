@@ -17,21 +17,3 @@ exports[`AlertController > creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`AlertController creates snapshot 1`] = `
-<DocumentFragment>
-  <div
-    aria-hidden="true"
-    class="position-relative"
-    tabindex="-1"
-  >
-    <div
-      aria-atomic="true"
-      aria-live="assertive"
-      class="alert alert-dismissible position-fixed alert-warning alert fade"
-      data-testid="alertController"
-      role="alert"
-    />
-  </div>
-</DocumentFragment>
-`;

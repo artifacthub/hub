@@ -22,26 +22,3 @@ exports[`Loading > creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`Loading creates snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
-  >
-    <div
-      class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
-    >
-      <div
-        class="wave"
-        role="status"
-      >
-        <span
-          class="visually-hidden"
-        >
-          Loading...
-        </span>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;

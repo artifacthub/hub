@@ -1,5 +1,313 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`ControlPanelView > renders correctly 1`] = `
+<DocumentFragment>
+  <main
+    class="d-flex flex-column flex-grow-1 position-relative noFocus"
+    id="content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="pt-3 position-relative navWrapper _navWrapper_28273f"
+    >
+      <div
+        class="container-lg px-sm-4 px-lg-0"
+      >
+        <div
+          class="px-xs-0 px-sm-3 px-lg-0 d-flex flex-column-reverse flex-sm-row justify-content-between align-items-end"
+        >
+          <ul
+            class="me-auto me-md-0 nav nav-tabs"
+            role="tablist"
+          >
+            <li
+              class="nav-item _navItem_28273f"
+              role="tab"
+            >
+              <a
+                aria-label="Open Repositories section"
+                class="btn btn-link rounded-0 text-reset nav-link position-relative _section_28273f active activeSection _activeSection_28273f"
+                data-discover="true"
+                href="/control-panel/repositories"
+              >
+                <div
+                  class="d-flex flex-row align-items-center"
+                >
+                  <span
+                    class="_icon_28273f"
+                  >
+                    <svg
+                      fill="none"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <line
+                        x1="16.5"
+                        x2="7.5"
+                        y1="9.4"
+                        y2="4.21"
+                      />
+                      <path
+                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                      />
+                      <polyline
+                        points="3.27 6.96 12 12.01 20.73 6.96"
+                      />
+                      <line
+                        x1="12"
+                        x2="12"
+                        y1="22.08"
+                        y2="12"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="d-none d-md-inline ms-2 undefined"
+                  >
+                    Repositories
+                  </span>
+                </div>
+              </a>
+            </li>
+            <li
+              class="nav-item _navItem_28273f"
+              role="tab"
+            >
+              <a
+                aria-label="Open Organizations section"
+                class="btn btn-link rounded-0 text-reset nav-link position-relative _section_28273f"
+                data-discover="true"
+                href="/control-panel/organizations"
+              >
+                <div
+                  class="d-flex flex-row align-items-center"
+                >
+                  <span
+                    class="_icon_28273f"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="d-none d-md-inline ms-2 undefined"
+                  >
+                    Organizations
+                  </span>
+                </div>
+              </a>
+            </li>
+            <li
+              class="nav-item _navItem_28273f"
+              role="tab"
+            >
+              <a
+                aria-label="Open Settings section"
+                class="btn btn-link rounded-0 text-reset nav-link position-relative _section_28273f"
+                data-discover="true"
+                href="/control-panel/settings"
+              >
+                <div
+                  class="d-flex flex-row align-items-center"
+                >
+                  <span
+                    class="_icon_28273f"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0V0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="d-none d-md-inline ms-2 undefined"
+                  >
+                    Settings
+                  </span>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <div
+            class="position-relative _ctxWrapper_6a45a8"
+          >
+            <div
+              class="d-flex flex-column"
+            >
+              <small
+                class="text-uppercase text-muted _legendCtx_6a45a8"
+              >
+                Control panel context
+              </small>
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <button
+                  aria-expanded="false"
+                  aria-label="Open context"
+                  class="btn btn-primary btn-sm pe-3 position-relative lh-1 _ctxBtn_6a45a8"
+                  type="button"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center"
+                  >
+                    <div
+                      class="badge bg-light text-dark rounded-pill me-2 p-0 _badgeIcon_6a45a8"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 448 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="flex-grow-1 text-start me-1 text-truncate _badgeContent_6a45a8"
+                    >
+                      test
+                    </div>
+                  </div>
+                  <div
+                    class="position-absolute textLight _caret_6a45a8"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 320 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+              <div
+                class="position-absolute _loading_6a45a8"
+              >
+                <div
+                  class="_wave_b8d820 _miniWave_b8d820"
+                  role="status"
+                >
+                  <span
+                    class="visually-hidden"
+                  >
+                    Loading...
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="dropdown-menu dropdown-menu-end _dropdown_6a45a8"
+              role="menu"
+            >
+              <div
+                class="dropdown-arrow undefined"
+              />
+              <button
+                aria-label="Activate user context"
+                class="dropdown-item mw-100"
+              >
+                <div
+                  class="d-flex flex-row align-items-center text-truncate"
+                >
+                  <svg
+                    class="me-2 _icon_6a45a8"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                    />
+                  </svg>
+                  <div
+                    class="flex-grow-1 text-truncate"
+                  >
+                    test
+                  </div>
+                  <svg
+                    class="ms-2 text-success _icon_6a45a8"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M21.03 5.72a.75.75 0 0 1 0 1.06l-11.5 11.5a.747.747 0 0 1-1.072-.012l-5.5-5.75a.75.75 0 1 1 1.084-1.036l4.97 5.195L19.97 5.72a.75.75 0 0 1 1.06 0Z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="py-4 flex-grow-1 position-relative"
+    >
+      <div
+        class="container-lg px-sm-4 px-lg-0"
+      >
+        <div />
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
 exports[`ControlPanelView renders correctly 1`] = `
 <DocumentFragment>
   <main

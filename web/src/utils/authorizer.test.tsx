@@ -1,9 +1,9 @@
 import { waitFor } from '@testing-library/dom';
+import { vi } from 'vitest';
 
 import API from '../api';
 import { AuthorizerAction } from '../types';
 import authorizer from './authorizer';
-import { vi } from 'vitest';
 vi.mock('../api');
 
 const allActions: AuthorizerAction[] = [AuthorizerAction.All];

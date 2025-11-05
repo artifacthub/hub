@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import moment from 'moment';
+import { formatDistanceToNow, fromUnixTime, getUnixTime } from 'date-fns';
+import { vi } from 'vitest';
 
 import { AppCtx } from '../../../context/AppCtx';
 import { Repository } from '../../../types';
 import Card from './Card';
-import { vi } from 'vitest';
 vi.mock('../../../api');
 vi.mock('../../../utils/alertDispatcher');
 vi.mock('../../../utils/minutesToNearestInterval', () => () => 3);
@@ -90,13 +90,14 @@ describe('Repository Card - packages section', () => {
     });
 
     it('renders component with last tracking and scanning info', () => {
+      const now = getUnixTime(new Date());
       const props = {
         ...defaultProps,
         repository: {
           ...repoMock,
-          lastTrackingTs: moment().unix(),
+          lastTrackingTs: now,
           lastTrackingErrors: 'errors tracking',
-          lastScanningTs: moment().unix(),
+          lastScanningTs: now,
           lastScanningErrors: 'errors scanning',
         },
       };
@@ -106,7 +107,8 @@ describe('Repository Card - packages section', () => {
         </AppCtx.Provider>
       );
 
-      expect(screen.getAllByText('a few seconds ago')).toHaveLength(2);
+      const relativeTime = formatDistanceToNow(fromUnixTime(now), { addSuffix: true });
+      expect(screen.getAllByText(relativeTime)).toHaveLength(2);
       expect(screen.getByText('Show tracking errors log')).toBeInTheDocument();
       expect(screen.getByText('Show scanning errors log')).toBeInTheDocument();
     });
@@ -192,7 +194,7 @@ describe('Repository Card - packages section', () => {
         ...defaultProps,
         repository: {
           ...repoMock,
-          lastTrackingTs: moment().unix(),
+          lastTrackingTs: getUnixTime(new Date()),
           lastTrackingErrors: 'errors tracking',
         },
         visibleModal: 'tracking',
@@ -217,8 +219,8 @@ describe('Repository Card - packages section', () => {
         ...defaultProps,
         repository: {
           ...repoMock,
-          lastTrackingTs: moment().unix(),
-          lastScanningTs: moment().unix(),
+          lastTrackingTs: getUnixTime(new Date()),
+          lastScanningTs: getUnixTime(new Date()),
           lastScanningErrors: 'errors scanning',
         },
         visibleModal: 'scanning',
@@ -243,7 +245,7 @@ describe('Repository Card - packages section', () => {
         ...defaultProps,
         repository: {
           ...repoMock,
-          lastTrackingTs: moment().unix(),
+          lastTrackingTs: getUnixTime(new Date()),
         },
         visibleModal: 'tracking',
       };
@@ -275,8 +277,8 @@ describe('Repository Card - packages section', () => {
         ...defaultProps,
         repository: {
           ...repoMock,
-          lastTrackingTs: moment().unix(),
-          lastScanningTs: moment().unix(),
+          lastTrackingTs: getUnixTime(new Date()),
+          lastScanningTs: getUnixTime(new Date()),
         },
         visibleModal: 'scanning',
       };

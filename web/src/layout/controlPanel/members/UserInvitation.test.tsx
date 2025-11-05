@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { ErrorKind } from '../../../types';
 import UserInvitation from './UserInvitation';
-import { vi } from 'vitest';
 vi.mock('../../../api');
 
 const defaultProps = {

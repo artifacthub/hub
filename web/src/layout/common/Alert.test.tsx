@@ -14,6 +14,9 @@ const defaultProps = {
   onClose: onCloseMock,
 };
 
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
+
 describe('Alert', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -34,13 +37,13 @@ describe('Alert', () => {
 
     const alertWrapper = screen.getByTestId('alertWrapper');
     expect(alertWrapper).toBeInTheDocument();
-    expect(alertWrapper).not.toHaveClass('isAlertActive');
+    expect(hasClassContaining(alertWrapper, 'isAlertActive')).toBe(false);
     expect(screen.queryByRole('alert')).toBeNull();
 
     rerender(<Alert {...defaultProps} message="errorMessage" />);
 
     expect(await scrollIntoViewMock).toHaveBeenCalledTimes(1);
-    expect(alertWrapper).toHaveClass('isAlertActive');
+    expect(hasClassContaining(alertWrapper, 'isAlertActive')).toBe(true);
 
     const alert = screen.getByRole('alert');
     expect(alert).toBeInTheDocument();
@@ -52,7 +55,7 @@ describe('Alert', () => {
     render(<Alert {...defaultProps} message="errorMessage" />);
 
     const alertWrapper = screen.getByTestId('alertWrapper');
-    expect(alertWrapper).toHaveClass('isAlertActive');
+    expect(hasClassContaining(alertWrapper, 'isAlertActive')).toBe(true);
 
     const closeBtn = screen.getByTestId('closeAlertBtn');
     await userEvent.click(closeBtn);

@@ -1,9 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import MesheryDesignModal from './MesheryDesignModal';
-import { vi } from 'vitest';
 
 const mockUseNavigate = jest.fn();
 

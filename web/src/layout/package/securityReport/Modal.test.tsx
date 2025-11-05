@@ -1,26 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { SecurityReport, VulnerabilitySeverity } from '../../../types';
 import SecurityModal from './Modal';
-import { vi } from 'vitest';
 
 vi.mock('../../../api');
 vi.mock('react-markdown', () => () => <div />);
-vi.mock('moment', async () => {
-  const actual = await vi.importActual<typeof import('moment')>('moment');
-  return {
-    __esModule: true,
-    ...actual,
-    default: actual.default,
-    unix: () => ({
-      isAfter: () => false,
-      fromNow: () => '3 hours ago',
-    }),
-  };
-});
 
 const getMockSecurityReport = (fixtureId: string): SecurityReport => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports

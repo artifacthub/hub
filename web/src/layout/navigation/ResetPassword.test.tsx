@@ -1,9 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import ResetPassword from './ResetPassword';
-import { vi } from 'vitest';
 vi.mock('../../api');
 
 describe('ResetPassword visibleTitle', () => {

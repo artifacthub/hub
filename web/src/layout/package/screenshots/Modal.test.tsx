@@ -1,16 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter as Router } from 'react-router-dom';
 
 import ScreenshotsModal from './Modal';
-import { vi } from 'vitest';
-
-const mockUseNavigate = jest.fn();
-
-vi.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as object),
-  useNavigate: () => mockUseNavigate,
-}));
 
 const defaultProps = {
   visibleScreenshotsModal: true,

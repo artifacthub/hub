@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import WidgetModal from './WidgetModal';
-import { vi } from 'vitest';
 
 vi.mock('react-color', () => ({
   SketchPicker: () => <>sketch</>,

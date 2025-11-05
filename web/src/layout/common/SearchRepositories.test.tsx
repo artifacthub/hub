@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import SearchRepositories from './SearchRepositories';
-import { vi } from 'vitest';
 vi.mock('../../api');
 vi.mock('../../utils/alertDispatcher');
 
@@ -25,6 +25,9 @@ const defaultProps = {
   onSelection: mockOnSelection,
   onAuthError: mockOnAuthError,
 };
+
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('SearchRepositories', () => {
   afterEach(() => {
@@ -97,8 +100,8 @@ describe('SearchRepositories', () => {
       });
 
       const repos = await screen.findAllByTestId('repoItem');
-      expect(repos[0]).toHaveClass('disabledCell');
-      expect(repos[1]).toHaveClass('disabledCell');
+      expect(hasClassContaining(repos[0], 'disabledCell')).toBe(true);
+      expect(hasClassContaining(repos[1], 'disabledCell')).toBe(true);
 
       await userEvent.click(repos[0]);
       expect(mockOnSelection).toHaveBeenCalledTimes(0);

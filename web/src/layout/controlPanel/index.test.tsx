@@ -1,21 +1,34 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import ReactRouter, { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import ControlPanelView from './index';
-import { vi } from 'vitest';
 vi.mock('../../api');
-vi.mock('./repositories', () => () => <div />);
+vi.mock('./repositories', () => ({
+  __esModule: true,
+  default: () => <div />,
+}));
+
+const { useParamsMock, useSearchParamsMock } = vi.hoisted(() => ({
+  useParamsMock: vi.fn(),
+  useSearchParamsMock: vi.fn(),
+}));
 
 const mockUseNavigate = jest.fn();
 
-vi.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as object),
-  useSearchParams: () => jest.fn(),
-  useParams: jest.fn(),
-  useNavigate: () => mockUseNavigate,
-}));
+vi.mock('react-router-dom', () => {
+  const actual = jest.requireActual('react-router-dom') as typeof ReactRouter;
+  return {
+    __esModule: true,
+    ...actual,
+    default: actual,
+    useSearchParams: useSearchParamsMock,
+    useParams: useParamsMock,
+    useNavigate: () => mockUseNavigate,
+  };
+});
 
 const mockCtx = {
   user: { alias: 'test', email: 'test@test.com', passwordSet: true },
@@ -55,8 +68,8 @@ const mockDispatch = jest.fn();
 
 describe('ControlPanelView', () => {
   beforeEach(() => {
-    jest.spyOn(ReactRouter, 'useParams').mockReturnValue({ section: 'repositories' });
-    jest.spyOn(ReactRouter, 'useSearchParams').mockReturnValue([
+    useParamsMock.mockReturnValue({ section: 'repositories' });
+    useSearchParamsMock.mockReturnValue([
       {
         get: (): null => {
           return null;
@@ -83,7 +96,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls navigate when section is undefined', async () => {
-    jest.spyOn(ReactRouter, 'useParams').mockReturnValue({ section: 'non-exist' });
+    useParamsMock.mockReturnValue({ section: 'non-exist' });
 
     vi.mocked(API).searchRepositories.mockResolvedValue({ items: [], paginationTotalCount: '0' });
     render(
@@ -137,7 +150,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls updateOrg from ctx when organization name is defined', async () => {
-    jest.spyOn(ReactRouter, 'useSearchParams').mockReturnValue([
+    useSearchParamsMock.mockReturnValue([
       {
         get: (name: string): string | null => {
           switch (name) {
@@ -169,7 +182,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls updateOrg from ctx when organization userAlias is empty', async () => {
-    jest.spyOn(ReactRouter, 'useSearchParams').mockReturnValue([
+    useSearchParamsMock.mockReturnValue([
       {
         get: (name: string): string | null => {
           switch (name) {
@@ -200,7 +213,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls unselectOrg from ctx when user alias is defined', async () => {
-    jest.spyOn(ReactRouter, 'useSearchParams').mockReturnValue([
+    useSearchParamsMock.mockReturnValue([
       {
         get: (name: string): string | null => {
           switch (name) {
@@ -231,7 +244,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls unselectOrg from ctx when user alias is defined and org name is empty', async () => {
-    jest.spyOn(ReactRouter, 'useSearchParams').mockReturnValue([
+    useSearchParamsMock.mockReturnValue([
       {
         get: (name: string): string | null => {
           switch (name) {
@@ -264,7 +277,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls navigate when org name is defined, but not repo name', async () => {
-    jest.spyOn(ReactRouter, 'useSearchParams').mockReturnValue([
+    useSearchParamsMock.mockReturnValue([
       {
         get: (name: string): string | null => {
           switch (name) {

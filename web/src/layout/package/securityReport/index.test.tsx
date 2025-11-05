@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { RepositoryKind } from '../../../types';
 import calculateDiffInYears from '../../../utils/calculateDiffInYears';
 import SecurityReport from './index';
-import { vi } from 'vitest';
 vi.mock('../../../utils/calculateDiffInYears');
 
 const defaultProps = {

@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import API from '../../../../../api';
 import { ErrorKind, Profile } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import UpdateProfile from './UpdateProfile';
-import { vi } from 'vitest';
 vi.mock('../../../../../api');
 vi.mock('../../../../../utils/alertDispatcher');
 

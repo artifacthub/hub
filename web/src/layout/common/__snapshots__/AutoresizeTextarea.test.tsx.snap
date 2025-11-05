@@ -12,16 +12,3 @@ exports[`AutoresizeTextarea > creates snapshot 1`] = `
   />
 </DocumentFragment>
 `;
-
-exports[`AutoresizeTextarea creates snapshot 1`] = `
-<DocumentFragment>
-  <textarea
-    class="form-control textarea"
-    id="test"
-    name="test"
-    rows="3"
-    spellcheck="false"
-    wrap="off"
-  />
-</DocumentFragment>
-`;

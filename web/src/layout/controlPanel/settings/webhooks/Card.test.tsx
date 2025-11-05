@@ -1,13 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
 import { ErrorKind, Webhook } from '../../../../types';
 import alertDispatcher from '../../../../utils/alertDispatcher';
 import WebhookCard from './Card';
-import { vi } from 'vitest';
 vi.mock('../../../../api');
 vi.mock('../../../../utils/alertDispatcher');
 
@@ -154,7 +154,8 @@ describe('WebhookCard', () => {
       const btn = screen.getByRole('button', { name: 'Open deletion webhook modal' });
       await userEvent.click(btn);
 
-      expect(await screen.findByRole('dialog')).toHaveClass('active');
+      const dialog = await screen.findByRole('dialog');
+      expect(dialog.className.includes('active')).toBe(true);
       expect(screen.getByText('Are you sure you want to delete this webhook?')).toBeInTheDocument();
 
       const deleteBtn = screen.getByRole('button', { name: 'Delete webhook' });
@@ -190,7 +191,8 @@ describe('WebhookCard', () => {
       const btn = screen.getByRole('button', { name: 'Open deletion webhook modal' });
       await userEvent.click(btn);
 
-      expect(screen.getByRole('dialog')).toHaveClass('active');
+      const dialog = screen.getByRole('dialog');
+      expect(dialog.className.includes('active')).toBe(true);
 
       const deleteBtn = screen.getByRole('button', { name: 'Delete webhook' });
       await userEvent.click(deleteBtn);

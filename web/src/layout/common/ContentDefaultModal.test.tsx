@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { ContentDefaultModalKind } from '../../types';
 import ContentDefaultModal from './ContentDefaultModal';
-import { vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const isVisibleItemInContainer = require('../../utils/isVisibleItemInContainer');

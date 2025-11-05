@@ -18,22 +18,3 @@ exports[`SubNavbar > creates snapshot 1`] = `
   </nav>
 </DocumentFragment>
 `;
-
-exports[`SubNavbar creates snapshot 1`] = `
-<DocumentFragment>
-  <nav
-    class="navbar navbar-expand-sm navbar undefined"
-    role="navigation"
-  >
-    <div
-      class="container-lg px-1 px-sm-4 px-lg-0 d-flex align-items-center justify-content-between flex-nowrap"
-    >
-      <div
-        data-testid="children"
-      >
-        Test
-      </div>
-    </div>
-  </nav>
-</DocumentFragment>
-`;

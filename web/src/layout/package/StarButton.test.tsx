@@ -1,13 +1,24 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
+
+const mockUseNavigate = vi.fn();
+const mockUseLocation = vi.fn();
+
+vi.mock('react-router', async () => {
+  const actual = await vi.importActual<typeof import('react-router')>('react-router');
+  return {
+    ...actual,
+    useNavigate: () => mockUseNavigate,
+    useLocation: () => mockUseLocation(),
+  };
+});
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import StarButton from './StarButton';
-import { vi } from 'vitest';
 vi.mock('../../api');
 vi.mock('../../utils/alertDispatcher');
 
@@ -34,16 +45,17 @@ const mockCtx = {
 
 const mockDispatch = jest.fn();
 
-const mockUseNavigate = jest.fn();
-
-vi.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as object),
-  useNavigate: () => mockUseNavigate,
-}));
-
 describe('StarButton', () => {
+  beforeEach(() => {
+    mockUseNavigate.mockReset();
+    mockUseLocation.mockReset();
+    mockUseLocation.mockReturnValue({ pathname: '/packages' });
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
+    mockUseNavigate.mockReset();
+    mockUseLocation.mockReset();
   });
 
   it('creates snapshot', async () => {
@@ -51,9 +63,7 @@ describe('StarButton', () => {
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-        <Router>
-          <StarButton {...defaultProps} />
-        </Router>
+        <StarButton {...defaultProps} />
       </AppCtx.Provider>
     );
 
@@ -75,9 +85,7 @@ describe('StarButton', () => {
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -121,9 +129,7 @@ describe('StarButton', () => {
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -164,9 +170,7 @@ describe('StarButton', () => {
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -193,9 +197,7 @@ describe('StarButton', () => {
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -223,9 +225,7 @@ describe('StarButton', () => {
 
         const component = (
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -252,9 +252,7 @@ describe('StarButton', () => {
 
         render(
           <AppCtx.Provider value={{ ctx: { ...mockCtx, user: undefined }, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -271,9 +269,7 @@ describe('StarButton', () => {
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -297,9 +293,7 @@ describe('StarButton', () => {
         vi.mocked(API).getStars.mockResolvedValue({ stars: 4 });
         render(
           <AppCtx.Provider value={{ ctx: { ...mockCtx, user: null }, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 

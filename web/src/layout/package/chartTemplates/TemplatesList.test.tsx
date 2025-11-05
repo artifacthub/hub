@@ -1,9 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import { ChartTemplate } from '../../../types';
 import TemplatesList from './TemplatesList';
-import { vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const isVisibleItemInContainer = require('../../../utils/isVisibleItemInContainer');

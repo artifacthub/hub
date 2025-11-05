@@ -15,6 +15,9 @@ const defaultProps = {
   packageId: 'id',
 };
 
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
+
 describe('Dependencies', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -49,7 +52,10 @@ describe('Dependencies', () => {
       const btn = screen.getByRole('button', { name: 'See all entries' });
       await userEvent.click(btn);
 
-      expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+      const modal = await screen.findByRole('dialog');
+      expect(modal).toHaveClass('modal');
+      expect(hasClassContaining(modal, 'active')).toBe(true);
+      expect(modal).toHaveClass('d-block');
 
       expect(screen.getAllByText('Dependencies')).toHaveLength(2);
       expect(screen.getAllByTestId('dependencyItem')).toHaveLength(15);

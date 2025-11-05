@@ -17,21 +17,3 @@ exports[`Label > creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`Label creates snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="undefined"
-  >
-    <div
-      class="d-flex flex-row align-items-center overflow-hidden labelWrapper default"
-    >
-      <div
-        class="text-nowrap border border-1 fw-bold labelText labelTextNoIcon"
-      >
-        Label text
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;

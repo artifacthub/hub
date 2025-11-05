@@ -171,7 +171,7 @@ describe('MobileSettings', () => {
       const link = screen.getByRole('button', { name: 'Open documentation' });
       expect(link).toBeInTheDocument();
       expect(link).toHaveProperty('target', '_self');
-      expect(link).toHaveProperty('href', 'http://localhost/docs');
+      expect(link).toHaveProperty('href', `${window.location.origin}/docs`);
       expect(link).toHaveProperty('rel', 'noopener noreferrer');
     });
 

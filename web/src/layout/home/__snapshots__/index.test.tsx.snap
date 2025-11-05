@@ -1,5 +1,1041 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Home index > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-flex flex-column flex-grow-1 bg-white home"
+  >
+    <div
+      class="jumbotron mb-0 text-center border-0 _jumbotron_1e4b41"
+    >
+      <div
+        aria-label="Find, install and publisher Cloud Native packages"
+        class="display-4 text-center d-block d-xxl-flex justify-content-center noFocus _mainTitle_1e4b41"
+        id="content"
+        role="banner"
+        tabindex="-1"
+      >
+        Find, install and publish
+        <br />
+        <span
+          class="_secondLine_1e4b41"
+        >
+          Cloud Native packages
+        </span>
+      </div>
+      <div
+        class="mt-4 mt-sm-5 text-center"
+      >
+        <div
+          class="position-relative m-auto w-50 _search_1e4b41"
+        >
+          <div
+            aria-controls="search-list"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            aria-owns="search-list"
+            class="d-flex align-items-center overflow-hidden searchBar lh-base bg-white _searchBar_f1c3e6 _big_f1c3e6"
+            role="combobox"
+          >
+            <div
+              class="d-flex align-items-center _iconWrapper_f1c3e6"
+              data-testid="searchBarIcon"
+            >
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="8"
+                />
+                <line
+                  x1="21"
+                  x2="16.65"
+                  y1="21"
+                  y2="16.65"
+                />
+              </svg>
+            </div>
+            <input
+              aria-label="Search packages"
+              autocapitalize="none"
+              autocomplete="off"
+              autocorrect="off"
+              class="flex-grow-1 ps-2 ps-md-0 border-0 shadow-none bg-transparent _input_f1c3e6"
+              placeholder="Search packages"
+              spellcheck="false"
+              type="text"
+              value=""
+            />
+            <div
+              class="d-none"
+              tabindex="0"
+            >
+              <div
+                aria-live="polite"
+              />
+            </div>
+            <button
+              aria-label="Close"
+              class="btn-close lh-lg ps-2 pe-3 _inputClean_f1c3e6 invisible"
+              type="button"
+            />
+            <div
+              class="d-none d-sm-block position-absolute text-dark _tipIcon_f1c3e6 _bigTipIcon_f1c3e6"
+            >
+              <button
+                aria-label="Open search tips modal"
+                class="btn btn-link p-2 text-light btn-lg"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 448c-110.532 0-200-89.431-200-200 0-110.495 89.472-200 200-200 110.491 0 200 89.471 200 200 0 110.53-89.431 200-200 200zm107.244-255.2c0 67.052-72.421 68.084-72.421 92.863V300c0 6.627-5.373 12-12 12h-45.647c-6.627 0-12-5.373-12-12v-8.659c0-35.745 27.1-50.034 47.579-61.516 17.561-9.845 28.324-16.541 28.324-29.579 0-17.246-21.999-28.693-39.784-28.693-23.189 0-33.894 10.977-48.942 29.969-4.057 5.12-11.46 6.071-16.666 2.124l-27.824-21.098c-5.107-3.872-6.251-11.066-2.644-16.363C184.846 131.491 214.94 112 261.794 112c49.071 0 101.45 38.304 101.45 88.8zM298 368c0 23.159-18.841 42-42 42s-42-18.841-42-42 18.841-42 42-42 42 18.841 42 42z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div />
+        <div
+          class="d-inline-block d-md-none text-center mt-3"
+        >
+          - or -
+          <a
+            aria-label="Browse all packages"
+            class="btn btn-link textLighter fw-semibold py-0 pb-1 ps-1 _allPkgBtn_1e4b41"
+            data-discover="true"
+            href="/packages/search"
+          >
+            browse all packages
+          </a>
+        </div>
+        <div
+          class="d-none d-md-inline-block text-center mt-5"
+        >
+          Or you can also 
+          <a
+            aria-label="Browse all packages"
+            class="btn btn-link textLighter fw-semibold py-0 pb-1 ps-1 pe-0"
+            data-discover="true"
+            href="/packages/search"
+          >
+            browse all packages
+          </a>
+           .
+        </div>
+        <div
+          class="d-none d-md-flex flex-row align-items-end justify-content-center flex-wrap"
+        >
+          <div />
+        </div>
+      </div>
+      <div
+        class="d-flex align-items-center justify-content-center mt-4 mt-md-5"
+      >
+        <div
+          class="text-center _counterWrapper_29001f"
+        >
+          <div
+            class="h3 _counter_29001f"
+          >
+            1039
+          </div>
+          <small
+            class="text-uppercase"
+          >
+            packages
+          </small>
+        </div>
+        <div
+          class="mx-3 mx-md-5 separator _separator_1e4b41"
+        />
+        <div
+          class="text-center _counterWrapper_29001f"
+        >
+          <div
+            class="h3 _counter_29001f"
+          >
+            18197
+          </div>
+          <small
+            class="text-uppercase"
+          >
+            releases
+          </small>
+        </div>
+      </div>
+      <div
+        class="text-center h5 my-4 mt-md-5 _legend_1e4b41"
+      >
+        Artifact Hub is an 
+        <span
+          class="fw-semibold"
+        >
+          Open Source
+        </span>
+         project
+      </div>
+      <div
+        class="d-flex flex-row align-items-center justify-content-center flex-wrap"
+      >
+        <a
+          aria-label="Open GitHub link"
+          class="_link_f0e789 btn btn-secondary mb-4 mb-md-2 _socialBtn_1e4b41"
+          href="https://github.com/artifacthub/hub"
+          rel="noopener noreferrer"
+          role="button"
+          tabindex="-1"
+          target="_blank"
+        >
+          <div
+            class="d-flex align-items-center justify-content-center"
+          >
+            <svg
+              class="me-2"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 496 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"
+              />
+            </svg>
+            GitHub
+          </div>
+        </a>
+        <a
+          aria-label="Open Slack channel"
+          class="_link_f0e789 btn btn-secondary ms-2 ms-md-3 mb-4 mb-md-2 _socialBtn_1e4b41"
+          href="https://cloud-native.slack.com/channels/artifact-hub"
+          rel="noopener noreferrer"
+          role="button"
+          tabindex="-1"
+          target="_blank"
+        >
+          <div
+            class="d-flex align-items-center justify-content-center"
+          >
+            <svg
+              class="me-2"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"
+              />
+            </svg>
+            Slack
+          </div>
+        </a>
+        <a
+          aria-label="Open Twitter link"
+          class="_link_f0e789 btn btn-secondary ms-2 ms-md-3 mb-4 mb-md-2 _socialBtn_1e4b41"
+          href="https://twitter.com/cncfartifacthub"
+          rel="noopener noreferrer"
+          role="button"
+          tabindex="-1"
+          target="_blank"
+        >
+          <div
+            class="d-flex align-items-center justify-content-center"
+          >
+            <svg
+              class="me-2"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"
+              />
+            </svg>
+            Twitter
+          </div>
+        </a>
+      </div>
+      <div
+        class="text-center mx-3 mt-md-4 mb-0 mb-sm-4 fw-light _repoGuideText_1e4b41"
+      >
+        Please see the 
+        <a
+          aria-label="Open documentation"
+          class="_link_f0e789 btn btn-link text-light fw-semibold textLight p-0 align-baseline _inlineLink_1e4b41"
+          href="/docs/topics/repositories"
+          rel="noopener noreferrer"
+          role="button"
+          tabindex="-1"
+          target="_blank"
+        >
+          repositories guide
+        </a>
+         for more information about how to list your content on Artifact Hub.
+      </div>
+    </div>
+    <div />
+    <div
+      class="py-5 textLight fs-4 fw-light _about_1e4b41"
+    >
+      <div
+        class="container-lg px-4 px-sm-0 py-0 py-md-5"
+      >
+        <div
+          class="text-center px-3 px-xs-0"
+        >
+          Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages and configurations. For example, this could include Helm charts and plugins, Falco configurations, Open Policy Agent (OPA) and Gatekeeper policies, OLM operators, Tinkerbell actions, Kubectl plugins, Tekton tasks, pipelines and stepactions, KEDA scalers, CoreDNS plugins, Keptn integrations, container images, Kubewarden policies, Kyverno policies, Knative client, Backstage plugins, Argo templates, KubeArmor policies, KCL modules, Headlamp plugins, Inspektor gadgets, Meshery designs, OpenCost plugins, Radius recipes, Bootable Containers and Kagent agents.
+          <div
+            class="py-0 py-lg-5"
+          >
+            <div
+              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+            >
+              <a
+                aria-label="Open Argo templates web"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://argoproj.github.io/argo-workflows/"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/argo-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Argo templates
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Backstage web"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://backstage.io/plugins"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/backstage-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Backstage plugins
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Bootable containers web"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://containers.github.io/bootable/"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/bootc-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Bootable containers
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Container Initiative site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://opencontainers.org"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/container-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Container images
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open CoreDNS site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://coredns.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/coredns-plugin-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      CoreDNS plugins
+                    </small>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div
+              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+            >
+              <a
+                aria-label="Open Falco site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://falco.org"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/falco-rules-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Falco rules
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Headlamp site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://headlamp.dev"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/headlamp-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Headlamp plugins
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Helm site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://helm.sh"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/helm-chart-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small
+                      class="text-nowrap"
+                    >
+                      Helm charts and plugins
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Inspektor gadget site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://www.inspektor-gadget.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/inspektor-gadget-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Inspektor gadgets
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Kagent agents web"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://kagent.dev/agents"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/kagent-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Kagent agents
+                    </small>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div
+              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+            >
+              <a
+                aria-label="Open KCL site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://kcl-lang.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/kcl-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      KCL modules
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open KEDA site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://keda.sh"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/keda-scaler-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      KEDA scalers
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Keptn site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://keptn.sh"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/keptn-integrations-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Keptn integrations
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Knative client repository"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://github.com/knative/client"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/knative-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Knative client plugins
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Krew site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://krew.sigs.k8s.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/krew-plugins-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Kubectl plugins
+                    </small>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div
+              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+            >
+              <a
+                aria-label="Open KubeArmor policies web"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://kubearmor.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/kubearmor-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      KubeArmor policies
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Kubewarden site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://www.kubewarden.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/kubewarden-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Kubewarden policies
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Kubewarden site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://www.kyverno.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/kyverno-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Kyverno policies
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Meshery site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://meshery.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/meshery-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Meshery designs
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Operator framework site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://github.com/operator-framework"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/olm-operators-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      OLM operators
+                    </small>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div
+              class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-stretch justify-content-around"
+            >
+              <a
+                aria-label="Open Policy Agent site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://www.openpolicyagent.org"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/opa-policies-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      OPA and Gatekeeper policies
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Policy Agent site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://www.opencost.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/opencost-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      OpenCost plugins
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Radius site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://radapp.io"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/radius-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Radius recipes
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Tekton site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://tekton.dev"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/tekton-pkg-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Tekton packages
+                    </small>
+                  </div>
+                </div>
+              </a>
+              <a
+                aria-label="Open Tinkerbell site"
+                class="_link_f0e789 col _iconLink_1e4b41"
+                href="https://tinkerbell.org"
+                rel="noopener noreferrer"
+                role="button"
+                tabindex="-1"
+                target="_blank"
+              >
+                <div
+                  class="d-flex flex-column justify-content-between align-items-center h-100"
+                >
+                  <img
+                    alt="Icon"
+                    class="_aboutIcon_1e4b41"
+                    src="/static/media/tinkerbell-actions-light.svg"
+                  />
+                  <div
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
+                  >
+                    <small>
+                      Tinkerbell actions
+                    </small>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
+        </div>
+      </div>
+    </div>
+    <div
+      class="py-5 text-dark fs-4 fw-light"
+    >
+      <div
+        class="container-lg px-sm-4 px-lg-0 py-0 py-md-5"
+      >
+        <div
+          class="d-flex flex-column justify-content-center px-4 px-xs-0"
+        >
+          <img
+            alt="Logo CNCF incubating project"
+            class="_logo_1e4b41 _colorLogo_1e4b41 homeLogo"
+            src="/static/media/cncf-incubating-color.svg"
+          />
+          <img
+            alt="Logo CNCF incubating project"
+            class="_logo_1e4b41 _whiteLogo_1e4b41 homeLogo"
+            src="/static/media/cncf-incubating-white.svg"
+          />
+          <div
+            class="px-3 pt-4 text-center w-100"
+          >
+            Artifact Hub is a 
+            <a
+              aria-label="Open CNCF projects site"
+              class="_link_f0e789 fw-semibold text-dark"
+              href="https://www.cncf.io/projects/"
+              rel="noopener noreferrer"
+              role="button"
+              tabindex="-1"
+              target="_blank"
+            >
+              Cloud Native Computing Foundation
+            </a>
+             incubating project.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Home index creates snapshot 1`] = `
 <DocumentFragment>
   <div

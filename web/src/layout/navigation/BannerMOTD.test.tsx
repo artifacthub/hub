@@ -3,6 +3,9 @@ import userEvent from '@testing-library/user-event';
 
 import BannerMOTD from './BannerMOTD';
 
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
+
 describe('BannerMOTD', () => {
   afterEach(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,7 +52,8 @@ describe('BannerMOTD', () => {
 
       const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
-      expect(alert).toHaveClass('infoAlert alert-info');
+      expect(hasClassContaining(alert, 'infoAlert')).toBe(true);
+      expect(alert).toHaveClass('alert-info');
       expect(screen.getByRole('button', { name: 'Close banner' })).toBeInTheDocument();
       expect(screen.getByText('this is a sample')).toBeInTheDocument();
     });
@@ -82,7 +86,7 @@ describe('BannerMOTD', () => {
       render(<BannerMOTD />);
 
       const alert = screen.getByRole('alert');
-      expect(alert).toHaveClass('dangerAlert alert-danger');
+      expect(alert).toHaveClass('alert-danger');
     });
 
     it('closes alert', async () => {

@@ -9,6 +9,9 @@ const defaultProps = {
   label: 'test',
 };
 
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
+
 describe('Sidebar', () => {
   it('creates snapshot', () => {
     const { asFragment } = render(<Sidebar {...defaultProps} />);
@@ -28,9 +31,9 @@ describe('Sidebar', () => {
     render(<Sidebar {...defaultProps} />);
     const sidebar = screen.getByRole('complementary', { name: 'Sidebar' });
     expect(sidebar).toBeInTheDocument();
-    expect(sidebar).not.toHaveClass('active');
+    expect(hasClassContaining(sidebar, 'active')).toBe(false);
     const btn = screen.getByRole('button', { name: /Open sidebar/ });
     await userEvent.click(btn);
-    expect(sidebar).toHaveClass('active');
+    expect(hasClassContaining(sidebar, 'active')).toBe(true);
   });
 });

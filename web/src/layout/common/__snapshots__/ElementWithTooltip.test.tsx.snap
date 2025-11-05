@@ -15,19 +15,3 @@ exports[`ElementWithTooltip > creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`ElementWithTooltip creates snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="position-relative undefined"
-  >
-    <div
-      data-testid="elementWithTooltip"
-    >
-      <div>
-        label
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;

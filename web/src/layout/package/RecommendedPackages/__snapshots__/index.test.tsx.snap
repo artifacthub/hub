@@ -64,6 +64,7 @@ exports[`RecommendedPackages > creates snapshot 1`] = `
         >
           <a
             class="d-inline-block text-dark h5 mb-2 me-3"
+            data-discover="true"
             data-testid="recommended-pkg"
             href="/packages/helm/artifact-hub/artifact-hub"
           >
@@ -103,6 +104,7 @@ exports[`RecommendedPackages > creates snapshot 1`] = `
           </a>
           <a
             class="d-inline-block text-dark h5 mb-2 me-3"
+            data-discover="true"
             data-testid="recommended-pkg"
             href="/packages/helm/prometheus-community/kube-prometheus-stack"
           >
@@ -133,153 +135,6 @@ exports[`RecommendedPackages > creates snapshot 1`] = `
               </div>
               <div
                 class="text-truncate text-dark fw-bold _badgeContent_2dfead"
-              >
-                <span>
-                  kube-prometheus-stack
-                </span>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`RecommendedPackages creates snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="w-100 undefined"
-  >
-    <div
-      class="w-100 text-nowrap mb-2"
-    >
-      <span
-        class="position-relative pkgIcon"
-      >
-        <svg
-          fill="none"
-          height="1em"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <line
-            x1="16.5"
-            x2="7.5"
-            y1="9.4"
-            y2="4.21"
-          />
-          <path
-            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
-          />
-          <polyline
-            points="3.27 6.96 12 12.01 20.73 6.96"
-          />
-          <line
-            x1="12"
-            x2="12"
-            y1="22.08"
-            y2="12"
-          />
-        </svg>
-      </span>
-      <small
-        class="text-muted ms-2"
-      >
-        Other packages recommended by the publisher:
-      </small>
-      <small
-        class="fw-bold ms-2"
-      >
-        2
-      </small>
-    </div>
-    <div
-      class="d-flex flex-column pb-3 pt-1 content"
-    >
-      <div
-        class="position-relative w-100 overflow-hidden content"
-      >
-        <div
-          class="w-100"
-        >
-          <a
-            class="d-inline-block text-dark h5 mb-2 me-3"
-            data-testid="recommended-pkg"
-            href="/packages/helm/artifact-hub/artifact-hub"
-          >
-            <div
-              class="badge bg-light text-dark d-flex flex-row align-items-center ps-0 pe-3 border border-1 badge"
-            >
-              <div
-                class="me-2"
-              >
-                <div
-                  class="imageWrapper ms-1 overflow-hidden"
-                >
-                  <div
-                    class="d-flex align-items-center justify-content-center w-100 h-100"
-                  >
-                    <img
-                      alt="Icon"
-                      class="image iconLight"
-                      src="/static/media/helm-chart.svg"
-                    />
-                    <img
-                      alt="Icon"
-                      class="image iconDark"
-                      src="/static/media/helm-chart-light.svg"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                class="text-truncate text-dark fw-bold badgeContent"
-              >
-                <span>
-                  artifact-hub
-                </span>
-              </div>
-            </div>
-          </a>
-          <a
-            class="d-inline-block text-dark h5 mb-2 me-3"
-            data-testid="recommended-pkg"
-            href="/packages/helm/prometheus-community/kube-prometheus-stack"
-          >
-            <div
-              class="badge bg-light text-dark d-flex flex-row align-items-center ps-0 pe-3 border border-1 badge"
-            >
-              <div
-                class="me-2"
-              >
-                <div
-                  class="imageWrapper ms-1 overflow-hidden"
-                >
-                  <div
-                    class="d-flex align-items-center justify-content-center w-100 h-100"
-                  >
-                    <img
-                      alt="Icon"
-                      class="image iconLight"
-                      src="/static/media/helm-chart.svg"
-                    />
-                    <img
-                      alt="Icon"
-                      class="image iconDark"
-                      src="/static/media/helm-chart-light.svg"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                class="text-truncate text-dark fw-bold badgeContent"
               >
                 <span>
                   kube-prometheus-stack

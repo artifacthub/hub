@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { Package } from '../../../../../../types';
 import PackageCard from './PackageCard';
-import { vi } from 'vitest';
 
 const getMockPackage = (fixtureId: string): Package => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -61,7 +61,9 @@ describe('PackageCard', () => {
       );
       const image = screen.queryByAltText(`Logo ${mockPackage.name}`);
       expect(image).toBeInTheDocument();
-      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/placeholder_pkg_helm.png');
+      const src = (image as HTMLImageElement).getAttribute('src');
+      expect(src).not.toBeNull();
+      expect(src).toContain('/static/media/placeholder_pkg_helm');
     });
   });
 
@@ -102,7 +104,7 @@ describe('PackageCard', () => {
       );
       const link = screen.getByTestId('packageCardLink');
       expect(link).toBeInTheDocument();
-      expect(link).toHaveProperty('href', 'http://localhost/packages/helm/stable/airflow');
+      expect(link.getAttribute('href')).toBe('/packages/helm/stable/airflow');
     });
   });
 

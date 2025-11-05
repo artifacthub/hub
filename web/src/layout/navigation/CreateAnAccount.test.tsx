@@ -1,10 +1,10 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { ErrorKind } from '../../types';
 import CreateAnAccount from './CreateAnAccount';
-import { vi } from 'vitest';
 vi.mock('../../api');
 
 const setApiErrorMock = jest.fn();

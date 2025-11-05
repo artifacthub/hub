@@ -15,6 +15,9 @@ Object.defineProperty(navigator, 'clipboard', {
   writable: true,
 });
 
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
+
 describe('ButtonCopyToClipboard', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -48,8 +51,9 @@ describe('ButtonCopyToClipboard', () => {
     expect(clipboardWriteTextMock).toHaveBeenCalledTimes(1);
     expect(clipboardWriteTextMock).toHaveBeenCalledWith('Text to copy');
 
-    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
-    expect(screen.getByRole('tooltip')).toHaveClass('isLight');
+    const tooltip = await screen.findByRole('tooltip');
+    expect(tooltip).toBeInTheDocument();
+    expect(hasClassContaining(tooltip, 'isLight')).toBe(true);
   });
 
   it('renders tooltip after clicking button when navidator.clipboard is undefined', async () => {

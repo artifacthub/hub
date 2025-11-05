@@ -22,26 +22,3 @@ exports[`InputTypeaheadOptionItem > creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`InputTypeaheadOptionItem creates snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="me-2 iconClass"
-  >
-    icon
-  </div>
-  <div
-    class="text-truncate"
-  >
-    Option 1
-  </div>
-  <div>
-     
-    <small
-      class="ms-1"
-    >
-      (19)
-    </small>
-  </div>
-</DocumentFragment>
-`;

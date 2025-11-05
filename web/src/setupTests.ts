@@ -1,11 +1,42 @@
 import '@testing-library/jest-dom/vitest';
 
 import { cleanup } from '@testing-library/react';
-import { createRequire } from 'module';
+import { createRequire } from 'node:module';
 import { afterEach, vi } from 'vitest';
 
 const noop = () => {};
 Object.defineProperty(window, 'scrollTo', { value: noop, writable: true });
+
+const originalStderrWrite = process.stderr.write.bind(process.stderr);
+type WriteCallback = (err?: Error | null | undefined) => void;
+
+process.stderr.write = (
+  chunk: string | Uint8Array<ArrayBufferLike>,
+  encoding?: BufferEncoding | WriteCallback,
+  cb?: WriteCallback
+) => {
+  const decoded =
+    typeof chunk === 'string'
+      ? chunk
+      : typeof encoding === 'string'
+      ? Buffer.from(chunk).toString(encoding)
+      : Buffer.from(chunk).toString();
+  if (decoded.includes('Warning: `--localstorage-file` was provided without a valid path')) {
+    return true;
+  }
+  if (typeof encoding === 'function') {
+    return originalStderrWrite(chunk, encoding);
+  }
+  return originalStderrWrite(chunk, encoding, cb);
+};
+
+const originalConsoleError = console.error;
+console.error = (...args: unknown[]) => {
+  if (args[0] === 'Could not parse CSS stylesheet') {
+    return;
+  }
+  originalConsoleError(...args);
+};
 
 afterEach(() => {
   cleanup();

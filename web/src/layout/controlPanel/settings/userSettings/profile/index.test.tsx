@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
 import { ErrorKind, Profile } from '../../../../../types';
 import UserSettings from './index';
-import { vi } from 'vitest';
 vi.mock('../../../../../api');
 
 const getMockProfile = (fixtureId: string): Profile => {

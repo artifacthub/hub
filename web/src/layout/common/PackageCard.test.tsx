@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { Package } from '../../types';
 import calculateDiffInYears from '../../utils/calculateDiffInYears';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import PackageCard from './PackageCard';
-import { vi } from 'vitest';
 vi.mock('../../utils/calculateDiffInYears');
 
 const getMockPackage = (fixtureId: string): Package => {

@@ -23,27 +23,3 @@ exports[`FullScreenModal > creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`FullScreenModal creates snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="position-fixed overflow-hidden p-3 top-0 bottom-0 start-0 end-0 modal"
-    role="dialog"
-  >
-    <div
-      class="position-absolute closeWrapper"
-    >
-      <button
-        aria-label="Close"
-        class="btn-close btn-close-white opacity-100 fs-5 close"
-        type="button"
-      />
-    </div>
-    <div
-      class="d-flex flex-column h-100 w-100"
-    >
-      test
-    </div>
-  </div>
-</DocumentFragment>
-`;

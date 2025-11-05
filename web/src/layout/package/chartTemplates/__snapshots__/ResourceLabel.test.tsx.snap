@@ -9,13 +9,3 @@ exports[`ResourceLabel > creates snapshot 1`] = `
   </span>
 </DocumentFragment>
 `;
-
-exports[`ResourceLabel creates snapshot 1`] = `
-<DocumentFragment>
-  <span
-    class="text-truncate border border-1 fw-bold label"
-  >
-    Scanner
-  </span>
-</DocumentFragment>
-`;

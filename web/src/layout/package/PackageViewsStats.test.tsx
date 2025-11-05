@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import { RepositoryKind } from '../../types';
 import PackageViewsStats from './PackageViewsStats';
-import { vi } from 'vitest';
 vi.mock('react-apexcharts', () => () => <div>Chart</div>);
 
 const defaultProps = {

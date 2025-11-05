@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import ReadmeWrapper from './index';
-import { vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 vi.mock('react-markdown', () => (props: any) => {

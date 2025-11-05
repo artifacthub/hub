@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import UserSettingsSection from './index';
-import { vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 vi.mock('../../../common/SectionPanel', () => (props: any) => <div>{props.defaultSection}</div>);

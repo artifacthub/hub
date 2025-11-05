@@ -1,13 +1,13 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import SubscriptionsButton from './SubscriptionsButton';
-import { vi } from 'vitest';
 vi.mock('../../api');
 vi.mock('../../utils/alertDispatcher');
 
@@ -290,7 +290,7 @@ describe('SubscriptionsButton', () => {
     });
 
     describe('when change subscription fails, returns to previous state', () => {
-      xit('with active event', async () => {
+      it.skip('with active event', async () => {
         vi.mocked(API).getPackageSubscriptions.mockResolvedValue([]);
         vi.mocked(API).addSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
@@ -343,7 +343,7 @@ describe('SubscriptionsButton', () => {
       });
     });
 
-    xit('with inactive event', async () => {
+    it.skip('with inactive event', async () => {
       vi.mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
       vi.mocked(API).deleteSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 

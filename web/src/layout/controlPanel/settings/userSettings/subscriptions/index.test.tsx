@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import SubscriptionsSection from './index';
-import { vi } from 'vitest';
 vi.mock('./packages', () => () => <div />);
 vi.mock('./repositories', () => () => <div />);
 

@@ -11,7 +11,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "types": ["vite/client", "vitest"],
+    "types": ["vite/client", "vitest", "node"],
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",

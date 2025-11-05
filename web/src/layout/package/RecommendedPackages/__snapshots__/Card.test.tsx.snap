@@ -4,6 +4,7 @@ exports[`RecommendedPackageCard > creates snapshot 1`] = `
 <DocumentFragment>
   <a
     class="d-inline-block text-dark h5 mb-2 me-3"
+    data-discover="true"
     data-testid="recommended-pkg"
     href="/packages/helm/artifact-hub/artifact-hub"
   >
@@ -34,50 +35,6 @@ exports[`RecommendedPackageCard > creates snapshot 1`] = `
       </div>
       <div
         class="text-truncate text-dark fw-bold _badgeContent_2dfead"
-      >
-        <span>
-          artifact-hub
-        </span>
-      </div>
-    </div>
-  </a>
-</DocumentFragment>
-`;
-
-exports[`RecommendedPackageCard creates snapshot 1`] = `
-<DocumentFragment>
-  <a
-    class="d-inline-block text-dark h5 mb-2 me-3"
-    data-testid="recommended-pkg"
-    href="/packages/helm/artifact-hub/artifact-hub"
-  >
-    <div
-      class="badge bg-light text-dark d-flex flex-row align-items-center ps-0 pe-3 border border-1 badge"
-    >
-      <div
-        class="me-2"
-      >
-        <div
-          class="imageWrapper ms-1 overflow-hidden"
-        >
-          <div
-            class="d-flex align-items-center justify-content-center w-100 h-100"
-          >
-            <img
-              alt="Icon"
-              class="image iconLight"
-              src="/static/media/helm-chart.svg"
-            />
-            <img
-              alt="Icon"
-              class="image iconDark"
-              src="/static/media/helm-chart-light.svg"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="text-truncate text-dark fw-bold badgeContent"
       >
         <span>
           artifact-hub

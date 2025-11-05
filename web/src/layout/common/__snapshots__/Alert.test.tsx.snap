@@ -27,31 +27,3 @@ exports[`Alert > creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`Alert creates snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="overflow-hidden alertWrapper isAlertActive"
-    data-testid="alertWrapper"
-  >
-    <div
-      class="alert alert-danger mt-3 mb-0"
-      role="alert"
-    >
-      <div
-        class="d-flex flex-row align-items-start justify-content-between"
-      >
-        <div>
-          errorMessage
-        </div>
-        <button
-          aria-label="Close alert"
-          class="btn-close ms-3"
-          data-testid="closeAlertBtn"
-          type="button"
-        />
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;

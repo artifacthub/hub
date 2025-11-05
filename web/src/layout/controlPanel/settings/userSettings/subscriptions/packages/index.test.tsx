@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../../../../api';
 import { ErrorKind } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import PackagesSection from '../index';
-import { vi } from 'vitest';
 vi.mock('../../../../../../api');
 vi.mock('../../../../../../utils/alertDispatcher');
 
@@ -171,7 +171,7 @@ describe('PackagesSection', () => {
     });
   });
 
-  xit('loads first page when not subscriptions after deleting one', async () => {
+  it.skip('loads first page when not subscriptions after deleting one', async () => {
     const mockSubscriptions = getMockSubscriptions('11');
     vi.mocked(API).deleteSubscription.mockResolvedValue('');
     vi.mocked(API)
@@ -255,7 +255,7 @@ describe('PackagesSection', () => {
   });
 
   describe('when change subscription fails', () => {
-    xit('generic error', async () => {
+    it.skip('generic error', async () => {
       const mockSubscriptions = getMockSubscriptions('6');
       vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
       vi.mocked(API).deleteSubscription.mockRejectedValue({ kind: ErrorKind.Other });
@@ -299,7 +299,7 @@ describe('PackagesSection', () => {
       expect(await screen.findByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`)).toBeInTheDocument();
     });
 
-    xit('UnauthorizedError', async () => {
+    it.skip('UnauthorizedError', async () => {
       const mockSubscriptions = getMockSubscriptions('6');
       vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
       vi.mocked(API).deleteSubscription.mockRejectedValue({

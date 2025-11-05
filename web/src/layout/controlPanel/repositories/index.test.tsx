@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind } from '../../../types';
 import Repository from './index';
-import { vi } from 'vitest';
 vi.mock('../../../api');
 vi.mock('../../../utils/minutesToNearestInterval', () => () => 3);
 

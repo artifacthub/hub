@@ -1,13 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { JSONSchema } from '../../../jsonschema';
 import { ErrorKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ValuesSchema from './';
-import { vi } from 'vitest';
 vi.mock('../../../api');
 vi.mock('../../../utils/alertDispatcher');
 
@@ -40,7 +40,7 @@ describe('ValuesSchema', () => {
     jest.resetAllMocks();
   });
 
-  xit('creates snapshot', async () => {
+  it.skip('creates snapshot', async () => {
     const mockValuesSchema = getMockValuesSchema('1');
     vi.mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 

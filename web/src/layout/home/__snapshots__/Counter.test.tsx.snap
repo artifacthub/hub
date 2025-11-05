@@ -18,22 +18,3 @@ exports[`Counter > renders correctly 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`Counter renders correctly 1`] = `
-<DocumentFragment>
-  <div
-    class="text-center counterWrapper"
-  >
-    <div
-      class="h3 counter"
-    >
-      12
-    </div>
-    <small
-      class="text-uppercase"
-    >
-      name
-    </small>
-  </div>
-</DocumentFragment>
-`;

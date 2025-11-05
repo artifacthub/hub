@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../../../../api';
 import { ErrorKind } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import RepositoriesSection from './index';
-import { vi } from 'vitest';
 
 vi.mock('../../../../../../api');
 vi.mock('../../../../../../utils/alertDispatcher');
@@ -172,7 +172,7 @@ describe('RepositoriesSection', () => {
   });
 
   describe('to change opt-out', () => {
-    xit('to deactivate active opt-out', async () => {
+    it.skip('to deactivate active opt-out', async () => {
       const mockOptOut = getMockOptOut('5');
       vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
       vi.mocked(API).deleteOptOut.mockResolvedValue('');
@@ -252,7 +252,7 @@ describe('RepositoriesSection', () => {
       expect(await screen.findByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_input`)).toBeInTheDocument();
     });
 
-    xit('UnauthorizedError', async () => {
+    it.skip('UnauthorizedError', async () => {
       const mockOptOut = getMockOptOut('6');
       vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
       vi.mocked(API).deleteOptOut.mockRejectedValue({
@@ -381,7 +381,7 @@ describe('RepositoriesSection', () => {
       expect(input4).toBeChecked();
     });
 
-    xit('to activate opt-out for RepositoryScanningErrors', async () => {
+    it.skip('to activate opt-out for RepositoryScanningErrors', async () => {
       const mockOptOut = getMockOptOut('11');
       vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
       vi.mocked(API).addOptOut.mockResolvedValue('');

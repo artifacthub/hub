@@ -1,8 +1,8 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import ParamInfo from './ParamInfo';
-import { vi } from 'vitest';
 vi.mock('react-markdown', () => () => <div />);
 vi.mock('remark-gfm', () => () => <div />);
 

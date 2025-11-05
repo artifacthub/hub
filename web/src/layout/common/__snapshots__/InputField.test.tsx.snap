@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`InputField creates snapshot 1`] = `
+exports[`InputField > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mb-4 position-relative undefined"
   >
     <label
-      class="form-label fw-bold label"
+      class="form-label fw-bold _label_d02ded"
       for="name"
     >
       <span
@@ -27,12 +27,12 @@ exports[`InputField creates snapshot 1`] = `
       value=""
     />
     <div
-      class="valid-feedback mt-0 inputFeedback"
+      class="valid-feedback mt-0 _inputFeedback_d02ded"
     >
       valid text
     </div>
     <div
-      class="invalid-feedback mt-0 inputFeedback"
+      class="invalid-feedback mt-0 _inputFeedback_d02ded"
     >
       invalid text
     </div>

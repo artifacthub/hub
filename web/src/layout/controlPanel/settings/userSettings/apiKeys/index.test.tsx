@@ -1,21 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../../../api';
 import { ErrorKind } from '../../../../../types';
 import APIKeysSection from './index';
-import { vi } from 'vitest';
 vi.mock('../../../../../api');
-vi.mock('moment', async () => {
-  const actual = await vi.importActual<typeof import('moment')>('moment');
-  return {
-    __esModule: true,
-    ...actual,
-    default: actual.default,
-    format: () => '2020/06/18 16:35:39 (+00:00)',
-  };
-});
 
 const getMockAPIKeys = (fixtureId: string) => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports

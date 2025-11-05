@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import API from '../../../../../api';
 import { APIKey, ErrorKind } from '../../../../../types';
 import Modal from './Modal';
-import { vi } from 'vitest';
 vi.mock('../../../../../api');
 
 const APIKeyMock: APIKey = {

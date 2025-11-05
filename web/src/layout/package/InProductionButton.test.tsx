@@ -1,13 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import { ErrorKind, Organization } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import InProductionButton from './InProductionButton';
-import { vi } from 'vitest';
 vi.mock('../../api');
 vi.mock('../../utils/alertDispatcher');
 

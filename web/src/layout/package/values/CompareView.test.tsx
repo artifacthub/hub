@@ -1,8 +1,8 @@
 import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import CompareView from './CompareView';
-import { vi } from 'vitest';
 
 vi.mock('../../../api');
 

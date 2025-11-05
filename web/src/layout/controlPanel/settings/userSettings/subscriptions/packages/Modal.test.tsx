@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import API from '../../../../../../api';
 import { Package, SearchResults } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import SubscriptionModal from './Modal';
-import { vi } from 'vitest';
 vi.mock('../../../../../../api');
 vi.mock('../../../../../../utils/alertDispatcher');
 const mockOnSuccess = jest.fn();
@@ -27,6 +27,9 @@ const defaultProps = {
   onClose: mockOnClose,
   getNotificationTitle: () => 'new releases',
 };
+
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('SubscriptionModal', () => {
   afterEach(() => {
@@ -75,14 +78,14 @@ describe('SubscriptionModal', () => {
 
       const buttons = await screen.findAllByTestId('packageItem');
       expect(buttons).toHaveLength(8);
-      expect(buttons[0]).toHaveClass('disabledCell');
-      expect(buttons[1]).toHaveClass('disabledCell');
-      expect(buttons[2]).toHaveClass('clickableCell');
-      expect(buttons[3]).toHaveClass('clickableCell');
-      expect(buttons[4]).toHaveClass('clickableCell');
-      expect(buttons[5]).toHaveClass('clickableCell');
-      expect(buttons[6]).toHaveClass('clickableCell');
-      expect(buttons[7]).toHaveClass('clickableCell');
+      expect(hasClassContaining(buttons[0], 'disabledCell')).toBe(true);
+      expect(hasClassContaining(buttons[1], 'disabledCell')).toBe(true);
+      expect(hasClassContaining(buttons[2], 'clickableCell')).toBe(true);
+      expect(hasClassContaining(buttons[3], 'clickableCell')).toBe(true);
+      expect(hasClassContaining(buttons[4], 'clickableCell')).toBe(true);
+      expect(hasClassContaining(buttons[5], 'clickableCell')).toBe(true);
+      expect(hasClassContaining(buttons[6], 'clickableCell')).toBe(true);
+      expect(hasClassContaining(buttons[7], 'clickableCell')).toBe(true);
     });
 
     it('all enabled', async () => {
@@ -102,8 +105,8 @@ describe('SubscriptionModal', () => {
       });
 
       const buttons = await screen.findAllByTestId('packageItem');
-      expect(buttons[0]).toHaveClass('clickableCell');
-      expect(buttons[1]).toHaveClass('clickableCell');
+      expect(hasClassContaining(buttons[0], 'clickableCell')).toBe(true);
+      expect(hasClassContaining(buttons[1], 'clickableCell')).toBe(true);
     });
 
     it('all disabled', async () => {
@@ -123,8 +126,8 @@ describe('SubscriptionModal', () => {
       });
 
       const buttons = await screen.findAllByTestId('packageItem');
-      expect(buttons[0]).toHaveClass('disabledCell');
-      expect(buttons[1]).toHaveClass('disabledCell');
+      expect(hasClassContaining(buttons[0], 'disabledCell')).toBe(true);
+      expect(hasClassContaining(buttons[1], 'disabledCell')).toBe(true);
     });
 
     it('one disabled', async () => {
@@ -144,8 +147,8 @@ describe('SubscriptionModal', () => {
       });
 
       const buttons = await screen.findAllByTestId('packageItem');
-      expect(buttons[0]).toHaveClass('disabledCell');
-      expect(buttons[1]).toHaveClass('clickableCell');
+      expect(hasClassContaining(buttons[0], 'disabledCell')).toBe(true);
+      expect(hasClassContaining(buttons[1], 'clickableCell')).toBe(true);
     });
   });
 

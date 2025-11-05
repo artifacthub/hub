@@ -7,11 +7,3 @@ exports[`HoverableItem > creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`HoverableItem creates snapshot 1`] = `
-<DocumentFragment>
-  <div>
-    hi
-  </div>
-</DocumentFragment>
-`;

@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { ChartTmplTypeFile } from '../../../types';
 import CompareView from './CompareView';
-import { vi } from 'vitest';
 
 vi.mock('../../../api');
 vi.mock('react-markdown', () => () => <div />);

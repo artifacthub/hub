@@ -3,6 +3,9 @@ import userEvent from '@testing-library/user-event';
 
 import CapabilityLevelInfoModal from './CapabilityLevelInfoModal';
 
+const hasClassContaining = (element: Element, token: string): boolean =>
+  Array.from(element.classList).some((cls) => cls.includes(token));
+
 describe('CapabilityLevelInfoModal', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -22,11 +25,11 @@ describe('CapabilityLevelInfoModal', () => {
     it('opens modal', async () => {
       render(<CapabilityLevelInfoModal />);
 
-      expect(screen.getByRole('dialog')).not.toHaveClass('active');
+      expect(hasClassContaining(screen.getByRole('dialog'), 'active')).toBe(false);
       const btn = screen.getByRole('button', { name: /Open modal/ });
       await userEvent.click(btn);
 
-      expect(screen.getByRole('dialog')).toHaveClass('active');
+      expect(hasClassContaining(screen.getByRole('dialog'), 'active')).toBe(true);
       expect(screen.getByAltText('Capability Level Diagram')).toBeInTheDocument();
     });
   });
