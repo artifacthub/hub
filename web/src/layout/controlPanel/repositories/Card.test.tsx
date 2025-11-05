@@ -8,7 +8,9 @@ import { Repository } from '../../../types';
 import Card from './Card';
 vi.mock('../../../api');
 vi.mock('../../../utils/alertDispatcher');
-vi.mock('../../../utils/minutesToNearestInterval', () => () => 3);
+vi.mock('../../../utils/minutesToNearestInterval', () => ({
+  default: () => 3,
+}));
 vi.mock('./TransferModal', () => () => <div>Transfer repository</div>);
 
 const mockUseNavigate = jest.fn();

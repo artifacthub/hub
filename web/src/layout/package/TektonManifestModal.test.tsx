@@ -12,7 +12,9 @@ vi.mock('react-router-dom', () => ({
   useNavigate: () => mockUseNavigate,
 }));
 
-vi.mock('react-syntax-highlighter', () => () => <div>content</div>);
+vi.mock('react-syntax-highlighter', () => ({
+  default: () => <div>content</div>,
+}));
 
 const defaultProps = {
   manifestRaw:

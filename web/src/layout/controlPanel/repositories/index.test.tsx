@@ -8,7 +8,9 @@ import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind } from '../../../types';
 import Repository from './index';
 vi.mock('../../../api');
-vi.mock('../../../utils/minutesToNearestInterval', () => () => 3);
+vi.mock('../../../utils/minutesToNearestInterval', () => ({
+  default: () => 3,
+}));
 
 const getMockRepository = (fixtureId: string) => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports

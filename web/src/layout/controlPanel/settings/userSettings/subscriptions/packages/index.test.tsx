@@ -92,13 +92,14 @@ describe('PackagesSection', () => {
 
       const modal = await screen.findByRole('dialog');
       expect(modal).toBeInTheDocument();
-      expect(modal).not.toHaveClass('active');
+      expect(modal.className.split(' ').some((cls) => cls.includes('active'))).toBe(false);
 
       const btn = screen.getByRole('button', { name: 'Open subscription modal' });
       expect(btn).toBeInTheDocument();
       await userEvent.click(btn);
 
-      expect(await screen.findByRole('dialog')).toHaveClass('active');
+      const openedModal = await screen.findByRole('dialog');
+      expect(openedModal.className.split(' ').some((cls) => cls.includes('active'))).toBe(true);
     });
   });
 

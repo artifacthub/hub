@@ -22,7 +22,9 @@ vi.mock('react-router-dom', () => ({
   useNavigate: () => mockUseNavigate,
 }));
 
-vi.mock('react-syntax-highlighter', () => () => <div id="line_59">port:</div>);
+vi.mock('react-syntax-highlighter', () => ({
+  default: () => <div id="line_59">port:</div>,
+}));
 
 const defaultProps = {
   packageId: 'id',

@@ -3,8 +3,12 @@ import { vi } from 'vitest';
 
 import SettingsSection from './index';
 
-vi.mock('./userSettings', () => () => <div>user</div>);
-vi.mock('./orgSettings', () => () => <div>org</div>);
+vi.mock('./userSettings', () => ({
+  default: () => <div>user</div>,
+}));
+vi.mock('./orgSettings', () => ({
+  default: () => <div>org</div>,
+}));
 
 const defaultProps = {
   activePage: '1',
