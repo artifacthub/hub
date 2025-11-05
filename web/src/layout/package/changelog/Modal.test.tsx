@@ -7,6 +7,7 @@ import API from '../../../api';
 import { ChangeLog } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ChangelogModal from './Modal';
+import styles from './Modal.module.css';
 vi.mock('../../../api');
 vi.mock('../../../utils/alertDispatcher');
 
@@ -179,7 +180,7 @@ describe('ChangelogModal', () => {
       expect(els).toHaveLength(2);
 
       await waitFor(() => {
-        expect(els[0].parentElement).toHaveClass('activeVersionBtnWrapper');
+        expect(els[0].parentElement).toHaveClass(styles.activeVersionBtnWrapper);
       });
     });
 
@@ -222,7 +223,7 @@ describe('ChangelogModal', () => {
       const versionBtns = await screen.findAllByTestId('versionBtnWrapper');
 
       await waitFor(() => {
-        expect(versionBtns[0]).toHaveClass('activeVersionBtnWrapper');
+        expect(versionBtns[0]).toHaveClass(styles.activeVersionBtnWrapper);
       });
     });
 

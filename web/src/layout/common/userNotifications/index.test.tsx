@@ -5,13 +5,20 @@ import { AppCtx } from '../../../context/AppCtx';
 import { UserNotification } from '../../../types';
 import userNotificationsDispatcher from '../../../utils/userNotificationsDispatcher';
 import UserNotificationsController from './index';
-vi.mock('react-markdown', () => () => <div />);
-vi.mock('remark-gfm', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: () => <div />,
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
 vi.mock('../../../utils/userNotificationsDispatcher', () => ({
-  subscribe: jest.fn(),
-  close: jest.fn(),
-  start: jest.fn(),
-  updateSettings: jest.fn(),
+  __esModule: true,
+  default: {
+    subscribe: jest.fn(),
+    close: jest.fn(),
+    start: jest.fn(),
+    updateSettings: jest.fn(),
+  },
 }));
 
 const updateUserNotificationMock = jest.fn();

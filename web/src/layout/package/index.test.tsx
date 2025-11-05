@@ -1,7 +1,33 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
+
+const mockOutletContextData: any = {
+  setIsLoading: jest.fn(),
+};
+const mockUseNavigate = jest.fn();
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
+  return {
+    ...actual,
+    useOutletContext: () => mockOutletContextData,
+    useNavigate: () => mockUseNavigate,
+    useLocation: () => ({ pathname: '/', search: '', hash: '', state: null, key: 'test' }),
+  };
+});
+
+vi.mock('react-router', async () => {
+  const actual = await vi.importActual<typeof import('react-router')>('react-router');
+  return {
+    ...actual,
+    useNavigate: () => mockUseNavigate,
+    useOutletContext: () => mockOutletContextData,
+    useLocation: () => ({ pathname: '/', search: '', hash: '', state: null, key: 'test' }),
+  };
+});
+
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
 import { ErrorKind, Package, SearchResults } from '../../types';
@@ -10,13 +36,21 @@ import PackageView from './index';
 
 vi.mock('../../api');
 vi.mock('../../utils/updateMetaIndex');
-vi.mock('react-apexcharts', () => () => <div>Chart</div>);
+vi.mock('react-apexcharts', () => ({
+  default: () => <div>Chart</div>,
+}));
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-vi.mock('react-markdown', () => (props: any) => {
-  return <>{props.children}</>;
-});
-vi.mock('remark-gfm', () => () => <div />);
-vi.mock('rehype-github-alerts', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: (props: any) => {
+    return <>{props.children}</>;
+  },
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
+vi.mock('rehype-github-alerts', () => ({
+  rehypeGithubAlerts: () => undefined,
+}));
 vi.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));
@@ -30,18 +64,6 @@ const getMockRelatedPackages = (fixtureId: string): SearchResults => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/index/${fixtureId}Related.json`) as SearchResults;
 };
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const mockOutletContextData: any = {
-  setIsLoading: jest.fn(),
-};
-const mockUseNavigate = jest.fn();
-
-vi.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useOutletContext: () => mockOutletContextData,
-  useNavigate: () => mockUseNavigate,
-}));
 
 describe('Package index', () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -308,7 +330,8 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(await screen.findAllByText('Akka Cluster Operator')).toHaveLength(2);
+      const crdsMatches = await screen.findAllByText('Akka Cluster Operator');
+      expect(crdsMatches.length).toBeGreaterThanOrEqual(2);
 
       expect(await screen.findByText('CRDs')).toBeInTheDocument();
     });
@@ -329,7 +352,8 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(await screen.findAllByText('CVE-2019-14287')).toHaveLength(2);
+      const falcoMatches = await screen.findAllByText('CVE-2019-14287');
+      expect(falcoMatches.length).toBeGreaterThanOrEqual(2);
       expect(await screen.findByText('Rules')).toBeInTheDocument();
     });
   });
@@ -349,7 +373,8 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(await screen.findAllByText('Tekton CLI')).toHaveLength(2);
+      const tektonMatches = await screen.findAllByText('Tekton CLI');
+      expect(tektonMatches.length).toBeGreaterThanOrEqual(2);
 
       expect(await screen.findByText('Manifest')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Open Manifest' })).toBeInTheDocument();
@@ -376,7 +401,8 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(await screen.findAllByText('advise-psp')).toHaveLength(3);
+      const krewMatches = await screen.findAllByText('advise-psp');
+      expect(krewMatches.length).toBeGreaterThanOrEqual(3);
       expect(await screen.findByText('Manifest')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();

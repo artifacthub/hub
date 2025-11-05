@@ -4,11 +4,16 @@ import { vi } from 'vitest';
 
 import { RepositoryKind } from '../../../types';
 import Modal from './Modal';
+import modalStyles from '../../common/Modal.module.css';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-vi.mock('react-markdown', () => (props: any) => {
-  return <>{props.children}</>;
-});
-vi.mock('remark-gfm', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: (props: any) => {
+    return <>{props.children}</>;
+  },
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
 
 const mockUseNavigate = jest.fn();
 
@@ -102,7 +107,9 @@ describe('HelmInstall', () => {
         </Router>
       );
 
-      expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+      const modal = await screen.findByRole('dialog');
+      expect(modal).toHaveClass(modalStyles.active);
+      expect(modal).toHaveClass('d-block');
 
       rerender(
         <Router>
@@ -110,7 +117,9 @@ describe('HelmInstall', () => {
         </Router>
       );
 
-      expect(await screen.findByRole('dialog')).not.toHaveClass('active d-block');
+      const rerenderedModal = await screen.findByRole('dialog');
+      expect(rerenderedModal).not.toHaveClass(modalStyles.active);
+      expect(rerenderedModal).not.toHaveClass('d-block');
     });
   });
 });

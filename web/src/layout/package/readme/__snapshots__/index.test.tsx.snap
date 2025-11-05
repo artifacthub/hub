@@ -2,45 +2,11 @@
 
 exports[`ReadmeWrapper > creates snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="alert alert-primary ms-auto me-auto my-5 text-center p-4 p-sm-5 border border-1 _wrapper_5dbc1b d-table-cell overflow-hidden"
-    role="alert"
-  >
-    <div
-      class="h4"
-    >
-      Something went wrong rendering the README file of this package.
-      <div
-        class="h6 mt-4"
-      >
-        Please 
-        <a
-          aria-label="GitHub issue"
-          class="_link_f0e789 undefined"
-          href="https://github.com/artifacthub/hub/issues/new/choose"
-          rel="noopener noreferrer"
-          role="button"
-          tabindex="-1"
-          target="_blank"
-        >
-          <u>
-            file an issue
-          </u>
-        </a>
-         in GitHub indicating the URL of the package you are experiencing problems with.
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`ReadmeWrapper creates snapshot 1`] = `
-<DocumentFragment>
   <span
     data-testid="readme"
   >
     <div
-      class="mt-3 mb-5 position-relative md"
+      class="mt-3 mb-5 position-relative _md_eec7bb"
     >
       # package-name
 test # Sample

@@ -33,7 +33,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   if
                 </span>
@@ -71,7 +71,7 @@ exports[`Template > creates snapshot 1`] = `
                     data-testid="infoText"
                   >
                     <span
-                      class="_tmplValue_a85043 undefined"
+                      class="_tmplValue_a85043 _lightTheme_a85043"
                     >
                       .Values.hub.ingress.enabled
                     </span>
@@ -176,7 +176,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{ 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   include
                 </span>
@@ -258,7 +258,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   include
                 </span>
@@ -285,29 +285,8 @@ exports[`Template > creates snapshot 1`] = `
                         <div
                           class="p-2"
                         >
-                          <h1
-                            class="text-dark lh-1 fw-bold _header_b64196"
-                          >
-                            nindent function 
-                            <a
-                              class="d-inline-block text-dark"
-                              href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
-                              node="[object Object]"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              iconLink
-                            </a>
-                          </h1>
-                          
-
-                          <p>
-                            The 
-                            <strong>
-                              nindent
-                            </strong>
-                             function is the same as the indent function, but prepends a new line to the beginning of the string.
-                          </p>
+                          # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
+The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
                         </div>
                       </div>
                     </div>
@@ -317,7 +296,7 @@ exports[`Template > creates snapshot 1`] = `
                     data-testid="infoText"
                   >
                     <span
-                      class="_tmplFunction_a85043 undefined"
+                      class="_tmplFunction_a85043 _lightTheme_a85043"
                     >
                       nindent
                     </span>
@@ -356,7 +335,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   with
                 </span>
@@ -408,7 +387,7 @@ exports[`Template > creates snapshot 1`] = `
                     data-testid="infoText"
                   >
                     <span
-                      class="_tmplValue_a85043 undefined"
+                      class="_tmplValue_a85043 _lightTheme_a85043"
                     >
                       .Values.hub.ingress.annotations
                     </span>
@@ -469,7 +448,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   toYaml
                 </span>
@@ -496,29 +475,8 @@ exports[`Template > creates snapshot 1`] = `
                         <div
                           class="p-2"
                         >
-                          <h1
-                            class="text-dark lh-1 fw-bold _header_b64196"
-                          >
-                            nindent function 
-                            <a
-                              class="d-inline-block text-dark"
-                              href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
-                              node="[object Object]"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              iconLink
-                            </a>
-                          </h1>
-                          
-
-                          <p>
-                            The 
-                            <strong>
-                              nindent
-                            </strong>
-                             function is the same as the indent function, but prepends a new line to the beginning of the string.
-                          </p>
+                          # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
+The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
                         </div>
                       </div>
                     </div>
@@ -528,7 +486,7 @@ exports[`Template > creates snapshot 1`] = `
                     data-testid="infoText"
                   >
                     <span
-                      class="_tmplFunction_a85043 undefined"
+                      class="_tmplFunction_a85043 _lightTheme_a85043"
                     >
                       nindent
                     </span>
@@ -567,7 +525,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   end
                 </span>
@@ -648,7 +606,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{ 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   include
                 </span>
@@ -718,7 +676,7 @@ exports[`Template > creates snapshot 1`] = `
                     data-testid="infoText"
                   >
                     <span
-                      class="_tmplValue_a85043 undefined"
+                      class="_tmplValue_a85043 _lightTheme_a85043"
                     >
                       .Values.hub.service.port
                     </span>
@@ -757,7 +715,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   with
                 </span>
@@ -797,7 +755,7 @@ exports[`Template > creates snapshot 1`] = `
                     data-testid="infoText"
                   >
                     <span
-                      class="_tmplValue_a85043 undefined"
+                      class="_tmplValue_a85043 _lightTheme_a85043"
                     >
                       .Values.hub.ingress.rules
                     </span>
@@ -858,7 +816,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   toYaml
                 </span>
@@ -885,29 +843,8 @@ exports[`Template > creates snapshot 1`] = `
                         <div
                           class="p-2"
                         >
-                          <h1
-                            class="text-dark lh-1 fw-bold _header_b64196"
-                          >
-                            nindent function 
-                            <a
-                              class="d-inline-block text-dark"
-                              href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
-                              node="[object Object]"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              iconLink
-                            </a>
-                          </h1>
-                          
-
-                          <p>
-                            The 
-                            <strong>
-                              nindent
-                            </strong>
-                             function is the same as the indent function, but prepends a new line to the beginning of the string.
-                          </p>
+                          # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
+The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
                         </div>
                       </div>
                     </div>
@@ -917,7 +854,7 @@ exports[`Template > creates snapshot 1`] = `
                     data-testid="infoText"
                   >
                     <span
-                      class="_tmplFunction_a85043 undefined"
+                      class="_tmplFunction_a85043 _lightTheme_a85043"
                     >
                       nindent
                     </span>
@@ -956,7 +893,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   end
                 </span>
@@ -993,7 +930,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   with
                 </span>
@@ -1033,7 +970,7 @@ exports[`Template > creates snapshot 1`] = `
                     data-testid="infoText"
                   >
                     <span
-                      class="_tmplValue_a85043 undefined"
+                      class="_tmplValue_a85043 _lightTheme_a85043"
                     >
                       .Values.hub.ingress.tls
                     </span>
@@ -1094,7 +1031,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   toYaml
                 </span>
@@ -1121,29 +1058,8 @@ exports[`Template > creates snapshot 1`] = `
                         <div
                           class="p-2"
                         >
-                          <h1
-                            class="text-dark lh-1 fw-bold _header_b64196"
-                          >
-                            nindent function 
-                            <a
-                              class="d-inline-block text-dark"
-                              href="https://helm.sh/docs/chart_template_guide/function_list/#nindent"
-                              node="[object Object]"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              iconLink
-                            </a>
-                          </h1>
-                          
-
-                          <p>
-                            The 
-                            <strong>
-                              nindent
-                            </strong>
-                             function is the same as the indent function, but prepends a new line to the beginning of the string.
-                          </p>
+                          # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
+The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
                         </div>
                       </div>
                     </div>
@@ -1153,7 +1069,7 @@ exports[`Template > creates snapshot 1`] = `
                     data-testid="infoText"
                   >
                     <span
-                      class="_tmplFunction_a85043 undefined"
+                      class="_tmplFunction_a85043 _lightTheme_a85043"
                     >
                       nindent
                     </span>
@@ -1192,7 +1108,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   end
                 </span>
@@ -1228,1169 +1144,7 @@ exports[`Template > creates snapshot 1`] = `
               >
                 {{- 
                 <span
-                  class="_tmplFlowControl_a85043 undefined"
-                >
-                  end
-                </span>
-                 }}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-      </div>
-    </code>
-  </span>
-</DocumentFragment>
-`;
-
-exports[`Template creates snapshot 1`] = `
-<DocumentFragment>
-  <span
-    data-testid="activeTmpl"
-  >
-    <code>
-      <div
-        class="codeWrapper"
-      >
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_1"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            1
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{- 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  if
-                </span>
-                 
-                <div
-                  class="position-relative d-inline-block undefined"
-                >
-                  <div
-                    class="position-absolute"
-                  >
-                    <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
-                      data-testid="infoDropdown"
-                    >
-                      <div
-                        class="content"
-                      >
-                        <div
-                          class="p-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted me-2 normalOpacityFont"
-                          >
-                            DEFAULT:
-                          </span>
-                          <span>
-                            true
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    aria-expanded="false"
-                    data-testid="infoText"
-                  >
-                    <span
-                      class="tmplValue lightTheme"
-                    >
-                      .Values.hub.ingress.enabled
-                    </span>
-                  </div>
-                </div>
-                 -}}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_2"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            2
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-            apiVersion: networking.k8s.io/v1beta1
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_3"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            3
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-            kind: Ingress
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_4"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            4
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-            metadata:
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_5"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            5
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-              name: 
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{ 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  include
-                </span>
-                 "chart.resourceNamePrefix" . }}
-              </span>
-            </span>
-            hub
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_6"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            6
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-              labels:
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_7"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            7
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-                app.kubernetes.io/component: hub
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_8"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            8
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-                
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{- 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  include
-                </span>
-                 "chart.labels" . 
-                <span
-                  class="d-inline-flex prevSpace"
-                >
-                  |
-                </span>
-                 
-                <div
-                  class="position-relative d-inline-block undefined"
-                >
-                  <div
-                    class="position-absolute"
-                  >
-                    <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
-                      data-testid="infoDropdown"
-                    >
-                      <div
-                        class="content"
-                      >
-                        <div
-                          class="p-2"
-                        >
-                          # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
-The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    aria-expanded="false"
-                    data-testid="infoText"
-                  >
-                    <span
-                      class="tmplFunction lightTheme"
-                    >
-                      nindent
-                    </span>
-                  </div>
-                </div>
-                 4 }}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_9"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            9
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-              
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{- 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  with
-                </span>
-                 
-                <div
-                  class="position-relative d-inline-block undefined"
-                >
-                  <div
-                    class="position-absolute"
-                  >
-                    <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
-                      data-testid="infoDropdown"
-                    >
-                      <div
-                        class="content"
-                      >
-                        <div
-                          class="p-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted me-2 normalOpacityFont"
-                          >
-                            DEFAULT:
-                          </span>
-                          <div
-                            class="mt-2 textarea"
-                          >
-                            <textarea
-                              class="form-control textarea"
-                              disabled=""
-                              id="template"
-                              name="template"
-                              rows="3"
-                              spellcheck="false"
-                              wrap="off"
-                            >
-                              {
-  "kubernetes.io/ingress.class": "nginx"
-}
-                            </textarea>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    aria-expanded="false"
-                    data-testid="infoText"
-                  >
-                    <span
-                      class="tmplValue lightTheme"
-                    >
-                      .Values.hub.ingress.annotations
-                    </span>
-                  </div>
-                </div>
-                 }}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_10"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            10
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-              annotations:
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_11"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            11
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-                
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{- 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  toYaml
-                </span>
-                 . 
-                <span
-                  class="d-inline-flex prevSpace"
-                >
-                  |
-                </span>
-                 
-                <div
-                  class="position-relative d-inline-block undefined"
-                >
-                  <div
-                    class="position-absolute"
-                  >
-                    <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
-                      data-testid="infoDropdown"
-                    >
-                      <div
-                        class="content"
-                      >
-                        <div
-                          class="p-2"
-                        >
-                          # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
-The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    aria-expanded="false"
-                    data-testid="infoText"
-                  >
-                    <span
-                      class="tmplFunction lightTheme"
-                    >
-                      nindent
-                    </span>
-                  </div>
-                </div>
-                 4 }}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_12"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            12
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-              
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{- 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  end
-                </span>
-                 }}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_13"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            13
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-            spec:
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_14"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            14
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-              backend:
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_15"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            15
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-                serviceName: 
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{ 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  include
-                </span>
-                 "chart.resourceNamePrefix" . }}
-              </span>
-            </span>
-            hub
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_16"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            16
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-                servicePort: 
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{ 
-                <div
-                  class="position-relative d-inline-block undefined"
-                >
-                  <div
-                    class="position-absolute"
-                  >
-                    <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
-                      data-testid="infoDropdown"
-                    >
-                      <div
-                        class="content"
-                      >
-                        <div
-                          class="p-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted me-2 normalOpacityFont"
-                          >
-                            DEFAULT:
-                          </span>
-                          <span>
-                            80
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    aria-expanded="false"
-                    data-testid="infoText"
-                  >
-                    <span
-                      class="tmplValue lightTheme"
-                    >
-                      .Values.hub.service.port
-                    </span>
-                  </div>
-                </div>
-                 }}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_17"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            17
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-              
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{- 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  with
-                </span>
-                 
-                <div
-                  class="position-relative d-inline-block undefined"
-                >
-                  <div
-                    class="position-absolute"
-                  >
-                    <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
-                      data-testid="infoDropdown"
-                    >
-                      <div
-                        class="content"
-                      >
-                        <div
-                          class="p-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted me-2 normalOpacityFont"
-                          >
-                            DEFAULT:
-                          </span>
-                          <span
-                            class="text-nowrap"
-                          >
-                            []
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    aria-expanded="false"
-                    data-testid="infoText"
-                  >
-                    <span
-                      class="tmplValue lightTheme"
-                    >
-                      .Values.hub.ingress.rules
-                    </span>
-                  </div>
-                </div>
-                 }}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_18"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            18
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-              rules:
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_19"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            19
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-                
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{- 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  toYaml
-                </span>
-                 . 
-                <span
-                  class="d-inline-flex prevSpace"
-                >
-                  |
-                </span>
-                 
-                <div
-                  class="position-relative d-inline-block undefined"
-                >
-                  <div
-                    class="position-absolute"
-                  >
-                    <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
-                      data-testid="infoDropdown"
-                    >
-                      <div
-                        class="content"
-                      >
-                        <div
-                          class="p-2"
-                        >
-                          # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
-The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    aria-expanded="false"
-                    data-testid="infoText"
-                  >
-                    <span
-                      class="tmplFunction lightTheme"
-                    >
-                      nindent
-                    </span>
-                  </div>
-                </div>
-                 4 }}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_20"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            20
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-              
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{- 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  end
-                </span>
-                 }}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_21"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            21
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-              
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{- 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  with
-                </span>
-                 
-                <div
-                  class="position-relative d-inline-block undefined"
-                >
-                  <div
-                    class="position-absolute"
-                  >
-                    <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
-                      data-testid="infoDropdown"
-                    >
-                      <div
-                        class="content"
-                      >
-                        <div
-                          class="p-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted me-2 normalOpacityFont"
-                          >
-                            DEFAULT:
-                          </span>
-                          <span
-                            class="text-nowrap"
-                          >
-                            []
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    aria-expanded="false"
-                    data-testid="infoText"
-                  >
-                    <span
-                      class="tmplValue lightTheme"
-                    >
-                      .Values.hub.ingress.tls
-                    </span>
-                  </div>
-                </div>
-                 }}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_22"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            22
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-              tls:
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_23"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            23
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-                
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{- 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  toYaml
-                </span>
-                 . 
-                <span
-                  class="d-inline-flex prevSpace"
-                >
-                  |
-                </span>
-                 
-                <div
-                  class="position-relative d-inline-block undefined"
-                >
-                  <div
-                    class="position-absolute"
-                  >
-                    <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
-                      data-testid="infoDropdown"
-                    >
-                      <div
-                        class="content"
-                      >
-                        <div
-                          class="p-2"
-                        >
-                          # nindent function [iconLink](https://helm.sh/docs/chart_template_guide/function_list/#nindent)
-The **nindent** function is the same as the indent function, but prepends a new line to the beginning of the string.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    aria-expanded="false"
-                    data-testid="infoText"
-                  >
-                    <span
-                      class="tmplFunction lightTheme"
-                    >
-                      nindent
-                    </span>
-                  </div>
-                </div>
-                 4 }}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_24"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            24
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-              
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{- 
-                <span
-                  class="tmplFlowControl lightTheme"
-                >
-                  end
-                </span>
-                 }}
-              </span>
-            </span>
-          </div>
-          <div
-            class="ps-2"
-          />
-        </div>
-        <div
-          class="d-flex flex-row my-1 position-relative"
-        >
-          <div
-            class="position-absolute anchor"
-            data-testid="anchor"
-            id="line_25"
-          />
-          <div
-            class="text-end me-3 lineNumber"
-          >
-            25
-          </div>
-          <div
-            class="flex-grow-1 position-relative"
-          >
-            <span
-              data-testid="betweenBracketsContent"
-            >
-              <span
-                class="badge fw-normal border border-1 bg-white badge"
-              >
-                {{- 
-                <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   end
                 </span>

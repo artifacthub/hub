@@ -7,13 +7,18 @@ import API from '../../../api';
 import { ChartTemplatesData, ErrorKind, RepositoryKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ChartTemplatesModal from './index';
+import modalStyles from '../../common/Modal.module.css';
 vi.mock('../../../utils/alertDispatcher');
 vi.mock('../../../api');
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-vi.mock('react-markdown', () => (props: any) => {
-  return <>{props.children}</>;
-});
-vi.mock('remark-gfm', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: (props: any) => {
+    return <>{props.children}</>;
+  },
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
 
 const getMockChartTemplates = (fixtureId: string): ChartTemplatesData => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -63,7 +68,9 @@ describe('ChartTemplatesModal', () => {
       expect(API.getChartTemplates).toHaveBeenCalledTimes(1);
     });
 
-    expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+    const modal = await screen.findByRole('dialog');
+    expect(modal).toHaveClass(modalStyles.active);
+    expect(modal).toHaveClass('d-block');
     await waitFor(() => {
       expect(screen.queryByRole('status')).not.toBeInTheDocument();
     });

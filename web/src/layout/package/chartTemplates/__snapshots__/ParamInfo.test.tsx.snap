@@ -30,34 +30,3 @@ exports[`ParamInfo > creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`ParamInfo creates snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="position-relative d-inline-block undefined"
-  >
-    <div
-      class="position-absolute"
-    >
-      <div
-        class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
-        data-testid="infoDropdown"
-      >
-        <div
-          class="content"
-        >
-          this is a sample
-        </div>
-      </div>
-    </div>
-    <div
-      aria-expanded="false"
-      data-testid="infoText"
-    >
-      <span>
-        element
-      </span>
-    </div>
-  </div>
-</DocumentFragment>
-`;

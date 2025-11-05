@@ -3,8 +3,12 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 
 import ParamInfo from './ParamInfo';
-vi.mock('react-markdown', () => () => <div />);
-vi.mock('remark-gfm', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: () => <div />,
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
 
 const defaultProps = {
   element: <span>element</span>,

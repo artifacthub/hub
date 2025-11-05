@@ -6,7 +6,9 @@ import { vi } from 'vitest';
 import { SecurityReportResult } from '../../../types';
 import SecurityTable from './Table';
 
-vi.mock('react-markdown', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: () => <div />,
+}));
 
 const getMockSecurityReport = (fixtureId: string): SecurityReportResult[] => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports

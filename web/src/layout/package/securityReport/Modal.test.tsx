@@ -8,7 +8,9 @@ import { SecurityReport, VulnerabilitySeverity } from '../../../types';
 import SecurityModal from './Modal';
 
 vi.mock('../../../api');
-vi.mock('react-markdown', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: () => <div />,
+}));
 
 const getMockSecurityReport = (fixtureId: string): SecurityReport => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -111,16 +113,20 @@ describe('SecurityModal', () => {
       expect(await screen.findByText('Vulnerabilities details')).toBeInTheDocument();
     });
 
-    it('renders last scan time', () => {
-      render(
-        <Router>
-          <SecurityModal {...defaultProps} createdAt={1603804873} />
-        </Router>
-      );
+  it('renders last scan time', () => {
+    const dateNowSpy = jest.spyOn(Date, 'now').mockReturnValue(1603804873 * 1000 + 3 * 60 * 60 * 1000);
 
-      expect(screen.getByText('Last scan:')).toBeInTheDocument();
-      expect(screen.getByText('3 hours ago')).toBeInTheDocument();
-    });
+    render(
+      <Router>
+        <SecurityModal {...defaultProps} createdAt={1603804873} />
+      </Router>
+    );
+
+    expect(screen.getByText('Last scan:')).toBeInTheDocument();
+    expect(screen.getByText(/3 hours ago/i)).toBeInTheDocument();
+
+    dateNowSpy.mockRestore();
+  });
 
     it('calls again to getSnapshotSecurityReport when version is different', async () => {
       const mockReport = getMockSecurityReport('4');

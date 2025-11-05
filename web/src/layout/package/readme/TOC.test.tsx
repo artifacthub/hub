@@ -4,8 +4,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
 
 import TOC from './TOC';
-vi.mock('react-markdown', () => () => <div>Readme</div>);
-vi.mock('remark-gfm', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: () => <div>Readme</div>,
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
 
 const defaultProps = {
   title: 'Readme',

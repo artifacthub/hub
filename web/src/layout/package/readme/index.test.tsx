@@ -4,11 +4,17 @@ import { vi } from 'vitest';
 import ReadmeWrapper from './index';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-vi.mock('react-markdown', () => (props: any) => {
-  return <>{props.children}</>;
-});
-vi.mock('remark-gfm', () => () => <div />);
-vi.mock('rehype-github-alerts', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: (props: any) => {
+    return <>{props.children}</>;
+  },
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
+vi.mock('rehype-github-alerts', () => ({
+  rehypeGithubAlerts: () => undefined,
+}));
 
 const defaultProps = {
   packageName: 'package-name',

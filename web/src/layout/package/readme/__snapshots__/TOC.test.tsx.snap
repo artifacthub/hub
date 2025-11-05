@@ -3,7 +3,7 @@
 exports[`TOC > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="position-relative undefined"
+    class="position-relative _toc_1b5dcd"
   >
     <div
       class="d-flex flex-row align-items-top _titleWrapper_1b5dcd"
@@ -40,57 +40,6 @@ exports[`TOC > creates snapshot 1`] = `
       >
         <h1
           class="mb-0 lh-base _title_1b5dcd"
-        >
-          <p>
-            Readme
-          </p>
-        </h1>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`TOC creates snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="position-relative toc"
-  >
-    <div
-      class="d-flex flex-row align-items-top titleWrapper"
-    >
-      <div
-        class="mt-0 mt-sm-2"
-      >
-        <button
-          aria-controls="TOC-list"
-          aria-expanded="false"
-          aria-label="Table of contents"
-          aria-owns="TOC-list"
-          aria-pressed="false"
-          class="btn btn-sm me-2 btn-outline-dark btn"
-        >
-          <svg
-            class="position-relative icon"
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 512 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"
-            />
-          </svg>
-        </button>
-      </div>
-      <div
-        class="flex-grow-1 minWidth"
-      >
-        <h1
-          class="mb-0 lh-base title"
         >
           <div>
             Readme

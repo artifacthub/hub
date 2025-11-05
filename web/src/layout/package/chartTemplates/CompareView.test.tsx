@@ -7,7 +7,9 @@ import { ChartTmplTypeFile } from '../../../types';
 import CompareView from './CompareView';
 
 vi.mock('../../../api');
-vi.mock('react-markdown', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: () => <div />,
+}));
 
 const updateUrlMock = jest.fn();
 const itemScrollMock = jest.fn();

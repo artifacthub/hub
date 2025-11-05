@@ -5,7 +5,9 @@ import { vi } from 'vitest';
 import { VulnerabilitySeverity } from '../../../types';
 import SecurityCell from './Cell';
 
-vi.mock('react-markdown', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: () => <div />,
+}));
 
 const mockSetVisibleVulnerability = jest.fn();
 const scrollIntoViewMock = jest.fn();
