@@ -1,11 +1,8 @@
-import moment from 'moment';
+import { fromUnixTime, isAfter } from 'date-fns';
 
 const isFuture = (date: number, timestampFormat: boolean = true): boolean => {
-  if (!timestampFormat) {
-    return moment(date).isAfter();
-  } else {
-    return moment.unix(date).isAfter();
-  }
+  const targetDate = timestampFormat ? fromUnixTime(date) : new Date(date);
+  return isAfter(targetDate, new Date());
 };
 
 export default isFuture;

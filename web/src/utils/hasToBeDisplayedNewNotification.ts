@@ -1,8 +1,12 @@
 import isNull from 'lodash/isNull';
-import moment from 'moment';
+import { differenceInCalendarDays } from 'date-fns';
 
 const hasToBeDisplayedNewNotification = (dateLimit: boolean, lastDisplayedTime: null | number): boolean => {
-  return dateLimit !== true || isNull(lastDisplayedTime) || moment(lastDisplayedTime).diff(moment(), 'days') < 0;
+  return (
+    dateLimit !== true ||
+    isNull(lastDisplayedTime) ||
+    differenceInCalendarDays(new Date(lastDisplayedTime), new Date()) < 0
+  );
 };
 
 export default hasToBeDisplayedNewNotification;

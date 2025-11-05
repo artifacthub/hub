@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import isArray from 'lodash/isArray';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
+import { formatDistanceToNow, fromUnixTime } from 'date-fns';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { FiCode, FiPlus } from 'react-icons/fi';
@@ -1037,7 +1037,7 @@ const PackageView = () => {
                     >
                       {detail!.ts && !isFuture(detail!.ts) && (
                         <span className={`d-block d-lg-none text-muted text-nowrap ${styles.date}`}>
-                          Updated {moment.unix(detail!.ts).fromNow()}
+                          Updated {formatDistanceToNow(fromUnixTime(detail!.ts), { addSuffix: true })}
                         </span>
                       )}
                       <StarButton packageId={detail.packageId} />

@@ -1,6 +1,6 @@
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
+import { format, getUnixTime, parseISO, subDays } from 'date-fns';
 
 import { PackageViewsStats } from '../types';
 
@@ -11,7 +11,7 @@ interface ViewsPerDate {
 
 const getLast30Days = (): string[] =>
   Array.from(Array(30).keys())
-    .map((x: number) => moment().subtract(x, 'days').format('YYYY-MM-DD'))
+    .map((x: number) => format(subDays(new Date(), x), 'yyyy-MM-dd'))
     .reverse();
 
 const prepareVersions = (stats: PackageViewsStats, excludedVersions?: string[]): string[] => {
@@ -53,7 +53,7 @@ const sumViewsPerVersionsWithTimestamp = (stats: PackageViewsStats, excludedVers
   });
 
   return versionsPerDates.map((vpd: ViewsPerDate) => {
-    return [moment(vpd.date).unix() * 1000, vpd.total];
+    return [getUnixTime(parseISO(vpd.date)) * 1000, vpd.total];
   });
 };
 
@@ -69,7 +69,7 @@ const getSeriesDataPerPkgVersionViewsWithTimestamp = (stats: PackageViewsStats, 
   const last30Days = getLast30Days();
   if (isEmpty(stats) || !Object.keys(stats).includes(version)) return [];
   return last30Days.map((date: string) => {
-    return [moment(date).unix() * 1000, stats[version][date] || 0];
+    return [getUnixTime(parseISO(date)) * 1000, stats[version][date] || 0];
   });
 };
 

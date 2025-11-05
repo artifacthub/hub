@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
+import { formatDistanceToNow, fromUnixTime } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -179,7 +179,8 @@ const SecurityModal = (props: Props) => {
       <div>
         {props.createdAt && !isFuture(props.createdAt) && (
           <div className={`my-2 ${styles.created}`}>
-            <small className="text-uppercase text-muted">Last scan: </small> {moment.unix(props.createdAt).fromNow()}
+            <small className="text-uppercase text-muted">Last scan: </small>{' '}
+            {formatDistanceToNow(fromUnixTime(props.createdAt), { addSuffix: true })}
           </div>
         )}
 

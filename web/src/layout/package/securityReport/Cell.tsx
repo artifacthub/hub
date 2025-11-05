@@ -1,6 +1,6 @@
 import isArray from 'lodash/isArray';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
+import { formatDistanceToNow } from 'date-fns';
 import {
   cloneElement,
   ComponentPropsWithoutRef,
@@ -222,7 +222,10 @@ const SecurityCell = (props: Props) => {
                     {!isUndefined(props.vulnerability.LastModifiedDate) &&
                       !isFuture(props.vulnerability.LastModifiedDate, false) && (
                         <small className="fst-italic">
-                          Updated {moment(props.vulnerability.LastModifiedDate).fromNow()}
+                          Updated{' '}
+                          {formatDistanceToNow(new Date(props.vulnerability.LastModifiedDate), {
+                            addSuffix: true,
+                          })}
                         </small>
                       )}
                   </div>

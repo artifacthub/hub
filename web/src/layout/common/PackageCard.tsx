@@ -1,6 +1,6 @@
 import isUndefined from 'lodash/isUndefined';
 import throttle from 'lodash/throttle';
-import moment from 'moment';
+import { formatDistanceToNow, fromUnixTime } from 'date-fns';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
@@ -51,7 +51,7 @@ const PackageCard = (props: Props) => {
     <>
       {!isFuture(props.package.ts) && (
         <small className={`text-muted text-nowrap ${styles.date}`}>
-          Updated {moment.unix(props.package.ts).fromNow()}
+          Updated {formatDistanceToNow(fromUnixTime(props.package.ts), { addSuffix: true })}
         </small>
       )}
     </>
