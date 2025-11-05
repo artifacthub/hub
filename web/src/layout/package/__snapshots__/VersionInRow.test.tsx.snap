@@ -7,7 +7,9 @@ exports[`VersionInRow > creates snapshot 1`] = `
       <tr
         data-testid="tr-version-row"
       >
-        <td>
+        <td
+          class="_versionCell_45a823"
+        >
           <div
             class="d-flex flex-row align-items-center px-3 overflow-auto _truncateWrapper_45a823"
           >

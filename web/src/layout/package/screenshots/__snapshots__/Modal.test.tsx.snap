@@ -44,7 +44,7 @@ exports[`ScreenshotsModal > creates snapshot 1`] = `
     >
       <button
         aria-label="Close"
-        class="btn-close btn-close-white opacity-100 fs-5 undefined"
+        class="btn-close btn-close-white opacity-100 fs-5 _close_572511"
         type="button"
       />
     </div>

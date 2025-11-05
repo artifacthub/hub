@@ -7,7 +7,7 @@ exports[`WebhookCard > creates snapshot 1`] = `
     role="listitem"
   >
     <div
-      class="card cardWithHover w-100 h-100 mw-100 bg-white undefined"
+      class="card cardWithHover w-100 h-100 mw-100 bg-white _card_4591e1"
     >
       <div
         class="card-body position-relative"
@@ -38,7 +38,7 @@ exports[`WebhookCard > creates snapshot 1`] = `
               class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_4591e1"
             >
               <div
-                class="dropdown-arrow undefined"
+                class="dropdown-arrow _arrow_4591e1"
               />
               <button
                 aria-label="Edit webhook"

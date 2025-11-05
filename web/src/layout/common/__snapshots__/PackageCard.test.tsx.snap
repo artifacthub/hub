@@ -552,7 +552,7 @@ exports[`PackageCard > creates snapshot 1`] = `
                     <button
                       aria-hidden="true"
                       aria-label="Filter by Helm chart repository kind"
-                      class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative undefined"
+                      class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                       data-testid="repoIconLabelLink"
                       tabindex="-1"
                     >
@@ -662,7 +662,7 @@ exports[`PackageCard > creates snapshot 1`] = `
                   <button
                     aria-hidden="true"
                     aria-label="Filter by Helm chart repository kind"
-                    class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative undefined"
+                    class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                     data-testid="repoIconLabelLink"
                     tabindex="-1"
                   >
@@ -777,7 +777,9 @@ exports[`PackageCard > creates snapshot 1`] = `
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
-                      <div>
+                      <div
+                        class="_icon_4f4cdd"
+                      >
                         <svg
                           fill="none"
                           height="1em"
@@ -808,7 +810,9 @@ exports[`PackageCard > creates snapshot 1`] = `
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
-                      <div>
+                      <div
+                        class="_icon_4f4cdd"
+                      >
                         <svg
                           fill="none"
                           height="1em"
@@ -932,8 +936,11 @@ exports[`PackageCard > creates snapshot 1`] = `
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
-                      <div>
+                      <div
+                        class="_icon_4f4cdd"
+                      >
                         <svg
+                          class="_signedIcon_4f4cdd"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -960,8 +967,11 @@ exports[`PackageCard > creates snapshot 1`] = `
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
-                      <div>
+                      <div
+                        class="_icon_4f4cdd"
+                      >
                         <svg
+                          class="_signedIcon_4f4cdd"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1103,7 +1113,9 @@ exports[`PackageCard > creates snapshot 1`] = `
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
-                      <div>
+                      <div
+                        class="_icon_4f4cdd"
+                      >
                         <svg
                           fill="currentColor"
                           height="1em"
@@ -1135,7 +1147,9 @@ exports[`PackageCard > creates snapshot 1`] = `
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
-                      <div>
+                      <div
+                        class="_icon_4f4cdd"
+                      >
                         <svg
                           fill="currentColor"
                           height="1em"
@@ -1282,7 +1296,9 @@ exports[`PackageCard > creates snapshot 1`] = `
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
-                      <div>
+                      <div
+                        class="_icon_4f4cdd"
+                      >
                         <svg
                           fill="currentColor"
                           height="1em"
@@ -1314,7 +1330,9 @@ exports[`PackageCard > creates snapshot 1`] = `
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
-                      <div>
+                      <div
+                        class="_icon_4f4cdd"
+                      >
                         <svg
                           fill="currentColor"
                           height="1em"

@@ -106,7 +106,7 @@ exports[`SchemaLine > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"

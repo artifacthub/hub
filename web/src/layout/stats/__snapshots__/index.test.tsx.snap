@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`StatsView creates snapshot 1`] = `
+exports[`StatsView > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-flex flex-column flex-grow-1 position-relative"
@@ -15,7 +15,7 @@ exports[`StatsView creates snapshot 1`] = `
         class="flex-grow-1 position-relative"
       >
         <div
-          class="h2 text-dark text-center title"
+          class="h2 text-dark text-center _title_b0dee2"
         >
            Stats
         </div>
@@ -32,7 +32,7 @@ exports[`StatsView creates snapshot 1`] = `
               class="d-inline"
             >
               <div
-                class="wave miniWave"
+                class="_wave_b8d820 _miniWave_b8d820"
                 role="status"
               >
                 <span
@@ -45,19 +45,20 @@ exports[`StatsView creates snapshot 1`] = `
           </small>
         </div>
         <span
-          class="header"
+          class="_header_2d34f2"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper mb-2 mb-sm-4 fw-semibold title"
+            class="position-relative anchorHeader _headingWrapper_2d34f2 mb-2 mb-sm-4 fw-semibold _title_b0dee2"
           >
             <div
-              class="position-absolute headerAnchor"
+              class="position-absolute _headerAnchor_2d34f2"
               data-testid="anchor"
               id="usage"
             />
             <a
               aria-label="Usage"
-              class="text-reset text-center d-none d-md-block lh-1 float-start headingLink"
+              class="text-reset text-center d-none d-md-block lh-1 float-start _headingLink_2d34f2"
+              data-discover="true"
               href="/#usage"
               role="button"
             >
@@ -91,7 +92,7 @@ exports[`StatsView creates snapshot 1`] = `
               class="mt-2 mt-sm-4 mb-1 mb-sm-4 mb-lg-0"
             >
               <div
-                class="card chartWrapper"
+                class="card _chartWrapper_b0dee2"
               >
                 <div>
                   Chart
@@ -110,7 +111,7 @@ exports[`StatsView creates snapshot 1`] = `
               class="mt-2 mt-sm-4 mb-1 mb-sm-4 mb-lg-0"
             >
               <div
-                class="card chartWrapper"
+                class="card _chartWrapper_b0dee2"
               >
                 <div>
                   Chart
@@ -120,19 +121,20 @@ exports[`StatsView creates snapshot 1`] = `
           </div>
         </div>
         <span
-          class="header"
+          class="_header_2d34f2"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper mt-2 mt-sm-4 mb-2 mb-sm-4 fw-semibold title"
+            class="position-relative anchorHeader _headingWrapper_2d34f2 mt-2 mt-sm-4 mb-2 mb-sm-4 fw-semibold _title_b0dee2"
           >
             <div
-              class="position-absolute headerAnchor"
+              class="position-absolute _headerAnchor_2d34f2"
               data-testid="anchor"
               id="packages-and-releases"
             />
             <a
               aria-label="Packages and releases"
-              class="text-reset text-center d-none d-md-block lh-1 float-start headingLink"
+              class="text-reset text-center d-none d-md-block lh-1 float-start _headingLink_2d34f2"
+              data-discover="true"
               href="/#packages-and-releases"
               role="button"
             >
@@ -166,7 +168,7 @@ exports[`StatsView creates snapshot 1`] = `
               class="pe-0 pe-lg-3 pe-xxxl-4 mt-2 mt-sm-4 mb-2 mb-sm-4 mb-lg-0"
             >
               <div
-                class="card chartWrapper"
+                class="card _chartWrapper_b0dee2"
               >
                 <div>
                   Chart
@@ -181,7 +183,7 @@ exports[`StatsView creates snapshot 1`] = `
               class="ps-0 ps-lg-3 ps-xxxl-4 mt-2 mt-sm-4"
             >
               <div
-                class="card chartWrapper"
+                class="card _chartWrapper_b0dee2"
               >
                 <div>
                   Chart
@@ -200,7 +202,7 @@ exports[`StatsView creates snapshot 1`] = `
               class="pe-0 pe-lg-3 pe-xxxl-4 mt-2 mt-sm-4 mb-2 mb-sm-4 mb-lg-0"
             >
               <div
-                class="card chartWrapper"
+                class="card _chartWrapper_b0dee2"
               >
                 <div>
                   Chart
@@ -215,7 +217,7 @@ exports[`StatsView creates snapshot 1`] = `
               class="ps-0 ps-lg-3 ps-xxxl-4 mt-2 mt-sm-4 mb-1 mb-sm-4 mb-lg-0"
             >
               <div
-                class="card chartWrapper"
+                class="card _chartWrapper_b0dee2"
               >
                 <div>
                   Chart
@@ -225,19 +227,20 @@ exports[`StatsView creates snapshot 1`] = `
           </div>
         </div>
         <span
-          class="header"
+          class="_header_2d34f2"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper mb-2 mb-sm-4 mt-2 mt-sm-4 fw-semibold title"
+            class="position-relative anchorHeader _headingWrapper_2d34f2 mb-2 mb-sm-4 mt-2 mt-sm-4 fw-semibold _title_b0dee2"
           >
             <div
-              class="position-absolute headerAnchor"
+              class="position-absolute _headerAnchor_2d34f2"
               data-testid="anchor"
               id="repositories"
             />
             <a
               aria-label="Repositories"
-              class="text-reset text-center d-none d-md-block lh-1 float-start headingLink"
+              class="text-reset text-center d-none d-md-block lh-1 float-start _headingLink_2d34f2"
+              data-discover="true"
               href="/#repositories"
               role="button"
             >
@@ -268,7 +271,7 @@ exports[`StatsView creates snapshot 1`] = `
             class="col-12 my-2 my-sm-4"
           >
             <div
-              class="card chartWrapper"
+              class="card _chartWrapper_b0dee2"
             >
               <div>
                 Chart
@@ -277,19 +280,20 @@ exports[`StatsView creates snapshot 1`] = `
           </div>
         </div>
         <span
-          class="header"
+          class="_header_2d34f2"
         >
           <h2
-            class="position-relative anchorHeader headingWrapper mt-1 mt-sm-4 fw-semibold title"
+            class="position-relative anchorHeader _headingWrapper_2d34f2 mt-1 mt-sm-4 fw-semibold _title_b0dee2"
           >
             <div
-              class="position-absolute headerAnchor"
+              class="position-absolute _headerAnchor_2d34f2"
               data-testid="anchor"
               id="organizations-and-users"
             />
             <a
               aria-label="Organizations and users"
-              class="text-reset text-center d-none d-md-block lh-1 float-start headingLink"
+              class="text-reset text-center d-none d-md-block lh-1 float-start _headingLink_2d34f2"
+              data-discover="true"
               href="/#organizations-and-users"
               role="button"
             >
@@ -323,7 +327,7 @@ exports[`StatsView creates snapshot 1`] = `
               class="pe-0 pe-lg-3 pe-xxxl-4 pt-2 pt-sm-4"
             >
               <div
-                class="card chartWrapper"
+                class="card _chartWrapper_b0dee2"
               >
                 <div>
                   Chart
@@ -338,7 +342,7 @@ exports[`StatsView creates snapshot 1`] = `
               class="ps-0 ps-lg-3 ps-xxxl-4 pt-2 pt-sm-4 my-1 my-sm-4 my-lg-0"
             >
               <div
-                class="card chartWrapper"
+                class="card _chartWrapper_b0dee2"
               >
                 <div>
                   Chart

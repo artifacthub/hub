@@ -427,7 +427,7 @@ exports[`StarredPackagesView > creates snapshot 1`] = `
                             <button
                               aria-hidden="true"
                               aria-label="Filter by Helm chart repository kind"
-                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative undefined"
+                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                               data-testid="repoIconLabelLink"
                               tabindex="-1"
                             >
@@ -564,7 +564,7 @@ exports[`StarredPackagesView > creates snapshot 1`] = `
                           <button
                             aria-hidden="true"
                             aria-label="Filter by Helm chart repository kind"
-                            class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative undefined"
+                            class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                             data-testid="repoIconLabelLink"
                             tabindex="-1"
                           >
@@ -1035,7 +1035,7 @@ exports[`StarredPackagesView > creates snapshot 1`] = `
                             <button
                               aria-hidden="true"
                               aria-label="Filter by Helm chart repository kind"
-                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative undefined"
+                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                               data-testid="repoIconLabelLink"
                               tabindex="-1"
                             >
@@ -1172,7 +1172,7 @@ exports[`StarredPackagesView > creates snapshot 1`] = `
                           <button
                             aria-hidden="true"
                             aria-label="Filter by Helm chart repository kind"
-                            class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative undefined"
+                            class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                             data-testid="repoIconLabelLink"
                             tabindex="-1"
                           >
@@ -1643,7 +1643,7 @@ exports[`StarredPackagesView > creates snapshot 1`] = `
                             <button
                               aria-hidden="true"
                               aria-label="Filter by Helm chart repository kind"
-                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative undefined"
+                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                               data-testid="repoIconLabelLink"
                               tabindex="-1"
                             >
@@ -1780,7 +1780,7 @@ exports[`StarredPackagesView > creates snapshot 1`] = `
                           <button
                             aria-hidden="true"
                             aria-label="Filter by Helm chart repository kind"
-                            class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative undefined"
+                            class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                             data-testid="repoIconLabelLink"
                             tabindex="-1"
                           >
@@ -2430,7 +2430,7 @@ exports[`StarredPackagesView > creates snapshot 1`] = `
                             <button
                               aria-hidden="true"
                               aria-label="Filter by Falco rules repository kind"
-                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative undefined"
+                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                               data-testid="repoIconLabelLink"
                               tabindex="-1"
                             >
@@ -2567,7 +2567,7 @@ exports[`StarredPackagesView > creates snapshot 1`] = `
                           <button
                             aria-hidden="true"
                             aria-label="Filter by Falco rules repository kind"
-                            class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative undefined"
+                            class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                             data-testid="repoIconLabelLink"
                             tabindex="-1"
                           >
@@ -3217,7 +3217,7 @@ exports[`StarredPackagesView > creates snapshot 1`] = `
                             <button
                               aria-hidden="true"
                               aria-label="Filter by OPA policies repository kind"
-                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative undefined"
+                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                               data-testid="repoIconLabelLink"
                               tabindex="-1"
                             >
@@ -3354,7 +3354,7 @@ exports[`StarredPackagesView > creates snapshot 1`] = `
                           <button
                             aria-hidden="true"
                             aria-label="Filter by OPA policies repository kind"
-                            class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative undefined"
+                            class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                             data-testid="repoIconLabelLink"
                             tabindex="-1"
                           >

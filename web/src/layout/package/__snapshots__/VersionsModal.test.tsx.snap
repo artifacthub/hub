@@ -231,10 +231,10 @@ exports[`VersionsModal > creates snapshot 1`] = `
       role="dialog"
     >
       <div
-        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable _modalDialog_41a422"
       >
         <div
-          class="modal-content border border-3 mx-auto _content_2adcc6"
+          class="modal-content border border-3 mx-auto _content_2adcc6 _modal_41a422"
         >
           <div
             class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"

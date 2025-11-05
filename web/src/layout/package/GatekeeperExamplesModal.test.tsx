@@ -8,7 +8,10 @@ import GatekeeperExamplesModal from './GatekeeperExamplesModal';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const isVisibleItemInContainer = require('../../utils/isVisibleItemInContainer');
 
-vi.mock('../../utils/isVisibleItemInContainer', () => jest.fn());
+vi.mock('../../utils/isVisibleItemInContainer', () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 const mockUseNavigate = jest.fn();
 

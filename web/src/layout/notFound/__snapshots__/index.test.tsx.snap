@@ -3,7 +3,7 @@
 exports[`NotFoundView > renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="p-5 d-flex flex-column align-items-center justify-content-center flex-grow-1 noFocus undefined"
+    class="p-5 d-flex flex-column align-items-center justify-content-center flex-grow-1 noFocus _content_e48d6b"
     id="content"
     tabindex="-1"
   >

@@ -207,7 +207,7 @@ exports[`Claim Repository Modal - repositories section > creates snapshot 1`] = 
                       </option>
                     </select>
                     <div
-                      class="invalid-feedback undefined"
+                      class="invalid-feedback _fieldFeedback_b7b695"
                     >
                       This field is required
                     </div>

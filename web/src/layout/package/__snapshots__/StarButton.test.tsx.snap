@@ -6,7 +6,7 @@ exports[`StarButton > creates snapshot 1`] = `
     class="ms-auto d-flex flex-row align-items-center position-relative _wrapper_9ba591"
   >
     <div
-      class="position-relative undefined"
+      class="position-relative _starBtnWrapper_9ba591"
     >
       <div
         data-testid="elementWithTooltip"

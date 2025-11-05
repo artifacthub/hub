@@ -9,12 +9,24 @@ import { AHStats, ErrorKind } from '../../types';
 import StatsView from './index';
 vi.mock('../../api');
 vi.mock('./BrushChart', () => () => <div>Chart</div>);
-vi.mock('react-apexcharts', () => () => <div>Chart</div>);
-
-vi.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as object),
-  useLocation: jest.fn(),
+vi.mock('react-apexcharts', () => ({
+  __esModule: true,
+  default: () => <div>Chart</div>,
 }));
+
+const { useLocationMock } = vi.hoisted(() => ({
+  useLocationMock: vi.fn(),
+}));
+
+vi.mock('react-router-dom', () => {
+  const actual = jest.requireActual('react-router-dom') as typeof ReactRouter;
+  return {
+    __esModule: true,
+    ...actual,
+    default: actual,
+    useLocation: useLocationMock,
+  };
+});
 
 const getMockStats = (fixtureId: string): AHStats => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -48,7 +60,7 @@ describe('StatsView', () => {
   beforeEach(() => {
     dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1639468828000);
 
-    jest.spyOn(ReactRouter, 'useLocation').mockReturnValue({
+    useLocationMock.mockReturnValue({
       pathname: '',
       search: '',
       hash: '',
@@ -199,7 +211,7 @@ describe('StatsView', () => {
     });
 
     it('calls scrollIntoView when hash is defined to load component', async () => {
-      jest.spyOn(ReactRouter, 'useLocation').mockReturnValue({
+      useLocationMock.mockReturnValue({
         pathname: '',
         search: '',
         hash: '#repositories',

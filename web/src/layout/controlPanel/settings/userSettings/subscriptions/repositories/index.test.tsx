@@ -7,6 +7,7 @@ import API from '../../../../../../api';
 import { ErrorKind } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import RepositoriesSection from './index';
+import modalStyles from '../../../../../common/Modal.module.css';
 
 vi.mock('../../../../../../api');
 vi.mock('../../../../../../utils/alertDispatcher');
@@ -94,7 +95,8 @@ describe('RepositoriesSection', () => {
 
       const modal = await screen.findByRole('dialog');
       expect(modal).toBeInTheDocument();
-      expect(modal).toHaveClass('active');
+      expect(modal).toHaveClass('d-block');
+      expect(modal).toHaveClass(modalStyles.active);
     });
   });
 

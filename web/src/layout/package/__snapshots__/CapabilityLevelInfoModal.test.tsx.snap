@@ -6,7 +6,7 @@ exports[`CapabilityLevelInfoModal > creates snapshot 1`] = `
     class="d-none d-lg-inline-block ms-2"
   >
     <div
-      class="position-relative undefined"
+      class="position-relative _buttonWrapper_2adcc6"
     >
       <button
         aria-label="Open modal"

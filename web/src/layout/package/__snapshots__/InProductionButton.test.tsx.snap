@@ -211,6 +211,7 @@ exports[`InProductionButton > creates snapshot 1`] = `
                       class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_fba2bb"
                     >
                       <svg
+                        class="_orgIcon_fba2bb"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"

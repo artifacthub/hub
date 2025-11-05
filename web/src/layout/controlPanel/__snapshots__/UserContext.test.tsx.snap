@@ -73,7 +73,7 @@ exports[`UserContext > creates snapshot 1`] = `
       role="menu"
     >
       <div
-        class="dropdown-arrow undefined"
+        class="dropdown-arrow _arrow_6a45a8"
       />
       <button
         aria-label="Activate user context"

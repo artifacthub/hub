@@ -1,5 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`UserSettingsSection > renders correctly 1`] = `
+<DocumentFragment>
+  <div>
+    profile
+  </div>
+</DocumentFragment>
+`;
+
 exports[`UserSettingsSection renders correctly 1`] = `
 <DocumentFragment>
   <div>

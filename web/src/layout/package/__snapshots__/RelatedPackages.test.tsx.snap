@@ -31,7 +31,7 @@ exports[`RelatedPackages > renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard undefined"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
@@ -168,7 +168,7 @@ exports[`RelatedPackages > renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard undefined"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
@@ -305,7 +305,7 @@ exports[`RelatedPackages > renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard undefined"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
@@ -442,7 +442,7 @@ exports[`RelatedPackages > renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard undefined"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
@@ -579,7 +579,7 @@ exports[`RelatedPackages > renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard undefined"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
@@ -716,7 +716,7 @@ exports[`RelatedPackages > renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard undefined"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
@@ -853,7 +853,7 @@ exports[`RelatedPackages > renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard undefined"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a

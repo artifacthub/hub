@@ -22,7 +22,7 @@ exports[`WidgetsGroupModal > creates snapshot 1`] = `
             class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 undefined"
+              class="h3 m-2 flex-grow-1 _title_a9b46a"
             >
               Widgets group
             </div>
@@ -401,7 +401,7 @@ exports[`WidgetsGroupModal > creates snapshot 1`] = `
                   Code
                 </label>
                 <div
-                  class="flex-grow-1 me-3 user-select-none undefined"
+                  class="flex-grow-1 me-3 user-select-none _blockWrapper_a9b46a"
                   data-testid="block-content"
                 >
                   <pre

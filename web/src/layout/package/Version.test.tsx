@@ -7,10 +7,15 @@ import Version from './Version';
 
 const mockUseNavigate = jest.fn();
 
-vi.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as object),
-  useNavigate: () => mockUseNavigate,
-}));
+vi.mock('react-router-dom', () => {
+  const actual = jest.requireActual('react-router-dom');
+  return {
+    __esModule: true,
+    ...actual,
+    default: actual,
+    useNavigate: () => mockUseNavigate,
+  };
+});
 
 const defaultProps = {
   isActive: false,

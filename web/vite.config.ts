@@ -78,7 +78,11 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
     globals: true,
-    css: true,
+    css: {
+      modules: {
+        generateScopedName: '[local]',
+      },
+    },
     alias: {
       '#minpath': fileURLToPath(new URL('./node_modules/vfile/lib/minpath.js', import.meta.url)),
       '#minproc': fileURLToPath(new URL('./node_modules/vfile/lib/minproc.js', import.meta.url)),

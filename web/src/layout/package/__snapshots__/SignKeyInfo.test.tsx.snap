@@ -45,7 +45,7 @@ exports[`SignKeyInfo > creates snapshot 1`] = `
       role="dialog"
     >
       <div
-        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable _modalDialog_93591b"
       >
         <div
           class="modal-content border border-3 mx-auto _content_2adcc6"

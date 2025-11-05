@@ -6,7 +6,7 @@ exports[`Repository LastNotificationsModal - packages section > creates snapshot
     class="d-inline-block"
   >
     <div
-      class="position-relative undefined"
+      class="position-relative _buttonWrapper_2adcc6"
     >
       <button
         aria-label="Open modal"

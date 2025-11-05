@@ -9,7 +9,7 @@ exports[`Schema > creates snapshot 1`] = `
       class="position-relative _wrapper_6b0f1f _search_4a7697"
     >
       <div
-        class="mb-3 input-group-sm undefined undefined"
+        class="mb-3 input-group-sm _inputWrapper_228486 undefined"
       >
         <input
           class="flex-grow-1 form-control _input_228486 ps-3 pe-4"
@@ -325,7 +325,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -458,7 +458,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -591,7 +591,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -724,7 +724,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -857,7 +857,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -1190,7 +1190,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -1409,7 +1409,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -1536,7 +1536,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -1663,7 +1663,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -1790,7 +1790,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -1917,7 +1917,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -2044,7 +2044,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -2367,7 +2367,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -2500,7 +2500,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -2633,7 +2633,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -2769,7 +2769,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -3193,7 +3193,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <svg
                           class="me-1 text-success"
@@ -3330,7 +3330,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -3457,7 +3457,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -3584,7 +3584,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -3820,7 +3820,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <svg
                           class="me-1 text-success"
@@ -3957,7 +3957,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -4084,7 +4084,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -4211,7 +4211,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -4436,7 +4436,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -4569,7 +4569,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -4696,7 +4696,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -4829,7 +4829,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -5060,7 +5060,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -5193,7 +5193,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -5320,7 +5320,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -5447,7 +5447,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -5681,7 +5681,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -5806,7 +5806,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -6047,7 +6047,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -6278,7 +6278,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -6411,7 +6411,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -6636,7 +6636,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -6861,7 +6861,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -6994,7 +6994,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -7323,7 +7323,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -7456,7 +7456,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -7589,7 +7589,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -7716,7 +7716,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -7941,7 +7941,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -8068,7 +8068,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -8201,7 +8201,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -8632,7 +8632,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -8765,7 +8765,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -8898,7 +8898,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -9031,7 +9031,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -9370,7 +9370,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -9693,7 +9693,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -9826,7 +9826,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -9959,7 +9959,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -10092,7 +10092,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -10225,7 +10225,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -10366,7 +10366,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -10505,7 +10505,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -10636,7 +10636,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -11073,7 +11073,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -11206,7 +11206,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -11329,7 +11329,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -11452,7 +11452,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -11569,7 +11569,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"
@@ -11684,7 +11684,7 @@ exports[`Schema > creates snapshot 1`] = `
                       </small>
                       : 
                       <span
-                        class="text-truncate undefined"
+                        class="text-truncate _default_c8b87c"
                       >
                         <span
                           class="ms-1"

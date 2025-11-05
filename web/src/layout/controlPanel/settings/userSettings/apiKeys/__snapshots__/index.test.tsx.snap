@@ -114,7 +114,7 @@ exports[`API keys section index > creates snapshot 1`] = `
                           class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_44e237"
                         >
                           <div
-                            class="dropdown-arrow undefined"
+                            class="dropdown-arrow _arrow_44e237"
                           />
                           <button
                             aria-label="Open API key modal"
@@ -292,7 +292,7 @@ exports[`API keys section index > creates snapshot 1`] = `
                           class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_44e237"
                         >
                           <div
-                            class="dropdown-arrow undefined"
+                            class="dropdown-arrow _arrow_44e237"
                           />
                           <button
                             aria-label="Open API key modal"

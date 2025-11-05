@@ -218,7 +218,7 @@ exports[`RepositoriesSection > creates snapshot 1`] = `
                     class="align-middle position-relative d-none d-sm-table-cell"
                   >
                     <span
-                      class="mx-1 mb-1 undefined"
+                      class="mx-1 mb-1 _tinyIcon_12cac0"
                     >
                       <svg
                         fill="currentColor"
@@ -321,7 +321,7 @@ exports[`RepositoriesSection > creates snapshot 1`] = `
                     class="align-middle position-relative d-none d-sm-table-cell"
                   >
                     <span
-                      class="mx-1 mb-1 undefined"
+                      class="mx-1 mb-1 _tinyIcon_12cac0"
                     >
                       <svg
                         fill="currentColor"
@@ -424,7 +424,7 @@ exports[`RepositoriesSection > creates snapshot 1`] = `
                     class="align-middle position-relative d-none d-sm-table-cell"
                   >
                     <span
-                      class="mx-1 mb-1 undefined"
+                      class="mx-1 mb-1 _tinyIcon_12cac0"
                     >
                       <svg
                         fill="currentColor"

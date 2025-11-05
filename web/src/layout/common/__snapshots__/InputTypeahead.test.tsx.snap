@@ -3,7 +3,7 @@
 exports[`InputTypeahead > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="mb-3 input-group-sm undefined undefined"
+    class="mb-3 input-group-sm _inputWrapper_228486 undefined"
   >
     <input
       class="flex-grow-1 form-control _input_228486 px-3"

@@ -56,7 +56,7 @@ exports[`Organization Card - organization section > creates snapshot 1`] = `
                 class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_8d726f"
               >
                 <div
-                  class="dropdown-arrow undefined"
+                  class="dropdown-arrow _arrow_8d726f"
                 />
                 <button
                   aria-label="Open modal"

@@ -1,5 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`OrganizationSettingsSection > creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    profile
+  </div>
+</DocumentFragment>
+`;
+
 exports[`OrganizationSettingsSection creates snapshot 1`] = `
 <DocumentFragment>
   <div>

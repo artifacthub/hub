@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 
 import Modal from './Modal';
+import styles from './Modal.module.css';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 vi.mock('./Alert', () => (props: any) => <div>{props.message}</div>);
@@ -61,12 +62,15 @@ describe('Modal', () => {
     render(<Modal {...defaultProps} buttonContent="Open modal" open={false} />);
 
     const modal = screen.getByRole('dialog');
-    expect(modal).not.toHaveClass('active d-block');
+    expect(modal).not.toHaveClass('d-block');
+    expect(modal).not.toHaveClass(styles.active);
     const btn = screen.getByRole('button', { name: /Open modal/ });
 
     await userEvent.click(btn);
 
-    expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+    const openedModal = await screen.findByRole('dialog');
+    expect(openedModal).toHaveClass('d-block');
+    expect(openedModal).toHaveClass(styles.active);
   });
 
   it('calls cleanErrorMock to click close button when error is not null', async () => {

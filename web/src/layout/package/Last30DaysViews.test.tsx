@@ -5,18 +5,26 @@ import { vi } from 'vitest';
 
 import { RepositoryKind } from '../../types';
 import Last30DaysViews from './Last30DaysViews';
-vi.mock('react-apexcharts', () => () => <div>Chart</div>);
+vi.mock('react-apexcharts', () => ({
+  __esModule: true,
+  default: () => <div>Chart</div>,
+}));
 
 const mockUseNavigate = jest.fn();
 
-vi.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as object),
-  useNavigate: () => mockUseNavigate,
-  useLocation: () => ({
-    pathname: 'test',
-    state: null,
-  }),
-}));
+vi.mock('react-router-dom', () => {
+  const actual = jest.requireActual('react-router-dom');
+  return {
+    __esModule: true,
+    ...actual,
+    default: actual,
+    useNavigate: () => mockUseNavigate,
+    useLocation: () => ({
+      pathname: 'test',
+      state: null,
+    }),
+  };
+});
 
 const stats = {
   '19.0.1': {

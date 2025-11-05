@@ -3,7 +3,10 @@ import { vi } from 'vitest';
 
 import { RepositoryKind } from '../../types';
 import PackageViewsStats from './PackageViewsStats';
-vi.mock('react-apexcharts', () => () => <div>Chart</div>);
+vi.mock('react-apexcharts', () => ({
+  __esModule: true,
+  default: () => <div>Chart</div>,
+}));
 
 const defaultProps = {
   title: <span>Views over the last 30 days</span>,

@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 import { MdNotificationsActive, MdNotificationsOff } from 'react-icons/md';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
