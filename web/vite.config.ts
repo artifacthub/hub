@@ -60,11 +60,6 @@ export default defineConfig({
             ? 'static/js/main.[hash].js'
             : 'static/js/[name].[hash].js',
         chunkFileNames: 'static/js/[name].[hash].js',
-        manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
-        },
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) {
             return 'static/css/main.[hash][extname]';
