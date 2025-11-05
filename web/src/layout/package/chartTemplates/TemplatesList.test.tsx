@@ -5,12 +5,13 @@ import { vi } from 'vitest';
 import { ChartTemplate } from '../../../types';
 import TemplatesList from './TemplatesList';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const isVisibleItemInContainer = require('../../../utils/isVisibleItemInContainer');
+const { isVisibleItemInContainerMock } = vi.hoisted(() => ({
+  isVisibleItemInContainerMock: vi.fn(),
+}));
 
 vi.mock('../../../utils/isVisibleItemInContainer', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: isVisibleItemInContainerMock,
 }));
 
 const onTemplateChangeMock = jest.fn();
@@ -38,7 +39,7 @@ describe('TemplatesList', () => {
   });
 
   beforeEach(() => {
-    isVisibleItemInContainer.mockImplementation(() => true);
+    isVisibleItemInContainerMock.mockImplementation(() => true);
   });
 
   it('creates snapshot', () => {
@@ -86,7 +87,7 @@ describe('TemplatesList', () => {
       );
 
       const btns = screen.getAllByRole('button', { name: /Show template/ });
-      expect(btns[1]).toHaveClass('active');
+      expect(btns[1]).toHaveClass('activeTemplate');
       expect(btns[1]).toHaveTextContent('Template:db_migrator_secret.yamlResource:Secret');
     });
 
@@ -132,7 +133,7 @@ describe('TemplatesList', () => {
     });
 
     it('scrolls to active template when is not visible', async () => {
-      isVisibleItemInContainer.mockImplementationOnce(() => true).mockImplementation(() => false);
+      isVisibleItemInContainerMock.mockImplementationOnce(() => true).mockImplementation(() => false);
 
       const { rerender } = render(
         <TemplatesList
