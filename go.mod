@@ -126,7 +126,7 @@ require (
 	github.com/chrismellard/docker-credential-acr-env v0.0.0-20230304212654-82a0ddb27589 // indirect
 	github.com/cloudevents/sdk-go/v2 v2.16.1 // indirect
 	github.com/cloudflare/circl v1.6.1 // indirect
-	github.com/containerd/containerd v1.7.28 // indirect
+	github.com/containerd/containerd v1.7.29 // indirect
 	github.com/containerd/errdefs v1.0.0 // indirect
 	github.com/containerd/log v0.1.0 // indirect
 	github.com/containerd/platforms v1.0.0-rc.1 // indirect
