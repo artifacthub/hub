@@ -1,4 +1,4 @@
-const createValidator = () => {
+const createChainedValidator = () => {
   const validator = (...args) => {
     void args;
     return validator;
@@ -7,29 +7,50 @@ const createValidator = () => {
   return validator;
 };
 
-const baseValidator = createValidator();
-
-const PropTypes = new Proxy(baseValidator, {
-  get: (_target, prop) => {
-    if (prop === 'checkPropTypes' || prop === 'resetWarningCache') {
-      return () => null;
-    }
-    if (prop === 'PropTypes' || prop === 'default') {
-      return PropTypes;
-    }
-    if (prop === Symbol.toStringTag) {
-      return 'PropTypes';
-    }
-    return baseValidator;
-  },
-  apply: () => baseValidator,
-});
+const createFactory = () => {
+  const validator = createChainedValidator();
+  const factory = (...args) => {
+    void args;
+    return validator;
+  };
+  factory.isRequired = validator;
+  return factory;
+};
 
 const checkPropTypes = () => null;
 const resetWarningCache = () => null;
 
-PropTypes.checkPropTypes = checkPropTypes;
-PropTypes.resetWarningCache = resetWarningCache;
+const PropTypes = {
+  checkPropTypes,
+  resetWarningCache,
+};
+
+const simpleValidators = [
+  'any',
+  'array',
+  'bool',
+  'element',
+  'elementType',
+  'func',
+  'node',
+  'number',
+  'object',
+  'string',
+  'symbol',
+];
+
+simpleValidators.forEach((prop) => {
+  PropTypes[prop] = createChainedValidator();
+});
+
+const factoryValidators = ['arrayOf', 'objectOf', 'oneOf', 'oneOfType', 'shape', 'exact', 'instanceOf'];
+
+factoryValidators.forEach((prop) => {
+  PropTypes[prop] = createFactory();
+});
+
+PropTypes.PropTypes = PropTypes;
+PropTypes.default = PropTypes;
 
 export { checkPropTypes, PropTypes, resetWarningCache };
 export default PropTypes;
