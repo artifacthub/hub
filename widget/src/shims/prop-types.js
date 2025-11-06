@@ -1,5 +1,8 @@
 const createValidator = () => {
-  const validator = (..._args) => validator;
+  const validator = (...args) => {
+    void args;
+    return validator;
+  };
   validator.isRequired = validator;
   return validator;
 };
@@ -22,13 +25,11 @@ const PropTypes = new Proxy(baseValidator, {
   apply: () => baseValidator,
 });
 
-PropTypes.checkPropTypes = () => null;
-PropTypes.resetWarningCache = () => null;
+const checkPropTypes = () => null;
+const resetWarningCache = () => null;
 
-Object.defineProperty(PropTypes, '__esModule', { value: true });
+PropTypes.checkPropTypes = checkPropTypes;
+PropTypes.resetWarningCache = resetWarningCache;
 
-module.exports = PropTypes;
-module.exports.default = PropTypes;
-module.exports.PropTypes = PropTypes;
-module.exports.checkPropTypes = PropTypes.checkPropTypes;
-module.exports.resetWarningCache = PropTypes.resetWarningCache;
+export { checkPropTypes, PropTypes, resetWarningCache };
+export default PropTypes;
