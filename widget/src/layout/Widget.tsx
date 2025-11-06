@@ -1,5 +1,5 @@
 import { isNull, isUndefined } from 'lodash';
-import moment from 'moment';
+import { formatDistanceToNow, fromUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
@@ -471,7 +471,9 @@ export default function Widget(props: Props) {
                     theme={currentTheme}
                   />
 
-                  <Date>Updated {moment.unix(packageSummary.ts).fromNow()}</Date>
+                  <Date>
+                    Updated {formatDistanceToNow(fromUnixTime(packageSummary.ts), { addSuffix: true })}
+                  </Date>
                 </ExtraInfo>
 
                 <Description>{packageSummary.description || ''}</Description>
