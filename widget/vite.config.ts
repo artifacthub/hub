@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '~': fileURLToPath(new URL('./node_modules/', import.meta.url)),
+      'prop-types': fileURLToPath(new URL('./src/shims/prop-types.js', import.meta.url)),
     },
   },
   server: {
