@@ -1,7 +1,7 @@
 import './App.css';
 import '../themes/default.scss';
 
-import { Suspense, lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 
 import { HOME_ROUTES } from '../utils/data';

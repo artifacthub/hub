@@ -146,7 +146,7 @@ jobs:
         run: yarn lint
       - name: Run frontend tests
         working-directory: ./web
-        run: yarn test --watchAll=false --passWithNoTests --verbose --maxWorkers=4
+        run: yarn test --reporter verbose --maxWorkers 4
 
   tests-widget:
     runs-on: ubuntu-24.04
@@ -173,7 +173,7 @@ jobs:
         run: yarn lint
       - name: Run widget tests
         working-directory: ./widget
-        run: yarn test --watchAll=false --passWithNoTests --verbose --maxWorkers=4
+        run: yarn test --reporter verbose --maxWorkers 4
 
   build-backend:
     runs-on: ubuntu-24.04
