@@ -1,5 +1,3 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Loading > creates snapshot 1`] = `[Function]`;
-
-exports[`Loading creates snapshot 1`] = `[Function]`;

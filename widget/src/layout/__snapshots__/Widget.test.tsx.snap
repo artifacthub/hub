@@ -1,13 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Widget creates snapshot 1`] = `
+exports[`Widget > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="sc-hwkwBN ezwvdE"
+    class="sc-hwkwBN fWVLcW"
     data-testid="mainWrapper"
   >
     <div
-      class="sc-kNOymR tvSSF"
+      class="sc-kNOymR jPxQvk"
       data-testid="cardWrapper"
     >
       <a

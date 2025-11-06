@@ -1,5 +1,6 @@
-import { isNull, isUndefined } from 'lodash';
 import { formatDistanceToNow, fromUnixTime } from 'date-fns';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
@@ -121,6 +122,10 @@ interface CardBodyProps {
   className: string;
 }
 
+interface CardWrapperProps {
+  color?: string;
+}
+
 interface WrapperProps {
   theme: string;
   color?: string;
@@ -164,7 +169,12 @@ const Wrapper = styled.div<WrapperProps>`
           --dark: #343a40;
           --muted: #636a6e;
         `}
-  --color-ah-primary: ${(props) => (props.color && props.color !== DEFAULT_COLOR ? 'inherit' : props.color)};
+  ${(props) =>
+    props.color && props.color !== DEFAULT_COLOR
+      ? css`
+          --color-ah-primary: ${props.color};
+        `
+      : undefined};
   margin: 0.75rem;
 
   @media (max-width: 380px) {
@@ -178,16 +188,24 @@ const Wrapper = styled.div<WrapperProps>`
   }
 `;
 
-const CardWrapper = styled('div')`
+const CardWrapper = styled('div')<CardWrapperProps>`
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
   color: var(--color-ah-font);
   background-color: var(--white);
   background-clip: padding-box;
-  border: 3px solid var(--color-ah-primary);
+  border-width: 3px;
+  border-style: solid;
+  border-color: var(--color-ah-primary);
   overflow: hidden;
   width: 350px;
   line-height: 1.15rem;
+  ${(props) =>
+    props.color && props.color !== DEFAULT_COLOR
+      ? css`
+          border-color: ${props.color};
+        `
+      : undefined};
 
   &.responsive {
     min-width: 350px;
@@ -411,7 +429,7 @@ export default function Widget(props: Props) {
 
   return (
     <Wrapper data-testid="mainWrapper" theme={currentTheme} color={props.color}>
-      <CardWrapper data-testid="cardWrapper" className={props.responsive ? 'responsive' : ''}>
+      <CardWrapper data-testid="cardWrapper" className={props.responsive ? 'responsive' : ''} color={props.color}>
         <Link
           href={
             props.inGroup && packageSummary
@@ -471,9 +489,7 @@ export default function Widget(props: Props) {
                     theme={currentTheme}
                   />
 
-                  <Date>
-                    Updated {formatDistanceToNow(fromUnixTime(packageSummary.ts), { addSuffix: true })}
-                  </Date>
+                  <Date>Updated {formatDistanceToNow(fromUnixTime(packageSummary.ts), { addSuffix: true })}</Date>
                 </ExtraInfo>
 
                 <Description>{packageSummary.description || ''}</Description>
