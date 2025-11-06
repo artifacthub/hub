@@ -743,21 +743,21 @@ exports[`Details > renders correctly 1`] = `
               <small
                 class="text-muted"
               >
-                06 Oct
+                07 Oct
               </small>
             </div>
             <div>
               <small
                 class="text-muted"
               >
-                21 Oct
+                22 Oct
               </small>
             </div>
             <div>
               <small
                 class="text-muted"
               >
-                05 Nov
+                06 Nov
               </small>
             </div>
           </div>

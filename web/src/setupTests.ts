@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 
+process.env.TZ = 'UTC';
+
 import { createRequire } from 'node:module';
 
 import { cleanup } from '@testing-library/react';

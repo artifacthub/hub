@@ -261,7 +261,7 @@ exports[`API keys section index > creates snapshot 1`] = `
                         Created at: 
                       </small>
                       <small>
-                        2020/06/18 18:35:30 (+02:00)
+                        2020/06/18 16:35:30 (+00:00)
                       </small>
                     </div>
                   </div>
@@ -439,7 +439,7 @@ exports[`API keys section index > creates snapshot 1`] = `
                         Created at: 
                       </small>
                       <small>
-                        2020/06/18 18:35:39 (+02:00)
+                        2020/06/18 16:35:39 (+00:00)
                       </small>
                     </div>
                   </div>
