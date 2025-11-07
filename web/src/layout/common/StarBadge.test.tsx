@@ -1,9 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
+import { hasClassContaining } from '../../utils/testUtils';
 import StarBadge from './StarBadge';
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('StarBadge', () => {
   it('creates snapshot', () => {

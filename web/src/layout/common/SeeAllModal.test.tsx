@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { hasClassContaining } from '../../utils/testUtils';
 import SeeAllModal from './SeeAllModal';
 
 const getItems = (itemsNumber: number): JSX.Element[] => {
@@ -10,9 +11,6 @@ const getItems = (itemsNumber: number): JSX.Element[] => {
 const defaultProps = {
   title: 'title',
 };
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('SeeAllModal', () => {
   afterEach(() => {

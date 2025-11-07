@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Dependency } from '../../types';
+import { hasClassContaining } from '../../utils/testUtils';
 import Dependencies from './Dependencies';
 
 const getMockDependencies = (fixtureId: string): Dependency[] => {
@@ -14,9 +15,6 @@ const defaultProps = {
   title: 'Containers Images',
   packageId: 'id',
 };
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('Dependencies', () => {
   afterEach(() => {

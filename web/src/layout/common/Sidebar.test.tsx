@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { hasClassContaining } from '../../utils/testUtils';
 import Sidebar from './Sidebar';
 
 const defaultProps = {
@@ -8,9 +9,6 @@ const defaultProps = {
   header: 'title',
   label: 'test',
 };
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('Sidebar', () => {
   it('creates snapshot', () => {

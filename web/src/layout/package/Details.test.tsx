@@ -8,6 +8,8 @@ import { prepareQueryString } from '../../utils/prepareQueryString';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import Details from './Details';
 
+const fixedDate = new Date('2021-10-06T00:00:00Z');
+
 const getMockPackage = (fixtureId: string): Package => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/Details/${fixtureId}.json`) as Package;
@@ -37,19 +39,19 @@ const defaultProps = {
 };
 
 describe('Details', () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let dateNowSpy: any;
-
-  beforeEach(() => {
-    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1634969145000);
-  });
-
-  afterAll(() => {
-    dateNowSpy.mockRestore();
+  beforeAll(() => {
+    vi.useFakeTimers({
+      now: fixedDate,
+      toFake: ['Date'],
+    });
   });
 
   afterEach(() => {
     jest.resetAllMocks();
+  });
+
+  afterAll(() => {
+    vi.useRealTimers();
   });
 
   it('renders correctly', () => {

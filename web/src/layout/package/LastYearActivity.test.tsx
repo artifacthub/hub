@@ -1,15 +1,13 @@
 import { render, screen } from '@testing-library/react';
 
 import { Version } from '../../types';
+import { hasClassContaining } from '../../utils/testUtils';
 import LastYearActivity from './LastYearActivity';
 
 const getMockVersions = (fixtureId: string): Version[] => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/LastYearActivity/${fixtureId}.json`) as Version[];
 };
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('LastYearActivity', () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

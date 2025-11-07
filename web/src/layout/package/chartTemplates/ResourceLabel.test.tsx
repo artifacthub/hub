@@ -1,9 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
+import { hasClassContaining } from '../../../utils/testUtils';
 import ResourceLabel from './ResourceLabel';
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('ResourceLabel', () => {
   afterEach(() => {

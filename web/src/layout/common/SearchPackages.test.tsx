@@ -5,6 +5,7 @@ import { vi } from 'vitest';
 import API from '../../api';
 import { SearchResults } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
+import { hasClassContaining } from '../../utils/testUtils';
 import SearchPackages from './SearchPackages';
 vi.mock('../../api');
 vi.mock('../../utils/alertDispatcher');
@@ -23,9 +24,6 @@ const defaultProps = {
   disabledPackages: [],
   onSelection: mockOnSelection,
 };
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('SearchPackages', () => {
   afterEach(() => {

@@ -5,6 +5,7 @@ import { vi } from 'vitest';
 import API from '../../../../../../api';
 import { Package, SearchResults } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
+import { hasClassContaining } from '../../../../../../utils/testUtils';
 import SubscriptionModal from './Modal';
 vi.mock('../../../../../../api');
 vi.mock('../../../../../../utils/alertDispatcher');
@@ -27,9 +28,6 @@ const defaultProps = {
   onClose: mockOnClose,
   getNotificationTitle: () => 'new releases',
 };
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('SubscriptionModal', () => {
   afterEach(() => {

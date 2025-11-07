@@ -1,10 +1,8 @@
 import { render, screen } from '@testing-library/react';
 
 import { RepositoryKind } from '../../types';
+import { hasClassContaining } from '../../utils/testUtils';
 import RepositoryIcon from './RepositoryIcon';
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 const expectIconSrcContains = (element: Element, asset: string) => {
   const src = element.getAttribute('src');

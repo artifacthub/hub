@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { hasClassContaining } from '../../utils/testUtils';
 import Alert from './Alert';
 
 const onCloseMock = jest.fn();
@@ -13,9 +14,6 @@ const defaultProps = {
   type: 'danger',
   onClose: onCloseMock,
 };
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('Alert', () => {
   afterEach(() => {

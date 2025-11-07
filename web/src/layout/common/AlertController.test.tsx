@@ -1,10 +1,8 @@
 import { act, render, screen } from '@testing-library/react';
 
 import alertDispatcher from '../../utils/alertDispatcher';
+import { hasClassContaining } from '../../utils/testUtils';
 import AlertController from './AlertController';
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('AlertController', () => {
   afterEach(() => {

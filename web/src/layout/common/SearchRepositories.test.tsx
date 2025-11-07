@@ -5,6 +5,7 @@ import { vi } from 'vitest';
 import API from '../../api';
 import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
+import { hasClassContaining } from '../../utils/testUtils';
 import SearchRepositories from './SearchRepositories';
 vi.mock('../../api');
 vi.mock('../../utils/alertDispatcher');
@@ -25,9 +26,6 @@ const defaultProps = {
   onSelection: mockOnSelection,
   onAuthError: mockOnAuthError,
 };
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('SearchRepositories', () => {
   afterEach(() => {

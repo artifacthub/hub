@@ -56,6 +56,8 @@ vi.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));
 
+const fixedDate = new Date('2021-10-06T00:00:00Z');
+
 const getMockPackage = (fixtureId: string): Package => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/index/${fixtureId}.json`) as Package;
@@ -67,18 +69,19 @@ const getMockRelatedPackages = (fixtureId: string): SearchResults => {
 };
 
 describe('Package index', () => {
-  let dateNowSpy: jest.SpyInstance<number, []>;
-
-  beforeEach(() => {
-    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1634969145000);
-  });
-
-  afterAll(() => {
-    dateNowSpy.mockRestore();
+  beforeAll(() => {
+    vi.useFakeTimers({
+      now: fixedDate,
+      toFake: ['Date'],
+    });
   });
 
   afterEach(() => {
     jest.resetAllMocks();
+  });
+
+  afterAll(() => {
+    vi.useRealTimers();
   });
 
   it('creates snapshot', async () => {

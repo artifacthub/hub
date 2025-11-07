@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { hasClassContaining } from '../../utils/testUtils';
 import ButtonCopyToClipboard from './ButtonCopyToClipboard';
 
 const copyToClipboardMock = jest.fn();
@@ -14,9 +15,6 @@ Object.defineProperty(navigator, 'clipboard', {
   },
   writable: true,
 });
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('ButtonCopyToClipboard', () => {
   afterEach(() => {

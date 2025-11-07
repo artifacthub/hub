@@ -4,6 +4,7 @@ import { vi } from 'vitest';
 
 import { RepositoryKind } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
+import { hasClassContaining } from '../../utils/testUtils';
 import RepositoryIconLabel from './RepositoryIconLabel';
 
 const mockUseNavigate = jest.fn();
@@ -12,9 +13,6 @@ vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('RepositoryIconLabel', () => {
   it('creates snapshot', () => {

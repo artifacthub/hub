@@ -10,6 +10,8 @@ vi.mock('react-apexcharts', () => ({
   default: () => <div>Chart</div>,
 }));
 
+const fixedDate = new Date('2021-10-06T00:00:00Z');
+
 const mockUseNavigate = jest.fn();
 
 vi.mock('react-router-dom', () => {
@@ -107,11 +109,11 @@ const defaultProps = {
 };
 
 describe('Last30DaysViews', () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let dateNowSpy: any;
-
-  beforeEach(() => {
-    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1639468828000);
+  beforeAll(() => {
+    vi.useFakeTimers({
+      now: fixedDate,
+      toFake: ['Date'],
+    });
   });
 
   afterEach(() => {
@@ -119,7 +121,7 @@ describe('Last30DaysViews', () => {
   });
 
   afterAll(() => {
-    dateNowSpy.mockRestore();
+    vi.useRealTimers();
   });
 
   it('creates snapshot', () => {

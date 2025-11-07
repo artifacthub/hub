@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import { hasClassContaining } from '../../../utils/testUtils';
 import TOCEntry from './TOCEntry';
 
 const setVisibleTOCMock = jest.fn();
@@ -16,9 +17,6 @@ const defaultProps = {
   setVisibleTOC: setVisibleTOCMock,
   scrollIntoView: scrollIntoViewMock,
 };
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 describe('TOCEntry', () => {
   afterEach(() => {

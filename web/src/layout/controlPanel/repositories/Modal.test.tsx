@@ -5,6 +5,7 @@ import { vi } from 'vitest';
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Repository, RepositoryKind } from '../../../types';
+import { hasClassContaining } from '../../../utils/testUtils';
 import Modal from './Modal';
 vi.mock('../../../api');
 
@@ -20,9 +21,6 @@ const defaultProps = {
   onSuccess: onSuccessMock,
   onClose: jest.fn(),
 };
-
-const hasClassContaining = (element: Element, token: string): boolean =>
-  Array.from(element.classList).some((cls) => cls.includes(token));
 
 const repoMock: Repository = {
   kind: 0,
