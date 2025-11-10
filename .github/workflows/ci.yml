@@ -25,7 +25,7 @@ jobs:
           sudo tar -C /usr/local -xzf ${FILENAME}
           sudo ldconfig /usr/local/lib
       - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v8
+        uses: golangci/golangci-lint-action@v9
         with:
           version: v2.5.0
           args: --timeout 10m
@@ -86,7 +86,7 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Apply database migrations
         working-directory: ./database/migrations
         run: TERN_CONF=../../../.github/workflows/tern.conf PGPORT=${{ job.services.postgres.ports[5432] }} ./migrate.sh
