@@ -39,6 +39,10 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- with (default .Values.tolerations .Values.dbMigrator.job.tolerations) }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       restartPolicy: Never
       initContainers:
         - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 10 }}
