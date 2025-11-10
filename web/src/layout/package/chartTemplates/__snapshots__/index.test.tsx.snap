@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ChartTemplatesModal creates snapshot 1`] = `
+exports[`ChartTemplatesModal > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mb-2"
@@ -39,28 +39,28 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
     </div>
     <div>
       <div
-        class="modal-backdrop activeBackdrop"
+        class="modal-backdrop _activeBackdrop_2adcc6"
         data-testid="modalBackdrop"
       />
       <div
         aria-modal="true"
-        class="modal modal active d-block"
+        class="modal _modal_2adcc6 _active_2adcc6 d-block"
         role="dialog"
       >
         <div
-          class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+          class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable _modalDialog_86b827"
         >
           <div
-            class="modal-content border border-3 mx-auto content h-100"
+            class="modal-content border border-3 mx-auto _content_2adcc6 h-100"
           >
             <div
-              class="modal-header d-flex flex-row align-items-center header undefined"
+              class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
             >
               <div
                 class="d-flex flex-row align-items-center flex-grow-1"
               >
                 <div
-                  class="h3 m-2 flex-grow-1 title"
+                  class="h3 m-2 flex-grow-1 _title_86b827"
                 >
                   Templates
                 </div>
@@ -92,20 +92,20 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                       </div>
                     </div>
                     <div
-                      class="dropdown-menu dropdown-menu-end text-nowrap overflow-hidden dropdown"
+                      class="dropdown-menu dropdown-menu-end text-nowrap overflow-hidden _dropdown_86b827"
                       role="complementary"
                     >
                       <div
                         class="overflow-scroll h-100"
                       >
                         <button
-                          class="dropdown-item btnItem"
+                          class="dropdown-item _btnItem_86b827"
                         >
                           <div
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="itemIcon"
+                              class="_itemIcon_86b827"
                             />
                             <div
                               class="ms-2 text-truncate"
@@ -115,13 +115,13 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                         <button
-                          class="dropdown-item btnItem"
+                          class="dropdown-item _btnItem_86b827"
                         >
                           <div
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="itemIcon"
+                              class="_itemIcon_86b827"
                             />
                             <div
                               class="ms-2 text-truncate"
@@ -131,13 +131,13 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           </div>
                         </button>
                         <button
-                          class="dropdown-item btnItem"
+                          class="dropdown-item _btnItem_86b827"
                         >
                           <div
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="itemIcon"
+                              class="_itemIcon_86b827"
                             />
                             <div
                               class="ms-2 text-truncate"
@@ -179,7 +179,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                           class="mb-3 input-group-sm"
                         >
                           <input
-                            class="flex-grow-1 form-control ps-3 pe-4 input"
+                            class="flex-grow-1 form-control ps-3 pe-4 _input_98bf60"
                             name="chartTemplateInput"
                             placeholder="Search by template or resource kind"
                             spellcheck="false"
@@ -187,7 +187,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                             value=""
                           />
                           <svg
-                            class="text-muted position-absolute searchIcon"
+                            class="text-muted position-absolute _searchIcon_98bf60"
                             fill="currentColor"
                             height="1em"
                             stroke="currentColor"
@@ -223,7 +223,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template db_migrator_install_job.yaml"
                           aria-pressed="true"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn activeTemplate active"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60 activeTemplate _active_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -232,7 +232,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -241,7 +241,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 db_migrator_install_job.yaml
                               </div>
@@ -250,7 +250,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -269,7 +269,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template db_migrator_secret.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -278,7 +278,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -287,7 +287,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 db_migrator_secret.yaml
                               </div>
@@ -296,7 +296,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -315,7 +315,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template db_migrator_upgrade_job.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -324,7 +324,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -333,7 +333,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 db_migrator_upgrade_job.yaml
                               </div>
@@ -342,7 +342,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -361,7 +361,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template hub_deployment.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -370,7 +370,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -379,7 +379,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 hub_deployment.yaml
                               </div>
@@ -388,7 +388,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -407,7 +407,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template hub_ingress.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -416,7 +416,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -425,7 +425,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 hub_ingress.yaml
                               </div>
@@ -434,7 +434,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -453,7 +453,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template hub_secret.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -462,7 +462,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -471,7 +471,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 hub_secret.yaml
                               </div>
@@ -480,7 +480,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -499,7 +499,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template hub_service.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -508,7 +508,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -517,7 +517,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 hub_service.yaml
                               </div>
@@ -526,7 +526,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -545,7 +545,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template hub_serviceaccount.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -554,7 +554,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -563,7 +563,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 hub_serviceaccount.yaml
                               </div>
@@ -572,7 +572,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -591,7 +591,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template scanner_cronjob.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -600,7 +600,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -609,7 +609,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 scanner_cronjob.yaml
                               </div>
@@ -618,7 +618,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -637,7 +637,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template scanner_secret.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -646,7 +646,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -655,7 +655,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 scanner_secret.yaml
                               </div>
@@ -664,7 +664,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -683,7 +683,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template tracker_cronjob.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -692,7 +692,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -701,7 +701,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 tracker_cronjob.yaml
                               </div>
@@ -710,7 +710,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -729,7 +729,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template tracker_secret.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -738,7 +738,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -747,7 +747,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 tracker_secret.yaml
                               </div>
@@ -756,7 +756,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -775,7 +775,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template trivy_deployment.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -784,7 +784,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -793,7 +793,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 trivy_deployment.yaml
                               </div>
@@ -802,7 +802,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -821,7 +821,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template trivy_pvc.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -830,7 +830,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -839,7 +839,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 trivy_pvc.yaml
                               </div>
@@ -848,7 +848,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -867,7 +867,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template trivy_service.yaml"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -876,7 +876,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -885,7 +885,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 trivy_service.yaml
                               </div>
@@ -894,7 +894,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -913,7 +913,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         <button
                           aria-label="Show template _helpers.tpl"
                           aria-pressed="false"
-                          class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+                          class="btn btn-light btn-sm mb-2 text-start w-100 _btn_98bf60"
                         >
                           <div
                             class="d-flex flex-column"
@@ -922,7 +922,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                               class="d-flex flex-row align-items-baseline mb-1"
                             >
                               <div
-                                class="legend"
+                                class="_legend_98bf60"
                               >
                                 <small
                                   class="text-muted text-uppercase"
@@ -931,7 +931,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 </small>
                               </div>
                               <div
-                                class="text-truncate templateName"
+                                class="text-truncate _templateName_98bf60"
                               >
                                 _helpers.tpl
                               </div>
@@ -945,17 +945,17 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                     class="col-9 ps-3 h-100"
                   >
                     <div
-                      class="position-relative h-100 mh-100 border border-1 templateWrapper"
+                      class="position-relative h-100 mh-100 border border-1 _templateWrapper_87fb6d"
                     >
                       <div
-                        class="position-absolute d-flex flex-row wrapper undefined"
+                        class="position-absolute d-flex flex-row _wrapper_735216 undefined"
                       >
                         <div
                           class="position-relative me-2"
                         >
                           <button
                             aria-label="Copy to clipboard"
-                            class="btn btn-sm btn-primary btn"
+                            class="btn btn-sm btn-primary _btn_a0bd31"
                             style="box-shadow: 0px 0px 0px 8px var(--extra-light-gray);"
                             type="button"
                           >
@@ -991,7 +991,7 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         </div>
                         <button
                           aria-label="Download"
-                          class="btn btn-sm btn-primary fs-5 btn"
+                          class="btn btn-sm btn-primary fs-5 _btn_735216"
                           style="box-shadow: 0px 0px 0px 8px var(--extra-light-gray);"
                         >
                           <svg
@@ -1014,25 +1014,25 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                         </button>
                       </div>
                       <pre
-                        class="text-muted h-100 mh-100 mb-0 overflow-auto position-relative pre"
+                        class="text-muted h-100 mh-100 mb-0 overflow-auto position-relative _pre_87fb6d"
                       >
                         <span
                           data-testid="activeTmpl"
                         >
                           <code>
                             <div
-                              class="codeWrapper"
+                              class="_codeWrapper_a85043"
                             >
                               <div
                                 class="d-flex flex-row my-1 position-relative"
                               >
                                 <div
-                                  class="position-absolute anchor"
+                                  class="position-absolute _anchor_a85043"
                                   data-testid="anchor"
                                   id="line_1"
                                 />
                                 <div
-                                  class="text-end me-3 lineNumber"
+                                  class="text-end me-3 _lineNumber_a85043"
                                 >
                                   1
                                 </div>
@@ -1049,12 +1049,12 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 class="d-flex flex-row my-1 position-relative"
                               >
                                 <div
-                                  class="position-absolute anchor"
+                                  class="position-absolute _anchor_a85043"
                                   data-testid="anchor"
                                   id="line_2"
                                 />
                                 <div
-                                  class="text-end me-3 lineNumber"
+                                  class="text-end me-3 _lineNumber_a85043"
                                 >
                                   2
                                 </div>
@@ -1071,12 +1071,12 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 class="d-flex flex-row my-1 position-relative"
                               >
                                 <div
-                                  class="position-absolute anchor"
+                                  class="position-absolute _anchor_a85043"
                                   data-testid="anchor"
                                   id="line_3"
                                 />
                                 <div
-                                  class="text-end me-3 lineNumber"
+                                  class="text-end me-3 _lineNumber_a85043"
                                 >
                                   3
                                 </div>
@@ -1093,12 +1093,12 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 class="d-flex flex-row my-1 position-relative"
                               >
                                 <div
-                                  class="position-absolute anchor"
+                                  class="position-absolute _anchor_a85043"
                                   data-testid="anchor"
                                   id="line_4"
                                 />
                                 <div
-                                  class="text-end me-3 lineNumber"
+                                  class="text-end me-3 _lineNumber_a85043"
                                 >
                                   4
                                 </div>
@@ -1115,12 +1115,12 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 class="d-flex flex-row my-1 position-relative"
                               >
                                 <div
-                                  class="position-absolute anchor"
+                                  class="position-absolute _anchor_a85043"
                                   data-testid="anchor"
                                   id="line_5"
                                 />
                                 <div
-                                  class="text-end me-3 lineNumber"
+                                  class="text-end me-3 _lineNumber_a85043"
                                 >
                                   5
                                 </div>
@@ -1137,12 +1137,12 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 class="d-flex flex-row my-1 position-relative"
                               >
                                 <div
-                                  class="position-absolute anchor"
+                                  class="position-absolute _anchor_a85043"
                                   data-testid="anchor"
                                   id="line_6"
                                 />
                                 <div
-                                  class="text-end me-3 lineNumber"
+                                  class="text-end me-3 _lineNumber_a85043"
                                 >
                                   6
                                 </div>
@@ -1159,12 +1159,12 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
                                 class="d-flex flex-row my-1 position-relative"
                               >
                                 <div
-                                  class="position-absolute anchor"
+                                  class="position-absolute _anchor_a85043"
                                   data-testid="anchor"
                                   id="line_7"
                                 />
                                 <div
-                                  class="text-end me-3 lineNumber"
+                                  class="text-end me-3 _lineNumber_a85043"
                                 >
                                   7
                                 </div>
@@ -1187,13 +1187,13 @@ exports[`ChartTemplatesModal creates snapshot 1`] = `
               </div>
               <div>
                 <div
-                  class="overflow-hidden alertWrapper"
+                  class="overflow-hidden _alertWrapper_1aa3f6"
                   data-testid="alertWrapper"
                 />
               </div>
             </div>
             <div
-              class="modal-footer p-3 modalFooter"
+              class="modal-footer p-3 _modalFooter_86b827"
             >
               <div
                 class="w-100 d-flex flex-row align-items-center justify-content-between"

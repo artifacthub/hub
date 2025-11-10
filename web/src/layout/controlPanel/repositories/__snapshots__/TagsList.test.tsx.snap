@@ -1,17 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TagsList creates snapshot 1`] = `
+exports[`TagsList > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mb-4"
   >
     <label
-      class="form-check-label fw-bold mb-2 label"
+      class="form-check-label fw-bold mb-2 _label_cce9b9"
     >
       Tags
       <button
         aria-label="Add tag"
-        class="btn btn-primary btn-sm ms-2 p-0 position-relative lh-1 btn inTitle"
+        class="btn btn-primary btn-sm ms-2 p-0 position-relative lh-1 _btn_cce9b9 _inTitle_cce9b9"
         type="button"
       >
         <svg
@@ -50,20 +50,20 @@ exports[`TagsList creates snapshot 1`] = `
           value="tag1"
         />
         <div
-          class="invalid-feedback mt-0 inputFeedback"
+          class="invalid-feedback mt-0 _inputFeedback_d02ded"
         />
       </div>
       <div
         class="d-flex flex-row align-items-center mb-3 ms-3 flex-nowrap"
       >
         <div
-          class="ms-2 me-5 position-relative inputWrapper"
+          class="ms-2 me-5 position-relative _inputWrapper_cce9b9"
         >
           <div
             class="form-check form-switch ps-0"
           >
             <label
-              class="form-check-label fw-bold label"
+              class="form-check-label fw-bold _label_cce9b9"
               for="mutable_0"
             >
               Mutable
@@ -78,11 +78,11 @@ exports[`TagsList creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="position-relative text-end btnWrapper"
+          class="position-relative text-end _btnWrapper_cce9b9"
         >
           <button
             aria-label="Delete tag from repository"
-            class="btn btn-danger btn-sm ms-auto p-0 position-relative lh-1 btn"
+            class="btn btn-danger btn-sm ms-auto p-0 position-relative lh-1 _btn_cce9b9"
             type="button"
           >
             <svg
@@ -124,20 +124,20 @@ exports[`TagsList creates snapshot 1`] = `
           value="tag2"
         />
         <div
-          class="invalid-feedback mt-0 inputFeedback"
+          class="invalid-feedback mt-0 _inputFeedback_d02ded"
         />
       </div>
       <div
         class="d-flex flex-row align-items-center mb-3 ms-3 flex-nowrap"
       >
         <div
-          class="ms-2 me-5 position-relative inputWrapper"
+          class="ms-2 me-5 position-relative _inputWrapper_cce9b9"
         >
           <div
             class="form-check form-switch ps-0"
           >
             <label
-              class="form-check-label fw-bold label"
+              class="form-check-label fw-bold _label_cce9b9"
               for="mutable_1"
             >
               Mutable
@@ -152,11 +152,11 @@ exports[`TagsList creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="position-relative text-end btnWrapper"
+          class="position-relative text-end _btnWrapper_cce9b9"
         >
           <button
             aria-label="Delete tag from repository"
-            class="btn btn-danger btn-sm ms-auto p-0 position-relative lh-1 btn"
+            class="btn btn-danger btn-sm ms-auto p-0 position-relative lh-1 _btn_cce9b9"
             type="button"
           >
             <svg
@@ -198,20 +198,20 @@ exports[`TagsList creates snapshot 1`] = `
           value="tag3"
         />
         <div
-          class="invalid-feedback mt-0 inputFeedback"
+          class="invalid-feedback mt-0 _inputFeedback_d02ded"
         />
       </div>
       <div
         class="d-flex flex-row align-items-center mb-3 ms-3 flex-nowrap"
       >
         <div
-          class="ms-2 me-5 position-relative inputWrapper"
+          class="ms-2 me-5 position-relative _inputWrapper_cce9b9"
         >
           <div
             class="form-check form-switch ps-0"
           >
             <label
-              class="form-check-label fw-bold label"
+              class="form-check-label fw-bold _label_cce9b9"
               for="mutable_2"
             >
               Mutable
@@ -227,11 +227,11 @@ exports[`TagsList creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="position-relative text-end btnWrapper"
+          class="position-relative text-end _btnWrapper_cce9b9"
         >
           <button
             aria-label="Delete tag from repository"
-            class="btn btn-danger btn-sm ms-auto p-0 position-relative lh-1 btn"
+            class="btn btn-danger btn-sm ms-auto p-0 position-relative lh-1 _btn_cce9b9"
             type="button"
           >
             <svg

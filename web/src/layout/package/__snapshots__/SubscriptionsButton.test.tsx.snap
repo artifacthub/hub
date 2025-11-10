@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SubscriptionsButton creates snapshot 1`] = `
+exports[`SubscriptionsButton > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-none d-lg-block position-relative ms-2"
@@ -14,7 +14,7 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
         <button
           aria-expanded="false"
           aria-label="Open subscriptions menu"
-          class="btn btn-outline-primary p-0 position-relative lh-1 fs-5 subsBtn iconWrapper"
+          class="btn btn-outline-primary p-0 position-relative lh-1 fs-5 _subsBtn_ca235c _iconWrapper_ca235c"
           type="button"
         >
           <div
@@ -42,15 +42,15 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="dropdown-menu dropdown-menu-end p-0 dropdown"
+      class="dropdown-menu dropdown-menu-end p-0 _dropdown_ca235c"
       role="menu"
     >
       <div
-        class="dropdown-arrow arrow"
+        class="dropdown-arrow _arrow_ca235c"
       />
       <button
         aria-label="Change New releases subscription"
-        class="dropdownItem dropdownItem btn p-3 rounded-0 w-100"
+        class="_dropdownItem_ca235c dropdownItem btn p-3 rounded-0 w-100"
       >
         <div
           class="d-flex flex-row align-items-center w-100 justify-content-between"
@@ -113,7 +113,7 @@ exports[`SubscriptionsButton creates snapshot 1`] = `
       </button>
       <button
         aria-label="Change Security alerts subscription"
-        class="dropdownItem dropdownItem btn p-3 rounded-0 w-100"
+        class="_dropdownItem_ca235c dropdownItem btn p-3 rounded-0 w-100"
       >
         <div
           class="d-flex flex-row align-items-center w-100 justify-content-between"

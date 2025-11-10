@@ -1,12 +1,18 @@
 import { render, screen } from '@testing-library/react';
+import type { ReactNode } from 'react';
+import { vi } from 'vitest';
 
 import Template from './Template';
+import styles from './Template.module.css';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('react-markdown', () => (props: any) => {
-  return <>{props.children}</>;
-});
-jest.mock('remark-gfm', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: ({ children }: { children?: ReactNode }) => {
+    return <>{children}</>;
+  },
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
 
 const setIsChangingTemplateMock = jest.fn();
 
@@ -175,27 +181,27 @@ describe('Template', () => {
       // Functions
       const functionsSample = screen.getAllByText('nindent');
       expect(functionsSample).toHaveLength(6);
-      expect(functionsSample[1]).toHaveClass('tmplFunction');
+      expect(functionsSample[1]).toHaveClass(styles.tmplFunction);
 
       // Built-in
       const builtInSample = screen.getAllByText('.Release.Namespace');
       expect(builtInSample).toHaveLength(2);
-      expect(builtInSample[1]).toHaveClass('tmplBuiltIn');
+      expect(builtInSample[1]).toHaveClass(styles.tmplBuiltIn);
 
       // Values
       const valuesSample = screen.getAllByText('.Values.pullPolicy');
       expect(valuesSample).toHaveLength(2);
-      expect(valuesSample[0]).toHaveClass('tmplValue');
+      expect(valuesSample[0]).toHaveClass(styles.tmplValue);
 
       // Flow Control
       const flowControlSample = screen.getAllByText('include');
       expect(flowControlSample).toHaveLength(7);
-      expect(flowControlSample[0]).toHaveClass('tmplFlowControl');
+      expect(flowControlSample[0]).toHaveClass(styles.tmplFlowControl);
 
       // Variable
       const variableSample = screen.getAllByText('$variable');
       expect(variableSample).toHaveLength(1);
-      expect(variableSample[0]).toHaveClass('tmplVariable');
+      expect(variableSample[0]).toHaveClass(styles.tmplVariable);
     });
 
     it('calls setIsChangingTemplateMock when a new template is rendered', () => {

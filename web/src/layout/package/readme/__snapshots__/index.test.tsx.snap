@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ReadmeWrapper creates snapshot 1`] = `
+exports[`ReadmeWrapper > creates snapshot 1`] = `
 <DocumentFragment>
   <span
     data-testid="readme"
   >
     <div
-      class="mt-3 mb-5 position-relative md"
+      class="mt-3 mb-5 position-relative _md_eec7bb"
     >
       # package-name
 test # Sample

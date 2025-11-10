@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ContainersImages creates snapshot 1`] = `
+exports[`ContainersImages > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mt-2 mb-1 undefined"
@@ -35,7 +35,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             class="d-flex flex-row align-items-center mw-100"
           >
             <svg
-              class="text-muted me-2 icon"
+              class="text-muted me-2 _icon_4190d9"
               fill="none"
               height="1em"
               stroke="currentColor"
@@ -66,7 +66,7 @@ exports[`ContainersImages creates snapshot 1`] = `
               />
             </svg>
             <div
-              class="text-truncate text-break containerImage"
+              class="text-truncate text-break _containerImage_4190d9"
               data-testid="containerImage"
             >
               db-migrator
@@ -76,7 +76,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             >
               <button
                 aria-label="Copy db-migrator container image to clipboard"
-                class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn undefined"
+                class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_4190d9 undefined"
                 type="button"
               >
                 <div
@@ -120,7 +120,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             class="d-flex flex-row align-items-center mw-100"
           >
             <svg
-              class="text-muted me-2 icon"
+              class="text-muted me-2 _icon_4190d9"
               fill="none"
               height="1em"
               stroke="currentColor"
@@ -151,7 +151,7 @@ exports[`ContainersImages creates snapshot 1`] = `
               />
             </svg>
             <div
-              class="text-truncate text-break containerImage"
+              class="text-truncate text-break _containerImage_4190d9"
               data-testid="containerImage"
             >
               hub
@@ -161,7 +161,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             >
               <button
                 aria-label="Copy hub container image to clipboard"
-                class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn undefined"
+                class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_4190d9 undefined"
                 type="button"
               >
                 <div
@@ -205,7 +205,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             class="d-flex flex-row align-items-center mw-100"
           >
             <svg
-              class="text-muted me-2 icon"
+              class="text-muted me-2 _icon_4190d9"
               fill="none"
               height="1em"
               stroke="currentColor"
@@ -236,7 +236,7 @@ exports[`ContainersImages creates snapshot 1`] = `
               />
             </svg>
             <div
-              class="text-truncate text-break containerImage"
+              class="text-truncate text-break _containerImage_4190d9"
               data-testid="containerImage"
             >
               tracker
@@ -246,7 +246,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             >
               <button
                 aria-label="Copy tracker container image to clipboard"
-                class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn undefined"
+                class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_4190d9 undefined"
                 type="button"
               >
                 <div
@@ -294,7 +294,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             class="d-flex flex-row align-items-center mw-100"
           >
             <svg
-              class="text-muted me-2 icon"
+              class="text-muted me-2 _icon_4190d9"
               fill="none"
               height="1em"
               stroke="currentColor"
@@ -325,7 +325,7 @@ exports[`ContainersImages creates snapshot 1`] = `
               />
             </svg>
             <div
-              class="text-truncate text-break containerImage"
+              class="text-truncate text-break _containerImage_4190d9"
               data-testid="containerImage"
             >
               db-migrator
@@ -335,7 +335,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             >
               <button
                 aria-label="Copy db-migrator container image to clipboard"
-                class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn undefined"
+                class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_4190d9 undefined"
                 type="button"
               >
                 <div
@@ -379,7 +379,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             class="d-flex flex-row align-items-center mw-100"
           >
             <svg
-              class="text-muted me-2 icon"
+              class="text-muted me-2 _icon_4190d9"
               fill="none"
               height="1em"
               stroke="currentColor"
@@ -410,7 +410,7 @@ exports[`ContainersImages creates snapshot 1`] = `
               />
             </svg>
             <div
-              class="text-truncate text-break containerImage"
+              class="text-truncate text-break _containerImage_4190d9"
               data-testid="containerImage"
             >
               hub
@@ -420,7 +420,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             >
               <button
                 aria-label="Copy hub container image to clipboard"
-                class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn undefined"
+                class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_4190d9 undefined"
                 type="button"
               >
                 <div
@@ -464,7 +464,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             class="d-flex flex-row align-items-center mw-100"
           >
             <svg
-              class="text-muted me-2 icon"
+              class="text-muted me-2 _icon_4190d9"
               fill="none"
               height="1em"
               stroke="currentColor"
@@ -495,7 +495,7 @@ exports[`ContainersImages creates snapshot 1`] = `
               />
             </svg>
             <div
-              class="text-truncate text-break containerImage"
+              class="text-truncate text-break _containerImage_4190d9"
               data-testid="containerImage"
             >
               tracker
@@ -505,7 +505,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             >
               <button
                 aria-label="Copy tracker container image to clipboard"
-                class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn undefined"
+                class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_4190d9 undefined"
                 type="button"
               >
                 <div
@@ -549,7 +549,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             class="d-flex flex-row align-items-center mw-100"
           >
             <svg
-              class="text-muted me-2 icon"
+              class="text-muted me-2 _icon_4190d9"
               fill="none"
               height="1em"
               stroke="currentColor"
@@ -580,7 +580,7 @@ exports[`ContainersImages creates snapshot 1`] = `
               />
             </svg>
             <div
-              class="text-truncate text-break containerImage"
+              class="text-truncate text-break _containerImage_4190d9"
               data-testid="containerImage"
             >
               scanner
@@ -590,7 +590,7 @@ exports[`ContainersImages creates snapshot 1`] = `
             >
               <button
                 aria-label="Copy scanner container image to clipboard"
-                class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn undefined"
+                class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_4190d9 undefined"
                 type="button"
               >
                 <div
@@ -628,7 +628,7 @@ exports[`ContainersImages creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="d-block d-md-none legend"
+      class="d-block d-md-none _legend_eddba6"
     >
       <small
         class="text-muted fst-italic"
@@ -641,7 +641,7 @@ exports[`ContainersImages creates snapshot 1`] = `
     >
       <button
         aria-label="See all entries"
-        class="btn btn-link ps-0 pe-1 position-relative text-primary btn"
+        class="btn btn-link ps-0 pe-1 position-relative text-primary _btn_eddba6"
       >
         <div
           class="d-flex flex-row align-items-center"
@@ -669,7 +669,7 @@ exports[`ContainersImages creates snapshot 1`] = `
         </div>
       </button>
       <div
-        class="text-muted position-relative summary"
+        class="text-muted position-relative _summary_eddba6"
       >
         (4)
       </div>
@@ -677,20 +677,20 @@ exports[`ContainersImages creates snapshot 1`] = `
     <div>
       <div
         aria-modal="false"
-        class="modal modal"
+        class="modal _modal_2adcc6"
         role="dialog"
       >
         <div
-          class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable modalDialog"
+          class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable _modalDialog_eddba6"
         >
           <div
-            class="modal-content border border-3 mx-auto content modal modalBig"
+            class="modal-content border border-3 mx-auto _content_2adcc6 _modal_eddba6 _modalBig_eddba6"
           >
             <div
-              class="modal-header d-flex flex-row align-items-center header undefined"
+              class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
             >
               <div
-                class="h3 m-2 flex-grow-1 text-truncate title"
+                class="h3 m-2 flex-grow-1 text-truncate _title_eddba6"
               >
                 Containers Images
               </div>
@@ -705,13 +705,13 @@ exports[`ContainersImages creates snapshot 1`] = `
             >
               <div>
                 <div
-                  class="overflow-hidden alertWrapper"
+                  class="overflow-hidden _alertWrapper_1aa3f6"
                   data-testid="alertWrapper"
                 />
               </div>
             </div>
             <div
-              class="modal-footer p-3 modalFooter"
+              class="modal-footer p-3 _modalFooter_eddba6"
             >
               <button
                 aria-label="Close modal"

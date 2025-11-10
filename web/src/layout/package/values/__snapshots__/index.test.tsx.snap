@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Values creates snapshot 1`] = `
+exports[`Values > creates snapshot 1`] = `
 <DocumentFragment>
   <button
     aria-label="Open default values modal"
@@ -59,28 +59,28 @@ exports[`Values creates snapshot 1`] = `
   </button>
   <div>
     <div
-      class="modal-backdrop activeBackdrop"
+      class="modal-backdrop _activeBackdrop_2adcc6"
       data-testid="modalBackdrop"
     />
     <div
       aria-modal="true"
-      class="modal modal active d-block"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
       role="dialog"
     >
       <div
-        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable _modalDialog_5a2db2"
       >
         <div
-          class="modal-content border border-3 mx-auto content h-100"
+          class="modal-content border border-3 mx-auto _content_2adcc6 h-100"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
               class="d-flex flex-row align-items-center flex-grow-1"
             >
               <div
-                class="h3 m-2 flex-grow-1 title"
+                class="h3 m-2 flex-grow-1 _title_5a2db2"
               >
                 Default values
               </div>
@@ -112,20 +112,20 @@ exports[`Values creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="dropdown-menu dropdown-menu-end text-nowrap overflow-hidden versionsDropdown"
+                    class="dropdown-menu dropdown-menu-end text-nowrap overflow-hidden _versionsDropdown_5a2db2"
                     role="complementary"
                   >
                     <div
                       class="overflow-scroll h-100"
                     >
                       <button
-                        class="dropdown-item btnItem"
+                        class="dropdown-item _btnItem_5a2db2"
                       >
                         <div
                           class="d-flex flex-row align-items-center"
                         >
                           <div
-                            class="itemIcon"
+                            class="_itemIcon_5a2db2"
                           />
                           <div
                             class="ms-2 text-truncate"
@@ -135,13 +135,13 @@ exports[`Values creates snapshot 1`] = `
                         </div>
                       </button>
                       <button
-                        class="dropdown-item btnItem"
+                        class="dropdown-item _btnItem_5a2db2"
                       >
                         <div
                           class="d-flex flex-row align-items-center"
                         >
                           <div
-                            class="itemIcon"
+                            class="_itemIcon_5a2db2"
                           />
                           <div
                             class="ms-2 text-truncate"
@@ -151,13 +151,13 @@ exports[`Values creates snapshot 1`] = `
                         </div>
                       </button>
                       <button
-                        class="dropdown-item btnItem"
+                        class="dropdown-item _btnItem_5a2db2"
                       >
                         <div
                           class="d-flex flex-row align-items-center"
                         >
                           <div
-                            class="itemIcon"
+                            class="_itemIcon_5a2db2"
                           />
                           <div
                             class="ms-2 text-truncate"
@@ -167,13 +167,13 @@ exports[`Values creates snapshot 1`] = `
                         </div>
                       </button>
                       <button
-                        class="dropdown-item btnItem"
+                        class="dropdown-item _btnItem_5a2db2"
                       >
                         <div
                           class="d-flex flex-row align-items-center"
                         >
                           <div
-                            class="itemIcon"
+                            class="_itemIcon_5a2db2"
                           />
                           <div
                             class="ms-2 text-truncate"
@@ -203,13 +203,13 @@ exports[`Values creates snapshot 1`] = `
                 class="d-flex flex-row"
               >
                 <div
-                  class="position-relative wrapper w-50"
+                  class="position-relative _wrapper_6b0f1f w-50"
                 >
                   <div
-                    class="mb-3 input-group-sm inputWrapper undefined"
+                    class="mb-3 input-group-sm _inputWrapper_228486 undefined"
                   >
                     <input
-                      class="flex-grow-1 form-control input ps-3 pe-4"
+                      class="flex-grow-1 form-control _input_228486 ps-3 pe-4"
                       name="inputTypeahead_path"
                       placeholder="Search path"
                       spellcheck="false"
@@ -217,7 +217,7 @@ exports[`Values creates snapshot 1`] = `
                       value=""
                     />
                     <svg
-                      class="text-muted position-absolute searchIcon"
+                      class="text-muted position-absolute _searchIcon_228486"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -234,17 +234,17 @@ exports[`Values creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="position-relative flex-grow-1 content"
+                class="position-relative flex-grow-1 _content_5a2db2"
               >
                 <div
-                  class="position-absolute d-flex flex-row wrapper undefined"
+                  class="position-absolute d-flex flex-row _wrapper_735216 undefined"
                 >
                   <div
                     class="position-relative me-2"
                   >
                     <button
                       aria-label="Copy to clipboard"
-                      class="btn btn-sm btn-primary btn"
+                      class="btn btn-sm btn-primary _btn_a0bd31"
                       type="button"
                     >
                       <div
@@ -279,7 +279,7 @@ exports[`Values creates snapshot 1`] = `
                   </div>
                   <button
                     aria-label="Download"
-                    class="btn btn-sm btn-primary fs-5 btn"
+                    class="btn btn-sm btn-primary fs-5 _btn_735216"
                   >
                     <svg
                       aria-hidden="true"
@@ -301,7 +301,7 @@ exports[`Values creates snapshot 1`] = `
                   </button>
                 </div>
                 <div
-                  class="overflow-auto h-100 position-relative border border-1 codeWrapper"
+                  class="overflow-auto h-100 position-relative border border-1 _codeWrapper_5a2db2"
                 >
                   <div
                     id="line_59"
@@ -313,13 +313,13 @@ exports[`Values creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>
           </div>
           <div
-            class="modal-footer p-3 modalFooter"
+            class="modal-footer p-3 _modalFooter_5a2db2"
           >
             <button
               aria-label="Close modal"

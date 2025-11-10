@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MobileSettings creates snapshot 1`] = `
+exports[`MobileSettings > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="btn-group navbar-toggler pe-0 ms-auto border-0 fs-6 bg-transparent navbarToggler"
+    class="btn-group navbar-toggler pe-0 ms-auto border-0 fs-6 bg-transparent _navbarToggler_b738b3"
   >
     <aside
       aria-label="User settings"
@@ -19,7 +19,7 @@ exports[`MobileSettings creates snapshot 1`] = `
           class="d-flex align-items-center justify-content-center"
         >
           <div
-            class="rounded-circle d-flex align-items-center justify-content-center lh-1 bg-white iconWrapper"
+            class="rounded-circle d-flex align-items-center justify-content-center lh-1 bg-white _iconWrapper_b738b3"
           >
             <svg
               fill="currentColor"
@@ -39,7 +39,7 @@ exports[`MobileSettings creates snapshot 1`] = `
       </button>
       <div
         aria-label="Sidebar"
-        class="sidebar position-fixed top-0 bottom-0 w-75 sidebar right"
+        class="sidebar position-fixed top-0 bottom-0 w-75 _sidebar_7fc36f _right_7fc36f"
         role="complementary"
       >
         <div
@@ -66,14 +66,14 @@ exports[`MobileSettings creates snapshot 1`] = `
               <div>
                 <button
                   aria-label="Close sidebar"
-                  class="btn-close closeBtn"
+                  class="btn-close _closeBtn_7fc36f"
                   type="button"
                 />
               </div>
             </div>
           </div>
           <div
-            class="flex-grow-1 d-flex contentWrapper undefined"
+            class="flex-grow-1 d-flex _contentWrapper_7fc36f undefined"
           >
             <div
               class="overflow-auto mh-100 w-100 py-3"
@@ -105,7 +105,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                   >
                     <input
                       aria-checked="false"
-                      class="form-check-input input"
+                      class="form-check-input _input_4ef093"
                       id="mobile-automatic"
                       name="automatic"
                       tabindex="0"
@@ -113,11 +113,11 @@ exports[`MobileSettings creates snapshot 1`] = `
                       value="automatic"
                     />
                     <label
-                      class="form-check-label fw-bold w-100 label"
+                      class="form-check-label fw-bold w-100 _label_4ef093"
                       for="mobile-automatic"
                     >
                       <svg
-                        class="mx-1 position-relative icon"
+                        class="mx-1 position-relative _icon_4ef093"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -143,7 +143,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                     <input
                       aria-checked="true"
                       checked=""
-                      class="form-check-input input"
+                      class="form-check-input _input_4ef093"
                       id="mobile-light"
                       name="light"
                       tabindex="-1"
@@ -151,11 +151,11 @@ exports[`MobileSettings creates snapshot 1`] = `
                       value="light"
                     />
                     <label
-                      class="form-check-label fw-bold w-100 label"
+                      class="form-check-label fw-bold w-100 _label_4ef093"
                       for="mobile-light"
                     >
                       <svg
-                        class="mx-1 position-relative icon"
+                        class="mx-1 position-relative _icon_4ef093"
                         fill="none"
                         height="1em"
                         stroke="currentColor"
@@ -232,7 +232,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                   >
                     <input
                       aria-checked="false"
-                      class="form-check-input input"
+                      class="form-check-input _input_4ef093"
                       id="mobile-dark"
                       name="dark"
                       tabindex="-1"
@@ -240,11 +240,11 @@ exports[`MobileSettings creates snapshot 1`] = `
                       value="dark"
                     />
                     <label
-                      class="form-check-label fw-bold w-100 label"
+                      class="form-check-label fw-bold w-100 _label_4ef093"
                       for="mobile-dark"
                     >
                       <svg
-                        class="mx-1 position-relative icon"
+                        class="mx-1 position-relative _icon_4ef093"
                         fill="none"
                         height="1em"
                         stroke="currentColor"
@@ -269,7 +269,7 @@ exports[`MobileSettings creates snapshot 1`] = `
               />
               <a
                 aria-label="Open documentation"
-                class="link dropdown-item my-2"
+                class="_link_f0e789 dropdown-item my-2"
                 href="/docs"
                 rel="noopener noreferrer"
                 role="button"
@@ -310,6 +310,7 @@ exports[`MobileSettings creates snapshot 1`] = `
               </a>
               <a
                 class="dropdown-item my-2"
+                data-discover="true"
                 href="/stats"
               >
                 <div
@@ -339,6 +340,7 @@ exports[`MobileSettings creates snapshot 1`] = `
               </a>
               <a
                 class="dropdown-item my-2"
+                data-discover="true"
                 href="/packages/starred"
               >
                 <div
@@ -365,6 +367,7 @@ exports[`MobileSettings creates snapshot 1`] = `
               </a>
               <a
                 class="dropdown-item my-2"
+                data-discover="true"
                 href="/control-panel"
               >
                 <div

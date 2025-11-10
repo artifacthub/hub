@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ParamInfo creates snapshot 1`] = `
+exports[`ParamInfo > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="position-relative d-inline-block undefined"
@@ -9,11 +9,11 @@ exports[`ParamInfo creates snapshot 1`] = `
       class="position-absolute"
     >
       <div
-        class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
+        class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap _dropdown_b64196 invisible"
         data-testid="infoDropdown"
       >
         <div
-          class="content"
+          class="_content_b64196"
         >
           this is a sample
         </div>

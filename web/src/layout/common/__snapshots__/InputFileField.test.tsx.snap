@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`InputFileField creates snapshot 1`] = `
+exports[`InputFileField > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class=" mb-4 undefined"
@@ -9,7 +9,7 @@ exports[`InputFileField creates snapshot 1`] = `
       class="d-flex flex-column"
     >
       <label
-        class="form-label label"
+        class="form-label _label_ad3bee"
         for="test"
       >
         <span
@@ -23,7 +23,7 @@ exports[`InputFileField creates snapshot 1`] = `
       >
         <button
           aria-label="Add image"
-          class="btn p-0 overflow-hidden position-relative lh-1 fs-2 btn"
+          class="btn p-0 overflow-hidden position-relative lh-1 fs-2 _btn_ad3bee"
           type="button"
         >
           <svg

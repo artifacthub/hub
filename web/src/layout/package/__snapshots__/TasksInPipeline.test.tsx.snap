@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TasksInPipeline creates snapshot 1`] = `
+exports[`TasksInPipeline > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mt-2 mb-1 undefined"
@@ -33,7 +33,7 @@ exports[`TasksInPipeline creates snapshot 1`] = `
         >
           <svg
             baseProfile="tiny"
-            class="text-muted icon"
+            class="text-muted _icon_037c39"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -49,7 +49,7 @@ exports[`TasksInPipeline creates snapshot 1`] = `
           </svg>
         </div>
         <div
-          class="text-truncate text-break task"
+          class="text-truncate text-break _task_037c39"
         >
           task1
         </div>
@@ -68,7 +68,7 @@ exports[`TasksInPipeline creates snapshot 1`] = `
         >
           <svg
             baseProfile="tiny"
-            class="text-muted icon"
+            class="text-muted _icon_037c39"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -84,14 +84,14 @@ exports[`TasksInPipeline creates snapshot 1`] = `
           </svg>
         </div>
         <div
-          class="text-truncate text-break task"
+          class="text-truncate text-break _task_037c39"
         >
           task1a
         </div>
       </div>
       <div>
         <div
-          class="d-flex flex-row align-items-center taskParent"
+          class="d-flex flex-row align-items-center _taskParent_037c39"
         >
           <small
             class="text-muted text-uppercase me-1"
@@ -114,7 +114,7 @@ exports[`TasksInPipeline creates snapshot 1`] = `
         >
           <svg
             baseProfile="tiny"
-            class="text-muted icon"
+            class="text-muted _icon_037c39"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -130,7 +130,7 @@ exports[`TasksInPipeline creates snapshot 1`] = `
           </svg>
         </div>
         <div
-          class="text-truncate text-break task"
+          class="text-truncate text-break _task_037c39"
         >
           task2
         </div>
@@ -149,7 +149,7 @@ exports[`TasksInPipeline creates snapshot 1`] = `
         >
           <svg
             baseProfile="tiny"
-            class="text-muted icon"
+            class="text-muted _icon_037c39"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -165,14 +165,14 @@ exports[`TasksInPipeline creates snapshot 1`] = `
           </svg>
         </div>
         <div
-          class="text-truncate text-break task"
+          class="text-truncate text-break _task_037c39"
         >
           task1-2a
         </div>
       </div>
       <div>
         <div
-          class="taskParent"
+          class="_taskParent_037c39"
         >
           <div
             class="d-flex flex-row"
@@ -190,7 +190,7 @@ exports[`TasksInPipeline creates snapshot 1`] = `
               class="pe-1"
             >
               <svg
-                class="icon"
+                class="_icon_037c39"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -217,7 +217,7 @@ exports[`TasksInPipeline creates snapshot 1`] = `
               class="pe-1"
             >
               <svg
-                class="icon"
+                class="_icon_037c39"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"

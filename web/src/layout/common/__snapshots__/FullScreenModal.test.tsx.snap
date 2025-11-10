@@ -1,17 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`FullScreenModal creates snapshot 1`] = `
+exports[`FullScreenModal > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="position-fixed overflow-hidden p-3 top-0 bottom-0 start-0 end-0 modal"
+    class="position-fixed overflow-hidden p-3 top-0 bottom-0 start-0 end-0 _modal_572511"
     role="dialog"
   >
     <div
-      class="position-absolute closeWrapper"
+      class="position-absolute _closeWrapper_572511"
     >
       <button
         aria-label="Close"
-        class="btn-close btn-close-white opacity-100 fs-5 close"
+        class="btn-close btn-close-white opacity-100 fs-5 _close_572511"
         type="button"
       />
     </div>

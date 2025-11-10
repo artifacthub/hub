@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`BannerMOTD creates snapshot 1`] = `
+exports[`BannerMOTD > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     aria-atomic="true"
     aria-live="assertive"
-    class="alert mb-0 py-2 rounded-0 text-center alert-info infoAlert wrapper motdBanner"
+    class="alert mb-0 py-2 rounded-0 text-center alert-info _infoAlert_94364c _wrapper_94364c motdBanner"
     role="alert"
   >
     <div
@@ -15,7 +15,7 @@ exports[`BannerMOTD creates snapshot 1`] = `
     </div>
     <button
       aria-label="Close banner"
-      class="btn-close position-absolute close"
+      class="btn-close position-absolute _close_94364c"
       type="button"
     />
   </div>

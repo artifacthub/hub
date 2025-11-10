@@ -1,27 +1,19 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { ChangeLog } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ChangelogModal from './Modal';
-jest.mock('../../../api');
-jest.mock('../../../utils/alertDispatcher');
-
-jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as object),
-  unix: () => ({
-    isAfter: () => false,
-    fromNow: () => '3 hours ago',
-    format: () => '7 Oct, 2020',
-  }),
-}));
+import styles from './Modal.module.css';
+vi.mock('../../../api');
+vi.mock('../../../utils/alertDispatcher');
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -76,7 +68,7 @@ describe('ChangelogModal', () => {
 
   it('creates snapshot', async () => {
     const mockChangelog = getMockChangelog('1');
-    mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+    vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
     const { asFragment } = render(
       <Router>
@@ -95,7 +87,7 @@ describe('ChangelogModal', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockChangelog = getMockChangelog('2');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       render(
         <Router>
@@ -145,7 +137,7 @@ describe('ChangelogModal', () => {
 
     it('opens modal', async () => {
       const mockChangelog = getMockChangelog('3');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       render(
         <Router>
@@ -169,7 +161,7 @@ describe('ChangelogModal', () => {
 
     it('selects correct version to open modal', async () => {
       const mockChangelog = getMockChangelog('10');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       render(
         <Router>
@@ -188,13 +180,13 @@ describe('ChangelogModal', () => {
       expect(els).toHaveLength(2);
 
       await waitFor(() => {
-        expect(els[0].parentElement).toHaveClass('activeVersionBtnWrapper');
+        expect(els[0].parentElement).toHaveClass(styles.activeVersionBtnWrapper);
       });
     });
 
     it('closes modal', async () => {
       const mockChangelog = getMockChangelog('4');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       render(
         <Router>
@@ -216,7 +208,7 @@ describe('ChangelogModal', () => {
 
     it("displays first version when selected one doesn't exist", async () => {
       const mockChangelog = getMockChangelog('10');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       render(
         <Router>
@@ -231,13 +223,13 @@ describe('ChangelogModal', () => {
       const versionBtns = await screen.findAllByTestId('versionBtnWrapper');
 
       await waitFor(() => {
-        expect(versionBtns[0]).toHaveClass('activeVersionBtnWrapper');
+        expect(versionBtns[0]).toHaveClass(styles.activeVersionBtnWrapper);
       });
     });
 
     it('does not render blocks when changes is null', async () => {
       const mockChangelog = getMockChangelog('5');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       render(
         <Router>
@@ -256,7 +248,7 @@ describe('ChangelogModal', () => {
 
     it('calls again to getMockChangelog when packageId is different', async () => {
       const mockChangelog = getMockChangelog('6');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       const { rerender } = render(
         <Router>
@@ -288,7 +280,7 @@ describe('ChangelogModal', () => {
 
     it('dislays security updates badge', async () => {
       const mockChangelog = getMockChangelog('7');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       render(
         <Router>
@@ -308,7 +300,7 @@ describe('ChangelogModal', () => {
 
     it('dislays pre-release badge', async () => {
       const mockChangelog = getMockChangelog('8');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       render(
         <Router>
@@ -328,7 +320,7 @@ describe('ChangelogModal', () => {
 
     it('calls again to getChangelog to render a different version', async () => {
       const mockChangelog = getMockChangelog('9');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
 
       const { rerender } = render(
         <Router>
@@ -357,8 +349,8 @@ describe('ChangelogModal', () => {
 
     it('calls getChangelogMD', async () => {
       const mockChangelog = getMockChangelog('11');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
-      mocked(API).getChangelogMD.mockResolvedValue(markdownMock);
+      vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      vi.mocked(API).getChangelogMD.mockResolvedValue(markdownMock);
 
       render(
         <Router>
@@ -388,8 +380,8 @@ describe('ChangelogModal', () => {
 
     it('when getChangelogMD call fails', async () => {
       const mockChangelog = getMockChangelog('12');
-      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
-      mocked(API).getChangelogMD.mockRejectedValue('');
+      vi.mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+      vi.mocked(API).getChangelogMD.mockRejectedValue('');
 
       render(
         <Router>

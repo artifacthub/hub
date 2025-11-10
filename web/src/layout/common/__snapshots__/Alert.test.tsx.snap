@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Alert creates snapshot 1`] = `
+exports[`Alert > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="overflow-hidden alertWrapper isAlertActive"
+    class="overflow-hidden _alertWrapper_1aa3f6 _isAlertActive_1aa3f6"
     data-testid="alertWrapper"
   >
     <div

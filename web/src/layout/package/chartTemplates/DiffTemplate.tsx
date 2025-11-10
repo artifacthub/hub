@@ -1,15 +1,13 @@
 import 'react-diff-view/style/index.css';
 
 import classnames from 'classnames';
+import { createTwoFilesPatch } from 'diff';
 import isNull from 'lodash/isNull';
 import { Dispatch, Fragment, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import { Decoration, Diff, Hunk, parseDiff } from 'react-diff-view';
 
 import { CompareChartTemplate, CompareChartTemplateStatus } from '../../../types';
 import styles from './DiffTemplate.module.css';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const DiffLibrary = require('diff');
 
 interface Props {
   currentVersion: string;
@@ -119,17 +117,18 @@ const DiffTemplate = (props: Props) => {
 
   useEffect(() => {
     const prepareDiff = () => {
-      setDiffContent(
-        DiffLibrary.createTwoFilesPatch(
-          '  ',
-          '  ',
-          props.template.compareData,
-          props.template.data,
-          props.diffVersion,
-          props.currentVersion,
-          { context: props.expanded ? Number.MAX_SAFE_INTEGER : 2 }
-        )
+      const sourceLabel = props.diffVersion ?? 'previous';
+      const targetLabel = props.currentVersion ?? 'current';
+      const newDiff = createTwoFilesPatch(
+        sourceLabel,
+        targetLabel,
+        props.template.compareData,
+        props.template.data,
+        props.diffVersion,
+        props.currentVersion,
+        { context: props.expanded ? Number.MAX_SAFE_INTEGER : 2 }
       );
+      setDiffContent(`diff --git a/${sourceLabel} b/${targetLabel}\n${newDiff}`);
     };
 
     prepareDiff();
@@ -139,7 +138,7 @@ const DiffTemplate = (props: Props) => {
     <>
       {!isNull(diffContent) && (
         <Changes
-          diffText={`diff --git \n ${diffContent}`}
+          diffText={diffContent}
           fileName={props.template.name}
           status={props.template.status}
           removeLoading={removeLoading}

@@ -1,15 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { JSONSchema } from '../../../jsonschema';
 import { ErrorKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ValuesSchema from './';
-jest.mock('../../../api');
-jest.mock('../../../utils/alertDispatcher');
+vi.mock('../../../api');
+vi.mock('../../../utils/alertDispatcher');
 
 const getMockValuesSchema = (fixtureId: string): JSONSchema => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -22,7 +22,7 @@ const mockOutletContextData: any = {
 };
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useOutletContext: () => mockOutletContextData,
   useNavigate: () => mockUseNavigate,
@@ -40,9 +40,9 @@ describe('ValuesSchema', () => {
     jest.resetAllMocks();
   });
 
-  xit('creates snapshot', async () => {
+  it.skip('creates snapshot', async () => {
     const mockValuesSchema = getMockValuesSchema('1');
-    mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+    vi.mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
     const { asFragment } = render(
       <Router>
@@ -61,7 +61,7 @@ describe('ValuesSchema', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockValuesSchema = getMockValuesSchema('2');
-      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+      vi.mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
       render(
         <Router>
@@ -83,7 +83,7 @@ describe('ValuesSchema', () => {
 
     it('opens modal', async () => {
       const mockValuesSchema = getMockValuesSchema('3');
-      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+      vi.mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
       render(
         <Router>
@@ -106,7 +106,7 @@ describe('ValuesSchema', () => {
 
     it('closes modal', async () => {
       const mockValuesSchema = getMockValuesSchema('4');
-      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+      vi.mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
       render(
         <Router>
@@ -135,7 +135,7 @@ describe('ValuesSchema', () => {
 
     it('calls again to getValuesSchema when version is different', async () => {
       const mockValuesSchema = getMockValuesSchema('5');
-      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+      vi.mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
       const { rerender } = render(
         <Router>
@@ -174,7 +174,7 @@ describe('ValuesSchema', () => {
 
     it('calls again to getValuesSchema when packageId is different', async () => {
       const mockValuesSchema = getMockValuesSchema('6');
-      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+      vi.mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
       const { rerender } = render(
         <Router>
@@ -213,7 +213,7 @@ describe('ValuesSchema', () => {
 
     it('renders JSON schema with refs', async () => {
       const mockValuesSchema = getMockValuesSchema('8');
-      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+      vi.mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
       render(
         <Router>
@@ -240,7 +240,7 @@ describe('ValuesSchema', () => {
     // cmak
     it('renders complex full JSON', async () => {
       const mockValuesSchema = getMockValuesSchema('9');
-      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+      vi.mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
       render(
         <Router>
@@ -362,7 +362,7 @@ describe('ValuesSchema', () => {
     // core-dump-handler
     it('resolve JSON schema with refs - first level', async () => {
       const mockValuesSchema = getMockValuesSchema('11');
-      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+      vi.mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
       render(
         <Router>
@@ -428,7 +428,7 @@ describe('ValuesSchema', () => {
 
     it('closes modal when a new pkg is open', async () => {
       const mockValuesSchema = getMockValuesSchema('10');
-      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+      vi.mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
 
       const { rerender } = render(
         <Router>
@@ -455,7 +455,7 @@ describe('ValuesSchema', () => {
     });
 
     it('when fails', async () => {
-      mocked(API).getValuesSchema.mockRejectedValue({ kind: ErrorKind.Other });
+      vi.mocked(API).getValuesSchema.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <Router>

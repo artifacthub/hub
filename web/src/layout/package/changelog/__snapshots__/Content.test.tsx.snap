@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Changelog content  creates snapshot 1`] = `
+exports[`Changelog content  > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="flex-grow-1 overflow-auto h-100"
@@ -14,17 +14,17 @@ exports[`Changelog content  creates snapshot 1`] = `
         id="changelog-0"
       >
         <div
-          class="d-flex flex-row align-items-baseline versionWrapper"
+          class="d-flex flex-row align-items-baseline _versionWrapper_03714e"
         >
           <button
             aria-label="Open version 0.8.0"
-            class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 btnTitle"
+            class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 _btnTitle_03714e"
           >
             0.8.0
           </button>
           <button
             aria-label="Update active version in querystring to 0.8.0"
-            class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
+            class="btn btn-link btn-sm text-dark py-0 position-relative _btnLink_03714e"
           >
             <svg
               fill="currentColor"
@@ -42,10 +42,10 @@ exports[`Changelog content  creates snapshot 1`] = `
           </button>
         </div>
         <div
-          class="badgesWrapper"
+          class="_badgesWrapper_03714e"
         >
           <span
-            class="badge badge-sm me-2 position-relative border badge"
+            class="badge badge-sm me-2 position-relative border _badge_03714e"
           >
             Pre-release
           </span>
@@ -56,12 +56,12 @@ exports[`Changelog content  creates snapshot 1`] = `
           <small
             class="text-muted"
           >
-            Released 3 hours ago
+            Released about 5 years ago
           </small>
         </div>
       </div>
       <div
-        class="d-flex flex-column mb-4 list"
+        class="d-flex flex-column mb-4 _list_03714e"
       >
         <div
           class="mb-1 w-100 d-flex flex-row"
@@ -386,7 +386,7 @@ exports[`Changelog content  creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="lastVersion"
+      class="_lastVersion_03714e"
       data-testid="changelogBlock"
     >
       <div
@@ -394,17 +394,17 @@ exports[`Changelog content  creates snapshot 1`] = `
         id="changelog-1"
       >
         <div
-          class="d-flex flex-row align-items-baseline versionWrapper"
+          class="d-flex flex-row align-items-baseline _versionWrapper_03714e"
         >
           <button
             aria-label="Open version 0.5.0"
-            class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 btnTitle"
+            class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 _btnTitle_03714e"
           >
             0.5.0
           </button>
           <button
             aria-label="Update active version in querystring to 0.5.0"
-            class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
+            class="btn btn-link btn-sm text-dark py-0 position-relative _btnLink_03714e"
           >
             <svg
               fill="currentColor"
@@ -422,10 +422,10 @@ exports[`Changelog content  creates snapshot 1`] = `
           </button>
         </div>
         <div
-          class="badgesWrapper"
+          class="_badgesWrapper_03714e"
         >
           <span
-            class="badge badge-sm me-2 position-relative border badge"
+            class="badge badge-sm me-2 position-relative border _badge_03714e"
           >
             Contains security updates
           </span>
@@ -436,12 +436,12 @@ exports[`Changelog content  creates snapshot 1`] = `
           <small
             class="text-muted"
           >
-            Released 3 hours ago
+            Released about 5 years ago
           </small>
         </div>
       </div>
       <div
-        class="d-flex flex-column mb-4 list"
+        class="d-flex flex-column mb-4 _list_03714e"
       >
         <div
           class="mb-1 w-100 d-flex flex-row"

@@ -1,14 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SectionBtn creates snapshot 1`] = `
+exports[`SectionBtn > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="position-relative d-flex flex-row justify-content-between btnWrapper undefined"
+    class="position-relative d-flex flex-row justify-content-between _btnWrapper_5bfa2e undefined"
   >
     <div>
       <button
         aria-label="Go to Title section"
-        class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn inSection"
+        class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white _linkBtn_5bfa2e _inSection_5bfa2e"
       >
         <svg
           fill="currentColor"

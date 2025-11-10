@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SecurityRating creates snapshot 1`] = `
+exports[`SecurityRating > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="position-relative undefined"
@@ -12,10 +12,10 @@ exports[`SecurityRating creates snapshot 1`] = `
         class="fw-bold undefined"
       >
         <div
-          class="d-flex flex-row align-items-center overflow-hidden labelWrapper custom"
+          class="d-flex flex-row align-items-center overflow-hidden _labelWrapper_bb12c5 _custom_bb12c5"
         >
           <div
-            class="text-center border border-1 border-end-0 position-relative labelIconWrapper iconWrapper"
+            class="text-center border border-1 border-end-0 position-relative labelIconWrapper _iconWrapper_bb12c5"
             data-testid="label-wrapper"
             style="background-color: rgb(150, 0, 3);"
           >
@@ -23,14 +23,14 @@ exports[`SecurityRating creates snapshot 1`] = `
               class=""
             >
               <span
-                class="position-relative ratingLetter"
+                class="position-relative _ratingLetter_a64850"
               >
                 F
               </span>
             </span>
           </div>
           <div
-            class="text-nowrap border border-1 fw-bold labelText"
+            class="text-nowrap border border-1 fw-bold _labelText_bb12c5"
           >
             <span
               class="d-none d-sm-inline"

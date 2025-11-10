@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TargetImageBtn creates snapshot 1`] = `
+exports[`TargetImageBtn > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="position-relative btnWrapper"
+    class="position-relative _btnWrapper_5bfa2e"
   >
     <button
-      class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn inTarget"
+      class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white _linkBtn_5bfa2e _inTarget_5bfa2e"
     >
       <svg
         fill="currentColor"

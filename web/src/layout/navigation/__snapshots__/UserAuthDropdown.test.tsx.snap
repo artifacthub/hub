@@ -1,20 +1,20 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`UserAuthDropdown creates snapshot 1`] = `
+exports[`UserAuthDropdown > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="btn-group"
   >
     <button
       aria-label="Open menu"
-      class="btn p-0 position-relative btn"
+      class="btn p-0 position-relative _btn_5f966c"
       type="button"
     >
       <div
         class="d-flex flex-row align-items-center justify-content-center"
       >
         <div
-          class="rounded-circle d-flex align-items-center justify-content-center textLight userAuth overflow-hidden position-relative border border-2 overflow-hidden lh-1 fs-5 bg-white imageWrapper iconWrapper"
+          class="rounded-circle d-flex align-items-center justify-content-center textLight userAuth overflow-hidden position-relative border border-2 overflow-hidden lh-1 fs-5 bg-white _imageWrapper_5f966c _iconWrapper_5f966c"
         >
           <svg
             class="rounded-circle"
@@ -52,13 +52,13 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
       </div>
     </button>
     <div
-      class="dropdown-menu dropdown-menu-end dropdown"
+      class="dropdown-menu dropdown-menu-end _dropdown_5f966c"
     >
       <div
-        class="dropdown-arrow arrow"
+        class="dropdown-arrow _arrow_5f966c"
       />
       <p
-        class="mt-2 mb-0 text-break signedInText"
+        class="mt-2 mb-0 text-break _signedInText_5f966c"
       >
         Signed in as 
         <span
@@ -97,7 +97,7 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
           >
             <input
               aria-checked="false"
-              class="form-check-input input"
+              class="form-check-input _input_4ef093"
               id="desktop-automatic"
               name="automatic"
               tabindex="0"
@@ -105,11 +105,11 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
               value="automatic"
             />
             <label
-              class="form-check-label fw-bold w-100 label"
+              class="form-check-label fw-bold w-100 _label_4ef093"
               for="desktop-automatic"
             >
               <svg
-                class="mx-1 position-relative icon"
+                class="mx-1 position-relative _icon_4ef093"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -135,7 +135,7 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
             <input
               aria-checked="true"
               checked=""
-              class="form-check-input input"
+              class="form-check-input _input_4ef093"
               id="desktop-light"
               name="light"
               tabindex="-1"
@@ -143,11 +143,11 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
               value="light"
             />
             <label
-              class="form-check-label fw-bold w-100 label"
+              class="form-check-label fw-bold w-100 _label_4ef093"
               for="desktop-light"
             >
               <svg
-                class="mx-1 position-relative icon"
+                class="mx-1 position-relative _icon_4ef093"
                 fill="none"
                 height="1em"
                 stroke="currentColor"
@@ -224,7 +224,7 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
           >
             <input
               aria-checked="false"
-              class="form-check-input input"
+              class="form-check-input _input_4ef093"
               id="desktop-dark"
               name="dark"
               tabindex="-1"
@@ -232,11 +232,11 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
               value="dark"
             />
             <label
-              class="form-check-label fw-bold w-100 label"
+              class="form-check-label fw-bold w-100 _label_4ef093"
               for="desktop-dark"
             >
               <svg
-                class="mx-1 position-relative icon"
+                class="mx-1 position-relative _icon_4ef093"
                 fill="none"
                 height="1em"
                 stroke="currentColor"
@@ -261,6 +261,7 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
       />
       <a
         class="dropdown-item"
+        data-discover="true"
         href="/packages/starred"
       >
         <div
@@ -287,6 +288,7 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
       </a>
       <a
         class="dropdown-item"
+        data-discover="true"
         href="/control-panel"
       >
         <div

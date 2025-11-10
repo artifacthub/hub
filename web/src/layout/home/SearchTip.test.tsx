@@ -1,12 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { SEARH_TIPS } from '../../utils/data';
 import SearchTip from './SearchTip';
 
 const mockTip = SEARH_TIPS[0];
 
-jest.mock('lodash/sample', () => () => mockTip);
+vi.mock('lodash/sample', () => ({
+  __esModule: true,
+  default: () => mockTip,
+}));
 
 describe('SearchTip', () => {
   afterEach(() => {

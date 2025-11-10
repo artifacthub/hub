@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`License creates snapshot 1`] = `
+exports[`License > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <span
@@ -11,7 +11,7 @@ exports[`License creates snapshot 1`] = `
     <a
       aria-hidden="true"
       aria-label="Open MIT documentation"
-      class="link undefined"
+      class="_link_f0e789 undefined"
       href="https://choosealicense.com/licenses/mit/"
       rel="noopener noreferrer"
       role="button"
@@ -27,7 +27,7 @@ exports[`License creates snapshot 1`] = `
           MIT
         </div>
         <span
-          class="smallIcon alignedSmallIcon"
+          class="_smallIcon_a3ecd8 _alignedSmallIcon_a3ecd8"
         >
           <svg
             class="ms-1"

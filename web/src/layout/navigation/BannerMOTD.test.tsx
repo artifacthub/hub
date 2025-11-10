@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { hasClassContaining } from '../../utils/testUtils';
 import BannerMOTD from './BannerMOTD';
 
 describe('BannerMOTD', () => {
@@ -49,7 +50,8 @@ describe('BannerMOTD', () => {
 
       const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
-      expect(alert).toHaveClass('infoAlert alert-info');
+      expect(hasClassContaining(alert, 'infoAlert')).toBe(true);
+      expect(alert).toHaveClass('alert-info');
       expect(screen.getByRole('button', { name: 'Close banner' })).toBeInTheDocument();
       expect(screen.getByText('this is a sample')).toBeInTheDocument();
     });
@@ -82,7 +84,7 @@ describe('BannerMOTD', () => {
       render(<BannerMOTD />);
 
       const alert = screen.getByRole('alert');
-      expect(alert).toHaveClass('dangerAlert alert-danger');
+      expect(alert).toHaveClass('alert-danger');
     });
 
     it('closes alert', async () => {

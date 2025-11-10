@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RandomPackages creates snapshot 1`] = `
+exports[`RandomPackages > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="position-relative wrapper"
+    class="position-relative _wrapper_e2b467"
   >
     <div
       class="container-lg px-sm-4 px-lg-0 my-4 my-md-5"
@@ -26,39 +26,40 @@ exports[`RandomPackages creates snapshot 1`] = `
             role="list"
           >
             <div
-              class="py-sm-3 py-2 cardWrapper col-12 col-xxl-6 col-xxxl-5"
+              class="py-sm-3 py-2 _cardWrapper_db3e62 col-12 col-xxl-6 col-xxxl-5"
               role="listitem"
             >
               <div
-                class="card cardWithHover h-100 mw-100 bg-white card card"
+                class="card cardWithHover h-100 mw-100 bg-white _card_db3e62 _card_e2b467"
               >
                 <a
-                  class="text-decoration-none text-reset h-100 bg-transparent link"
+                  class="text-decoration-none text-reset h-100 bg-transparent _link_db3e62"
+                  data-discover="true"
                   href="/packages/helm/halkeye/undefined"
                   role="link"
                 >
                   <div
-                    class="card-body d-flex flex-column h-100 body"
+                    class="card-body d-flex flex-column h-100 _body_db3e62"
                   >
                     <div
                       class="d-flex align-items-start justify-content-between mw-100"
                     >
                       <div
-                        class="d-flex align-items-stretch flex-grow-1 h-100 truncateWrapper"
+                        class="d-flex align-items-stretch flex-grow-1 h-100 _truncateWrapper_db3e62"
                       >
                         <div
-                          class="my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative imageWrapper"
+                          class="my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative _imageWrapper_db3e62"
                         >
                           <img
                             alt="Logo mosquitto"
                             aria-hidden="true"
-                            class="image"
+                            class="_image_db3e62"
                             src="/image/aca0e134-7e18-411c-9662-1245f92f438d"
                             srcset="/image/aca0e134-7e18-411c-9662-1245f92f438d@1x 1x, /image/aca0e134-7e18-411c-9662-1245f92f438d@2x 2x, /image/aca0e134-7e18-411c-9662-1245f92f438d@3x 3x, /image/aca0e134-7e18-411c-9662-1245f92f438d@4x 4x"
                           />
                         </div>
                         <div
-                          class="d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between truncateWrapper titleWrapper"
+                          class="d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between _truncateWrapper_db3e62 _titleWrapper_db3e62"
                         >
                           <div
                             class="text-truncate card-title mb-0"
@@ -67,7 +68,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex flex-row align-items-center justify-content-between"
                             >
                               <div
-                                class="text-truncate title"
+                                class="text-truncate _title_db3e62"
                               >
                                 mosquitto
                               </div>
@@ -77,7 +78,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-block d-md-none"
                           >
                             <div
-                              class="card-subtitle align-items-baseline subtitle"
+                              class="card-subtitle align-items-baseline _subtitle_db3e62"
                             >
                               <div
                                 class="d-inline d-md-none text-truncate w-100"
@@ -86,11 +87,11 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   class="position-absolute"
                                 >
                                   <div
-                                    class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                    class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                                     role="complementary"
                                   >
                                     <div
-                                      class="content"
+                                      class="_content_e64025"
                                     >
                                       <div
                                         class="d-flex flex-column"
@@ -105,16 +106,16 @@ exports[`RandomPackages creates snapshot 1`] = `
                                           </small>
                                           <img
                                             alt="Icon"
-                                            class="me-1 w-auto repoIconMini iconLight"
+                                            class="me-1 w-auto _repoIconMini_e64025 iconLight"
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <img
                                             alt="Icon"
-                                            class="me-1 w-auto repoIconMini iconDark"
+                                            class="me-1 w-auto _repoIconMini_e64025 iconDark"
                                             src="/static/media/helm-chart-light.svg"
                                           />
                                           <div
-                                            class="text-reset text-truncate labelContent"
+                                            class="text-reset text-truncate _labelContent_e64025"
                                           >
                                             halkeye
                                           </div>
@@ -130,7 +131,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                                   >
                                     <div
-                                      class="position-relative icon"
+                                      class="position-relative _icon_e64025"
                                     >
                                       <svg
                                         fill="none"
@@ -173,7 +174,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     aria-expanded="false"
                                     aria-hidden="true"
                                     aria-label="Filter by repo halkeye"
-                                    class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                                    class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                                     data-testid="repoLink"
                                     tabindex="-1"
                                   >
@@ -188,18 +189,18 @@ exports[`RandomPackages creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-block card-subtitle align-items-center subtitle"
+                            class="d-none d-md-block card-subtitle align-items-center _subtitle_db3e62"
                           >
                             <div
                               class="visually-hidden d-flex flex-row position-relative"
                             >
                               <div
-                                class="info"
+                                class="_info_db3e62"
                               >
                                 user
                               </div>
                               <div
-                                class="ms-3 info"
+                                class="ms-3 _info_db3e62"
                               >
                                 halkeye
                               </div>
@@ -208,10 +209,10 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex flex-row mw-100"
                             >
                               <div
-                                class="truncateWrapper"
+                                class="_truncateWrapper_db3e62"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-baseline userInfo"
+                                  class="d-flex flex-row align-items-baseline _userInfo_db3e62"
                                 >
                                   <span
                                     class="visually-hidden"
@@ -221,12 +222,12 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   <button
                                     aria-hidden="true"
                                     aria-label="Filter by user"
-                                    class="d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent link"
+                                    class="d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent _link_db3e62"
                                     data-testid="userLink"
                                     tabindex="-1"
                                   >
                                     <div
-                                      class="text-dark me-1 position-relative userIcon"
+                                      class="text-dark me-1 position-relative _userIcon_db3e62"
                                     >
                                       <svg
                                         fill="currentColor"
@@ -251,20 +252,20 @@ exports[`RandomPackages creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="truncateWrapper"
+                                class="_truncateWrapper_db3e62"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
+                                  class="d-flex flex-row align-items-baseline ms-3 _truncateWrapper_db3e62"
                                 >
                                   <div
                                     class="position-absolute"
                                   >
                                     <div
-                                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                      class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                                       role="complementary"
                                     >
                                       <div
-                                        class="content"
+                                        class="_content_e64025"
                                       >
                                         <div
                                           class="d-flex flex-column"
@@ -279,16 +280,16 @@ exports[`RandomPackages creates snapshot 1`] = `
                                             </small>
                                             <img
                                               alt="Icon"
-                                              class="me-1 w-auto repoIconMini iconLight"
+                                              class="me-1 w-auto _repoIconMini_e64025 iconLight"
                                               src="/static/media/helm-chart.svg"
                                             />
                                             <img
                                               alt="Icon"
-                                              class="me-1 w-auto repoIconMini iconDark"
+                                              class="me-1 w-auto _repoIconMini_e64025 iconDark"
                                               src="/static/media/helm-chart-light.svg"
                                             />
                                             <div
-                                              class="text-reset text-truncate labelContent"
+                                              class="text-reset text-truncate _labelContent_e64025"
                                             >
                                               halkeye
                                             </div>
@@ -304,7 +305,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                                     >
                                       <div
-                                        class="position-relative icon"
+                                        class="position-relative _icon_e64025"
                                       >
                                         <svg
                                           fill="none"
@@ -347,7 +348,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       aria-expanded="false"
                                       aria-hidden="true"
                                       aria-label="Filter by repo halkeye"
-                                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                                       data-testid="repoLink"
                                       tabindex="-1"
                                     >
@@ -364,10 +365,10 @@ exports[`RandomPackages creates snapshot 1`] = `
                           </div>
                         </div>
                         <div
-                          class="d-none d-lg-flex flex-column align-items-end mb-auto ms-auto rightInfo"
+                          class="d-none d-lg-flex flex-column align-items-end mb-auto ms-auto _rightInfo_db3e62"
                         >
                           <div
-                            class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                            class="align-self-start d-flex align-items-center text-uppercase ms-auto _kind_db3e62"
                           >
                             <div
                               class="d-none d-md-inline-block"
@@ -380,19 +381,19 @@ exports[`RandomPackages creates snapshot 1`] = `
                               <button
                                 aria-hidden="true"
                                 aria-label="Filter by Helm chart repository kind"
-                                class="btn btn-link m-0 p-0 border-0 btn position-relative repoLabel"
+                                class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                                 data-testid="repoIconLabelLink"
                                 tabindex="-1"
                               >
                                 <span
-                                  class="badge bg-light text-dark border border-1 bg badge"
+                                  class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                                 >
                                   <div
                                     class="d-flex flex-row align-items-center"
                                   >
                                     <div
                                       aria-hidden="true"
-                                      class="position-relative icon undefined"
+                                      class="position-relative _icon_c0e9ad undefined"
                                     >
                                       <img
                                         alt="Icon"
@@ -406,7 +407,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       />
                                     </div>
                                     <div
-                                      class="ms-1 text"
+                                      class="ms-1 _text_c0e9ad"
                                     >
                                       Helm chart
                                     </div>
@@ -418,14 +419,14 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex d-md-none fs-6"
                             >
                               <span
-                                class="badge bg-light text-dark border border-1 bg badge"
+                                class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
                                 >
                                   <div
                                     aria-hidden="true"
-                                    class="position-relative icon undefined"
+                                    class="position-relative _icon_c0e9ad undefined"
                                   >
                                     <img
                                       alt="Icon"
@@ -439,7 +440,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     />
                                   </div>
                                   <div
-                                    class="ms-1 text"
+                                    class="ms-1 _text_c0e9ad"
                                   >
                                     Helm chart
                                   </div>
@@ -449,15 +450,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                           </div>
                           <div
                             class="mt-1"
-                          >
-                            <small
-                              class="text-muted text-nowrap date"
-                            >
-                              Updated Invalid date
-                            </small>
-                          </div>
+                          />
                           <div
-                            class="mt-1 text-truncate align-items-baseline position-relative version"
+                            class="mt-1 text-truncate align-items-baseline position-relative _version_db3e62"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate"
@@ -476,14 +471,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                     <div
                       class="d-flex d-lg-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-3 pt-lg-0 mt-1 mt-lg-0 mt-xxl-1 mt-xxxl-0"
                     >
-                      <small
-                        class="text-muted text-nowrap date"
-                      >
-                        Updated Invalid date
-                      </small>
                       <span>
                         <div
-                          class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                          class="align-self-start d-flex align-items-center text-uppercase ms-auto _kind_db3e62"
                         >
                           <div
                             class="d-none d-md-inline-block"
@@ -496,19 +486,19 @@ exports[`RandomPackages creates snapshot 1`] = `
                             <button
                               aria-hidden="true"
                               aria-label="Filter by Helm chart repository kind"
-                              class="btn btn-link m-0 p-0 border-0 btn position-relative repoLabel"
+                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                               data-testid="repoIconLabelLink"
                               tabindex="-1"
                             >
                               <span
-                                class="badge bg-light text-dark border border-1 bg badge"
+                                class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
                                 >
                                   <div
                                     aria-hidden="true"
-                                    class="position-relative icon undefined"
+                                    class="position-relative _icon_c0e9ad undefined"
                                   >
                                     <img
                                       alt="Icon"
@@ -522,7 +512,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     />
                                   </div>
                                   <div
-                                    class="ms-1 text"
+                                    class="ms-1 _text_c0e9ad"
                                   >
                                     Helm chart
                                   </div>
@@ -534,14 +524,14 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-flex d-md-none fs-6"
                           >
                             <span
-                              class="badge bg-light text-dark border border-1 bg badge"
+                              class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
                                   aria-hidden="true"
-                                  class="position-relative icon undefined"
+                                  class="position-relative _icon_c0e9ad undefined"
                                 >
                                   <img
                                     alt="Icon"
@@ -555,7 +545,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1 text"
+                                  class="ms-1 _text_c0e9ad"
                                 >
                                   Helm chart
                                 </div>
@@ -570,39 +560,40 @@ exports[`RandomPackages creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="py-sm-3 py-2 cardWrapper col-12 col-xxl-6 col-xxxl-5"
+              class="py-sm-3 py-2 _cardWrapper_db3e62 col-12 col-xxl-6 col-xxxl-5"
               role="listitem"
             >
               <div
-                class="card cardWithHover h-100 mw-100 bg-white card card"
+                class="card cardWithHover h-100 mw-100 bg-white _card_db3e62 _card_e2b467"
               >
                 <a
-                  class="text-decoration-none text-reset h-100 bg-transparent link"
+                  class="text-decoration-none text-reset h-100 bg-transparent _link_db3e62"
+                  data-discover="true"
                   href="/packages/helm/halkeye/undefined"
                   role="link"
                 >
                   <div
-                    class="card-body d-flex flex-column h-100 body"
+                    class="card-body d-flex flex-column h-100 _body_db3e62"
                   >
                     <div
                       class="d-flex align-items-start justify-content-between mw-100"
                     >
                       <div
-                        class="d-flex align-items-stretch flex-grow-1 h-100 truncateWrapper"
+                        class="d-flex align-items-stretch flex-grow-1 h-100 _truncateWrapper_db3e62"
                       >
                         <div
-                          class="my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative imageWrapper"
+                          class="my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative _imageWrapper_db3e62"
                         >
                           <img
                             alt="Logo pihole"
                             aria-hidden="true"
-                            class="image"
+                            class="_image_db3e62"
                             src="/image/18db8f84-f8a7-4203-9116-60f24d34914f"
                             srcset="/image/18db8f84-f8a7-4203-9116-60f24d34914f@1x 1x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@2x 2x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@3x 3x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@4x 4x"
                           />
                         </div>
                         <div
-                          class="d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between truncateWrapper titleWrapper"
+                          class="d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between _truncateWrapper_db3e62 _titleWrapper_db3e62"
                         >
                           <div
                             class="text-truncate card-title mb-0"
@@ -611,7 +602,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex flex-row align-items-center justify-content-between"
                             >
                               <div
-                                class="text-truncate title"
+                                class="text-truncate _title_db3e62"
                               >
                                 pihole
                               </div>
@@ -621,7 +612,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-block d-md-none"
                           >
                             <div
-                              class="card-subtitle align-items-baseline subtitle"
+                              class="card-subtitle align-items-baseline _subtitle_db3e62"
                             >
                               <div
                                 class="d-inline d-md-none text-truncate w-100"
@@ -630,11 +621,11 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   class="position-absolute"
                                 >
                                   <div
-                                    class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                    class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                                     role="complementary"
                                   >
                                     <div
-                                      class="content"
+                                      class="_content_e64025"
                                     >
                                       <div
                                         class="d-flex flex-column"
@@ -649,16 +640,16 @@ exports[`RandomPackages creates snapshot 1`] = `
                                           </small>
                                           <img
                                             alt="Icon"
-                                            class="me-1 w-auto repoIconMini iconLight"
+                                            class="me-1 w-auto _repoIconMini_e64025 iconLight"
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <img
                                             alt="Icon"
-                                            class="me-1 w-auto repoIconMini iconDark"
+                                            class="me-1 w-auto _repoIconMini_e64025 iconDark"
                                             src="/static/media/helm-chart-light.svg"
                                           />
                                           <div
-                                            class="text-reset text-truncate labelContent"
+                                            class="text-reset text-truncate _labelContent_e64025"
                                           >
                                             halkeye
                                           </div>
@@ -674,7 +665,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                                   >
                                     <div
-                                      class="position-relative icon"
+                                      class="position-relative _icon_e64025"
                                     >
                                       <svg
                                         fill="none"
@@ -717,7 +708,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     aria-expanded="false"
                                     aria-hidden="true"
                                     aria-label="Filter by repo halkeye"
-                                    class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                                    class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                                     data-testid="repoLink"
                                     tabindex="-1"
                                   >
@@ -732,18 +723,18 @@ exports[`RandomPackages creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-block card-subtitle align-items-center subtitle"
+                            class="d-none d-md-block card-subtitle align-items-center _subtitle_db3e62"
                           >
                             <div
                               class="visually-hidden d-flex flex-row position-relative"
                             >
                               <div
-                                class="info"
+                                class="_info_db3e62"
                               >
                                 user
                               </div>
                               <div
-                                class="ms-3 info"
+                                class="ms-3 _info_db3e62"
                               >
                                 halkeye
                               </div>
@@ -752,10 +743,10 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex flex-row mw-100"
                             >
                               <div
-                                class="truncateWrapper"
+                                class="_truncateWrapper_db3e62"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-baseline userInfo"
+                                  class="d-flex flex-row align-items-baseline _userInfo_db3e62"
                                 >
                                   <span
                                     class="visually-hidden"
@@ -765,12 +756,12 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   <button
                                     aria-hidden="true"
                                     aria-label="Filter by user"
-                                    class="d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent link"
+                                    class="d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent _link_db3e62"
                                     data-testid="userLink"
                                     tabindex="-1"
                                   >
                                     <div
-                                      class="text-dark me-1 position-relative userIcon"
+                                      class="text-dark me-1 position-relative _userIcon_db3e62"
                                     >
                                       <svg
                                         fill="currentColor"
@@ -795,20 +786,20 @@ exports[`RandomPackages creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="truncateWrapper"
+                                class="_truncateWrapper_db3e62"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
+                                  class="d-flex flex-row align-items-baseline ms-3 _truncateWrapper_db3e62"
                                 >
                                   <div
                                     class="position-absolute"
                                   >
                                     <div
-                                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                      class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                                       role="complementary"
                                     >
                                       <div
-                                        class="content"
+                                        class="_content_e64025"
                                       >
                                         <div
                                           class="d-flex flex-column"
@@ -823,16 +814,16 @@ exports[`RandomPackages creates snapshot 1`] = `
                                             </small>
                                             <img
                                               alt="Icon"
-                                              class="me-1 w-auto repoIconMini iconLight"
+                                              class="me-1 w-auto _repoIconMini_e64025 iconLight"
                                               src="/static/media/helm-chart.svg"
                                             />
                                             <img
                                               alt="Icon"
-                                              class="me-1 w-auto repoIconMini iconDark"
+                                              class="me-1 w-auto _repoIconMini_e64025 iconDark"
                                               src="/static/media/helm-chart-light.svg"
                                             />
                                             <div
-                                              class="text-reset text-truncate labelContent"
+                                              class="text-reset text-truncate _labelContent_e64025"
                                             >
                                               halkeye
                                             </div>
@@ -848,7 +839,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                                     >
                                       <div
-                                        class="position-relative icon"
+                                        class="position-relative _icon_e64025"
                                       >
                                         <svg
                                           fill="none"
@@ -891,7 +882,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       aria-expanded="false"
                                       aria-hidden="true"
                                       aria-label="Filter by repo halkeye"
-                                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                                       data-testid="repoLink"
                                       tabindex="-1"
                                     >
@@ -908,10 +899,10 @@ exports[`RandomPackages creates snapshot 1`] = `
                           </div>
                         </div>
                         <div
-                          class="d-none d-lg-flex flex-column align-items-end mb-auto ms-auto rightInfo"
+                          class="d-none d-lg-flex flex-column align-items-end mb-auto ms-auto _rightInfo_db3e62"
                         >
                           <div
-                            class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                            class="align-self-start d-flex align-items-center text-uppercase ms-auto _kind_db3e62"
                           >
                             <div
                               class="d-none d-md-inline-block"
@@ -924,19 +915,19 @@ exports[`RandomPackages creates snapshot 1`] = `
                               <button
                                 aria-hidden="true"
                                 aria-label="Filter by Helm chart repository kind"
-                                class="btn btn-link m-0 p-0 border-0 btn position-relative repoLabel"
+                                class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                                 data-testid="repoIconLabelLink"
                                 tabindex="-1"
                               >
                                 <span
-                                  class="badge bg-light text-dark border border-1 bg badge"
+                                  class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                                 >
                                   <div
                                     class="d-flex flex-row align-items-center"
                                   >
                                     <div
                                       aria-hidden="true"
-                                      class="position-relative icon undefined"
+                                      class="position-relative _icon_c0e9ad undefined"
                                     >
                                       <img
                                         alt="Icon"
@@ -950,7 +941,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       />
                                     </div>
                                     <div
-                                      class="ms-1 text"
+                                      class="ms-1 _text_c0e9ad"
                                     >
                                       Helm chart
                                     </div>
@@ -962,14 +953,14 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex d-md-none fs-6"
                             >
                               <span
-                                class="badge bg-light text-dark border border-1 bg badge"
+                                class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
                                 >
                                   <div
                                     aria-hidden="true"
-                                    class="position-relative icon undefined"
+                                    class="position-relative _icon_c0e9ad undefined"
                                   >
                                     <img
                                       alt="Icon"
@@ -983,7 +974,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     />
                                   </div>
                                   <div
-                                    class="ms-1 text"
+                                    class="ms-1 _text_c0e9ad"
                                   >
                                     Helm chart
                                   </div>
@@ -993,15 +984,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                           </div>
                           <div
                             class="mt-1"
-                          >
-                            <small
-                              class="text-muted text-nowrap date"
-                            >
-                              Updated Invalid date
-                            </small>
-                          </div>
+                          />
                           <div
-                            class="mt-1 text-truncate align-items-baseline position-relative version"
+                            class="mt-1 text-truncate align-items-baseline position-relative _version_db3e62"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate"
@@ -1020,14 +1005,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                     <div
                       class="d-flex d-lg-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-3 pt-lg-0 mt-1 mt-lg-0 mt-xxl-1 mt-xxxl-0"
                     >
-                      <small
-                        class="text-muted text-nowrap date"
-                      >
-                        Updated Invalid date
-                      </small>
                       <span>
                         <div
-                          class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                          class="align-self-start d-flex align-items-center text-uppercase ms-auto _kind_db3e62"
                         >
                           <div
                             class="d-none d-md-inline-block"
@@ -1040,19 +1020,19 @@ exports[`RandomPackages creates snapshot 1`] = `
                             <button
                               aria-hidden="true"
                               aria-label="Filter by Helm chart repository kind"
-                              class="btn btn-link m-0 p-0 border-0 btn position-relative repoLabel"
+                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                               data-testid="repoIconLabelLink"
                               tabindex="-1"
                             >
                               <span
-                                class="badge bg-light text-dark border border-1 bg badge"
+                                class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
                                 >
                                   <div
                                     aria-hidden="true"
-                                    class="position-relative icon undefined"
+                                    class="position-relative _icon_c0e9ad undefined"
                                   >
                                     <img
                                       alt="Icon"
@@ -1066,7 +1046,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     />
                                   </div>
                                   <div
-                                    class="ms-1 text"
+                                    class="ms-1 _text_c0e9ad"
                                   >
                                     Helm chart
                                   </div>
@@ -1078,14 +1058,14 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-flex d-md-none fs-6"
                           >
                             <span
-                              class="badge bg-light text-dark border border-1 bg badge"
+                              class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
                                   aria-hidden="true"
-                                  class="position-relative icon undefined"
+                                  class="position-relative _icon_c0e9ad undefined"
                                 >
                                   <img
                                     alt="Icon"
@@ -1099,7 +1079,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1 text"
+                                  class="ms-1 _text_c0e9ad"
                                 >
                                   Helm chart
                                 </div>
@@ -1114,39 +1094,40 @@ exports[`RandomPackages creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="py-sm-3 py-2 cardWrapper col-12 col-xxl-6 col-xxxl-5"
+              class="py-sm-3 py-2 _cardWrapper_db3e62 col-12 col-xxl-6 col-xxxl-5"
               role="listitem"
             >
               <div
-                class="card cardWithHover h-100 mw-100 bg-white card card"
+                class="card cardWithHover h-100 mw-100 bg-white _card_db3e62 _card_e2b467"
               >
                 <a
-                  class="text-decoration-none text-reset h-100 bg-transparent link"
+                  class="text-decoration-none text-reset h-100 bg-transparent _link_db3e62"
+                  data-discover="true"
                   href="/packages/helm/gabibbo97/undefined"
                   role="link"
                 >
                   <div
-                    class="card-body d-flex flex-column h-100 body"
+                    class="card-body d-flex flex-column h-100 _body_db3e62"
                   >
                     <div
                       class="d-flex align-items-start justify-content-between mw-100"
                     >
                       <div
-                        class="d-flex align-items-stretch flex-grow-1 h-100 truncateWrapper"
+                        class="d-flex align-items-stretch flex-grow-1 h-100 _truncateWrapper_db3e62"
                       >
                         <div
-                          class="my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative imageWrapper"
+                          class="my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative _imageWrapper_db3e62"
                         >
                           <img
                             alt="Logo fcgi-nginx-frontend"
                             aria-hidden="true"
-                            class="image"
+                            class="_image_db3e62"
                             data-testid="placeholderImg"
                             src="/static/media/placeholder_pkg_helm.png"
                           />
                         </div>
                         <div
-                          class="d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between truncateWrapper titleWrapper"
+                          class="d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between _truncateWrapper_db3e62 _titleWrapper_db3e62"
                         >
                           <div
                             class="text-truncate card-title mb-0"
@@ -1155,7 +1136,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex flex-row align-items-center justify-content-between"
                             >
                               <div
-                                class="text-truncate title"
+                                class="text-truncate _title_db3e62"
                               >
                                 fcgi-nginx-frontend
                               </div>
@@ -1165,7 +1146,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-block d-md-none"
                           >
                             <div
-                              class="card-subtitle align-items-baseline subtitle"
+                              class="card-subtitle align-items-baseline _subtitle_db3e62"
                             >
                               <div
                                 class="d-inline d-md-none text-truncate w-100"
@@ -1174,11 +1155,11 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   class="position-absolute"
                                 >
                                   <div
-                                    class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                    class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                                     role="complementary"
                                   >
                                     <div
-                                      class="content"
+                                      class="_content_e64025"
                                     >
                                       <div
                                         class="d-flex flex-column"
@@ -1193,16 +1174,16 @@ exports[`RandomPackages creates snapshot 1`] = `
                                           </small>
                                           <img
                                             alt="Icon"
-                                            class="me-1 w-auto repoIconMini iconLight"
+                                            class="me-1 w-auto _repoIconMini_e64025 iconLight"
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <img
                                             alt="Icon"
-                                            class="me-1 w-auto repoIconMini iconDark"
+                                            class="me-1 w-auto _repoIconMini_e64025 iconDark"
                                             src="/static/media/helm-chart-light.svg"
                                           />
                                           <div
-                                            class="text-reset text-truncate labelContent"
+                                            class="text-reset text-truncate _labelContent_e64025"
                                           >
                                             gabibbo97
                                           </div>
@@ -1218,7 +1199,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                                   >
                                     <div
-                                      class="position-relative icon"
+                                      class="position-relative _icon_e64025"
                                     >
                                       <svg
                                         fill="none"
@@ -1261,7 +1242,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     aria-expanded="false"
                                     aria-hidden="true"
                                     aria-label="Filter by repo gabibbo97"
-                                    class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                                    class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                                     data-testid="repoLink"
                                     tabindex="-1"
                                   >
@@ -1276,18 +1257,18 @@ exports[`RandomPackages creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-block card-subtitle align-items-center subtitle"
+                            class="d-none d-md-block card-subtitle align-items-center _subtitle_db3e62"
                           >
                             <div
                               class="visually-hidden d-flex flex-row position-relative"
                             >
                               <div
-                                class="info"
+                                class="_info_db3e62"
                               >
                                 user1
                               </div>
                               <div
-                                class="ms-3 info"
+                                class="ms-3 _info_db3e62"
                               >
                                 gabibbo97
                               </div>
@@ -1296,10 +1277,10 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex flex-row mw-100"
                             >
                               <div
-                                class="truncateWrapper"
+                                class="_truncateWrapper_db3e62"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-baseline userInfo"
+                                  class="d-flex flex-row align-items-baseline _userInfo_db3e62"
                                 >
                                   <span
                                     class="visually-hidden"
@@ -1309,12 +1290,12 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   <button
                                     aria-hidden="true"
                                     aria-label="Filter by user1"
-                                    class="d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent link"
+                                    class="d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent _link_db3e62"
                                     data-testid="userLink"
                                     tabindex="-1"
                                   >
                                     <div
-                                      class="text-dark me-1 position-relative userIcon"
+                                      class="text-dark me-1 position-relative _userIcon_db3e62"
                                     >
                                       <svg
                                         fill="currentColor"
@@ -1339,20 +1320,20 @@ exports[`RandomPackages creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="truncateWrapper"
+                                class="_truncateWrapper_db3e62"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
+                                  class="d-flex flex-row align-items-baseline ms-3 _truncateWrapper_db3e62"
                                 >
                                   <div
                                     class="position-absolute"
                                   >
                                     <div
-                                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                      class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                                       role="complementary"
                                     >
                                       <div
-                                        class="content"
+                                        class="_content_e64025"
                                       >
                                         <div
                                           class="d-flex flex-column"
@@ -1367,16 +1348,16 @@ exports[`RandomPackages creates snapshot 1`] = `
                                             </small>
                                             <img
                                               alt="Icon"
-                                              class="me-1 w-auto repoIconMini iconLight"
+                                              class="me-1 w-auto _repoIconMini_e64025 iconLight"
                                               src="/static/media/helm-chart.svg"
                                             />
                                             <img
                                               alt="Icon"
-                                              class="me-1 w-auto repoIconMini iconDark"
+                                              class="me-1 w-auto _repoIconMini_e64025 iconDark"
                                               src="/static/media/helm-chart-light.svg"
                                             />
                                             <div
-                                              class="text-reset text-truncate labelContent"
+                                              class="text-reset text-truncate _labelContent_e64025"
                                             >
                                               gabibbo97
                                             </div>
@@ -1392,7 +1373,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                                     >
                                       <div
-                                        class="position-relative icon"
+                                        class="position-relative _icon_e64025"
                                       >
                                         <svg
                                           fill="none"
@@ -1435,7 +1416,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       aria-expanded="false"
                                       aria-hidden="true"
                                       aria-label="Filter by repo gabibbo97"
-                                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                                       data-testid="repoLink"
                                       tabindex="-1"
                                     >
@@ -1452,10 +1433,10 @@ exports[`RandomPackages creates snapshot 1`] = `
                           </div>
                         </div>
                         <div
-                          class="d-none d-lg-flex flex-column align-items-end mb-auto ms-auto rightInfo"
+                          class="d-none d-lg-flex flex-column align-items-end mb-auto ms-auto _rightInfo_db3e62"
                         >
                           <div
-                            class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                            class="align-self-start d-flex align-items-center text-uppercase ms-auto _kind_db3e62"
                           >
                             <div
                               class="d-none d-md-inline-block"
@@ -1468,19 +1449,19 @@ exports[`RandomPackages creates snapshot 1`] = `
                               <button
                                 aria-hidden="true"
                                 aria-label="Filter by Helm chart repository kind"
-                                class="btn btn-link m-0 p-0 border-0 btn position-relative repoLabel"
+                                class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                                 data-testid="repoIconLabelLink"
                                 tabindex="-1"
                               >
                                 <span
-                                  class="badge bg-light text-dark border border-1 bg badge"
+                                  class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                                 >
                                   <div
                                     class="d-flex flex-row align-items-center"
                                   >
                                     <div
                                       aria-hidden="true"
-                                      class="position-relative icon undefined"
+                                      class="position-relative _icon_c0e9ad undefined"
                                     >
                                       <img
                                         alt="Icon"
@@ -1494,7 +1475,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       />
                                     </div>
                                     <div
-                                      class="ms-1 text"
+                                      class="ms-1 _text_c0e9ad"
                                     >
                                       Helm chart
                                     </div>
@@ -1506,14 +1487,14 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex d-md-none fs-6"
                             >
                               <span
-                                class="badge bg-light text-dark border border-1 bg badge"
+                                class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
                                 >
                                   <div
                                     aria-hidden="true"
-                                    class="position-relative icon undefined"
+                                    class="position-relative _icon_c0e9ad undefined"
                                   >
                                     <img
                                       alt="Icon"
@@ -1527,7 +1508,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     />
                                   </div>
                                   <div
-                                    class="ms-1 text"
+                                    class="ms-1 _text_c0e9ad"
                                   >
                                     Helm chart
                                   </div>
@@ -1537,15 +1518,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                           </div>
                           <div
                             class="mt-1"
-                          >
-                            <small
-                              class="text-muted text-nowrap date"
-                            >
-                              Updated Invalid date
-                            </small>
-                          </div>
+                          />
                           <div
-                            class="mt-1 text-truncate align-items-baseline position-relative version"
+                            class="mt-1 text-truncate align-items-baseline position-relative _version_db3e62"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate"
@@ -1564,14 +1539,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                     <div
                       class="d-flex d-lg-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-3 pt-lg-0 mt-1 mt-lg-0 mt-xxl-1 mt-xxxl-0"
                     >
-                      <small
-                        class="text-muted text-nowrap date"
-                      >
-                        Updated Invalid date
-                      </small>
                       <span>
                         <div
-                          class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                          class="align-self-start d-flex align-items-center text-uppercase ms-auto _kind_db3e62"
                         >
                           <div
                             class="d-none d-md-inline-block"
@@ -1584,19 +1554,19 @@ exports[`RandomPackages creates snapshot 1`] = `
                             <button
                               aria-hidden="true"
                               aria-label="Filter by Helm chart repository kind"
-                              class="btn btn-link m-0 p-0 border-0 btn position-relative repoLabel"
+                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                               data-testid="repoIconLabelLink"
                               tabindex="-1"
                             >
                               <span
-                                class="badge bg-light text-dark border border-1 bg badge"
+                                class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
                                 >
                                   <div
                                     aria-hidden="true"
-                                    class="position-relative icon undefined"
+                                    class="position-relative _icon_c0e9ad undefined"
                                   >
                                     <img
                                       alt="Icon"
@@ -1610,7 +1580,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     />
                                   </div>
                                   <div
-                                    class="ms-1 text"
+                                    class="ms-1 _text_c0e9ad"
                                   >
                                     Helm chart
                                   </div>
@@ -1622,14 +1592,14 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-flex d-md-none fs-6"
                           >
                             <span
-                              class="badge bg-light text-dark border border-1 bg badge"
+                              class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
                                   aria-hidden="true"
-                                  class="position-relative icon undefined"
+                                  class="position-relative _icon_c0e9ad undefined"
                                 >
                                   <img
                                     alt="Icon"
@@ -1643,7 +1613,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1 text"
+                                  class="ms-1 _text_c0e9ad"
                                 >
                                   Helm chart
                                 </div>
@@ -1658,39 +1628,40 @@ exports[`RandomPackages creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="py-sm-3 py-2 cardWrapper col-12 col-xxl-6 col-xxxl-5"
+              class="py-sm-3 py-2 _cardWrapper_db3e62 col-12 col-xxl-6 col-xxxl-5"
               role="listitem"
             >
               <div
-                class="card cardWithHover h-100 mw-100 bg-white card card"
+                class="card cardWithHover h-100 mw-100 bg-white _card_db3e62 _card_e2b467"
               >
                 <a
-                  class="text-decoration-none text-reset h-100 bg-transparent link"
+                  class="text-decoration-none text-reset h-100 bg-transparent _link_db3e62"
+                  data-discover="true"
                   href="/packages/helm/halkeye/undefined"
                   role="link"
                 >
                   <div
-                    class="card-body d-flex flex-column h-100 body"
+                    class="card-body d-flex flex-column h-100 _body_db3e62"
                   >
                     <div
                       class="d-flex align-items-start justify-content-between mw-100"
                     >
                       <div
-                        class="d-flex align-items-stretch flex-grow-1 h-100 truncateWrapper"
+                        class="d-flex align-items-stretch flex-grow-1 h-100 _truncateWrapper_db3e62"
                       >
                         <div
-                          class="my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative imageWrapper"
+                          class="my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative _imageWrapper_db3e62"
                         >
                           <img
                             alt="Logo sevendaysdie"
                             aria-hidden="true"
-                            class="image"
+                            class="_image_db3e62"
                             src="/image/56724a8a-d8de-4700-8f23-1cf828220d51"
                             srcset="/image/56724a8a-d8de-4700-8f23-1cf828220d51@1x 1x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@2x 2x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@3x 3x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@4x 4x"
                           />
                         </div>
                         <div
-                          class="d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between truncateWrapper titleWrapper"
+                          class="d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between _truncateWrapper_db3e62 _titleWrapper_db3e62"
                         >
                           <div
                             class="text-truncate card-title mb-0"
@@ -1699,7 +1670,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex flex-row align-items-center justify-content-between"
                             >
                               <div
-                                class="text-truncate title"
+                                class="text-truncate _title_db3e62"
                               >
                                 sevendaysdie
                               </div>
@@ -1709,7 +1680,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-block d-md-none"
                           >
                             <div
-                              class="card-subtitle align-items-baseline subtitle"
+                              class="card-subtitle align-items-baseline _subtitle_db3e62"
                             >
                               <div
                                 class="d-inline d-md-none text-truncate w-100"
@@ -1718,11 +1689,11 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   class="position-absolute"
                                 >
                                   <div
-                                    class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                    class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                                     role="complementary"
                                   >
                                     <div
-                                      class="content"
+                                      class="_content_e64025"
                                     >
                                       <div
                                         class="d-flex flex-column"
@@ -1737,16 +1708,16 @@ exports[`RandomPackages creates snapshot 1`] = `
                                           </small>
                                           <img
                                             alt="Icon"
-                                            class="me-1 w-auto repoIconMini iconLight"
+                                            class="me-1 w-auto _repoIconMini_e64025 iconLight"
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <img
                                             alt="Icon"
-                                            class="me-1 w-auto repoIconMini iconDark"
+                                            class="me-1 w-auto _repoIconMini_e64025 iconDark"
                                             src="/static/media/helm-chart-light.svg"
                                           />
                                           <div
-                                            class="text-reset text-truncate labelContent"
+                                            class="text-reset text-truncate _labelContent_e64025"
                                           >
                                             halkeye
                                           </div>
@@ -1762,7 +1733,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                                   >
                                     <div
-                                      class="position-relative icon"
+                                      class="position-relative _icon_e64025"
                                     >
                                       <svg
                                         fill="none"
@@ -1805,7 +1776,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     aria-expanded="false"
                                     aria-hidden="true"
                                     aria-label="Filter by repo halkeye"
-                                    class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                                    class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                                     data-testid="repoLink"
                                     tabindex="-1"
                                   >
@@ -1820,18 +1791,18 @@ exports[`RandomPackages creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-block card-subtitle align-items-center subtitle"
+                            class="d-none d-md-block card-subtitle align-items-center _subtitle_db3e62"
                           >
                             <div
                               class="visually-hidden d-flex flex-row position-relative"
                             >
                               <div
-                                class="info"
+                                class="_info_db3e62"
                               >
                                 user
                               </div>
                               <div
-                                class="ms-3 info"
+                                class="ms-3 _info_db3e62"
                               >
                                 halkeye
                               </div>
@@ -1840,10 +1811,10 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex flex-row mw-100"
                             >
                               <div
-                                class="truncateWrapper"
+                                class="_truncateWrapper_db3e62"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-baseline userInfo"
+                                  class="d-flex flex-row align-items-baseline _userInfo_db3e62"
                                 >
                                   <span
                                     class="visually-hidden"
@@ -1853,12 +1824,12 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   <button
                                     aria-hidden="true"
                                     aria-label="Filter by user"
-                                    class="d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent link"
+                                    class="d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent _link_db3e62"
                                     data-testid="userLink"
                                     tabindex="-1"
                                   >
                                     <div
-                                      class="text-dark me-1 position-relative userIcon"
+                                      class="text-dark me-1 position-relative _userIcon_db3e62"
                                     >
                                       <svg
                                         fill="currentColor"
@@ -1883,20 +1854,20 @@ exports[`RandomPackages creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="truncateWrapper"
+                                class="_truncateWrapper_db3e62"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
+                                  class="d-flex flex-row align-items-baseline ms-3 _truncateWrapper_db3e62"
                                 >
                                   <div
                                     class="position-absolute"
                                   >
                                     <div
-                                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                      class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                                       role="complementary"
                                     >
                                       <div
-                                        class="content"
+                                        class="_content_e64025"
                                       >
                                         <div
                                           class="d-flex flex-column"
@@ -1911,16 +1882,16 @@ exports[`RandomPackages creates snapshot 1`] = `
                                             </small>
                                             <img
                                               alt="Icon"
-                                              class="me-1 w-auto repoIconMini iconLight"
+                                              class="me-1 w-auto _repoIconMini_e64025 iconLight"
                                               src="/static/media/helm-chart.svg"
                                             />
                                             <img
                                               alt="Icon"
-                                              class="me-1 w-auto repoIconMini iconDark"
+                                              class="me-1 w-auto _repoIconMini_e64025 iconDark"
                                               src="/static/media/helm-chart-light.svg"
                                             />
                                             <div
-                                              class="text-reset text-truncate labelContent"
+                                              class="text-reset text-truncate _labelContent_e64025"
                                             >
                                               halkeye
                                             </div>
@@ -1936,7 +1907,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                                     >
                                       <div
-                                        class="position-relative icon"
+                                        class="position-relative _icon_e64025"
                                       >
                                         <svg
                                           fill="none"
@@ -1979,7 +1950,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       aria-expanded="false"
                                       aria-hidden="true"
                                       aria-label="Filter by repo halkeye"
-                                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                                       data-testid="repoLink"
                                       tabindex="-1"
                                     >
@@ -1996,10 +1967,10 @@ exports[`RandomPackages creates snapshot 1`] = `
                           </div>
                         </div>
                         <div
-                          class="d-none d-lg-flex flex-column align-items-end mb-auto ms-auto rightInfo"
+                          class="d-none d-lg-flex flex-column align-items-end mb-auto ms-auto _rightInfo_db3e62"
                         >
                           <div
-                            class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                            class="align-self-start d-flex align-items-center text-uppercase ms-auto _kind_db3e62"
                           >
                             <div
                               class="d-none d-md-inline-block"
@@ -2012,19 +1983,19 @@ exports[`RandomPackages creates snapshot 1`] = `
                               <button
                                 aria-hidden="true"
                                 aria-label="Filter by Helm chart repository kind"
-                                class="btn btn-link m-0 p-0 border-0 btn position-relative repoLabel"
+                                class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                                 data-testid="repoIconLabelLink"
                                 tabindex="-1"
                               >
                                 <span
-                                  class="badge bg-light text-dark border border-1 bg badge"
+                                  class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                                 >
                                   <div
                                     class="d-flex flex-row align-items-center"
                                   >
                                     <div
                                       aria-hidden="true"
-                                      class="position-relative icon undefined"
+                                      class="position-relative _icon_c0e9ad undefined"
                                     >
                                       <img
                                         alt="Icon"
@@ -2038,7 +2009,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       />
                                     </div>
                                     <div
-                                      class="ms-1 text"
+                                      class="ms-1 _text_c0e9ad"
                                     >
                                       Helm chart
                                     </div>
@@ -2050,14 +2021,14 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex d-md-none fs-6"
                             >
                               <span
-                                class="badge bg-light text-dark border border-1 bg badge"
+                                class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
                                 >
                                   <div
                                     aria-hidden="true"
-                                    class="position-relative icon undefined"
+                                    class="position-relative _icon_c0e9ad undefined"
                                   >
                                     <img
                                       alt="Icon"
@@ -2071,7 +2042,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     />
                                   </div>
                                   <div
-                                    class="ms-1 text"
+                                    class="ms-1 _text_c0e9ad"
                                   >
                                     Helm chart
                                   </div>
@@ -2081,15 +2052,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                           </div>
                           <div
                             class="mt-1"
-                          >
-                            <small
-                              class="text-muted text-nowrap date"
-                            >
-                              Updated Invalid date
-                            </small>
-                          </div>
+                          />
                           <div
-                            class="mt-1 text-truncate align-items-baseline position-relative version"
+                            class="mt-1 text-truncate align-items-baseline position-relative _version_db3e62"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate"
@@ -2108,14 +2073,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                     <div
                       class="d-flex d-lg-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-3 pt-lg-0 mt-1 mt-lg-0 mt-xxl-1 mt-xxxl-0"
                     >
-                      <small
-                        class="text-muted text-nowrap date"
-                      >
-                        Updated Invalid date
-                      </small>
                       <span>
                         <div
-                          class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                          class="align-self-start d-flex align-items-center text-uppercase ms-auto _kind_db3e62"
                         >
                           <div
                             class="d-none d-md-inline-block"
@@ -2128,19 +2088,19 @@ exports[`RandomPackages creates snapshot 1`] = `
                             <button
                               aria-hidden="true"
                               aria-label="Filter by Helm chart repository kind"
-                              class="btn btn-link m-0 p-0 border-0 btn position-relative repoLabel"
+                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                               data-testid="repoIconLabelLink"
                               tabindex="-1"
                             >
                               <span
-                                class="badge bg-light text-dark border border-1 bg badge"
+                                class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
                                 >
                                   <div
                                     aria-hidden="true"
-                                    class="position-relative icon undefined"
+                                    class="position-relative _icon_c0e9ad undefined"
                                   >
                                     <img
                                       alt="Icon"
@@ -2154,7 +2114,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     />
                                   </div>
                                   <div
-                                    class="ms-1 text"
+                                    class="ms-1 _text_c0e9ad"
                                   >
                                     Helm chart
                                   </div>
@@ -2166,14 +2126,14 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-flex d-md-none fs-6"
                           >
                             <span
-                              class="badge bg-light text-dark border border-1 bg badge"
+                              class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
                                   aria-hidden="true"
-                                  class="position-relative icon undefined"
+                                  class="position-relative _icon_c0e9ad undefined"
                                 >
                                   <img
                                     alt="Icon"
@@ -2187,7 +2147,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1 text"
+                                  class="ms-1 _text_c0e9ad"
                                 >
                                   Helm chart
                                 </div>
@@ -2202,39 +2162,40 @@ exports[`RandomPackages creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="py-sm-3 py-2 cardWrapper col-12 col-xxl-6 col-xxxl-5"
+              class="py-sm-3 py-2 _cardWrapper_db3e62 col-12 col-xxl-6 col-xxxl-5"
               role="listitem"
             >
               <div
-                class="card cardWithHover h-100 mw-100 bg-white card card"
+                class="card cardWithHover h-100 mw-100 bg-white _card_db3e62 _card_e2b467"
               >
                 <a
-                  class="text-decoration-none text-reset h-100 bg-transparent link"
+                  class="text-decoration-none text-reset h-100 bg-transparent _link_db3e62"
+                  data-discover="true"
                   href="/packages/helm/billimek/undefined"
                   role="link"
                 >
                   <div
-                    class="card-body d-flex flex-column h-100 body"
+                    class="card-body d-flex flex-column h-100 _body_db3e62"
                   >
                     <div
                       class="d-flex align-items-start justify-content-between mw-100"
                     >
                       <div
-                        class="d-flex align-items-stretch flex-grow-1 h-100 truncateWrapper"
+                        class="d-flex align-items-stretch flex-grow-1 h-100 _truncateWrapper_db3e62"
                       >
                         <div
-                          class="my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative imageWrapper"
+                          class="my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative _imageWrapper_db3e62"
                         >
                           <img
                             alt="Logo digitalocean-dyndns"
                             aria-hidden="true"
-                            class="image"
+                            class="_image_db3e62"
                             src="/image/2fbaacae-e538-4706-a9fc-bcf443218af1"
                             srcset="/image/2fbaacae-e538-4706-a9fc-bcf443218af1@1x 1x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@2x 2x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@3x 3x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@4x 4x"
                           />
                         </div>
                         <div
-                          class="d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between truncateWrapper titleWrapper"
+                          class="d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between _truncateWrapper_db3e62 _titleWrapper_db3e62"
                         >
                           <div
                             class="text-truncate card-title mb-0"
@@ -2243,7 +2204,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex flex-row align-items-center justify-content-between"
                             >
                               <div
-                                class="text-truncate title"
+                                class="text-truncate _title_db3e62"
                               >
                                 digitalocean-dyndns
                               </div>
@@ -2253,7 +2214,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-block d-md-none"
                           >
                             <div
-                              class="card-subtitle align-items-baseline subtitle"
+                              class="card-subtitle align-items-baseline _subtitle_db3e62"
                             >
                               <div
                                 class="d-inline d-md-none text-truncate w-100"
@@ -2262,11 +2223,11 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   class="position-absolute"
                                 >
                                   <div
-                                    class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                    class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                                     role="complementary"
                                   >
                                     <div
-                                      class="content"
+                                      class="_content_e64025"
                                     >
                                       <div
                                         class="d-flex flex-column"
@@ -2281,16 +2242,16 @@ exports[`RandomPackages creates snapshot 1`] = `
                                           </small>
                                           <img
                                             alt="Icon"
-                                            class="me-1 w-auto repoIconMini iconLight"
+                                            class="me-1 w-auto _repoIconMini_e64025 iconLight"
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <img
                                             alt="Icon"
-                                            class="me-1 w-auto repoIconMini iconDark"
+                                            class="me-1 w-auto _repoIconMini_e64025 iconDark"
                                             src="/static/media/helm-chart-light.svg"
                                           />
                                           <div
-                                            class="text-reset text-truncate labelContent"
+                                            class="text-reset text-truncate _labelContent_e64025"
                                           >
                                             billimek
                                           </div>
@@ -2306,7 +2267,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                                   >
                                     <div
-                                      class="position-relative icon"
+                                      class="position-relative _icon_e64025"
                                     >
                                       <svg
                                         fill="none"
@@ -2349,7 +2310,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     aria-expanded="false"
                                     aria-hidden="true"
                                     aria-label="Filter by repo billimek"
-                                    class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                                    class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                                     data-testid="repoLink"
                                     tabindex="-1"
                                   >
@@ -2364,18 +2325,18 @@ exports[`RandomPackages creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-block card-subtitle align-items-center subtitle"
+                            class="d-none d-md-block card-subtitle align-items-center _subtitle_db3e62"
                           >
                             <div
                               class="visually-hidden d-flex flex-row position-relative"
                             >
                               <div
-                                class="info"
+                                class="_info_db3e62"
                               >
                                 user2
                               </div>
                               <div
-                                class="ms-3 info"
+                                class="ms-3 _info_db3e62"
                               >
                                 billimek
                               </div>
@@ -2384,10 +2345,10 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex flex-row mw-100"
                             >
                               <div
-                                class="truncateWrapper"
+                                class="_truncateWrapper_db3e62"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-baseline userInfo"
+                                  class="d-flex flex-row align-items-baseline _userInfo_db3e62"
                                 >
                                   <span
                                     class="visually-hidden"
@@ -2397,12 +2358,12 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   <button
                                     aria-hidden="true"
                                     aria-label="Filter by user2"
-                                    class="d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent link"
+                                    class="d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent _link_db3e62"
                                     data-testid="userLink"
                                     tabindex="-1"
                                   >
                                     <div
-                                      class="text-dark me-1 position-relative userIcon"
+                                      class="text-dark me-1 position-relative _userIcon_db3e62"
                                     >
                                       <svg
                                         fill="currentColor"
@@ -2427,20 +2388,20 @@ exports[`RandomPackages creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="truncateWrapper"
+                                class="_truncateWrapper_db3e62"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
+                                  class="d-flex flex-row align-items-baseline ms-3 _truncateWrapper_db3e62"
                                 >
                                   <div
                                     class="position-absolute"
                                   >
                                     <div
-                                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                                      class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                                       role="complementary"
                                     >
                                       <div
-                                        class="content"
+                                        class="_content_e64025"
                                       >
                                         <div
                                           class="d-flex flex-column"
@@ -2455,16 +2416,16 @@ exports[`RandomPackages creates snapshot 1`] = `
                                             </small>
                                             <img
                                               alt="Icon"
-                                              class="me-1 w-auto repoIconMini iconLight"
+                                              class="me-1 w-auto _repoIconMini_e64025 iconLight"
                                               src="/static/media/helm-chart.svg"
                                             />
                                             <img
                                               alt="Icon"
-                                              class="me-1 w-auto repoIconMini iconDark"
+                                              class="me-1 w-auto _repoIconMini_e64025 iconDark"
                                               src="/static/media/helm-chart-light.svg"
                                             />
                                             <div
-                                              class="text-reset text-truncate labelContent"
+                                              class="text-reset text-truncate _labelContent_e64025"
                                             >
                                               billimek
                                             </div>
@@ -2480,7 +2441,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                                     >
                                       <div
-                                        class="position-relative icon"
+                                        class="position-relative _icon_e64025"
                                       >
                                         <svg
                                           fill="none"
@@ -2523,7 +2484,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       aria-expanded="false"
                                       aria-hidden="true"
                                       aria-label="Filter by repo billimek"
-                                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                                       data-testid="repoLink"
                                       tabindex="-1"
                                     >
@@ -2540,10 +2501,10 @@ exports[`RandomPackages creates snapshot 1`] = `
                           </div>
                         </div>
                         <div
-                          class="d-none d-lg-flex flex-column align-items-end mb-auto ms-auto rightInfo"
+                          class="d-none d-lg-flex flex-column align-items-end mb-auto ms-auto _rightInfo_db3e62"
                         >
                           <div
-                            class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                            class="align-self-start d-flex align-items-center text-uppercase ms-auto _kind_db3e62"
                           >
                             <div
                               class="d-none d-md-inline-block"
@@ -2556,19 +2517,19 @@ exports[`RandomPackages creates snapshot 1`] = `
                               <button
                                 aria-hidden="true"
                                 aria-label="Filter by Helm chart repository kind"
-                                class="btn btn-link m-0 p-0 border-0 btn position-relative repoLabel"
+                                class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                                 data-testid="repoIconLabelLink"
                                 tabindex="-1"
                               >
                                 <span
-                                  class="badge bg-light text-dark border border-1 bg badge"
+                                  class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                                 >
                                   <div
                                     class="d-flex flex-row align-items-center"
                                   >
                                     <div
                                       aria-hidden="true"
-                                      class="position-relative icon undefined"
+                                      class="position-relative _icon_c0e9ad undefined"
                                     >
                                       <img
                                         alt="Icon"
@@ -2582,7 +2543,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                       />
                                     </div>
                                     <div
-                                      class="ms-1 text"
+                                      class="ms-1 _text_c0e9ad"
                                     >
                                       Helm chart
                                     </div>
@@ -2594,14 +2555,14 @@ exports[`RandomPackages creates snapshot 1`] = `
                               class="d-flex d-md-none fs-6"
                             >
                               <span
-                                class="badge bg-light text-dark border border-1 bg badge"
+                                class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
                                 >
                                   <div
                                     aria-hidden="true"
-                                    class="position-relative icon undefined"
+                                    class="position-relative _icon_c0e9ad undefined"
                                   >
                                     <img
                                       alt="Icon"
@@ -2615,7 +2576,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     />
                                   </div>
                                   <div
-                                    class="ms-1 text"
+                                    class="ms-1 _text_c0e9ad"
                                   >
                                     Helm chart
                                   </div>
@@ -2625,15 +2586,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                           </div>
                           <div
                             class="mt-1"
-                          >
-                            <small
-                              class="text-muted text-nowrap date"
-                            >
-                              Updated Invalid date
-                            </small>
-                          </div>
+                          />
                           <div
-                            class="mt-1 text-truncate align-items-baseline position-relative version"
+                            class="mt-1 text-truncate align-items-baseline position-relative _version_db3e62"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate"
@@ -2652,14 +2607,9 @@ exports[`RandomPackages creates snapshot 1`] = `
                     <div
                       class="d-flex d-lg-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-3 pt-lg-0 mt-1 mt-lg-0 mt-xxl-1 mt-xxxl-0"
                     >
-                      <small
-                        class="text-muted text-nowrap date"
-                      >
-                        Updated Invalid date
-                      </small>
                       <span>
                         <div
-                          class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                          class="align-self-start d-flex align-items-center text-uppercase ms-auto _kind_db3e62"
                         >
                           <div
                             class="d-none d-md-inline-block"
@@ -2672,19 +2622,19 @@ exports[`RandomPackages creates snapshot 1`] = `
                             <button
                               aria-hidden="true"
                               aria-label="Filter by Helm chart repository kind"
-                              class="btn btn-link m-0 p-0 border-0 btn position-relative repoLabel"
+                              class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                               data-testid="repoIconLabelLink"
                               tabindex="-1"
                             >
                               <span
-                                class="badge bg-light text-dark border border-1 bg badge"
+                                class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                               >
                                 <div
                                   class="d-flex flex-row align-items-center"
                                 >
                                   <div
                                     aria-hidden="true"
-                                    class="position-relative icon undefined"
+                                    class="position-relative _icon_c0e9ad undefined"
                                   >
                                     <img
                                       alt="Icon"
@@ -2698,7 +2648,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                     />
                                   </div>
                                   <div
-                                    class="ms-1 text"
+                                    class="ms-1 _text_c0e9ad"
                                   >
                                     Helm chart
                                   </div>
@@ -2710,14 +2660,14 @@ exports[`RandomPackages creates snapshot 1`] = `
                             class="d-flex d-md-none fs-6"
                           >
                             <span
-                              class="badge bg-light text-dark border border-1 bg badge"
+                              class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
                                   aria-hidden="true"
-                                  class="position-relative icon undefined"
+                                  class="position-relative _icon_c0e9ad undefined"
                                 >
                                   <img
                                     alt="Icon"
@@ -2731,7 +2681,7 @@ exports[`RandomPackages creates snapshot 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1 text"
+                                  class="ms-1 _text_c0e9ad"
                                 >
                                   Helm chart
                                 </div>

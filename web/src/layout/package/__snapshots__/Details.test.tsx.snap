@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Details renders correctly 1`] = `
+exports[`Details > renders correctly 1`] = `
 <DocumentFragment>
   <div>
     <div
@@ -19,7 +19,7 @@ exports[`Details renders correctly 1`] = `
       </small>
     </div>
     <p
-      class="text-truncate text"
+      class="text-truncate _text_522701"
       data-testid="appVersion"
     >
       0.5.1
@@ -88,7 +88,7 @@ exports[`Details renders correctly 1`] = `
             >
               <button
                 aria-label="Open version 1.0.0"
-                class="btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-start version"
+                class="btn btn-link text-primary ps-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-start _version_1facb1"
               >
                 1.0.0
               </button>
@@ -106,7 +106,7 @@ exports[`Details renders correctly 1`] = `
       >
         <button
           aria-label="See all entries"
-          class="btn btn-link ps-0 pe-1 position-relative text-primary btn"
+          class="btn btn-link ps-0 pe-1 position-relative text-primary _btn_41a422"
         >
           <div
             class="d-flex flex-row align-items-center"
@@ -134,7 +134,7 @@ exports[`Details renders correctly 1`] = `
           </div>
         </button>
         <div
-          class="text-muted position-relative summary"
+          class="text-muted position-relative _summary_41a422"
         >
           (1)
         </div>
@@ -142,20 +142,20 @@ exports[`Details renders correctly 1`] = `
       <div>
         <div
           aria-modal="false"
-          class="modal modal"
+          class="modal _modal_2adcc6"
           role="dialog"
         >
           <div
-            class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+            class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable _modalDialog_41a422"
           >
             <div
-              class="modal-content border border-3 mx-auto content modal"
+              class="modal-content border border-3 mx-auto _content_2adcc6 _modal_41a422"
             >
               <div
-                class="modal-header d-flex flex-row align-items-center header undefined"
+                class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
               >
                 <div
-                  class="h3 m-2 flex-grow-1 text-truncate title"
+                  class="h3 m-2 flex-grow-1 text-truncate _title_41a422"
                 >
                   Chart versions
                 </div>
@@ -170,13 +170,13 @@ exports[`Details renders correctly 1`] = `
               >
                 <div>
                   <div
-                    class="overflow-hidden alertWrapper"
+                    class="overflow-hidden _alertWrapper_1aa3f6"
                     data-testid="alertWrapper"
                   />
                 </div>
               </div>
               <div
-                class="modal-footer p-3 modalFooter"
+                class="modal-footer p-3 _modalFooter_41a422"
               >
                 <button
                   aria-label="Close modal"
@@ -233,7 +233,7 @@ exports[`Details renders correctly 1`] = `
       </small>
     </div>
     <div
-      class="d-flex flex-column w-100 mb-3 heatMap"
+      class="d-flex flex-column w-100 mb-3 _heatMap_7e4fdd"
       data-testid="lastYearActivity"
     >
       <div
@@ -243,16 +243,16 @@ exports[`Details renders correctly 1`] = `
           class="position-relative"
         >
           <div
-            class="position-relative border border-1 heatMapCell level0 border"
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
             data-testid="heatMapCell"
           />
           <div
-            class="tooltip popover end-0 popover"
+            class="tooltip popover end-0 _popover_7e4fdd"
             data-testid="heatMapPopover"
             role="tooltip"
           >
             <div
-              class="popover-header lh-1 p-2 popoverHeader"
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
             >
               Nov'20
             </div>
@@ -263,7 +263,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border border-1 top-0 marker level0"
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                 />
                 Releases: 
                 <span
@@ -279,16 +279,16 @@ exports[`Details renders correctly 1`] = `
           class="position-relative"
         >
           <div
-            class="position-relative border border-1 heatMapCell level0 border"
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
             data-testid="heatMapCell"
           />
           <div
-            class="tooltip popover end-0 popover"
+            class="tooltip popover end-0 _popover_7e4fdd"
             data-testid="heatMapPopover"
             role="tooltip"
           >
             <div
-              class="popover-header lh-1 p-2 popoverHeader"
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
             >
               Dec'20
             </div>
@@ -299,7 +299,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border border-1 top-0 marker level0"
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                 />
                 Releases: 
                 <span
@@ -315,16 +315,16 @@ exports[`Details renders correctly 1`] = `
           class="position-relative"
         >
           <div
-            class="position-relative border border-1 heatMapCell level0 border"
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
             data-testid="heatMapCell"
           />
           <div
-            class="tooltip popover end-0 popover"
+            class="tooltip popover end-0 _popover_7e4fdd"
             data-testid="heatMapPopover"
             role="tooltip"
           >
             <div
-              class="popover-header lh-1 p-2 popoverHeader"
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
             >
               Jan'21
             </div>
@@ -335,7 +335,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border border-1 top-0 marker level0"
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                 />
                 Releases: 
                 <span
@@ -351,16 +351,16 @@ exports[`Details renders correctly 1`] = `
           class="position-relative"
         >
           <div
-            class="position-relative border border-1 heatMapCell level0 border"
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
             data-testid="heatMapCell"
           />
           <div
-            class="tooltip popover end-0 popover"
+            class="tooltip popover end-0 _popover_7e4fdd"
             data-testid="heatMapPopover"
             role="tooltip"
           >
             <div
-              class="popover-header lh-1 p-2 popoverHeader"
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
             >
               Feb'21
             </div>
@@ -371,7 +371,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border border-1 top-0 marker level0"
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                 />
                 Releases: 
                 <span
@@ -387,16 +387,16 @@ exports[`Details renders correctly 1`] = `
           class="position-relative"
         >
           <div
-            class="position-relative border border-1 heatMapCell level0 border"
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
             data-testid="heatMapCell"
           />
           <div
-            class="tooltip popover end-0 popover"
+            class="tooltip popover end-0 _popover_7e4fdd"
             data-testid="heatMapPopover"
             role="tooltip"
           >
             <div
-              class="popover-header lh-1 p-2 popoverHeader"
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
             >
               Mar'21
             </div>
@@ -407,7 +407,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border border-1 top-0 marker level0"
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                 />
                 Releases: 
                 <span
@@ -423,16 +423,16 @@ exports[`Details renders correctly 1`] = `
           class="position-relative"
         >
           <div
-            class="position-relative border border-1 heatMapCell level0 border"
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
             data-testid="heatMapCell"
           />
           <div
-            class="tooltip popover end-0 popover"
+            class="tooltip popover end-0 _popover_7e4fdd"
             data-testid="heatMapPopover"
             role="tooltip"
           >
             <div
-              class="popover-header lh-1 p-2 popoverHeader"
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
             >
               Apr'21
             </div>
@@ -443,7 +443,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border border-1 top-0 marker level0"
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                 />
                 Releases: 
                 <span
@@ -459,16 +459,16 @@ exports[`Details renders correctly 1`] = `
           class="position-relative"
         >
           <div
-            class="position-relative border border-1 heatMapCell level0 border"
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
             data-testid="heatMapCell"
           />
           <div
-            class="tooltip popover end-0 popover"
+            class="tooltip popover end-0 _popover_7e4fdd"
             data-testid="heatMapPopover"
             role="tooltip"
           >
             <div
-              class="popover-header lh-1 p-2 popoverHeader"
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
             >
               May'21
             </div>
@@ -479,7 +479,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border border-1 top-0 marker level0"
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                 />
                 Releases: 
                 <span
@@ -495,16 +495,16 @@ exports[`Details renders correctly 1`] = `
           class="position-relative"
         >
           <div
-            class="position-relative border border-1 heatMapCell level0 border"
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
             data-testid="heatMapCell"
           />
           <div
-            class="tooltip popover end-0 popover"
+            class="tooltip popover end-0 _popover_7e4fdd"
             data-testid="heatMapPopover"
             role="tooltip"
           >
             <div
-              class="popover-header lh-1 p-2 popoverHeader"
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
             >
               Jun'21
             </div>
@@ -515,7 +515,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border border-1 top-0 marker level0"
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                 />
                 Releases: 
                 <span
@@ -531,16 +531,16 @@ exports[`Details renders correctly 1`] = `
           class="position-relative"
         >
           <div
-            class="position-relative border border-1 heatMapCell level0 border"
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
             data-testid="heatMapCell"
           />
           <div
-            class="tooltip popover end-0 popover"
+            class="tooltip popover end-0 _popover_7e4fdd"
             data-testid="heatMapPopover"
             role="tooltip"
           >
             <div
-              class="popover-header lh-1 p-2 popoverHeader"
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
             >
               Jul'21
             </div>
@@ -551,7 +551,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border border-1 top-0 marker level0"
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                 />
                 Releases: 
                 <span
@@ -567,16 +567,16 @@ exports[`Details renders correctly 1`] = `
           class="position-relative"
         >
           <div
-            class="position-relative border border-1 heatMapCell level0 border"
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
             data-testid="heatMapCell"
           />
           <div
-            class="tooltip popover end-0 popover"
+            class="tooltip popover end-0 _popover_7e4fdd"
             data-testid="heatMapPopover"
             role="tooltip"
           >
             <div
-              class="popover-header lh-1 p-2 popoverHeader"
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
             >
               Aug'21
             </div>
@@ -587,7 +587,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border border-1 top-0 marker level0"
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                 />
                 Releases: 
                 <span
@@ -603,16 +603,16 @@ exports[`Details renders correctly 1`] = `
           class="position-relative"
         >
           <div
-            class="position-relative border border-1 heatMapCell level0 border"
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
             data-testid="heatMapCell"
           />
           <div
-            class="tooltip popover end-0 popover"
+            class="tooltip popover end-0 _popover_7e4fdd"
             data-testid="heatMapPopover"
             role="tooltip"
           >
             <div
-              class="popover-header lh-1 p-2 popoverHeader"
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
             >
               Sep'21
             </div>
@@ -623,7 +623,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border border-1 top-0 marker level0"
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                 />
                 Releases: 
                 <span
@@ -639,16 +639,16 @@ exports[`Details renders correctly 1`] = `
           class="position-relative"
         >
           <div
-            class="position-relative border border-1 heatMapCell level0 border"
+            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
             data-testid="heatMapCell"
           />
           <div
-            class="tooltip popover end-0 popover"
+            class="tooltip popover end-0 _popover_7e4fdd"
             data-testid="heatMapPopover"
             role="tooltip"
           >
             <div
-              class="popover-header lh-1 p-2 popoverHeader"
+              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
             >
               Oct'21
             </div>
@@ -659,7 +659,7 @@ exports[`Details renders correctly 1`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="me-2 border border-1 top-0 marker level0"
+                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                 />
                 Releases: 
                 <span
@@ -673,7 +673,7 @@ exports[`Details renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="d-flex flex-row justify-content-between w-100 legend"
+        class="d-flex flex-row justify-content-between w-100 _legend_7e4fdd"
       >
         <div>
           <small
@@ -724,7 +724,7 @@ exports[`Details renders correctly 1`] = `
       >
         <div>
           <div
-            class="position-relative border bg-white chartWrapper"
+            class="position-relative border bg-white _chartWrapper_84329d"
           >
             <div
               class="d-flex flex-row align-items-center h-100 w-100"
@@ -737,27 +737,27 @@ exports[`Details renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="d-flex flex-row justify-content-between w-100 legend"
+            class="d-flex flex-row justify-content-between w-100 _legend_84329d"
           >
             <div>
               <small
                 class="text-muted"
               >
-                23 Sep
+                06 Sep
               </small>
             </div>
             <div>
               <small
                 class="text-muted"
               >
-                08 Oct
+                21 Sep
               </small>
             </div>
             <div>
               <small
                 class="text-muted"
               >
-                23 Oct
+                06 Oct
               </small>
             </div>
           </div>
@@ -769,7 +769,7 @@ exports[`Details renders correctly 1`] = `
             >
               <button
                 aria-label="See views chart"
-                class="btn btn-link ps-0 position-relative text-primary btn"
+                class="btn btn-link ps-0 position-relative text-primary _btn_84329d"
                 disabled=""
               >
                 <div
@@ -799,7 +799,7 @@ exports[`Details renders correctly 1`] = `
               </button>
             </div>
             <div
-              class="ms-auto text-truncate legend"
+              class="ms-auto text-truncate _legend_84329d"
             >
               <small
                 class="text-muted text-truncate"
@@ -835,7 +835,7 @@ exports[`Details renders correctly 1`] = `
     >
       <a
         aria-label="Open Homepage"
-        class="link d-flex align-items-start mb-1 text-capitalize text-primary"
+        class="_link_f0e789 d-flex align-items-start mb-1 text-capitalize text-primary"
         href="https://github.com/chartmuseum/chartmuseum"
         rel="noopener noreferrer"
         role="button"
@@ -847,7 +847,7 @@ exports[`Details renders correctly 1`] = `
         >
           <svg
             baseProfile="tiny"
-            class="text-muted me-2 icon"
+            class="text-muted me-2 _icon_0ccb12"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -862,7 +862,7 @@ exports[`Details renders correctly 1`] = `
             />
           </svg>
           <div
-            class="flex-grow-1 text-break linkText"
+            class="flex-grow-1 text-break _linkText_0ccb12"
           >
             Homepage
           </div>
@@ -896,7 +896,7 @@ exports[`Details renders correctly 1`] = `
     >
       <button
         aria-label="Filter by chartmuseum"
-        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 badge"
+        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 _badge_30d08c"
         role="listitem"
       >
         <div
@@ -907,7 +907,7 @@ exports[`Details renders correctly 1`] = `
       </button>
       <button
         aria-label="Filter by helm"
-        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 badge"
+        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 _badge_30d08c"
         role="listitem"
       >
         <div
@@ -918,7 +918,7 @@ exports[`Details renders correctly 1`] = `
       </button>
       <button
         aria-label="Filter by charts repo"
-        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 badge"
+        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 _badge_30d08c"
         role="listitem"
       >
         <div

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ChangelogModal creates snapshot 1`] = `
+exports[`ChangelogModal > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="position-relative undefined"
@@ -55,25 +55,25 @@ exports[`ChangelogModal creates snapshot 1`] = `
   </div>
   <div>
     <div
-      class="modal-backdrop activeBackdrop"
+      class="modal-backdrop _activeBackdrop_2adcc6"
       data-testid="modalBackdrop"
     />
     <div
       aria-modal="true"
-      class="modal modal active d-block"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
       role="dialog"
     >
       <div
-        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable _modalDialog_c3ceb5"
       >
         <div
-          class="modal-content border border-3 mx-auto content h-100"
+          class="modal-content border border-3 mx-auto _content_2adcc6 h-100"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 title"
+              class="h3 m-2 flex-grow-1 _title_c3ceb5"
             >
               Changelog
             </div>
@@ -96,117 +96,117 @@ exports[`ChangelogModal creates snapshot 1`] = `
                   class="h-100 d-none d-lg-flex"
                 >
                   <div
-                    class="d-flex flex-column me-4 border-end border-1 overflow-auto versionsIndexWrapper"
+                    class="d-flex flex-column me-4 border-end border-1 overflow-auto _versionsIndexWrapper_c3ceb5"
                   >
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper activeVersionBtnWrapper border-top"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 _versionBtnWrapper_c3ceb5 _activeVersionBtnWrapper_c3ceb5 border-top"
                       data-testid="versionBtnWrapper"
                     >
                       <button
-                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 versionBtn"
+                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 _versionBtn_c3ceb5"
                       >
                         0.8.0
                         <br />
                         <small
-                          class="text-muted legend"
+                          class="text-muted _legend_c3ceb5"
                         >
-                          7 Oct, 2020
+                          30 Oct, 2020
                         </small>
                       </button>
                     </div>
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 _versionBtnWrapper_c3ceb5"
                       data-testid="versionBtnWrapper"
                     >
                       <button
-                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 versionBtn"
+                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 _versionBtn_c3ceb5"
                       >
                         0.7.0
                         <br />
                         <small
-                          class="text-muted legend"
+                          class="text-muted _legend_c3ceb5"
                         >
-                          7 Oct, 2020
+                          30 Oct, 2020
                         </small>
                       </button>
                     </div>
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 _versionBtnWrapper_c3ceb5"
                       data-testid="versionBtnWrapper"
                     >
                       <button
-                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 versionBtn"
+                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 _versionBtn_c3ceb5"
                       >
                         0.6.0
                         <br />
                         <small
-                          class="text-muted legend"
+                          class="text-muted _legend_c3ceb5"
                         >
-                          7 Oct, 2020
+                          30 Oct, 2020
                         </small>
                       </button>
                     </div>
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 _versionBtnWrapper_c3ceb5"
                       data-testid="versionBtnWrapper"
                     >
                       <button
-                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 versionBtn"
+                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 _versionBtn_c3ceb5"
                       >
                         0.5.0
                         <br />
                         <small
-                          class="text-muted legend"
+                          class="text-muted _legend_c3ceb5"
                         >
-                          7 Oct, 2020
+                          30 Oct, 2020
                         </small>
                       </button>
                     </div>
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 _versionBtnWrapper_c3ceb5"
                       data-testid="versionBtnWrapper"
                     >
                       <button
-                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 versionBtn"
+                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 _versionBtn_c3ceb5"
                       >
                         0.4.0
                         <br />
                         <small
-                          class="text-muted legend"
+                          class="text-muted _legend_c3ceb5"
                         >
-                          7 Oct, 2020
+                          30 Oct, 2020
                         </small>
                       </button>
                     </div>
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 _versionBtnWrapper_c3ceb5"
                       data-testid="versionBtnWrapper"
                     >
                       <button
-                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 versionBtn"
+                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 _versionBtn_c3ceb5"
                       >
                         0.3.0
                         <br />
                         <small
-                          class="text-muted legend"
+                          class="text-muted _legend_c3ceb5"
                         >
-                          7 Oct, 2020
+                          30 Oct, 2020
                         </small>
                       </button>
                     </div>
                     <div
-                      class="pe-4 ps-2 position-relative border-bottom border-1 versionBtnWrapper"
+                      class="pe-4 ps-2 position-relative border-bottom border-1 _versionBtnWrapper_c3ceb5"
                       data-testid="versionBtnWrapper"
                     >
                       <button
-                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 versionBtn"
+                        class="btn btn-link text-dark text-start p-0 text-truncate position-relative w-100 rounded-0 _versionBtn_c3ceb5"
                       >
                         0.2.0
                         <br />
                         <small
-                          class="text-muted legend"
+                          class="text-muted _legend_c3ceb5"
                         >
-                          7 Oct, 2020
+                          30 Oct, 2020
                         </small>
                       </button>
                     </div>
@@ -224,17 +224,17 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       id="changelog-0"
                     >
                       <div
-                        class="d-flex flex-row align-items-baseline versionWrapper"
+                        class="d-flex flex-row align-items-baseline _versionWrapper_03714e"
                       >
                         <button
                           aria-label="Open version 0.8.0"
-                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 btnTitle"
+                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 _btnTitle_03714e"
                         >
                           0.8.0
                         </button>
                         <button
                           aria-label="Update active version in querystring to 0.8.0"
-                          class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
+                          class="btn btn-link btn-sm text-dark py-0 position-relative _btnLink_03714e"
                         >
                           <svg
                             fill="currentColor"
@@ -257,12 +257,12 @@ exports[`ChangelogModal creates snapshot 1`] = `
                         <small
                           class="text-muted"
                         >
-                          Released 3 hours ago
+                          Released about 5 years ago
                         </small>
                       </div>
                     </div>
                     <div
-                      class="d-flex flex-column mb-4 list"
+                      class="d-flex flex-column mb-4 _list_03714e"
                     >
                       <div
                         class="mb-1 w-100 d-flex flex-row"
@@ -595,17 +595,17 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       id="changelog-1"
                     >
                       <div
-                        class="d-flex flex-row align-items-baseline versionWrapper"
+                        class="d-flex flex-row align-items-baseline _versionWrapper_03714e"
                       >
                         <button
                           aria-label="Open version 0.7.0"
-                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 btnTitle"
+                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 _btnTitle_03714e"
                         >
                           0.7.0
                         </button>
                         <button
                           aria-label="Update active version in querystring to 0.7.0"
-                          class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
+                          class="btn btn-link btn-sm text-dark py-0 position-relative _btnLink_03714e"
                         >
                           <svg
                             fill="currentColor"
@@ -628,12 +628,12 @@ exports[`ChangelogModal creates snapshot 1`] = `
                         <small
                           class="text-muted"
                         >
-                          Released 3 hours ago
+                          Released about 5 years ago
                         </small>
                       </div>
                     </div>
                     <div
-                      class="d-flex flex-column mb-4 list"
+                      class="d-flex flex-column mb-4 _list_03714e"
                     >
                       <div
                         class="mb-1 w-100 d-flex flex-row"
@@ -934,17 +934,17 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       id="changelog-2"
                     >
                       <div
-                        class="d-flex flex-row align-items-baseline versionWrapper"
+                        class="d-flex flex-row align-items-baseline _versionWrapper_03714e"
                       >
                         <button
                           aria-label="Open version 0.6.0"
-                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 btnTitle"
+                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 _btnTitle_03714e"
                         >
                           0.6.0
                         </button>
                         <button
                           aria-label="Update active version in querystring to 0.6.0"
-                          class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
+                          class="btn btn-link btn-sm text-dark py-0 position-relative _btnLink_03714e"
                         >
                           <svg
                             fill="currentColor"
@@ -967,12 +967,12 @@ exports[`ChangelogModal creates snapshot 1`] = `
                         <small
                           class="text-muted"
                         >
-                          Released 3 hours ago
+                          Released about 5 years ago
                         </small>
                       </div>
                     </div>
                     <div
-                      class="d-flex flex-column mb-4 list"
+                      class="d-flex flex-column mb-4 _list_03714e"
                     >
                       <div
                         class="mb-1 w-100 d-flex flex-row"
@@ -1305,17 +1305,17 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       id="changelog-3"
                     >
                       <div
-                        class="d-flex flex-row align-items-baseline versionWrapper"
+                        class="d-flex flex-row align-items-baseline _versionWrapper_03714e"
                       >
                         <button
                           aria-label="Open version 0.5.0"
-                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 btnTitle"
+                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 _btnTitle_03714e"
                         >
                           0.5.0
                         </button>
                         <button
                           aria-label="Update active version in querystring to 0.5.0"
-                          class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
+                          class="btn btn-link btn-sm text-dark py-0 position-relative _btnLink_03714e"
                         >
                           <svg
                             fill="currentColor"
@@ -1338,12 +1338,12 @@ exports[`ChangelogModal creates snapshot 1`] = `
                         <small
                           class="text-muted"
                         >
-                          Released 3 hours ago
+                          Released about 5 years ago
                         </small>
                       </div>
                     </div>
                     <div
-                      class="d-flex flex-column mb-4 list"
+                      class="d-flex flex-column mb-4 _list_03714e"
                     >
                       <div
                         class="mb-1 w-100 d-flex flex-row"
@@ -1644,17 +1644,17 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       id="changelog-4"
                     >
                       <div
-                        class="d-flex flex-row align-items-baseline versionWrapper"
+                        class="d-flex flex-row align-items-baseline _versionWrapper_03714e"
                       >
                         <button
                           aria-label="Open version 0.4.0"
-                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 btnTitle"
+                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 _btnTitle_03714e"
                         >
                           0.4.0
                         </button>
                         <button
                           aria-label="Update active version in querystring to 0.4.0"
-                          class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
+                          class="btn btn-link btn-sm text-dark py-0 position-relative _btnLink_03714e"
                         >
                           <svg
                             fill="currentColor"
@@ -1677,12 +1677,12 @@ exports[`ChangelogModal creates snapshot 1`] = `
                         <small
                           class="text-muted"
                         >
-                          Released 3 hours ago
+                          Released about 5 years ago
                         </small>
                       </div>
                     </div>
                     <div
-                      class="d-flex flex-column mb-4 list"
+                      class="d-flex flex-column mb-4 _list_03714e"
                     >
                       <div
                         class="mb-1 w-100 d-flex flex-row"
@@ -1951,17 +1951,17 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       id="changelog-5"
                     >
                       <div
-                        class="d-flex flex-row align-items-baseline versionWrapper"
+                        class="d-flex flex-row align-items-baseline _versionWrapper_03714e"
                       >
                         <button
                           aria-label="Open version 0.3.0"
-                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 btnTitle"
+                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 _btnTitle_03714e"
                         >
                           0.3.0
                         </button>
                         <button
                           aria-label="Update active version in querystring to 0.3.0"
-                          class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
+                          class="btn btn-link btn-sm text-dark py-0 position-relative _btnLink_03714e"
                         >
                           <svg
                             fill="currentColor"
@@ -1984,12 +1984,12 @@ exports[`ChangelogModal creates snapshot 1`] = `
                         <small
                           class="text-muted"
                         >
-                          Released 3 hours ago
+                          Released about 5 years ago
                         </small>
                       </div>
                     </div>
                     <div
-                      class="d-flex flex-column mb-4 list"
+                      class="d-flex flex-column mb-4 _list_03714e"
                     >
                       <div
                         class="mb-1 w-100 d-flex flex-row"
@@ -2314,7 +2314,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="lastVersion"
+                    class="_lastVersion_03714e"
                     data-testid="changelogBlock"
                   >
                     <div
@@ -2322,17 +2322,17 @@ exports[`ChangelogModal creates snapshot 1`] = `
                       id="changelog-6"
                     >
                       <div
-                        class="d-flex flex-row align-items-baseline versionWrapper"
+                        class="d-flex flex-row align-items-baseline _versionWrapper_03714e"
                       >
                         <button
                           aria-label="Open version 0.2.0"
-                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 btnTitle"
+                          class="btn btn-link btn-sm text-dark text-truncate mb-0 p-0 fs-5 _btnTitle_03714e"
                         >
                           0.2.0
                         </button>
                         <button
                           aria-label="Update active version in querystring to 0.2.0"
-                          class="btn btn-link btn-sm text-dark py-0 position-relative btnLink"
+                          class="btn btn-link btn-sm text-dark py-0 position-relative _btnLink_03714e"
                         >
                           <svg
                             fill="currentColor"
@@ -2355,12 +2355,12 @@ exports[`ChangelogModal creates snapshot 1`] = `
                         <small
                           class="text-muted"
                         >
-                          Released 3 hours ago
+                          Released about 5 years ago
                         </small>
                       </div>
                     </div>
                     <div
-                      class="d-flex flex-column mb-4 list"
+                      class="d-flex flex-column mb-4 _list_03714e"
                     >
                       <div
                         class="mb-1 w-100 d-flex flex-row"
@@ -2625,7 +2625,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>

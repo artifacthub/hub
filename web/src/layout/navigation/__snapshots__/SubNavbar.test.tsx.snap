@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SubNavbar creates snapshot 1`] = `
+exports[`SubNavbar > creates snapshot 1`] = `
 <DocumentFragment>
   <nav
-    class="navbar navbar-expand-sm navbar undefined"
+    class="navbar navbar-expand-sm _navbar_972379 undefined"
     role="navigation"
   >
     <div

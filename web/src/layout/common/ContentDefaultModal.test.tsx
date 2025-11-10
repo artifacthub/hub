@@ -1,18 +1,23 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { ContentDefaultModalKind } from '../../types';
 import ContentDefaultModal from './ContentDefaultModal';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const isVisibleItemInContainer = require('../../utils/isVisibleItemInContainer');
+const { isVisibleItemInContainerMock } = vi.hoisted(() => ({
+  isVisibleItemInContainerMock: vi.fn(),
+}));
 
-jest.mock('../../utils/isVisibleItemInContainer', () => jest.fn());
+vi.mock('../../utils/isVisibleItemInContainer', () => ({
+  __esModule: true,
+  default: isVisibleItemInContainerMock,
+}));
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
   useLocation: () => ({
@@ -122,7 +127,7 @@ describe('Content default modal', () => {
   });
 
   beforeEach(() => {
-    isVisibleItemInContainer.mockImplementation(() => true);
+    isVisibleItemInContainerMock.mockImplementation(() => true);
   });
 
   it('creates snapshot', async () => {
@@ -205,7 +210,7 @@ describe('Content default modal', () => {
   });
 
   it('scrolls to active file when is not visible', async () => {
-    isVisibleItemInContainer.mockImplementation(() => false);
+    isVisibleItemInContainerMock.mockImplementation(() => false);
 
     render(
       <Router>

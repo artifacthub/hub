@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Sidebar creates snapshot 1`] = `
+exports[`Sidebar > creates snapshot 1`] = `
 <DocumentFragment>
   <aside
     aria-label="test"
@@ -17,7 +17,7 @@ exports[`Sidebar creates snapshot 1`] = `
     </button>
     <div
       aria-label="Sidebar"
-      class="sidebar position-fixed top-0 bottom-0 w-75 sidebar left"
+      class="sidebar position-fixed top-0 bottom-0 w-75 _sidebar_7fc36f _left_7fc36f"
       role="complementary"
     >
       <div
@@ -35,14 +35,14 @@ exports[`Sidebar creates snapshot 1`] = `
             <div>
               <button
                 aria-label="Close sidebar"
-                class="btn-close closeBtn"
+                class="btn-close _closeBtn_7fc36f"
                 type="button"
               />
             </div>
           </div>
         </div>
         <div
-          class="flex-grow-1 d-flex contentWrapper undefined"
+          class="flex-grow-1 d-flex _contentWrapper_7fc36f undefined"
         >
           <div
             class="overflow-auto mh-100 w-100 py-3"

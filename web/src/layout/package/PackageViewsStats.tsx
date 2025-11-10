@@ -1,7 +1,7 @@
 import { ApexOptions } from 'apexcharts';
+import { format } from 'date-fns';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import semver from 'semver';
@@ -106,7 +106,7 @@ const PackagesViewsStats = (props: Props) => {
       tooltip: {
         x: {
           formatter: (val: number): string => {
-            return moment(val).format('DD MMM YY');
+            return format(new Date(val), 'dd MMM yy');
           },
         },
         y: {

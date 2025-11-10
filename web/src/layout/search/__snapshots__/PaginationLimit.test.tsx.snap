@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Filters creates snapshot 1`] = `
+exports[`Filters > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-flex flex-nowrap align-items-center ms-3"
@@ -12,7 +12,7 @@ exports[`Filters creates snapshot 1`] = `
     </label>
     <select
       aria-label="pagination-limit"
-      class="form-select form-select-sm pe-2 select"
+      class="form-select form-select-sm pe-2 _select_687630"
     >
       <option
         value="20"

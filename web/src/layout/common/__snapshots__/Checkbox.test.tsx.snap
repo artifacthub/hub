@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Checkbox creates snapshot 1`] = `
+exports[`Checkbox > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="form-check me-sm-2 mb-2 undefined"
   >
     <input
       aria-checked="false"
-      class="form-check-input input"
+      class="form-check-input _input_b7404d"
       id="all-checkbox-val"
       name="checkbox"
       tabindex="0"
@@ -15,7 +15,7 @@ exports[`Checkbox creates snapshot 1`] = `
       value="val"
     />
     <label
-      class="form-check-label label undefined"
+      class="form-check-label _label_b7404d undefined"
       data-testid="checkboxLabel"
       for="all-checkbox-val"
     >

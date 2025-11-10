@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Home index creates snapshot 1`] = `
+exports[`Home index > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-flex flex-column flex-grow-1 bg-white home"
   >
     <div
-      class="jumbotron mb-0 text-center border-0 jumbotron"
+      class="jumbotron mb-0 text-center border-0 _jumbotron_1e4b41"
     >
       <div
         aria-label="Find, install and publisher Cloud Native packages"
-        class="display-4 text-center d-block d-xxl-flex justify-content-center noFocus mainTitle"
+        class="display-4 text-center d-block d-xxl-flex justify-content-center noFocus _mainTitle_1e4b41"
         id="content"
         role="banner"
         tabindex="-1"
@@ -18,7 +18,7 @@ exports[`Home index creates snapshot 1`] = `
         Find, install and publish
         <br />
         <span
-          class="secondLine"
+          class="_secondLine_1e4b41"
         >
           Cloud Native packages
         </span>
@@ -27,18 +27,18 @@ exports[`Home index creates snapshot 1`] = `
         class="mt-4 mt-sm-5 text-center"
       >
         <div
-          class="position-relative m-auto w-50 search"
+          class="position-relative m-auto w-50 _search_1e4b41"
         >
           <div
             aria-controls="search-list"
             aria-expanded="false"
             aria-haspopup="listbox"
             aria-owns="search-list"
-            class="d-flex align-items-center overflow-hidden searchBar lh-base bg-white searchBar big"
+            class="d-flex align-items-center overflow-hidden searchBar lh-base bg-white _searchBar_f1c3e6 _big_f1c3e6"
             role="combobox"
           >
             <div
-              class="d-flex align-items-center iconWrapper"
+              class="d-flex align-items-center _iconWrapper_f1c3e6"
               data-testid="searchBarIcon"
             >
               <svg
@@ -70,7 +70,7 @@ exports[`Home index creates snapshot 1`] = `
               autocapitalize="none"
               autocomplete="off"
               autocorrect="off"
-              class="flex-grow-1 ps-2 ps-md-0 border-0 shadow-none bg-transparent input"
+              class="flex-grow-1 ps-2 ps-md-0 border-0 shadow-none bg-transparent _input_f1c3e6"
               placeholder="Search packages"
               spellcheck="false"
               type="text"
@@ -86,11 +86,11 @@ exports[`Home index creates snapshot 1`] = `
             </div>
             <button
               aria-label="Close"
-              class="btn-close lh-lg ps-2 pe-3 inputClean invisible"
+              class="btn-close lh-lg ps-2 pe-3 _inputClean_f1c3e6 invisible"
               type="button"
             />
             <div
-              class="d-none d-sm-block position-absolute text-dark tipIcon bigTipIcon"
+              class="d-none d-sm-block position-absolute text-dark _tipIcon_f1c3e6 _bigTipIcon_f1c3e6"
             >
               <button
                 aria-label="Open search tips modal"
@@ -120,7 +120,8 @@ exports[`Home index creates snapshot 1`] = `
           - or -
           <a
             aria-label="Browse all packages"
-            class="btn btn-link textLighter fw-semibold py-0 pb-1 ps-1 allPkgBtn"
+            class="btn btn-link textLighter fw-semibold py-0 pb-1 ps-1 _allPkgBtn_1e4b41"
+            data-discover="true"
             href="/packages/search"
           >
             browse all packages
@@ -133,6 +134,7 @@ exports[`Home index creates snapshot 1`] = `
           <a
             aria-label="Browse all packages"
             class="btn btn-link textLighter fw-semibold py-0 pb-1 ps-1 pe-0"
+            data-discover="true"
             href="/packages/search"
           >
             browse all packages
@@ -149,10 +151,10 @@ exports[`Home index creates snapshot 1`] = `
         class="d-flex align-items-center justify-content-center mt-4 mt-md-5"
       >
         <div
-          class="text-center counterWrapper"
+          class="text-center _counterWrapper_29001f"
         >
           <div
-            class="h3 counter"
+            class="h3 _counter_29001f"
           >
             1039
           </div>
@@ -163,13 +165,13 @@ exports[`Home index creates snapshot 1`] = `
           </small>
         </div>
         <div
-          class="mx-3 mx-md-5 separator separator"
+          class="mx-3 mx-md-5 separator _separator_1e4b41"
         />
         <div
-          class="text-center counterWrapper"
+          class="text-center _counterWrapper_29001f"
         >
           <div
-            class="h3 counter"
+            class="h3 _counter_29001f"
           >
             18197
           </div>
@@ -181,7 +183,7 @@ exports[`Home index creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="text-center h5 my-4 mt-md-5 legend"
+        class="text-center h5 my-4 mt-md-5 _legend_1e4b41"
       >
         Artifact Hub is an 
         <span
@@ -196,7 +198,7 @@ exports[`Home index creates snapshot 1`] = `
       >
         <a
           aria-label="Open GitHub link"
-          class="link btn btn-secondary mb-4 mb-md-2 socialBtn"
+          class="_link_f0e789 btn btn-secondary mb-4 mb-md-2 _socialBtn_1e4b41"
           href="https://github.com/artifacthub/hub"
           rel="noopener noreferrer"
           role="button"
@@ -225,7 +227,7 @@ exports[`Home index creates snapshot 1`] = `
         </a>
         <a
           aria-label="Open Slack channel"
-          class="link btn btn-secondary ms-2 ms-md-3 mb-4 mb-md-2 socialBtn"
+          class="_link_f0e789 btn btn-secondary ms-2 ms-md-3 mb-4 mb-md-2 _socialBtn_1e4b41"
           href="https://cloud-native.slack.com/channels/artifact-hub"
           rel="noopener noreferrer"
           role="button"
@@ -254,7 +256,7 @@ exports[`Home index creates snapshot 1`] = `
         </a>
         <a
           aria-label="Open Twitter link"
-          class="link btn btn-secondary ms-2 ms-md-3 mb-4 mb-md-2 socialBtn"
+          class="_link_f0e789 btn btn-secondary ms-2 ms-md-3 mb-4 mb-md-2 _socialBtn_1e4b41"
           href="https://twitter.com/cncfartifacthub"
           rel="noopener noreferrer"
           role="button"
@@ -283,12 +285,12 @@ exports[`Home index creates snapshot 1`] = `
         </a>
       </div>
       <div
-        class="text-center mx-3 mt-md-4 mb-0 mb-sm-4 fw-light repoGuideText"
+        class="text-center mx-3 mt-md-4 mb-0 mb-sm-4 fw-light _repoGuideText_1e4b41"
       >
         Please see the 
         <a
           aria-label="Open documentation"
-          class="link btn btn-link text-light fw-semibold textLight p-0 align-baseline inlineLink"
+          class="_link_f0e789 btn btn-link text-light fw-semibold textLight p-0 align-baseline _inlineLink_1e4b41"
           href="/docs/topics/repositories"
           rel="noopener noreferrer"
           role="button"
@@ -302,7 +304,7 @@ exports[`Home index creates snapshot 1`] = `
     </div>
     <div />
     <div
-      class="py-5 textLight fs-4 fw-light about"
+      class="py-5 textLight fs-4 fw-light _about_1e4b41"
     >
       <div
         class="container-lg px-4 px-sm-0 py-0 py-md-5"
@@ -319,7 +321,7 @@ exports[`Home index creates snapshot 1`] = `
             >
               <a
                 aria-label="Open Argo templates web"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://argoproj.github.io/argo-workflows/"
                 rel="noopener noreferrer"
                 role="button"
@@ -331,11 +333,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/argo-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Argo templates
@@ -345,7 +347,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Backstage web"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://backstage.io/plugins"
                 rel="noopener noreferrer"
                 role="button"
@@ -357,11 +359,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/backstage-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Backstage plugins
@@ -371,7 +373,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Bootable containers web"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://containers.github.io/bootable/"
                 rel="noopener noreferrer"
                 role="button"
@@ -383,11 +385,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/bootc-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Bootable containers
@@ -397,7 +399,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Container Initiative site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://opencontainers.org"
                 rel="noopener noreferrer"
                 role="button"
@@ -409,11 +411,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/container-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Container images
@@ -423,7 +425,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open CoreDNS site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://coredns.io"
                 rel="noopener noreferrer"
                 role="button"
@@ -435,11 +437,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/coredns-plugin-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       CoreDNS plugins
@@ -453,7 +455,7 @@ exports[`Home index creates snapshot 1`] = `
             >
               <a
                 aria-label="Open Falco site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://falco.org"
                 rel="noopener noreferrer"
                 role="button"
@@ -465,11 +467,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/falco-rules-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Falco rules
@@ -479,7 +481,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Headlamp site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://headlamp.dev"
                 rel="noopener noreferrer"
                 role="button"
@@ -491,11 +493,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/headlamp-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Headlamp plugins
@@ -505,7 +507,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Helm site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://helm.sh"
                 rel="noopener noreferrer"
                 role="button"
@@ -517,11 +519,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/helm-chart-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small
                       class="text-nowrap"
@@ -533,7 +535,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Inspektor gadget site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://www.inspektor-gadget.io"
                 rel="noopener noreferrer"
                 role="button"
@@ -545,11 +547,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/inspektor-gadget-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Inspektor gadgets
@@ -559,7 +561,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Kagent agents web"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://kagent.dev/agents"
                 rel="noopener noreferrer"
                 role="button"
@@ -571,11 +573,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/kagent-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Kagent agents
@@ -589,7 +591,7 @@ exports[`Home index creates snapshot 1`] = `
             >
               <a
                 aria-label="Open KCL site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://kcl-lang.io"
                 rel="noopener noreferrer"
                 role="button"
@@ -601,11 +603,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/kcl-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       KCL modules
@@ -615,7 +617,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open KEDA site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://keda.sh"
                 rel="noopener noreferrer"
                 role="button"
@@ -627,11 +629,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/keda-scaler-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       KEDA scalers
@@ -641,7 +643,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Keptn site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://keptn.sh"
                 rel="noopener noreferrer"
                 role="button"
@@ -653,11 +655,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/keptn-integrations-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Keptn integrations
@@ -667,7 +669,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Knative client repository"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://github.com/knative/client"
                 rel="noopener noreferrer"
                 role="button"
@@ -679,11 +681,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/knative-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Knative client plugins
@@ -693,7 +695,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Krew site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://krew.sigs.k8s.io"
                 rel="noopener noreferrer"
                 role="button"
@@ -705,11 +707,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/krew-plugins-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Kubectl plugins
@@ -723,7 +725,7 @@ exports[`Home index creates snapshot 1`] = `
             >
               <a
                 aria-label="Open KubeArmor policies web"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://kubearmor.io"
                 rel="noopener noreferrer"
                 role="button"
@@ -735,11 +737,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/kubearmor-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       KubeArmor policies
@@ -749,7 +751,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Kubewarden site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://www.kubewarden.io"
                 rel="noopener noreferrer"
                 role="button"
@@ -761,11 +763,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/kubewarden-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Kubewarden policies
@@ -775,7 +777,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Kubewarden site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://www.kyverno.io"
                 rel="noopener noreferrer"
                 role="button"
@@ -787,11 +789,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/kyverno-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Kyverno policies
@@ -801,7 +803,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Meshery site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://meshery.io"
                 rel="noopener noreferrer"
                 role="button"
@@ -813,11 +815,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/meshery-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Meshery designs
@@ -827,7 +829,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Operator framework site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://github.com/operator-framework"
                 rel="noopener noreferrer"
                 role="button"
@@ -839,11 +841,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/olm-operators-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       OLM operators
@@ -857,7 +859,7 @@ exports[`Home index creates snapshot 1`] = `
             >
               <a
                 aria-label="Open Policy Agent site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://www.openpolicyagent.org"
                 rel="noopener noreferrer"
                 role="button"
@@ -869,11 +871,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/opa-policies-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       OPA and Gatekeeper policies
@@ -883,7 +885,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Policy Agent site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://www.opencost.io"
                 rel="noopener noreferrer"
                 role="button"
@@ -895,11 +897,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/opencost-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       OpenCost plugins
@@ -909,7 +911,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Radius site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://radapp.io"
                 rel="noopener noreferrer"
                 role="button"
@@ -921,11 +923,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/radius-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Radius recipes
@@ -935,7 +937,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Tekton site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://tekton.dev"
                 rel="noopener noreferrer"
                 role="button"
@@ -947,11 +949,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/tekton-pkg-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Tekton packages
@@ -961,7 +963,7 @@ exports[`Home index creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Tinkerbell site"
-                class="link col iconLink"
+                class="_link_f0e789 col _iconLink_1e4b41"
                 href="https://tinkerbell.org"
                 rel="noopener noreferrer"
                 role="button"
@@ -973,11 +975,11 @@ exports[`Home index creates snapshot 1`] = `
                 >
                   <img
                     alt="Icon"
-                    class="aboutIcon"
+                    class="_aboutIcon_1e4b41"
                     src="/static/media/tinkerbell-actions-light.svg"
                   />
                   <div
-                    class="d-none d-sm-block text-light mt-2 legendIcon"
+                    class="d-none d-sm-block text-light mt-2 _legendIcon_1e4b41"
                   >
                     <small>
                       Tinkerbell actions
@@ -1002,12 +1004,12 @@ exports[`Home index creates snapshot 1`] = `
         >
           <img
             alt="Logo CNCF incubating project"
-            class="logo colorLogo homeLogo"
+            class="_logo_1e4b41 _colorLogo_1e4b41 homeLogo"
             src="/static/media/cncf-incubating-color.svg"
           />
           <img
             alt="Logo CNCF incubating project"
-            class="logo whiteLogo homeLogo"
+            class="_logo_1e4b41 _whiteLogo_1e4b41 homeLogo"
             src="/static/media/cncf-incubating-white.svg"
           />
           <div
@@ -1016,7 +1018,7 @@ exports[`Home index creates snapshot 1`] = `
             Artifact Hub is a 
             <a
               aria-label="Open CNCF projects site"
-              class="link fw-semibold text-dark"
+              class="_link_f0e789 fw-semibold text-dark"
               href="https://www.cncf.io/projects/"
               rel="noopener noreferrer"
               role="button"

@@ -5,7 +5,7 @@ declare global {
     ApexCharts: typeof ApexCharts;
   }
 }
-import moment from 'moment';
+import { subMonths } from 'date-fns';
 import { useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
@@ -37,7 +37,7 @@ const BrushChart = (props: Props) => {
       {
         selection: {
           xaxis: {
-            min: moment(lastSeriesDate).subtract(12, 'months').valueOf(), // We select last year
+            min: subMonths(new Date(lastSeriesDate), 12).getTime(), // We select last year
             max: lastSeriesDate,
           },
         },
@@ -170,7 +170,7 @@ const BrushChart = (props: Props) => {
         selection: {
           enabled: true,
           xaxis: {
-            min: moment(lastSeriesDate).subtract(12, 'months').valueOf(), // We select last year
+            min: subMonths(new Date(lastSeriesDate), 12).getTime(), // We select last year
             max: lastSeriesDate,
           },
           fill: {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`API keys section index creates snapshot 1`] = `
+exports[`API keys section index > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-flex flex-column flex-grow-1"
@@ -16,14 +16,14 @@ exports[`API keys section index creates snapshot 1`] = `
           class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom border-1"
         >
           <div
-            class="h3 pb-0 title"
+            class="h3 pb-0 _title_c13bc3"
           >
             API keys
           </div>
           <div>
             <button
               aria-label="Open modal to add API key"
-              class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
+              class="btn btn-outline-secondary btn-sm text-uppercase _btnAction_c13bc3"
             >
               <div
                 class="d-flex flex-row align-items-center justify-content-center"
@@ -103,7 +103,7 @@ exports[`API keys section index creates snapshot 1`] = `
                       class="d-flex flex-row w-100 justify-content-between"
                     >
                       <div
-                        class="h5 mb-1 me-2 text-break titleCard"
+                        class="h5 mb-1 me-2 text-break _titleCard_44e237"
                       >
                         key1
                       </div>
@@ -111,10 +111,10 @@ exports[`API keys section index creates snapshot 1`] = `
                         class="ms-auto"
                       >
                         <div
-                          class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                          class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_44e237"
                         >
                           <div
-                            class="dropdown-arrow arrow"
+                            class="dropdown-arrow _arrow_44e237"
                           />
                           <button
                             aria-label="Open API key modal"
@@ -124,7 +124,7 @@ exports[`API keys section index creates snapshot 1`] = `
                               class="d-flex flex-row align-items-center"
                             >
                               <svg
-                                class="me-2 btnIcon"
+                                class="me-2 _btnIcon_44e237"
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
@@ -150,7 +150,7 @@ exports[`API keys section index creates snapshot 1`] = `
                               class="d-flex flex-row align-items-center"
                             >
                               <svg
-                                class="me-2 btnIcon"
+                                class="me-2 _btnIcon_44e237"
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
@@ -172,7 +172,7 @@ exports[`API keys section index creates snapshot 1`] = `
                         <button
                           aria-expanded="false"
                           aria-label="Open menu"
-                          class="btn btn-outline-secondary p-0 text-center  btnDropdown"
+                          class="btn btn-outline-secondary p-0 text-center  _btnDropdown_44e237"
                         >
                           <svg
                             fill="currentColor"
@@ -206,10 +206,10 @@ exports[`API keys section index creates snapshot 1`] = `
                         </small>
                       </div>
                       <div
-                        class="ms-1 copyBtn"
+                        class="ms-1 _copyBtn_44e237"
                       >
                         <div
-                          class="position-absolute copyBtnWrapper"
+                          class="position-absolute _copyBtnWrapper_44e237"
                         >
                           <div
                             class="position-relative undefined"
@@ -281,7 +281,7 @@ exports[`API keys section index creates snapshot 1`] = `
                       class="d-flex flex-row w-100 justify-content-between"
                     >
                       <div
-                        class="h5 mb-1 me-2 text-break titleCard"
+                        class="h5 mb-1 me-2 text-break _titleCard_44e237"
                       >
                         key2
                       </div>
@@ -289,10 +289,10 @@ exports[`API keys section index creates snapshot 1`] = `
                         class="ms-auto"
                       >
                         <div
-                          class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                          class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_44e237"
                         >
                           <div
-                            class="dropdown-arrow arrow"
+                            class="dropdown-arrow _arrow_44e237"
                           />
                           <button
                             aria-label="Open API key modal"
@@ -302,7 +302,7 @@ exports[`API keys section index creates snapshot 1`] = `
                               class="d-flex flex-row align-items-center"
                             >
                               <svg
-                                class="me-2 btnIcon"
+                                class="me-2 _btnIcon_44e237"
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
@@ -328,7 +328,7 @@ exports[`API keys section index creates snapshot 1`] = `
                               class="d-flex flex-row align-items-center"
                             >
                               <svg
-                                class="me-2 btnIcon"
+                                class="me-2 _btnIcon_44e237"
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
@@ -350,7 +350,7 @@ exports[`API keys section index creates snapshot 1`] = `
                         <button
                           aria-expanded="false"
                           aria-label="Open menu"
-                          class="btn btn-outline-secondary p-0 text-center  btnDropdown"
+                          class="btn btn-outline-secondary p-0 text-center  _btnDropdown_44e237"
                         >
                           <svg
                             fill="currentColor"
@@ -384,10 +384,10 @@ exports[`API keys section index creates snapshot 1`] = `
                         </small>
                       </div>
                       <div
-                        class="ms-1 copyBtn"
+                        class="ms-1 _copyBtn_44e237"
                       >
                         <div
-                          class="position-absolute copyBtnWrapper"
+                          class="position-absolute _copyBtnWrapper_44e237"
                         >
                           <div
                             class="position-relative undefined"
@@ -454,20 +454,20 @@ exports[`API keys section index creates snapshot 1`] = `
         <div>
           <div
             aria-modal="false"
-            class="modal modal"
+            class="modal _modal_2adcc6"
             role="dialog"
           >
             <div
               class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
             >
               <div
-                class="modal-content border border-3 mx-auto content modal"
+                class="modal-content border border-3 mx-auto _content_2adcc6 _modal_478183"
               >
                 <div
-                  class="modal-header d-flex flex-row align-items-center header undefined"
+                  class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
                 >
                   <div
-                    class="h3 m-2 flex-grow-1 title"
+                    class="h3 m-2 flex-grow-1 _title_478183"
                   >
                     Add API key
                   </div>
@@ -482,7 +482,7 @@ exports[`API keys section index creates snapshot 1`] = `
                 >
                   <div>
                     <div
-                      class="overflow-hidden alertWrapper"
+                      class="overflow-hidden _alertWrapper_1aa3f6"
                       data-testid="alertWrapper"
                     />
                   </div>

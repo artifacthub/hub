@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`WebhooksSection creates snapshot 1`] = `
+exports[`WebhooksSection > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-flex flex-column flex-grow-1"
@@ -17,14 +17,14 @@ exports[`WebhooksSection creates snapshot 1`] = `
             class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom border-1"
           >
             <div
-              class="h3 pb-0 title"
+              class="h3 pb-0 _title_de7031"
             >
               Webhooks
             </div>
             <div>
               <button
                 aria-label="Open webhook form"
-                class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
+                class="btn btn-outline-secondary btn-sm text-uppercase _btnAction_de7031"
               >
                 <div
                   class="d-flex flex-row align-items-center justify-content-center"
@@ -97,7 +97,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
               role="listitem"
             >
               <div
-                class="card cardWithHover w-100 h-100 mw-100 bg-white card"
+                class="card cardWithHover w-100 h-100 mw-100 bg-white _card_4591e1"
               >
                 <div
                   class="card-body position-relative"
@@ -115,7 +115,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           test
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge border border-dark border-1 text-dark text-uppercase badge inactiveBadge"
+                          class="ms-3 mt-1 fw-bold badge border border-dark border-1 text-dark text-uppercase _badge_4591e1 _inactiveBadge_4591e1"
                         >
                           Inactive
                         </span>
@@ -125,10 +125,10 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       class="ms-auto"
                     >
                       <div
-                        class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                        class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_4591e1"
                       >
                         <div
-                          class="dropdown-arrow arrow"
+                          class="dropdown-arrow _arrow_4591e1"
                         />
                         <button
                           aria-label="Edit webhook"
@@ -138,7 +138,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <svg
-                              class="me-2 btnIcon"
+                              class="me-2 _btnIcon_4591e1"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -164,7 +164,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <svg
-                              class="me-2 btnIcon"
+                              class="me-2 _btnIcon_4591e1"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -186,7 +186,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       <button
                         aria-expanded="false"
                         aria-label="Open menu"
-                        class="btn btn-outline-secondary p-0 text-center  btnDropdown"
+                        class="btn btn-outline-secondary p-0 text-center  _btnDropdown_4591e1"
                       >
                         <svg
                           fill="currentColor"
@@ -240,7 +240,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
               role="listitem"
             >
               <div
-                class="card cardWithHover w-100 h-100 mw-100 bg-white card"
+                class="card cardWithHover w-100 h-100 mw-100 bg-white _card_4591e1"
               >
                 <div
                   class="card-body position-relative"
@@ -258,7 +258,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           test1
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase badge"
+                          class="ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase _badge_4591e1"
                         >
                           Active
                         </span>
@@ -268,10 +268,10 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       class="ms-auto"
                     >
                       <div
-                        class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                        class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_4591e1"
                       >
                         <div
-                          class="dropdown-arrow arrow"
+                          class="dropdown-arrow _arrow_4591e1"
                         />
                         <button
                           aria-label="Edit webhook"
@@ -281,7 +281,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <svg
-                              class="me-2 btnIcon"
+                              class="me-2 _btnIcon_4591e1"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -307,7 +307,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <svg
-                              class="me-2 btnIcon"
+                              class="me-2 _btnIcon_4591e1"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -329,7 +329,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       <button
                         aria-expanded="false"
                         aria-label="Open menu"
-                        class="btn btn-outline-secondary p-0 text-center  btnDropdown"
+                        class="btn btn-outline-secondary p-0 text-center  _btnDropdown_4591e1"
                       >
                         <svg
                           fill="currentColor"
@@ -383,7 +383,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
               role="listitem"
             >
               <div
-                class="card cardWithHover w-100 h-100 mw-100 bg-white card"
+                class="card cardWithHover w-100 h-100 mw-100 bg-white _card_4591e1"
               >
                 <div
                   class="card-body position-relative"
@@ -401,7 +401,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           dfgfgdhg
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase badge"
+                          class="ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase _badge_4591e1"
                         >
                           Active
                         </span>
@@ -411,10 +411,10 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       class="ms-auto"
                     >
                       <div
-                        class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                        class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_4591e1"
                       >
                         <div
-                          class="dropdown-arrow arrow"
+                          class="dropdown-arrow _arrow_4591e1"
                         />
                         <button
                           aria-label="Edit webhook"
@@ -424,7 +424,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <svg
-                              class="me-2 btnIcon"
+                              class="me-2 _btnIcon_4591e1"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -450,7 +450,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <svg
-                              class="me-2 btnIcon"
+                              class="me-2 _btnIcon_4591e1"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -472,7 +472,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       <button
                         aria-expanded="false"
                         aria-label="Open menu"
-                        class="btn btn-outline-secondary p-0 text-center  btnDropdown"
+                        class="btn btn-outline-secondary p-0 text-center  _btnDropdown_4591e1"
                       >
                         <svg
                           fill="currentColor"
@@ -524,7 +524,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
               role="listitem"
             >
               <div
-                class="card cardWithHover w-100 h-100 mw-100 bg-white card"
+                class="card cardWithHover w-100 h-100 mw-100 bg-white _card_4591e1"
               >
                 <div
                   class="card-body position-relative"
@@ -542,7 +542,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           testdefault
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge border border-dark border-1 text-dark text-uppercase badge inactiveBadge"
+                          class="ms-3 mt-1 fw-bold badge border border-dark border-1 text-dark text-uppercase _badge_4591e1 _inactiveBadge_4591e1"
                         >
                           Inactive
                         </span>
@@ -552,10 +552,10 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       class="ms-auto"
                     >
                       <div
-                        class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                        class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_4591e1"
                       >
                         <div
-                          class="dropdown-arrow arrow"
+                          class="dropdown-arrow _arrow_4591e1"
                         />
                         <button
                           aria-label="Edit webhook"
@@ -565,7 +565,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <svg
-                              class="me-2 btnIcon"
+                              class="me-2 _btnIcon_4591e1"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -591,7 +591,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <svg
-                              class="me-2 btnIcon"
+                              class="me-2 _btnIcon_4591e1"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -613,7 +613,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       <button
                         aria-expanded="false"
                         aria-label="Open menu"
-                        class="btn btn-outline-secondary p-0 text-center  btnDropdown"
+                        class="btn btn-outline-secondary p-0 text-center  _btnDropdown_4591e1"
                       >
                         <svg
                           fill="currentColor"
@@ -667,7 +667,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
               role="listitem"
             >
               <div
-                class="card cardWithHover w-100 h-100 mw-100 bg-white card"
+                class="card cardWithHover w-100 h-100 mw-100 bg-white _card_4591e1"
               >
                 <div
                   class="card-body position-relative"
@@ -685,7 +685,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                           ffdsffdfgdsd
                         </div>
                         <span
-                          class="ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase badge"
+                          class="ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase _badge_4591e1"
                         >
                           Active
                         </span>
@@ -695,10 +695,10 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       class="ms-auto"
                     >
                       <div
-                        class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                        class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_4591e1"
                       >
                         <div
-                          class="dropdown-arrow arrow"
+                          class="dropdown-arrow _arrow_4591e1"
                         />
                         <button
                           aria-label="Edit webhook"
@@ -708,7 +708,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <svg
-                              class="me-2 btnIcon"
+                              class="me-2 _btnIcon_4591e1"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -734,7 +734,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <svg
-                              class="me-2 btnIcon"
+                              class="me-2 _btnIcon_4591e1"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -756,7 +756,7 @@ exports[`WebhooksSection creates snapshot 1`] = `
                       <button
                         aria-expanded="false"
                         aria-label="Open menu"
-                        class="btn btn-outline-secondary p-0 text-center  btnDropdown"
+                        class="btn btn-outline-secondary p-0 text-center  _btnDropdown_4591e1"
                       >
                         <svg
                           fill="currentColor"

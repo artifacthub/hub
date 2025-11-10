@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RecommendedPackages creates snapshot 1`] = `
+exports[`RecommendedPackages > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="w-100 undefined"
@@ -9,7 +9,7 @@ exports[`RecommendedPackages creates snapshot 1`] = `
       class="w-100 text-nowrap mb-2"
     >
       <span
-        class="position-relative pkgIcon"
+        class="position-relative _pkgIcon_01f44f"
       >
         <svg
           fill="none"
@@ -54,46 +54,47 @@ exports[`RecommendedPackages creates snapshot 1`] = `
       </small>
     </div>
     <div
-      class="d-flex flex-column pb-3 pt-1 content"
+      class="d-flex flex-column pb-3 pt-1 _content_01f44f"
     >
       <div
-        class="position-relative w-100 overflow-hidden content"
+        class="position-relative w-100 overflow-hidden _content_01f44f"
       >
         <div
           class="w-100"
         >
           <a
             class="d-inline-block text-dark h5 mb-2 me-3"
+            data-discover="true"
             data-testid="recommended-pkg"
             href="/packages/helm/artifact-hub/artifact-hub"
           >
             <div
-              class="badge bg-light text-dark d-flex flex-row align-items-center ps-0 pe-3 border border-1 badge"
+              class="badge bg-light text-dark d-flex flex-row align-items-center ps-0 pe-3 border border-1 _badge_2dfead"
             >
               <div
                 class="me-2"
               >
                 <div
-                  class="imageWrapper ms-1 overflow-hidden"
+                  class="_imageWrapper_2dfead ms-1 overflow-hidden"
                 >
                   <div
                     class="d-flex align-items-center justify-content-center w-100 h-100"
                   >
                     <img
                       alt="Icon"
-                      class="image iconLight"
+                      class="_image_2dfead iconLight"
                       src="/static/media/helm-chart.svg"
                     />
                     <img
                       alt="Icon"
-                      class="image iconDark"
+                      class="_image_2dfead iconDark"
                       src="/static/media/helm-chart-light.svg"
                     />
                   </div>
                 </div>
               </div>
               <div
-                class="text-truncate text-dark fw-bold badgeContent"
+                class="text-truncate text-dark fw-bold _badgeContent_2dfead"
               >
                 <span>
                   artifact-hub
@@ -103,36 +104,37 @@ exports[`RecommendedPackages creates snapshot 1`] = `
           </a>
           <a
             class="d-inline-block text-dark h5 mb-2 me-3"
+            data-discover="true"
             data-testid="recommended-pkg"
             href="/packages/helm/prometheus-community/kube-prometheus-stack"
           >
             <div
-              class="badge bg-light text-dark d-flex flex-row align-items-center ps-0 pe-3 border border-1 badge"
+              class="badge bg-light text-dark d-flex flex-row align-items-center ps-0 pe-3 border border-1 _badge_2dfead"
             >
               <div
                 class="me-2"
               >
                 <div
-                  class="imageWrapper ms-1 overflow-hidden"
+                  class="_imageWrapper_2dfead ms-1 overflow-hidden"
                 >
                   <div
                     class="d-flex align-items-center justify-content-center w-100 h-100"
                   >
                     <img
                       alt="Icon"
-                      class="image iconLight"
+                      class="_image_2dfead iconLight"
                       src="/static/media/helm-chart.svg"
                     />
                     <img
                       alt="Icon"
-                      class="image iconDark"
+                      class="_image_2dfead iconDark"
                       src="/static/media/helm-chart-light.svg"
                     />
                   </div>
                 </div>
               </div>
               <div
-                class="text-truncate text-dark fw-bold badgeContent"
+                class="text-truncate text-dark fw-bold _badgeContent_2dfead"
               >
                 <span>
                   kube-prometheus-stack

@@ -38,15 +38,11 @@ describe('Badge Modal - repositories section', () => {
 
       const badge = screen.getByAltText('Artifact HUB badge');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveProperty(
-        'src',
-        `https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name}`
-      );
-      expect(
-        screen.getByText(
-          `[![null](https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name})](http://localhost/packages/search?repo=${repoMock.name})`
-        )
-      ).toBeInTheDocument();
+      const origin = window.location.origin;
+      const badgeUrl = `https://img.shields.io/endpoint?url=${origin}/badge/repository/${repoMock.name}`;
+      const packagesUrl = `${origin}/packages/search?repo=${repoMock.name}`;
+      expect(badge).toHaveProperty('src', badgeUrl);
+      expect(screen.getByText(`[![null](${badgeUrl})](${packagesUrl})`)).toBeInTheDocument();
     });
 
     it('renders ascii tab', async () => {
@@ -59,15 +55,11 @@ describe('Badge Modal - repositories section', () => {
 
       const badge = await screen.findByAltText('Artifact HUB badge');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveProperty(
-        'src',
-        `https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name}`
-      );
-      expect(
-        screen.getByText(
-          `http://localhost/packages/search?repo=${repoMock.name}[image:https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name}[null]]`
-        )
-      ).toBeInTheDocument();
+      const origin = window.location.origin;
+      const badgeUrl = `https://img.shields.io/endpoint?url=${origin}/badge/repository/${repoMock.name}`;
+      const packagesUrl = `${origin}/packages/search?repo=${repoMock.name}`;
+      expect(badge).toHaveProperty('src', badgeUrl);
+      expect(screen.getByText(`${packagesUrl}[image:${badgeUrl}[null]]`)).toBeInTheDocument();
     });
   });
 });

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SecurityModal creates snapshot 1`] = `
+exports[`SecurityModal > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <button
@@ -38,25 +38,25 @@ exports[`SecurityModal creates snapshot 1`] = `
   </div>
   <div>
     <div
-      class="modal-backdrop activeBackdrop"
+      class="modal-backdrop _activeBackdrop_2adcc6"
       data-testid="modalBackdrop"
     />
     <div
       aria-modal="true"
-      class="modal modal active d-block"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
       role="dialog"
     >
       <div
-        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable _modalDialog_f7d000"
       >
         <div
-          class="modal-content border border-3 mx-auto content h-100"
+          class="modal-content border border-3 mx-auto _content_2adcc6 h-100"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 title"
+              class="h3 m-2 flex-grow-1 _title_f7d000"
             >
               Security report
             </div>
@@ -73,12 +73,12 @@ exports[`SecurityModal creates snapshot 1`] = `
               class="m-3 h-100"
             >
               <div
-                class="position-relative d-flex flex-row justify-content-between btnWrapper mt-0 pb-2"
+                class="position-relative d-flex flex-row justify-content-between _btnWrapper_5bfa2e mt-0 pb-2"
               >
                 <div>
                   <button
                     aria-label="Go to Summary section"
-                    class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn inSection"
+                    class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white _linkBtn_5bfa2e _inSection_5bfa2e"
                   >
                     <svg
                       fill="currentColor"
@@ -102,14 +102,14 @@ exports[`SecurityModal creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="w-100 my-4 tableWrapper"
+                class="w-100 my-4 _tableWrapper_7db815"
               >
                 <table
-                  class="table table-bordered table-md mb-0 table"
+                  class="table table-bordered table-md mb-0 _table_7db815"
                 >
                   <thead>
                     <tr
-                      class="tableTitle"
+                      class="_tableTitle_7db815"
                     >
                       <th
                         class="w-auto"
@@ -169,7 +169,7 @@ exports[`SecurityModal creates snapshot 1`] = `
                         rowspan="2"
                       >
                         <div
-                          class="d-table w-100 imageNameWrapper"
+                          class="d-table w-100 _imageNameWrapper_7db815"
                         >
                           <div
                             class="text-truncate"
@@ -184,94 +184,77 @@ exports[`SecurityModal creates snapshot 1`] = `
                       >
                         <div
                           class="d-inline-block"
-                        >
-                          <div
-                            class="position-relative ratingBadge"
-                          >
-                            <div
-                              data-testid="elementWithTooltip"
-                            >
-                              <small>
-                                <div
-                                  class="badge text-light fw-bold badge ratingBadge"
-                                  style="background-color: rgb(150, 0, 3);"
-                                >
-                                  F
-                                </div>
-                              </small>
-                            </div>
-                          </div>
-                        </div>
+                        />
                       </td>
                       <td
-                        class="narrowCell"
+                        class="_narrowCell_7db815"
                       >
                         Fixable
                       </td>
                       <td
-                        class="text-center narrowCell"
+                        class="text-center _narrowCell_7db815"
                       >
                         0
                       </td>
                       <td
-                        class="text-center narrowCell"
+                        class="text-center _narrowCell_7db815"
                       >
                         19
                       </td>
                       <td
-                        class="text-center narrowCell"
+                        class="text-center _narrowCell_7db815"
                       >
                         132
                       </td>
                       <td
-                        class="text-center narrowCell"
+                        class="text-center _narrowCell_7db815"
                       >
                         35
                       </td>
                       <td
-                        class="text-center narrowCell"
+                        class="text-center _narrowCell_7db815"
                       >
                         0
                       </td>
                       <td
-                        class="text-center fw-bold narrowCell"
+                        class="text-center fw-bold _narrowCell_7db815"
                       >
                         186
                       </td>
                     </tr>
                     <tr>
                       <td
-                        class="narrowCell"
+                        class="_narrowCell_7db815"
                       >
                         All
                       </td>
                       <td
-                        class="text-center narrowCell"
+                        class="text-center _narrowCell_7db815"
                       >
                         4
                       </td>
                       <td
-                        class="text-center narrowCell"
+                        class="text-center _narrowCell_7db815"
                       >
                         22
                       </td>
                       <td
-                        class="text-center narrowCell"
+                        class="text-center _narrowCell_7db815"
                       >
                         461
                       </td>
                       <td
-                        class="text-center narrowCell"
+                        class="text-center _narrowCell_7db815"
                       >
                         455
                       </td>
                       <td
-                        class="text-center narrowCell"
+                        class="text-center _narrowCell_7db815"
                       >
                         0
                       </td>
                       <td
-                        class="text-center fw-bold narrowCell"
+                        class="text-center fw-bold _narrowCell_7db815"
                       >
                         942
                       </td>
@@ -323,48 +306,48 @@ exports[`SecurityModal creates snapshot 1`] = `
                 >
                   <div
                     aria-label="Vulnerabilities number - critical"
-                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    class="progress-bar text-dark px-1 fw-bold _progressBar_8c9d3d"
                     role="progressbar"
                     style="width: 0.19569471624266144%; background-color: rgb(150, 0, 3);"
                   >
                     <span
-                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                      class="badge rounded-pill bg-light text-dark text-center _badgeSummary_8c9d3d"
                     >
                       1
                     </span>
                   </div>
                   <div
                     aria-label="Vulnerabilities number - high"
-                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    class="progress-bar text-dark px-1 fw-bold _progressBar_8c9d3d"
                     role="progressbar"
                     style="width: 2.544031311154599%; background-color: rgb(223, 42, 25);"
                   >
                     <span
-                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                      class="badge rounded-pill bg-light text-dark text-center _badgeSummary_8c9d3d"
                     >
                       13
                     </span>
                   </div>
                   <div
                     aria-label="Vulnerabilities number - medium"
-                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    class="progress-bar text-dark px-1 fw-bold _progressBar_8c9d3d"
                     role="progressbar"
                     style="width: 41.48727984344423%; background-color: rgb(247, 134, 15);"
                   >
                     <span
-                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                      class="badge rounded-pill bg-light text-dark text-center _badgeSummary_8c9d3d"
                     >
                       212
                     </span>
                   </div>
                   <div
                     aria-label="Vulnerabilities number - low"
-                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    class="progress-bar text-dark px-1 fw-bold _progressBar_8c9d3d"
                     role="progressbar"
                     style="width: 55.77299412915851%; background-color: rgb(244, 189, 12);"
                   >
                     <span
-                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                      class="badge rounded-pill bg-light text-dark text-center _badgeSummary_8c9d3d"
                     >
                       285
                     </span>
@@ -383,36 +366,36 @@ exports[`SecurityModal creates snapshot 1`] = `
                 >
                   <div
                     aria-label="Vulnerabilities number - high"
-                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    class="progress-bar text-dark px-1 fw-bold _progressBar_8c9d3d"
                     role="progressbar"
                     style="width: 10.21505376344086%; background-color: rgb(223, 42, 25);"
                   >
                     <span
-                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                      class="badge rounded-pill bg-light text-dark text-center _badgeSummary_8c9d3d"
                     >
                       19
                     </span>
                   </div>
                   <div
                     aria-label="Vulnerabilities number - medium"
-                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    class="progress-bar text-dark px-1 fw-bold _progressBar_8c9d3d"
                     role="progressbar"
                     style="width: 70.96774193548387%; background-color: rgb(247, 134, 15);"
                   >
                     <span
-                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                      class="badge rounded-pill bg-light text-dark text-center _badgeSummary_8c9d3d"
                     >
                       132
                     </span>
                   </div>
                   <div
                     aria-label="Vulnerabilities number - low"
-                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    class="progress-bar text-dark px-1 fw-bold _progressBar_8c9d3d"
                     role="progressbar"
                     style="width: 18.817204301075268%; background-color: rgb(244, 189, 12);"
                   >
                     <span
-                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                      class="badge rounded-pill bg-light text-dark text-center _badgeSummary_8c9d3d"
                     >
                       35
                     </span>
@@ -431,340 +414,64 @@ exports[`SecurityModal creates snapshot 1`] = `
                 >
                   <div
                     aria-label="Vulnerabilities number - critical"
-                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    class="progress-bar text-dark px-1 fw-bold _progressBar_8c9d3d"
                     role="progressbar"
                     style="width: 3.669724770642202%; background-color: rgb(150, 0, 3);"
                   >
                     <span
-                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                      class="badge rounded-pill bg-light text-dark text-center _badgeSummary_8c9d3d"
                     >
                       4
                     </span>
                   </div>
                   <div
                     aria-label="Vulnerabilities number - high"
-                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    class="progress-bar text-dark px-1 fw-bold _progressBar_8c9d3d"
                     role="progressbar"
                     style="width: 7.339449541284404%; background-color: rgb(223, 42, 25);"
                   >
                     <span
-                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                      class="badge rounded-pill bg-light text-dark text-center _badgeSummary_8c9d3d"
                     >
                       8
                     </span>
                   </div>
                   <div
                     aria-label="Vulnerabilities number - medium"
-                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    class="progress-bar text-dark px-1 fw-bold _progressBar_8c9d3d"
                     role="progressbar"
                     style="width: 27.522935779816514%; background-color: rgb(247, 134, 15);"
                   >
                     <span
-                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                      class="badge rounded-pill bg-light text-dark text-center _badgeSummary_8c9d3d"
                     >
                       30
                     </span>
                   </div>
                   <div
                     aria-label="Vulnerabilities number - low"
-                    class="progress-bar text-dark px-1 fw-bold progressBar"
+                    class="progress-bar text-dark px-1 fw-bold _progressBar_8c9d3d"
                     role="progressbar"
                     style="width: 61.46788990825688%; background-color: rgb(244, 189, 12);"
                   >
                     <span
-                      class="badge rounded-pill bg-light text-dark text-center badgeSummary"
+                      class="badge rounded-pill bg-light text-dark text-center _badgeSummary_8c9d3d"
                     >
                       67
                     </span>
                   </div>
                 </div>
               </div>
-              <div
-                class="position-relative d-flex flex-row justify-content-between btnWrapper mt-3"
-              >
-                <div>
-                  <button
-                    aria-label="Go to Vulnerabilities details section"
-                    class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn inSection"
-                  >
-                    <svg
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 512 512"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
-                      />
-                    </svg>
-                  </button>
-                  <div
-                    class="h5 text-dark text-uppercase fw-bold"
-                  >
-                    Vulnerabilities details
-                  </div>
-                </div>
-                <div
-                  class="form-check form-switch clickable"
-                >
-                  <input
-                    class="form-check-input checkbox"
-                    id="fixable-vulnerabilities"
-                    role="switch"
-                    type="checkbox"
-                  />
-                  <label
-                    class="form-check-label"
-                    for="fixable-vulnerabilities"
-                  >
-                    Only display fixable vulnerabilities
-                  </label>
-                </div>
-              </div>
-              <div
-                class="py-3"
-              >
-                <div
-                  class=""
-                >
-                  <div
-                    class="my-1"
-                  >
-                    <div
-                      class="d-flex flex-row align-items-center fw-bold mb-2 btnWrapper"
-                    >
-                      <button
-                        class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn"
-                      >
-                        <svg
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 512 512"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
-                          />
-                        </svg>
-                      </button>
-                      <svg
-                        fill="none"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <line
-                          x1="16.5"
-                          x2="7.5"
-                          y1="9.4"
-                          y2="4.21"
-                        />
-                        <path
-                          d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
-                        />
-                        <polyline
-                          points="3.27 6.96 12 12.01 20.73 6.96"
-                        />
-                        <line
-                          x1="12"
-                          x2="12"
-                          y1="22.08"
-                          y2="12"
-                        />
-                      </svg>
-                      <div
-                        class="ps-2 text-truncate"
-                      >
-                        <span
-                          class="text-uppercase text-muted me-2 tableTitle"
-                        >
-                          Image:
-                        </span>
-                        rook/ceph:v1.1.1
-                      </div>
-                    </div>
-                    <div
-                      data-testid="securityReportInfo"
-                    >
-                      <div
-                        class="ms-4"
-                        style="min-height: auto;"
-                      >
-                        <div
-                          class="position-relative btnWrapper"
-                        >
-                          <button
-                            class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn inTarget"
-                          >
-                            <svg
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 512 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
-                              />
-                            </svg>
-                          </button>
-                          <div
-                            class="p-1 ps-0"
-                          >
-                            <div
-                              class="d-flex flex-row align-items-center mb-2"
-                            >
-                              <svg
-                                fill="currentColor"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 192 512"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
-                                />
-                              </svg>
-                              <div
-                                class="tableTitle fw-bold me-3 ms-1 text-truncate"
-                                data-testid="targetTitle"
-                              >
-                                <span
-                                  class="text-uppercase text-muted me-2"
-                                >
-                                  Target:
-                                </span>
-                                <span
-                                  class="fw-bold"
-                                >
-                                  centos 7.7.1908
-                                </span>
-                              </div>
-                              <div
-                                class="tableTitle d-flex flex-row align-items-center fw-bold text-nowrap"
-                              >
-                                <span
-                                  class="text-uppercase text-muted"
-                                >
-                                  Rating:
-                                </span>
-                              </div>
-                              <button
-                                aria-label="Open target image vulnerabilities"
-                                class="btn badge bg-secondary ms-3 badge"
-                              >
-                                Show vulnerabilities
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="ms-4"
-                        style="min-height: 40px;"
-                      >
-                        <div
-                          class="position-relative btnWrapper"
-                        >
-                          <button
-                            class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn inTarget"
-                          >
-                            <svg
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 512 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
-                              />
-                            </svg>
-                          </button>
-                          <div
-                            class="p-1 ps-0"
-                          >
-                            <div
-                              class="d-flex flex-row align-items-center mb-2"
-                            >
-                              <svg
-                                fill="currentColor"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 192 512"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
-                                />
-                              </svg>
-                              <div
-                                class="tableTitle fw-bold me-3 ms-1 text-truncate"
-                                data-testid="targetTitle"
-                              >
-                                <span
-                                  class="text-uppercase text-muted me-2"
-                                >
-                                  Target:
-                                </span>
-                                <span
-                                  class="fw-bold"
-                                >
-                                  usr/share/ceph/mgr/dashboard/frontend/package-lock.json
-                                </span>
-                              </div>
-                              <div
-                                class="tableTitle d-flex flex-row align-items-center fw-bold text-nowrap"
-                              >
-                                <span
-                                  class="text-uppercase text-muted"
-                                >
-                                  Rating:
-                                </span>
-                              </div>
-                              <button
-                                aria-label="Open target image vulnerabilities"
-                                class="btn badge bg-secondary ms-3 badge"
-                              >
-                                Show vulnerabilities
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>
           </div>
           <div
-            class="modal-footer p-3 modalFooter"
+            class="modal-footer p-3 _modalFooter_f7d000"
           >
             <button
               aria-label="Close modal"

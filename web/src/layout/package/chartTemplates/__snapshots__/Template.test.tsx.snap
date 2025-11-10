@@ -1,24 +1,24 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Template creates snapshot 1`] = `
+exports[`Template > creates snapshot 1`] = `
 <DocumentFragment>
   <span
     data-testid="activeTmpl"
   >
     <code>
       <div
-        class="codeWrapper"
+        class="_codeWrapper_a85043"
       >
         <div
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_1"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             1
           </div>
@@ -29,11 +29,11 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{- 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   if
                 </span>
@@ -45,11 +45,11 @@ exports[`Template creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap _dropdown_b64196 invisible"
                       data-testid="infoDropdown"
                     >
                       <div
-                        class="content"
+                        class="_content_b64196"
                       >
                         <div
                           class="p-2 text-truncate"
@@ -71,7 +71,7 @@ exports[`Template creates snapshot 1`] = `
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplValue lightTheme"
+                      class="_tmplValue_a85043 _lightTheme_a85043"
                     >
                       .Values.hub.ingress.enabled
                     </span>
@@ -89,12 +89,12 @@ exports[`Template creates snapshot 1`] = `
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_2"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             2
           </div>
@@ -111,12 +111,12 @@ exports[`Template creates snapshot 1`] = `
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_3"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             3
           </div>
@@ -133,12 +133,12 @@ exports[`Template creates snapshot 1`] = `
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_4"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             4
           </div>
@@ -155,12 +155,12 @@ exports[`Template creates snapshot 1`] = `
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_5"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             5
           </div>
@@ -172,11 +172,11 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{ 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   include
                 </span>
@@ -193,12 +193,12 @@ exports[`Template creates snapshot 1`] = `
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_6"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             6
           </div>
@@ -215,12 +215,12 @@ exports[`Template creates snapshot 1`] = `
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_7"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             7
           </div>
@@ -237,12 +237,12 @@ exports[`Template creates snapshot 1`] = `
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_8"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             8
           </div>
@@ -254,17 +254,17 @@ exports[`Template creates snapshot 1`] = `
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{- 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   include
                 </span>
                  "chart.labels" . 
                 <span
-                  class="d-inline-flex prevSpace"
+                  class="d-inline-flex _prevSpace_a85043"
                 >
                   |
                 </span>
@@ -276,11 +276,11 @@ exports[`Template creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap _dropdown_b64196 invisible _fixedWidth_b64196"
                       data-testid="infoDropdown"
                     >
                       <div
-                        class="content"
+                        class="_content_b64196"
                       >
                         <div
                           class="p-2"
@@ -296,7 +296,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplFunction lightTheme"
+                      class="_tmplFunction_a85043 _lightTheme_a85043"
                     >
                       nindent
                     </span>
@@ -314,12 +314,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_9"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             9
           </div>
@@ -331,11 +331,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{- 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   with
                 </span>
@@ -347,11 +347,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap _dropdown_b64196 invisible _fixedWidth_b64196"
                       data-testid="infoDropdown"
                     >
                       <div
-                        class="content"
+                        class="_content_b64196"
                       >
                         <div
                           class="p-2 text-truncate"
@@ -362,10 +362,10 @@ The **nindent** function is the same as the indent function, but prepends a new 
                             DEFAULT:
                           </span>
                           <div
-                            class="mt-2 textarea"
+                            class="mt-2 _textarea_a85043"
                           >
                             <textarea
-                              class="form-control textarea"
+                              class="form-control _textarea_b5c6e5"
                               disabled=""
                               id="template"
                               name="template"
@@ -387,7 +387,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplValue lightTheme"
+                      class="_tmplValue_a85043 _lightTheme_a85043"
                     >
                       .Values.hub.ingress.annotations
                     </span>
@@ -405,12 +405,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_10"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             10
           </div>
@@ -427,12 +427,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_11"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             11
           </div>
@@ -444,17 +444,17 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{- 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   toYaml
                 </span>
                  . 
                 <span
-                  class="d-inline-flex prevSpace"
+                  class="d-inline-flex _prevSpace_a85043"
                 >
                   |
                 </span>
@@ -466,11 +466,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap _dropdown_b64196 invisible _fixedWidth_b64196"
                       data-testid="infoDropdown"
                     >
                       <div
-                        class="content"
+                        class="_content_b64196"
                       >
                         <div
                           class="p-2"
@@ -486,7 +486,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplFunction lightTheme"
+                      class="_tmplFunction_a85043 _lightTheme_a85043"
                     >
                       nindent
                     </span>
@@ -504,12 +504,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_12"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             12
           </div>
@@ -521,11 +521,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{- 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   end
                 </span>
@@ -541,12 +541,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_13"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             13
           </div>
@@ -563,12 +563,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_14"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             14
           </div>
@@ -585,12 +585,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_15"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             15
           </div>
@@ -602,11 +602,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{ 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   include
                 </span>
@@ -623,12 +623,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_16"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             16
           </div>
@@ -640,7 +640,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{ 
                 <div
@@ -650,11 +650,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap _dropdown_b64196 invisible"
                       data-testid="infoDropdown"
                     >
                       <div
-                        class="content"
+                        class="_content_b64196"
                       >
                         <div
                           class="p-2 text-truncate"
@@ -676,7 +676,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplValue lightTheme"
+                      class="_tmplValue_a85043 _lightTheme_a85043"
                     >
                       .Values.hub.service.port
                     </span>
@@ -694,12 +694,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_17"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             17
           </div>
@@ -711,11 +711,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{- 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   with
                 </span>
@@ -727,11 +727,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap _dropdown_b64196 invisible"
                       data-testid="infoDropdown"
                     >
                       <div
-                        class="content"
+                        class="_content_b64196"
                       >
                         <div
                           class="p-2 text-truncate"
@@ -755,7 +755,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplValue lightTheme"
+                      class="_tmplValue_a85043 _lightTheme_a85043"
                     >
                       .Values.hub.ingress.rules
                     </span>
@@ -773,12 +773,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_18"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             18
           </div>
@@ -795,12 +795,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_19"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             19
           </div>
@@ -812,17 +812,17 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{- 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   toYaml
                 </span>
                  . 
                 <span
-                  class="d-inline-flex prevSpace"
+                  class="d-inline-flex _prevSpace_a85043"
                 >
                   |
                 </span>
@@ -834,11 +834,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap _dropdown_b64196 invisible _fixedWidth_b64196"
                       data-testid="infoDropdown"
                     >
                       <div
-                        class="content"
+                        class="_content_b64196"
                       >
                         <div
                           class="p-2"
@@ -854,7 +854,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplFunction lightTheme"
+                      class="_tmplFunction_a85043 _lightTheme_a85043"
                     >
                       nindent
                     </span>
@@ -872,12 +872,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_20"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             20
           </div>
@@ -889,11 +889,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{- 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   end
                 </span>
@@ -909,12 +909,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_21"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             21
           </div>
@@ -926,11 +926,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{- 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   with
                 </span>
@@ -942,11 +942,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap _dropdown_b64196 invisible"
                       data-testid="infoDropdown"
                     >
                       <div
-                        class="content"
+                        class="_content_b64196"
                       >
                         <div
                           class="p-2 text-truncate"
@@ -970,7 +970,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplValue lightTheme"
+                      class="_tmplValue_a85043 _lightTheme_a85043"
                     >
                       .Values.hub.ingress.tls
                     </span>
@@ -988,12 +988,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_22"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             22
           </div>
@@ -1010,12 +1010,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_23"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             23
           </div>
@@ -1027,17 +1027,17 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{- 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   toYaml
                 </span>
                  . 
                 <span
-                  class="d-inline-flex prevSpace"
+                  class="d-inline-flex _prevSpace_a85043"
                 >
                   |
                 </span>
@@ -1049,11 +1049,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap dropdown invisible fixedWidth"
+                      class="dropdown-menu dropdown-menu-left p-0 show d-block me-1 mb-1 text-wrap _dropdown_b64196 invisible _fixedWidth_b64196"
                       data-testid="infoDropdown"
                     >
                       <div
-                        class="content"
+                        class="_content_b64196"
                       >
                         <div
                           class="p-2"
@@ -1069,7 +1069,7 @@ The **nindent** function is the same as the indent function, but prepends a new 
                     data-testid="infoText"
                   >
                     <span
-                      class="tmplFunction lightTheme"
+                      class="_tmplFunction_a85043 _lightTheme_a85043"
                     >
                       nindent
                     </span>
@@ -1087,12 +1087,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_24"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             24
           </div>
@@ -1104,11 +1104,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{- 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   end
                 </span>
@@ -1124,12 +1124,12 @@ The **nindent** function is the same as the indent function, but prepends a new 
           class="d-flex flex-row my-1 position-relative"
         >
           <div
-            class="position-absolute anchor"
+            class="position-absolute _anchor_a85043"
             data-testid="anchor"
             id="line_25"
           />
           <div
-            class="text-end me-3 lineNumber"
+            class="text-end me-3 _lineNumber_a85043"
           >
             25
           </div>
@@ -1140,11 +1140,11 @@ The **nindent** function is the same as the indent function, but prepends a new 
               data-testid="betweenBracketsContent"
             >
               <span
-                class="badge fw-normal border border-1 bg-white badge"
+                class="badge fw-normal border border-1 bg-white _badge_a85043"
               >
                 {{- 
                 <span
-                  class="tmplFlowControl lightTheme"
+                  class="_tmplFlowControl_a85043 _lightTheme_a85043"
                 >
                   end
                 </span>

@@ -1,18 +1,18 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ValuesView creates snapshot 1`] = `
+exports[`ValuesView > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-flex flex-row"
   >
     <div
-      class="position-relative wrapper w-50"
+      class="position-relative _wrapper_6b0f1f w-50"
     >
       <div
-        class="mb-3 input-group-sm inputWrapper undefined"
+        class="mb-3 input-group-sm _inputWrapper_228486 undefined"
       >
         <input
-          class="flex-grow-1 form-control input ps-3 pe-4"
+          class="flex-grow-1 form-control _input_228486 ps-3 pe-4"
           name="inputTypeahead_path"
           placeholder="Search path"
           spellcheck="false"
@@ -20,7 +20,7 @@ exports[`ValuesView creates snapshot 1`] = `
           value=""
         />
         <svg
-          class="text-muted position-absolute searchIcon"
+          class="text-muted position-absolute _searchIcon_228486"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -37,17 +37,17 @@ exports[`ValuesView creates snapshot 1`] = `
     </div>
   </div>
   <div
-    class="position-relative flex-grow-1 content"
+    class="position-relative flex-grow-1 _content_5a2db2"
   >
     <div
-      class="position-absolute d-flex flex-row wrapper undefined"
+      class="position-absolute d-flex flex-row _wrapper_735216 undefined"
     >
       <div
         class="position-relative me-2"
       >
         <button
           aria-label="Copy to clipboard"
-          class="btn btn-sm btn-primary btn"
+          class="btn btn-sm btn-primary _btn_a0bd31"
           type="button"
         >
           <div
@@ -82,7 +82,7 @@ exports[`ValuesView creates snapshot 1`] = `
       </div>
       <button
         aria-label="Download"
-        class="btn btn-sm btn-primary fs-5 btn"
+        class="btn btn-sm btn-primary fs-5 _btn_735216"
       >
         <svg
           aria-hidden="true"
@@ -104,7 +104,7 @@ exports[`ValuesView creates snapshot 1`] = `
       </button>
     </div>
     <div
-      class="overflow-auto h-100 position-relative border border-1 codeWrapper"
+      class="overflow-auto h-100 position-relative border border-1 _codeWrapper_5a2db2"
     >
       <pre
         class="hljs customYAML"

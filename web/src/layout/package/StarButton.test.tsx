@@ -1,15 +1,26 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
+
+const mockUseNavigate = vi.fn();
+const mockUseLocation = vi.fn();
+
+vi.mock('react-router', async () => {
+  const actual = await vi.importActual<typeof import('react-router')>('react-router');
+  return {
+    ...actual,
+    useNavigate: () => mockUseNavigate,
+    useLocation: () => mockUseLocation(),
+  };
+});
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import StarButton from './StarButton';
-jest.mock('../../api');
-jest.mock('../../utils/alertDispatcher');
+vi.mock('../../api');
+vi.mock('../../utils/alertDispatcher');
 
 const defaultProps = {
   packageId: 'id',
@@ -34,26 +45,25 @@ const mockCtx = {
 
 const mockDispatch = jest.fn();
 
-const mockUseNavigate = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as object),
-  useNavigate: () => mockUseNavigate,
-}));
-
 describe('StarButton', () => {
+  beforeEach(() => {
+    mockUseNavigate.mockReset();
+    mockUseLocation.mockReset();
+    mockUseLocation.mockReturnValue({ pathname: '/packages' });
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
+    mockUseNavigate.mockReset();
+    mockUseLocation.mockReset();
   });
 
   it('creates snapshot', async () => {
-    mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: false });
+    vi.mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: false });
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-        <Router>
-          <StarButton {...defaultProps} />
-        </Router>
+        <StarButton {...defaultProps} />
       </AppCtx.Provider>
     );
 
@@ -68,16 +78,14 @@ describe('StarButton', () => {
   describe('Render', () => {
     describe('when user is signed in', () => {
       it('renders unstarred package', async () => {
-        mocked(API)
+        vi.mocked(API)
           .getStars.mockResolvedValue({ stars: 5, starredByUser: true })
           .mockResolvedValueOnce({ stars: 4, starredByUser: false });
-        mocked(API).toggleStar.mockResolvedValue('');
+        vi.mocked(API).toggleStar.mockResolvedValue('');
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -114,16 +122,14 @@ describe('StarButton', () => {
       });
 
       it('renders starred package', async () => {
-        mocked(API)
+        vi.mocked(API)
           .getStars.mockResolvedValue({ stars: 4, starredByUser: false })
           .mockResolvedValueOnce({ stars: 5, starredByUser: true });
-        mocked(API).toggleStar.mockResolvedValue('');
+        vi.mocked(API).toggleStar.mockResolvedValue('');
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -159,14 +165,12 @@ describe('StarButton', () => {
 
     describe('calls alertDispatcher on error', () => {
       it('when package is not starred', async () => {
-        mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: false });
-        mocked(API).toggleStar.mockRejectedValue('');
+        vi.mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: false });
+        vi.mocked(API).toggleStar.mockRejectedValue('');
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -188,14 +192,12 @@ describe('StarButton', () => {
       });
 
       it('when package is starred', async () => {
-        mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: true });
-        mocked(API).toggleStar.mockRejectedValue('');
+        vi.mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: true });
+        vi.mocked(API).toggleStar.mockRejectedValue('');
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -219,13 +221,11 @@ describe('StarButton', () => {
 
     describe('on getStars error', () => {
       it('does not render component', async () => {
-        mocked(API).getStars.mockRejectedValue({ kind: ErrorKind.Other });
+        vi.mocked(API).getStars.mockRejectedValue({ kind: ErrorKind.Other });
 
         const component = (
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -248,13 +248,11 @@ describe('StarButton', () => {
 
     describe('on init', () => {
       it('does not call getStars if ctx.user is not initialized', async () => {
-        mocked(API).getStars.mockResolvedValue({ stars: 4 });
+        vi.mocked(API).getStars.mockResolvedValue({ stars: 4 });
 
         render(
           <AppCtx.Provider value={{ ctx: { ...mockCtx, user: undefined }, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -266,14 +264,12 @@ describe('StarButton', () => {
 
     describe('calls to sign out', () => {
       it('when user is not logged in to star/unstar pkg', async () => {
-        mocked(API).getStars.mockResolvedValue({ stars: 4 });
-        mocked(API).toggleStar.mockRejectedValue({ kind: ErrorKind.Unauthorized });
+        vi.mocked(API).getStars.mockResolvedValue({ stars: 4 });
+        vi.mocked(API).toggleStar.mockRejectedValue({ kind: ErrorKind.Unauthorized });
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
@@ -294,12 +290,10 @@ describe('StarButton', () => {
 
     describe('when user is not signed in', () => {
       it('btn is disabled', async () => {
-        mocked(API).getStars.mockResolvedValue({ stars: 4 });
+        vi.mocked(API).getStars.mockResolvedValue({ stars: 4 });
         render(
           <AppCtx.Provider value={{ ctx: { ...mockCtx, user: null }, dispatch: jest.fn() }}>
-            <Router>
-              <StarButton {...defaultProps} />
-            </Router>
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 

@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`OAuth creates snapshot 1`] = `
+exports[`OAuth > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="undefined my-4 position-relative text-center separator"
+    class="undefined my-4 position-relative text-center _separator_2a244d"
   >
     <span
       class="p-3 m-auto bg-white"
@@ -11,7 +11,7 @@ exports[`OAuth creates snapshot 1`] = `
       or sign in with
     </span>
     <div
-      class="position-absolute top-50 start-0 end-0 divider"
+      class="position-absolute top-50 start-0 end-0 _divider_2a244d"
     />
   </div>
   <div>
@@ -23,7 +23,7 @@ exports[`OAuth creates snapshot 1`] = `
       >
         <button
           aria-label="Sign in with GitHub"
-          class="btn btn-outline-secondary btn"
+          class="btn btn-outline-secondary _btn_2a244d"
           type="button"
         >
           <div
@@ -31,7 +31,7 @@ exports[`OAuth creates snapshot 1`] = `
           >
             <img
               alt="GitHub Logo"
-              class="lh-base logo"
+              class="lh-base _logo_2a244d"
               src="/static/media/github-mark.svg"
             />
             <div
@@ -43,7 +43,7 @@ exports[`OAuth creates snapshot 1`] = `
         </button>
         <button
           aria-label="Sign in with Google"
-          class="btn btn-outline-secondary btn"
+          class="btn btn-outline-secondary _btn_2a244d"
           type="button"
         >
           <div
@@ -51,7 +51,7 @@ exports[`OAuth creates snapshot 1`] = `
           >
             <img
               alt="Google Logo"
-              class="lh-base logo"
+              class="lh-base _logo_2a244d"
               src="/static/media/google.svg"
             />
             <div
@@ -63,7 +63,7 @@ exports[`OAuth creates snapshot 1`] = `
         </button>
         <button
           aria-label="Sign in with OpenID Connect"
-          class="btn btn-outline-secondary  btn"
+          class="btn btn-outline-secondary  _btn_2a244d"
           type="button"
         >
           <div
@@ -71,7 +71,7 @@ exports[`OAuth creates snapshot 1`] = `
           >
             <img
               alt="OpenID Logo"
-              class="lh-base logo"
+              class="lh-base _logo_2a244d"
               src="/static/media/openid.svg"
             />
             <div

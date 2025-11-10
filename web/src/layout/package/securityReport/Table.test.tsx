@@ -1,11 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { SecurityReportResult } from '../../../types';
 import SecurityTable from './Table';
 
-jest.mock('react-markdown', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: () => <div />,
+}));
 
 const getMockSecurityReport = (fixtureId: string): SecurityReportResult[] => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports

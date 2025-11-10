@@ -1,14 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Repository } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import DeletionModal from './DeletionModal';
-jest.mock('../../../api');
-jest.mock('../../../utils/alertDispatcher');
+vi.mock('../../../api');
+vi.mock('../../../utils/alertDispatcher');
 
 const onAuthErrorMock = jest.fn();
 const onSuccessMock = jest.fn();
@@ -86,7 +86,7 @@ describe('Deletion modal Modal - packages section', () => {
     });
 
     it('calls delete repo when delete button in dropdown is clicked', async () => {
-      mocked(API).deleteRepository.mockResolvedValue(null);
+      vi.mocked(API).deleteRepository.mockResolvedValue(null);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -124,7 +124,7 @@ describe('Deletion modal Modal - packages section', () => {
 
   describe('on deleteRepositoryError', () => {
     it('displays generic error', async () => {
-      mocked(API).deleteRepository.mockRejectedValue({
+      vi.mocked(API).deleteRepository.mockRejectedValue({
         kind: ErrorKind.Other,
       });
       render(
@@ -151,7 +151,7 @@ describe('Deletion modal Modal - packages section', () => {
     });
 
     it('calls onAuthError', async () => {
-      mocked(API).deleteRepository.mockRejectedValue({
+      vi.mocked(API).deleteRepository.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
       render(

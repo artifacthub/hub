@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ControlPanelView renders correctly 1`] = `
+exports[`ControlPanelView > renders correctly 1`] = `
 <DocumentFragment>
   <main
     class="d-flex flex-column flex-grow-1 position-relative noFocus"
@@ -9,7 +9,7 @@ exports[`ControlPanelView renders correctly 1`] = `
     tabindex="-1"
   >
     <div
-      class="pt-3 position-relative navWrapper navWrapper"
+      class="pt-3 position-relative navWrapper _navWrapper_28273f"
     >
       <div
         class="container-lg px-sm-4 px-lg-0"
@@ -22,19 +22,20 @@ exports[`ControlPanelView renders correctly 1`] = `
             role="tablist"
           >
             <li
-              class="nav-item navItem"
+              class="nav-item _navItem_28273f"
               role="tab"
             >
               <a
                 aria-label="Open Repositories section"
-                class="btn btn-link rounded-0 text-reset nav-link position-relative section active activeSection activeSection"
+                class="btn btn-link rounded-0 text-reset nav-link position-relative _section_28273f active activeSection _activeSection_28273f"
+                data-discover="true"
                 href="/control-panel/repositories"
               >
                 <div
                   class="d-flex flex-row align-items-center"
                 >
                   <span
-                    class="icon"
+                    class="_icon_28273f"
                   >
                     <svg
                       fill="none"
@@ -68,7 +69,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                     </svg>
                   </span>
                   <span
-                    class="d-none d-md-inline ms-2 navTitle"
+                    class="d-none d-md-inline ms-2 _navTitle_28273f"
                   >
                     Repositories
                   </span>
@@ -76,19 +77,20 @@ exports[`ControlPanelView renders correctly 1`] = `
               </a>
             </li>
             <li
-              class="nav-item navItem"
+              class="nav-item _navItem_28273f"
               role="tab"
             >
               <a
                 aria-label="Open Organizations section"
-                class="btn btn-link rounded-0 text-reset nav-link position-relative section"
+                class="btn btn-link rounded-0 text-reset nav-link position-relative _section_28273f"
+                data-discover="true"
                 href="/control-panel/organizations"
               >
                 <div
                   class="d-flex flex-row align-items-center"
                 >
                   <span
-                    class="icon"
+                    class="_icon_28273f"
                   >
                     <svg
                       fill="currentColor"
@@ -109,7 +111,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                     </svg>
                   </span>
                   <span
-                    class="d-none d-md-inline ms-2 navTitle"
+                    class="d-none d-md-inline ms-2 _navTitle_28273f"
                   >
                     Organizations
                   </span>
@@ -117,19 +119,20 @@ exports[`ControlPanelView renders correctly 1`] = `
               </a>
             </li>
             <li
-              class="nav-item navItem"
+              class="nav-item _navItem_28273f"
               role="tab"
             >
               <a
                 aria-label="Open Settings section"
-                class="btn btn-link rounded-0 text-reset nav-link position-relative section"
+                class="btn btn-link rounded-0 text-reset nav-link position-relative _section_28273f"
+                data-discover="true"
                 href="/control-panel/settings"
               >
                 <div
                   class="d-flex flex-row align-items-center"
                 >
                   <span
-                    class="icon"
+                    class="_icon_28273f"
                   >
                     <svg
                       fill="currentColor"
@@ -150,7 +153,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                     </svg>
                   </span>
                   <span
-                    class="d-none d-md-inline ms-2 navTitle"
+                    class="d-none d-md-inline ms-2 _navTitle_28273f"
                   >
                     Settings
                   </span>
@@ -159,13 +162,13 @@ exports[`ControlPanelView renders correctly 1`] = `
             </li>
           </ul>
           <div
-            class="position-relative ctxWrapper"
+            class="position-relative _ctxWrapper_6a45a8"
           >
             <div
               class="d-flex flex-column"
             >
               <small
-                class="text-uppercase text-muted legendCtx"
+                class="text-uppercase text-muted _legendCtx_6a45a8"
               >
                 Control panel context
               </small>
@@ -175,14 +178,14 @@ exports[`ControlPanelView renders correctly 1`] = `
                 <button
                   aria-expanded="false"
                   aria-label="Open context"
-                  class="btn btn-primary btn-sm pe-3 position-relative lh-1 ctxBtn"
+                  class="btn btn-primary btn-sm pe-3 position-relative lh-1 _ctxBtn_6a45a8"
                   type="button"
                 >
                   <div
                     class="d-flex flex-row align-items-center"
                   >
                     <div
-                      class="badge bg-light text-dark rounded-pill me-2 p-0 badgeIcon"
+                      class="badge bg-light text-dark rounded-pill me-2 p-0 _badgeIcon_6a45a8"
                     >
                       <svg
                         fill="currentColor"
@@ -199,13 +202,13 @@ exports[`ControlPanelView renders correctly 1`] = `
                       </svg>
                     </div>
                     <div
-                      class="flex-grow-1 text-start me-1 text-truncate badgeContent"
+                      class="flex-grow-1 text-start me-1 text-truncate _badgeContent_6a45a8"
                     >
                       test
                     </div>
                   </div>
                   <div
-                    class="position-absolute textLight caret"
+                    class="position-absolute textLight _caret_6a45a8"
                   >
                     <svg
                       fill="currentColor"
@@ -224,10 +227,10 @@ exports[`ControlPanelView renders correctly 1`] = `
                 </button>
               </div>
               <div
-                class="position-absolute loading"
+                class="position-absolute _loading_6a45a8"
               >
                 <div
-                  class="wave miniWave"
+                  class="_wave_b8d820 _miniWave_b8d820"
                   role="status"
                 >
                   <span
@@ -239,11 +242,11 @@ exports[`ControlPanelView renders correctly 1`] = `
               </div>
             </div>
             <div
-              class="dropdown-menu dropdown-menu-end dropdown"
+              class="dropdown-menu dropdown-menu-end _dropdown_6a45a8"
               role="menu"
             >
               <div
-                class="dropdown-arrow arrow"
+                class="dropdown-arrow _arrow_6a45a8"
               />
               <button
                 aria-label="Activate user context"
@@ -253,7 +256,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                   class="d-flex flex-row align-items-center text-truncate"
                 >
                   <svg
-                    class="me-2 icon"
+                    class="me-2 _icon_6a45a8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -272,7 +275,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                     test
                   </div>
                   <svg
-                    class="ms-2 text-success icon"
+                    class="ms-2 text-success _icon_6a45a8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"

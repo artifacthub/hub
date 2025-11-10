@@ -1,26 +1,26 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`StarButton creates snapshot 1`] = `
+exports[`StarButton > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="ms-auto d-flex flex-row align-items-center position-relative wrapper"
+    class="ms-auto d-flex flex-row align-items-center position-relative _wrapper_9ba591"
   >
     <div
-      class="position-relative starBtnWrapper"
+      class="position-relative _starBtnWrapper_9ba591"
     >
       <div
         data-testid="elementWithTooltip"
       >
         <button
           aria-label="Star package"
-          class="btn btn-sm btn-primary px-1 px-md-3 position-relative starBtn starBtn"
+          class="btn btn-sm btn-primary px-1 px-md-3 position-relative starBtn _starBtn_9ba591"
           type="button"
         >
           <div
             class="d-flex align-items-center"
           >
             <svg
-              class="icon"
+              class="_icon_9ba591"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -43,7 +43,7 @@ exports[`StarButton creates snapshot 1`] = `
       </div>
     </div>
     <span
-      class="badge bg-light text-dark text-center px-3 border border-1 border-start-0 lh-base starBadge"
+      class="badge bg-light text-dark text-center px-3 border border-1 border-start-0 lh-base _starBadge_9ba591"
     >
       4
     </span>

@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Authorization settings index creates snapshot 1`] = `
+exports[`Authorization settings index > creates snapshot 1`] = `
 <DocumentFragment>
   <main
     class="p-0"
     role="main"
   >
     <div
-      class="h3 pb-2 border-bottom border-1 title"
+      class="h3 pb-2 border-bottom border-1 _title_330824"
     >
       Authorization
     </div>
@@ -18,7 +18,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
          allows you to setup fine-grained access control based on authorization policies. Authorization polices are written in 
         <a
           aria-label="Open rego documentation"
-          class="link text-primary fw-bold"
+          class="_link_f0e789 text-primary fw-bold"
           href="https://www.openpolicyagent.org/docs/latest/#rego"
           rel="noopener noreferrer"
           role="button"
@@ -30,7 +30,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
          and they are evaluated using the 
         <a
           aria-label="Open Open Policy Agent documentation"
-          class="link text-primary fw-bold"
+          class="_link_f0e789 text-primary fw-bold"
           href="https://www.openpolicyagent.org"
           rel="noopener noreferrer"
           role="button"
@@ -42,7 +42,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
         . Depending on your requirements, you can use a predefined policy and only supply a data file, or you can provide your custom policy for maximum flexibility. For more information please see the 
         <a
           aria-label="Open documentation"
-          class="link text-primary fw-bold"
+          class="_link_f0e789 text-primary fw-bold"
           href="/docs/authorization"
           rel="noopener noreferrer"
           role="button"

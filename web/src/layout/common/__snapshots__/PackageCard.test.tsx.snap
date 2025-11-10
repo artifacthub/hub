@@ -1,41 +1,42 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PackageCard creates snapshot 1`] = `
+exports[`PackageCard > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="py-sm-3 py-2 cardWrapper undefined"
+    class="py-sm-3 py-2 _cardWrapper_db3e62 undefined"
     role="listitem"
   >
     <div
-      class="card cardWithHover h-100 mw-100 bg-white card undefined"
+      class="card cardWithHover h-100 mw-100 bg-white _card_db3e62 undefined"
     >
       <a
-        class="text-decoration-none text-reset h-100 bg-transparent link"
+        class="text-decoration-none text-reset h-100 bg-transparent _link_db3e62"
+        data-discover="true"
         href="/packages/helm/stable/test"
         role="link"
       >
         <div
-          class="card-body d-flex flex-column h-100 body"
+          class="card-body d-flex flex-column h-100 _body_db3e62"
         >
           <div
             class="d-flex align-items-start justify-content-between mw-100"
           >
             <div
-              class="d-flex align-items-stretch flex-grow-1 h-100 truncateWrapper"
+              class="d-flex align-items-stretch flex-grow-1 h-100 _truncateWrapper_db3e62"
             >
               <div
-                class="my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative imageWrapper"
+                class="my-2 my-md-0 d-flex align-items-center justify-content-center overflow-hidden position-relative _imageWrapper_db3e62"
               >
                 <img
                   alt="Logo Pretty name"
                   aria-hidden="true"
-                  class="image"
+                  class="_image_db3e62"
                   src="/image/imageId"
                   srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
                 />
               </div>
               <div
-                class="d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between truncateWrapper titleWrapper"
+                class="d-flex flex-column flex-grow-1 flex-sm-grow-0 justify-content-between _truncateWrapper_db3e62 _titleWrapper_db3e62"
               >
                 <div
                   class="text-truncate card-title mb-0"
@@ -44,7 +45,7 @@ exports[`PackageCard creates snapshot 1`] = `
                     class="d-flex flex-row align-items-center justify-content-between"
                   >
                     <div
-                      class="text-truncate title"
+                      class="text-truncate _title_db3e62"
                     >
                       Pretty name
                     </div>
@@ -54,7 +55,7 @@ exports[`PackageCard creates snapshot 1`] = `
                   class="d-block d-md-none"
                 >
                   <div
-                    class="card-subtitle align-items-baseline subtitle"
+                    class="card-subtitle align-items-baseline _subtitle_db3e62"
                   >
                     <div
                       class="d-inline d-md-none text-truncate w-100"
@@ -63,11 +64,11 @@ exports[`PackageCard creates snapshot 1`] = `
                         class="position-absolute"
                       >
                         <div
-                          class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                          class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                           role="complementary"
                         >
                           <div
-                            class="content"
+                            class="_content_e64025"
                           >
                             <div
                               class="d-flex flex-column"
@@ -82,16 +83,16 @@ exports[`PackageCard creates snapshot 1`] = `
                                 </small>
                                 <img
                                   alt="Icon"
-                                  class="me-1 w-auto repoIconMini iconLight"
+                                  class="me-1 w-auto _repoIconMini_e64025 iconLight"
                                   src="/static/media/helm-chart.svg"
                                 />
                                 <img
                                   alt="Icon"
-                                  class="me-1 w-auto repoIconMini iconDark"
+                                  class="me-1 w-auto _repoIconMini_e64025 iconDark"
                                   src="/static/media/helm-chart-light.svg"
                                 />
                                 <div
-                                  class="text-reset text-truncate labelContent"
+                                  class="text-reset text-truncate _labelContent_e64025"
                                 >
                                   stable
                                 </div>
@@ -105,13 +106,13 @@ exports[`PackageCard creates snapshot 1`] = `
                                   Url: 
                                 </small>
                                 <div
-                                  class="text-reset text-break labelContent"
+                                  class="text-reset text-break _labelContent_e64025"
                                   data-testid="repoUrl"
                                 >
                                   <div
                                     class="d-flex flex-row flex-wrap undefined"
                                     data-testid="attachedIconToTextWrapper"
-                                    style="line-height: 21px;"
+                                    style="font-size: inherit; line-height: 21px;"
                                   >
                                     <div
                                       class="d-inline"
@@ -204,7 +205,7 @@ exports[`PackageCard creates snapshot 1`] = `
                           class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                         >
                           <div
-                            class="position-relative icon"
+                            class="position-relative _icon_e64025"
                           >
                             <svg
                               fill="none"
@@ -247,7 +248,7 @@ exports[`PackageCard creates snapshot 1`] = `
                           aria-expanded="false"
                           aria-hidden="true"
                           aria-label="Filter by repo stable"
-                          class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                          class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                           data-testid="repoLink"
                           tabindex="-1"
                         >
@@ -262,18 +263,18 @@ exports[`PackageCard creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="d-none d-md-block card-subtitle align-items-center subtitle"
+                  class="d-none d-md-block card-subtitle align-items-center _subtitle_db3e62"
                 >
                   <div
                     class="visually-hidden d-flex flex-row position-relative"
                   >
                     <div
-                      class="info"
+                      class="_info_db3e62"
                     >
                       user
                     </div>
                     <div
-                      class="ms-3 info"
+                      class="ms-3 _info_db3e62"
                     >
                       stable
                     </div>
@@ -282,10 +283,10 @@ exports[`PackageCard creates snapshot 1`] = `
                     class="d-flex flex-row mw-100"
                   >
                     <div
-                      class="truncateWrapper"
+                      class="_truncateWrapper_db3e62"
                     >
                       <div
-                        class="d-flex flex-row align-items-baseline userInfo"
+                        class="d-flex flex-row align-items-baseline _userInfo_db3e62"
                       >
                         <span
                           class="visually-hidden"
@@ -295,12 +296,12 @@ exports[`PackageCard creates snapshot 1`] = `
                         <button
                           aria-hidden="true"
                           aria-label="Filter by user"
-                          class="d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent link"
+                          class="d-flex align-items-baseline p-0 border-0 text-truncate text-muted mw-100 bg-transparent _link_db3e62"
                           data-testid="userLink"
                           tabindex="-1"
                         >
                           <div
-                            class="text-dark me-1 position-relative userIcon"
+                            class="text-dark me-1 position-relative _userIcon_db3e62"
                           >
                             <svg
                               fill="currentColor"
@@ -325,20 +326,20 @@ exports[`PackageCard creates snapshot 1`] = `
                       </div>
                     </div>
                     <div
-                      class="truncateWrapper"
+                      class="_truncateWrapper_db3e62"
                     >
                       <div
-                        class="d-flex flex-row align-items-baseline ms-3 truncateWrapper"
+                        class="d-flex flex-row align-items-baseline ms-3 _truncateWrapper_db3e62"
                       >
                         <div
                           class="position-absolute"
                         >
                           <div
-                            class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                            class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                             role="complementary"
                           >
                             <div
-                              class="content"
+                              class="_content_e64025"
                             >
                               <div
                                 class="d-flex flex-column"
@@ -353,16 +354,16 @@ exports[`PackageCard creates snapshot 1`] = `
                                   </small>
                                   <img
                                     alt="Icon"
-                                    class="me-1 w-auto repoIconMini iconLight"
+                                    class="me-1 w-auto _repoIconMini_e64025 iconLight"
                                     src="/static/media/helm-chart.svg"
                                   />
                                   <img
                                     alt="Icon"
-                                    class="me-1 w-auto repoIconMini iconDark"
+                                    class="me-1 w-auto _repoIconMini_e64025 iconDark"
                                     src="/static/media/helm-chart-light.svg"
                                   />
                                   <div
-                                    class="text-reset text-truncate labelContent"
+                                    class="text-reset text-truncate _labelContent_e64025"
                                   >
                                     stable
                                   </div>
@@ -376,13 +377,13 @@ exports[`PackageCard creates snapshot 1`] = `
                                     Url: 
                                   </small>
                                   <div
-                                    class="text-reset text-break labelContent"
+                                    class="text-reset text-break _labelContent_e64025"
                                     data-testid="repoUrl"
                                   >
                                     <div
                                       class="d-flex flex-row flex-wrap undefined"
                                       data-testid="attachedIconToTextWrapper"
-                                      style="line-height: 21px;"
+                                      style="font-size: inherit; line-height: 21px;"
                                     >
                                       <div
                                         class="d-inline"
@@ -475,7 +476,7 @@ exports[`PackageCard creates snapshot 1`] = `
                             class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                           >
                             <div
-                              class="position-relative icon"
+                              class="position-relative _icon_e64025"
                             >
                               <svg
                                 fill="none"
@@ -518,7 +519,7 @@ exports[`PackageCard creates snapshot 1`] = `
                             aria-expanded="false"
                             aria-hidden="true"
                             aria-label="Filter by repo stable"
-                            class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                            class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                             data-testid="repoLink"
                             tabindex="-1"
                           >
@@ -535,10 +536,10 @@ exports[`PackageCard creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="d-none d-lg-flex flex-column align-items-end mb-auto ms-auto rightInfo"
+                class="d-none d-lg-flex flex-column align-items-end mb-auto ms-auto _rightInfo_db3e62"
               >
                 <div
-                  class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                  class="align-self-start d-flex align-items-center text-uppercase ms-auto _kind_db3e62"
                 >
                   <div
                     class="d-none d-md-inline-block"
@@ -551,19 +552,19 @@ exports[`PackageCard creates snapshot 1`] = `
                     <button
                       aria-hidden="true"
                       aria-label="Filter by Helm chart repository kind"
-                      class="btn btn-link m-0 p-0 border-0 btn position-relative repoLabel"
+                      class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                       data-testid="repoIconLabelLink"
                       tabindex="-1"
                     >
                       <span
-                        class="badge bg-light text-dark border border-1 bg badge"
+                        class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                       >
                         <div
                           class="d-flex flex-row align-items-center"
                         >
                           <div
                             aria-hidden="true"
-                            class="position-relative icon undefined"
+                            class="position-relative _icon_c0e9ad undefined"
                           >
                             <img
                               alt="Icon"
@@ -577,7 +578,7 @@ exports[`PackageCard creates snapshot 1`] = `
                             />
                           </div>
                           <div
-                            class="ms-1 text"
+                            class="ms-1 _text_c0e9ad"
                           >
                             Helm chart
                           </div>
@@ -589,14 +590,14 @@ exports[`PackageCard creates snapshot 1`] = `
                     class="d-flex d-md-none fs-6"
                   >
                     <span
-                      class="badge bg-light text-dark border border-1 bg badge"
+                      class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                     >
                       <div
                         class="d-flex flex-row align-items-center"
                       >
                         <div
                           aria-hidden="true"
-                          class="position-relative icon undefined"
+                          class="position-relative _icon_c0e9ad undefined"
                         >
                           <img
                             alt="Icon"
@@ -610,7 +611,7 @@ exports[`PackageCard creates snapshot 1`] = `
                           />
                         </div>
                         <div
-                          class="ms-1 text"
+                          class="ms-1 _text_c0e9ad"
                         >
                           Helm chart
                         </div>
@@ -620,15 +621,9 @@ exports[`PackageCard creates snapshot 1`] = `
                 </div>
                 <div
                   class="mt-1"
-                >
-                  <small
-                    class="text-muted text-nowrap date"
-                  >
-                    Updated Invalid date
-                  </small>
-                </div>
+                />
                 <div
-                  class="mt-1 text-truncate align-items-baseline position-relative version"
+                  class="mt-1 text-truncate align-items-baseline position-relative _version_db3e62"
                 >
                   <div
                     class="d-flex flex-row align-items-baseline text-truncate"
@@ -645,21 +640,16 @@ exports[`PackageCard creates snapshot 1`] = `
             </div>
           </div>
           <div
-            class="mb-0 mb-md-1 mt-3 pt-0 pt-md-2 text-muted text-truncate description lineClamp "
+            class="mb-0 mb-md-1 mt-3 pt-0 pt-md-2 text-muted text-truncate _description_db3e62 _lineClamp_db3e62 "
           >
             desc
           </div>
           <div
             class="d-flex d-lg-none flex-row flex-wrap justify-content-between align-items-center mt-auto pt-3 pt-lg-0 mt-1 mt-lg-0 mt-xxl-1 mt-xxxl-0"
           >
-            <small
-              class="text-muted text-nowrap date"
-            >
-              Updated Invalid date
-            </small>
             <span>
               <div
-                class="align-self-start d-flex align-items-center text-uppercase ms-auto kind"
+                class="align-self-start d-flex align-items-center text-uppercase ms-auto _kind_db3e62"
               >
                 <div
                   class="d-none d-md-inline-block"
@@ -672,19 +662,19 @@ exports[`PackageCard creates snapshot 1`] = `
                   <button
                     aria-hidden="true"
                     aria-label="Filter by Helm chart repository kind"
-                    class="btn btn-link m-0 p-0 border-0 btn position-relative repoLabel"
+                    class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad position-relative _repoLabel_db3e62"
                     data-testid="repoIconLabelLink"
                     tabindex="-1"
                   >
                     <span
-                      class="badge bg-light text-dark border border-1 bg badge"
+                      class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                     >
                       <div
                         class="d-flex flex-row align-items-center"
                       >
                         <div
                           aria-hidden="true"
-                          class="position-relative icon undefined"
+                          class="position-relative _icon_c0e9ad undefined"
                         >
                           <img
                             alt="Icon"
@@ -698,7 +688,7 @@ exports[`PackageCard creates snapshot 1`] = `
                           />
                         </div>
                         <div
-                          class="ms-1 text"
+                          class="ms-1 _text_c0e9ad"
                         >
                           Helm chart
                         </div>
@@ -710,14 +700,14 @@ exports[`PackageCard creates snapshot 1`] = `
                   class="d-flex d-md-none fs-6"
                 >
                   <span
-                    class="badge bg-light text-dark border border-1 bg badge"
+                    class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                   >
                     <div
                       class="d-flex flex-row align-items-center"
                     >
                       <div
                         aria-hidden="true"
-                        class="position-relative icon undefined"
+                        class="position-relative _icon_c0e9ad undefined"
                       >
                         <img
                           alt="Icon"
@@ -731,7 +721,7 @@ exports[`PackageCard creates snapshot 1`] = `
                         />
                       </div>
                       <div
-                        class="ms-1 text"
+                        class="ms-1 _text_c0e9ad"
                       >
                         Helm chart
                       </div>
@@ -758,11 +748,11 @@ exports[`PackageCard creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
+                      class="dropdown-menu dropdown-menu-end text-wrap _dropdown_4f4cdd dropdown-menu-end"
                       role="complementary"
                     >
                       <div
-                        class="content"
+                        class="_content_4f4cdd"
                       >
                         <div
                           class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
@@ -782,13 +772,13 @@ exports[`PackageCard creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="border label"
+                    class="border _label_4f4cdd"
                   >
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
                       <div
-                        class="icon"
+                        class="_icon_4f4cdd"
                       >
                         <svg
                           fill="none"
@@ -814,14 +804,14 @@ exports[`PackageCard creates snapshot 1`] = `
                   class="d-block d-md-none d-inline mt-3 ms-2"
                 >
                   <div
-                    class="border label"
+                    class="border _label_4f4cdd"
                     role="button"
                   >
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
                       <div
-                        class="icon"
+                        class="_icon_4f4cdd"
                       >
                         <svg
                           fill="none"
@@ -845,21 +835,21 @@ exports[`PackageCard creates snapshot 1`] = `
                   <div>
                     <div
                       aria-modal="false"
-                      class="modal modal"
+                      class="modal _modal_2adcc6"
                       role="dialog"
                     >
                       <div
                         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
                       >
                         <div
-                          class="modal-content border border-3 mx-auto content"
+                          class="modal-content border border-3 mx-auto _content_2adcc6"
                         >
                           <div
                             class="modal-body p-4 h-100 d-flex flex-column"
                           >
                             <div>
                               <div
-                                class="overflow-hidden alertWrapper"
+                                class="overflow-hidden _alertWrapper_1aa3f6"
                                 data-testid="alertWrapper"
                               />
                             </div>
@@ -915,11 +905,11 @@ exports[`PackageCard creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
+                      class="dropdown-menu dropdown-menu-end text-wrap _dropdown_4f4cdd dropdown-menu-end"
                       role="complementary"
                     >
                       <div
-                        class="content"
+                        class="_content_4f4cdd"
                       >
                         <div
                           class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
@@ -941,16 +931,16 @@ exports[`PackageCard creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="border label"
+                    class="border _label_4f4cdd"
                   >
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
                       <div
-                        class="icon"
+                        class="_icon_4f4cdd"
                       >
                         <svg
-                          class="signedIcon"
+                          class="_signedIcon_4f4cdd"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -971,17 +961,17 @@ exports[`PackageCard creates snapshot 1`] = `
                   class="d-block d-md-none d-inline mt-3 ms-2"
                 >
                   <div
-                    class="border label"
+                    class="border _label_4f4cdd"
                     role="button"
                   >
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
                       <div
-                        class="icon"
+                        class="_icon_4f4cdd"
                       >
                         <svg
-                          class="signedIcon"
+                          class="_signedIcon_4f4cdd"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -1000,21 +990,21 @@ exports[`PackageCard creates snapshot 1`] = `
                   <div>
                     <div
                       aria-modal="false"
-                      class="modal modal"
+                      class="modal _modal_2adcc6"
                       role="dialog"
                     >
                       <div
                         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
                       >
                         <div
-                          class="modal-content border border-3 mx-auto content"
+                          class="modal-content border border-3 mx-auto _content_2adcc6"
                         >
                           <div
                             class="modal-body p-4 h-100 d-flex flex-column"
                           >
                             <div>
                               <div
-                                class="overflow-hidden alertWrapper"
+                                class="overflow-hidden _alertWrapper_1aa3f6"
                                 data-testid="alertWrapper"
                               />
                             </div>
@@ -1070,11 +1060,11 @@ exports[`PackageCard creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
+                      class="dropdown-menu dropdown-menu-end text-wrap _dropdown_4f4cdd dropdown-menu-end"
                       role="complementary"
                     >
                       <div
-                        class="content"
+                        class="_content_4f4cdd"
                       >
                         <div
                           class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
@@ -1091,7 +1081,7 @@ exports[`PackageCard creates snapshot 1`] = `
                           .
                         </p>
                         <p
-                          class="mb-0 text-muted legend"
+                          class="mb-0 text-muted _legend_4f4cdd"
                         >
                           The 
                           <code>
@@ -1106,7 +1096,7 @@ exports[`PackageCard creates snapshot 1`] = `
                            over the source repository. For more information, please see the 
                           <button
                             aria-label="Open external link"
-                            class="btn p-0 link text-decoration-underline text-reset btnInBadge"
+                            class="btn p-0 _link_f0e789 text-decoration-underline text-reset _btnInBadge_4f4cdd"
                             tabindex="-1"
                             type="button"
                           >
@@ -1118,13 +1108,13 @@ exports[`PackageCard creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="border label"
+                    class="border _label_4f4cdd"
                   >
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
                       <div
-                        class="icon"
+                        class="_icon_4f4cdd"
                       >
                         <svg
                           fill="currentColor"
@@ -1151,14 +1141,14 @@ exports[`PackageCard creates snapshot 1`] = `
                   class="d-block d-md-none d-inline mt-3 ms-2"
                 >
                   <div
-                    class="border label"
+                    class="border _label_4f4cdd"
                     role="button"
                   >
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
                       <div
-                        class="icon"
+                        class="_icon_4f4cdd"
                       >
                         <svg
                           fill="currentColor"
@@ -1183,21 +1173,21 @@ exports[`PackageCard creates snapshot 1`] = `
                   <div>
                     <div
                       aria-modal="false"
-                      class="modal modal"
+                      class="modal _modal_2adcc6"
                       role="dialog"
                     >
                       <div
                         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
                       >
                         <div
-                          class="modal-content border border-3 mx-auto content"
+                          class="modal-content border border-3 mx-auto _content_2adcc6"
                         >
                           <div
                             class="modal-body p-4 h-100 d-flex flex-column"
                           >
                             <div>
                               <div
-                                class="overflow-hidden alertWrapper"
+                                class="overflow-hidden _alertWrapper_1aa3f6"
                                 data-testid="alertWrapper"
                               />
                             </div>
@@ -1253,11 +1243,11 @@ exports[`PackageCard creates snapshot 1`] = `
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
+                      class="dropdown-menu dropdown-menu-end text-wrap _dropdown_4f4cdd dropdown-menu-end"
                       role="complementary"
                     >
                       <div
-                        class="content"
+                        class="_content_4f4cdd"
                       >
                         <div
                           class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
@@ -1274,7 +1264,7 @@ exports[`PackageCard creates snapshot 1`] = `
                           .
                         </p>
                         <p
-                          class="mb-0 text-muted legend"
+                          class="mb-0 text-muted _legend_4f4cdd"
                         >
                           In Artifact Hub, the 
                           <code>
@@ -1289,7 +1279,7 @@ exports[`PackageCard creates snapshot 1`] = `
                            a package primarily focuses on. For more information, please see the 
                           <button
                             aria-label="Open external link"
-                            class="btn p-0 link text-decoration-underline text-reset btnInBadge"
+                            class="btn p-0 _link_f0e789 text-decoration-underline text-reset _btnInBadge_4f4cdd"
                             tabindex="-1"
                             type="button"
                           >
@@ -1301,13 +1291,13 @@ exports[`PackageCard creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="border label"
+                    class="border _label_4f4cdd"
                   >
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
                       <div
-                        class="icon"
+                        class="_icon_4f4cdd"
                       >
                         <svg
                           fill="currentColor"
@@ -1334,14 +1324,14 @@ exports[`PackageCard creates snapshot 1`] = `
                   class="d-block d-md-none d-inline mt-3 ms-2"
                 >
                   <div
-                    class="border label"
+                    class="border _label_4f4cdd"
                     role="button"
                   >
                     <div
                       class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                     >
                       <div
-                        class="icon"
+                        class="_icon_4f4cdd"
                       >
                         <svg
                           fill="currentColor"
@@ -1366,21 +1356,21 @@ exports[`PackageCard creates snapshot 1`] = `
                   <div>
                     <div
                       aria-modal="false"
-                      class="modal modal"
+                      class="modal _modal_2adcc6"
                       role="dialog"
                     >
                       <div
                         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
                       >
                         <div
-                          class="modal-content border border-3 mx-auto content"
+                          class="modal-content border border-3 mx-auto _content_2adcc6"
                         >
                           <div
                             class="modal-body p-4 h-100 d-flex flex-column"
                           >
                             <div>
                               <div
-                                class="overflow-hidden alertWrapper"
+                                class="overflow-hidden _alertWrapper_1aa3f6"
                                 data-testid="alertWrapper"
                               />
                             </div>

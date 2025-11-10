@@ -1,7 +1,14 @@
 import { render, screen } from '@testing-library/react';
 
 import { RepositoryKind } from '../../types';
+import { hasClassContaining } from '../../utils/testUtils';
 import RepositoryIcon from './RepositoryIcon';
+
+const expectIconSrcContains = (element: Element, asset: string) => {
+  const src = element.getAttribute('src');
+  expect(src).not.toBeNull();
+  expect(src).toContain(`/static/media/${asset}`);
+};
 
 describe('RepositoryIcon', () => {
   it('creates snapshot', () => {
@@ -13,161 +20,161 @@ describe('RepositoryIcon', () => {
     render(<RepositoryIcon kind={RepositoryKind.Helm} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/helm-chart-light.svg');
+    expectIconSrcContains(icon, 'helm-chart-light');
   });
 
   it('renders Falco icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.Falco} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/falco-rules-light.svg');
+    expectIconSrcContains(icon, 'falco-rules-light');
   });
 
   it('renders OPA icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.OPA} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/opa-policies-light.svg');
+    expectIconSrcContains(icon, 'opa-policies-light');
   });
 
   it('renders OLM icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.OLM} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/olm-operators-light.svg');
+    expectIconSrcContains(icon, 'olm-operators-light');
   });
 
   it('renders Tinkerbell icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.TBAction} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/tinkerbell-actions-light.svg');
+    expectIconSrcContains(icon, 'tinkerbell-actions-light');
   });
 
   it('renders Krew icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.Krew} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/krew-plugins-light.svg');
+    expectIconSrcContains(icon, 'krew-plugins-light');
   });
 
   it('renders Helm plugin icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.HelmPlugin} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/helm-chart-light.svg');
+    expectIconSrcContains(icon, 'helm-chart-light');
   });
 
   it('renders Tekton task icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.TektonTask} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/tekton-pkg-light.svg');
+    expectIconSrcContains(icon, 'tekton-pkg-light');
   });
 
   it('renders Keda scaler icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.KedaScaler} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/keda-scaler-light.svg');
+    expectIconSrcContains(icon, 'keda-scaler-light');
   });
 
   it('renders Core DNS plugin icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.CoreDNS} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/coredns-plugin-light.svg');
+    expectIconSrcContains(icon, 'coredns-plugin-light');
   });
 
   it('renders Keptn integration icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.Keptn} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/keptn-integrations-light.svg');
+    expectIconSrcContains(icon, 'keptn-integrations-light');
   });
 
   it('renders Tekton pipeline icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.TektonPipeline} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/tekton-pkg-light.svg');
+    expectIconSrcContains(icon, 'tekton-pkg-light');
   });
 
   it('renders Container icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.Container} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/container-light.svg');
+    expectIconSrcContains(icon, 'container-light');
   });
 
   it('renders Kubewarden integration icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.Kubewarden} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/kubewarden-light.svg');
+    expectIconSrcContains(icon, 'kubewarden-light');
   });
 
   it('renders Gatekeeper policy icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.Gatekeeper} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/gatekeeper-light.svg');
+    expectIconSrcContains(icon, 'gatekeeper-light');
   });
 
   it('renders Kyverno policy icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.Kyverno} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/kyverno-light.svg');
+    expectIconSrcContains(icon, 'kyverno-light');
   });
 
   it('renders Knative client plugin icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.KnativeClientPlugin} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/knative-light.svg');
+    expectIconSrcContains(icon, 'knative-light');
   });
 
   it('renders Backstage plugin icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.Backstage} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/backstage-light.svg');
+    expectIconSrcContains(icon, 'backstage-light');
   });
 
   it('renders Inspektor gadget icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.InspektorGadget} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/inspektor-gadget-light.svg');
+    expectIconSrcContains(icon, 'inspektor-gadget-light');
   });
 
   it('renders Tekton StepAction icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.TektonStepAction} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/tekton-pkg-light.svg');
+    expectIconSrcContains(icon, 'tekton-pkg-light');
   });
 
   it('renders Meshery design icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.MesheryDesign} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/meshery-light.svg');
+    expectIconSrcContains(icon, 'meshery-light');
   });
 
   it('renders Opencost plugin icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.OpenCost} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/opencost-light.svg');
+    expectIconSrcContains(icon, 'opencost-light');
   });
 
   it('renders Radius recipe icon', () => {
     render(<RepositoryIcon kind={RepositoryKind.RadiusRecipe} type="white" />);
     const icon = screen.getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/radius-light.svg');
+    expectIconSrcContains(icon, 'radius-light');
   });
 
   it('renders empty icon', () => {
@@ -179,9 +186,9 @@ describe('RepositoryIcon', () => {
     render(<RepositoryIcon kind={RepositoryKind.Helm} />);
     const icons = screen.getAllByAltText('Icon');
     expect(icons).toHaveLength(2);
-    expect(icons[0]).toHaveProperty('src', 'http://localhost/static/media/helm-chart.svg');
-    expect(icons[0]).toHaveClass('iconLight');
-    expect(icons[1]).toHaveProperty('src', 'http://localhost/static/media/helm-chart-light.svg');
-    expect(icons[1]).toHaveClass('iconDark');
+    expectIconSrcContains(icons[0], 'helm-chart');
+    expect(hasClassContaining(icons[0], 'iconLight')).toBe(true);
+    expectIconSrcContains(icons[1], 'helm-chart-light');
+    expect(hasClassContaining(icons[1], 'iconDark')).toBe(true);
   });
 });

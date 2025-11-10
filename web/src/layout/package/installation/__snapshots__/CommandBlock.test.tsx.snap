@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CommandBlock creates snapshot 1`] = `
+exports[`CommandBlock > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-flex align-items-start"
   >
     <div
-      class="flex-grow-1 blockWrapper"
+      class="flex-grow-1 _blockWrapper_c0c294"
     >
       <pre
-        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
       >
         <code
           class="language-bash"
@@ -31,7 +31,7 @@ exports[`CommandBlock creates snapshot 1`] = `
       >
         <button
           aria-label="Copy command to clipboard"
-          class="btn btn-sm btn-primary copyBtn undefined"
+          class="btn btn-sm btn-primary _copyBtn_c0c294 undefined"
           type="button"
         >
           <div

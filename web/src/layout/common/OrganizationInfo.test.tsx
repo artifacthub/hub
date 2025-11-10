@@ -1,12 +1,12 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { Organization } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import OrganizationInfo from './OrganizationInfo';
-jest.mock('../../api');
+vi.mock('../../api');
 
 const defaultProps = {
   organizationName: 'orgname',
@@ -17,7 +17,7 @@ const user = userEvent.setup({ delay: null });
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -63,7 +63,7 @@ describe('OrganizationInfo', () => {
     jest.useFakeTimers();
 
     const mockOrganization = getMockOrganization('1');
-    mocked(API).getOrganization.mockResolvedValue(mockOrganization);
+    vi.mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
     render(<OrganizationInfo {...defaultProps} />);
     await user.hover(screen.getByLabelText('Organization info'));
@@ -76,7 +76,7 @@ describe('OrganizationInfo', () => {
     expect(screen.getByAltText(mockOrganization.displayName!)).toBeInTheDocument();
     expect(screen.getByAltText(mockOrganization.displayName!)).toHaveProperty(
       'src',
-      `http://localhost/image/${mockOrganization.logoImageId!}`
+      `${window.location.origin}/image/${mockOrganization.logoImageId!}`
     );
     expect(screen.getByText(mockOrganization.description!)).toBeInTheDocument();
 
@@ -84,7 +84,7 @@ describe('OrganizationInfo', () => {
       jest.advanceTimersByTime(100);
     });
 
-    expect(await screen.findByRole('complementary')).toHaveClass('show');
+    expect((await screen.findByRole('complementary')).className.includes('show')).toBe(true);
 
     await user.unhover(screen.getByLabelText('Organization info'));
 
@@ -92,7 +92,7 @@ describe('OrganizationInfo', () => {
       jest.advanceTimersByTime(50);
     });
 
-    expect(await screen.findByRole('complementary')).not.toHaveClass('show');
+    expect((await screen.findByRole('complementary')).className.includes('show')).toBe(false);
 
     jest.useRealTimers();
   });
@@ -101,7 +101,7 @@ describe('OrganizationInfo', () => {
     jest.useFakeTimers();
 
     const mockOrganization = getMockOrganization('1');
-    mocked(API).getOrganization.mockResolvedValue(mockOrganization);
+    vi.mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
     render(<OrganizationInfo {...defaultProps} />);
     await user.hover(screen.getByLabelText('Organization info'));
@@ -116,7 +116,7 @@ describe('OrganizationInfo', () => {
       jest.advanceTimersByTime(100);
     });
 
-    expect(await screen.findByRole('complementary')).toHaveClass('show');
+    expect((await screen.findByRole('complementary')).className.includes('show')).toBe(true);
 
     await user.unhover(screen.getByRole('complementary'));
 
@@ -124,13 +124,13 @@ describe('OrganizationInfo', () => {
       jest.advanceTimersByTime(50);
     });
 
-    expect(await screen.findByRole('complementary')).not.toHaveClass('show');
+    expect((await screen.findByRole('complementary')).className.includes('show')).toBe(false);
 
     jest.useRealTimers();
   });
 
   it('does not render dropdown content when api call fails', async () => {
-    mocked(API).getOrganization.mockRejectedValue('');
+    vi.mocked(API).getOrganization.mockRejectedValue('');
 
     render(<OrganizationInfo {...defaultProps} />);
     await userEvent.hover(screen.getByLabelText('Organization info'));
@@ -146,7 +146,7 @@ describe('OrganizationInfo', () => {
     jest.useFakeTimers();
 
     const mockOrganization = getMockOrganization('1');
-    mocked(API).getOrganization.mockResolvedValue(mockOrganization);
+    vi.mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
     render(<OrganizationInfo {...defaultProps} />);
     await user.hover(screen.getByLabelText('Organization info'));

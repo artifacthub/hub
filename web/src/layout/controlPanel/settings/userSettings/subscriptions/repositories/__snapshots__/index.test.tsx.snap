@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RepositoriesSection creates snapshot 1`] = `
+exports[`RepositoriesSection > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mt-5 pt-3"
@@ -9,14 +9,14 @@ exports[`RepositoriesSection creates snapshot 1`] = `
       class="d-flex flex-row align-items-start justify-content-between pb-2"
     >
       <div
-        class="h4 pb-0 title"
+        class="h4 pb-0 _title_12cac0"
       >
         Repositories
       </div>
       <div>
         <button
           aria-label="Open opt-out modal"
-          class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
+          class="btn btn-outline-secondary btn-sm text-uppercase _btnAction_12cac0"
         >
           <div
             class="d-flex flex-row align-items-center justify-content-center"
@@ -83,15 +83,15 @@ exports[`RepositoriesSection creates snapshot 1`] = `
               1 - 3 of 3 results
             </div>
             <table
-              class="table table-bordered table-hover table"
+              class="table table-bordered table-hover _table_12cac0"
               data-testid="repositoriesList"
             >
               <thead>
                 <tr
-                  class="tableTitle"
+                  class="_tableTitle_12cac0"
                 >
                   <th
-                    class="align-middle text-center d-none d-sm-table-cell fitCell"
+                    class="align-middle text-center d-none d-sm-table-cell _fitCell_12cac0"
                     scope="col"
                   >
                     Kind
@@ -109,7 +109,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                     Publisher
                   </th>
                   <th
-                    class="align-middle text-nowrap fitCell"
+                    class="align-middle text-nowrap _fitCell_12cac0"
                     scope="col"
                   >
                     <div
@@ -143,7 +143,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                     </div>
                   </th>
                   <th
-                    class="align-middle text-nowrap fitCell"
+                    class="align-middle text-nowrap _fitCell_12cac0"
                     scope="col"
                   >
                     <div
@@ -179,7 +179,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                 </tr>
               </thead>
               <tbody
-                class="body"
+                class="_body_12cac0"
               >
                 <tr
                   data-testid="optOutRow"
@@ -189,12 +189,12 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                   >
                     <img
                       alt="Icon"
-                      class="h-auto icon iconLight"
+                      class="h-auto _icon_12cac0 iconLight"
                       src="/static/media/helm-chart.svg"
                     />
                     <img
                       alt="Icon"
-                      class="h-auto icon iconDark"
+                      class="h-auto _icon_12cac0 iconDark"
                       src="/static/media/helm-chart-light.svg"
                     />
                   </td>
@@ -206,6 +206,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                     >
                       <a
                         class="text-dark text-capitalize"
+                        data-discover="true"
                         data-testid="repoLink"
                         href="/packages/search?repo=adfinis&sort=relevance&page=1"
                       >
@@ -217,7 +218,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                     class="align-middle position-relative d-none d-sm-table-cell"
                   >
                     <span
-                      class="mx-1 mb-1 tinyIcon"
+                      class="mx-1 mb-1 _tinyIcon_12cac0"
                     >
                       <svg
                         fill="currentColor"
@@ -236,6 +237,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                      
                     <a
                       class="text-dark"
+                      data-discover="true"
                       data-testid="userLink"
                       href="/packages/search?user=alias&sort=relevance&page=1"
                     >
@@ -253,7 +255,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                       >
                         <input
                           checked=""
-                          class="form-check-input checkbox"
+                          class="form-check-input _checkbox_12cac0"
                           data-testid="subs_8cf4ae9a-d43c-4abf-86d0-615bb3864db2_2_input"
                           id="subs_8cf4ae9a-d43c-4abf-86d0-615bb3864db2_2"
                           role="switch"
@@ -272,7 +274,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                         class="form-switch"
                       >
                         <input
-                          class="form-check-input checkbox"
+                          class="form-check-input _checkbox_12cac0"
                           data-testid="subs_8cf4ae9a-d43c-4abf-86d0-615bb3864db2_4_input"
                           id="subs_8cf4ae9a-d43c-4abf-86d0-615bb3864db2_4"
                           role="switch"
@@ -290,12 +292,12 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                   >
                     <img
                       alt="Icon"
-                      class="h-auto icon iconLight"
+                      class="h-auto _icon_12cac0 iconLight"
                       src="/static/media/helm-chart.svg"
                     />
                     <img
                       alt="Icon"
-                      class="h-auto icon iconDark"
+                      class="h-auto _icon_12cac0 iconDark"
                       src="/static/media/helm-chart-light.svg"
                     />
                   </td>
@@ -307,6 +309,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                     >
                       <a
                         class="text-dark text-capitalize"
+                        data-discover="true"
                         data-testid="repoLink"
                         href="/packages/search?repo=apache-pulsar-helm-chart-repo&sort=relevance&page=1"
                       >
@@ -318,7 +321,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                     class="align-middle position-relative d-none d-sm-table-cell"
                   >
                     <span
-                      class="mx-1 mb-1 tinyIcon"
+                      class="mx-1 mb-1 _tinyIcon_12cac0"
                     >
                       <svg
                         fill="currentColor"
@@ -337,6 +340,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                      
                     <a
                       class="text-dark"
+                      data-discover="true"
                       data-testid="userLink"
                       href="/packages/search?user=alias&sort=relevance&page=1"
                     >
@@ -354,7 +358,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                       >
                         <input
                           checked=""
-                          class="form-check-input checkbox"
+                          class="form-check-input _checkbox_12cac0"
                           data-testid="subs_68edcb58-ed11-42e1-953b-e52e3bfac3e5_2_input"
                           id="subs_68edcb58-ed11-42e1-953b-e52e3bfac3e5_2"
                           role="switch"
@@ -373,7 +377,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                         class="form-switch"
                       >
                         <input
-                          class="form-check-input checkbox"
+                          class="form-check-input _checkbox_12cac0"
                           data-testid="subs_68edcb58-ed11-42e1-953b-e52e3bfac3e5_4_input"
                           id="subs_68edcb58-ed11-42e1-953b-e52e3bfac3e5_4"
                           role="switch"
@@ -391,12 +395,12 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                   >
                     <img
                       alt="Icon"
-                      class="h-auto icon iconLight"
+                      class="h-auto _icon_12cac0 iconLight"
                       src="/static/media/helm-chart.svg"
                     />
                     <img
                       alt="Icon"
-                      class="h-auto icon iconDark"
+                      class="h-auto _icon_12cac0 iconDark"
                       src="/static/media/helm-chart-light.svg"
                     />
                   </td>
@@ -408,6 +412,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                     >
                       <a
                         class="text-dark text-capitalize"
+                        data-discover="true"
                         data-testid="repoLink"
                         href="/packages/search?repo=artifact-hub&sort=relevance&page=1"
                       >
@@ -419,7 +424,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                     class="align-middle position-relative d-none d-sm-table-cell"
                   >
                     <span
-                      class="mx-1 mb-1 tinyIcon"
+                      class="mx-1 mb-1 _tinyIcon_12cac0"
                     >
                       <svg
                         fill="currentColor"
@@ -442,6 +447,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                      
                     <a
                       class="text-dark"
+                      data-discover="true"
                       data-testid="orgLink"
                       href="/packages/search?org=artifactHub&sort=relevance&page=1"
                     >
@@ -459,7 +465,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                       >
                         <input
                           checked=""
-                          class="form-check-input checkbox"
+                          class="form-check-input _checkbox_12cac0"
                           data-testid="subs_a032a436-3568-4970-804a-2780f5e9d231_2_input"
                           id="subs_a032a436-3568-4970-804a-2780f5e9d231_2"
                           role="switch"
@@ -478,7 +484,7 @@ exports[`RepositoriesSection creates snapshot 1`] = `
                         class="form-switch"
                       >
                         <input
-                          class="form-check-input checkbox"
+                          class="form-check-input _checkbox_12cac0"
                           data-testid="subs_a032a436-3568-4970-804a-2780f5e9d231_4_input"
                           id="subs_a032a436-3568-4970-804a-2780f5e9d231_4"
                           role="switch"

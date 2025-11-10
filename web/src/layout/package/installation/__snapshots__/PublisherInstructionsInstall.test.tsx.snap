@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PublisherInstructionsInstall creates snapshot 1`] = `
+exports[`PublisherInstructionsInstall > creates snapshot 1`] = `
 <DocumentFragment>
   <span
     data-testid="readme"
   >
     <div
-      class="mt-3 mb-5 md"
+      class="mt-3 mb-5 _md_c0c294"
     >
       <div>
         Install using Helm

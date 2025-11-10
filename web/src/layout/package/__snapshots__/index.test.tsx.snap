@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Package index creates snapshot 1`] = `
+exports[`Package index > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="position-relative flex-grow-1 mainPackage"
     data-testid="mainPackage"
   >
     <div
-      class="jumbotron package-detail-jumbotron rounded-0 mb-2 jumbotron"
+      class="jumbotron package-detail-jumbotron rounded-0 mb-2 _jumbotron_c31b0e"
     >
       <div
         class="container-lg px-sm-4 px-lg-0 position-relative"
@@ -19,29 +19,29 @@ exports[`Package index creates snapshot 1`] = `
             class="d-flex align-items-center flex-grow-1 mw-100"
           >
             <div
-              class="d-flex align-items-center justify-content-center imageWrapper"
+              class="d-flex align-items-center justify-content-center _imageWrapper_c31b0e"
             >
               <img
                 alt="Pretty name"
                 aria-hidden="true"
-                class="image"
+                class="_image_c31b0e"
                 src="/image/imageId"
                 srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
               />
             </div>
             <div
-              class="position-relative ms-3 flex-grow-1 pe-3 py-0 py-sm-2 wrapperWithContentEllipsis"
+              class="position-relative ms-3 flex-grow-1 pe-3 py-0 py-sm-2 _wrapperWithContentEllipsis_c31b0e"
             >
               <div
-                class="d-flex flex-row align-items-center titleWrapper"
+                class="d-flex flex-row align-items-center _titleWrapper_c31b0e"
               >
                 <div
-                  class="position-relative h3 mb-0 text-nowrap text-truncate title"
+                  class="position-relative h3 mb-0 text-nowrap text-truncate _title_c31b0e"
                 >
                   Pretty name
                 </div>
                 <div
-                  class="d-none d-md-flex align-items-center labels"
+                  class="d-none d-md-flex align-items-center _labels_c31b0e"
                 >
                   <div
                     class="d-none d-md-inline-block"
@@ -54,19 +54,19 @@ exports[`Package index creates snapshot 1`] = `
                     <button
                       aria-hidden="true"
                       aria-label="Filter by Helm chart repository kind"
-                      class="btn btn-link m-0 p-0 border-0 btn undefined"
+                      class="btn btn-link m-0 p-0 border-0 _btn_c0e9ad undefined"
                       data-testid="repoIconLabelLink"
                       tabindex="-1"
                     >
                       <span
-                        class="badge bg-light text-dark border border-1 bg badge d-none d-md-inline-block position-relative mt-1 kindIcon me-3"
+                        class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad d-none d-md-inline-block position-relative mt-1 _kindIcon_c31b0e me-3"
                       >
                         <div
                           class="d-flex flex-row align-items-center"
                         >
                           <div
                             aria-hidden="true"
-                            class="position-relative icon undefined"
+                            class="position-relative _icon_c0e9ad undefined"
                           >
                             <img
                               alt="Icon"
@@ -80,7 +80,7 @@ exports[`Package index creates snapshot 1`] = `
                             />
                           </div>
                           <div
-                            class="ms-1 text"
+                            class="ms-1 _text_c0e9ad"
                           >
                             Helm chart
                           </div>
@@ -92,14 +92,14 @@ exports[`Package index creates snapshot 1`] = `
                     class="d-flex d-md-none fs-6"
                   >
                     <span
-                      class="badge bg-light text-dark border border-1 bg badge d-none d-md-inline-block position-relative mt-1 kindIcon me-3"
+                      class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad d-none d-md-inline-block position-relative mt-1 _kindIcon_c31b0e me-3"
                     >
                       <div
                         class="d-flex flex-row align-items-center"
                       >
                         <div
                           aria-hidden="true"
-                          class="position-relative icon undefined"
+                          class="position-relative _icon_c0e9ad undefined"
                         >
                           <img
                             alt="Icon"
@@ -113,7 +113,7 @@ exports[`Package index creates snapshot 1`] = `
                           />
                         </div>
                         <div
-                          class="ms-1 text"
+                          class="ms-1 _text_c0e9ad"
                         >
                           Helm chart
                         </div>
@@ -123,7 +123,7 @@ exports[`Package index creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="position-relative d-flex d-md-none text-truncate mt-2 w-100 mobileSubtitle"
+                class="position-relative d-flex d-md-none text-truncate mt-2 w-100 _mobileSubtitle_c31b0e"
               >
                 <div
                   class="d-none d-md-block text-dark me-2"
@@ -160,36 +160,36 @@ exports[`Package index creates snapshot 1`] = `
                   </svg>
                 </div>
                 <div
-                  class="d-inline mobileIcon"
+                  class="d-inline _mobileIcon_c31b0e"
                 >
                   <img
                     alt="Icon"
-                    class="w-auto repoIcon iconLight"
+                    class="w-auto _repoIcon_c31b0e iconLight"
                     src="/static/media/helm-chart.svg"
                   />
                   <img
                     alt="Icon"
-                    class="w-auto repoIcon iconDark"
+                    class="w-auto _repoIcon_c31b0e iconDark"
                     src="/static/media/helm-chart-light.svg"
                   />
                 </div>
                 <span
-                  class="text-muted d-inline-block text-truncate mw-100 mobileVersion"
+                  class="text-muted d-inline-block text-truncate mw-100 _mobileVersion_c31b0e"
                 >
                   incubator
                 </span>
               </div>
               <div
-                class="position-relative d-none d-md-flex flex-row align-items-baseline mt-2 subtitle"
+                class="position-relative d-none d-md-flex flex-row align-items-baseline mt-2 _subtitle_c31b0e"
               >
                 <div
-                  class="me-2 text-truncate d-flex flex-row align-items-baseline mw50"
+                  class="me-2 text-truncate d-flex flex-row align-items-baseline _mw50_c31b0e"
                 >
                   <div
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                      class="dropdown-menu dropdown-menu-left text-wrap _dropdown_9229df"
                       role="complementary"
                     />
                   </div>
@@ -200,14 +200,14 @@ exports[`Package index creates snapshot 1`] = `
                       aria-expanded="false"
                       aria-hidden="true"
                       aria-label="Organization info"
-                      class="p-0 border-0 text-muted text-truncate flex-grow-1 bg-transparent position-relative link undefined"
+                      class="p-0 border-0 text-muted text-truncate flex-grow-1 bg-transparent position-relative _link_9229df undefined"
                       tabindex="-1"
                     >
                       <div
                         class="d-flex flex-row align-items-baseline"
                       >
                         <div
-                          class="d-flex flex-row align-items-baseline me-1 text-dark position-relative icon"
+                          class="d-flex flex-row align-items-baseline me-1 text-dark position-relative _icon_9229df"
                         >
                           <svg
                             fill="currentColor"
@@ -237,17 +237,17 @@ exports[`Package index creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="text-truncate d-flex flex-row align-items-baseline ms-2 mw50"
+                  class="text-truncate d-flex flex-row align-items-baseline ms-2 _mw50_c31b0e"
                 >
                   <div
                     class="position-absolute"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+                      class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
                       role="complementary"
                     >
                       <div
-                        class="content"
+                        class="_content_e64025"
                       >
                         <div
                           class="d-flex flex-column"
@@ -262,16 +262,16 @@ exports[`Package index creates snapshot 1`] = `
                             </small>
                             <img
                               alt="Icon"
-                              class="me-1 w-auto repoIconMini iconLight"
+                              class="me-1 w-auto _repoIconMini_e64025 iconLight"
                               src="/static/media/helm-chart.svg"
                             />
                             <img
                               alt="Icon"
-                              class="me-1 w-auto repoIconMini iconDark"
+                              class="me-1 w-auto _repoIconMini_e64025 iconDark"
                               src="/static/media/helm-chart-light.svg"
                             />
                             <div
-                              class="text-reset text-truncate labelContent"
+                              class="text-reset text-truncate _labelContent_e64025"
                             >
                               incubator
                             </div>
@@ -285,13 +285,13 @@ exports[`Package index creates snapshot 1`] = `
                               Url: 
                             </small>
                             <div
-                              class="text-reset text-break labelContent"
+                              class="text-reset text-break _labelContent_e64025"
                               data-testid="repoUrl"
                             >
                               <div
                                 class="d-flex flex-row flex-wrap undefined"
                                 data-testid="attachedIconToTextWrapper"
-                                style="line-height: 21px;"
+                                style="font-size: inherit; line-height: 21px;"
                               >
                                 <div
                                   class="d-inline"
@@ -429,7 +429,7 @@ exports[`Package index creates snapshot 1`] = `
                       class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
                     >
                       <div
-                        class="position-relative icon"
+                        class="position-relative _icon_e64025"
                       >
                         <svg
                           fill="none"
@@ -472,7 +472,7 @@ exports[`Package index creates snapshot 1`] = `
                       aria-expanded="false"
                       aria-hidden="true"
                       aria-label="Filter by repo incubator"
-                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+                      class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
                       data-testid="repoLink"
                       tabindex="-1"
                     >
@@ -489,7 +489,7 @@ exports[`Package index creates snapshot 1`] = `
           </div>
         </div>
         <p
-          class="mb-2 overflow-hidden text-break description"
+          class="mb-2 overflow-hidden text-break _description_c31b0e"
         >
           desc
         </p>
@@ -509,11 +509,11 @@ exports[`Package index creates snapshot 1`] = `
                   class="position-absolute"
                 >
                   <div
-                    class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-start dropdownStart"
+                    class="dropdown-menu dropdown-menu-end text-wrap _dropdown_4f4cdd dropdown-menu-start _dropdownStart_4f4cdd"
                     role="complementary"
                   >
                     <div
-                      class="content"
+                      class="_content_4f4cdd"
                     >
                       <div
                         class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
@@ -533,13 +533,13 @@ exports[`Package index creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="border label"
+                  class="border _label_4f4cdd"
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                   >
                     <div
-                      class="icon"
+                      class="_icon_4f4cdd"
                     >
                       <svg
                         fill="none"
@@ -565,14 +565,14 @@ exports[`Package index creates snapshot 1`] = `
                 class="d-block d-md-none me-2"
               >
                 <div
-                  class="border label"
+                  class="border _label_4f4cdd"
                   role="button"
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                   >
                     <div
-                      class="icon"
+                      class="_icon_4f4cdd"
                     >
                       <svg
                         fill="none"
@@ -596,21 +596,21 @@ exports[`Package index creates snapshot 1`] = `
                 <div>
                   <div
                     aria-modal="false"
-                    class="modal modal"
+                    class="modal _modal_2adcc6"
                     role="dialog"
                   >
                     <div
                       class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
                     >
                       <div
-                        class="modal-content border border-3 mx-auto content"
+                        class="modal-content border border-3 mx-auto _content_2adcc6"
                       >
                         <div
                           class="modal-body p-4 h-100 d-flex flex-column"
                         >
                           <div>
                             <div
-                              class="overflow-hidden alertWrapper"
+                              class="overflow-hidden _alertWrapper_1aa3f6"
                               data-testid="alertWrapper"
                             />
                           </div>
@@ -666,11 +666,11 @@ exports[`Package index creates snapshot 1`] = `
                   class="position-absolute"
                 >
                   <div
-                    class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-start dropdownStart"
+                    class="dropdown-menu dropdown-menu-end text-wrap _dropdown_4f4cdd dropdown-menu-start _dropdownStart_4f4cdd"
                     role="complementary"
                   >
                     <div
-                      class="content"
+                      class="_content_4f4cdd"
                     >
                       <div
                         class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
@@ -692,16 +692,16 @@ exports[`Package index creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="border label"
+                  class="border _label_4f4cdd"
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                   >
                     <div
-                      class="icon"
+                      class="_icon_4f4cdd"
                     >
                       <svg
-                        class="signedIcon"
+                        class="_signedIcon_4f4cdd"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -722,17 +722,17 @@ exports[`Package index creates snapshot 1`] = `
                 class="d-block d-md-none me-2"
               >
                 <div
-                  class="border label"
+                  class="border _label_4f4cdd"
                   role="button"
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                   >
                     <div
-                      class="icon"
+                      class="_icon_4f4cdd"
                     >
                       <svg
-                        class="signedIcon"
+                        class="_signedIcon_4f4cdd"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -751,21 +751,21 @@ exports[`Package index creates snapshot 1`] = `
                 <div>
                   <div
                     aria-modal="false"
-                    class="modal modal"
+                    class="modal _modal_2adcc6"
                     role="dialog"
                   >
                     <div
                       class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
                     >
                       <div
-                        class="modal-content border border-3 mx-auto content"
+                        class="modal-content border border-3 mx-auto _content_2adcc6"
                       >
                         <div
                           class="modal-body p-4 h-100 d-flex flex-column"
                         >
                           <div>
                             <div
-                              class="overflow-hidden alertWrapper"
+                              class="overflow-hidden _alertWrapper_1aa3f6"
                               data-testid="alertWrapper"
                             />
                           </div>
@@ -821,11 +821,11 @@ exports[`Package index creates snapshot 1`] = `
                   class="position-absolute"
                 >
                   <div
-                    class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-start dropdownStart"
+                    class="dropdown-menu dropdown-menu-end text-wrap _dropdown_4f4cdd dropdown-menu-start _dropdownStart_4f4cdd"
                     role="complementary"
                   >
                     <div
-                      class="content"
+                      class="_content_4f4cdd"
                     >
                       <div
                         class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
@@ -842,7 +842,7 @@ exports[`Package index creates snapshot 1`] = `
                         .
                       </p>
                       <p
-                        class="mb-0 text-muted legend"
+                        class="mb-0 text-muted _legend_4f4cdd"
                       >
                         The 
                         <code>
@@ -857,7 +857,7 @@ exports[`Package index creates snapshot 1`] = `
                          over the source repository. For more information, please see the 
                         <button
                           aria-label="Open external link"
-                          class="btn p-0 link text-decoration-underline text-reset btnInBadge"
+                          class="btn p-0 _link_f0e789 text-decoration-underline text-reset _btnInBadge_4f4cdd"
                           tabindex="-1"
                           type="button"
                         >
@@ -869,13 +869,13 @@ exports[`Package index creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="border label"
+                  class="border _label_4f4cdd"
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                   >
                     <div
-                      class="icon"
+                      class="_icon_4f4cdd"
                     >
                       <svg
                         fill="currentColor"
@@ -902,14 +902,14 @@ exports[`Package index creates snapshot 1`] = `
                 class="d-block d-md-none me-2"
               >
                 <div
-                  class="border label"
+                  class="border _label_4f4cdd"
                   role="button"
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                   >
                     <div
-                      class="icon"
+                      class="_icon_4f4cdd"
                     >
                       <svg
                         fill="currentColor"
@@ -934,21 +934,21 @@ exports[`Package index creates snapshot 1`] = `
                 <div>
                   <div
                     aria-modal="false"
-                    class="modal modal"
+                    class="modal _modal_2adcc6"
                     role="dialog"
                   >
                     <div
                       class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
                     >
                       <div
-                        class="modal-content border border-3 mx-auto content"
+                        class="modal-content border border-3 mx-auto _content_2adcc6"
                       >
                         <div
                           class="modal-body p-4 h-100 d-flex flex-column"
                         >
                           <div>
                             <div
-                              class="overflow-hidden alertWrapper"
+                              class="overflow-hidden _alertWrapper_1aa3f6"
                               data-testid="alertWrapper"
                             />
                           </div>
@@ -1004,11 +1004,11 @@ exports[`Package index creates snapshot 1`] = `
                   class="position-absolute"
                 >
                   <div
-                    class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-start dropdownStart"
+                    class="dropdown-menu dropdown-menu-end text-wrap _dropdown_4f4cdd dropdown-menu-start _dropdownStart_4f4cdd"
                     role="complementary"
                   >
                     <div
-                      class="content"
+                      class="_content_4f4cdd"
                     >
                       <div
                         class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
@@ -1025,7 +1025,7 @@ exports[`Package index creates snapshot 1`] = `
                         .
                       </p>
                       <p
-                        class="mb-0 text-muted legend"
+                        class="mb-0 text-muted _legend_4f4cdd"
                       >
                         In Artifact Hub, the 
                         <code>
@@ -1040,7 +1040,7 @@ exports[`Package index creates snapshot 1`] = `
                          a package primarily focuses on. For more information, please see the 
                         <button
                           aria-label="Open external link"
-                          class="btn p-0 link text-decoration-underline text-reset btnInBadge"
+                          class="btn p-0 _link_f0e789 text-decoration-underline text-reset _btnInBadge_4f4cdd"
                           tabindex="-1"
                           type="button"
                         >
@@ -1052,13 +1052,13 @@ exports[`Package index creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="border label"
+                  class="border _label_4f4cdd"
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                   >
                     <div
-                      class="icon"
+                      class="_icon_4f4cdd"
                     >
                       <svg
                         fill="currentColor"
@@ -1085,14 +1085,14 @@ exports[`Package index creates snapshot 1`] = `
                 class="d-block d-md-none me-2"
               >
                 <div
-                  class="border label"
+                  class="border _label_4f4cdd"
                   role="button"
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                   >
                     <div
-                      class="icon"
+                      class="_icon_4f4cdd"
                     >
                       <svg
                         fill="currentColor"
@@ -1117,21 +1117,21 @@ exports[`Package index creates snapshot 1`] = `
                 <div>
                   <div
                     aria-modal="false"
-                    class="modal modal"
+                    class="modal _modal_2adcc6"
                     role="dialog"
                   >
                     <div
                       class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
                     >
                       <div
-                        class="modal-content border border-3 mx-auto content"
+                        class="modal-content border border-3 mx-auto _content_2adcc6"
                       >
                         <div
                           class="modal-body p-4 h-100 d-flex flex-column"
                         >
                           <div>
                             <div
-                              class="overflow-hidden alertWrapper"
+                              class="overflow-hidden _alertWrapper_1aa3f6"
                               data-testid="alertWrapper"
                             />
                           </div>
@@ -1183,7 +1183,7 @@ exports[`Package index creates snapshot 1`] = `
           />
         </div>
         <div
-          class="position-absolute d-flex flex-row align-items-center top-0 end-0 optsWrapper"
+          class="position-absolute d-flex flex-row align-items-center top-0 end-0 _optsWrapper_c31b0e"
         >
           <div
             class="d-none d-lg-block position-relative ms-2"
@@ -1197,7 +1197,7 @@ exports[`Package index creates snapshot 1`] = `
                 <button
                   aria-expanded="false"
                   aria-label="Open organizations menu"
-                  class="btn btn-outline-primary p-0 position-relative lh-1 fs-5 iconWrapper disabled isDisabled"
+                  class="btn btn-outline-primary p-0 position-relative lh-1 fs-5 _iconWrapper_fba2bb disabled _isDisabled_fba2bb"
                   type="button"
                 >
                   <div
@@ -1222,14 +1222,14 @@ exports[`Package index creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="dropdown-menu dropdown-menu-end p-0 dropdown"
+              class="dropdown-menu dropdown-menu-end p-0 _dropdown_fba2bb"
               role="menu"
             >
               <div
-                class="dropdown-arrow arrow"
+                class="dropdown-arrow _arrow_fba2bb"
               />
               <div
-                class="p-4 text-center emptyListMsg"
+                class="p-4 text-center _emptyListMsg_fba2bb"
               >
                 Here you'll be able to specify which of the organizations you belong to are using this package in production.
               </div>
@@ -1241,7 +1241,7 @@ exports[`Package index creates snapshot 1`] = `
             <button
               aria-expanded="false"
               aria-label="Open menu"
-              class="btn btn-outline-primary p-0 position-relative lh-1 fs-5 iconWrapper"
+              class="btn btn-outline-primary p-0 position-relative lh-1 fs-5 _iconWrapper_edcc00"
               type="button"
             >
               <svg
@@ -1260,11 +1260,11 @@ exports[`Package index creates snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="dropdown-menu dropdown-menu-end p-0 dropdown"
+              class="dropdown-menu dropdown-menu-end p-0 _dropdown_edcc00"
               role="menu"
             >
               <div
-                class="dropdown-arrow arrow"
+                class="dropdown-arrow _arrow_edcc00"
               />
               <button
                 aria-label="Open embed widget modal"
@@ -1274,7 +1274,7 @@ exports[`Package index creates snapshot 1`] = `
                   class="d-flex flex-row align-items-center"
                 >
                   <svg
-                    class="me-2 position-relative icon"
+                    class="me-2 position-relative _icon_edcc00"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1299,14 +1299,14 @@ exports[`Package index creates snapshot 1`] = `
           class="row align-items-baseline d-md-none"
         >
           <div
-            class="col mt-3 btnMobileWrapper"
+            class="col mt-3 _btnMobileWrapper_c31b0e"
           >
             <div
-              class="position-relative buttonWrapper"
+              class="position-relative _buttonWrapper_2adcc6"
             >
               <button
                 aria-label="Open modal"
-                class="fw-bold text-uppercase position-relative btn w-100 btn btn-outline-secondary btn-sm text-nowrap"
+                class="fw-bold text-uppercase position-relative btn w-100 _btn_2adcc6 btn-outline-secondary btn-sm text-nowrap"
                 type="button"
               >
                 <div
@@ -1345,28 +1345,28 @@ exports[`Package index creates snapshot 1`] = `
             </div>
             <div
               aria-modal="false"
-              class="modal modal"
+              class="modal _modal_2adcc6"
               role="dialog"
             >
               <div
                 class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
               >
                 <div
-                  class="modal-content border border-3 mx-auto content"
+                  class="modal-content border border-3 mx-auto _content_2adcc6"
                 >
                   <div
-                    class="modal-header d-flex flex-row align-items-center header undefined"
+                    class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
                   >
                     <div
                       class="d-flex align-items-center flex-grow-1"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_c65a52"
                       >
                         <img
                           alt="Pretty name"
                           aria-hidden="true"
-                          class="image"
+                          class="_image_c65a52"
                           src="/image/imageId"
                           srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
                         />
@@ -1392,7 +1392,7 @@ exports[`Package index creates snapshot 1`] = `
                   >
                     <div>
                       <div
-                        class="overflow-hidden alertWrapper"
+                        class="overflow-hidden _alertWrapper_1aa3f6"
                         data-testid="alertWrapper"
                       />
                     </div>
@@ -1437,7 +1437,7 @@ exports[`Package index creates snapshot 1`] = `
             </div>
           </div>
           <div
-            class="col mt-3 btnMobileWrapper"
+            class="col mt-3 _btnMobileWrapper_c31b0e"
           />
         </div>
       </div>
@@ -1449,10 +1449,10 @@ exports[`Package index creates snapshot 1`] = `
         class="d-flex flex-column-reverse d-md-block px-xs-0 px-sm-3 px-lg-0"
       >
         <div
-          class="ms-0 ms-md-5 mb-5 position-relative float-none float-md-end additionalInfo"
+          class="ms-0 ms-md-5 mb-5 position-relative float-none float-md-end _additionalInfo_c31b0e"
         >
           <div
-            class="rightColumnWrapper"
+            class="_rightColumnWrapper_c31b0e"
           >
             <div
               class="d-none d-md-block"
@@ -1618,10 +1618,10 @@ exports[`Package index creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="card shadow-sm position-relative info info"
+                class="card shadow-sm position-relative info _info_c31b0e"
               >
                 <div
-                  class="card-body detailsBody"
+                  class="card-body _detailsBody_c31b0e"
                 >
                   <div>
                     <div
@@ -1640,7 +1640,7 @@ exports[`Package index creates snapshot 1`] = `
                       </small>
                     </div>
                     <p
-                      class="text-truncate text"
+                      class="text-truncate _text_522701"
                       data-testid="appVersion"
                     >
                       1.0.0
@@ -1715,7 +1715,7 @@ exports[`Package index creates snapshot 1`] = `
                       </small>
                     </div>
                     <div
-                      class="d-flex flex-column w-100 mb-3 heatMap"
+                      class="d-flex flex-column w-100 mb-3 _heatMap_7e4fdd"
                       data-testid="lastYearActivity"
                     >
                       <div
@@ -1725,16 +1725,16 @@ exports[`Package index creates snapshot 1`] = `
                           class="position-relative"
                         >
                           <div
-                            class="position-relative border border-1 heatMapCell level0 border"
+                            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
                             data-testid="heatMapCell"
                           />
                           <div
-                            class="tooltip popover end-0 popover"
+                            class="tooltip popover end-0 _popover_7e4fdd"
                             data-testid="heatMapPopover"
                             role="tooltip"
                           >
                             <div
-                              class="popover-header lh-1 p-2 popoverHeader"
+                              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
                             >
                               Nov'20
                             </div>
@@ -1745,7 +1745,7 @@ exports[`Package index creates snapshot 1`] = `
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
-                                  class="me-2 border border-1 top-0 marker level0"
+                                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                                 />
                                 Releases: 
                                 <span
@@ -1761,16 +1761,16 @@ exports[`Package index creates snapshot 1`] = `
                           class="position-relative"
                         >
                           <div
-                            class="position-relative border border-1 heatMapCell level0 border"
+                            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
                             data-testid="heatMapCell"
                           />
                           <div
-                            class="tooltip popover end-0 popover"
+                            class="tooltip popover end-0 _popover_7e4fdd"
                             data-testid="heatMapPopover"
                             role="tooltip"
                           >
                             <div
-                              class="popover-header lh-1 p-2 popoverHeader"
+                              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
                             >
                               Dec'20
                             </div>
@@ -1781,7 +1781,7 @@ exports[`Package index creates snapshot 1`] = `
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
-                                  class="me-2 border border-1 top-0 marker level0"
+                                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                                 />
                                 Releases: 
                                 <span
@@ -1797,16 +1797,16 @@ exports[`Package index creates snapshot 1`] = `
                           class="position-relative"
                         >
                           <div
-                            class="position-relative border border-1 heatMapCell level0 border"
+                            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
                             data-testid="heatMapCell"
                           />
                           <div
-                            class="tooltip popover end-0 popover"
+                            class="tooltip popover end-0 _popover_7e4fdd"
                             data-testid="heatMapPopover"
                             role="tooltip"
                           >
                             <div
-                              class="popover-header lh-1 p-2 popoverHeader"
+                              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
                             >
                               Jan'21
                             </div>
@@ -1817,7 +1817,7 @@ exports[`Package index creates snapshot 1`] = `
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
-                                  class="me-2 border border-1 top-0 marker level0"
+                                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                                 />
                                 Releases: 
                                 <span
@@ -1833,16 +1833,16 @@ exports[`Package index creates snapshot 1`] = `
                           class="position-relative"
                         >
                           <div
-                            class="position-relative border border-1 heatMapCell level0 border"
+                            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
                             data-testid="heatMapCell"
                           />
                           <div
-                            class="tooltip popover end-0 popover"
+                            class="tooltip popover end-0 _popover_7e4fdd"
                             data-testid="heatMapPopover"
                             role="tooltip"
                           >
                             <div
-                              class="popover-header lh-1 p-2 popoverHeader"
+                              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
                             >
                               Feb'21
                             </div>
@@ -1853,7 +1853,7 @@ exports[`Package index creates snapshot 1`] = `
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
-                                  class="me-2 border border-1 top-0 marker level0"
+                                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                                 />
                                 Releases: 
                                 <span
@@ -1869,16 +1869,16 @@ exports[`Package index creates snapshot 1`] = `
                           class="position-relative"
                         >
                           <div
-                            class="position-relative border border-1 heatMapCell level0 border"
+                            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
                             data-testid="heatMapCell"
                           />
                           <div
-                            class="tooltip popover end-0 popover"
+                            class="tooltip popover end-0 _popover_7e4fdd"
                             data-testid="heatMapPopover"
                             role="tooltip"
                           >
                             <div
-                              class="popover-header lh-1 p-2 popoverHeader"
+                              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
                             >
                               Mar'21
                             </div>
@@ -1889,7 +1889,7 @@ exports[`Package index creates snapshot 1`] = `
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
-                                  class="me-2 border border-1 top-0 marker level0"
+                                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                                 />
                                 Releases: 
                                 <span
@@ -1905,16 +1905,16 @@ exports[`Package index creates snapshot 1`] = `
                           class="position-relative"
                         >
                           <div
-                            class="position-relative border border-1 heatMapCell level0 border"
+                            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
                             data-testid="heatMapCell"
                           />
                           <div
-                            class="tooltip popover end-0 popover"
+                            class="tooltip popover end-0 _popover_7e4fdd"
                             data-testid="heatMapPopover"
                             role="tooltip"
                           >
                             <div
-                              class="popover-header lh-1 p-2 popoverHeader"
+                              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
                             >
                               Apr'21
                             </div>
@@ -1925,7 +1925,7 @@ exports[`Package index creates snapshot 1`] = `
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
-                                  class="me-2 border border-1 top-0 marker level0"
+                                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                                 />
                                 Releases: 
                                 <span
@@ -1941,16 +1941,16 @@ exports[`Package index creates snapshot 1`] = `
                           class="position-relative"
                         >
                           <div
-                            class="position-relative border border-1 heatMapCell level0 border"
+                            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
                             data-testid="heatMapCell"
                           />
                           <div
-                            class="tooltip popover end-0 popover"
+                            class="tooltip popover end-0 _popover_7e4fdd"
                             data-testid="heatMapPopover"
                             role="tooltip"
                           >
                             <div
-                              class="popover-header lh-1 p-2 popoverHeader"
+                              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
                             >
                               May'21
                             </div>
@@ -1961,7 +1961,7 @@ exports[`Package index creates snapshot 1`] = `
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
-                                  class="me-2 border border-1 top-0 marker level0"
+                                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                                 />
                                 Releases: 
                                 <span
@@ -1977,16 +1977,16 @@ exports[`Package index creates snapshot 1`] = `
                           class="position-relative"
                         >
                           <div
-                            class="position-relative border border-1 heatMapCell level0 border"
+                            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
                             data-testid="heatMapCell"
                           />
                           <div
-                            class="tooltip popover end-0 popover"
+                            class="tooltip popover end-0 _popover_7e4fdd"
                             data-testid="heatMapPopover"
                             role="tooltip"
                           >
                             <div
-                              class="popover-header lh-1 p-2 popoverHeader"
+                              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
                             >
                               Jun'21
                             </div>
@@ -1997,7 +1997,7 @@ exports[`Package index creates snapshot 1`] = `
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
-                                  class="me-2 border border-1 top-0 marker level0"
+                                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                                 />
                                 Releases: 
                                 <span
@@ -2013,16 +2013,16 @@ exports[`Package index creates snapshot 1`] = `
                           class="position-relative"
                         >
                           <div
-                            class="position-relative border border-1 heatMapCell level0 border"
+                            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
                             data-testid="heatMapCell"
                           />
                           <div
-                            class="tooltip popover end-0 popover"
+                            class="tooltip popover end-0 _popover_7e4fdd"
                             data-testid="heatMapPopover"
                             role="tooltip"
                           >
                             <div
-                              class="popover-header lh-1 p-2 popoverHeader"
+                              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
                             >
                               Jul'21
                             </div>
@@ -2033,7 +2033,7 @@ exports[`Package index creates snapshot 1`] = `
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
-                                  class="me-2 border border-1 top-0 marker level0"
+                                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                                 />
                                 Releases: 
                                 <span
@@ -2049,16 +2049,16 @@ exports[`Package index creates snapshot 1`] = `
                           class="position-relative"
                         >
                           <div
-                            class="position-relative border border-1 heatMapCell level0 border"
+                            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
                             data-testid="heatMapCell"
                           />
                           <div
-                            class="tooltip popover end-0 popover"
+                            class="tooltip popover end-0 _popover_7e4fdd"
                             data-testid="heatMapPopover"
                             role="tooltip"
                           >
                             <div
-                              class="popover-header lh-1 p-2 popoverHeader"
+                              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
                             >
                               Aug'21
                             </div>
@@ -2069,7 +2069,7 @@ exports[`Package index creates snapshot 1`] = `
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
-                                  class="me-2 border border-1 top-0 marker level0"
+                                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                                 />
                                 Releases: 
                                 <span
@@ -2085,16 +2085,16 @@ exports[`Package index creates snapshot 1`] = `
                           class="position-relative"
                         >
                           <div
-                            class="position-relative border border-1 heatMapCell level0 border"
+                            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
                             data-testid="heatMapCell"
                           />
                           <div
-                            class="tooltip popover end-0 popover"
+                            class="tooltip popover end-0 _popover_7e4fdd"
                             data-testid="heatMapPopover"
                             role="tooltip"
                           >
                             <div
-                              class="popover-header lh-1 p-2 popoverHeader"
+                              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
                             >
                               Sep'21
                             </div>
@@ -2105,7 +2105,7 @@ exports[`Package index creates snapshot 1`] = `
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
-                                  class="me-2 border border-1 top-0 marker level0"
+                                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                                 />
                                 Releases: 
                                 <span
@@ -2121,16 +2121,16 @@ exports[`Package index creates snapshot 1`] = `
                           class="position-relative"
                         >
                           <div
-                            class="position-relative border border-1 heatMapCell level0 border"
+                            class="position-relative border border-1 _heatMapCell_7e4fdd _level0_7e4fdd border"
                             data-testid="heatMapCell"
                           />
                           <div
-                            class="tooltip popover end-0 popover"
+                            class="tooltip popover end-0 _popover_7e4fdd"
                             data-testid="heatMapPopover"
                             role="tooltip"
                           >
                             <div
-                              class="popover-header lh-1 p-2 popoverHeader"
+                              class="popover-header lh-1 p-2 _popoverHeader_7e4fdd"
                             >
                               Oct'21
                             </div>
@@ -2141,7 +2141,7 @@ exports[`Package index creates snapshot 1`] = `
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
-                                  class="me-2 border border-1 top-0 marker level0"
+                                  class="me-2 border border-1 top-0 _marker_7e4fdd _level0_7e4fdd"
                                 />
                                 Releases: 
                                 <span
@@ -2155,7 +2155,7 @@ exports[`Package index creates snapshot 1`] = `
                         </div>
                       </div>
                       <div
-                        class="d-flex flex-row justify-content-between w-100 legend"
+                        class="d-flex flex-row justify-content-between w-100 _legend_7e4fdd"
                       >
                         <div>
                           <small
@@ -2206,7 +2206,7 @@ exports[`Package index creates snapshot 1`] = `
                       >
                         <div>
                           <div
-                            class="position-relative border bg-white chartWrapper"
+                            class="position-relative border bg-white _chartWrapper_84329d"
                           >
                             <div
                               class="d-flex flex-row align-items-center h-100 w-100"
@@ -2219,27 +2219,27 @@ exports[`Package index creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-flex flex-row justify-content-between w-100 legend"
+                            class="d-flex flex-row justify-content-between w-100 _legend_84329d"
                           >
                             <div>
                               <small
                                 class="text-muted"
                               >
-                                23 Sep
+                                06 Sep
                               </small>
                             </div>
                             <div>
                               <small
                                 class="text-muted"
                               >
-                                08 Oct
+                                21 Sep
                               </small>
                             </div>
                             <div>
                               <small
                                 class="text-muted"
                               >
-                                23 Oct
+                                06 Oct
                               </small>
                             </div>
                           </div>
@@ -2251,7 +2251,7 @@ exports[`Package index creates snapshot 1`] = `
                             >
                               <button
                                 aria-label="See views chart"
-                                class="btn btn-link ps-0 position-relative text-primary btn"
+                                class="btn btn-link ps-0 position-relative text-primary _btn_84329d"
                                 disabled=""
                               >
                                 <div
@@ -2281,7 +2281,7 @@ exports[`Package index creates snapshot 1`] = `
                               </button>
                             </div>
                             <div
-                              class="ms-auto text-truncate legend"
+                              class="ms-auto text-truncate _legend_84329d"
                             >
                               <small
                                 class="text-muted text-truncate"
@@ -2320,7 +2320,7 @@ exports[`Package index creates snapshot 1`] = `
                     >
                       <button
                         aria-label="Filter by key1"
-                        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 badge"
+                        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 _badge_30d08c"
                         role="listitem"
                       >
                         <div
@@ -2331,7 +2331,7 @@ exports[`Package index creates snapshot 1`] = `
                       </button>
                       <button
                         aria-label="Filter by key2"
-                        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 badge"
+                        class="btn btn-sm d-inline badge fw-normal me-2 mb-2 mb-sm-0 mw-100 _badge_30d08c"
                         role="listitem"
                       >
                         <div
@@ -2349,16 +2349,16 @@ exports[`Package index creates snapshot 1`] = `
         </div>
         <div
           aria-label="Package detail"
-          class="noFocus mainContent"
+          class="noFocus _mainContent_c31b0e"
           id="content"
           tabindex="-1"
         >
           <div>
             <div
-              class="contentWrapper"
+              class="_contentWrapper_c31b0e"
             >
               <div
-                class="alert alert-primary ms-auto me-auto my-5 text-center p-4 p-sm-5 border border-1 wrapper w-100 noReadmeAlert bg-transparent"
+                class="alert alert-primary ms-auto me-auto my-5 text-center p-4 p-sm-5 border border-1 _wrapper_5dbc1b w-100 noReadmeAlert bg-transparent"
                 role="alert"
               >
                 <div
@@ -2366,7 +2366,7 @@ exports[`Package index creates snapshot 1`] = `
                 >
                   <div>
                     <div
-                      class="mb-4 fileIcon"
+                      class="mb-4 _fileIcon_c31b0e"
                     >
                       <svg
                         fill="currentColor"
@@ -2406,19 +2406,20 @@ exports[`Package index creates snapshot 1`] = `
             class="mb-5 pb-3"
           >
             <span
-              class="header"
+              class="_header_2d34f2"
             >
               <h2
-                class="position-relative anchorHeader headingWrapper undefined"
+                class="position-relative anchorHeader _headingWrapper_2d34f2 undefined"
               >
                 <div
-                  class="position-absolute headerAnchor"
+                  class="position-absolute _headerAnchor_2d34f2"
                   data-testid="anchor"
                   id="views"
                 />
                 <a
                   aria-label="Views over the last 30 days"
-                  class="text-reset text-center d-none d-md-block lh-1 float-start headingLink"
+                  class="text-reset text-center d-none d-md-block lh-1 float-start _headingLink_2d34f2"
+                  data-discover="true"
                   href="/#views"
                   role="button"
                 >
@@ -2443,16 +2444,16 @@ exports[`Package index creates snapshot 1`] = `
               </h2>
             </span>
             <div
-              class="card chartWrapper"
+              class="card _chartWrapper_c90aa1"
             >
               <div
-                class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper"
+                class="position-absolute top-0 bottom-0 start-0 end-0 p-5 _wrapper_b8d820"
               >
                 <div
                   class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                 >
                   <div
-                    class="wave"
+                    class="_wave_b8d820"
                     role="status"
                   >
                     <span

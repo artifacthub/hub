@@ -1,20 +1,21 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PackageCard creates snapshot 1`] = `
+exports[`PackageCard > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="py-2"
     role="listitem"
   >
     <div
-      class="card cardWithHover h-100 bg-white mw-100 card"
+      class="card cardWithHover h-100 bg-white mw-100 _card_a1a21c"
     >
       <div>
         <div
-          class="card-body position-relative body"
+          class="card-body position-relative _body_a1a21c"
         >
           <a
-            class="text-decoration-none text-reset bg-transparent link"
+            class="text-decoration-none text-reset bg-transparent _link_a1a21c"
+            data-discover="true"
             data-testid="packageCardLink"
             href="/packages/helm/stable/airflow"
           >
@@ -22,21 +23,21 @@ exports[`PackageCard creates snapshot 1`] = `
               class="d-flex align-items-start justify-content-between mb-3"
             >
               <div
-                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                class="d-flex align-items-center flex-grow-1 _truncateWrapper_a1a21c"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white _imageWrapper_a1a21c imageWrapper"
                 >
                   <img
                     alt="Logo airflow"
                     aria-hidden="true"
-                    class="image"
+                    class="_image_a1a21c"
                     src="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc"
                     srcset="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@1x 1x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@2x 2x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@3x 3x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@4x 4x"
                   />
                 </div>
                 <div
-                  class="ms-3 flex-grow-1 truncateWrapper"
+                  class="ms-3 flex-grow-1 _truncateWrapper_a1a21c"
                 >
                   <div
                     class="card-title fw-bolder mb-2 lh-1"
@@ -48,7 +49,7 @@ exports[`PackageCard creates snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                    class="card-subtitle d-flex flex-wrap mw-100 mt-1 _subtitle_a1a21c"
                   >
                     <div
                       class="me-2 text-truncate"
@@ -82,16 +83,16 @@ exports[`PackageCard creates snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="d-flex align-items-center text-uppercase kind"
+                class="d-flex align-items-center text-uppercase _kind_a1a21c"
               >
                 <img
                   alt="Icon"
-                  class="h-auto icon iconLight"
+                  class="h-auto _icon_a1a21c iconLight"
                   src="/static/media/helm-chart.svg"
                 />
                 <img
                   alt="Icon"
-                  class="h-auto icon iconDark"
+                  class="h-auto _icon_a1a21c iconDark"
                   src="/static/media/helm-chart-light.svg"
                 />
               </div>
@@ -101,11 +102,11 @@ exports[`PackageCard creates snapshot 1`] = `
             class="d-flex flex-row align-items-center"
           >
             <div
-              class="form-check form-switch clickable"
+              class="form-check form-switch _clickable_a1a21c"
             >
               <input
                 checked=""
-                class="form-check-input checkbox"
+                class="form-check-input _checkbox_a1a21c"
                 id="airflow_newRelease"
                 role="switch"
                 type="checkbox"
@@ -149,10 +150,10 @@ exports[`PackageCard creates snapshot 1`] = `
             class="d-flex flex-row align-items-center"
           >
             <div
-              class="form-check form-switch clickable"
+              class="form-check form-switch _clickable_a1a21c"
             >
               <input
-                class="form-check-input checkbox"
+                class="form-check-input _checkbox_a1a21c"
                 id="airflow_securityAlert"
                 role="switch"
                 type="checkbox"

@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`NotFoundView renders correctly 1`] = `
+exports[`NotFoundView > renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="p-5 d-flex flex-column align-items-center justify-content-center flex-grow-1 noFocus content"
+    class="p-5 d-flex flex-column align-items-center justify-content-center flex-grow-1 noFocus _content_e48d6b"
     id="content"
     tabindex="-1"
   >
     <svg
       baseProfile="tiny"
-      class="m-3 icon"
+      class="m-3 _icon_e48d6b"
       fill="currentColor"
       height="1em"
       stroke="currentColor"
@@ -43,6 +43,7 @@ exports[`NotFoundView renders correctly 1`] = `
     </div>
     <a
       class="btn btn-secondary btn-lg"
+      data-discover="true"
       href="/"
     >
       Back Home

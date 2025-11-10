@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SummaryTable creates snapshot 1`] = `
+exports[`SummaryTable > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="w-100 my-4 tableWrapper"
+    class="w-100 my-4 _tableWrapper_7db815"
   >
     <table
-      class="table table-bordered table-md mb-0 table"
+      class="table table-bordered table-md mb-0 _table_7db815"
     >
       <thead>
         <tr
-          class="tableTitle"
+          class="_tableTitle_7db815"
         >
           <th
             class="w-auto"
@@ -70,7 +70,7 @@ exports[`SummaryTable creates snapshot 1`] = `
             rowspan="2"
           >
             <div
-              class="d-table w-100 imageNameWrapper"
+              class="d-table w-100 _imageNameWrapper_7db815"
             >
               <div
                 class="text-truncate"
@@ -87,14 +87,14 @@ exports[`SummaryTable creates snapshot 1`] = `
               class="d-inline-block"
             >
               <div
-                class="position-relative ratingBadge"
+                class="position-relative _ratingBadge_7db815"
               >
                 <div
                   data-testid="elementWithTooltip"
                 >
                   <small>
                     <div
-                      class="badge text-light fw-bold badge ratingBadge"
+                      class="badge text-light fw-bold _badge_a64850 _ratingBadge_7db815"
                       style="background-color: rgb(150, 0, 3);"
                     >
                       F
@@ -105,74 +105,74 @@ exports[`SummaryTable creates snapshot 1`] = `
             </div>
           </td>
           <td
-            class="narrowCell"
+            class="_narrowCell_7db815"
           >
             Fixable
           </td>
           <td
-            class="text-center narrowCell"
+            class="text-center _narrowCell_7db815"
           >
             0
           </td>
           <td
-            class="text-center narrowCell"
+            class="text-center _narrowCell_7db815"
           >
             0
           </td>
           <td
-            class="text-center narrowCell"
+            class="text-center _narrowCell_7db815"
           >
             0
           </td>
           <td
-            class="text-center narrowCell"
+            class="text-center _narrowCell_7db815"
           >
             0
           </td>
           <td
-            class="text-center narrowCell"
+            class="text-center _narrowCell_7db815"
           >
             0
           </td>
           <td
-            class="text-center fw-bold narrowCell"
+            class="text-center fw-bold _narrowCell_7db815"
           >
             0
           </td>
         </tr>
         <tr>
           <td
-            class="narrowCell"
+            class="_narrowCell_7db815"
           >
             All
           </td>
           <td
-            class="text-center narrowCell"
+            class="text-center _narrowCell_7db815"
           >
             4
           </td>
           <td
-            class="text-center narrowCell"
+            class="text-center _narrowCell_7db815"
           >
             22
           </td>
           <td
-            class="text-center narrowCell"
+            class="text-center _narrowCell_7db815"
           >
             461
           </td>
           <td
-            class="text-center narrowCell"
+            class="text-center _narrowCell_7db815"
           >
             455
           </td>
           <td
-            class="text-center narrowCell"
+            class="text-center _narrowCell_7db815"
           >
             0
           </td>
           <td
-            class="text-center fw-bold narrowCell"
+            class="text-center fw-bold _narrowCell_7db815"
           >
             942
           </td>

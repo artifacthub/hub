@@ -1,14 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../../../../api';
 import { ErrorKind } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import PackagesSection from '../index';
-jest.mock('../../../../../../api');
-jest.mock('../../../../../../utils/alertDispatcher');
+vi.mock('../../../../../../api');
+vi.mock('../../../../../../utils/alertDispatcher');
 
 const getMockSubscriptions = (fixtureId: string) => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -31,7 +31,7 @@ describe('PackagesSection', () => {
 
   it('creates snapshot', async () => {
     const mockSubscriptions = getMockSubscriptions('1');
-    mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+    vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
     const { asFragment } = render(
       <Router>
@@ -51,7 +51,7 @@ describe('PackagesSection', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockSubscriptions = getMockSubscriptions('2');
-      mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+      vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
       render(
         <Router>
@@ -78,7 +78,7 @@ describe('PackagesSection', () => {
 
     it('opens Add subscription modal', async () => {
       const mockSubscriptions = getMockSubscriptions('2');
-      mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+      vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
       render(
         <Router>
@@ -92,20 +92,21 @@ describe('PackagesSection', () => {
 
       const modal = await screen.findByRole('dialog');
       expect(modal).toBeInTheDocument();
-      expect(modal).not.toHaveClass('active');
+      expect(modal.className.split(' ').some((cls) => cls.includes('active'))).toBe(false);
 
       const btn = screen.getByRole('button', { name: 'Open subscription modal' });
       expect(btn).toBeInTheDocument();
       await userEvent.click(btn);
 
-      expect(await screen.findByRole('dialog')).toHaveClass('active');
+      const openedModal = await screen.findByRole('dialog');
+      expect(openedModal.className.split(' ').some((cls) => cls.includes('active'))).toBe(true);
     });
   });
 
   describe('Packages', () => {
     it('renders 8 packages', async () => {
       const mockSubscriptions = getMockSubscriptions('3');
-      mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+      vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
       render(
         <Router>
@@ -122,7 +123,7 @@ describe('PackagesSection', () => {
 
     it('does not display list when no packages', async () => {
       const mockSubscriptions = getMockSubscriptions('4');
-      mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+      vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
       render(
         <Router>
@@ -140,7 +141,7 @@ describe('PackagesSection', () => {
     });
 
     it('calls alertDispatcher when getUserSubscriptions call fails with not Unauthorized error', async () => {
-      mocked(API).getUserSubscriptions.mockRejectedValue({ kind: ErrorKind.Other });
+      vi.mocked(API).getUserSubscriptions.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <Router>
@@ -157,7 +158,7 @@ describe('PackagesSection', () => {
     });
 
     it('calls navigate to load login modal when user is not signed in', async () => {
-      mocked(API).getUserSubscriptions.mockRejectedValue({
+      vi.mocked(API).getUserSubscriptions.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -171,10 +172,10 @@ describe('PackagesSection', () => {
     });
   });
 
-  xit('loads first page when not subscriptions after deleting one', async () => {
+  it.skip('loads first page when not subscriptions after deleting one', async () => {
     const mockSubscriptions = getMockSubscriptions('11');
-    mocked(API).deleteSubscription.mockResolvedValue('');
-    mocked(API)
+    vi.mocked(API).deleteSubscription.mockResolvedValue('');
+    vi.mocked(API)
       .getUserSubscriptions.mockResolvedValue(mockSubscriptions)
       .mockResolvedValueOnce(mockSubscriptions)
       .mockResolvedValueOnce(mockSubscriptions)
@@ -216,8 +217,8 @@ describe('PackagesSection', () => {
   describe('to change subscription', () => {
     it('to inactivate New release notification', async () => {
       const mockSubscriptions = getMockSubscriptions('5');
-      mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
-      mocked(API).deleteSubscription.mockResolvedValue('');
+      vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+      vi.mocked(API).deleteSubscription.mockResolvedValue('');
 
       render(
         <Router>
@@ -255,10 +256,10 @@ describe('PackagesSection', () => {
   });
 
   describe('when change subscription fails', () => {
-    xit('generic error', async () => {
+    it.skip('generic error', async () => {
       const mockSubscriptions = getMockSubscriptions('6');
-      mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
-      mocked(API).deleteSubscription.mockRejectedValue({ kind: ErrorKind.Other });
+      vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+      vi.mocked(API).deleteSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <Router>
@@ -299,10 +300,10 @@ describe('PackagesSection', () => {
       expect(await screen.findByTestId(`${mockSubscriptions.items[0].name}_newRelease_input`)).toBeInTheDocument();
     });
 
-    xit('UnauthorizedError', async () => {
+    it.skip('UnauthorizedError', async () => {
       const mockSubscriptions = getMockSubscriptions('6');
-      mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
-      mocked(API).deleteSubscription.mockRejectedValue({
+      vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+      vi.mocked(API).deleteSubscription.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -337,7 +338,7 @@ describe('PackagesSection', () => {
   describe('click links', () => {
     it('on package link click', async () => {
       const mockSubscriptions = getMockSubscriptions('7');
-      mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+      vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
       render(
         <Router>
@@ -358,7 +359,7 @@ describe('PackagesSection', () => {
 
     it('on user link click', async () => {
       const mockSubscriptions = getMockSubscriptions('8');
-      mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+      vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
       render(
         <Router>
@@ -380,7 +381,7 @@ describe('PackagesSection', () => {
 
     it('on org link click', async () => {
       const mockSubscriptions = getMockSubscriptions('9');
-      mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+      vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
       render(
         <Router>
@@ -402,7 +403,7 @@ describe('PackagesSection', () => {
 
     it('on repo link click', async () => {
       const mockSubscriptions = getMockSubscriptions('10');
-      mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+      vi.mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
       render(
         <Router>

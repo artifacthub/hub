@@ -1,6 +1,6 @@
 import getMetaTag from './getMetaTag';
 
-const siteName = getMetaTag('siteName');
+const siteName = getMetaTag('siteName') || 'Artifact Hub';
 
 const updateMetaIndex = (
   title: string = siteName,

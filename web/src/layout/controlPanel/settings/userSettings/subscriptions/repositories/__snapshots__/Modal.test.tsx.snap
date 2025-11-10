@@ -1,28 +1,28 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`OptOutModal creates snapshot 1`] = `
+exports[`OptOutModal > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="modal-backdrop activeBackdrop"
+      class="modal-backdrop _activeBackdrop_2adcc6"
       data-testid="modalBackdrop"
     />
     <div
       aria-modal="true"
-      class="modal modal active d-block"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
       role="dialog"
     >
       <div
-        class="modal-dialog modal-lg modal"
+        class="modal-dialog modal-lg _modal_c160ed"
       >
         <div
-          class="modal-content border border-3 mx-auto content"
+          class="modal-content border border-3 mx-auto _content_2adcc6"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 title"
+              class="h3 m-2 flex-grow-1 _title_c160ed"
             >
               Add opt-out entry
             </div>
@@ -39,7 +39,7 @@ exports[`OptOutModal creates snapshot 1`] = `
               class="w-100 position-relative"
             >
               <label
-                class="form-label fw-bold label"
+                class="form-label fw-bold _label_c160ed"
                 for="kind"
               >
                 Events
@@ -143,7 +143,7 @@ exports[`OptOutModal creates snapshot 1`] = `
                 class="d-flex flex-column mb-3"
               >
                 <label
-                  class="form-label fw-bold label"
+                  class="form-label fw-bold _label_c160ed"
                   for="description"
                 >
                   Repository
@@ -154,7 +154,7 @@ exports[`OptOutModal creates snapshot 1`] = `
                   Select repository:
                 </small>
                 <div
-                  class="mt-2 searchWrapper"
+                  class="mt-2 _searchWrapper_c160ed"
                 >
                   <div
                     class="position-relative"
@@ -163,10 +163,10 @@ exports[`OptOutModal creates snapshot 1`] = `
                       class="d-flex flex-row"
                     >
                       <div
-                        class="flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative searchBar lh-base bg-white inputWrapper"
+                        class="flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative searchBar lh-base bg-white _inputWrapper_6128be"
                       >
                         <div
-                          class="d-flex align-items-center iconWrapper"
+                          class="d-flex align-items-center _iconWrapper_6128be"
                           data-testid="searchBarIcon"
                         >
                           <svg
@@ -196,7 +196,7 @@ exports[`OptOutModal creates snapshot 1`] = `
                         <input
                           aria-label="Search repositories"
                           autocomplete="new-input"
-                          class="flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent input"
+                          class="flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent _input_6128be"
                           name="searchRepositoriesInput"
                           spellcheck="false"
                           type="text"
@@ -209,7 +209,7 @@ exports[`OptOutModal creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>

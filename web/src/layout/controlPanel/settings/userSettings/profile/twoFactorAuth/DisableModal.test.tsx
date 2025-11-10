@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../../../../../api';
 import { ErrorKind } from '../../../../../../types';
 import DisableTwoFactorAuthenticationModal from './DisableModal';
-jest.mock('../../../../../../api');
+vi.mock('../../../../../../api');
 
 const scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
@@ -36,7 +36,7 @@ describe('DisableModal', () => {
     });
 
     it('opens modal', async () => {
-      mocked(API).disableTFA.mockResolvedValue(null);
+      vi.mocked(API).disableTFA.mockResolvedValue(null);
 
       render(<DisableTwoFactorAuthenticationModal {...defaultProps} />);
 
@@ -70,7 +70,7 @@ describe('DisableModal', () => {
   describe('on error', () => {
     describe('when disableTFA fails', () => {
       it('default error', async () => {
-        mocked(API).disableTFA.mockRejectedValue({ kind: ErrorKind.Other });
+        vi.mocked(API).disableTFA.mockRejectedValue({ kind: ErrorKind.Other });
 
         render(<DisableTwoFactorAuthenticationModal {...defaultProps} />);
 
@@ -94,7 +94,7 @@ describe('DisableModal', () => {
       });
 
       it('custom error', async () => {
-        mocked(API).disableTFA.mockRejectedValue({ kind: ErrorKind.Other, message: 'custom error' });
+        vi.mocked(API).disableTFA.mockRejectedValue({ kind: ErrorKind.Other, message: 'custom error' });
 
         render(<DisableTwoFactorAuthenticationModal {...defaultProps} />);
 
@@ -118,7 +118,7 @@ describe('DisableModal', () => {
       });
 
       it('unauthorized', async () => {
-        mocked(API).disableTFA.mockRejectedValue({ kind: ErrorKind.Unauthorized });
+        vi.mocked(API).disableTFA.mockRejectedValue({ kind: ErrorKind.Unauthorized });
 
         render(<DisableTwoFactorAuthenticationModal {...defaultProps} />);
 

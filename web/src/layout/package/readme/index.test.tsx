@@ -1,13 +1,20 @@
 import { render, screen } from '@testing-library/react';
+import type { ReactNode } from 'react';
+import { vi } from 'vitest';
 
 import ReadmeWrapper from './index';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('react-markdown', () => (props: any) => {
-  return <>{props.children}</>;
-});
-jest.mock('remark-gfm', () => () => <div />);
-jest.mock('rehype-github-alerts', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: ({ children }: { children?: ReactNode }) => {
+    return <>{children}</>;
+  },
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
+vi.mock('rehype-github-alerts', () => ({
+  rehypeGithubAlerts: () => undefined,
+}));
 
 const defaultProps = {
   packageName: 'package-name',

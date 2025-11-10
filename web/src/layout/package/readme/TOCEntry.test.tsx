@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import { hasClassContaining } from '../../../utils/testUtils';
 import TOCEntry from './TOCEntry';
 
 const setVisibleTOCMock = jest.fn();
@@ -41,8 +42,8 @@ describe('TOCEntry', () => {
 
       const link = screen.getByText('Installing the Chart');
       expect(link).toBeInTheDocument();
-      expect(link).toHaveClass('level1');
-      expect(link).toHaveProperty('href', 'http://localhost/#installing-the-chart');
+      expect(hasClassContaining(link, 'level1')).toBe(true);
+      expect(link.getAttribute('href')).toBe('/#installing-the-chart');
     });
 
     it('clicks link', async () => {

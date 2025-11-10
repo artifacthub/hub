@@ -1,17 +1,22 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import GatekeeperExamplesModal from './GatekeeperExamplesModal';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const isVisibleItemInContainer = require('../../utils/isVisibleItemInContainer');
+const { isVisibleItemInContainerMock } = vi.hoisted(() => ({
+  isVisibleItemInContainerMock: vi.fn(),
+}));
 
-jest.mock('../../utils/isVisibleItemInContainer', () => jest.fn());
+vi.mock('../../utils/isVisibleItemInContainer', () => ({
+  __esModule: true,
+  default: isVisibleItemInContainerMock,
+}));
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -79,7 +84,7 @@ describe('Gatekeeper examples modal', () => {
   });
 
   beforeEach(() => {
-    isVisibleItemInContainer.mockImplementation(() => true);
+    isVisibleItemInContainerMock.mockImplementation(() => true);
   });
 
   it('creates snapshot', async () => {
@@ -153,7 +158,7 @@ describe('Gatekeeper examples modal', () => {
   });
 
   it('scrolls to active example when is not visible', async () => {
-    isVisibleItemInContainer.mockImplementation(() => false);
+    isVisibleItemInContainerMock.mockImplementation(() => false);
 
     render(
       <Router>

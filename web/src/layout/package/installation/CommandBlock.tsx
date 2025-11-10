@@ -19,9 +19,13 @@ const CommandBlock = (props: Props) => {
 
   useEffect(() => {
     setVisibleCommand(' ');
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setVisibleCommand(props.command);
     }, 10);
+
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [props.command]);
 
   return (

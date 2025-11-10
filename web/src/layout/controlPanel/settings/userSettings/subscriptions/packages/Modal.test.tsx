@@ -1,13 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../../../../../api';
 import { Package, SearchResults } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
+import { hasClassContaining } from '../../../../../../utils/testUtils';
 import SubscriptionModal from './Modal';
-jest.mock('../../../../../../api');
-jest.mock('../../../../../../utils/alertDispatcher');
+vi.mock('../../../../../../api');
+vi.mock('../../../../../../utils/alertDispatcher');
 const mockOnSuccess = jest.fn();
 const mockOnClose = jest.fn();
 
@@ -59,7 +60,7 @@ describe('SubscriptionModal', () => {
   describe('Renders some disabled packages', () => {
     it('first 2 disabled', async () => {
       const mockSearch = getMockSearch('3');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('3')} />);
 
@@ -75,19 +76,19 @@ describe('SubscriptionModal', () => {
 
       const buttons = await screen.findAllByTestId('packageItem');
       expect(buttons).toHaveLength(8);
-      expect(buttons[0]).toHaveClass('disabledCell');
-      expect(buttons[1]).toHaveClass('disabledCell');
-      expect(buttons[2]).toHaveClass('clickableCell');
-      expect(buttons[3]).toHaveClass('clickableCell');
-      expect(buttons[4]).toHaveClass('clickableCell');
-      expect(buttons[5]).toHaveClass('clickableCell');
-      expect(buttons[6]).toHaveClass('clickableCell');
-      expect(buttons[7]).toHaveClass('clickableCell');
+      expect(hasClassContaining(buttons[0], 'disabledCell')).toBe(true);
+      expect(hasClassContaining(buttons[1], 'disabledCell')).toBe(true);
+      expect(hasClassContaining(buttons[2], 'clickableCell')).toBe(true);
+      expect(hasClassContaining(buttons[3], 'clickableCell')).toBe(true);
+      expect(hasClassContaining(buttons[4], 'clickableCell')).toBe(true);
+      expect(hasClassContaining(buttons[5], 'clickableCell')).toBe(true);
+      expect(hasClassContaining(buttons[6], 'clickableCell')).toBe(true);
+      expect(hasClassContaining(buttons[7], 'clickableCell')).toBe(true);
     });
 
     it('all enabled', async () => {
       const mockSearch = getMockSearch('4');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('4')} />);
 
@@ -102,13 +103,13 @@ describe('SubscriptionModal', () => {
       });
 
       const buttons = await screen.findAllByTestId('packageItem');
-      expect(buttons[0]).toHaveClass('clickableCell');
-      expect(buttons[1]).toHaveClass('clickableCell');
+      expect(hasClassContaining(buttons[0], 'clickableCell')).toBe(true);
+      expect(hasClassContaining(buttons[1], 'clickableCell')).toBe(true);
     });
 
     it('all disabled', async () => {
       const mockSearch = getMockSearch('5');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('5')} />);
 
@@ -123,13 +124,13 @@ describe('SubscriptionModal', () => {
       });
 
       const buttons = await screen.findAllByTestId('packageItem');
-      expect(buttons[0]).toHaveClass('disabledCell');
-      expect(buttons[1]).toHaveClass('disabledCell');
+      expect(hasClassContaining(buttons[0], 'disabledCell')).toBe(true);
+      expect(hasClassContaining(buttons[1], 'disabledCell')).toBe(true);
     });
 
     it('one disabled', async () => {
       const mockSearch = getMockSearch('6');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('6')} />);
 
@@ -144,16 +145,16 @@ describe('SubscriptionModal', () => {
       });
 
       const buttons = await screen.findAllByTestId('packageItem');
-      expect(buttons[0]).toHaveClass('disabledCell');
-      expect(buttons[1]).toHaveClass('clickableCell');
+      expect(hasClassContaining(buttons[0], 'disabledCell')).toBe(true);
+      expect(hasClassContaining(buttons[1], 'clickableCell')).toBe(true);
     });
   });
 
   describe('calls addSubscription', () => {
     it('when is successful', async () => {
       const mockSearch = getMockSearch('7');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
-      mocked(API).addSubscription.mockResolvedValue('');
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).addSubscription.mockResolvedValue('');
 
       render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('7')} />);
 
@@ -193,8 +194,8 @@ describe('SubscriptionModal', () => {
 
     it('when fails', async () => {
       const mockSearch = getMockSearch('8');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
-      mocked(API).addSubscription.mockRejectedValue({});
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).addSubscription.mockRejectedValue({});
 
       render(<SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('8')} />);
 

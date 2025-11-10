@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`FilterBadge creates snapshot 1`] = `
+exports[`FilterBadge > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="badge bg-light me-2 mb-2 p-0 ps-1 border border-1 badgeFilter"
+    class="badge bg-light me-2 mb-2 p-0 ps-1 border border-1 _badgeFilter_ee52e0"
   >
     <div
       class="d-flex flex-row align-items-center"
@@ -20,10 +20,10 @@ exports[`FilterBadge creates snapshot 1`] = `
       </div>
       <button
         aria-label="Remove filter: Category - Test"
-        class="btn btn-link btn-sm py-0 pe-1 text-center btn"
+        class="btn btn-link btn-sm py-0 pe-1 text-center _btn_ee52e0"
       >
         <svg
-          class="position-relative btnIcon"
+          class="position-relative _btnIcon_ee52e0"
           fill="currentColor"
           height="1em"
           stroke="currentColor"

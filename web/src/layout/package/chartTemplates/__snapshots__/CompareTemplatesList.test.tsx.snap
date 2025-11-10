@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CompareTemplatesList creates snapshot 1`] = `
+exports[`CompareTemplatesList > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="h-100 d-flex flex-column overflow-auto pe-2"
@@ -12,7 +12,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
         class="mb-3 input-group-sm"
       >
         <input
-          class="flex-grow-1 form-control ps-3 pe-4 input"
+          class="flex-grow-1 form-control ps-3 pe-4 _input_393876"
           name="CompareChartTemplateInput"
           placeholder="Search by template or resource kind"
           spellcheck="false"
@@ -20,7 +20,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
           value=""
         />
         <svg
-          class="text-muted position-absolute searchIcon"
+          class="text-muted position-absolute _searchIcon_393876"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -39,7 +39,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template configmap-authscripts.yaml"
         aria-pressed="true"
-        class="btn btn-light btn-sm mb-2 text-start w-100 btn activeTemplate active"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876 activeTemplate _active_393876"
       >
         <div
           class="d-flex flex-column"
@@ -48,7 +48,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row align-items-baseline mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -57,7 +57,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <div
-              class="text-truncate templateName"
+              class="text-truncate _templateName_393876"
             >
               configmap-authscripts.yaml
             </div>
@@ -88,7 +88,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -97,7 +97,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border border-1 fw-bold label"
+              class="text-truncate border border-1 fw-bold _label_ed385e"
             >
               ConfigMap
             </span>
@@ -109,7 +109,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template configmap-sshconfig.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
       >
         <div
           class="d-flex flex-column"
@@ -118,7 +118,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row align-items-baseline mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -127,7 +127,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <div
-              class="text-truncate templateName"
+              class="text-truncate _templateName_393876"
             >
               configmap-sshconfig.yaml
             </div>
@@ -158,7 +158,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -167,7 +167,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border border-1 fw-bold label"
+              class="text-truncate border border-1 fw-bold _label_ed385e"
             >
               ConfigMap
             </span>
@@ -179,7 +179,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template configmap.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
       >
         <div
           class="d-flex flex-column"
@@ -188,7 +188,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row align-items-baseline mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -197,7 +197,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <div
-              class="text-truncate templateName"
+              class="text-truncate _templateName_393876"
             >
               configmap.yaml
             </div>
@@ -205,7 +205,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               class="ps-2 ms-auto"
             >
               <span
-                class="modifiedIcon"
+                class="_modifiedIcon_393876"
                 data-testid="tmpl-modified-icon"
               >
                 <svg
@@ -233,7 +233,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -242,7 +242,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border border-1 fw-bold label"
+              class="text-truncate border border-1 fw-bold _label_ed385e"
             >
               ConfigMap
             </span>
@@ -254,7 +254,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template deployment.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
       >
         <div
           class="d-flex flex-column"
@@ -263,7 +263,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row align-items-baseline mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -272,7 +272,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <div
-              class="text-truncate templateName"
+              class="text-truncate _templateName_393876"
             >
               deployment.yaml
             </div>
@@ -280,7 +280,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               class="ps-2 ms-auto"
             >
               <span
-                class="modifiedIcon"
+                class="_modifiedIcon_393876"
                 data-testid="tmpl-modified-icon"
               >
                 <svg
@@ -308,7 +308,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -317,7 +317,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border border-1 fw-bold label"
+              class="text-truncate border border-1 fw-bold _label_ed385e"
             >
               Deployment
             </span>
@@ -329,7 +329,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template metrics-service.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
       >
         <div
           class="d-flex flex-column"
@@ -338,7 +338,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row align-items-baseline mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -347,7 +347,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <div
-              class="text-truncate templateName"
+              class="text-truncate _templateName_393876"
             >
               metrics-service.yaml
             </div>
@@ -378,7 +378,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -387,7 +387,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border border-1 fw-bold label"
+              class="text-truncate border border-1 fw-bold _label_ed385e"
             >
               Service
             </span>
@@ -399,7 +399,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template secret.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
       >
         <div
           class="d-flex flex-column"
@@ -408,7 +408,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row align-items-baseline mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -417,7 +417,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <div
-              class="text-truncate templateName"
+              class="text-truncate _templateName_393876"
             >
               secret.yaml
             </div>
@@ -448,7 +448,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -457,7 +457,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border border-1 fw-bold label"
+              class="text-truncate border border-1 fw-bold _label_ed385e"
             >
               Secret
             </span>
@@ -469,7 +469,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template servicemonitor.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
       >
         <div
           class="d-flex flex-column"
@@ -478,7 +478,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row align-items-baseline mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -487,7 +487,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <div
-              class="text-truncate templateName"
+              class="text-truncate _templateName_393876"
             >
               servicemonitor.yaml
             </div>
@@ -518,7 +518,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -527,7 +527,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border border-1 fw-bold label"
+              class="text-truncate border border-1 fw-bold _label_ed385e"
             >
               ServiceMonitor
             </span>
@@ -539,7 +539,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
       <button
         aria-label="Show template sample.yaml"
         aria-pressed="false"
-        class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+        class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
       >
         <div
           class="d-flex flex-column"
@@ -548,7 +548,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row align-items-baseline mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -557,7 +557,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <div
-              class="text-truncate templateName"
+              class="text-truncate _templateName_393876"
             >
               sample.yaml
             </div>
@@ -588,7 +588,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
             class="d-flex flex-row mb-1"
           >
             <div
-              class="legend"
+              class="_legend_393876"
             >
               <small
                 class="text-muted text-uppercase"
@@ -597,7 +597,7 @@ exports[`CompareTemplatesList creates snapshot 1`] = `
               </small>
             </div>
             <span
-              class="text-truncate border border-1 fw-bold label"
+              class="text-truncate border border-1 fw-bold _label_ed385e"
             >
               Sample
             </span>

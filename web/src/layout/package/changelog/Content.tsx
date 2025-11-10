@@ -1,7 +1,7 @@
 import classnames from 'classnames';
+import { formatDistanceToNow, fromUnixTime } from 'date-fns';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
 import { Dispatch, SetStateAction, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { BsDot } from 'react-icons/bs';
 import { FaLink, FaTrash, FaWrench } from 'react-icons/fa';
@@ -127,7 +127,9 @@ const Content = (props: Props) => {
 
                 {!isFuture(item.ts) && (
                   <div className="ms-auto ps-0 ps-md-2 text-nowrap">
-                    <small className="text-muted">Released {moment.unix(item.ts).fromNow()}</small>
+                    <small className="text-muted">
+                      Released {formatDistanceToNow(fromUnixTime(item.ts), { addSuffix: true })}
+                    </small>
                   </div>
                 )}
               </div>

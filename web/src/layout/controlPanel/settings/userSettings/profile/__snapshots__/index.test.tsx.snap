@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`User settings index creates snapshot 1`] = `
+exports[`User settings index > creates snapshot 1`] = `
 <DocumentFragment>
   <main
     class="p-0"
@@ -10,12 +10,12 @@ exports[`User settings index creates snapshot 1`] = `
       class="mb-5"
     >
       <div
-        class="h3 mb-4 pb-2 border-bottom border-1 title"
+        class="h3 mb-4 pb-2 border-bottom border-1 _title_469808"
       >
         Profile information
       </div>
       <div
-        class="mt-4 mt-md-5 formWrapper"
+        class="mt-4 mt-md-5 _formWrapper_469808"
       >
         <form
           autocomplete="on"
@@ -30,7 +30,7 @@ exports[`User settings index creates snapshot 1`] = `
               class="d-flex flex-column"
             >
               <label
-                class="form-label label"
+                class="form-label _label_ad3bee"
                 for="image"
               >
                 <span
@@ -49,7 +49,7 @@ exports[`User settings index creates snapshot 1`] = `
               >
                 <button
                   aria-label="Add image"
-                  class="btn p-0 overflow-hidden position-relative lh-1 fs-2 btn rounded-circle border border-2 bg-white circularBtn"
+                  class="btn p-0 overflow-hidden position-relative lh-1 fs-2 _btn_ad3bee rounded-circle border border-2 bg-white _circularBtn_ad3bee"
                   type="button"
                 >
                   <svg
@@ -84,7 +84,7 @@ exports[`User settings index creates snapshot 1`] = `
             class="mb-4 position-relative undefined"
           >
             <label
-              class="form-label fw-bold label"
+              class="form-label fw-bold _label_d02ded"
               for="email"
             >
               <span
@@ -104,14 +104,14 @@ exports[`User settings index creates snapshot 1`] = `
               value="jsmith@email.com"
             />
             <div
-              class="invalid-feedback mt-0 inputFeedback"
+              class="invalid-feedback mt-0 _inputFeedback_d02ded"
             />
           </div>
           <div
             class="mb-4 position-relative undefined"
           >
             <label
-              class="form-label fw-bold label"
+              class="form-label fw-bold _label_d02ded"
               for="alias"
             >
               <span
@@ -137,7 +137,7 @@ exports[`User settings index creates snapshot 1`] = `
               value="userAlias"
             />
             <div
-              class="invalid-feedback mt-0 inputFeedback"
+              class="invalid-feedback mt-0 _inputFeedback_d02ded"
             >
               This field is required
             </div>
@@ -146,7 +146,7 @@ exports[`User settings index creates snapshot 1`] = `
             class="mb-4 position-relative undefined"
           >
             <label
-              class="form-label fw-bold label"
+              class="form-label fw-bold _label_d02ded"
               for="firstName"
             >
               <span
@@ -166,14 +166,14 @@ exports[`User settings index creates snapshot 1`] = `
               value=""
             />
             <div
-              class="invalid-feedback mt-0 inputFeedback"
+              class="invalid-feedback mt-0 _inputFeedback_d02ded"
             />
           </div>
           <div
             class="mb-4 position-relative undefined"
           >
             <label
-              class="form-label fw-bold label"
+              class="form-label fw-bold _label_d02ded"
               for="lastName"
             >
               <span
@@ -193,7 +193,7 @@ exports[`User settings index creates snapshot 1`] = `
               value=""
             />
             <div
-              class="invalid-feedback mt-0 inputFeedback"
+              class="invalid-feedback mt-0 _inputFeedback_d02ded"
             />
           </div>
           <div
@@ -234,12 +234,12 @@ exports[`User settings index creates snapshot 1`] = `
       class="mb-5"
     >
       <div
-        class="h3 mb-4 pb-2 border-bottom border-1 title"
+        class="h3 mb-4 pb-2 border-bottom border-1 _title_469808"
       >
         Change password
       </div>
       <div
-        class="mt-4 mt-md-5 formWrapper"
+        class="mt-4 mt-md-5 _formWrapper_469808"
       >
         <form
           autocomplete="on"
@@ -251,7 +251,7 @@ exports[`User settings index creates snapshot 1`] = `
             class="mb-4 position-relative undefined"
           >
             <label
-              class="form-label fw-bold label"
+              class="form-label fw-bold _label_d02ded"
               for="oldPassword"
             >
               <span
@@ -272,7 +272,7 @@ exports[`User settings index creates snapshot 1`] = `
               value=""
             />
             <div
-              class="invalid-feedback mt-0 inputFeedback"
+              class="invalid-feedback mt-0 _inputFeedback_d02ded"
             >
               This field is required
             </div>
@@ -281,7 +281,7 @@ exports[`User settings index creates snapshot 1`] = `
             class="mb-4 position-relative undefined"
           >
             <label
-              class="form-label fw-bold label"
+              class="form-label fw-bold _label_d02ded"
               for="password"
             >
               <span
@@ -303,7 +303,7 @@ exports[`User settings index creates snapshot 1`] = `
               value=""
             />
             <div
-              class="invalid-feedback mt-0 inputFeedback"
+              class="invalid-feedback mt-0 _inputFeedback_d02ded"
             >
               This field is required
             </div>
@@ -312,7 +312,7 @@ exports[`User settings index creates snapshot 1`] = `
             class="mb-4 position-relative undefined"
           >
             <label
-              class="form-label fw-bold label"
+              class="form-label fw-bold _label_d02ded"
               for="confirmPassword"
             >
               <span
@@ -339,7 +339,7 @@ exports[`User settings index creates snapshot 1`] = `
               value=""
             />
             <div
-              class="invalid-feedback mt-0 inputFeedback"
+              class="invalid-feedback mt-0 _inputFeedback_d02ded"
             >
               This field is required
             </div>
@@ -382,7 +382,7 @@ exports[`User settings index creates snapshot 1`] = `
       class="mb-5"
     >
       <div
-        class="h3 mb-4 pb-2 border-bottom border-1 title"
+        class="h3 mb-4 pb-2 border-bottom border-1 _title_469808"
       >
         Two-factor authentication
       </div>
@@ -438,20 +438,20 @@ exports[`User settings index creates snapshot 1`] = `
         <div>
           <div
             aria-modal="false"
-            class="modal modal"
+            class="modal _modal_2adcc6"
             role="dialog"
           >
             <div
               class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
             >
               <div
-                class="modal-content border border-3 mx-auto content modal"
+                class="modal-content border border-3 mx-auto _content_2adcc6 _modal_396727"
               >
                 <div
-                  class="modal-header d-flex flex-row align-items-center header undefined"
+                  class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
                 >
                   <div
-                    class="h3 m-2 flex-grow-1 text-truncate title"
+                    class="h3 m-2 flex-grow-1 text-truncate _title_396727"
                   >
                     Setup 2FA
                   </div>
@@ -466,7 +466,7 @@ exports[`User settings index creates snapshot 1`] = `
                 >
                   <div>
                     <div
-                      class="overflow-hidden alertWrapper"
+                      class="overflow-hidden _alertWrapper_1aa3f6"
                       data-testid="alertWrapper"
                     />
                   </div>
@@ -538,7 +538,7 @@ exports[`User settings index creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="h3 mb-4 pb-2 border-bottom border-1 title"
+      class="h3 mb-4 pb-2 border-bottom border-1 _title_469808"
     >
       Delete account
     </div>
@@ -582,20 +582,20 @@ exports[`User settings index creates snapshot 1`] = `
     >
       <div
         aria-modal="false"
-        class="modal modal"
+        class="modal _modal_2adcc6"
         role="dialog"
       >
         <div
           class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
         >
           <div
-            class="modal-content border border-3 mx-auto content modal"
+            class="modal-content border border-3 mx-auto _content_2adcc6 _modal_86fc20"
           >
             <div
-              class="modal-header d-flex flex-row align-items-center header undefined"
+              class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
             >
               <div
-                class="h3 m-2 flex-grow-1 title"
+                class="h3 m-2 flex-grow-1 _title_86fc20"
               >
                 Delete account
               </div>
@@ -610,7 +610,7 @@ exports[`User settings index creates snapshot 1`] = `
             >
               <div>
                 <div
-                  class="overflow-hidden alertWrapper"
+                  class="overflow-hidden _alertWrapper_1aa3f6"
                   data-testid="alertWrapper"
                 />
               </div>

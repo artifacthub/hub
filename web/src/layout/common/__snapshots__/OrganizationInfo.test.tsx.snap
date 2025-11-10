@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`OrganizationInfo creates snapshot 1`] = `
+exports[`OrganizationInfo > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
       class="position-absolute"
     >
       <div
-        class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+        class="dropdown-menu dropdown-menu-left text-wrap _dropdown_9229df"
         role="complementary"
       />
     </div>
@@ -18,7 +18,7 @@ exports[`OrganizationInfo creates snapshot 1`] = `
         aria-expanded="false"
         aria-hidden="true"
         aria-label="Organization info"
-        class="p-0 border-0 text-muted text-truncate flex-grow-1 bg-transparent position-relative link undefined"
+        class="p-0 border-0 text-muted text-truncate flex-grow-1 bg-transparent position-relative _link_9229df undefined"
         tabindex="-1"
       >
         <div

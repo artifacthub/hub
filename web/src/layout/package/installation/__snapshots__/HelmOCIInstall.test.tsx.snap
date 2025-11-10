@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`HelmOCIInstall creates snapshot 1`] = `
+exports[`HelmOCIInstall > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="my-2"
@@ -15,10 +15,10 @@ exports[`HelmOCIInstall creates snapshot 1`] = `
     class="d-flex align-items-start"
   >
     <div
-      class="flex-grow-1 blockWrapper"
+      class="flex-grow-1 _blockWrapper_c0c294"
     >
       <pre
-        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
       >
         <code
           class="language-bash"
@@ -38,7 +38,7 @@ exports[`HelmOCIInstall creates snapshot 1`] = `
       >
         <button
           aria-label="Copy command to clipboard"
-          class="btn btn-sm btn-primary copyBtn undefined"
+          class="btn btn-sm btn-primary _copyBtn_c0c294 undefined"
           type="button"
         >
           <div
@@ -74,7 +74,7 @@ exports[`HelmOCIInstall creates snapshot 1`] = `
     </div>
   </div>
   <div
-    class="fst-italic text-muted legend"
+    class="fst-italic text-muted _legend_c0c294"
   >
     <span
       class="fw-bold"
@@ -94,7 +94,7 @@ exports[`HelmOCIInstall creates snapshot 1`] = `
   >
     <a
       aria-label="Download Helm"
-      class="link btn btn-link ps-0"
+      class="_link_f0e789 btn btn-link ps-0"
       href="https://helm.sh/docs/intro/quickstart/"
       rel="noopener noreferrer"
       role="button"

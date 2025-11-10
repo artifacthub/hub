@@ -1,18 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Navbar creates snapshot 1`] = `
+exports[`Navbar > creates snapshot 1`] = `
 <DocumentFragment>
   <nav
-    class="navbar navbar-top navbar-expand-lg navbar-dark border-top-0 p-2 p-sm-3 navbar bg-transparent w-100 position-absolute homeNavbar"
+    class="navbar navbar-top navbar-expand-lg navbar-dark border-top-0 p-2 p-sm-3 _navbar_0b28b6 bg-transparent w-100 position-absolute _homeNavbar_0b28b6"
   >
     <div
       class="container-lg px-0 px-sm-4 px-lg-0"
     >
       <div
-        class="d-flex flex-row ps-1 ps-sm-0 pe-1 mobileWrapper"
+        class="d-flex flex-row ps-1 ps-sm-0 pe-1 _mobileWrapper_0b28b6"
       >
         <a
           class="navbar-brand d-flex align-items-center"
+          data-discover="true"
           data-testid="brandLink"
           href="/"
         >
@@ -21,7 +22,7 @@ exports[`Navbar creates snapshot 1`] = `
           >
             <img
               alt="Logo null"
-              class="w-auto logo"
+              class="w-auto _logo_0b28b6"
             />
           </div>
         </a>
@@ -39,7 +40,7 @@ exports[`Navbar creates snapshot 1`] = `
           >
             <a
               aria-label="Open documentation"
-              class="link btn navbarBtn ps-0 pe-0 fw-bold text-uppercase position-relative text-nowrap text-decoration-none text-white button"
+              class="_link_f0e789 btn navbarBtn ps-0 pe-0 fw-bold text-uppercase position-relative text-nowrap text-decoration-none text-white _button_0b28b6"
               href="/docs"
               rel="noopener noreferrer"
               role="button"
@@ -53,7 +54,8 @@ exports[`Navbar creates snapshot 1`] = `
             class="nav-item ms-4 position-relative"
           >
             <a
-              class="btn navbarBtn ps-0 pe-0 fw-bold text-uppercase position-relative text-nowrap text-decoration-none text-white button"
+              class="btn navbarBtn ps-0 pe-0 fw-bold text-uppercase position-relative text-nowrap text-decoration-none text-white _button_0b28b6"
+              data-discover="true"
               href="/stats"
             >
               Stats
@@ -67,14 +69,14 @@ exports[`Navbar creates snapshot 1`] = `
             >
               <button
                 aria-label="Open menu"
-                class="btn p-0 position-relative btn"
+                class="btn p-0 position-relative _btn_5f966c"
                 type="button"
               >
                 <div
                   class="d-flex flex-row align-items-center justify-content-center"
                 >
                   <div
-                    class="rounded-circle d-flex align-items-center justify-content-center textLight userAuth overflow-hidden position-relative border border-2 overflow-hidden lh-1 fs-5 bg-white imageWrapper iconWrapper"
+                    class="rounded-circle d-flex align-items-center justify-content-center textLight userAuth overflow-hidden position-relative border border-2 overflow-hidden lh-1 fs-5 bg-white _imageWrapper_5f966c _iconWrapper_5f966c"
                   >
                     <svg
                       class="rounded-circle"
@@ -112,13 +114,13 @@ exports[`Navbar creates snapshot 1`] = `
                 </div>
               </button>
               <div
-                class="dropdown-menu dropdown-menu-end dropdown"
+                class="dropdown-menu dropdown-menu-end _dropdown_5f966c"
               >
                 <div
-                  class="dropdown-arrow arrow"
+                  class="dropdown-arrow _arrow_5f966c"
                 />
                 <p
-                  class="mt-2 mb-0 text-break signedInText"
+                  class="mt-2 mb-0 text-break _signedInText_5f966c"
                 >
                   Signed in as 
                   <span
@@ -157,7 +159,7 @@ exports[`Navbar creates snapshot 1`] = `
                     >
                       <input
                         aria-checked="false"
-                        class="form-check-input input"
+                        class="form-check-input _input_4ef093"
                         id="desktop-automatic"
                         name="automatic"
                         tabindex="0"
@@ -165,11 +167,11 @@ exports[`Navbar creates snapshot 1`] = `
                         value="automatic"
                       />
                       <label
-                        class="form-check-label fw-bold w-100 label"
+                        class="form-check-label fw-bold w-100 _label_4ef093"
                         for="desktop-automatic"
                       >
                         <svg
-                          class="mx-1 position-relative icon"
+                          class="mx-1 position-relative _icon_4ef093"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -195,7 +197,7 @@ exports[`Navbar creates snapshot 1`] = `
                       <input
                         aria-checked="true"
                         checked=""
-                        class="form-check-input input"
+                        class="form-check-input _input_4ef093"
                         id="desktop-light"
                         name="light"
                         tabindex="-1"
@@ -203,11 +205,11 @@ exports[`Navbar creates snapshot 1`] = `
                         value="light"
                       />
                       <label
-                        class="form-check-label fw-bold w-100 label"
+                        class="form-check-label fw-bold w-100 _label_4ef093"
                         for="desktop-light"
                       >
                         <svg
-                          class="mx-1 position-relative icon"
+                          class="mx-1 position-relative _icon_4ef093"
                           fill="none"
                           height="1em"
                           stroke="currentColor"
@@ -284,7 +286,7 @@ exports[`Navbar creates snapshot 1`] = `
                     >
                       <input
                         aria-checked="false"
-                        class="form-check-input input"
+                        class="form-check-input _input_4ef093"
                         id="desktop-dark"
                         name="dark"
                         tabindex="-1"
@@ -292,11 +294,11 @@ exports[`Navbar creates snapshot 1`] = `
                         value="dark"
                       />
                       <label
-                        class="form-check-label fw-bold w-100 label"
+                        class="form-check-label fw-bold w-100 _label_4ef093"
                         for="desktop-dark"
                       >
                         <svg
-                          class="mx-1 position-relative icon"
+                          class="mx-1 position-relative _icon_4ef093"
                           fill="none"
                           height="1em"
                           stroke="currentColor"
@@ -321,6 +323,7 @@ exports[`Navbar creates snapshot 1`] = `
                 />
                 <a
                   class="dropdown-item"
+                  data-discover="true"
                   href="/packages/starred"
                 >
                   <div
@@ -347,6 +350,7 @@ exports[`Navbar creates snapshot 1`] = `
                 </a>
                 <a
                   class="dropdown-item"
+                  data-discover="true"
                   href="/control-panel"
                 >
                   <div

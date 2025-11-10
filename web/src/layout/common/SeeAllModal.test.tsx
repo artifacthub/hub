@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { hasClassContaining } from '../../utils/testUtils';
 import SeeAllModal from './SeeAllModal';
 
 const getItems = (itemsNumber: number): JSX.Element[] => {
@@ -33,7 +34,10 @@ describe('SeeAllModal', () => {
 
     await userEvent.click(btn);
 
-    expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+    const modal = await screen.findByRole('dialog');
+    expect(modal).toHaveClass('modal');
+    expect(hasClassContaining(modal, 'active')).toBe(true);
+    expect(modal).toHaveClass('d-block');
 
     expect(screen.getByText('title')).toBeInTheDocument();
     expect(screen.getAllByTestId('item')).toHaveLength(12 * 2 + 3 + 5);
@@ -57,7 +61,7 @@ describe('SeeAllModal', () => {
 
     const modal = screen.getByRole('dialog');
     expect(modal).toBeInTheDocument();
-    expect(modal).toHaveClass('active');
+    expect(hasClassContaining(modal, 'active')).toBe(true);
 
     expect(screen.getAllByTestId('item')).toHaveLength(32);
   });
@@ -69,7 +73,9 @@ describe('SeeAllModal', () => {
 
     rerender(<SeeAllModal items={getItems(12)} packageId="pkg2" {...defaultProps} />);
 
-    expect(await screen.findByRole('dialog')).not.toHaveClass('active d-block');
+    const modal = await screen.findByRole('dialog');
+    expect(hasClassContaining(modal, 'active')).toBe(false);
+    expect(modal).not.toHaveClass('d-block');
   });
 
   it('does not close modal when packageId is the same', async () => {
@@ -79,7 +85,10 @@ describe('SeeAllModal', () => {
 
     rerender(<SeeAllModal items={getItems(15)} open packageId="pkg1" {...defaultProps} />);
 
-    expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+    const modal = await screen.findByRole('dialog');
+    expect(modal).toHaveClass('modal');
+    expect(hasClassContaining(modal, 'active')).toBe(true);
+    expect(modal).toHaveClass('d-block');
   });
 
   it('renders modal with special content', () => {

@@ -1,8 +1,10 @@
+import { differenceInMilliseconds } from 'date-fns';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
 
 import { SecurityReport, VulnerabilitySeverity } from '../types';
+
+const MILLISECONDS_IN_YEAR = 1000 * 60 * 60 * 24 * 365.25;
 
 const checkIfOldVulnerabilities = (report: SecurityReport, oldThreshold: number): boolean => {
   // Loop through report images
@@ -23,7 +25,8 @@ const checkIfOldVulnerabilities = (report: SecurityReport, oldThreshold: number)
             )
           ) {
             // Calculate difference in years between today and published date
-            const elapsed = moment(new Date()).diff(moment(vulnerability.PublishedDate), 'years', true);
+            const publishedDate = new Date(vulnerability.PublishedDate);
+            const elapsed = differenceInMilliseconds(new Date(Date.now()), publishedDate) / MILLISECONDS_IN_YEAR;
             // When one vulnerability is older then diffInYears, we return true and stop to check the rest
             if (elapsed > oldThreshold) {
               return true;

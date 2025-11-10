@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`HelmInstall creates snapshot 1`] = `
+exports[`HelmInstall > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="position-relative undefined"
@@ -51,33 +51,33 @@ exports[`HelmInstall creates snapshot 1`] = `
   </div>
   <div>
     <div
-      class="modal-backdrop activeBackdrop"
+      class="modal-backdrop _activeBackdrop_2adcc6"
       data-testid="modalBackdrop"
     />
     <div
       aria-modal="true"
-      class="modal modal active d-block"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
       role="dialog"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content border border-3 mx-auto content"
+          class="modal-content border border-3 mx-auto _content_2adcc6"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
               class="d-flex align-items-center flex-grow-1"
             >
               <div
-                class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_c65a52"
               >
                 <img
                   alt="Pretty name"
                   aria-hidden="true"
-                  class="image"
+                  class="_image_c65a52"
                   src="/image/imageId"
                   srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
                 />
@@ -115,14 +115,14 @@ exports[`HelmInstall creates snapshot 1`] = `
             </div>
             <div>
               <ul
-                class="nav nav-tabs tabs"
+                class="nav nav-tabs _tabs_ec5be4"
               >
                 <li
                   class="nav-item"
                 >
                   <button
                     aria-label="Open tab v3"
-                    class="btn nav-item btn active btn-primary active"
+                    class="btn nav-item _btn_ec5be4 active btn-primary _active_ec5be4"
                   >
                     <span
                       class="d-none d-sm-block"
@@ -141,7 +141,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                 >
                   <button
                     aria-label="Open tab v2"
-                    class="btn nav-item btn"
+                    class="btn nav-item _btn_ec5be4"
                   >
                     <span
                       class="d-none d-sm-block"
@@ -176,10 +176,10 @@ exports[`HelmInstall creates snapshot 1`] = `
                   class="d-flex align-items-start"
                 >
                   <div
-                    class="flex-grow-1 blockWrapper"
+                    class="flex-grow-1 _blockWrapper_c0c294"
                   >
                     <pre
-                      style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+                      style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
                     >
                       <code
                         class="language-bash"
@@ -199,7 +199,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                     >
                       <button
                         aria-label="Copy command to clipboard"
-                        class="btn btn-sm btn-primary copyBtn undefined"
+                        class="btn btn-sm btn-primary _copyBtn_c0c294 undefined"
                         type="button"
                       >
                         <div
@@ -247,10 +247,10 @@ exports[`HelmInstall creates snapshot 1`] = `
                   class="d-flex align-items-start"
                 >
                   <div
-                    class="flex-grow-1 blockWrapper"
+                    class="flex-grow-1 _blockWrapper_c0c294"
                   >
                     <pre
-                      style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+                      style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
                     >
                       <code
                         class="language-bash"
@@ -270,7 +270,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                     >
                       <button
                         aria-label="Copy command to clipboard"
-                        class="btn btn-sm btn-primary copyBtn undefined"
+                        class="btn btn-sm btn-primary _copyBtn_c0c294 undefined"
                         type="button"
                       >
                         <div
@@ -306,7 +306,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="fst-italic text-muted legend"
+                  class="fst-italic text-muted _legend_c0c294"
                 >
                   <span
                     class="fw-bold"
@@ -326,7 +326,7 @@ exports[`HelmInstall creates snapshot 1`] = `
                 >
                   <a
                     aria-label="Download Helm"
-                    class="link btn btn-link ps-0"
+                    class="_link_f0e789 btn btn-link ps-0"
                     href="https://helm.sh/docs/intro/quickstart/"
                     rel="noopener noreferrer"
                     role="button"
@@ -340,7 +340,7 @@ exports[`HelmInstall creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>

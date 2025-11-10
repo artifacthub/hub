@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Update profile - user settings creates snapshot 1`] = `
+exports[`Update profile - user settings > creates snapshot 1`] = `
 <DocumentFragment>
   <form
     autocomplete="on"
@@ -15,7 +15,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         class="d-flex flex-column"
       >
         <label
-          class="form-label label"
+          class="form-label _label_ad3bee"
           for="image"
         >
           <span
@@ -34,7 +34,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         >
           <button
             aria-label="Add image"
-            class="btn p-0 overflow-hidden position-relative lh-1 fs-2 btn rounded-circle border border-2 bg-white circularBtn"
+            class="btn p-0 overflow-hidden position-relative lh-1 fs-2 _btn_ad3bee rounded-circle border border-2 bg-white _circularBtn_ad3bee"
             type="button"
           >
             <img
@@ -58,7 +58,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       class="mb-4 position-relative undefined"
     >
       <label
-        class="form-label fw-bold label"
+        class="form-label fw-bold _label_d02ded"
         for="email"
       >
         <span
@@ -78,14 +78,14 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         value="jsmith@email.com"
       />
       <div
-        class="invalid-feedback mt-0 inputFeedback"
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
       />
     </div>
     <div
       class="mb-4 position-relative undefined"
     >
       <label
-        class="form-label fw-bold label"
+        class="form-label fw-bold _label_d02ded"
         for="alias"
       >
         <span
@@ -111,7 +111,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         value="userAlias"
       />
       <div
-        class="invalid-feedback mt-0 inputFeedback"
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
       >
         This field is required
       </div>
@@ -120,7 +120,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       class="mb-4 position-relative undefined"
     >
       <label
-        class="form-label fw-bold label"
+        class="form-label fw-bold _label_d02ded"
         for="firstName"
       >
         <span
@@ -140,14 +140,14 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         value="John"
       />
       <div
-        class="invalid-feedback mt-0 inputFeedback"
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
       />
     </div>
     <div
       class="mb-4 position-relative undefined"
     >
       <label
-        class="form-label fw-bold label"
+        class="form-label fw-bold _label_d02ded"
         for="lastName"
       >
         <span
@@ -167,7 +167,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         value="Smith"
       />
       <div
-        class="invalid-feedback mt-0 inputFeedback"
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
       />
     </div>
     <div

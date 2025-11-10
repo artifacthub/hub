@@ -1,19 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CompareView creates snapshot 1`] = `
+exports[`CompareView > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="position-relative h-100 mh-100 border border-1 templateWrapper"
+    class="position-relative h-100 mh-100 border border-1 _templateWrapper_ef7571"
   >
     <div
-      class="position-absolute d-flex wrapper"
+      class="position-absolute d-flex _wrapper_ef7571"
     >
       <div
         class="position-relative"
       >
         <button
           aria-label="Expand code"
-          class="btn btn-sm btn-primary fs-5 btn"
+          class="btn btn-sm btn-primary fs-5 _btn_ef7571"
         >
           <svg
             fill="currentColor"
@@ -33,42 +33,42 @@ exports[`CompareView creates snapshot 1`] = `
       </div>
     </div>
     <pre
-      class="text-muted h-100 mh-100 mb-0 overflow-hidden position-relative diffTemplate pre"
+      class="text-muted h-100 mh-100 mb-0 overflow-hidden position-relative diffTemplate _pre_ef7571"
     >
       <div
         class="file-diff h-100"
         data-testid="diffTemplate"
       >
         <header
-          class="d-flex flex-row align-items-center justify-content-between diff-header fw-bold py-1 header"
+          class="d-flex flex-row align-items-center justify-content-between diff-header fw-bold py-1 _header_8e2ac5"
         >
           <div
             class="pe-5 me-3"
           >
             <span
-              class="pe-2 versionTitle"
+              class="pe-2 _versionTitle_8e2ac5"
             >
               Changes from
             </span>
             <span
               class="badge bg-dark px-2 py-1 badge-md"
             >
-              	0.0.2
+              0.2	0.0.2
             </span>
             <span
-              class="px-2 versionTitle"
+              class="px-2 _versionTitle_8e2ac5"
             >
               to
             </span>
             <span
               class="badge bg-dark px-2 py-1 badge-md"
             >
-              	0.0.1
+              0.1	0.0.1
             </span>
           </div>
         </header>
         <div
-          class="overflow-scroll border-top border-1 py-2 codeWrapper"
+          class="overflow-scroll border-top border-1 py-2 _codeWrapper_8e2ac5"
         >
           <table
             class="diff diff-unified"
@@ -91,7 +91,7 @@ exports[`CompareView creates snapshot 1`] = `
                   colspan="3"
                 >
                   <div
-                    class="hunk-header py-1 px-3 fw-bold hunkHeader mb-2"
+                    class="hunk-header py-1 px-3 fw-bold _hunkHeader_8e2ac5 mb-2"
                   >
                     @@ -27,4 +27,5 @@
                   </div>
@@ -106,16 +106,19 @@ exports[`CompareView creates snapshot 1`] = `
               >
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N27"
                 >
                   27
                 </td>
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N27"
                 >
                   27
                 </td>
                 <td
                   class="diff-code diff-code-normal"
+                  data-change-key="N27"
                 >
                   ## @param haproxy.image.repository HAProxy image repository
                 </td>
@@ -125,16 +128,19 @@ exports[`CompareView creates snapshot 1`] = `
               >
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N28"
                 >
                   28
                 </td>
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N28"
                 >
                   28
                 </td>
                 <td
                   class="diff-code diff-code-normal"
+                  data-change-key="N28"
                 >
                   ## @param haproxy.image.tag HAProxy image tag (immutable tags are recommended)
                 </td>
@@ -144,14 +150,17 @@ exports[`CompareView creates snapshot 1`] = `
               >
                 <td
                   class="diff-gutter diff-gutter-insert"
+                  data-change-key="I29"
                 />
                 <td
                   class="diff-gutter diff-gutter-insert"
+                  data-change-key="I29"
                 >
                   29
                 </td>
                 <td
                   class="diff-code diff-code-insert"
+                  data-change-key="I29"
                 >
                   ## @param haproxy.image.digest HAProxy image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
                 </td>
@@ -161,16 +170,19 @@ exports[`CompareView creates snapshot 1`] = `
               >
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N29"
                 >
                   29
                 </td>
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N29"
                 >
                   30
                 </td>
                 <td
                   class="diff-code diff-code-normal"
+                  data-change-key="N29"
                 >
                   ## @param haproxy.image.pullPolicy HAProxy image pull policy
                 </td>
@@ -180,16 +192,19 @@ exports[`CompareView creates snapshot 1`] = `
               >
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N30"
                 >
                   30
                 </td>
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N30"
                 >
                   31
                 </td>
                 <td
                   class="diff-code diff-code-normal"
+                  data-change-key="N30"
                 >
                   ## @param haproxy.image.pullSecrets HAProxy image pull secrets
                 </td>
@@ -204,7 +219,7 @@ exports[`CompareView creates snapshot 1`] = `
                   colspan="3"
                 >
                   <div
-                    class="hunk-header py-1 px-3 fw-bold hunkHeader my-2"
+                    class="hunk-header py-1 px-3 fw-bold _hunkHeader_8e2ac5 my-2"
                   >
                     @@ -34,5 +35,6 @@
                   </div>
@@ -219,16 +234,19 @@ exports[`CompareView creates snapshot 1`] = `
               >
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N34"
                 >
                   34
                 </td>
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N34"
                 >
                   35
                 </td>
                 <td
                   class="diff-code diff-code-normal"
+                  data-change-key="N34"
                 >
                       registry: docker.io
                 </td>
@@ -238,16 +256,19 @@ exports[`CompareView creates snapshot 1`] = `
               >
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N35"
                 >
                   35
                 </td>
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N35"
                 >
                   36
                 </td>
                 <td
                   class="diff-code diff-code-normal"
+                  data-change-key="N35"
                 >
                       repository: bitnami/haproxy-intel
                 </td>
@@ -257,14 +278,17 @@ exports[`CompareView creates snapshot 1`] = `
               >
                 <td
                   class="diff-gutter diff-gutter-delete"
+                  data-change-key="D36"
                 >
                   36
                 </td>
                 <td
                   class="diff-gutter diff-gutter-delete"
+                  data-change-key="D36"
                 />
                 <td
                   class="diff-code diff-code-delete"
+                  data-change-key="D36"
                 >
                       tag: 2.5.7-debian-10-r4
                 </td>
@@ -274,14 +298,17 @@ exports[`CompareView creates snapshot 1`] = `
               >
                 <td
                   class="diff-gutter diff-gutter-insert"
+                  data-change-key="I37"
                 />
                 <td
                   class="diff-gutter diff-gutter-insert"
+                  data-change-key="I37"
                 >
                   37
                 </td>
                 <td
                   class="diff-code diff-code-insert"
+                  data-change-key="I37"
                 >
                       tag: 2.6.6-debian-11-r0
                 </td>
@@ -291,14 +318,17 @@ exports[`CompareView creates snapshot 1`] = `
               >
                 <td
                   class="diff-gutter diff-gutter-insert"
+                  data-change-key="I38"
                 />
                 <td
                   class="diff-gutter diff-gutter-insert"
+                  data-change-key="I38"
                 >
                   38
                 </td>
                 <td
                   class="diff-code diff-code-insert"
+                  data-change-key="I38"
                 >
                       digest: ""
                 </td>
@@ -308,16 +338,19 @@ exports[`CompareView creates snapshot 1`] = `
               >
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N37"
                 >
                   37
                 </td>
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N37"
                 >
                   39
                 </td>
                 <td
                   class="diff-code diff-code-normal"
+                  data-change-key="N37"
                 >
                       ## Specify a imagePullPolicy
                 </td>
@@ -327,16 +360,19 @@ exports[`CompareView creates snapshot 1`] = `
               >
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N38"
                 >
                   38
                 </td>
                 <td
                   class="diff-gutter diff-gutter-normal"
+                  data-change-key="N38"
                 >
                   40
                 </td>
                 <td
                   class="diff-code diff-code-normal"
+                  data-change-key="N38"
                 >
                       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
                 </td>

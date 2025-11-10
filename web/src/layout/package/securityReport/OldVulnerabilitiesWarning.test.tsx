@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import moment from 'moment';
+import { format, subMonths } from 'date-fns';
 
 import { SecurityReport, VulnerabilitySeverity } from '../../../types';
 import OldVulnerabilitiesWarning from './OldVulnerabilitiesWarning';
@@ -48,7 +48,7 @@ const newVulnerabilities: SecurityReport = {
             Description:
               'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
             FixedVersion: '0.3.8',
-            PublishedDate: moment().subtract(6, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
+            PublishedDate: format(subMonths(new Date(), 6), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
             SeveritySource: 'nvd',
             VulnerabilityID: 'CVE-2022-32149',
             InstalledVersion: 'v0.3.7',
@@ -96,7 +96,7 @@ const newVulnerabilities: SecurityReport = {
             Description:
               'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
             FixedVersion: '0.3.8',
-            PublishedDate: moment().subtract(6, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
+            PublishedDate: format(subMonths(new Date(), 6), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
             SeveritySource: 'nvd',
             VulnerabilityID: 'CVE-2022-32149',
             InstalledVersion: 'v0.3.7',
@@ -144,7 +144,7 @@ const newVulnerabilities: SecurityReport = {
             Description:
               'An attacker may cause a denial of service by crafting an Accept-Language header which ParseAcceptLanguage will take significant time to parse.',
             FixedVersion: '0.3.8',
-            PublishedDate: moment().subtract(6, 'months').format('YYYY-MM-DDTHH:mm:ss[Z]'),
+            PublishedDate: format(subMonths(new Date(), 6), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
             SeveritySource: 'nvd',
             VulnerabilityID: 'CVE-2022-32149',
             InstalledVersion: 'v0.3.7',

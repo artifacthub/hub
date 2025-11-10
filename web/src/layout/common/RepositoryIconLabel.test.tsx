@@ -1,13 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import { RepositoryKind } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
+import { hasClassContaining } from '../../utils/testUtils';
 import RepositoryIconLabel from './RepositoryIconLabel';
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -24,10 +26,10 @@ describe('RepositoryIconLabel', () => {
 
     const icons = screen.getAllByAltText('Icon');
     expect(icons).toHaveLength(4);
-    expect(icons[0]).toHaveProperty('src', 'http://localhost/static/media/helm-chart.svg');
-    expect(icons[0]).toHaveClass('iconLight');
-    expect(icons[1]).toHaveProperty('src', 'http://localhost/static/media/helm-chart-light.svg');
-    expect(icons[1]).toHaveClass('iconDark');
+    expect(icons[0].getAttribute('src')).toContain('/static/media/helm-chart');
+    expect(hasClassContaining(icons[0], 'iconLight')).toBe(true);
+    expect(icons[1].getAttribute('src')).toContain('/static/media/helm-chart-light');
+    expect(hasClassContaining(icons[1], 'iconDark')).toBe(true);
   });
 
   it('renders proper content with isPlural', () => {

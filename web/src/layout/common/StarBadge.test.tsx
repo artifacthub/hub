@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
+import { hasClassContaining } from '../../utils/testUtils';
 import StarBadge from './StarBadge';
 
 describe('StarBadge', () => {
@@ -17,7 +18,7 @@ describe('StarBadge', () => {
   it('renders xs size', () => {
     render(<StarBadge starsNumber={1} size="xs" />);
     const el = screen.getByTestId('starBadge');
-    expect(el).toHaveClass('size-xs');
+    expect(hasClassContaining(el, 'size-xs')).toBe(true);
   });
 
   describe('does not render component', () => {

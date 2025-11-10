@@ -20,9 +20,8 @@ describe('Image', () => {
     render(<Image {...defaultProps} />);
     const image = screen.getByAltText(defaultProps.alt);
     expect(image).toBeInTheDocument();
-    expect(image).toHaveProperty('src', `http://localhost/image/${defaultProps.imageId}`);
-    expect(image).toHaveProperty(
-      'srcset',
+    expect(image.getAttribute('src')).toBe(`/image/${defaultProps.imageId}`);
+    expect(image.getAttribute('srcset')).toBe(
       `/image/${defaultProps.imageId}@1x 1x, /image/${defaultProps.imageId}@2x 2x, /image/${defaultProps.imageId}@3x 3x, /image/${defaultProps.imageId}@4x 4x`
     );
   });
@@ -35,19 +34,23 @@ describe('Image', () => {
     render(<Image {...props} />);
     const image = screen.getByAltText(defaultProps.alt);
     expect(image).toBeInTheDocument();
-    expect(image).toHaveProperty('src', 'http://localhost/static/media/placeholder_pkg_helm.png');
+    const src = image.getAttribute('src');
+    expect(src).not.toBeNull();
+    expect(src).toContain('/static/media/placeholder_pkg_helm');
   });
 
   it('renders placeholder on error', async () => {
     render(<Image {...defaultProps} />);
     const image = screen.getByAltText(defaultProps.alt);
-    expect(image).toHaveProperty('src', `http://localhost/image/${defaultProps.imageId}`);
+    expect(image.getAttribute('src')).toBe(`/image/${defaultProps.imageId}`);
 
     fireEvent.error(image);
 
     const placeholder = await screen.findByTestId('placeholderImg');
     expect(placeholder).toBeInTheDocument();
-    expect(placeholder).toHaveProperty('src', 'http://localhost/static/media/placeholder_pkg_helm.png');
+    const placeholderSrc = placeholder.getAttribute('src');
+    expect(placeholderSrc).not.toBeNull();
+    expect(placeholderSrc).toContain('/static/media/placeholder_pkg_helm');
   });
 
   it('renders default placeholder when kind is undefined', () => {
@@ -59,6 +62,8 @@ describe('Image', () => {
     render(<Image {...props} />);
     const image = screen.getByAltText(defaultProps.alt);
     expect(image).toBeInTheDocument();
-    expect(image).toHaveProperty('src', 'http://localhost/static/media/package_placeholder.svg');
+    const src = image.getAttribute('src');
+    expect(src).not.toBeNull();
+    expect(src).toContain('/static/media/package_placeholder');
   });
 });

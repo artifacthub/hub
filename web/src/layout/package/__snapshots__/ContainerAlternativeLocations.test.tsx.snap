@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ContainerAlternativeLocations creates snapshot 1`] = `
+exports[`ContainerAlternativeLocations > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mt-2 mb-1 undefined"
@@ -29,11 +29,11 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
       >
         <img
           alt="Registry icon"
-          class="me-2 icon registryIcon"
+          class="me-2 _icon_301b6d registryIcon"
           src="/static/media/registries/github.svg"
         />
         <div
-          class="text-truncate text-break url"
+          class="text-truncate text-break _url_301b6d"
         >
           GitHub Packages CR
         </div>
@@ -42,7 +42,7 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
         >
           <button
             aria-label="Copy registry url to clipboard"
-            class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
             type="button"
           >
             <div
@@ -85,11 +85,11 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
       >
         <img
           alt="Registry icon"
-          class="me-2 icon registryIcon"
+          class="me-2 _icon_301b6d registryIcon"
           src="/static/media/registries/google.svg"
         />
         <div
-          class="text-truncate text-break url"
+          class="text-truncate text-break _url_301b6d"
         >
           Google CR
         </div>
@@ -98,7 +98,7 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
         >
           <button
             aria-label="Copy registry url to clipboard"
-            class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
             type="button"
           >
             <div
@@ -141,11 +141,11 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
       >
         <img
           alt="Registry icon"
-          class="me-2 icon registryIcon"
+          class="me-2 _icon_301b6d registryIcon"
           src="/static/media/registries/docker.svg"
         />
         <div
-          class="text-truncate text-break url"
+          class="text-truncate text-break _url_301b6d"
         >
           Docker Hub
         </div>
@@ -154,7 +154,7 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
         >
           <button
             aria-label="Copy registry url to clipboard"
-            class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
             type="button"
           >
             <div
@@ -197,11 +197,11 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
       >
         <img
           alt="Registry icon"
-          class="me-2 icon registryIcon"
+          class="me-2 _icon_301b6d registryIcon"
           src="/static/media/registries/amazon.svg"
         />
         <div
-          class="text-truncate text-break url"
+          class="text-truncate text-break _url_301b6d"
         >
           Amazon ECR
         </div>
@@ -210,7 +210,7 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
         >
           <button
             aria-label="Copy registry url to clipboard"
-            class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
             type="button"
           >
             <div
@@ -253,11 +253,11 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
       >
         <img
           alt="Registry icon"
-          class="me-2 icon registryIcon"
+          class="me-2 _icon_301b6d registryIcon"
           src="/static/media/registries/quay.svg"
         />
         <div
-          class="text-truncate text-break url"
+          class="text-truncate text-break _url_301b6d"
         >
           Quay
         </div>
@@ -266,7 +266,7 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
         >
           <button
             aria-label="Copy registry url to clipboard"
-            class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
             type="button"
           >
             <div
@@ -309,11 +309,11 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
       >
         <img
           alt="Registry icon"
-          class="me-2 icon registryIcon"
+          class="me-2 _icon_301b6d registryIcon"
           src="/static/media/registries/azure.svg"
         />
         <div
-          class="text-truncate text-break url"
+          class="text-truncate text-break _url_301b6d"
         >
           Azure CR
         </div>
@@ -322,7 +322,7 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
         >
           <button
             aria-label="Copy registry url to clipboard"
-            class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
             type="button"
           >
             <div
@@ -365,11 +365,11 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
       >
         <img
           alt="Registry icon"
-          class="me-2 icon registryIcon"
+          class="me-2 _icon_301b6d registryIcon"
           src="/static/media/registries/bundlebar.svg"
         />
         <div
-          class="text-truncate text-break url"
+          class="text-truncate text-break _url_301b6d"
         >
           Bundle Bar
         </div>
@@ -378,7 +378,7 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
         >
           <button
             aria-label="Copy registry url to clipboard"
-            class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
             type="button"
           >
             <div
@@ -421,11 +421,11 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
       >
         <img
           alt="Registry icon"
-          class="me-2 icon registryIcon"
+          class="me-2 _icon_301b6d registryIcon"
           src="/static/media/registries/gitlab.svg"
         />
         <div
-          class="text-truncate text-break url"
+          class="text-truncate text-break _url_301b6d"
         >
           GitLab Registry
         </div>
@@ -434,7 +434,7 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
         >
           <button
             aria-label="Copy registry url to clipboard"
-            class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
             type="button"
           >
             <div
@@ -477,11 +477,11 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
       >
         <img
           alt="Registry icon"
-          class="me-2 icon registryIcon"
+          class="me-2 _icon_301b6d registryIcon"
           src="/static/media/registries/unknown.svg"
         />
         <div
-          class="text-truncate text-break url"
+          class="text-truncate text-break _url_301b6d"
         >
           localhost:5000
         </div>
@@ -490,7 +490,7 @@ exports[`ContainerAlternativeLocations creates snapshot 1`] = `
         >
           <button
             aria-label="Copy registry url to clipboard"
-            class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
+            class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
             type="button"
           >
             <div

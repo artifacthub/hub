@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Members section index creates snapshot 1`] = `
+exports[`Members section index > creates snapshot 1`] = `
 <DocumentFragment>
   <main
     class="px-xs-0 px-sm-3 px-lg-0 d-flex flex-column flex-md-row justify-content-between my-md-4"
@@ -14,7 +14,7 @@ exports[`Members section index creates snapshot 1`] = `
           class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom border-1"
         >
           <div
-            class="h3 pb-0 title"
+            class="h3 pb-0 _title_93dfc6"
           >
             Members
           </div>
@@ -24,7 +24,7 @@ exports[`Members section index creates snapshot 1`] = `
             >
               <button
                 aria-label="Open invite member modal"
-                class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
+                class="btn btn-outline-secondary btn-sm text-uppercase _btnAction_93dfc6"
                 type="button"
               >
                 <div
@@ -107,10 +107,10 @@ exports[`Members section index creates snapshot 1`] = `
                   class="d-flex flex-row w-100 justify-content-between align-items-start"
                 >
                   <div
-                    class="d-flex align-items-center justify-content-center p-1 overflow-hidden me-2 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
+                    class="d-flex align-items-center justify-content-center p-1 overflow-hidden me-2 border border-2 rounded-circle bg-white _imageWrapper_3fce52 imageWrapper"
                   >
                     <svg
-                      class="fs-4 image"
+                      class="fs-4 _image_3fce52"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -146,7 +146,7 @@ exports[`Members section index creates snapshot 1`] = `
                     class="ms-auto"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                      class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_3fce52"
                     >
                       <div
                         class="dropdown-arrow"
@@ -159,7 +159,7 @@ exports[`Members section index creates snapshot 1`] = `
                           class="d-flex flex-row align-items-center"
                         >
                           <svg
-                            class="me-2 btnIcon"
+                            class="me-2 _btnIcon_3fce52"
                             fill="currentColor"
                             height="1em"
                             stroke="currentColor"
@@ -181,7 +181,7 @@ exports[`Members section index creates snapshot 1`] = `
                     <button
                       aria-expanded="false"
                       aria-label="Open menu"
-                      class="btn btn-outline-secondary p-0 text-center  btnDropdown"
+                      class="btn btn-outline-secondary p-0 text-center  _btnDropdown_3fce52"
                     >
                       <svg
                         fill="currentColor"
@@ -216,10 +216,10 @@ exports[`Members section index creates snapshot 1`] = `
                   class="d-flex flex-row w-100 justify-content-between align-items-start"
                 >
                   <div
-                    class="d-flex align-items-center justify-content-center p-1 overflow-hidden me-2 border border-2 rounded-circle bg-white imageWrapper imageWrapper"
+                    class="d-flex align-items-center justify-content-center p-1 overflow-hidden me-2 border border-2 rounded-circle bg-white _imageWrapper_3fce52 imageWrapper"
                   >
                     <svg
-                      class="fs-4 image"
+                      class="fs-4 _image_3fce52"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -255,7 +255,7 @@ exports[`Members section index creates snapshot 1`] = `
                     class="ms-auto"
                   >
                     <div
-                      class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                      class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_3fce52"
                     >
                       <div
                         class="dropdown-arrow"
@@ -272,7 +272,7 @@ exports[`Members section index creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center undefined"
                           >
                             <svg
-                              class="me-2 btnIcon"
+                              class="me-2 _btnIcon_3fce52"
                               fill="currentColor"
                               height="1em"
                               stroke="currentColor"
@@ -295,7 +295,7 @@ exports[`Members section index creates snapshot 1`] = `
                     <button
                       aria-expanded="false"
                       aria-label="Open menu"
-                      class="btn btn-outline-secondary p-0 text-center  btnDropdown"
+                      class="btn btn-outline-secondary p-0 text-center  _btnDropdown_3fce52"
                     >
                       <svg
                         fill="currentColor"

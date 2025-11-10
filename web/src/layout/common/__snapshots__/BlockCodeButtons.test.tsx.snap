@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`BlockCodeButtons creates snapshot 1`] = `
+exports[`BlockCodeButtons > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="position-absolute d-flex flex-row wrapper undefined"
+    class="position-absolute d-flex flex-row _wrapper_735216 undefined"
   >
     <div
       class="position-relative me-2"
     >
       <button
         aria-label="Copy to clipboard"
-        class="btn btn-sm btn-primary btn"
+        class="btn btn-sm btn-primary _btn_a0bd31"
         type="button"
       >
         <div
@@ -45,7 +45,7 @@ exports[`BlockCodeButtons creates snapshot 1`] = `
     </div>
     <button
       aria-label="Download"
-      class="btn btn-sm btn-primary fs-5 btn"
+      class="btn btn-sm btn-primary fs-5 _btn_735216"
     >
       <svg
         aria-hidden="true"

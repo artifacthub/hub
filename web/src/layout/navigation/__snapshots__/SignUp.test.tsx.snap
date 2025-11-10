@@ -1,28 +1,28 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SignUp creates snapshot 1`] = `
+exports[`SignUp > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="modal-backdrop activeBackdrop"
+      class="modal-backdrop _activeBackdrop_2adcc6"
       data-testid="modalBackdrop"
     />
     <div
       aria-modal="true"
-      class="modal modal active d-block"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
       role="dialog"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content border border-3 mx-auto content modal"
+          class="modal-content border border-3 mx-auto _content_2adcc6 _modal_bf51f5"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 text-truncate title"
+              class="h3 m-2 flex-grow-1 text-truncate _title_bf51f5"
             >
               Sign up
             </div>
@@ -76,7 +76,7 @@ exports[`SignUp creates snapshot 1`] = `
                 </button>
               </div>
               <div
-                class="my-5 my-4 position-relative text-center separator"
+                class="my-5 my-4 position-relative text-center _separator_2a244d"
               >
                 <span
                   class="p-3 m-auto bg-white"
@@ -84,7 +84,7 @@ exports[`SignUp creates snapshot 1`] = `
                   or sign in with
                 </span>
                 <div
-                  class="position-absolute top-50 start-0 end-0 divider"
+                  class="position-absolute top-50 start-0 end-0 _divider_2a244d"
                 />
               </div>
               <div>
@@ -96,7 +96,7 @@ exports[`SignUp creates snapshot 1`] = `
                   >
                     <button
                       aria-label="Sign in with GitHub"
-                      class="btn btn-outline-secondary btn"
+                      class="btn btn-outline-secondary _btn_2a244d"
                       type="button"
                     >
                       <div
@@ -104,7 +104,7 @@ exports[`SignUp creates snapshot 1`] = `
                       >
                         <img
                           alt="GitHub Logo"
-                          class="lh-base logo"
+                          class="lh-base _logo_2a244d"
                           src="/static/media/github-mark.svg"
                         />
                         <div
@@ -116,7 +116,7 @@ exports[`SignUp creates snapshot 1`] = `
                     </button>
                     <button
                       aria-label="Sign in with Google"
-                      class="btn btn-outline-secondary btn"
+                      class="btn btn-outline-secondary _btn_2a244d"
                       type="button"
                     >
                       <div
@@ -124,7 +124,7 @@ exports[`SignUp creates snapshot 1`] = `
                       >
                         <img
                           alt="Google Logo"
-                          class="lh-base logo"
+                          class="lh-base _logo_2a244d"
                           src="/static/media/google.svg"
                         />
                         <div
@@ -136,7 +136,7 @@ exports[`SignUp creates snapshot 1`] = `
                     </button>
                     <button
                       aria-label="Sign in with OpenID Connect"
-                      class="btn btn-outline-secondary  btn"
+                      class="btn btn-outline-secondary  _btn_2a244d"
                       type="button"
                     >
                       <div
@@ -144,7 +144,7 @@ exports[`SignUp creates snapshot 1`] = `
                       >
                         <img
                           alt="OpenID Logo"
-                          class="lh-base logo"
+                          class="lh-base _logo_2a244d"
                           src="/static/media/openid.svg"
                         />
                         <div
@@ -160,7 +160,7 @@ exports[`SignUp creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>

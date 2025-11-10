@@ -1,5 +1,4 @@
-import isNull from 'lodash/isNull';
-import moment from 'moment';
+import { format, fromUnixTime } from 'date-fns';
 import { FaCheck, FaExclamation, FaTimes } from 'react-icons/fa';
 import { GrConnect } from 'react-icons/gr';
 
@@ -46,12 +45,14 @@ const LastNotificationsModal = (props: Props) => {
               {props.notifications.map((item: WebhookNotification) => (
                 <tr data-testid="lastNotificationCell" key={`lastNotif_${item.notificationId}`}>
                   <td className="align-middle">{item.notificationId}</td>
-                  <td className="align-middle">{moment.unix(item.createdAt).format('YYYY/MM/DD HH:mm:ss (Z)')}</td>
+                  <td className="align-middle">{format(fromUnixTime(item.createdAt), 'yyyy/MM/dd HH:mm:ss (xxx)')}</td>
                   <td className="align-middle text-center">
                     {item.processed && <FaCheck className="text-success" data-testid="processedIcon" />}
                   </td>
                   <td className="align-middle">
-                    {!isNull(item.processedAt) && moment.unix(item.processedAt).format('YYYY/MM/DD HH:mm:ss (Z)')}
+                    {item.processedAt !== undefined &&
+                      item.processedAt !== null &&
+                      format(fromUnixTime(item.processedAt), 'yyyy/MM/dd HH:mm:ss (xxx)')}
                   </td>
                   <td className="align-middle text-center">
                     {item.processed && (

@@ -1,17 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ContainerRegistry creates snapshot 1`] = `
+exports[`ContainerRegistry > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-flex flex-row align-items-center mw-100"
   >
     <img
       alt="Registry icon"
-      class="me-2 icon registryIcon"
+      class="me-2 _icon_301b6d registryIcon"
       src="/static/media/registries/google.svg"
     />
     <div
-      class="text-truncate text-break url"
+      class="text-truncate text-break _url_301b6d"
     >
       Google CR
     </div>
@@ -20,7 +20,7 @@ exports[`ContainerRegistry creates snapshot 1`] = `
     >
       <button
         aria-label="Copy registry url to clipboard"
-        class="btn btn-sm btn-link text-dark border-0 position-relative copyBtn"
+        class="btn btn-sm btn-link text-dark border-0 position-relative _copyBtn_301b6d"
         type="button"
       >
         <div

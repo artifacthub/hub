@@ -1,23 +1,23 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Repository LastNotificationsModal - packages section creates snapshot 1`] = `
+exports[`Repository LastNotificationsModal - packages section > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-inline-block"
   >
     <div
-      class="position-relative buttonWrapper"
+      class="position-relative _buttonWrapper_2adcc6"
     >
       <button
         aria-label="Open modal"
-        class="fw-bold text-uppercase position-relative btn w-100 btn btn badge btn-outline-secondary"
+        class="fw-bold text-uppercase position-relative btn w-100 _btn_2adcc6 btn badge btn-outline-secondary"
         type="button"
       >
         <div
           class="d-flex align-items-center justify-content-center"
         >
           <svg
-            class="me-2 icon"
+            class="me-2 _icon_098249"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -40,20 +40,20 @@ exports[`Repository LastNotificationsModal - packages section creates snapshot 1
     </div>
     <div
       aria-modal="false"
-      class="modal modal"
+      class="modal _modal_2adcc6"
       role="dialog"
     >
       <div
-        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable _modalDialog_098249"
       >
         <div
-          class="modal-content border border-3 mx-auto content"
+          class="modal-content border border-3 mx-auto _content_2adcc6"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 title"
+              class="h3 m-2 flex-grow-1 _title_098249"
             >
               Last notifications
             </div>
@@ -68,13 +68,13 @@ exports[`Repository LastNotificationsModal - packages section creates snapshot 1
           >
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>
           </div>
           <div
-            class="modal-footer p-3 modalFooter"
+            class="modal-footer p-3 _modalFooter_098249"
           >
             <button
               aria-label="Close modal"

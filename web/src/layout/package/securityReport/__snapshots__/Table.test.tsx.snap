@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SecurityTable creates snapshot 1`] = `
+exports[`SecurityTable > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="my-1"
   >
     <div
-      class="d-flex flex-row align-items-center fw-bold mb-2 btnWrapper"
+      class="d-flex flex-row align-items-center fw-bold mb-2 _btnWrapper_5bfa2e"
     >
       <button
-        class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn"
+        class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white _linkBtn_5bfa2e"
       >
         <svg
           fill="currentColor"
@@ -59,7 +59,7 @@ exports[`SecurityTable creates snapshot 1`] = `
         class="ps-2 text-truncate"
       >
         <span
-          class="text-uppercase text-muted me-2 tableTitle"
+          class="text-uppercase text-muted me-2 _tableTitle_5bfa2e"
         >
           Image:
         </span>
@@ -74,10 +74,10 @@ exports[`SecurityTable creates snapshot 1`] = `
         style="min-height: auto;"
       >
         <div
-          class="position-relative btnWrapper"
+          class="position-relative _btnWrapper_5bfa2e"
         >
           <button
-            class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn inTarget"
+            class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white _linkBtn_5bfa2e _inTarget_5bfa2e"
           >
             <svg
               fill="currentColor"
@@ -113,7 +113,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                 />
               </svg>
               <div
-                class="tableTitle fw-bold me-3 ms-1 text-truncate"
+                class="_tableTitle_0fd7c1 fw-bold me-3 ms-1 text-truncate"
                 data-testid="targetTitle"
               >
                 <span
@@ -128,7 +128,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                 </span>
               </div>
               <div
-                class="tableTitle d-flex flex-row align-items-center fw-bold text-nowrap"
+                class="_tableTitle_0fd7c1 d-flex flex-row align-items-center fw-bold text-nowrap"
               >
                 <span
                   class="text-uppercase text-muted"
@@ -136,14 +136,14 @@ exports[`SecurityTable creates snapshot 1`] = `
                   Rating:
                 </span>
                 <div
-                  class="position-relative ms-2 securityRatingBadge"
+                  class="position-relative ms-2 _securityRatingBadge_0fd7c1"
                 >
                   <div
                     data-testid="elementWithTooltip"
                   >
                     <small>
                       <div
-                        class="badge text-light fw-bold badge ms-2 securityRatingBadge"
+                        class="badge text-light fw-bold _badge_a64850 ms-2 _securityRatingBadge_0fd7c1"
                         style="background-color: rgb(150, 0, 3);"
                       >
                         F
@@ -154,7 +154,7 @@ exports[`SecurityTable creates snapshot 1`] = `
               </div>
               <button
                 aria-label="Open target image vulnerabilities"
-                class="btn badge bg-secondary ms-3 badge"
+                class="btn badge bg-secondary ms-3 _badge_0fd7c1"
               >
                 Show vulnerabilities
               </button>
@@ -167,10 +167,10 @@ exports[`SecurityTable creates snapshot 1`] = `
         style="min-height: auto;"
       >
         <div
-          class="position-relative btnWrapper"
+          class="position-relative _btnWrapper_5bfa2e"
         >
           <button
-            class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white linkBtn inTarget"
+            class="btn btn-link text-reset position-absolute lh-1 text-center float-start bg-white _linkBtn_5bfa2e _inTarget_5bfa2e"
           >
             <svg
               fill="currentColor"
@@ -206,7 +206,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                 />
               </svg>
               <div
-                class="tableTitle fw-bold me-3 ms-1 text-truncate"
+                class="_tableTitle_0fd7c1 fw-bold me-3 ms-1 text-truncate"
                 data-testid="targetTitle"
               >
                 <span
@@ -221,7 +221,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                 </span>
               </div>
               <div
-                class="tableTitle d-flex flex-row align-items-center fw-bold text-nowrap"
+                class="_tableTitle_0fd7c1 d-flex flex-row align-items-center fw-bold text-nowrap"
               >
                 <span
                   class="text-uppercase text-muted"
@@ -229,14 +229,14 @@ exports[`SecurityTable creates snapshot 1`] = `
                   Rating:
                 </span>
                 <div
-                  class="position-relative ms-2 securityRatingBadge"
+                  class="position-relative ms-2 _securityRatingBadge_0fd7c1"
                 >
                   <div
                     data-testid="elementWithTooltip"
                   >
                     <small>
                       <div
-                        class="badge text-light fw-bold badge ms-2 securityRatingBadge"
+                        class="badge text-light fw-bold _badge_a64850 ms-2 _securityRatingBadge_0fd7c1"
                         style="background-color: rgb(247, 134, 15);"
                       >
                         C
@@ -247,7 +247,7 @@ exports[`SecurityTable creates snapshot 1`] = `
               </div>
               <button
                 aria-label="Open target image vulnerabilities"
-                class="btn badge bg-secondary ms-3 badge"
+                class="btn badge bg-secondary ms-3 _badge_0fd7c1"
               >
                 Show vulnerabilities
               </button>

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SecurityReport creates snapshot 1`] = `
+exports[`SecurityReport > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
@@ -42,7 +42,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           >
             <small>
               <div
-                class="badge text-light fw-bold badge position-relative ms-1"
+                class="badge text-light fw-bold _badge_a64850 position-relative ms-1"
                 style="background-color: rgb(150, 0, 3);"
               >
                 F
@@ -52,131 +52,131 @@ exports[`SecurityReport creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="d-flex justify-content-between align-items-center pb-2 pb-md-0 pt-1 summary"
+        class="d-flex justify-content-between align-items-center pb-2 pb-md-0 pt-1 _summary_d09260"
         data-testid="summaryItem"
       >
         <div
           class="d-flex flex-row align-items-center"
         >
           <span
-            class="badge position-relative me-2 badge"
+            class="badge position-relative me-2 _badge_d09260"
             data-testid="summaryBadge"
             style="background-color: rgb(150, 0, 3);"
           >
              
           </span>
           <span
-            class="text-uppercase title"
+            class="text-uppercase _title_d09260"
           >
             critical
           </span>
         </div>
         <span
-          class="badge text-dark rounded-pill badgeItems"
+          class="badge text-dark rounded-pill _badgeItems_d09260"
         >
           2
         </span>
       </div>
       <div
-        class="d-flex justify-content-between align-items-center pb-2 pb-md-0 pt-1 summary"
+        class="d-flex justify-content-between align-items-center pb-2 pb-md-0 pt-1 _summary_d09260"
         data-testid="summaryItem"
       >
         <div
           class="d-flex flex-row align-items-center"
         >
           <span
-            class="badge position-relative me-2 badge"
+            class="badge position-relative me-2 _badge_d09260"
             data-testid="summaryBadge"
             style="background-color: rgb(223, 42, 25);"
           >
              
           </span>
           <span
-            class="text-uppercase title"
+            class="text-uppercase _title_d09260"
           >
             high
           </span>
         </div>
         <span
-          class="badge text-dark rounded-pill badgeItems"
+          class="badge text-dark rounded-pill _badgeItems_d09260"
         >
           10
         </span>
       </div>
       <div
-        class="d-flex justify-content-between align-items-center pb-2 pb-md-0 pt-1 summary"
+        class="d-flex justify-content-between align-items-center pb-2 pb-md-0 pt-1 _summary_d09260"
         data-testid="summaryItem"
       >
         <div
           class="d-flex flex-row align-items-center"
         >
           <span
-            class="badge position-relative me-2 badge"
+            class="badge position-relative me-2 _badge_d09260"
             data-testid="summaryBadge"
             style="background-color: rgb(247, 134, 15);"
           >
              
           </span>
           <span
-            class="text-uppercase title"
+            class="text-uppercase _title_d09260"
           >
             medium
           </span>
         </div>
         <span
-          class="badge text-dark rounded-pill badgeItems"
+          class="badge text-dark rounded-pill _badgeItems_d09260"
         >
           105
         </span>
       </div>
       <div
-        class="d-flex justify-content-between align-items-center pb-2 pb-md-0 pt-1 summary"
+        class="d-flex justify-content-between align-items-center pb-2 pb-md-0 pt-1 _summary_d09260"
         data-testid="summaryItem"
       >
         <div
           class="d-flex flex-row align-items-center"
         >
           <span
-            class="badge position-relative me-2 badge"
+            class="badge position-relative me-2 _badge_d09260"
             data-testid="summaryBadge"
             style="background-color: rgb(244, 189, 12);"
           >
              
           </span>
           <span
-            class="text-uppercase title"
+            class="text-uppercase _title_d09260"
           >
             low
           </span>
         </div>
         <span
-          class="badge text-dark rounded-pill badgeItems"
+          class="badge text-dark rounded-pill _badgeItems_d09260"
         >
           53
         </span>
       </div>
       <div
-        class="d-flex justify-content-between align-items-center pb-2 pb-md-0 pt-1 summary"
+        class="d-flex justify-content-between align-items-center pb-2 pb-md-0 pt-1 _summary_d09260"
         data-testid="summaryItem"
       >
         <div
           class="d-flex flex-row align-items-center"
         >
           <span
-            class="badge position-relative me-2 badge"
+            class="badge position-relative me-2 _badge_d09260"
             data-testid="summaryBadge"
             style="background-color: rgb(178, 178, 178);"
           >
              
           </span>
           <span
-            class="text-uppercase title"
+            class="text-uppercase _title_d09260"
           >
             unknown
           </span>
         </div>
         <span
-          class="badge text-dark rounded-pill badgeItems"
+          class="badge text-dark rounded-pill _badgeItems_d09260"
         >
           9
         </span>

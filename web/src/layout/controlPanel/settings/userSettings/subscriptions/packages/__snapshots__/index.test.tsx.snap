@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PackagesSection creates snapshot 1`] = `
+exports[`PackagesSection > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-flex flex-column flex-grow-1"
@@ -13,7 +13,7 @@ exports[`PackagesSection creates snapshot 1`] = `
         class="flex-grow-1"
       >
         <div
-          class="h3 pb-2 mb-2 border-bottom border-1 title"
+          class="h3 pb-2 mb-2 border-bottom border-1 _title_12cac0"
         >
           Your subscriptions
         </div>
@@ -21,14 +21,14 @@ exports[`PackagesSection creates snapshot 1`] = `
           class="d-flex flex-row align-items-start justify-content-between pb-2 mt-5"
         >
           <div
-            class="h4 mb-0 title"
+            class="h4 mb-0 _title_12cac0"
           >
             Packages
           </div>
           <div>
             <button
               aria-label="Open subscription modal"
-              class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
+              class="btn btn-outline-secondary btn-sm text-uppercase _btnAction_12cac0"
             >
               <div
                 class="d-flex flex-row align-items-center justify-content-center"
@@ -106,14 +106,14 @@ exports[`PackagesSection creates snapshot 1`] = `
                   class="col-12 col-xxxl-10"
                 >
                   <table
-                    class="table table-bordered table-hover table"
+                    class="table table-bordered table-hover _table_12cac0"
                   >
                     <thead>
                       <tr
-                        class="tableTitle"
+                        class="_tableTitle_12cac0"
                       >
                         <th
-                          class="align-middle text-center d-none d-sm-table-cell fitCell"
+                          class="align-middle text-center d-none d-sm-table-cell _fitCell_12cac0"
                           scope="col"
                         >
                           Kind
@@ -131,7 +131,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                           Publisher
                         </th>
                         <th
-                          class="align-middle text-nowrap fitCell"
+                          class="align-middle text-nowrap _fitCell_12cac0"
                           scope="col"
                         >
                           <div
@@ -162,7 +162,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                           </div>
                         </th>
                         <th
-                          class="align-middle text-nowrap fitCell"
+                          class="align-middle text-nowrap _fitCell_12cac0"
                           scope="col"
                         >
                           <div
@@ -195,7 +195,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                       </tr>
                     </thead>
                     <tbody
-                      class="body"
+                      class="_body_12cac0"
                     >
                       <tr
                         data-testid="subsTableCell"
@@ -205,12 +205,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                         >
                           <img
                             alt="Icon"
-                            class="h-auto icon iconLight"
+                            class="h-auto _icon_12cac0 iconLight"
                             src="/static/media/helm-chart.svg"
                           />
                           <img
                             alt="Icon"
-                            class="h-auto icon iconDark"
+                            class="h-auto _icon_12cac0 iconDark"
                             src="/static/media/helm-chart-light.svg"
                           />
                         </td>
@@ -221,12 +221,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_12cac0"
                             >
                               <img
                                 alt="airflow"
                                 aria-hidden="true"
-                                class="fs-4 image"
+                                class="fs-4 _image_12cac0"
                                 src="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc"
                                 srcset="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@1x 1x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@2x 2x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@3x 3x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@4x 4x"
                               />
@@ -234,6 +234,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             <a
                               aria-label="Open airflow package"
                               class="ms-2 text-dark"
+                              data-discover="true"
                               data-testid="packageLink"
                               href="/packages/helm/stable/airflow"
                             >
@@ -247,6 +248,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                           <a
                             aria-label="Filter by Helm organization"
                             class="text-dark"
+                            data-discover="true"
                             data-testid="orgLink"
                             href="/packages/search?org=helm&sort=relevance&page=1"
                           >
@@ -257,13 +259,14 @@ exports[`PackagesSection creates snapshot 1`] = `
                           >
                             (
                             <span
-                              class="text-uppercase text-muted legend"
+                              class="text-uppercase text-muted _legend_12cac0"
                             >
                               Repo: 
                             </span>
                             <a
                               aria-label="Filter by Stable repository"
                               class="text-dark"
+                              data-discover="true"
                               data-testid="repoLink"
                               href="/packages/search?repo=stable&sort=relevance&page=1"
                             >
@@ -283,7 +286,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             >
                               <input
                                 checked=""
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="airflow_newRelease_input"
                                 id="subs_0acb228c-17ab-4e50-85e9-ffc7102ea423_0"
                                 role="switch"
@@ -302,7 +305,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                               class="form-switch"
                             >
                               <input
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="airflow_securityAlert_input"
                                 id="subs_0acb228c-17ab-4e50-85e9-ffc7102ea423_1"
                                 role="switch"
@@ -320,12 +323,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                         >
                           <img
                             alt="Icon"
-                            class="h-auto icon iconLight"
+                            class="h-auto _icon_12cac0 iconLight"
                             src="/static/media/helm-chart.svg"
                           />
                           <img
                             alt="Icon"
-                            class="h-auto icon iconDark"
+                            class="h-auto _icon_12cac0 iconDark"
                             src="/static/media/helm-chart-light.svg"
                           />
                         </td>
@@ -336,12 +339,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_12cac0"
                             >
                               <img
                                 alt="cerebro"
                                 aria-hidden="true"
-                                class="fs-4 image"
+                                class="fs-4 _image_12cac0"
                                 data-testid="placeholderImg"
                                 src="/static/media/placeholder_pkg_helm.png"
                               />
@@ -349,6 +352,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             <a
                               aria-label="Open cerebro package"
                               class="ms-2 text-dark"
+                              data-discover="true"
                               data-testid="packageLink"
                               href="/packages/helm/stable/cerebro"
                             >
@@ -362,6 +366,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                           <a
                             aria-label="Filter by Helm organization"
                             class="text-dark"
+                            data-discover="true"
                             data-testid="orgLink"
                             href="/packages/search?org=helm&sort=relevance&page=1"
                           >
@@ -372,13 +377,14 @@ exports[`PackagesSection creates snapshot 1`] = `
                           >
                             (
                             <span
-                              class="text-uppercase text-muted legend"
+                              class="text-uppercase text-muted _legend_12cac0"
                             >
                               Repo: 
                             </span>
                             <a
                               aria-label="Filter by Stable repository"
                               class="text-dark"
+                              data-discover="true"
                               data-testid="repoLink"
                               href="/packages/search?repo=stable&sort=relevance&page=1"
                             >
@@ -398,7 +404,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             >
                               <input
                                 checked=""
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="cerebro_newRelease_input"
                                 id="subs_11d84cdc-e414-43c7-9be0-1f6b11912eb2_0"
                                 role="switch"
@@ -417,7 +423,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                               class="form-switch"
                             >
                               <input
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="cerebro_securityAlert_input"
                                 id="subs_11d84cdc-e414-43c7-9be0-1f6b11912eb2_1"
                                 role="switch"
@@ -435,12 +441,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                         >
                           <img
                             alt="Icon"
-                            class="h-auto icon iconLight"
+                            class="h-auto _icon_12cac0 iconLight"
                             src="/static/media/helm-chart.svg"
                           />
                           <img
                             alt="Icon"
-                            class="h-auto icon iconDark"
+                            class="h-auto _icon_12cac0 iconDark"
                             src="/static/media/helm-chart-light.svg"
                           />
                         </td>
@@ -451,12 +457,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_12cac0"
                             >
                               <img
                                 alt="elastic-stack"
                                 aria-hidden="true"
-                                class="fs-4 image"
+                                class="fs-4 _image_12cac0"
                                 data-testid="placeholderImg"
                                 src="/static/media/placeholder_pkg_helm.png"
                               />
@@ -464,6 +470,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             <a
                               aria-label="Open elastic-stack package"
                               class="ms-2 text-dark"
+                              data-discover="true"
                               data-testid="packageLink"
                               href="/packages/helm/stable/elastic-stack"
                             >
@@ -477,6 +484,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                           <a
                             aria-label="Filter by Helm organization"
                             class="text-dark"
+                            data-discover="true"
                             data-testid="orgLink"
                             href="/packages/search?org=helm&sort=relevance&page=1"
                           >
@@ -487,13 +495,14 @@ exports[`PackagesSection creates snapshot 1`] = `
                           >
                             (
                             <span
-                              class="text-uppercase text-muted legend"
+                              class="text-uppercase text-muted _legend_12cac0"
                             >
                               Repo: 
                             </span>
                             <a
                               aria-label="Filter by Stable repository"
                               class="text-dark"
+                              data-discover="true"
                               data-testid="repoLink"
                               href="/packages/search?repo=stable&sort=relevance&page=1"
                             >
@@ -513,7 +522,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             >
                               <input
                                 checked=""
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="elastic-stack_newRelease_input"
                                 id="subs_eedf0ee0-841e-4434-bf0b-4c2a175cb8c8_0"
                                 role="switch"
@@ -532,7 +541,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                               class="form-switch"
                             >
                               <input
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="elastic-stack_securityAlert_input"
                                 id="subs_eedf0ee0-841e-4434-bf0b-4c2a175cb8c8_1"
                                 role="switch"
@@ -550,12 +559,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                         >
                           <img
                             alt="Icon"
-                            class="h-auto icon iconLight"
+                            class="h-auto _icon_12cac0 iconLight"
                             src="/static/media/helm-chart.svg"
                           />
                           <img
                             alt="Icon"
-                            class="h-auto icon iconDark"
+                            class="h-auto _icon_12cac0 iconDark"
                             src="/static/media/helm-chart-light.svg"
                           />
                         </td>
@@ -566,12 +575,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_12cac0"
                             >
                               <img
                                 alt="ibm-redis"
                                 aria-hidden="true"
-                                class="fs-4 image"
+                                class="fs-4 _image_12cac0"
                                 src="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88"
                                 srcset="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@1x 1x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@2x 2x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@3x 3x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@4x 4x"
                               />
@@ -579,6 +588,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             <a
                               aria-label="Open ibm-redis package"
                               class="ms-2 text-dark"
+                              data-discover="true"
                               data-testid="packageLink"
                               href="/packages/helm/ibm-charts/ibm-redis"
                             >
@@ -592,6 +602,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                           <a
                             aria-label="Filter by Org 1 organization"
                             class="text-dark"
+                            data-discover="true"
                             data-testid="orgLink"
                             href="/packages/search?org=org1&sort=relevance&page=1"
                           >
@@ -602,13 +613,14 @@ exports[`PackagesSection creates snapshot 1`] = `
                           >
                             (
                             <span
-                              class="text-uppercase text-muted legend"
+                              class="text-uppercase text-muted _legend_12cac0"
                             >
                               Repo: 
                             </span>
                             <a
                               aria-label="Filter by IBM charts repository"
                               class="text-dark"
+                              data-discover="true"
                               data-testid="repoLink"
                               href="/packages/search?repo=ibm-charts&sort=relevance&page=1"
                             >
@@ -628,7 +640,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             >
                               <input
                                 checked=""
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="ibm-redis_newRelease_input"
                                 id="subs_cfa55ea2-eb69-4703-8be7-73937c6efc4b_0"
                                 role="switch"
@@ -647,7 +659,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                               class="form-switch"
                             >
                               <input
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="ibm-redis_securityAlert_input"
                                 id="subs_cfa55ea2-eb69-4703-8be7-73937c6efc4b_1"
                                 role="switch"
@@ -665,12 +677,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                         >
                           <img
                             alt="Icon"
-                            class="h-auto icon iconLight"
+                            class="h-auto _icon_12cac0 iconLight"
                             src="/static/media/falco-rules.svg"
                           />
                           <img
                             alt="Icon"
-                            class="h-auto icon iconDark"
+                            class="h-auto _icon_12cac0 iconDark"
                             src="/static/media/falco-rules-light.svg"
                           />
                         </td>
@@ -681,12 +693,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_12cac0"
                             >
                               <img
                                 alt="SSH connections"
                                 aria-hidden="true"
-                                class="fs-4 image"
+                                class="fs-4 _image_12cac0"
                                 src="/image/23baee82-817d-4443-bb12-164913cb631b"
                                 srcset="/image/23baee82-817d-4443-bb12-164913cb631b@1x 1x, /image/23baee82-817d-4443-bb12-164913cb631b@2x 2x, /image/23baee82-817d-4443-bb12-164913cb631b@3x 3x, /image/23baee82-817d-4443-bb12-164913cb631b@4x 4x"
                               />
@@ -694,6 +706,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             <a
                               aria-label="Open SSH connections package"
                               class="ms-2 text-dark"
+                              data-discover="true"
                               data-testid="packageLink"
                               href="/packages/falco/falco/ssh-connections"
                             >
@@ -707,6 +720,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                           <a
                             aria-label="Filter by Org 2 organization"
                             class="text-dark"
+                            data-discover="true"
                             data-testid="orgLink"
                             href="/packages/search?org=org2&sort=relevance&page=1"
                           >
@@ -717,13 +731,14 @@ exports[`PackagesSection creates snapshot 1`] = `
                           >
                             (
                             <span
-                              class="text-uppercase text-muted legend"
+                              class="text-uppercase text-muted _legend_12cac0"
                             >
                               Repo: 
                             </span>
                             <a
                               aria-label="Filter by Falco rules repository"
                               class="text-dark"
+                              data-discover="true"
                               data-testid="repoLink"
                               href="/packages/search?repo=falco&sort=relevance&page=1"
                             >
@@ -743,7 +758,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             >
                               <input
                                 checked=""
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="SSH connections_newRelease_input"
                                 id="subs_ccd1553a-e9bd-45b5-93a3-9ee127dddcb0_0"
                                 role="switch"
@@ -762,7 +777,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                               class="form-switch"
                             >
                               <input
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="SSH connections_securityAlert_input"
                                 id="subs_ccd1553a-e9bd-45b5-93a3-9ee127dddcb0_1"
                                 role="switch"
@@ -780,12 +795,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                         >
                           <img
                             alt="Icon"
-                            class="h-auto icon iconLight"
+                            class="h-auto _icon_12cac0 iconLight"
                             src="/static/media/falco-rules.svg"
                           />
                           <img
                             alt="Icon"
-                            class="h-auto icon iconDark"
+                            class="h-auto _icon_12cac0 iconDark"
                             src="/static/media/falco-rules-light.svg"
                           />
                         </td>
@@ -796,12 +811,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_12cac0"
                             >
                               <img
                                 alt="Traefik"
                                 aria-hidden="true"
-                                class="fs-4 image"
+                                class="fs-4 _image_12cac0"
                                 src="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b"
                                 srcset="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b@1x 1x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@2x 2x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@3x 3x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@4x 4x"
                               />
@@ -809,6 +824,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             <a
                               aria-label="Open Traefik package"
                               class="ms-2 text-dark"
+                              data-discover="true"
                               data-testid="packageLink"
                               href="/packages/falco/falco/traefik"
                             >
@@ -822,6 +838,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                           <a
                             aria-label="Filter by Org 2 organization"
                             class="text-dark"
+                            data-discover="true"
                             data-testid="orgLink"
                             href="/packages/search?org=org2&sort=relevance&page=1"
                           >
@@ -832,13 +849,14 @@ exports[`PackagesSection creates snapshot 1`] = `
                           >
                             (
                             <span
-                              class="text-uppercase text-muted legend"
+                              class="text-uppercase text-muted _legend_12cac0"
                             >
                               Repo: 
                             </span>
                             <a
                               aria-label="Filter by Falco rules repository"
                               class="text-dark"
+                              data-discover="true"
                               data-testid="repoLink"
                               href="/packages/search?repo=falco&sort=relevance&page=1"
                             >
@@ -858,7 +876,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             >
                               <input
                                 checked=""
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="Traefik_newRelease_input"
                                 id="subs_e63b8968-a688-4525-889d-cbbf3df82f9f_0"
                                 role="switch"
@@ -877,7 +895,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                               class="form-switch"
                             >
                               <input
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="Traefik_securityAlert_input"
                                 id="subs_e63b8968-a688-4525-889d-cbbf3df82f9f_1"
                                 role="switch"
@@ -895,12 +913,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                         >
                           <img
                             alt="Icon"
-                            class="h-auto icon iconLight"
+                            class="h-auto _icon_12cac0 iconLight"
                             src="/static/media/opa-policies.svg"
                           />
                           <img
                             alt="Icon"
-                            class="h-auto icon iconDark"
+                            class="h-auto _icon_12cac0 iconDark"
                             src="/static/media/opa-policies-light.svg"
                           />
                         </td>
@@ -911,12 +929,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_12cac0"
                             >
                               <img
                                 alt="Trusted Registry Images"
                                 aria-hidden="true"
-                                class="fs-4 image"
+                                class="fs-4 _image_12cac0"
                                 src="/image/828583b3-e3a0-4970-899f-27a903fd72cb"
                                 srcset="/image/828583b3-e3a0-4970-899f-27a903fd72cb@1x 1x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@2x 2x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@3x 3x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@4x 4x"
                               />
@@ -924,6 +942,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             <a
                               aria-label="Open Trusted Registry Images package"
                               class="ms-2 text-dark"
+                              data-discover="true"
                               data-testid="packageLink"
                               href="/packages/opa/opa/trusted-registry-images"
                             >
@@ -937,6 +956,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                           <a
                             aria-label="Filter by OPA organization"
                             class="text-dark"
+                            data-discover="true"
                             data-testid="orgLink"
                             href="/packages/search?org=opa&sort=relevance&page=1"
                           >
@@ -947,13 +967,14 @@ exports[`PackagesSection creates snapshot 1`] = `
                           >
                             (
                             <span
-                              class="text-uppercase text-muted legend"
+                              class="text-uppercase text-muted _legend_12cac0"
                             >
                               Repo: 
                             </span>
                             <a
                               aria-label="Filter by OPA policies repository"
                               class="text-dark"
+                              data-discover="true"
                               data-testid="repoLink"
                               href="/packages/search?repo=opa&sort=relevance&page=1"
                             >
@@ -973,7 +994,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             >
                               <input
                                 checked=""
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="Trusted Registry Images_newRelease_input"
                                 id="subs_2052b061-2459-4d9f-8cd3-a5e8dbb4b804_0"
                                 role="switch"
@@ -992,7 +1013,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                               class="form-switch"
                             >
                               <input
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="Trusted Registry Images_securityAlert_input"
                                 id="subs_2052b061-2459-4d9f-8cd3-a5e8dbb4b804_1"
                                 role="switch"
@@ -1010,12 +1031,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                         >
                           <img
                             alt="Icon"
-                            class="h-auto icon iconLight"
+                            class="h-auto _icon_12cac0 iconLight"
                             src="/static/media/helm-chart.svg"
                           />
                           <img
                             alt="Icon"
-                            class="h-auto icon iconDark"
+                            class="h-auto _icon_12cac0 iconDark"
                             src="/static/media/helm-chart-light.svg"
                           />
                         </td>
@@ -1026,12 +1047,12 @@ exports[`PackagesSection creates snapshot 1`] = `
                             class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_12cac0"
                             >
                               <img
                                 alt="zookeeper"
                                 aria-hidden="true"
-                                class="fs-4 image"
+                                class="fs-4 _image_12cac0"
                                 src="/image/4c7230bf-5b08-49dc-b095-c93aef119f47"
                                 srcset="/image/4c7230bf-5b08-49dc-b095-c93aef119f47@1x 1x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@2x 2x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@3x 3x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@4x 4x"
                               />
@@ -1039,6 +1060,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             <a
                               aria-label="Open zookeeper package"
                               class="ms-2 text-dark"
+                              data-discover="true"
                               data-testid="packageLink"
                               href="/packages/helm/incubator/zookeeper"
                             >
@@ -1052,6 +1074,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                           <a
                             aria-label="Filter by Helm organization"
                             class="text-dark"
+                            data-discover="true"
                             data-testid="orgLink"
                             href="/packages/search?org=helm&sort=relevance&page=1"
                           >
@@ -1062,13 +1085,14 @@ exports[`PackagesSection creates snapshot 1`] = `
                           >
                             (
                             <span
-                              class="text-uppercase text-muted legend"
+                              class="text-uppercase text-muted _legend_12cac0"
                             >
                               Repo: 
                             </span>
                             <a
                               aria-label="Filter by Incubator repository"
                               class="text-dark"
+                              data-discover="true"
                               data-testid="repoLink"
                               href="/packages/search?repo=incubator&sort=relevance&page=1"
                             >
@@ -1088,7 +1112,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                             >
                               <input
                                 checked=""
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="zookeeper_newRelease_input"
                                 id="subs_d3945a69-2aae-4ff9-8fb3-ce3b720d0384_0"
                                 role="switch"
@@ -1107,7 +1131,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                               class="form-switch"
                             >
                               <input
-                                class="form-check-input checkbox"
+                                class="form-check-input _checkbox_12cac0"
                                 data-testid="zookeeper_securityAlert_input"
                                 id="subs_d3945a69-2aae-4ff9-8fb3-ce3b720d0384_1"
                                 role="switch"
@@ -1130,14 +1154,15 @@ exports[`PackagesSection creates snapshot 1`] = `
                 role="listitem"
               >
                 <div
-                  class="card cardWithHover h-100 bg-white mw-100 card"
+                  class="card cardWithHover h-100 bg-white mw-100 _card_a1a21c"
                 >
                   <div>
                     <div
-                      class="card-body position-relative body"
+                      class="card-body position-relative _body_a1a21c"
                     >
                       <a
-                        class="text-decoration-none text-reset bg-transparent link"
+                        class="text-decoration-none text-reset bg-transparent _link_a1a21c"
+                        data-discover="true"
                         data-testid="packageCardLink"
                         href="/packages/helm/stable/airflow"
                       >
@@ -1145,21 +1170,21 @@ exports[`PackagesSection creates snapshot 1`] = `
                           class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 _truncateWrapper_a1a21c"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white _imageWrapper_a1a21c imageWrapper"
                             >
                               <img
                                 alt="Logo airflow"
                                 aria-hidden="true"
-                                class="image"
+                                class="_image_a1a21c"
                                 src="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc"
                                 srcset="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@1x 1x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@2x 2x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@3x 3x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@4x 4x"
                               />
                             </div>
                             <div
-                              class="ms-3 flex-grow-1 truncateWrapper"
+                              class="ms-3 flex-grow-1 _truncateWrapper_a1a21c"
                             >
                               <div
                                 class="card-title fw-bolder mb-2 lh-1"
@@ -1171,7 +1196,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 _subtitle_a1a21c"
                               >
                                 <div
                                   class="me-2 text-truncate"
@@ -1205,16 +1230,16 @@ exports[`PackagesSection creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-flex align-items-center text-uppercase kind"
+                            class="d-flex align-items-center text-uppercase _kind_a1a21c"
                           >
                             <img
                               alt="Icon"
-                              class="h-auto icon iconLight"
+                              class="h-auto _icon_a1a21c iconLight"
                               src="/static/media/helm-chart.svg"
                             />
                             <img
                               alt="Icon"
-                              class="h-auto icon iconDark"
+                              class="h-auto _icon_a1a21c iconDark"
                               src="/static/media/helm-chart-light.svg"
                             />
                           </div>
@@ -1224,11 +1249,11 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
                             checked=""
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="airflow_newRelease"
                             role="switch"
                             type="checkbox"
@@ -1272,10 +1297,10 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="airflow_securityAlert"
                             role="switch"
                             type="checkbox"
@@ -1324,14 +1349,15 @@ exports[`PackagesSection creates snapshot 1`] = `
                 role="listitem"
               >
                 <div
-                  class="card cardWithHover h-100 bg-white mw-100 card"
+                  class="card cardWithHover h-100 bg-white mw-100 _card_a1a21c"
                 >
                   <div>
                     <div
-                      class="card-body position-relative body"
+                      class="card-body position-relative _body_a1a21c"
                     >
                       <a
-                        class="text-decoration-none text-reset bg-transparent link"
+                        class="text-decoration-none text-reset bg-transparent _link_a1a21c"
+                        data-discover="true"
                         data-testid="packageCardLink"
                         href="/packages/helm/stable/cerebro"
                       >
@@ -1339,21 +1365,21 @@ exports[`PackagesSection creates snapshot 1`] = `
                           class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 _truncateWrapper_a1a21c"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white _imageWrapper_a1a21c imageWrapper"
                             >
                               <img
                                 alt="Logo cerebro"
                                 aria-hidden="true"
-                                class="image"
+                                class="_image_a1a21c"
                                 data-testid="placeholderImg"
                                 src="/static/media/placeholder_pkg_helm.png"
                               />
                             </div>
                             <div
-                              class="ms-3 flex-grow-1 truncateWrapper"
+                              class="ms-3 flex-grow-1 _truncateWrapper_a1a21c"
                             >
                               <div
                                 class="card-title fw-bolder mb-2 lh-1"
@@ -1365,7 +1391,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 _subtitle_a1a21c"
                               >
                                 <div
                                   class="me-2 text-truncate"
@@ -1399,16 +1425,16 @@ exports[`PackagesSection creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-flex align-items-center text-uppercase kind"
+                            class="d-flex align-items-center text-uppercase _kind_a1a21c"
                           >
                             <img
                               alt="Icon"
-                              class="h-auto icon iconLight"
+                              class="h-auto _icon_a1a21c iconLight"
                               src="/static/media/helm-chart.svg"
                             />
                             <img
                               alt="Icon"
-                              class="h-auto icon iconDark"
+                              class="h-auto _icon_a1a21c iconDark"
                               src="/static/media/helm-chart-light.svg"
                             />
                           </div>
@@ -1418,11 +1444,11 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
                             checked=""
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="cerebro_newRelease"
                             role="switch"
                             type="checkbox"
@@ -1466,10 +1492,10 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="cerebro_securityAlert"
                             role="switch"
                             type="checkbox"
@@ -1518,14 +1544,15 @@ exports[`PackagesSection creates snapshot 1`] = `
                 role="listitem"
               >
                 <div
-                  class="card cardWithHover h-100 bg-white mw-100 card"
+                  class="card cardWithHover h-100 bg-white mw-100 _card_a1a21c"
                 >
                   <div>
                     <div
-                      class="card-body position-relative body"
+                      class="card-body position-relative _body_a1a21c"
                     >
                       <a
-                        class="text-decoration-none text-reset bg-transparent link"
+                        class="text-decoration-none text-reset bg-transparent _link_a1a21c"
+                        data-discover="true"
                         data-testid="packageCardLink"
                         href="/packages/helm/stable/elastic-stack"
                       >
@@ -1533,21 +1560,21 @@ exports[`PackagesSection creates snapshot 1`] = `
                           class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 _truncateWrapper_a1a21c"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white _imageWrapper_a1a21c imageWrapper"
                             >
                               <img
                                 alt="Logo elastic-stack"
                                 aria-hidden="true"
-                                class="image"
+                                class="_image_a1a21c"
                                 data-testid="placeholderImg"
                                 src="/static/media/placeholder_pkg_helm.png"
                               />
                             </div>
                             <div
-                              class="ms-3 flex-grow-1 truncateWrapper"
+                              class="ms-3 flex-grow-1 _truncateWrapper_a1a21c"
                             >
                               <div
                                 class="card-title fw-bolder mb-2 lh-1"
@@ -1559,7 +1586,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 _subtitle_a1a21c"
                               >
                                 <div
                                   class="me-2 text-truncate"
@@ -1593,16 +1620,16 @@ exports[`PackagesSection creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-flex align-items-center text-uppercase kind"
+                            class="d-flex align-items-center text-uppercase _kind_a1a21c"
                           >
                             <img
                               alt="Icon"
-                              class="h-auto icon iconLight"
+                              class="h-auto _icon_a1a21c iconLight"
                               src="/static/media/helm-chart.svg"
                             />
                             <img
                               alt="Icon"
-                              class="h-auto icon iconDark"
+                              class="h-auto _icon_a1a21c iconDark"
                               src="/static/media/helm-chart-light.svg"
                             />
                           </div>
@@ -1612,11 +1639,11 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
                             checked=""
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="elastic-stack_newRelease"
                             role="switch"
                             type="checkbox"
@@ -1660,10 +1687,10 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="elastic-stack_securityAlert"
                             role="switch"
                             type="checkbox"
@@ -1712,14 +1739,15 @@ exports[`PackagesSection creates snapshot 1`] = `
                 role="listitem"
               >
                 <div
-                  class="card cardWithHover h-100 bg-white mw-100 card"
+                  class="card cardWithHover h-100 bg-white mw-100 _card_a1a21c"
                 >
                   <div>
                     <div
-                      class="card-body position-relative body"
+                      class="card-body position-relative _body_a1a21c"
                     >
                       <a
-                        class="text-decoration-none text-reset bg-transparent link"
+                        class="text-decoration-none text-reset bg-transparent _link_a1a21c"
+                        data-discover="true"
                         data-testid="packageCardLink"
                         href="/packages/helm/ibm-charts/ibm-redis"
                       >
@@ -1727,21 +1755,21 @@ exports[`PackagesSection creates snapshot 1`] = `
                           class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 _truncateWrapper_a1a21c"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white _imageWrapper_a1a21c imageWrapper"
                             >
                               <img
                                 alt="Logo ibm-redis"
                                 aria-hidden="true"
-                                class="image"
+                                class="_image_a1a21c"
                                 src="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88"
                                 srcset="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@1x 1x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@2x 2x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@3x 3x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@4x 4x"
                               />
                             </div>
                             <div
-                              class="ms-3 flex-grow-1 truncateWrapper"
+                              class="ms-3 flex-grow-1 _truncateWrapper_a1a21c"
                             >
                               <div
                                 class="card-title fw-bolder mb-2 lh-1"
@@ -1753,7 +1781,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 _subtitle_a1a21c"
                               >
                                 <div
                                   class="me-2 text-truncate"
@@ -1787,16 +1815,16 @@ exports[`PackagesSection creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-flex align-items-center text-uppercase kind"
+                            class="d-flex align-items-center text-uppercase _kind_a1a21c"
                           >
                             <img
                               alt="Icon"
-                              class="h-auto icon iconLight"
+                              class="h-auto _icon_a1a21c iconLight"
                               src="/static/media/helm-chart.svg"
                             />
                             <img
                               alt="Icon"
-                              class="h-auto icon iconDark"
+                              class="h-auto _icon_a1a21c iconDark"
                               src="/static/media/helm-chart-light.svg"
                             />
                           </div>
@@ -1806,11 +1834,11 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
                             checked=""
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="ibm-redis_newRelease"
                             role="switch"
                             type="checkbox"
@@ -1854,10 +1882,10 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="ibm-redis_securityAlert"
                             role="switch"
                             type="checkbox"
@@ -1906,14 +1934,15 @@ exports[`PackagesSection creates snapshot 1`] = `
                 role="listitem"
               >
                 <div
-                  class="card cardWithHover h-100 bg-white mw-100 card"
+                  class="card cardWithHover h-100 bg-white mw-100 _card_a1a21c"
                 >
                   <div>
                     <div
-                      class="card-body position-relative body"
+                      class="card-body position-relative _body_a1a21c"
                     >
                       <a
-                        class="text-decoration-none text-reset bg-transparent link"
+                        class="text-decoration-none text-reset bg-transparent _link_a1a21c"
+                        data-discover="true"
                         data-testid="packageCardLink"
                         href="/packages/falco/falco/ssh-connections"
                       >
@@ -1921,21 +1950,21 @@ exports[`PackagesSection creates snapshot 1`] = `
                           class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 _truncateWrapper_a1a21c"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white _imageWrapper_a1a21c imageWrapper"
                             >
                               <img
                                 alt="Logo SSH connections"
                                 aria-hidden="true"
-                                class="image"
+                                class="_image_a1a21c"
                                 src="/image/23baee82-817d-4443-bb12-164913cb631b"
                                 srcset="/image/23baee82-817d-4443-bb12-164913cb631b@1x 1x, /image/23baee82-817d-4443-bb12-164913cb631b@2x 2x, /image/23baee82-817d-4443-bb12-164913cb631b@3x 3x, /image/23baee82-817d-4443-bb12-164913cb631b@4x 4x"
                               />
                             </div>
                             <div
-                              class="ms-3 flex-grow-1 truncateWrapper"
+                              class="ms-3 flex-grow-1 _truncateWrapper_a1a21c"
                             >
                               <div
                                 class="card-title fw-bolder mb-2 lh-1"
@@ -1947,7 +1976,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 _subtitle_a1a21c"
                               >
                                 <div
                                   class="me-2 text-truncate"
@@ -1981,16 +2010,16 @@ exports[`PackagesSection creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-flex align-items-center text-uppercase kind"
+                            class="d-flex align-items-center text-uppercase _kind_a1a21c"
                           >
                             <img
                               alt="Icon"
-                              class="h-auto icon iconLight"
+                              class="h-auto _icon_a1a21c iconLight"
                               src="/static/media/falco-rules.svg"
                             />
                             <img
                               alt="Icon"
-                              class="h-auto icon iconDark"
+                              class="h-auto _icon_a1a21c iconDark"
                               src="/static/media/falco-rules-light.svg"
                             />
                           </div>
@@ -2000,11 +2029,11 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
                             checked=""
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="SSH connections_newRelease"
                             role="switch"
                             type="checkbox"
@@ -2048,10 +2077,10 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="SSH connections_securityAlert"
                             role="switch"
                             type="checkbox"
@@ -2100,14 +2129,15 @@ exports[`PackagesSection creates snapshot 1`] = `
                 role="listitem"
               >
                 <div
-                  class="card cardWithHover h-100 bg-white mw-100 card"
+                  class="card cardWithHover h-100 bg-white mw-100 _card_a1a21c"
                 >
                   <div>
                     <div
-                      class="card-body position-relative body"
+                      class="card-body position-relative _body_a1a21c"
                     >
                       <a
-                        class="text-decoration-none text-reset bg-transparent link"
+                        class="text-decoration-none text-reset bg-transparent _link_a1a21c"
+                        data-discover="true"
                         data-testid="packageCardLink"
                         href="/packages/falco/falco/traefik"
                       >
@@ -2115,21 +2145,21 @@ exports[`PackagesSection creates snapshot 1`] = `
                           class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 _truncateWrapper_a1a21c"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white _imageWrapper_a1a21c imageWrapper"
                             >
                               <img
                                 alt="Logo Traefik"
                                 aria-hidden="true"
-                                class="image"
+                                class="_image_a1a21c"
                                 src="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b"
                                 srcset="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b@1x 1x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@2x 2x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@3x 3x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@4x 4x"
                               />
                             </div>
                             <div
-                              class="ms-3 flex-grow-1 truncateWrapper"
+                              class="ms-3 flex-grow-1 _truncateWrapper_a1a21c"
                             >
                               <div
                                 class="card-title fw-bolder mb-2 lh-1"
@@ -2141,7 +2171,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 _subtitle_a1a21c"
                               >
                                 <div
                                   class="me-2 text-truncate"
@@ -2175,16 +2205,16 @@ exports[`PackagesSection creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-flex align-items-center text-uppercase kind"
+                            class="d-flex align-items-center text-uppercase _kind_a1a21c"
                           >
                             <img
                               alt="Icon"
-                              class="h-auto icon iconLight"
+                              class="h-auto _icon_a1a21c iconLight"
                               src="/static/media/falco-rules.svg"
                             />
                             <img
                               alt="Icon"
-                              class="h-auto icon iconDark"
+                              class="h-auto _icon_a1a21c iconDark"
                               src="/static/media/falco-rules-light.svg"
                             />
                           </div>
@@ -2194,11 +2224,11 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
                             checked=""
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="Traefik_newRelease"
                             role="switch"
                             type="checkbox"
@@ -2242,10 +2272,10 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="Traefik_securityAlert"
                             role="switch"
                             type="checkbox"
@@ -2294,14 +2324,15 @@ exports[`PackagesSection creates snapshot 1`] = `
                 role="listitem"
               >
                 <div
-                  class="card cardWithHover h-100 bg-white mw-100 card"
+                  class="card cardWithHover h-100 bg-white mw-100 _card_a1a21c"
                 >
                   <div>
                     <div
-                      class="card-body position-relative body"
+                      class="card-body position-relative _body_a1a21c"
                     >
                       <a
-                        class="text-decoration-none text-reset bg-transparent link"
+                        class="text-decoration-none text-reset bg-transparent _link_a1a21c"
+                        data-discover="true"
                         data-testid="packageCardLink"
                         href="/packages/opa/opa/trusted-registry-images"
                       >
@@ -2309,21 +2340,21 @@ exports[`PackagesSection creates snapshot 1`] = `
                           class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 _truncateWrapper_a1a21c"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white _imageWrapper_a1a21c imageWrapper"
                             >
                               <img
                                 alt="Logo Trusted Registry Images"
                                 aria-hidden="true"
-                                class="image"
+                                class="_image_a1a21c"
                                 src="/image/828583b3-e3a0-4970-899f-27a903fd72cb"
                                 srcset="/image/828583b3-e3a0-4970-899f-27a903fd72cb@1x 1x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@2x 2x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@3x 3x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@4x 4x"
                               />
                             </div>
                             <div
-                              class="ms-3 flex-grow-1 truncateWrapper"
+                              class="ms-3 flex-grow-1 _truncateWrapper_a1a21c"
                             >
                               <div
                                 class="card-title fw-bolder mb-2 lh-1"
@@ -2335,7 +2366,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 _subtitle_a1a21c"
                               >
                                 <div
                                   class="me-2 text-truncate"
@@ -2369,16 +2400,16 @@ exports[`PackagesSection creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-flex align-items-center text-uppercase kind"
+                            class="d-flex align-items-center text-uppercase _kind_a1a21c"
                           >
                             <img
                               alt="Icon"
-                              class="h-auto icon iconLight"
+                              class="h-auto _icon_a1a21c iconLight"
                               src="/static/media/opa-policies.svg"
                             />
                             <img
                               alt="Icon"
-                              class="h-auto icon iconDark"
+                              class="h-auto _icon_a1a21c iconDark"
                               src="/static/media/opa-policies-light.svg"
                             />
                           </div>
@@ -2388,11 +2419,11 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
                             checked=""
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="Trusted Registry Images_newRelease"
                             role="switch"
                             type="checkbox"
@@ -2436,10 +2467,10 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="Trusted Registry Images_securityAlert"
                             role="switch"
                             type="checkbox"
@@ -2488,14 +2519,15 @@ exports[`PackagesSection creates snapshot 1`] = `
                 role="listitem"
               >
                 <div
-                  class="card cardWithHover h-100 bg-white mw-100 card"
+                  class="card cardWithHover h-100 bg-white mw-100 _card_a1a21c"
                 >
                   <div>
                     <div
-                      class="card-body position-relative body"
+                      class="card-body position-relative _body_a1a21c"
                     >
                       <a
-                        class="text-decoration-none text-reset bg-transparent link"
+                        class="text-decoration-none text-reset bg-transparent _link_a1a21c"
+                        data-discover="true"
                         data-testid="packageCardLink"
                         href="/packages/helm/incubator/zookeeper"
                       >
@@ -2503,21 +2535,21 @@ exports[`PackagesSection creates snapshot 1`] = `
                           class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 _truncateWrapper_a1a21c"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white imageWrapper imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 border border-2 bg-white _imageWrapper_a1a21c imageWrapper"
                             >
                               <img
                                 alt="Logo zookeeper"
                                 aria-hidden="true"
-                                class="image"
+                                class="_image_a1a21c"
                                 src="/image/4c7230bf-5b08-49dc-b095-c93aef119f47"
                                 srcset="/image/4c7230bf-5b08-49dc-b095-c93aef119f47@1x 1x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@2x 2x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@3x 3x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@4x 4x"
                               />
                             </div>
                             <div
-                              class="ms-3 flex-grow-1 truncateWrapper"
+                              class="ms-3 flex-grow-1 _truncateWrapper_a1a21c"
                             >
                               <div
                                 class="card-title fw-bolder mb-2 lh-1"
@@ -2529,7 +2561,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                                 </div>
                               </div>
                               <div
-                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 _subtitle_a1a21c"
                               >
                                 <div
                                   class="me-2 text-truncate"
@@ -2563,16 +2595,16 @@ exports[`PackagesSection creates snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="d-flex align-items-center text-uppercase kind"
+                            class="d-flex align-items-center text-uppercase _kind_a1a21c"
                           >
                             <img
                               alt="Icon"
-                              class="h-auto icon iconLight"
+                              class="h-auto _icon_a1a21c iconLight"
                               src="/static/media/helm-chart.svg"
                             />
                             <img
                               alt="Icon"
-                              class="h-auto icon iconDark"
+                              class="h-auto _icon_a1a21c iconDark"
                               src="/static/media/helm-chart-light.svg"
                             />
                           </div>
@@ -2582,11 +2614,11 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
                             checked=""
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="zookeeper_newRelease"
                             role="switch"
                             type="checkbox"
@@ -2630,10 +2662,10 @@ exports[`PackagesSection creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="form-check form-switch clickable"
+                          class="form-check form-switch _clickable_a1a21c"
                         >
                           <input
-                            class="form-check-input checkbox"
+                            class="form-check-input _checkbox_a1a21c"
                             id="zookeeper_securityAlert"
                             role="switch"
                             type="checkbox"
@@ -2686,20 +2718,20 @@ exports[`PackagesSection creates snapshot 1`] = `
         <div>
           <div
             aria-modal="false"
-            class="modal modal"
+            class="modal _modal_2adcc6"
             role="dialog"
           >
             <div
-              class="modal-dialog modal-lg modal"
+              class="modal-dialog modal-lg _modal_2eb1f7"
             >
               <div
-                class="modal-content border border-3 mx-auto content"
+                class="modal-content border border-3 mx-auto _content_2adcc6"
               >
                 <div
-                  class="modal-header d-flex flex-row align-items-center header undefined"
+                  class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
                 >
                   <div
-                    class="h3 m-2 flex-grow-1 title"
+                    class="h3 m-2 flex-grow-1 _title_2eb1f7"
                   >
                     Add subscription
                   </div>
@@ -2714,7 +2746,7 @@ exports[`PackagesSection creates snapshot 1`] = `
                 >
                   <div>
                     <div
-                      class="overflow-hidden alertWrapper"
+                      class="overflow-hidden _alertWrapper_1aa3f6"
                       data-testid="alertWrapper"
                     />
                   </div>
@@ -2766,14 +2798,14 @@ exports[`PackagesSection creates snapshot 1`] = `
             class="d-flex flex-row align-items-start justify-content-between pb-2"
           >
             <div
-              class="h4 pb-0 title"
+              class="h4 pb-0 _title_12cac0"
             >
               Repositories
             </div>
             <div>
               <button
                 aria-label="Open opt-out modal"
-                class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
+                class="btn btn-outline-secondary btn-sm text-uppercase _btnAction_12cac0"
               >
                 <div
                   class="d-flex flex-row align-items-center justify-content-center"

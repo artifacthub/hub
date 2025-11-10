@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`VersionInRow creates snapshot 1`] = `
+exports[`VersionInRow > creates snapshot 1`] = `
 <DocumentFragment>
   <table>
     <tbody>
@@ -8,10 +8,10 @@ exports[`VersionInRow creates snapshot 1`] = `
         data-testid="tr-version-row"
       >
         <td
-          class="versionCell"
+          class="_versionCell_45a823"
         >
           <div
-            class="d-flex flex-row align-items-center px-3 overflow-auto truncateWrapper"
+            class="d-flex flex-row align-items-center px-3 overflow-auto _truncateWrapper_45a823"
           >
             <button
               aria-label="Open version 1.0.1"

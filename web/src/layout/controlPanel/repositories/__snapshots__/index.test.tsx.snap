@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Repository index creates snapshot 1`] = `
+exports[`Repository index > creates snapshot 1`] = `
 <DocumentFragment>
   <main
     class="pe-xs-0 pe-sm-3 pe-md-0 d-flex flex-column flex-md-row justify-content-between my-md-4"
@@ -14,14 +14,14 @@ exports[`Repository index creates snapshot 1`] = `
           class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom border-1"
         >
           <div
-            class="h3 pb-0 title"
+            class="h3 pb-0 _title_790d8a"
           >
             Repositories
           </div>
           <div>
             <button
               aria-label="Refresh repositories list"
-              class="btn btn-outline-secondary btn-sm text-uppercase me-0 me-md-2 btnAction"
+              class="btn btn-outline-secondary btn-sm text-uppercase me-0 me-md-2 _btnAction_790d8a"
             >
               <div
                 class="d-flex flex-row align-items-center justify-content-center"
@@ -63,7 +63,7 @@ exports[`Repository index creates snapshot 1`] = `
             </button>
             <button
               aria-label="Open claim repository modal"
-              class="btn btn-outline-secondary btn-sm text-uppercase me-0 me-md-2 btnAction"
+              class="btn btn-outline-secondary btn-sm text-uppercase me-0 me-md-2 _btnAction_790d8a"
             >
               <div
                 class="d-flex flex-row align-items-center justify-content-center"
@@ -94,7 +94,7 @@ exports[`Repository index creates snapshot 1`] = `
             >
               <button
                 aria-label="Open add repository modal"
-                class="btn btn-outline-secondary btn-sm text-uppercase btnAction"
+                class="btn btn-outline-secondary btn-sm text-uppercase _btnAction_790d8a"
                 type="button"
               >
                 <div
@@ -159,7 +159,7 @@ exports[`Repository index creates snapshot 1`] = `
         , you can add a 
         <a
           aria-label="Open documentation"
-          class="link text-reset"
+          class="_link_f0e789 text-reset"
           href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
           rel="noopener noreferrer"
           role="button"
@@ -196,7 +196,7 @@ exports[`Repository index creates snapshot 1`] = `
                 class="d-flex flex-row w-100 justify-content-between"
               >
                 <div
-                  class="text-truncate h5 mb-0 titleCard"
+                  class="text-truncate h5 mb-0 _titleCard_e17593"
                 >
                   test
                 </div>
@@ -210,14 +210,14 @@ exports[`Repository index creates snapshot 1`] = `
                       class="d-flex fs-6"
                     >
                       <span
-                        class="badge bg-light text-dark border border-1 bg badge"
+                        class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                       >
                         <div
                           class="d-flex flex-row align-items-center"
                         >
                           <div
                             aria-hidden="true"
-                            class="position-relative icon undefined"
+                            class="position-relative _icon_c0e9ad undefined"
                           >
                             <img
                               alt="Icon"
@@ -231,7 +231,7 @@ exports[`Repository index creates snapshot 1`] = `
                             />
                           </div>
                           <div
-                            class="ms-1 text"
+                            class="ms-1 _text_c0e9ad"
                           >
                             Helm charts
                           </div>
@@ -243,14 +243,14 @@ exports[`Repository index creates snapshot 1`] = `
                     class="d-flex d-md-none fs-6"
                   >
                     <span
-                      class="badge bg-light text-dark border border-1 bg badge"
+                      class="badge bg-light text-dark border border-1 _bg_c0e9ad _badge_c0e9ad"
                     >
                       <div
                         class="d-flex flex-row align-items-center"
                       >
                         <div
                           aria-hidden="true"
-                          class="position-relative icon undefined"
+                          class="position-relative _icon_c0e9ad undefined"
                         >
                           <img
                             alt="Icon"
@@ -264,7 +264,7 @@ exports[`Repository index creates snapshot 1`] = `
                           />
                         </div>
                         <div
-                          class="ms-1 text"
+                          class="ms-1 _text_c0e9ad"
                         >
                           Helm charts
                         </div>
@@ -276,10 +276,10 @@ exports[`Repository index creates snapshot 1`] = `
                   class="ms-3"
                 >
                   <div
-                    class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                    class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_e17593"
                   >
                     <div
-                      class="dropdown-arrow arrow"
+                      class="dropdown-arrow _arrow_e17593"
                     />
                     <button
                       aria-label="Open badge modal"
@@ -289,7 +289,7 @@ exports[`Repository index creates snapshot 1`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <svg
-                          class="me-2 btnIcon"
+                          class="me-2 _btnIcon_e17593"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -323,7 +323,7 @@ exports[`Repository index creates snapshot 1`] = `
                           class="d-flex flex-row align-items-center undefined"
                         >
                           <svg
-                            class="me-2 btnIcon"
+                            class="me-2 _btnIcon_e17593"
                             fill="currentColor"
                             height="1em"
                             stroke="currentColor"
@@ -354,7 +354,7 @@ exports[`Repository index creates snapshot 1`] = `
                           class="d-flex flex-row align-items-center undefined"
                         >
                           <svg
-                            class="me-2 btnIcon"
+                            class="me-2 _btnIcon_e17593"
                             fill="currentColor"
                             height="1em"
                             stroke="currentColor"
@@ -385,7 +385,7 @@ exports[`Repository index creates snapshot 1`] = `
                           class="d-flex flex-row align-items-center undefined"
                         >
                           <svg
-                            class="me-2 btnIcon"
+                            class="me-2 _btnIcon_e17593"
                             fill="currentColor"
                             height="1em"
                             stroke="currentColor"
@@ -408,7 +408,7 @@ exports[`Repository index creates snapshot 1`] = `
                   <button
                     aria-expanded="false"
                     aria-label="Open menu"
-                    class="btn btn-outline-secondary p-0 text-center btnDropdown"
+                    class="btn btn-outline-secondary p-0 text-center _btnDropdown_e17593"
                   >
                     <svg
                       fill="currentColor"
@@ -442,10 +442,10 @@ exports[`Repository index creates snapshot 1`] = `
                   </small>
                 </div>
                 <div
-                  class="ms-1 copyBtn"
+                  class="ms-1 _copyBtn_e17593"
                 >
                   <div
-                    class="position-absolute copyBtnWrapper"
+                    class="position-absolute _copyBtnWrapper_e17593"
                   >
                     <div
                       class="position-relative undefined"
@@ -533,11 +533,11 @@ exports[`Repository index creates snapshot 1`] = `
                       class="position-absolute"
                     >
                       <div
-                        class="dropdown-menu dropdown-menu-end text-wrap dropdown dropdown-menu-end"
+                        class="dropdown-menu dropdown-menu-end text-wrap _dropdown_4f4cdd dropdown-menu-end"
                         role="complementary"
                       >
                         <div
-                          class="content"
+                          class="_content_4f4cdd"
                         >
                           <div
                             class="fs-6 fw-semibold border-bottom border-1 mb-3 pb-1"
@@ -554,7 +554,7 @@ exports[`Repository index creates snapshot 1`] = `
                             .
                           </p>
                           <p
-                            class="mb-0 text-muted legend"
+                            class="mb-0 text-muted _legend_4f4cdd"
                           >
                             The 
                             <code>
@@ -569,7 +569,7 @@ exports[`Repository index creates snapshot 1`] = `
                              over the source repository. For more information, please see the 
                             <button
                               aria-label="Open external link"
-                              class="btn p-0 link text-decoration-underline text-reset btnInBadge"
+                              class="btn p-0 _link_f0e789 text-decoration-underline text-reset _btnInBadge_4f4cdd"
                               tabindex="-1"
                               type="button"
                             >
@@ -581,13 +581,13 @@ exports[`Repository index creates snapshot 1`] = `
                       </div>
                     </div>
                     <div
-                      class="border label"
+                      class="border _label_4f4cdd"
                     >
                       <div
                         class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                       >
                         <div
-                          class="icon"
+                          class="_icon_4f4cdd"
                         >
                           <svg
                             fill="currentColor"
@@ -614,14 +614,14 @@ exports[`Repository index creates snapshot 1`] = `
                     class="d-block d-md-none ms-2"
                   >
                     <div
-                      class="border label"
+                      class="border _label_4f4cdd"
                       role="button"
                     >
                       <div
                         class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                       >
                         <div
-                          class="icon"
+                          class="_icon_4f4cdd"
                         >
                           <svg
                             fill="currentColor"
@@ -646,21 +646,21 @@ exports[`Repository index creates snapshot 1`] = `
                     <div>
                       <div
                         aria-modal="false"
-                        class="modal modal"
+                        class="modal _modal_2adcc6"
                         role="dialog"
                       >
                         <div
                           class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
                         >
                           <div
-                            class="modal-content border border-3 mx-auto content"
+                            class="modal-content border border-3 mx-auto _content_2adcc6"
                           >
                             <div
                               class="modal-body p-4 h-100 d-flex flex-column"
                             >
                               <div>
                                 <div
-                                  class="overflow-hidden alertWrapper"
+                                  class="overflow-hidden _alertWrapper_1aa3f6"
                                   data-testid="alertWrapper"
                                 />
                               </div>

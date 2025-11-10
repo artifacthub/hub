@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TOC creates snapshot 1`] = `
+exports[`TOC > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="position-relative toc"
+    class="position-relative _toc_1b5dcd"
   >
     <div
-      class="d-flex flex-row align-items-top titleWrapper"
+      class="d-flex flex-row align-items-top _titleWrapper_1b5dcd"
     >
       <div
         class="mt-0 mt-sm-2"
@@ -17,10 +17,10 @@ exports[`TOC creates snapshot 1`] = `
           aria-label="Table of contents"
           aria-owns="TOC-list"
           aria-pressed="false"
-          class="btn btn-sm me-2 btn-outline-dark btn"
+          class="btn btn-sm me-2 btn-outline-dark _btn_1b5dcd"
         >
           <svg
-            class="position-relative icon"
+            class="position-relative _icon_1b5dcd"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -36,10 +36,10 @@ exports[`TOC creates snapshot 1`] = `
         </button>
       </div>
       <div
-        class="flex-grow-1 minWidth"
+        class="flex-grow-1 _minWidth_1b5dcd"
       >
         <h1
-          class="mb-0 lh-base title"
+          class="mb-0 lh-base _title_1b5dcd"
         >
           <div>
             Readme

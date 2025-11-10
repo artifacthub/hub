@@ -1,15 +1,16 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../../../../api';
 import { ErrorKind } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
+import modalStyles from '../../../../../common/Modal.module.css';
 import RepositoriesSection from './index';
 
-jest.mock('../../../../../../api');
-jest.mock('../../../../../../utils/alertDispatcher');
+vi.mock('../../../../../../api');
+vi.mock('../../../../../../utils/alertDispatcher');
 
 const scrollIntoViewMock = jest.fn();
 
@@ -33,7 +34,7 @@ describe('RepositoriesSection', () => {
 
   it('creates snapshot', async () => {
     const mockOptOut = getMockOptOut('1');
-    mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+    vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
     const { asFragment } = render(
       <Router>
@@ -53,7 +54,7 @@ describe('RepositoriesSection', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockOptOut = getMockOptOut('2');
-      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+      vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -76,7 +77,7 @@ describe('RepositoriesSection', () => {
 
     it('opens Add opt out modal', async () => {
       const mockOptOut = getMockOptOut('2');
-      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+      vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -94,14 +95,15 @@ describe('RepositoriesSection', () => {
 
       const modal = await screen.findByRole('dialog');
       expect(modal).toBeInTheDocument();
-      expect(modal).toHaveClass('active');
+      expect(modal).toHaveClass('d-block');
+      expect(modal).toHaveClass(modalStyles.active);
     });
   });
 
   describe('Opt out list', () => {
     it('renders 3 items', async () => {
       const mockOptOut = getMockOptOut('3');
-      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+      vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -118,7 +120,7 @@ describe('RepositoriesSection', () => {
 
     it('does not display list when no packages', async () => {
       const mockOptOut = getMockOptOut('4');
-      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+      vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -136,7 +138,7 @@ describe('RepositoriesSection', () => {
     });
 
     it('calls alertDispatcher when getAllOptOut call fails with not Unauthorized error', async () => {
-      mocked(API).getAllOptOut.mockRejectedValue({ kind: ErrorKind.Other });
+      vi.mocked(API).getAllOptOut.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <Router>
@@ -154,7 +156,7 @@ describe('RepositoriesSection', () => {
     });
 
     it('calls navigate to load login modal when user is not signed in', async () => {
-      mocked(API).getAllOptOut.mockRejectedValue({
+      vi.mocked(API).getAllOptOut.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -172,10 +174,10 @@ describe('RepositoriesSection', () => {
   });
 
   describe('to change opt-out', () => {
-    xit('to deactivate active opt-out', async () => {
+    it.skip('to deactivate active opt-out', async () => {
       const mockOptOut = getMockOptOut('5');
-      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
-      mocked(API).deleteOptOut.mockResolvedValue('');
+      vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+      vi.mocked(API).deleteOptOut.mockResolvedValue('');
 
       render(
         <Router>
@@ -211,8 +213,8 @@ describe('RepositoriesSection', () => {
   describe('when change opt-out entry fails', () => {
     it('generic error', async () => {
       const mockOptOut = getMockOptOut('6');
-      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
-      mocked(API).deleteOptOut.mockRejectedValue({ kind: ErrorKind.Other });
+      vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+      vi.mocked(API).deleteOptOut.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <Router>
@@ -252,10 +254,10 @@ describe('RepositoriesSection', () => {
       expect(await screen.findByTestId(`subs_${mockOptOut[0].repository.repositoryId}_2_input`)).toBeInTheDocument();
     });
 
-    xit('UnauthorizedError', async () => {
+    it.skip('UnauthorizedError', async () => {
       const mockOptOut = getMockOptOut('6');
-      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
-      mocked(API).deleteOptOut.mockRejectedValue({
+      vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+      vi.mocked(API).deleteOptOut.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -290,7 +292,7 @@ describe('RepositoriesSection', () => {
   describe('click links', () => {
     it('on user link click', async () => {
       const mockOptOut = getMockOptOut('7');
-      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+      vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -312,7 +314,7 @@ describe('RepositoriesSection', () => {
 
     it('on org link click', async () => {
       const mockOptOut = getMockOptOut('8');
-      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+      vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -333,7 +335,7 @@ describe('RepositoriesSection', () => {
 
     it('on repo link click', async () => {
       const mockOptOut = getMockOptOut('9');
-      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+      vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -357,7 +359,7 @@ describe('RepositoriesSection', () => {
   describe('renders component with different event kinds', () => {
     it('renders properly', async () => {
       const mockOptOut = getMockOptOut('10');
-      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+      vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
 
       render(
         <Router>
@@ -381,10 +383,10 @@ describe('RepositoriesSection', () => {
       expect(input4).toBeChecked();
     });
 
-    xit('to activate opt-out for RepositoryScanningErrors', async () => {
+    it.skip('to activate opt-out for RepositoryScanningErrors', async () => {
       const mockOptOut = getMockOptOut('11');
-      mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
-      mocked(API).addOptOut.mockResolvedValue('');
+      vi.mocked(API).getAllOptOut.mockResolvedValue(mockOptOut);
+      vi.mocked(API).addOptOut.mockResolvedValue('');
 
       render(
         <Router>

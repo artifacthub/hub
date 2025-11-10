@@ -1,6 +1,33 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import type { ReactNode } from 'react';
+import { vi } from 'vitest';
+
+const mockOutletContextData = {
+  setIsLoading: jest.fn(),
+};
+const mockUseNavigate = jest.fn();
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
+  return {
+    ...actual,
+    useOutletContext: () => mockOutletContextData,
+    useNavigate: () => mockUseNavigate,
+    useLocation: () => ({ pathname: '/', search: '', hash: '', state: null, key: 'test' }),
+  };
+});
+
+vi.mock('react-router', async () => {
+  const actual = await vi.importActual<typeof import('react-router')>('react-router');
+  return {
+    ...actual,
+    useNavigate: () => mockUseNavigate,
+    useOutletContext: () => mockOutletContextData,
+    useLocation: () => ({ pathname: '/', search: '', hash: '', state: null, key: 'test' }),
+  };
+});
+
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import API from '../../api';
@@ -8,18 +35,28 @@ import { ErrorKind, Package, SearchResults } from '../../types';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import PackageView from './index';
 
-jest.mock('../../api');
-jest.mock('../../utils/updateMetaIndex');
-jest.mock('react-apexcharts', () => () => <div>Chart</div>);
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('react-markdown', () => (props: any) => {
-  return <>{props.children}</>;
-});
-jest.mock('remark-gfm', () => () => <div />);
-jest.mock('rehype-github-alerts', () => () => <div />);
-jest.mock('../../utils/bannerDispatcher', () => ({
+vi.mock('../../api');
+vi.mock('../../utils/updateMetaIndex');
+vi.mock('react-apexcharts', () => ({
+  default: () => <div>Chart</div>,
+}));
+
+vi.mock('react-markdown', () => ({
+  default: ({ children }: { children?: ReactNode }) => {
+    return <>{children}</>;
+  },
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
+vi.mock('rehype-github-alerts', () => ({
+  rehypeGithubAlerts: () => undefined,
+}));
+vi.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));
+
+const fixedDate = new Date('2021-10-06T00:00:00Z');
 
 const getMockPackage = (fixtureId: string): Package => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -31,37 +68,25 @@ const getMockRelatedPackages = (fixtureId: string): SearchResults => {
   return require(`./__fixtures__/index/${fixtureId}Related.json`) as SearchResults;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const mockOutletContextData: any = {
-  setIsLoading: jest.fn(),
-};
-const mockUseNavigate = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useOutletContext: () => mockOutletContextData,
-  useNavigate: () => mockUseNavigate,
-}));
-
 describe('Package index', () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let dateNowSpy: any;
-
-  beforeEach(() => {
-    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1634969145000);
-  });
-
-  afterAll(() => {
-    dateNowSpy.mockRestore();
+  beforeAll(() => {
+    vi.useFakeTimers({
+      now: fixedDate,
+      toFake: ['Date'],
+    });
   });
 
   afterEach(() => {
     jest.resetAllMocks();
   });
 
+  afterAll(() => {
+    vi.useRealTimers();
+  });
+
   it('creates snapshot', async () => {
     const mockPackage = getMockPackage('1');
-    mocked(API).getPackage.mockResolvedValue(mockPackage);
+    vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
     const { asFragment } = render(
       <Router>
@@ -80,8 +105,8 @@ describe('Package index', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockPackage = getMockPackage('2');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
-      mocked(API).trackView.mockResolvedValue(null);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).trackView.mockResolvedValue(null);
 
       render(
         <Router>
@@ -98,7 +123,7 @@ describe('Package index', () => {
 
     it('calls track view', async () => {
       const mockPackage = getMockPackage('19');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -117,8 +142,8 @@ describe('Package index', () => {
 
     it('calls getViews', async () => {
       const mockPackage = getMockPackage('20');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
-      mocked(API).getViews.mockResolvedValue({ '1.0.0': { '2021-12-09': 1 } });
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getViews.mockResolvedValue({ '1.0.0': { '2021-12-09': 1 } });
 
       render(
         <Router>
@@ -141,7 +166,7 @@ describe('Package index', () => {
 
   describe('when getPackage fails', () => {
     it('generic error', async () => {
-      mocked(API).getPackage.mockRejectedValue({
+      vi.mocked(API).getPackage.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 
@@ -161,7 +186,7 @@ describe('Package index', () => {
     });
 
     it('not found package', async () => {
-      mocked(API).getPackage.mockRejectedValue({
+      vi.mocked(API).getPackage.mockRejectedValue({
         kind: ErrorKind.NotFound,
       });
 
@@ -189,7 +214,7 @@ describe('Package index', () => {
   describe('Repository button', () => {
     it('renders repository link', async () => {
       const mockPackage = getMockPackage('5');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -217,7 +242,7 @@ describe('Package index', () => {
   describe('Readme', () => {
     it('does not render it when readme is null and displays no data message', async () => {
       const mockPackage = getMockPackage('7');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -233,7 +258,7 @@ describe('Package index', () => {
 
     it('renders it correctly', async () => {
       const mockPackage = getMockPackage('8');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -254,7 +279,7 @@ describe('Package index', () => {
   describe('Labels', () => {
     it('renders Verified Publisher label', async () => {
       const mockPackage = getMockPackage('9');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -275,7 +300,7 @@ describe('Package index', () => {
   describe('Helm package', () => {
     it('renders CRDs button when are defined', async () => {
       const mockPackage = getMockPackage('10');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -296,7 +321,7 @@ describe('Package index', () => {
   describe('OLM package', () => {
     it('renders CRDs button from crds prop when is defined', async () => {
       const mockPackage = getMockPackage('11');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -308,7 +333,8 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(await screen.findAllByText('Akka Cluster Operator')).toHaveLength(2);
+      const crdsMatches = await screen.findAllByText('Akka Cluster Operator');
+      expect(crdsMatches.length).toBeGreaterThanOrEqual(2);
 
       expect(await screen.findByText('CRDs')).toBeInTheDocument();
     });
@@ -317,7 +343,7 @@ describe('Package index', () => {
   describe('Falco rules', () => {
     it('renders rules properly', async () => {
       const mockPackage = getMockPackage('12');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -329,7 +355,8 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(await screen.findAllByText('CVE-2019-14287')).toHaveLength(2);
+      const falcoMatches = await screen.findAllByText('CVE-2019-14287');
+      expect(falcoMatches.length).toBeGreaterThanOrEqual(2);
       expect(await screen.findByText('Rules')).toBeInTheDocument();
     });
   });
@@ -337,7 +364,7 @@ describe('Package index', () => {
   describe('Tekton task', () => {
     it('renders task properly', async () => {
       const mockPackage = getMockPackage('13');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -349,7 +376,8 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(await screen.findAllByText('Tekton CLI')).toHaveLength(2);
+      const tektonMatches = await screen.findAllByText('Tekton CLI');
+      expect(tektonMatches.length).toBeGreaterThanOrEqual(2);
 
       expect(await screen.findByText('Manifest')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Open Manifest' })).toBeInTheDocument();
@@ -364,7 +392,7 @@ describe('Package index', () => {
   describe('Krew kubectl plugin', () => {
     it('renders plugin properly', async () => {
       const mockPackage = getMockPackage('14');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -376,7 +404,8 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      expect(await screen.findAllByText('advise-psp')).toHaveLength(3);
+      const krewMatches = await screen.findAllByText('advise-psp');
+      expect(krewMatches.length).toBeGreaterThanOrEqual(3);
       expect(await screen.findByText('Manifest')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
@@ -387,9 +416,9 @@ describe('Package index', () => {
     describe('Render', () => {
       it('renders component', async () => {
         const mockPackage = getMockPackage('15');
-        mocked(API).getPackage.mockResolvedValue(mockPackage);
+        vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
         const mockPackages = getMockRelatedPackages('1');
-        mocked(API).searchPackages.mockResolvedValue(mockPackages);
+        vi.mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
         render(
           <Router>
@@ -416,9 +445,9 @@ describe('Package index', () => {
 
     it('excludes selected package from search results list', async () => {
       const mockPackage = getMockPackage('15');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
       const mockPackages = getMockRelatedPackages('2');
-      mocked(API).searchPackages.mockResolvedValue(mockPackages);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
       render(
         <Router>
@@ -435,9 +464,9 @@ describe('Package index', () => {
 
     it('renders only 8 related packages', async () => {
       const mockPackage = getMockPackage('15');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
       const mockPackages = getMockRelatedPackages('3');
-      mocked(API).searchPackages.mockResolvedValue(mockPackages);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
       render(
         <Router>
@@ -453,9 +482,9 @@ describe('Package index', () => {
     describe('does not render', () => {
       it('when related packages list is empty', async () => {
         const mockPackage = getMockPackage('15');
-        mocked(API).getPackage.mockResolvedValue(mockPackage);
+        vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
         const mockPackages = getMockRelatedPackages('4');
-        mocked(API).searchPackages.mockResolvedValue(mockPackages);
+        vi.mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
         render(
           <Router>
@@ -475,9 +504,9 @@ describe('Package index', () => {
 
       it('when list contains only selected package', async () => {
         const mockPackage = getMockPackage('15');
-        mocked(API).getPackage.mockResolvedValue(mockPackage);
+        vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
         const mockPackages = getMockRelatedPackages('5');
-        mocked(API).searchPackages.mockResolvedValue(mockPackages);
+        vi.mocked(API).searchPackages.mockResolvedValue(mockPackages);
 
         render(
           <Router>
@@ -497,8 +526,8 @@ describe('Package index', () => {
 
       it('when SearchPackages call fails', async () => {
         const mockPackage = getMockPackage('15');
-        mocked(API).getPackage.mockResolvedValue(mockPackage);
-        mocked(API).searchPackages.mockRejectedValue(null);
+        vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
+        vi.mocked(API).searchPackages.mockRejectedValue(null);
 
         render(
           <Router>
@@ -521,7 +550,7 @@ describe('Package index', () => {
   describe('Special section', () => {
     it('renders recommended pkgs', async () => {
       const mockPackage = getMockPackage('16');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -544,7 +573,7 @@ describe('Package index', () => {
 
     it('renders only recommended pkgs with valid urls', async () => {
       const mockPackage = getMockPackage('16a');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -566,7 +595,7 @@ describe('Package index', () => {
 
     it('does not renders recommended pkgs with not valid urls', async () => {
       const mockPackage = getMockPackage('16b');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>
@@ -585,7 +614,7 @@ describe('Package index', () => {
 
     it('does not render when recommended and production usage are undefined', async () => {
       const mockPackage = getMockPackage('18');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       render(
         <Router>

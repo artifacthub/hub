@@ -1,7 +1,7 @@
 import classnames from 'classnames';
+import { format, formatDistanceToNow, fromUnixTime } from 'date-fns';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
 import {
   Dispatch,
   MouseEvent as ReactMouseEvent,
@@ -103,7 +103,7 @@ const RepositoryCard = (props: Props) => {
     const content = (
       <>
         {!isFuture(props.repository.lastTrackingTs!) && (
-          <span>{moment.unix(props.repository.lastTrackingTs!).fromNow()}</span>
+          <span>{formatDistanceToNow(fromUnixTime(props.repository.lastTrackingTs!), { addSuffix: true })}</span>
         )}
         {hasErrors ? (
           <>
@@ -149,7 +149,7 @@ const RepositoryCard = (props: Props) => {
             <div className="d-flex h-100 mw-100 overflow-hidden">
               <div className="d-flex flex-column w-100">
                 <div className={`mb-2 ${styles.trackingTime}`}>
-                  {moment.unix(props.repository.lastTrackingTs!).format('llll Z')}
+                  {format(fromUnixTime(props.repository.lastTrackingTs!), 'eee, MMM d, yyyy h:mm a xxx')}
                 </div>
                 <div
                   className={`position-relative flex-grow-1 mw-100 mh-100 overflow-hidden ${styles.modalSyntaxTrackerWrapper}`}
@@ -221,7 +221,7 @@ const RepositoryCard = (props: Props) => {
     const content = (
       <>
         {!isFuture(props.repository.lastScanningTs!) && (
-          <span>{moment.unix(props.repository.lastScanningTs!).fromNow()}</span>
+          <span>{formatDistanceToNow(fromUnixTime(props.repository.lastScanningTs!), { addSuffix: true })}</span>
         )}
         {hasScanningErrors ? (
           <FaExclamation className="mx-2 text-warning" />

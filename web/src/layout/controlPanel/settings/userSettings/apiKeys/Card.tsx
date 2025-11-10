@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import moment from 'moment';
+import { format, fromUnixTime } from 'date-fns';
 import { Dispatch, MouseEvent as ReactMouseEvent, SetStateAction, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
@@ -186,7 +186,7 @@ const APIKeyCard = (props: Props) => {
           </div>
           <div className="text-truncate">
             <small className="text-muted text-uppercase me-1">Created at: </small>
-            <small>{moment.unix(props.apiKey.createdAt!).format('YYYY/MM/DD HH:mm:ss (Z)')}</small>
+            <small>{format(fromUnixTime(props.apiKey.createdAt!), 'yyyy/MM/dd HH:mm:ss (xxx)')}</small>
           </div>
         </div>
       </div>

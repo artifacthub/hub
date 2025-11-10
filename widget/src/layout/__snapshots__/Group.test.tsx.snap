@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Group creates snapshot 1`] = `
+exports[`Group > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="sc-kjwdDK hIZnqb"
@@ -10,12 +10,13 @@ exports[`Group creates snapshot 1`] = `
       class="sc-eVqvcJ cDFSFR"
     >
       <div
-        class="sc-hwkwBN eRNYLR"
+        class="sc-hwkwBN fWVLcW"
         color="#417598"
         data-testid="mainWrapper"
       >
         <div
-          class="sc-kNOymR tvSSF"
+          class="sc-kNOymR jPxQvk"
+          color="#417598"
           data-testid="cardWrapper"
         >
           <a
@@ -226,12 +227,13 @@ exports[`Group creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="sc-hwkwBN eRNYLR"
+        class="sc-hwkwBN fWVLcW"
         color="#417598"
         data-testid="mainWrapper"
       >
         <div
-          class="sc-kNOymR tvSSF"
+          class="sc-kNOymR jPxQvk"
+          color="#417598"
           data-testid="cardWrapper"
         >
           <a
@@ -386,12 +388,13 @@ exports[`Group creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="sc-hwkwBN eRNYLR"
+        class="sc-hwkwBN fWVLcW"
         color="#417598"
         data-testid="mainWrapper"
       >
         <div
-          class="sc-kNOymR tvSSF"
+          class="sc-kNOymR jPxQvk"
+          color="#417598"
           data-testid="cardWrapper"
         >
           <a
@@ -576,12 +579,13 @@ exports[`Group creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="sc-hwkwBN eRNYLR"
+        class="sc-hwkwBN fWVLcW"
         color="#417598"
         data-testid="mainWrapper"
       >
         <div
-          class="sc-kNOymR tvSSF"
+          class="sc-kNOymR jPxQvk"
+          color="#417598"
           data-testid="cardWrapper"
         >
           <a
@@ -736,12 +740,13 @@ exports[`Group creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="sc-hwkwBN eRNYLR"
+        class="sc-hwkwBN fWVLcW"
         color="#417598"
         data-testid="mainWrapper"
       >
         <div
-          class="sc-kNOymR tvSSF"
+          class="sc-kNOymR jPxQvk"
+          color="#417598"
           data-testid="cardWrapper"
         >
           <a

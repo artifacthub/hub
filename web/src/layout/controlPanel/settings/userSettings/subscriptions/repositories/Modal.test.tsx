@@ -1,14 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../../../../../api';
 import { AppCtx } from '../../../../../../context/AppCtx';
 import { OptOutItem } from '../../../../../../types';
 import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import OptOutModal from './Modal';
-jest.mock('../../../../../../api');
-jest.mock('../../../../../../utils/alertDispatcher');
+vi.mock('../../../../../../api');
+vi.mock('../../../../../../utils/alertDispatcher');
 
 const scrollIntoViewMock = jest.fn();
 
@@ -76,7 +76,7 @@ describe('OptOutModal', () => {
   });
 
   it('creates snapshot', async () => {
-    mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
+    vi.mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -94,7 +94,7 @@ describe('OptOutModal', () => {
 
   describe('Render', () => {
     it('renders component', async () => {
-      mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -122,9 +122,9 @@ describe('OptOutModal', () => {
 
   describe('calls addOptOut', () => {
     it('when is successful', async () => {
-      mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
-      mocked(API).searchRepositories.mockResolvedValue(getMockRepos('repos'));
-      mocked(API).addOptOut.mockResolvedValue('');
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
+      vi.mocked(API).searchRepositories.mockResolvedValue(getMockRepos('repos'));
+      vi.mocked(API).addOptOut.mockResolvedValue('');
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -170,9 +170,9 @@ describe('OptOutModal', () => {
     });
 
     it('when fails', async () => {
-      mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
-      mocked(API).searchRepositories.mockResolvedValue(getMockRepos('repos'));
-      mocked(API).addOptOut.mockRejectedValue({});
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(getMockOrgs());
+      vi.mocked(API).searchRepositories.mockResolvedValue(getMockRepos('repos'));
+      vi.mocked(API).addOptOut.mockRejectedValue({});
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
