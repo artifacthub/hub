@@ -3,6 +3,12 @@
     "title": "Artifact Hub Chart JSON Schema",
     "type": "object",
     "properties": {
+        "commonLabels": {
+            "title": "Common labels",
+            "description": "Labels to add to all kubernetes resources provisioned by the helm chart",
+            "type": "object",
+            "default": {}
+        },
         "creds": {
             "type": "object",
             "properties": {

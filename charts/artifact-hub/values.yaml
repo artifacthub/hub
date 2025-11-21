@@ -1,5 +1,8 @@
 # Artifact Hub Chart default configuration values
 
+# Common labels to add to all resources
+commonLabels: {}
+
 imagePullSecrets: []
 imageTag: ""
 nameOverride: ""
