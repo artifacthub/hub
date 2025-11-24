@@ -2,7 +2,7 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.
 type: application
-version: 1.22.1-0
+version: 1.22.1-1
 appVersion: 1.22.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
