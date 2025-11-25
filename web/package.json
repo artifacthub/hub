@@ -6,7 +6,7 @@
   "dependencies": {
     "@analytics/google-analytics-v3": "^0.7.0",
     "analytics": "^0.8.19",
-    "apexcharts": "5.3.6",
+    "apexcharts": "3.49.0",
     "bootstrap": "^5.3.8",
     "classnames": "^2.5.1",
     "codemirror": "^5.65.20",
@@ -19,7 +19,7 @@
     "lodash": "^4.17.21",
     "nanoid": "^5.1.6",
     "react": "^19.2.0",
-    "react-apexcharts": "^1.8.0",
+    "react-apexcharts": "^1.4.4",
     "react-codemirror2": "^8.0.1",
     "react-color": "^2.19.3",
     "react-diff-view": "3.3.2",
