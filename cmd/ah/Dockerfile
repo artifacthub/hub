@@ -1,5 +1,5 @@
 # Build ah
-FROM golang:1.25.3-alpine3.22 AS ah-builder
+FROM golang:1.25.4-alpine3.22 AS ah-builder
 ARG VERSION
 ARG GIT_COMMIT
 WORKDIR /go/src/github.com/artifacthub/ah
