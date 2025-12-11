@@ -113,6 +113,8 @@ dbMigrator:
     nodeSelector: {}
     # Optionally specify a list of tolerations for the dbMigrator pod
     tolerations: []
+    # Optionally specify extra list of additional environment variables for the db-migrator container
+    extraEnvVars: []
   # Load demo user and sample repositories
   loadSampleData: true
   # Directory path where the configuration files should be mounted

@@ -88,6 +88,12 @@
                             "type": "object",
                             "default": {}
                         },
+                        "extraEnvVars": {
+                            "title": "Extra environment variables",
+                            "description": "Optionally specify extra list of additional environment variables for the db-migrator container",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "type": "object",
                             "properties": {
