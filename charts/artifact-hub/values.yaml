@@ -115,6 +115,10 @@ dbMigrator:
     tolerations: []
     # Optionally specify extra list of additional environment variables for the db-migrator container
     extraEnvVars: []
+    # Optionally specify extra list of additional volume mounts for the dbMigrator job
+    extraVolumeMounts: []
+    # Optionally specify extra list of additional volumes for the dbMigrator job
+    extraVolumes: []
   # Load demo user and sample repositories
   loadSampleData: true
   # Directory path where the configuration files should be mounted

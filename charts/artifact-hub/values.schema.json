@@ -94,6 +94,18 @@
                             "type": "array",
                             "default": "[]"
                         },
+                        "extraVolumeMounts": {
+                            "title": "Extra volume mounts",
+                            "description": "Optionally specify extra list of additional volume mounts for the dbMigrator job",
+                            "type": "array",
+                            "default": "[]"
+                        },
+                        "extraVolumes": {
+                            "title": "Extra volumes",
+                            "description": "Optionally specify extra list of additional volumes for the dbMigrator job",
+                            "type": "array",
+                            "default": "[]"
+                        },
                         "image": {
                             "type": "object",
                             "properties": {

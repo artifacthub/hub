@@ -68,8 +68,14 @@ spec:
             - name: db-migrator-config
               mountPath: {{ .Values.dbMigrator.configDir }}
               readOnly: true
+            {{- if .Values.dbMigrator.job.extraVolumeMounts }}
+              {{- include "chart.tplvalues.render" (dict "value" .Values.dbMigrator.job.extraVolumeMounts "context" $) | nindent 12 }}
+            {{- end }}
           command: ["./migrate.sh"]
       volumes:
         - name: db-migrator-config
           secret:
             secretName: {{ include "chart.resourceNamePrefix" . }}db-migrator-config
+        {{- if .Values.dbMigrator.job.extraVolumes }}
+          {{- include "chart.tplvalues.render" (dict "value" .Values.dbMigrator.job.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}
