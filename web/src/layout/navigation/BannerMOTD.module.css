@@ -8,10 +8,30 @@
 .close {
   right: 10px;
   top: 7px;
+  height: 0.75rem;
+  width: 0.75rem;
   color: black !important;
 }
 
 .infoAlert {
   background-color: var(--color-1-100);
   border-color: var(--color-1-300);
+}
+
+/* Markdown element styles */
+.wrapper p {
+  margin: 0;
+  display: inline;
+}
+
+.wrapper p + p {
+  margin-left: 0.5em;
+}
+
+.wrapper a {
+  color: inherit;
+}
+
+.wrapper a:hover {
+  text-decoration: underline !important;
 }
