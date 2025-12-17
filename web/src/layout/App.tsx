@@ -1,39 +1,32 @@
 import './App.css';
 import '../themes/default.scss';
 
-import { lazy, Suspense } from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 
 import { HOME_ROUTES } from '../utils/data';
-
-const Layout = lazy(() => import('.'));
-const ControlPanelView = lazy(() => import('./controlPanel'));
-const HomeView = lazy(() => import('./home'));
-const NotFound = lazy(() => import('./notFound'));
-const PackageView = lazy(() => import('./package'));
-const SearchView = lazy(() => import('./search'));
-const StarredPackagesView = lazy(() => import('./starredPackages'));
-const StatsView = lazy(() => import('./stats'));
-
-const withSuspense = (component: JSX.Element) => <Suspense fallback={null}>{component}</Suspense>;
+import Layout from '.';
+import ControlPanelView from './controlPanel';
+import HomeView from './home';
+import NotFound from './notFound';
+import PackageView from './package';
+import SearchView from './search';
+import StarredPackagesView from './starredPackages';
+import StatsView from './stats';
 
 export default function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={withSuspense(<Layout />)}>
-        <Route index element={withSuspense(<HomeView />)} />
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomeView />} />
         {HOME_ROUTES.map((path: string) => (
-          <Route key={path} path={path} element={withSuspense(<HomeView />)} />
+          <Route key={path} path={path} element={<HomeView />} />
         ))}
-        <Route path="/packages/search" element={withSuspense(<SearchView />)} />
-        <Route
-          path="/packages/:repositoryKind/:repositoryName/:packageName/:version?"
-          element={withSuspense(<PackageView />)}
-        />
-        <Route path="/control-panel/:section?/:subsection?" element={withSuspense(<ControlPanelView />)} />
-        <Route path="/packages/starred" element={withSuspense(<StarredPackagesView />)} />
-        <Route path="/stats" element={withSuspense(<StatsView />)} />
-        <Route path="*" element={withSuspense(<NotFound />)} />
+        <Route path="/packages/search" element={<SearchView />} />
+        <Route path="/packages/:repositoryKind/:repositoryName/:packageName/:version?" element={<PackageView />} />
+        <Route path="/control-panel/:section?/:subsection?" element={<ControlPanelView />} />
+        <Route path="/packages/starred" element={<StarredPackagesView />} />
+        <Route path="/stats" element={<StatsView />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     )
   );
