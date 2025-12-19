@@ -419,7 +419,7 @@ tracker:
   bypassDigestCheck: false
   # Require container images to provide a readme URL annotation (io.artifacthub.package.readme-url)
   requireContainerReadMe: true
-  
+
 # Trivy configuration
 trivy:
   enabled: true
