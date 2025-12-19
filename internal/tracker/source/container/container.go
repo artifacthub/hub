@@ -454,9 +454,8 @@ func getMetadata(
 }
 
 // containsSomeMetadata checks if the provided map contains some of the
-// required metadata fields. This function uses a minimal set of required (created and description) 
+// minimal set of required metadata fields (config-independent).  
 func containsSomeMetadata(m map[string]string) bool {
-	// Check for minimal required fields (config-independent)
 	minimalRequired := []string{
 		createdAnnotation,
 		descriptionAnnotation,
