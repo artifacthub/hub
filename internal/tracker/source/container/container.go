@@ -73,15 +73,20 @@ var (
 
 	// errInvalidAnnotation indicates that the annotation provided is not valid.
 	errInvalidAnnotation = errors.New("invalid annotation")
+)
 
-	// requiredMetadata represents the fields that must be present in the image
-	// metadata.
-	requiredMetadata = []string{
+// getRequiredMetadata returns the fields that must be present in the image
+// metadata based on the configuration.
+func getRequiredMetadata(cfg *viper.Viper) []string {
+	required := []string{
 		createdAnnotation,
 		descriptionAnnotation,
-		readmeURLAnnotation,
 	}
-)
+	if cfg.GetBool("tracker.requireContainerReadMe") {
+		required = append(required, readmeURLAnnotation)
+	}
+	return required
+}
 
 // TrackerSource is a hub.TrackerSource implementation for containers images
 // repositories.
@@ -190,7 +195,7 @@ func PreparePackage(
 
 	// Check required metadata fields are present
 	var errs *multierror.Error
-	for _, key := range requiredMetadata {
+	for _, key := range getRequiredMetadata(cfg) {
 		if _, ok := md[key]; !ok {
 			errs = multierror.Append(errs, fmt.Errorf("required metadata field not provided: %s", key))
 		}
@@ -449,9 +454,14 @@ func getMetadata(
 }
 
 // containsSomeMetadata checks if the provided map contains some of the
-// required metadata fields.
+// required metadata fields. This function uses a minimal set of required (created and description) 
 func containsSomeMetadata(m map[string]string) bool {
-	for _, key := range requiredMetadata {
+	// Check for minimal required fields (config-independent)
+	minimalRequired := []string{
+		createdAnnotation,
+		descriptionAnnotation,
+	}
+	for _, key := range minimalRequired {
 		if _, ok := m[key]; ok {
 			return true
 		}

@@ -16,3 +16,4 @@ tracker:
   repositoriesNames: []
   repositoriesKinds: []
   bypassDigestCheck: false
+  requireContainerReadMe: true
