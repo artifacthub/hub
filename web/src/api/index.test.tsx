@@ -1907,7 +1907,7 @@ describe('API', () => {
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/id/changelog');
-        expect(response).toEqual(API.toCamelCase(changelog));
+        expect(response).toEqual(changelog);
       });
     });
 

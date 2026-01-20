@@ -952,7 +952,7 @@ class API_CLASS {
   }
 
   public getChangelog(packageId: string): Promise<ChangeLog[]> {
-    return this.apiFetch({ url: `${this.API_BASE_URL}/packages/${packageId}/changelog` });
+    return this.apiFetch({ url: `${this.API_BASE_URL}/packages/${packageId}/changelog`, skipCamelConversion: true });
   }
 
   public getChangelogMD(request: PackageRequest): Promise<string> {
