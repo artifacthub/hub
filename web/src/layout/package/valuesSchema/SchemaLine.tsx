@@ -11,6 +11,7 @@ import { ActiveJSONSchemaValue } from '../../../types';
 import checkIfPropIsRequiredInSchema from '../../../utils/checkIfPropIsRequiredInSchema';
 import formatStringForYAML from '../../../utils/formatStringForYAML';
 import getJMESPathForValuesSchema from '../../../utils/getJMESPathForValuesSchema';
+import resolveSchemaTypeFromDefault from '../../../utils/resolveSchemaTypeFromDefault';
 import SchemaDefinition from './SchemaDefinition';
 import styles from './SchemaLine.module.css';
 
@@ -54,8 +55,14 @@ const getValue = (newValue: any): ValueProp => {
     };
   }
 
+  const defaultValue = valueToCheck.default;
+  const typeOptions = isArray(valueToCheck.type) ? valueToCheck.type : [valueToCheck.type];
+  const resolvedType = isArray(valueToCheck.type)
+    ? resolveSchemaTypeFromDefault(typeOptions as string[], defaultValue)
+    : typeOptions[0];
+
   let isLongText;
-  switch (isArray(valueToCheck.type) ? valueToCheck.type[0] : valueToCheck.type) {
+  switch (resolvedType) {
     case 'object':
       return {
         content: <span>{isEmpty(valueToCheck.default) ? '{}' : JSON.stringify(valueToCheck.default)}</span>,
@@ -87,6 +94,7 @@ const getValue = (newValue: any): ValueProp => {
       };
     case 'boolean':
     case 'integer':
+    case 'number':
       return {
         content: <span>{valueToCheck.default!.toString()}</span>,
         className: 'text-danger',

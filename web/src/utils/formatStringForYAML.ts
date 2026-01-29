@@ -1,7 +1,7 @@
 const YAML_SPECIAL_CHARACTERS = /[:!@#%&|*\-=[\]{}?<>]+/;
 
 const formatStringForYAML = (str: string): string => {
-  if (str.match(YAML_SPECIAL_CHARACTERS)) {
+  if (typeof str === 'string' && str.match(YAML_SPECIAL_CHARACTERS)) {
     return `"${str}"`;
   }
   return str;
