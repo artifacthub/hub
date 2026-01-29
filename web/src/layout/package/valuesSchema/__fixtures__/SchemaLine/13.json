@@ -1,0 +1,7 @@
+{
+  "value": { "type": ["string", "integer"], "title": "CPU request", "default": "500m" },
+  "name": "cpu",
+  "level": 2,
+  "isRequired": false,
+  "path": "resources.requests"
+}
