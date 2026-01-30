@@ -144,5 +144,33 @@ describe('SchemaLine', () => {
         expect(onActivePathChangeMock).toHaveBeenCalledWith('db.host');
       });
     });
+
+    it('renders union type (string|integer) with integer default value', () => {
+      render(
+        <SchemaLine {...getProps('12')} onActivePathChange={onActivePathChangeMock} saveSelectedOption={jest.fn()} />
+      );
+
+      expect(screen.getByText('# CPU request')).toBeInTheDocument();
+      expect(screen.getByText('cpu:')).toBeInTheDocument();
+
+      const defaultValue = screen.getByTestId('defaultValue');
+      expect(defaultValue).toBeInTheDocument();
+      expect(defaultValue).toHaveTextContent('2');
+      expect(defaultValue).toHaveClass('text-danger');
+    });
+
+    it('renders union type (string|integer) with string default value', () => {
+      render(
+        <SchemaLine {...getProps('13')} onActivePathChange={onActivePathChangeMock} saveSelectedOption={jest.fn()} />
+      );
+
+      expect(screen.getByText('# CPU request')).toBeInTheDocument();
+      expect(screen.getByText('cpu:')).toBeInTheDocument();
+
+      const defaultValue = screen.getByTestId('defaultValue');
+      expect(defaultValue).toBeInTheDocument();
+      expect(defaultValue).toHaveTextContent('500m');
+      expect(defaultValue).toHaveClass('text-warning');
+    });
   });
 });

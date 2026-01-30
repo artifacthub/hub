@@ -70,13 +70,23 @@ const defaultProps = {
   state: null,
 };
 
+// Fixed date for stable snapshot tests (~1 month after fixture timestamp 1604048487)
+const fixedDate = new Date('2020-11-30T00:00:00Z');
+
 describe('Changelog content ', () => {
-  afterEach(() => {
-    jest.resetAllMocks();
+  beforeAll(() => {
+    vi.useFakeTimers({
+      now: fixedDate,
+      toFake: ['Date'],
+    });
   });
 
-  beforeEach(() => {
-    jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2019/11/24').getTime());
+  afterAll(() => {
+    vi.useRealTimers();
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
   it('creates snapshot', () => {
