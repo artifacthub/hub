@@ -21,6 +21,9 @@ vi.mock('react-router-dom', () => ({
 const scrollIntoViewMock = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
+// Fixed date for stable snapshot tests (~1 month after fixture timestamp 1604048487)
+const fixedDate = new Date('2020-11-30T00:00:00Z');
+
 const getMockChangelog = (fixtureId: string): ChangeLog[] => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(`./__fixtures__/Modal/${fixtureId}.json`) as ChangeLog[];
@@ -58,12 +61,19 @@ const defaultProps = {
 };
 
 describe('ChangelogModal', () => {
-  afterEach(() => {
-    jest.resetAllMocks();
+  beforeAll(() => {
+    vi.useFakeTimers({
+      now: fixedDate,
+      toFake: ['Date'],
+    });
   });
 
-  beforeEach(() => {
-    jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2019/11/24').getTime());
+  afterAll(() => {
+    vi.useRealTimers();
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
   it('creates snapshot', async () => {
