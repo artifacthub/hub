@@ -15,7 +15,7 @@ jobs:
       - name: Free disk space
         uses: jlumbroso/free-disk-space@main
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v5
         with:
