@@ -1564,3 +1564,32 @@ func TestParseKey(t *testing.T) {
 		})
 	}
 }
+
+func TestStripChangeDescription(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		description string
+		expected    string
+	}{
+		{
+			description: "Suppress CONFIG_OPTION_NAME warning and *bold* text",
+			expected:    "Suppress CONFIG_OPTION_NAME warning and bold text",
+		},
+		{
+			description: "No markdown or underscores here",
+			expected:    "No markdown or underscores here",
+		},
+		{
+			description: "Token collision UNDERSCORETOKEN and CONFIG_OPTION_NAME",
+			expected:    "Token collision UNDERSCORETOKEN and CONFIG_OPTION_NAME",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.description, func(t *testing.T) {
+			t.Parallel()
+			assert.Equal(t, tc.expected, stripChangeDescription(tc.description))
+		})
+	}
+}
