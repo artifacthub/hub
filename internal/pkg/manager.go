@@ -301,7 +301,7 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 
 	// Strip markdown from changes entries description
 	for _, change := range pkg.Changes {
-		change.Description = stripmd.Strip(change.Description)
+		change.Description = stripChangeDescription(change.Description)
 	}
 
 	// Register package in database
@@ -442,4 +442,23 @@ func areValidCapabilities(capabilities string) bool {
 		}
 	}
 	return false
+}
+
+// stripChangeDescription removes markdown while preserving underscores.
+func stripChangeDescription(description string) string {
+	// Fast path for descriptions without underscores
+	if !strings.Contains(description, "_") {
+		return stripmd.Strip(description)
+	}
+
+	// Protect underscores before stripping markdown
+	token := "UNDERSCORETOKEN"
+	for strings.Contains(description, token) {
+		token += "X"
+	}
+	protected := strings.ReplaceAll(description, "_", token)
+
+	// Strip markdown and restore underscores
+	stripped := stripmd.Strip(protected)
+	return strings.ReplaceAll(stripped, token, "_")
 }
