@@ -14,7 +14,7 @@ jobs:
       - name: Free disk space
         uses: jlumbroso/free-disk-space@main
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
@@ -49,7 +49,7 @@ jobs:
       - name: Set up Helm
         uses: azure/setup-helm@v4
       - name: Checkout Helm charts repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: artifacthub/helm-charts
           path: helm-charts
