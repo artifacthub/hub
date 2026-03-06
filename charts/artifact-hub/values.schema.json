@@ -1334,7 +1334,7 @@
                         "image": {
                             "title": "Trivy container image",
                             "type": "string",
-                            "default": "aquasec/trivy:0.67.2"
+                            "default": "aquasec/trivy:0.69.3"
                         },
                         "nodeSelector": {
                             "title": "Trivy pod node selector",
