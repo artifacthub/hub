@@ -1,3 +1,5 @@
+ARG TRIVY_VERSION=0.69.3
+
 # Build scanner
 FROM golang:1.26.1-alpine3.23 AS scanner-builder
 WORKDIR /go/src/github.com/artifacthub/scanner
@@ -9,8 +11,10 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /scanner .
 
 # Trivy installer
 FROM alpine:3.23.3 AS trivy-installer
+ARG TRIVY_VERSION
 RUN apk --no-cache add curl
-RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.67.2
+RUN curl -sfL "https://raw.githubusercontent.com/aquasecurity/trivy/v${TRIVY_VERSION}/contrib/install.sh" \
+    | sh -s -- -b /usr/local/bin "v${TRIVY_VERSION}"
 
 # Final stage
 FROM alpine:3.23.3
