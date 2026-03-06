@@ -6,7 +6,7 @@ import "context"
 type APIKey struct {
 	APIKeyID  string `json:"api_key_id"`
 	Name      string `json:"name"`
-	Secret    string `json:"secret"`
+	Secret    string `json:"secret"` // #nosec G117 -- API responses intentionally include the generated secret
 	CreatedAt int64  `json:"created_at"`
 	UserID    string `json:"user_id"`
 }

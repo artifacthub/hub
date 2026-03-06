@@ -1,77 +1,80 @@
+---
 version: 2
+
+multi-ecosystem-groups:
+  backend:
+    schedule:
+      interval: "monthly"
+  frontend:
+    schedule:
+      interval: "monthly"
+  infra:
+    schedule:
+      interval: "monthly"
+
 updates:
-  - package-ecosystem: "npm"
-    directory: "/web"
-    schedule:
-      interval: "monthly"
-    groups:
-      web:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-
-  - package-ecosystem: "npm"
-    directory: "/widget"
-    schedule:
-      interval: "monthly"
-    groups:
-      widget:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-
-  - package-ecosystem: gomod
+  - package-ecosystem: "gomod"
     directory: "/"
-    schedule:
-      interval: "monthly"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "backend"
     ignore:
       - dependency-name: "k8s.io/apimachinery"
       - dependency-name: "k8s.io/client-go"
-    groups:
-      backend:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-    groups:
-      github-actions:
-        patterns:
-          - "*"
+  - package-ecosystem: "npm"
+    directory: "/web"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "frontend"
+
+  - package-ecosystem: "npm"
+    directory: "/widget"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "frontend"
 
   - package-ecosystem: "docker"
     directory: "/cmd/ah"
-    schedule:
-      interval: "monthly"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "infra"
 
   - package-ecosystem: "docker"
     directory: "/cmd/hub"
-    schedule:
-      interval: "monthly"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "infra"
     ignore:
       - dependency-name: "node"
-        versions: ["19-alpine3.19", "20-alpine3.19", "21-alpine3.19", "22-alpine3.19", "22-alpine3.20", "23-alpine3.21"]
+        versions:
+          - "19-alpine3.19"
+          - "20-alpine3.19"
+          - "21-alpine3.19"
+          - "22-alpine3.19"
+          - "22-alpine3.20"
+          - "23-alpine3.21"
 
   - package-ecosystem: "docker"
     directory: "/cmd/scanner"
-    schedule:
-      interval: "monthly"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "infra"
 
   - package-ecosystem: "docker"
     directory: "/cmd/tracker"
-    schedule:
-      interval: "monthly"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "infra"
 
   - package-ecosystem: "docker"
     directory: "/database/migrations"
-    schedule:
-      interval: "monthly"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "infra"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "infra"

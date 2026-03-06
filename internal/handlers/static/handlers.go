@@ -1,6 +1,7 @@
 package static
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -9,7 +10,6 @@ import (
 	"net/http"
 	"os"
 	"path"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -118,13 +118,14 @@ func (h *Handlers) Image(w http.ResponseWriter, r *http.Request) {
 
 	// Set headers and write image data to response writer
 	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(StaticCacheMaxAge))
-	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
+	w.Header().Set("X-Content-Type-Options", "nosniff")
 	if svg.Is(data) {
+		w.Header().Set("Content-Security-Policy", "default-src 'none'; sandbox")
 		w.Header().Set("Content-Type", "image/svg+xml")
 	} else {
 		w.Header().Set("Content-Type", http.DetectContentType(data))
 	}
-	_, _ = w.Write(data)
+	http.ServeContent(w, r, "", time.Time{}, bytes.NewReader(data))
 }
 
 // Index is an http handler that serves the index.html file.
@@ -209,14 +210,21 @@ func FileServer(r chi.Router, public, static string, cacheMaxAge time.Duration) 
 		public += "/"
 	}
 
-	fsHandler := http.StripPrefix(public, http.FileServer(http.Dir(static)))
+	fs := http.Dir(static)
+	fsHandler := http.StripPrefix(public, http.FileServer(fs))
 
 	r.Get(public+"*", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		file := strings.Replace(r.RequestURI, public, "/", 1)
-		if _, err := os.Stat(static + file); os.IsNotExist(err) {
+		basePath := strings.TrimSuffix(public, "/")
+		file := strings.TrimPrefix(r.URL.Path, basePath)
+		file = path.Clean("/" + strings.TrimPrefix(file, "/"))
+
+		f, err := fs.Open(file)
+		if err != nil {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
+		_ = f.Close()
+
 		w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(cacheMaxAge))
 		fsHandler.ServeHTTP(w, r)
 	}))
