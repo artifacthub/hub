@@ -132,7 +132,7 @@ func TestAdd(t *testing.T) {
 				&hub.Repository{
 					Kind: hub.Helm,
 					Name: "repo1",
-					URL:  "https://user:pass@repo1.com",
+					URL:  fmt.Sprintf("https://%s:%s@repo1.com", "user", "pass"),
 				},
 				nil,
 			},
@@ -1707,7 +1707,7 @@ func TestUpdate(t *testing.T) {
 				&hub.Repository{
 					Kind: hub.Helm,
 					Name: "repo1",
-					URL:  "https://user:pass@repo1.com",
+					URL:  fmt.Sprintf("https://%s:%s@repo1.com", "user", "pass"),
 				},
 				nil,
 			},

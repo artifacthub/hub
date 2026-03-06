@@ -31,7 +31,7 @@ type Session struct {
 type SetupTFAOutput struct {
 	QRCode        string   `json:"qr_code"`
 	RecoveryCodes []string `json:"recovery_codes"`
-	Secret        string   `json:"secret"`
+	Secret        string   `json:"secret"` // #nosec G117 -- API responses intentionally include the generated TFA secret
 }
 
 // TFAConfig represents the TFA configuration for a given user.
@@ -49,7 +49,7 @@ type User struct {
 	LastName       string `json:"last_name"`
 	Email          string `json:"email"`
 	EmailVerified  bool   `json:"email_verified"`
-	Password       string `json:"password"`
+	Password       string `json:"password"` // #nosec G117 -- API payload intentionally accepts a plaintext password
 	ProfileImageID string `json:"profile_image_id"`
 	PasswordSet    bool   `json:"password_set"`
 	TFAEnabled     bool   `json:"tfa_enabled"`

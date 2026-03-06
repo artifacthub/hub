@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -257,9 +258,9 @@ func (h *Handlers) GetChartValues(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(24*time.Hour))
-	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
 	w.Header().Set("Content-Type", "application/yaml")
-	_, _ = w.Write(data)
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	http.ServeContent(w, r, "", time.Time{}, bytes.NewReader(data))
 }
 
 // GetHarborReplicationDump is an http handler used to get a summary of all
@@ -619,10 +620,10 @@ func (h *Handlers) getChartArchive(ctx context.Context, packageID, version strin
 		ctx,
 		u,
 		&helm.LoadChartArchiveOptions{
+			AuthPass: password,
+			AuthUser: username,
 			Hc:       h.hc,
 			Op:       h.op,
-			Username: username,
-			Password: password,
 		},
 	)
 	if err != nil {

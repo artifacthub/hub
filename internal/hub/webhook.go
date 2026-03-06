@@ -9,7 +9,7 @@ type Webhook struct {
 	Name        string      `json:"name"`
 	Description string      `json:"description"`
 	URL         string      `json:"url"`
-	Secret      string      `json:"secret"`
+	Secret      string      `json:"secret"` // #nosec G117 -- API payload intentionally carries the webhook secret
 	ContentType string      `json:"content_type"`
 	Template    string      `json:"template"`
 	Active      bool        `json:"active"`
