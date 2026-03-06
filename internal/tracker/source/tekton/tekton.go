@@ -1,7 +1,6 @@
 package tekton
 
 import (
-	"context"
 	"crypto/sha256"
 	"encoding/json"
 	"errors"
@@ -401,7 +400,10 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 		annotations = m.Annotations
 
 		ps := m.PipelineSpec()
-		mps := pipelinerun.ApplyParameters(context.Background(), &ps, &v1.PipelineRun{})
+		mps, err := pipelinerun.ApplyParameters(&ps, &v1.PipelineRun{})
+		if err != nil {
+			return nil, err
+		}
 		for _, mts := range mps.Tasks {
 			if mts.TaskSpec != nil {
 				steps = append(steps, mts.TaskSpec.Steps...)
