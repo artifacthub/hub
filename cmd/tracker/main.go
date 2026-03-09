@@ -84,7 +84,7 @@ func main() {
 		Hc:                 hc,
 		Op:                 op,
 		Is:                 is,
-		Sc:                 oci.NewSignatureChecker(cfg, op),
+		Sc:                 oci.NewSignatureChecker(cfg),
 		Pcc:                pcc,
 		SetupTrackerSource: tracker.SetupSource,
 	}
