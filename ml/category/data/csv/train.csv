@@ -659,7 +659,6 @@
 4-monitoring-logging;appdynamics,cluster,kubernetes,openshift,monitoring,pod,deployment
 4-monitoring-logging;appdynamics,monitoring,e2e visibility,aiops,monitoring
 4-monitoring-logging;appdynamics,monitoring,infrastructure
-4-monitoring-logging;appranix,container protection service,application resilience service,aps,monitoring
 4-monitoring-logging;aspecto,opentelemetry,observability,traces,jaeger,otel,collector,sampling
 4-monitoring-logging;aws,cloudwatch,azure,stackdriver
 4-monitoring-logging;aws,tracing,xray
