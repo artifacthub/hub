@@ -3,13 +3,11 @@ package scanner
 import (
 	"bytes"
 	"context"
-	"crypto/sha512"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"os/exec"
-	"sort"
 	"strings"
 
 	trivy "github.com/aquasecurity/trivy/pkg/types"
@@ -107,7 +105,7 @@ func (s *Scanner) Scan(sn *hub.SnapshotToScan) (*hub.SnapshotSecurityReport, err
 	if len(imagesReports) > 0 {
 		report.ImagesReports = imagesReports
 		report.Summary = generateSummary(imagesReports)
-		report.AlertDigest = generateAlertDigest(imagesReports)
+		report.AlertDigest = BuildAlertDigest(imagesReports)
 	}
 
 	return report, nil
@@ -136,28 +134,6 @@ func generateSummary(imagesReports map[string]*trivy.Report) *hub.SecurityReport
 		}
 	}
 	return summary
-}
-
-// generateAlertDigest generates an alert digest of the security report from
-// the images reports. At the moment the digest is based on the vulnerabilities
-// with a severity of high or critical.
-func generateAlertDigest(imagesReports map[string]*trivy.Report) string {
-	var vs []string
-	for _, imageReport := range imagesReports {
-		for _, result := range imageReport.Results {
-			for _, v := range result.Vulnerabilities {
-				if v.Severity == "HIGH" || v.Severity == "CRITICAL" {
-					vs = append(vs, fmt.Sprintf("[%s:%s]", v.Severity, v.VulnerabilityID))
-				}
-			}
-		}
-	}
-	var digest string
-	if len(vs) > 0 {
-		sort.Strings(vs)
-		digest = fmt.Sprintf("%x", sha512.Sum512([]byte(strings.Join(vs, ""))))
-	}
-	return digest
 }
 
 // TrivyScanner is an ImageScanner implementation that uses Trivy to scan

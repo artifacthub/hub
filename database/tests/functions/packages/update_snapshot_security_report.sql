@@ -81,7 +81,7 @@ select update_snapshot_security_report('{
             {"k": "v"}
         ]
     }
-}');
+}', false);
 select is(security_report, '{
     "quay.io/org/pkg1:1.0.0": [
             {"k": "v"}
@@ -104,7 +104,7 @@ select update_snapshot_security_report('{
     "package_id": "00000000-0000-0000-0000-000000000002",
     "version": "0.0.9",
     "alert_digest": "digest-a"
-}');
+}', true);
 select is(
     count(*)::int,
     0::int,
@@ -117,11 +117,11 @@ where p.name = 'package2' and e.package_version = '0.0.9';
 select update_snapshot_security_report('{
     "package_id": "00000000-0000-0000-0000-000000000002",
     "version": "1.0.0"
-}');
+}', false);
 select is(
     count(*)::int,
     0::int,
-    'No security alert event should exist for package 2 version 1.0.0 as the alert digest is null'
+    'No security alert event should exist for package 2 version 1.0.0 when emit alert is false'
 )
 from event e
 join package p using (package_id)
@@ -131,7 +131,7 @@ select update_snapshot_security_report('{
     "package_id": "00000000-0000-0000-0000-000000000002",
     "version": "1.0.0",
     "alert_digest": "digest-b"
-}');
+}', true);
 select is(
     count(*)::int,
     1::int,
@@ -145,11 +145,11 @@ select update_snapshot_security_report('{
     "package_id": "00000000-0000-0000-0000-000000000002",
     "version": "1.0.0",
     "alert_digest": "digest-b"
-}');
+}', false);
 select is(
     count(*)::int,
     1::int,
-    'No new security alert event should exist for package 2 version 1.0.0 as the alert digest has not changed'
+    'No new security alert event should exist for package 2 version 1.0.0 when emit alert is false'
 )
 from event e
 join package p using (package_id)
@@ -168,7 +168,7 @@ select update_snapshot_security_report('{
     "package_id": "00000000-0000-0000-0000-000000000002",
     "version": "1.1.0",
     "alert_digest": "digest-b"
-}');
+}', true);
 select is(
     count(*)::int,
     1::int,
@@ -182,7 +182,7 @@ select update_snapshot_security_report('{
     "package_id": "00000000-0000-0000-0000-000000000002",
     "version": "1.1.0",
     "alert_digest": "digest-c"
-}');
+}', true);
 select is(
     count(*)::int,
     2::int,
