@@ -82,7 +82,7 @@ spec:
           volumes:
             - name: tracker-config
               secret:
-                secretName: {{ include "chart.resourceNamePrefix" . }}tracker-config
+                secretName: {{ default (printf "%stracker-config" (include "chart.resourceNamePrefix" .)) .Values.tracker.useExistingSecret }}
             {{- if .Values.tracker.cacheDir }}
             - name: cache-dir
               emptyDir: {}

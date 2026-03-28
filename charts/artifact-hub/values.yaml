@@ -123,6 +123,10 @@ dbMigrator:
   loadSampleData: true
   # Directory path where the configuration files should be mounted
   configDir: "/home/db-migrator/.cfg"
+  # Name of an existing Secret to use for db-migrator configuration. When set, the chart
+  # will not render its own db-migrator-config Secret. The Secret must contain a key
+  # named 'tern.conf' with the same structure as the chart-generated Secret.
+  useExistingSecret: ""
 
 # Hub configuration
 hub:
@@ -326,6 +330,10 @@ hub:
     # value than the default one (Artifact Hub) is provided, the site enters `white label` mode. In this mode, some
     # sections of the website are displayed in a more generic way, omitting certain parts that are unique to Artifact Hub
     siteName: "Artifact hub"
+  # Name of an existing Secret to use for hub configuration. When set, the chart will
+  # not render its own hub-config Secret. The Secret must contain a key named 'hub.yaml'
+  # with the same structure as the chart-generated Secret.
+  useExistingSecret: ""
 
 # Scanner configuration
 scanner:
@@ -369,6 +377,10 @@ scanner:
   cacheDir: ""
   # Directory path where the configuration files should be mounted
   configDir: "/home/scanner/.cfg"
+  # Name of an existing Secret to use for scanner configuration. When set, the chart
+  # will not render its own scanner-config Secret. The Secret must contain a key named
+  # 'scanner.yaml' with the same structure as the chart-generated Secret.
+  useExistingSecret: ""
 
 # Tracker configuration
 tracker:
@@ -417,6 +429,10 @@ tracker:
   repositoriesKinds: []
   # Bypass digest check. Use this option to force already indexed packages to be reprocessed (use with caution)
   bypassDigestCheck: false
+  # Name of an existing Secret to use for tracker configuration. When set, the chart
+  # will not render its own tracker-config Secret. The Secret must contain a key named
+  # 'tracker.yaml' with the same structure as the chart-generated Secret.
+  useExistingSecret: ""
 
 # Trivy configuration
 trivy:

@@ -83,7 +83,7 @@ spec:
           volumes:
             - name: scanner-config
               secret:
-                secretName: {{ include "chart.resourceNamePrefix" . }}scanner-config
+                secretName: {{ default (printf "%sscanner-config" (include "chart.resourceNamePrefix" .)) .Values.scanner.useExistingSecret }}
             {{- if .Values.scanner.cacheDir }}
             - name: cache-dir
               emptyDir: {}

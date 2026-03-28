@@ -75,7 +75,7 @@ spec:
       volumes:
         - name: db-migrator-config
           secret:
-            secretName: {{ include "chart.resourceNamePrefix" . }}db-migrator-config
+            secretName: {{ default (printf "%sdb-migrator-config" (include "chart.resourceNamePrefix" .)) .Values.dbMigrator.useExistingSecret }}
         {{- if .Values.dbMigrator.job.extraVolumes }}
           {{- include "chart.tplvalues.render" (dict "value" .Values.dbMigrator.job.extraVolumes "context" $) | nindent 8 }}
         {{- end }}

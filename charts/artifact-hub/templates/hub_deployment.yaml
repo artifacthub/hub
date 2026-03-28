@@ -120,7 +120,7 @@ spec:
       volumes:
         - name: hub-config
           secret:
-            secretName: {{ include "chart.resourceNamePrefix" . }}hub-config
+            secretName: {{ default (printf "%shub-config" (include "chart.resourceNamePrefix" .)) .Values.hub.useExistingSecret }}
         {{- if .Values.hub.server.cacheDir }}
         - name: cache-dir
           emptyDir: {}
