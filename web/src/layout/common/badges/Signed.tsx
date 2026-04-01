@@ -35,6 +35,8 @@ const Signed = (props: Props) => {
     RepositoryKind.Bootc,
     RepositoryKind.Kagent,
   ].includes(props.repoKind);
+  const fingerprint = props.signKey?.fingerprint.trim();
+  const url = props.signKey?.url.trim();
 
   return (
     <Badge
@@ -71,19 +73,18 @@ const Signed = (props: Props) => {
                       })}
                     </p>
                   )}
-                  {!isUndefined(props.signKey) && (
+                  {(fingerprint || url) && (
                     <>
                       <div className="fs-6 fw-semibold border-bottom border-1 mt-4 mb-3 pb-1">Sign key information</div>
-                      <CommandBlock
-                        language="text"
-                        command={props.signKey.fingerprint}
-                        title="Fingerprint"
-                        btnClassname="mt-0"
-                      />
+                      {fingerprint && (
+                        <CommandBlock language="text" command={fingerprint!} title="Fingerprint" btnClassname="mt-0" />
+                      )}
 
-                      <div className={styles.secondBlock}>
-                        <CommandBlock language="text" command={props.signKey.url} title="URL" btnClassname="mt-0" />
-                      </div>
+                      {url && (
+                        <div className={fingerprint ? styles.secondBlock : undefined}>
+                          <CommandBlock language="text" command={url!} title="URL" btnClassname="mt-0" />
+                        </div>
+                      )}
                     </>
                   )}
                 </>

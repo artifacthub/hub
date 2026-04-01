@@ -1,13 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
+import { hasClassContaining } from '../../utils/testUtils';
 import SearchRepositories from './SearchRepositories';
-jest.mock('../../api');
-jest.mock('../../utils/alertDispatcher');
+vi.mock('../../api');
+vi.mock('../../utils/alertDispatcher');
 
 const getMockSearch = (fixtureId: string) => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -39,7 +40,7 @@ describe('SearchRepositories', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockSearch = getMockSearch('1');
-      mocked(API).searchRepositories.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchRepositories.mockResolvedValue(mockSearch);
 
       render(<SearchRepositories {...defaultProps} />);
 
@@ -58,7 +59,7 @@ describe('SearchRepositories', () => {
 
     it('selects repo', async () => {
       const mockSearch = getMockSearch('2');
-      mocked(API).searchRepositories.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchRepositories.mockResolvedValue(mockSearch);
 
       render(<SearchRepositories {...defaultProps} />);
 
@@ -81,7 +82,7 @@ describe('SearchRepositories', () => {
 
     it('renders disabled repos', async () => {
       const mockSearch = getMockSearch('4');
-      mocked(API).searchRepositories.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchRepositories.mockResolvedValue(mockSearch);
 
       render(
         <SearchRepositories
@@ -97,8 +98,8 @@ describe('SearchRepositories', () => {
       });
 
       const repos = await screen.findAllByTestId('repoItem');
-      expect(repos[0]).toHaveClass('disabledCell');
-      expect(repos[1]).toHaveClass('disabledCell');
+      expect(hasClassContaining(repos[0], 'disabledCell')).toBe(true);
+      expect(hasClassContaining(repos[1], 'disabledCell')).toBe(true);
 
       await userEvent.click(repos[0]);
       expect(mockOnSelection).toHaveBeenCalledTimes(0);
@@ -106,7 +107,7 @@ describe('SearchRepositories', () => {
 
     describe('when searchRepositories fails', () => {
       it('default', async () => {
-        mocked(API).searchRepositories.mockRejectedValue({
+        vi.mocked(API).searchRepositories.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 
@@ -128,7 +129,7 @@ describe('SearchRepositories', () => {
       });
 
       it('unauthorized', async () => {
-        mocked(API).searchRepositories.mockRejectedValue({ kind: ErrorKind.Unauthorized });
+        vi.mocked(API).searchRepositories.mockRejectedValue({ kind: ErrorKind.Unauthorized });
 
         render(<SearchRepositories {...defaultProps} />);
 

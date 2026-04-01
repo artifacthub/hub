@@ -3,6 +3,7 @@ package pkg
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/url"
 	"sort"
@@ -11,7 +12,10 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/scanner"
 	"github.com/artifacthub/hub/internal/util"
+	"github.com/jackc/pgx/v4"
+	"github.com/rs/zerolog/log"
 	"github.com/satori/uuid"
 	stripmd "github.com/writeas/go-strip-markdown"
 )
@@ -32,6 +36,7 @@ const (
 	getPkgsStatsDBQ                 = `select get_packages_stats()`
 	getProductionUsageDBQ           = `select get_production_usage($1::uuid, $2::text, $3::text)`
 	getSnapshotSecurityReportDBQ    = `select security_report from snapshot where package_id = $1 and version = $2`
+	getSnapshotSecurityReportTxDBQ  = `select security_report from snapshot where package_id = $1 and version = $2 for update`
 	getSnapshotsToScanDBQ           = `select get_snapshots_to_scan()`
 	getRandomPkgsDBQ                = `select get_random_packages()`
 	getValuesSchemaDBQ              = `select values_schema from snapshot where package_id = $1 and version = $2`
@@ -39,7 +44,7 @@ const (
 	searchPkgsDBQ                   = `select * from search_packages($1::jsonb)`
 	searchPkgsMonocularDBQ          = `select search_packages_monocular($1::text, $2::text)`
 	togglePkgStarDBQ                = `select toggle_star($1::uuid, $2::uuid)`
-	updateSnapshotSecurityReportDBQ = `select update_snapshot_security_report($1::jsonb)`
+	updateSnapshotSecurityReportDBQ = `select update_snapshot_security_report($1::jsonb, $2::boolean)`
 	unregisterPkgDBQ                = `select unregister_package($1::jsonb)`
 )
 
@@ -301,7 +306,7 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 
 	// Strip markdown from changes entries description
 	for _, change := range pkg.Changes {
-		change.Description = stripmd.Strip(change.Description)
+		change.Description = stripChangeDescription(change.Description)
 	}
 
 	// Register package in database
@@ -385,10 +390,58 @@ func (m *Manager) UpdateSnapshotSecurityReport(ctx context.Context, r *hub.Snaps
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "version not provided")
 	}
 
-	// Update snapshot security report in database
-	rJSON, _ := json.Marshal(r)
-	_, err := m.db.Exec(ctx, updateSnapshotSecurityReportDBQ, rJSON)
-	return err
+	return util.DBTransact(ctx, m.db, func(tx pgx.Tx) error {
+		// Lock the snapshot row while computing the alert decision
+		previousReportJSON, err := getSnapshotSecurityReportJSONForUpdate(
+			ctx,
+			tx,
+			r.PackageID,
+			r.Version,
+		)
+		if err != nil && !errors.Is(err, hub.ErrNotFound) {
+			return err
+		}
+		if errors.Is(err, hub.ErrNotFound) {
+			previousReportJSON = nil
+		}
+
+		// Compare against the stored report to avoid noisy security alerts
+		emitAlert, err := scanner.ShouldNotifyOnNewOrEscalatedAlerts(
+			previousReportJSON,
+			r.ImagesReports,
+		)
+		if err != nil {
+			log.Error().
+				Err(err).
+				Str("package_id", r.PackageID).
+				Str("version", r.Version).
+				Msg("error processing previous security report")
+			emitAlert = false
+		}
+
+		// Update snapshot security report in database
+		rJSON, _ := json.Marshal(r)
+		_, err = tx.Exec(ctx, updateSnapshotSecurityReportDBQ, rJSON, emitAlert)
+		return err
+	})
+}
+
+// getSnapshotSecurityReportJSONForUpdate returns the stored security report for
+// the requested snapshot while holding a row lock for the current transaction.
+func getSnapshotSecurityReportJSONForUpdate(
+	ctx context.Context,
+	tx pgx.Tx,
+	pkgID, version string,
+) ([]byte, error) {
+	// Lock the snapshot row so concurrent workers observe the latest report
+	var dataJSON []byte
+	if err := tx.QueryRow(ctx, getSnapshotSecurityReportTxDBQ, pkgID, version).Scan(&dataJSON); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, hub.ErrNotFound
+		}
+		return nil, err
+	}
+	return dataJSON, nil
 }
 
 // Unregister unregisters the package provided from the database.
@@ -442,4 +495,23 @@ func areValidCapabilities(capabilities string) bool {
 		}
 	}
 	return false
+}
+
+// stripChangeDescription removes markdown while preserving underscores.
+func stripChangeDescription(description string) string {
+	// Fast path for descriptions without underscores
+	if !strings.Contains(description, "_") {
+		return stripmd.Strip(description)
+	}
+
+	// Protect underscores before stripping markdown
+	token := "UNDERSCORETOKEN"
+	for strings.Contains(description, token) {
+		token += "X"
+	}
+	protected := strings.ReplaceAll(description, "_", token)
+
+	// Strip markdown and restore underscores
+	stripped := stripmd.Strip(protected)
+	return strings.ReplaceAll(stripped, token, "_")
 }

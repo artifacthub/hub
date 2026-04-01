@@ -31,6 +31,7 @@
   - [Can I change my email address?](#can-i-change-my-email-address)
 - [Self-hosted Deployments](#self-hosted-deployments)
   - [How do I install Artifact Hub on my own infrastructure?](#how-do-i-install-artifact-hub-on-my-own-infrastructure)
+  - [Can I override configuration values using environment variables?](#can-i-override-configuration-values-using-environment-variables)
   - [Can I use custom OAuth providers?](#can-i-use-custom-oauth-providers)
   - [How do I enable private repositories?](#how-do-i-enable-private-repositories)
   - [How do I add repositories to my self-hosted instance?](#how-do-i-add-repositories-to-my-self-hosted-instance)
@@ -172,6 +173,53 @@ At the moment it's not possible to update the email address from the control pan
 ### How do I install Artifact Hub on my own infrastructure?
 
 You can deploy your own Artifact Hub instance using the [official Helm chart](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub). This is the recommended way of deploying your own instance.
+
+### Can I override configuration values using environment variables?
+
+Yes. Artifact Hub uses [Viper](https://github.com/spf13/viper), so environment variables can override configuration values loaded from the config file.
+
+The environment variable key is derived from `cmd` in `SetupConfig(cmd)` and
+follows this format:
+
+`<CMD>_<CONFIG_KEY>`
+
+Where:
+
+- Start with the command prefix (`HUB`, `SCANNER`, or `TRACKER`).
+- Append `_`.
+- Take the config key and replace `.` and `-` with `_`.
+- Uppercase everything.
+
+Examples:
+
+- `db.password` -> `HUB_DB_PASSWORD`
+- `server.oauth.oidc.clientSecret` -> `HUB_SERVER_OAUTH_OIDC_CLIENTSECRET`
+
+When using the Helm chart, define these variables in the component's `extraEnvVars` list:
+
+- `hub.deploy.extraEnvVars` for hub.
+- `scanner.cronjob.extraEnvVars` for scanner.
+- `tracker.cronjob.extraEnvVars` for tracker.
+
+Example (`values.yaml`):
+
+```yaml
+hub:
+  deploy:
+    extraEnvVars:
+      - name: HUB_DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: artifacthub-secrets
+            key: db-password
+      - name: HUB_SERVER_OAUTH_OIDC_CLIENTSECRET
+        valueFrom:
+          secretKeyRef:
+            name: artifacthub-secrets
+            key: oidc-client-secret
+```
+
+For more details on how env vars are handled, see the [Viper environment variables docs](https://github.com/spf13/viper#working-with-environment-variables).
 
 ### Can I use custom OAuth providers?
 

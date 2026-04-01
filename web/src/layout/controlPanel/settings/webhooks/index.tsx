@@ -10,6 +10,7 @@ import { ErrorKind, Webhook } from '../../../../types';
 import Loading from '../../../common/Loading';
 import NoData from '../../../common/NoData';
 import Pagination from '../../../common/Pagination';
+import PaginationSummary from '../../../common/PaginationSummary';
 import WebhookCard from './Card';
 import WebhookForm from './Form';
 import styles from './WebhooksSection.module.css';
@@ -160,7 +161,15 @@ const WebhooksSection = (props: Props) => {
                       </NoData>
                     ) : (
                       <>
-                        <div className="row mt-3 mt-md-4 gx-0 gx-xxl-4">
+                        {!isUndefined(total) && total > 0 && (
+                          <PaginationSummary
+                            offset={offset}
+                            itemsInPage={webhooks.length}
+                            total={total}
+                            className="mt-3 mt-md-4"
+                          />
+                        )}
+                        <div className="row mt-1 mt-md-2 gx-0 gx-xxl-4">
                           {webhooks.map((webhook: Webhook) => (
                             <WebhookCard
                               key={`webhook_${webhook.webhookId}`}

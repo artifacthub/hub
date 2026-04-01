@@ -268,10 +268,10 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 			s.i.Svc.Ctx,
 			chartURL,
 			&LoadChartArchiveOptions{
+				AuthPass: s.i.Repository.AuthPass,
+				AuthUser: s.i.Repository.AuthUser,
 				Hc:       s.i.Svc.Hc,
 				Op:       s.i.Svc.Op,
-				Username: s.i.Repository.AuthUser,
-				Password: s.i.Repository.AuthPass,
 			},
 		)
 		if err != nil {
@@ -401,10 +401,10 @@ func (s *TrackerSource) warn(md *chart.Metadata, err error) {
 // LoadChartArchiveOptions represents some options that can be provided to load
 // a chart archive from its remote location.
 type LoadChartArchiveOptions struct {
+	AuthPass string
+	AuthUser string
 	Hc       hub.HTTPClient
 	Op       hub.OCIPuller
-	Username string
-	Password string
 }
 
 // LoadChartArchive loads a chart from a remote archive located at the url
@@ -425,8 +425,8 @@ func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOption
 		}
 		req = req.WithContext(ctx)
 		req.Header.Set("Accept-Encoding", "identity")
-		if o.Username != "" || o.Password != "" {
-			req.SetBasicAuth(o.Username, o.Password)
+		if o.AuthUser != "" || o.AuthPass != "" {
+			req.SetBasicAuth(o.AuthUser, o.AuthPass)
 		}
 		resp, err := hc.Do(req)
 		if err != nil {
@@ -447,10 +447,10 @@ func LoadChartArchive(ctx context.Context, u *url.URL, o *LoadChartArchiveOption
 			op = oci.NewPuller(nil)
 		}
 		ref := strings.TrimPrefix(u.String(), hub.RepositoryOCIPrefix)
-		_, data, err := op.PullLayer(ctx, ref, ChartContentLayerMediaType, o.Username, o.Password)
+		_, data, err := op.PullLayer(ctx, ref, ChartContentLayerMediaType, o.AuthUser, o.AuthPass)
 		if err != nil {
 			if errors.Is(err, oci.ErrLayerNotFound) {
-				_, data, err = op.PullLayer(ctx, ref, legacyChartContentLayerMediaType, o.Username, o.Password)
+				_, data, err = op.PullLayer(ctx, ref, legacyChartContentLayerMediaType, o.AuthUser, o.AuthPass)
 				if err != nil {
 					return nil, err
 				}

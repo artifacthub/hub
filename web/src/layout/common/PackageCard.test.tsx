@@ -1,12 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { Package } from '../../types';
 import calculateDiffInYears from '../../utils/calculateDiffInYears';
 import { prepareQueryString } from '../../utils/prepareQueryString';
 import PackageCard from './PackageCard';
-jest.mock('../../utils/calculateDiffInYears');
+vi.mock('../../utils/calculateDiffInYears');
 
 const getMockPackage = (fixtureId: string): Package => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -15,7 +16,7 @@ const getMockPackage = (fixtureId: string): Package => {
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -61,7 +62,7 @@ describe('PackageCard', () => {
       );
       const image = screen.getByAltText(`Logo ${mockPackage.displayName}`);
       expect(image).toBeInTheDocument();
-      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/placeholder_pkg_helm.png');
+      expect((image as HTMLImageElement).src).toBe(`${window.location.origin}/static/media/placeholder_pkg_helm.png`);
     });
   });
 
@@ -103,7 +104,7 @@ describe('PackageCard', () => {
       const icons = screen.getAllByAltText('Icon');
       expect(icons).toHaveLength(12);
       expect(icons[0]).toBeInTheDocument();
-      expect((icons[0] as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
+      expect((icons[0] as HTMLImageElement).src).toBe(`${window.location.origin}/static/media/helm-chart.svg`);
       await userEvent.click(buttons[0]!);
 
       await waitFor(() => {

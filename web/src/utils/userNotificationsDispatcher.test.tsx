@@ -1,4 +1,5 @@
 import { act, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import { UserNotification } from '../types';
 import userNotificationsDispatcher from './userNotificationsDispatcher';
@@ -10,8 +11,9 @@ const notificationSample = {
   body: 'Lorem ipsum',
 };
 
-jest.mock('./notifications.json', () => {
-  return {
+vi.mock('./notifications.json', () => ({
+  __esModule: true,
+  default: {
     notifications: [
       { body: 'Lorem ipsum' },
       {
@@ -19,8 +21,8 @@ jest.mock('./notifications.json', () => {
         linkTip: 'package',
       },
     ],
-  };
-});
+  },
+}));
 
 describe('userNotificationsDispatcher', () => {
   beforeEach(() => {

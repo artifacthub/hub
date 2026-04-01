@@ -1,7 +1,7 @@
-import { isUndefined } from 'lodash';
 import camelCase from 'lodash/camelCase';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
+import isUndefined from 'lodash/isUndefined';
 
 import { PackageSummary, SearchResults } from '../types';
 

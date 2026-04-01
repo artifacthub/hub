@@ -1,5 +1,3 @@
-import { render } from '@testing-library/react';
-
 import updateMetaIndex from './updateMetaIndex';
 
 interface Test {
@@ -36,30 +34,39 @@ const placeholder = {
   description: 'Find, install and publish Cloud Native packages',
 };
 
+const getMetaTemplate = () => `
+  <title></title>
+  <meta name="description" content="" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="" />
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="{{ .baseURL }}/static/media/artifactHub_v2.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="" />
+  <meta name="twitter:description" content="" />
+  <meta name="twitter:image:src" content="{{ .baseURL }}/static/media/artifactHub_v2.png" />
+`;
+
+const setupMetaTags = () => {
+  document.head.innerHTML = getMetaTemplate();
+};
+
+afterEach(() => {
+  document.head.innerHTML = '';
+  document.title = '';
+});
+
 describe('updateMetaIndex', () => {
   it('renders default meta tags values', () => {
-    const { container } = render(
-      <>
-        <title></title>
-        <meta name="description" content="" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="" />
-        <meta property="og:description" content="" />
-        <meta property="og:image" content="{{ .baseURL }}/static/media/artifactHub_v2.png" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="" />
-        <meta name="twitter:description" content="" />
-        <meta name="twitter:image:src" content="{{ .baseURL }}/static/media/artifactHub_v2.png" />
-      </>
-    );
+    setupMetaTags();
 
     updateMetaIndex();
-    expect(container.querySelector(`meta[name='description']`)).toHaveAttribute('content', placeholder.description);
-    expect(container.querySelector(`meta[property='og:description']`)).toHaveAttribute(
+    expect(document.head.querySelector(`meta[name='description']`)).toHaveAttribute('content', placeholder.description);
+    expect(document.head.querySelector(`meta[property='og:description']`)).toHaveAttribute(
       'content',
       placeholder.description
     );
-    expect(container.querySelector(`meta[name='twitter:description']`)).toHaveAttribute(
+    expect(document.head.querySelector(`meta[name='twitter:description']`)).toHaveAttribute(
       'content',
       placeholder.description
     );
@@ -67,31 +74,18 @@ describe('updateMetaIndex', () => {
 
   for (let i = 0; i < tests.length; i++) {
     it('returns proper object', () => {
-      const { container } = render(
-        <>
-          <title></title>
-          <meta name="description" content="" />
-          <meta property="og:type" content="website" />
-          <meta property="og:title" content="" />
-          <meta property="og:description" content="" />
-          <meta property="og:image" content="{{ .baseURL }}/static/media/artifactHub_v2.png" />
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="" />
-          <meta name="twitter:description" content="" />
-          <meta name="twitter:image:src" content="{{ .baseURL }}/static/media/artifactHub_v2.png" />
-        </>
-      );
+      setupMetaTags();
 
       updateMetaIndex(tests[i].title, tests[i].description);
       expect(document.title).toBe(tests[i].title);
-      expect(container.querySelector(`meta[property='og:title']`)).toHaveAttribute('content', tests[i].title);
-      expect(container.querySelector(`meta[name='twitter:title']`)).toHaveAttribute('content', tests[i].title);
-      expect(container.querySelector(`meta[name='description']`)).toHaveAttribute('content', tests[i].description);
-      expect(container.querySelector(`meta[property='og:description']`)).toHaveAttribute(
+      expect(document.head.querySelector(`meta[property='og:title']`)).toHaveAttribute('content', tests[i].title);
+      expect(document.head.querySelector(`meta[name='twitter:title']`)).toHaveAttribute('content', tests[i].title);
+      expect(document.head.querySelector(`meta[name='description']`)).toHaveAttribute('content', tests[i].description);
+      expect(document.head.querySelector(`meta[property='og:description']`)).toHaveAttribute(
         'content',
         tests[i].description
       );
-      expect(container.querySelector(`meta[name='twitter:description']`)).toHaveAttribute(
+      expect(document.head.querySelector(`meta[name='twitter:description']`)).toHaveAttribute(
         'content',
         tests[i].description
       );

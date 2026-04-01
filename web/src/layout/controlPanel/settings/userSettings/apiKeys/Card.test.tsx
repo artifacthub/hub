@@ -1,19 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { format, fromUnixTime } from 'date-fns';
+import { vi } from 'vitest';
 
 import API from '../../../../../api';
 import { APIKey, ErrorKind } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import Card from './Card';
-jest.mock('../../../../../api');
-jest.mock('../../../../../utils/alertDispatcher');
-jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as object),
-  unix: () => ({
-    format: () => '2020/06/18 16:35:39 (+00:00)',
-  }),
-}));
+vi.mock('../../../../../api');
+vi.mock('../../../../../utils/alertDispatcher');
 
 const APIKeyMock: APIKey = {
   apiKeyId: 'bf28013f-610e-4691-80a2-bd3a673c4b3f',
@@ -48,6 +43,9 @@ describe('API key Card - API keys section', () => {
       expect(screen.getByTestId('APIKeyCard')).toBeInTheDocument();
       expect(screen.getByText(APIKeyMock.name!)).toBeInTheDocument();
       expect(screen.getByText('Created at:')).toBeInTheDocument();
+      expect(
+        screen.getByText(format(fromUnixTime(APIKeyMock.createdAt!), 'yyyy/MM/dd HH:mm:ss (xxx)'))
+      ).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Open API key modal' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Open deletion modal' })).toBeInTheDocument();
     });
@@ -89,7 +87,7 @@ describe('API key Card - API keys section', () => {
 
   describe('on deleteAPIKey error', () => {
     it('displays generic error', async () => {
-      mocked(API).deleteAPIKey.mockRejectedValue({
+      vi.mocked(API).deleteAPIKey.mockRejectedValue({
         kind: ErrorKind.Other,
       });
       render(<Card {...defaultProps} />);
@@ -115,7 +113,7 @@ describe('API key Card - API keys section', () => {
     });
 
     it('calls onAuthError', async () => {
-      mocked(API).deleteAPIKey.mockRejectedValue({
+      vi.mocked(API).deleteAPIKey.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
       render(<Card {...defaultProps} />);

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { BiImages, BiUnlink } from 'react-icons/bi';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import { GoDotFill } from 'react-icons/go';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { Screenshot } from '../../../types';

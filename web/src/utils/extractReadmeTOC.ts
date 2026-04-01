@@ -70,5 +70,5 @@ export const transformer = (ast: Node) => {
 };
 
 export function extractReadmeTOC() {
-  return transformer;
+  return (ast: unknown) => transformer(ast as Node);
 }

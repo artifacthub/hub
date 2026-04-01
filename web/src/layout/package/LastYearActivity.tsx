@@ -1,8 +1,8 @@
 import classnames from 'classnames';
+import { format, fromUnixTime, parse, startOfMonth, subMonths } from 'date-fns';
 import groupBy from 'lodash/groupBy';
 import isUndefined from 'lodash/isUndefined';
 import rangeRight from 'lodash/rangeRight';
-import moment from 'moment';
 import { useEffect, useState } from 'react';
 
 import { Version } from '../../types';
@@ -19,8 +19,9 @@ interface SortedVersions {
 
 const LastYearActivity = (props: Props) => {
   const prepareMonths = (): string[] => {
+    const currentDate = new Date(Date.now());
     return rangeRight(12).map((n: number) => {
-      return moment().subtract(n, 'months').startOf('month').format('MM/YY');
+      return format(startOfMonth(subMonths(currentDate, n)), 'MM/yy');
     });
   };
 
@@ -28,7 +29,7 @@ const LastYearActivity = (props: Props) => {
   const [months] = useState<string[]>(prepareMonths());
   useEffect(() => {
     const prepareVersionsList = () => {
-      const sortedVersions = groupBy(props.versions, (v) => moment.unix(v.ts).startOf('month').format('MM/YY'));
+      const sortedVersions = groupBy(props.versions, (v) => format(startOfMonth(fromUnixTime(v.ts)), 'MM/yy'));
       setVersions(sortedVersions);
     };
 
@@ -73,7 +74,7 @@ const LastYearActivity = (props: Props) => {
                 />
                 <div data-testid="heatMapPopover" className={`tooltip popover end-0 ${styles.popover}`} role="tooltip">
                   <div className={`popover-header lh-1 p-2 ${styles.popoverHeader}`}>
-                    {moment(month, 'MM/YY').format("MMM'YY")}
+                    {format(parse(month, 'MM/yy', new Date(Date.now())), "MMM''yy")}
                   </div>
                   <div className="popover-body text-nowrap">
                     <div className="d-flex flex-row align-items-center">
@@ -88,13 +89,15 @@ const LastYearActivity = (props: Props) => {
         </div>
         <div className={`d-flex flex-row justify-content-between w-100 ${styles.legend}`}>
           <div>
-            <small className="text-muted">{moment(months[0], 'MM/YY').format("MMM'YY")}</small>
+            <small className="text-muted">{format(parse(months[0], 'MM/yy', new Date(Date.now())), "MMM''yy")}</small>
           </div>
           <div>
-            <small className="text-muted">{moment(months[5], 'MM/YY').format("MMM'YY")}</small>
+            <small className="text-muted">{format(parse(months[5], 'MM/yy', new Date(Date.now())), "MMM''yy")}</small>
           </div>
           <div>
-            <small className="text-muted">{moment(months[months.length - 1], 'MM/YY').format("MMM'YY")}</small>
+            <small className="text-muted">
+              {format(parse(months[months.length - 1], 'MM/yy', new Date(Date.now())), "MMM''yy")}
+            </small>
           </div>
         </div>
       </div>

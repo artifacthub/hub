@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Repository } from '../../../types';
 import TransferModal from './TransferModal';
-jest.mock('../../../api');
+vi.mock('../../../api');
 
 const onAuthErrorMock = jest.fn();
 const onSuccessMock = jest.fn();
@@ -80,7 +80,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
   it('creates snapshot', async () => {
     const mockOrganizations = getMockOrganizations('1');
-    mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+    vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -101,7 +101,7 @@ describe('Transfer Repository Modal - packages section', () => {
   describe('Render', () => {
     it('renders component when org is selected in context', async () => {
       const mockOrganizations = getMockOrganizations('2');
-      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
 
       render(
         <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -134,7 +134,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
     it('renders component when org is not selected in context', async () => {
       const mockOrganizations = getMockOrganizations('3');
-      mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+      vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
 
       render(
         <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -164,8 +164,8 @@ describe('Transfer Repository Modal - packages section', () => {
     describe('Transfer repo', () => {
       it('from org to myself', async () => {
         const mockOrganizations = getMockOrganizations('4');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
-        mocked(API).transferRepository.mockResolvedValue(null);
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).transferRepository.mockResolvedValue(null);
 
         render(
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -195,8 +195,8 @@ describe('Transfer Repository Modal - packages section', () => {
 
       it('from org to org', async () => {
         const mockOrganizations = getMockOrganizations('5');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
-        mocked(API).transferRepository.mockResolvedValue(null);
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).transferRepository.mockResolvedValue(null);
 
         render(
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -236,8 +236,8 @@ describe('Transfer Repository Modal - packages section', () => {
 
       it('from user to org', async () => {
         const mockOrganizations = getMockOrganizations('6');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
-        mocked(API).transferRepository.mockResolvedValue(null);
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).transferRepository.mockResolvedValue(null);
 
         render(
           <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
@@ -279,8 +279,8 @@ describe('Transfer Repository Modal - packages section', () => {
     describe('When transfer repo fails', () => {
       it('UnauthorizedError', async () => {
         const mockOrganizations = getMockOrganizations('7');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
-        mocked(API).transferRepository.mockRejectedValue({
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).transferRepository.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
 
@@ -306,8 +306,8 @@ describe('Transfer Repository Modal - packages section', () => {
 
       it('default error', async () => {
         const mockOrganizations = getMockOrganizations('8');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
-        mocked(API).transferRepository.mockRejectedValue({
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).transferRepository.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 
@@ -340,8 +340,8 @@ describe('Transfer Repository Modal - packages section', () => {
 
       it('with custom error message', async () => {
         const mockOrganizations = getMockOrganizations('9');
-        mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
-        mocked(API).transferRepository.mockRejectedValue({
+        vi.mocked(API).getAllUserOrganizations.mockResolvedValue(mockOrganizations);
+        vi.mocked(API).transferRepository.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'custom error',
         });
@@ -376,7 +376,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
     describe('When fetchOrganizations fails', () => {
       it('error UnauthorizedError', async () => {
-        mocked(API).getAllUserOrganizations.mockRejectedValue({
+        vi.mocked(API).getAllUserOrganizations.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
 
@@ -394,7 +394,7 @@ describe('Transfer Repository Modal - packages section', () => {
       });
 
       it('default error', async () => {
-        mocked(API).getAllUserOrganizations.mockRejectedValue({
+        vi.mocked(API).getAllUserOrganizations.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 

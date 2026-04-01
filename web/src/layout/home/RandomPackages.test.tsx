@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { Package } from '../../types';
 import RandomPackages from './RandomPackages';
-jest.mock('../../api');
+vi.mock('../../api');
 
 const getMockRandomPackages = (fixtureId: string): Package[] => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -19,7 +19,7 @@ describe('RandomPackages', () => {
 
   it('creates snapshot', async () => {
     const mockPackages = getMockRandomPackages('1');
-    mocked(API).getRandomPackages.mockResolvedValue(mockPackages);
+    vi.mocked(API).getRandomPackages.mockResolvedValue(mockPackages);
 
     const { asFragment } = render(
       <Router>
@@ -38,7 +38,7 @@ describe('RandomPackages', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockPackages = getMockRandomPackages('2');
-      mocked(API).getRandomPackages.mockResolvedValue(mockPackages);
+      vi.mocked(API).getRandomPackages.mockResolvedValue(mockPackages);
 
       render(
         <Router>
@@ -55,7 +55,7 @@ describe('RandomPackages', () => {
 
     it('renders default message when list is empty', async () => {
       const mockPackages = getMockRandomPackages('3');
-      mocked(API).getRandomPackages.mockResolvedValue(mockPackages);
+      vi.mocked(API).getRandomPackages.mockResolvedValue(mockPackages);
 
       render(
         <Router>

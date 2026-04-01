@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { format, fromUnixTime } from 'date-fns';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Repository } from '../../types';
@@ -35,7 +35,7 @@ const VersionInRow = (props: Props) => {
     );
   };
 
-  const formattedDate = moment.unix(props.ts!).format('D MMM, YYYY');
+  const formattedDate = format(fromUnixTime(props.ts!), 'd MMM, yyyy');
 
   return (
     <tr data-testid="tr-version-row">

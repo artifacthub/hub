@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SubscriptionSwitch renders correctly 1`] = `
+exports[`SubscriptionSwitch > renders correctly 1`] = `
 <DocumentFragment>
   <div
     class="form-switch"
   >
     <input
-      class="form-check-input checkbox"
+      class="form-check-input _checkbox_12cac0"
       data-testid="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4_input"
       id="subs_b4b4973f-08f0-430a-acb3-2c6ec5449495_4"
       role="switch"

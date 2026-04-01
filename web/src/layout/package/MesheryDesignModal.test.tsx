@@ -1,17 +1,20 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import MesheryDesignModal from './MesheryDesignModal';
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 
-jest.mock('react-syntax-highlighter', () => () => <div>content</div>);
+vi.mock('react-syntax-highlighter', () => ({
+  default: () => <div>content</div>,
+}));
 
 const defaultProps = {
   design:

@@ -22,6 +22,11 @@ select:focus {
   overflow: hidden;
 }
 
+/* Fix issue to render sidebar correctly */
+.noScroll-sidebar .mainPackage {
+  z-index: -1;
+}
+
 /* GitHub alerts */
 .markdown-alert {
   padding: 0.5rem 1rem;

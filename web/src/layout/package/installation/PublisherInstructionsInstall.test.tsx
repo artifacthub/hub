@@ -1,8 +1,13 @@
 import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import PublisherInstructionsInstall from './PublisherInstructionsInstall';
-jest.mock('react-markdown', () => () => <div>Install using Helm</div>);
-jest.mock('remark-gfm', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: () => <div>Install using Helm</div>,
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
 
 describe('PublisherInstructionsInstall', () => {
   it('creates snapshot', () => {

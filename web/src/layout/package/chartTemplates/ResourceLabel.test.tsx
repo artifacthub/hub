@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
+import { hasClassContaining } from '../../../utils/testUtils';
 import ResourceLabel from './ResourceLabel';
 
 describe('ResourceLabel', () => {
@@ -17,7 +18,7 @@ describe('ResourceLabel', () => {
       render(<ResourceLabel text="Scanner" />);
 
       expect(screen.getByText('Scanner')).toBeInTheDocument();
-      expect(screen.getByText('Scanner')).toHaveClass('label');
+      expect(hasClassContaining(screen.getByText('Scanner'), 'label')).toBe(true);
     });
   });
 });

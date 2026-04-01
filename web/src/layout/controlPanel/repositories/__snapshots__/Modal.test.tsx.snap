@@ -1,28 +1,28 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Repository Modal - repositories section creates snapshot 1`] = `
+exports[`Repository Modal - repositories section > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="modal-backdrop activeBackdrop"
+      class="modal-backdrop _activeBackdrop_2adcc6"
       data-testid="modalBackdrop"
     />
     <div
       aria-modal="true"
-      class="modal modal active d-block"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
       role="dialog"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content border border-3 mx-auto content modal"
+          class="modal-content border border-3 mx-auto _content_2adcc6 _modal_189cd2"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 title"
+              class="h3 m-2 flex-grow-1 _title_189cd2"
             >
               Add repository
             </div>
@@ -48,7 +48,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   class="w-75 mb-4"
                 >
                   <label
-                    class="form-label fw-bold label"
+                    class="form-label fw-bold _label_189cd2"
                     for="repoKind"
                   >
                     Kind
@@ -210,7 +210,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   class="mb-4 position-relative undefined"
                 >
                   <label
-                    class="form-label fw-bold label"
+                    class="form-label fw-bold _label_d02ded"
                     for="name"
                   >
                     <span
@@ -230,14 +230,14 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     data-testid="nameInput"
                     id="name"
                     name="name"
-                    pattern="[a-z][a-z0-9\\\\-]*"
+                    pattern="[a-z][a-z0-9\\-]*"
                     required=""
                     spellcheck="false"
                     type="text"
                     value=""
                   />
                   <div
-                    class="invalid-feedback mt-0 inputFeedback"
+                    class="invalid-feedback mt-0 _inputFeedback_d02ded"
                   >
                     This field is required
                   </div>
@@ -265,7 +265,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   class="mb-4 position-relative undefined"
                 >
                   <label
-                    class="form-label fw-bold label"
+                    class="form-label fw-bold _label_d02ded"
                     for="displayName"
                   >
                     <span
@@ -284,14 +284,14 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     value=""
                   />
                   <div
-                    class="invalid-feedback mt-0 inputFeedback"
+                    class="invalid-feedback mt-0 _inputFeedback_d02ded"
                   />
                 </div>
                 <div
                   class="mb-4 position-relative undefined"
                 >
                   <label
-                    class="form-label fw-bold label"
+                    class="form-label fw-bold _label_d02ded"
                     for="url"
                   >
                     <span
@@ -317,7 +317,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     value=""
                   />
                   <div
-                    class="invalid-feedback mt-0 inputFeedback"
+                    class="invalid-feedback mt-0 _inputFeedback_d02ded"
                   >
                     This field is required
                   </div>
@@ -332,7 +332,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       For more information about the url format and the repository structure, please see the 
                       <a
                         aria-label="Open documentation"
-                        class="link text-primary fw-bold"
+                        class="_link_f0e789 text-primary fw-bold"
                         href="/docs/topics/repositories/helm-charts"
                         rel="noopener noreferrer"
                         role="button"
@@ -344,7 +344,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                        section in the 
                       <a
                         aria-label="Open documentation"
-                        class="link text-primary fw-bold"
+                        class="_link_f0e789 text-primary fw-bold"
                         href="/docs/repositories"
                         rel="noopener noreferrer"
                         role="button"
@@ -364,7 +364,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     class="form-check form-switch ps-0"
                   >
                     <label
-                      class="form-check-label fw-bold label"
+                      class="form-check-label fw-bold _label_189cd2"
                       for="disabledRepo"
                     >
                       Disabled
@@ -390,7 +390,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     class="form-check form-switch ps-0"
                   >
                     <label
-                      class="form-check-label fw-bold label"
+                      class="form-check-label fw-bold _label_189cd2"
                       for="scannerDisabledRepo"
                     >
                       Security scanner disabled
@@ -414,7 +414,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>

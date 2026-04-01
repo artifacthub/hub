@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CompareView creates snapshot 1`] = `
+exports[`CompareView > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-flex flex-row align-items-stretch g-0 h-100 mh-100"
@@ -18,7 +18,7 @@ exports[`CompareView creates snapshot 1`] = `
             class="mb-3 input-group-sm"
           >
             <input
-              class="flex-grow-1 form-control ps-3 pe-4 input"
+              class="flex-grow-1 form-control ps-3 pe-4 _input_393876"
               name="CompareChartTemplateInput"
               placeholder="Search by template or resource kind"
               spellcheck="false"
@@ -26,7 +26,7 @@ exports[`CompareView creates snapshot 1`] = `
               value=""
             />
             <svg
-              class="text-muted position-absolute searchIcon"
+              class="text-muted position-absolute _searchIcon_393876"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -45,7 +45,7 @@ exports[`CompareView creates snapshot 1`] = `
           <button
             aria-label="Show template configmap-authscripts.yaml"
             aria-pressed="true"
-            class="btn btn-light btn-sm mb-2 text-start w-100 btn activeTemplate active"
+            class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876 activeTemplate _active_393876"
           >
             <div
               class="d-flex flex-column"
@@ -54,7 +54,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row align-items-baseline mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -63,7 +63,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <div
-                  class="text-truncate templateName"
+                  class="text-truncate _templateName_393876"
                 >
                   configmap-authscripts.yaml
                 </div>
@@ -94,7 +94,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -103,7 +103,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border border-1 fw-bold label"
+                  class="text-truncate border border-1 fw-bold _label_ed385e"
                 >
                   ConfigMap
                 </span>
@@ -115,7 +115,7 @@ exports[`CompareView creates snapshot 1`] = `
           <button
             aria-label="Show template configmap-sshconfig.yaml"
             aria-pressed="false"
-            class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+            class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
           >
             <div
               class="d-flex flex-column"
@@ -124,7 +124,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row align-items-baseline mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -133,7 +133,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <div
-                  class="text-truncate templateName"
+                  class="text-truncate _templateName_393876"
                 >
                   configmap-sshconfig.yaml
                 </div>
@@ -164,7 +164,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -173,7 +173,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border border-1 fw-bold label"
+                  class="text-truncate border border-1 fw-bold _label_ed385e"
                 >
                   ConfigMap
                 </span>
@@ -185,7 +185,7 @@ exports[`CompareView creates snapshot 1`] = `
           <button
             aria-label="Show template configmap.yaml"
             aria-pressed="false"
-            class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+            class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
           >
             <div
               class="d-flex flex-column"
@@ -194,7 +194,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row align-items-baseline mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -203,7 +203,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <div
-                  class="text-truncate templateName"
+                  class="text-truncate _templateName_393876"
                 >
                   configmap.yaml
                 </div>
@@ -211,7 +211,7 @@ exports[`CompareView creates snapshot 1`] = `
                   class="ps-2 ms-auto"
                 >
                   <span
-                    class="modifiedIcon"
+                    class="_modifiedIcon_393876"
                     data-testid="tmpl-modified-icon"
                   >
                     <svg
@@ -239,7 +239,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -248,7 +248,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border border-1 fw-bold label"
+                  class="text-truncate border border-1 fw-bold _label_ed385e"
                 >
                   ConfigMap
                 </span>
@@ -260,7 +260,7 @@ exports[`CompareView creates snapshot 1`] = `
           <button
             aria-label="Show template deployment.yaml"
             aria-pressed="false"
-            class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+            class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
           >
             <div
               class="d-flex flex-column"
@@ -269,7 +269,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row align-items-baseline mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -278,7 +278,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <div
-                  class="text-truncate templateName"
+                  class="text-truncate _templateName_393876"
                 >
                   deployment.yaml
                 </div>
@@ -309,7 +309,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -318,7 +318,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border border-1 fw-bold label"
+                  class="text-truncate border border-1 fw-bold _label_ed385e"
                 >
                   Deployment
                 </span>
@@ -330,7 +330,7 @@ exports[`CompareView creates snapshot 1`] = `
           <button
             aria-label="Show template metrics-service.yaml"
             aria-pressed="false"
-            class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+            class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
           >
             <div
               class="d-flex flex-column"
@@ -339,7 +339,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row align-items-baseline mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -348,7 +348,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <div
-                  class="text-truncate templateName"
+                  class="text-truncate _templateName_393876"
                 >
                   metrics-service.yaml
                 </div>
@@ -379,7 +379,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -388,7 +388,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border border-1 fw-bold label"
+                  class="text-truncate border border-1 fw-bold _label_ed385e"
                 >
                   Service
                 </span>
@@ -400,7 +400,7 @@ exports[`CompareView creates snapshot 1`] = `
           <button
             aria-label="Show template secret.yaml"
             aria-pressed="false"
-            class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+            class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
           >
             <div
               class="d-flex flex-column"
@@ -409,7 +409,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row align-items-baseline mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -418,7 +418,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <div
-                  class="text-truncate templateName"
+                  class="text-truncate _templateName_393876"
                 >
                   secret.yaml
                 </div>
@@ -449,7 +449,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -458,7 +458,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border border-1 fw-bold label"
+                  class="text-truncate border border-1 fw-bold _label_ed385e"
                 >
                   Secret
                 </span>
@@ -470,7 +470,7 @@ exports[`CompareView creates snapshot 1`] = `
           <button
             aria-label="Show template servicemonitor.yaml"
             aria-pressed="false"
-            class="btn btn-light btn-sm mb-2 text-start w-100 btn"
+            class="btn btn-light btn-sm mb-2 text-start w-100 _btn_393876"
           >
             <div
               class="d-flex flex-column"
@@ -479,7 +479,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row align-items-baseline mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -488,7 +488,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <div
-                  class="text-truncate templateName"
+                  class="text-truncate _templateName_393876"
                 >
                   servicemonitor.yaml
                 </div>
@@ -519,7 +519,7 @@ exports[`CompareView creates snapshot 1`] = `
                 class="d-flex flex-row mb-1"
               >
                 <div
-                  class="legend"
+                  class="_legend_393876"
                 >
                   <small
                     class="text-muted text-uppercase"
@@ -528,7 +528,7 @@ exports[`CompareView creates snapshot 1`] = `
                   </small>
                 </div>
                 <span
-                  class="text-truncate border border-1 fw-bold label"
+                  class="text-truncate border border-1 fw-bold _label_ed385e"
                 >
                   ServiceMonitor
                 </span>
@@ -542,17 +542,17 @@ exports[`CompareView creates snapshot 1`] = `
       class="col-9 ps-3 h-100"
     >
       <div
-        class="position-relative h-100 mh-100 border border-1 templateWrapper"
+        class="position-relative h-100 mh-100 border border-1 _templateWrapper_ded8fa"
       >
         <div
-          class="position-absolute d-flex wrapper"
+          class="position-absolute d-flex _wrapper_ded8fa"
         >
           <div
             class="position-relative"
           >
             <button
               aria-label="Expand code"
-              class="btn btn-sm btn-primary fs-5 btn"
+              class="btn btn-sm btn-primary fs-5 _btn_ded8fa"
             >
               <svg
                 fill="currentColor"
@@ -572,14 +572,14 @@ exports[`CompareView creates snapshot 1`] = `
           </div>
         </div>
         <pre
-          class="text-muted h-100 mh-100 mb-0 overflow-hidden position-relative diffTemplate pre"
+          class="text-muted h-100 mh-100 mb-0 overflow-hidden position-relative diffTemplate _pre_ded8fa"
         >
           <div
             class="file-diff h-100"
             data-testid="diffTemplate"
           >
             <header
-              class="d-flex flex-row align-items-center justify-content-between diff-header fw-bold py-1 header"
+              class="d-flex flex-row align-items-center justify-content-between diff-header fw-bold py-1 _header_cb99ee"
             >
               <div
                 class="text-truncate"
@@ -590,29 +590,29 @@ exports[`CompareView creates snapshot 1`] = `
                 class="pe-5 me-3 ps-3"
               >
                 <span
-                  class="pe-2 versionTitle"
+                  class="pe-2 _versionTitle_cb99ee"
                 >
                   Changes from
                 </span>
                 <span
                   class="badge bg-dark px-2 py-1 badge-md"
                 >
-                  	0.1.0
+                  1.0	0.1.0
                 </span>
                 <span
-                  class="px-2 versionTitle"
+                  class="px-2 _versionTitle_cb99ee"
                 >
                   to
                 </span>
                 <span
                   class="badge bg-dark px-2 py-1 badge-md"
                 >
-                  	0.8.0
+                  8.0	0.8.0
                 </span>
               </div>
             </header>
             <div
-              class="overflow-scroll border-top border-1 py-2 codeWrapper"
+              class="overflow-scroll border-top border-1 py-2 _codeWrapper_cb99ee"
             >
               <table
                 class="diff diff-unified"
@@ -635,7 +635,7 @@ exports[`CompareView creates snapshot 1`] = `
                       colspan="3"
                     >
                       <div
-                        class="hunk-header py-1 px-3 fw-bold hunkHeader mb-2"
+                        class="hunk-header py-1 px-3 fw-bold _hunkHeader_cb99ee mb-2"
                       >
                         @@ -0,0 +1,10 @@
                       </div>
@@ -650,14 +650,17 @@ exports[`CompareView creates snapshot 1`] = `
                   >
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I1"
                     />
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I1"
                     >
                       1
                     </td>
                     <td
                       class="diff-code diff-code-insert"
+                      data-change-key="I1"
                     >
                       {{- if .Values.authScripts.enabled }}
                     </td>
@@ -667,14 +670,17 @@ exports[`CompareView creates snapshot 1`] = `
                   >
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I2"
                     />
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I2"
                     >
                       2
                     </td>
                     <td
                       class="diff-code diff-code-insert"
+                      data-change-key="I2"
                     >
                       apiVersion: v1
                     </td>
@@ -684,14 +690,17 @@ exports[`CompareView creates snapshot 1`] = `
                   >
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I3"
                     />
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I3"
                     >
                       3
                     </td>
                     <td
                       class="diff-code diff-code-insert"
+                      data-change-key="I3"
                     >
                       kind: ConfigMap
                     </td>
@@ -701,14 +710,17 @@ exports[`CompareView creates snapshot 1`] = `
                   >
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I4"
                     />
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I4"
                     >
                       4
                     </td>
                     <td
                       class="diff-code diff-code-insert"
+                      data-change-key="I4"
                     >
                       metadata:
                     </td>
@@ -718,14 +730,17 @@ exports[`CompareView creates snapshot 1`] = `
                   >
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I5"
                     />
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I5"
                     >
                       5
                     </td>
                     <td
                       class="diff-code diff-code-insert"
+                      data-change-key="I5"
                     >
                         labels:
                     </td>
@@ -735,14 +750,17 @@ exports[`CompareView creates snapshot 1`] = `
                   >
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I6"
                     />
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I6"
                     >
                       6
                     </td>
                     <td
                       class="diff-code diff-code-insert"
+                      data-change-key="I6"
                     >
                           {{- include "argocd-image-updater.labels" . | nindent 4 }}
                     </td>
@@ -752,14 +770,17 @@ exports[`CompareView creates snapshot 1`] = `
                   >
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I7"
                     />
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I7"
                     >
                       7
                     </td>
                     <td
                       class="diff-code diff-code-insert"
+                      data-change-key="I7"
                     >
                         name: argocd-image-updater-authscripts
                     </td>
@@ -769,14 +790,17 @@ exports[`CompareView creates snapshot 1`] = `
                   >
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I8"
                     />
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I8"
                     >
                       8
                     </td>
                     <td
                       class="diff-code diff-code-insert"
+                      data-change-key="I8"
                     >
                       data:
                     </td>
@@ -786,14 +810,17 @@ exports[`CompareView creates snapshot 1`] = `
                   >
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I9"
                     />
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I9"
                     >
                       9
                     </td>
                     <td
                       class="diff-code diff-code-insert"
+                      data-change-key="I9"
                     >
                         {{- toYaml .Values.authScripts.scripts | nindent 2}}
                     </td>
@@ -803,14 +830,17 @@ exports[`CompareView creates snapshot 1`] = `
                   >
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I10"
                     />
                     <td
                       class="diff-gutter diff-gutter-insert"
+                      data-change-key="I10"
                     >
                       10
                     </td>
                     <td
                       class="diff-code diff-code-insert"
+                      data-change-key="I10"
                     >
                       {{- end }}
                     </td>

@@ -1,18 +1,18 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import LogOut from './LogOut';
-jest.mock('../../api');
-jest.mock('../../utils/alertDispatcher');
+vi.mock('../../api');
+vi.mock('../../utils/alertDispatcher');
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -61,7 +61,7 @@ describe('LogOut', () => {
       await userEvent.click(btn);
 
       await waitFor(() => {
-        expect(API.logout).toBeCalledTimes(1);
+        expect(API.logout).toHaveBeenCalledTimes(1);
         expect(mockOnSuccess).toHaveBeenCalledTimes(1);
       });
     });
@@ -83,7 +83,7 @@ describe('LogOut', () => {
     });
 
     it('with custom error message', async () => {
-      mocked(API).logout.mockRejectedValue({
+      vi.mocked(API).logout.mockRejectedValue({
         kind: ErrorKind.Other,
         message: 'custom error',
       });
@@ -107,7 +107,7 @@ describe('LogOut', () => {
     });
 
     it('display common logout error', async () => {
-      mocked(API).logout.mockRejectedValue({
+      vi.mocked(API).logout.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 

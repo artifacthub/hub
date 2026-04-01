@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Organization Card - organization section creates snapshot 1`] = `
+exports[`Organization Card - organization section > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="col-12 col-xxl-6 py-sm-3 py-2 px-0 px-xxl-3"
@@ -19,10 +19,10 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
             class="d-flex flex-row align-items-center w-100"
           >
             <div
-              class="d-flex align-items-center justify-content-center overflow-hidden me-2 position-relative imageWrapper"
+              class="d-flex align-items-center justify-content-center overflow-hidden me-2 position-relative _imageWrapper_8d726f"
             >
               <svg
-                class="icon"
+                class="_icon_8d726f"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -44,7 +44,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
               class="text-truncate"
             >
               <div
-                class="h5 mb-0 text-truncate title"
+                class="h5 mb-0 text-truncate _title_8d726f"
               >
                 Test
               </div>
@@ -53,10 +53,10 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
               class="ms-auto"
             >
               <div
-                class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+                class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_8d726f"
               >
                 <div
-                  class="dropdown-arrow arrow"
+                  class="dropdown-arrow _arrow_8d726f"
                 />
                 <button
                   aria-label="Open modal"
@@ -66,7 +66,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
                     class="d-flex flex-row align-items-center"
                   >
                     <svg
-                      class="me-2 btnIcon"
+                      class="me-2 _btnIcon_8d726f"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -88,7 +88,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
               <button
                 aria-expanded="false"
                 aria-label="Open menu"
-                class="ms-3 mb-2 btn btn-outline-secondary p-0 text-center  btnDropdown"
+                class="ms-3 mb-2 btn btn-outline-secondary p-0 text-center  _btnDropdown_8d726f"
               >
                 <svg
                   fill="currentColor"
@@ -117,7 +117,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
           </small>
           <a
             aria-label="Open link https://test.org"
-            class="link text-reset link"
+            class="_link_f0e789 text-reset _link_8d726f"
             href="https://test.org"
             rel="noopener noreferrer"
             role="button"
@@ -131,7 +131,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
           class="mt-2"
         >
           <p
-            class="mb-0 text-muted description"
+            class="mb-0 text-muted _description_8d726f"
           >
             Lorem ipsum...
           </p>

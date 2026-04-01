@@ -1,10 +1,10 @@
 import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import CompareView from './CompareView';
 
-jest.mock('../../../api');
+vi.mock('../../../api');
 
 const defaultProps = {
   packageId: 'id',
@@ -23,7 +23,7 @@ describe('CompareView', () => {
   });
 
   it('creates snapshot', async () => {
-    mocked(API).getChartValues.mockResolvedValue(diff);
+    vi.mocked(API).getChartValues.mockResolvedValue(diff);
     const { asFragment } = render(<CompareView {...defaultProps} />);
 
     await waitFor(() => {
@@ -37,7 +37,7 @@ describe('CompareView', () => {
 
   describe('Render', () => {
     it('renders component', async () => {
-      mocked(API).getChartValues.mockResolvedValue(diff);
+      vi.mocked(API).getChartValues.mockResolvedValue(diff);
       render(<CompareView {...defaultProps} />);
 
       await waitFor(() => {
@@ -51,7 +51,7 @@ describe('CompareView', () => {
     });
 
     it('renders alert when any difference between versions', async () => {
-      mocked(API).getChartValues.mockResolvedValue(defaultProps.values);
+      vi.mocked(API).getChartValues.mockResolvedValue(defaultProps.values);
       render(<CompareView {...defaultProps} />);
 
       await waitFor(() => {
@@ -59,7 +59,10 @@ describe('CompareView', () => {
         expect(API.getChartValues).toHaveBeenCalledWith('id', '0.0.2');
       });
 
-      await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+      const loading = screen.queryByRole('status');
+      if (loading) {
+        await waitForElementToBeRemoved(loading);
+      }
       expect(await screen.findByText(/No changes found when comparing version/)).toBeInTheDocument();
     });
   });

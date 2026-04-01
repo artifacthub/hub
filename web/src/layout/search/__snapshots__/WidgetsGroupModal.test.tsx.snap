@@ -1,28 +1,28 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`WidgetsGroupModal creates snapshot 1`] = `
+exports[`WidgetsGroupModal > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="modal-backdrop activeBackdrop"
+      class="modal-backdrop _activeBackdrop_2adcc6"
       data-testid="modalBackdrop"
     />
     <div
       aria-modal="true"
-      class="modal modal active d-block"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
       role="dialog"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable fs-6"
       >
         <div
-          class="modal-content border border-3 mx-auto content"
+          class="modal-content border border-3 mx-auto _content_2adcc6"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 title"
+              class="h3 m-2 flex-grow-1 _title_a9b46a"
             >
               Widgets group
             </div>
@@ -39,7 +39,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
               class="w-100 position-relative"
             >
               <label
-                class="form-label fw-bold label"
+                class="form-label fw-bold _label_a9b46a"
                 for="theme"
               >
                 Theme
@@ -188,7 +188,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                   class="form-check form-switch ps-0"
                 >
                   <label
-                    class="form-check-label fw-bold label"
+                    class="form-check-label fw-bold _label_a9b46a"
                     for="header"
                   >
                     Header
@@ -214,7 +214,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                   class="form-check form-switch ps-0"
                 >
                   <label
-                    class="form-check-label fw-bold label"
+                    class="form-check-label fw-bold _label_a9b46a"
                     for="stars"
                   >
                     Stars
@@ -239,7 +239,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
               >
                 <div>
                   <label
-                    class="form-label fw-bold label"
+                    class="form-label fw-bold _label_a9b46a"
                     for="groupWrapperWidthOpt"
                   >
                     Container width
@@ -330,7 +330,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="position-relative inputWrapper"
+                  class="position-relative _inputWrapper_a9b46a"
                 />
               </div>
               <div
@@ -340,7 +340,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                   class="form-check form-switch ps-0"
                 >
                   <label
-                    class="form-check-label fw-bold label"
+                    class="form-check-label fw-bold _label_a9b46a"
                     for="loading"
                   >
                     Loading spinner
@@ -367,16 +367,16 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                   class="d-flex flex-row align-items-center"
                 >
                   <label
-                    class="form-label fw-bold mb-0 label"
+                    class="form-label fw-bold mb-0 _label_a9b46a"
                     for="color"
                   >
                     Color
                   </label>
                   <div
-                    class="btn btn-sm btn-light border border-1 p-1 ms-2 colorInputWrapper"
+                    class="btn btn-sm btn-light border border-1 p-1 ms-2 _colorInputWrapper_a9b46a"
                   >
                     <div
-                      class="colorInput"
+                      class="_colorInput_a9b46a"
                       style="background-color: rgb(65, 117, 152);"
                     />
                   </div>
@@ -387,7 +387,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                   Color used for widgets border, header and loading spinner.
                 </div>
                 <div
-                  class="pb-2 colorPickerWrapper"
+                  class="pb-2 _colorPickerWrapper_a9b46a"
                 >
                   sketch
                 </div>
@@ -396,23 +396,23 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
                 class="mt-3 mb-2"
               >
                 <label
-                  class="form-label fw-bold label"
+                  class="form-label fw-bold _label_a9b46a"
                 >
                   Code
                 </label>
                 <div
-                  class="flex-grow-1 me-3 user-select-none blockWrapper"
+                  class="flex-grow-1 me-3 user-select-none _blockWrapper_a9b46a"
                   data-testid="block-content"
                 >
                   <pre
-                    style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+                    style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
                   >
                     <code
                       class="language-text"
                       style="white-space: pre;"
                     >
                       <span>
-                        &lt;div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="true"  data-loading="true"&gt;&lt;/div&gt;&lt;script async src="http://localhost/artifacthub-widget.js"&gt;&lt;/script&gt;
+                        &lt;div class="artifacthub-widget-group" data-url="http://localhost:3000/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="true"  data-loading="true"&gt;&lt;/div&gt;&lt;script async src="http://localhost:3000/artifacthub-widget.js"&gt;&lt;/script&gt;
                       </span>
                     </code>
                   </pre>
@@ -464,7 +464,7 @@ exports[`WidgetsGroupModal creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>

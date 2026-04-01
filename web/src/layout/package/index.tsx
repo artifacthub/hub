@@ -1,8 +1,8 @@
 import classNames from 'classnames';
+import { formatDistanceToNow, fromUnixTime } from 'date-fns';
 import isArray from 'lodash/isArray';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { FiCode, FiPlus } from 'react-icons/fi';
@@ -76,6 +76,7 @@ import ReadmeWrapper from './readme';
 import RecommendedPackages, { URL_regex } from './RecommendedPackages';
 import RelatedPackages from './RelatedPackages';
 import ScreenshotsModal from './screenshots/Modal';
+import { default as SecurityReportMobileModal } from './securityReport/MobileModal';
 import StarButton from './StarButton';
 import Stats from './Stats';
 import SubscriptionsButton from './SubscriptionsButton';
@@ -888,7 +889,7 @@ const PackageView = () => {
         </SubNavbar>
       )}
 
-      <div data-testid="mainPackage" className="position-relative flex-grow-1">
+      <div data-testid="mainPackage" className="position-relative flex-grow-1 mainPackage">
         {(isLoadingPackage || isUndefined(detail)) && <Loading spinnerClassName="position-fixed top-50" />}
 
         {!isUndefined(detail) && (
@@ -1036,7 +1037,7 @@ const PackageView = () => {
                     >
                       {detail!.ts && !isFuture(detail!.ts) && (
                         <span className={`d-block d-lg-none text-muted text-nowrap ${styles.date}`}>
-                          Updated {moment.unix(detail!.ts).fromNow()}
+                          Updated {formatDistanceToNow(fromUnixTime(detail!.ts), { addSuffix: true })}
                         </span>
                       )}
                       <StarButton packageId={detail.packageId} />
@@ -1098,6 +1099,10 @@ const PackageView = () => {
                           />
                         </div>
                       )}
+
+                      <SecurityReportMobileModal
+                        visibleSecurityReport={!isNull(visibleModal) && visibleModal === 'security-report'}
+                      />
                     </div>
                   </div>
                 </div>
@@ -1463,14 +1468,16 @@ const PackageView = () => {
                               </NoData>
                             </div>
                           ) : (
-                            <ReadmeWrapper
-                              packageName={detail.displayName || detail.name}
-                              supportLink={supportLink}
-                              markdownContent={detail.readme}
-                              scrollIntoView={scrollIntoView}
-                              additionalTitles={isNull(additionalInfo) ? '' : additionalInfo.titles}
-                              stopPkgLoading={stopPkgLoading}
-                            />
+                            <div className={styles.contentWrapper}>
+                              <ReadmeWrapper
+                                packageName={detail.displayName || detail.name}
+                                supportLink={supportLink}
+                                markdownContent={detail.readme}
+                                scrollIntoView={scrollIntoView}
+                                additionalTitles={isNull(additionalInfo) ? '' : additionalInfo.titles}
+                                stopPkgLoading={stopPkgLoading}
+                              />
+                            </div>
                           )}
 
                           {!isNull(additionalInfo) && <>{additionalInfo.content}</>}

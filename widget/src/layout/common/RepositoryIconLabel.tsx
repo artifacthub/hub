@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import styled from 'styled-components';
 
 import { RepositoryKind } from '../../types';

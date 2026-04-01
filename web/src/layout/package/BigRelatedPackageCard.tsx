@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { formatDistanceToNow, fromUnixTime } from 'date-fns';
 import { Link } from 'react-router-dom';
 
 import { Package } from '../../types';
@@ -76,7 +76,7 @@ const BigRelatedPackageCard = (props: Props) => {
                 <div className="d-none d-md-block mt-1">
                   {!isFuture(props.package.ts) && (
                     <small className={`text-muted text-nowrap ${styles.date}`}>
-                      Updated {moment.unix(props.package.ts).fromNow()}
+                      Updated {formatDistanceToNow(fromUnixTime(props.package.ts), { addSuffix: true })}
                     </small>
                   )}
                 </div>

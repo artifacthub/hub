@@ -1,11 +1,10 @@
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
 
 const minutesToNearestInterval = (duration: number, decrement?: number): number => {
-  const rounding = moment.duration(duration, 'minutes');
-  const currentDate = moment();
-  const nextInterval = moment(Math.ceil(+currentDate / +rounding) * +rounding);
-  const result = Math.ceil(nextInterval.diff(currentDate, 'minutes', true));
+  const roundingInMs = duration * 60 * 1000;
+  const currentDateInMs = Date.now();
+  const nextIntervalInMs = Math.ceil(currentDateInMs / roundingInMs) * roundingInMs;
+  const result = Math.ceil((nextIntervalInMs - currentDateInMs) / (60 * 1000));
   if (!isUndefined(decrement)) {
     if (result < decrement) {
       return result + decrement;

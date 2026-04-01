@@ -1,4 +1,5 @@
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 

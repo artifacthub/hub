@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SearchBar creates snapshot 1`] = `
+exports[`SearchBar > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="position-relative undefined"
@@ -10,11 +10,11 @@ exports[`SearchBar creates snapshot 1`] = `
       aria-expanded="false"
       aria-haspopup="listbox"
       aria-owns="search-list"
-      class="d-flex align-items-center overflow-hidden searchBar lh-base bg-white searchBar big"
+      class="d-flex align-items-center overflow-hidden searchBar lh-base bg-white _searchBar_f1c3e6 _big_f1c3e6"
       role="combobox"
     >
       <div
-        class="d-flex align-items-center iconWrapper"
+        class="d-flex align-items-center _iconWrapper_f1c3e6"
         data-testid="searchBarIcon"
       >
         <svg
@@ -46,7 +46,7 @@ exports[`SearchBar creates snapshot 1`] = `
         autocapitalize="none"
         autocomplete="off"
         autocorrect="off"
-        class="flex-grow-1 ps-2 ps-md-0 border-0 shadow-none bg-transparent input"
+        class="flex-grow-1 ps-2 ps-md-0 border-0 shadow-none bg-transparent _input_f1c3e6"
         placeholder="Search packages"
         spellcheck="false"
         type="text"
@@ -62,11 +62,11 @@ exports[`SearchBar creates snapshot 1`] = `
       </div>
       <button
         aria-label="Close"
-        class="btn-close lh-lg ps-2 pe-3 inputClean"
+        class="btn-close lh-lg ps-2 pe-3 _inputClean_f1c3e6"
         type="button"
       />
       <div
-        class="d-none d-sm-block position-absolute text-dark tipIcon bigTipIcon"
+        class="d-none d-sm-block position-absolute text-dark _tipIcon_f1c3e6 _bigTipIcon_f1c3e6"
       >
         <button
           aria-label="Open search tips modal"

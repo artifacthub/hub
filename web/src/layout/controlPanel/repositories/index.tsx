@@ -13,6 +13,7 @@ import ExternalLink from '../../common/ExternalLink';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import Pagination from '../../common/Pagination';
+import PaginationSummary from '../../common/PaginationSummary';
 import ActionBtn from '../ActionBtn';
 import RepositoryCard from './Card';
 import ClaimOwnershipRepositoryModal from './ClaimOwnershipModal';
@@ -270,7 +271,15 @@ const RepositoriesSection = (props: Props) => {
               </NoData>
             ) : (
               <>
-                <div className="row mt-3 mt-md-4 gx-0 gx-xxl-4" data-testid="repoList">
+                {!isUndefined(total) && total > 0 && (
+                  <PaginationSummary
+                    offset={offset}
+                    itemsInPage={repositories.length}
+                    total={total}
+                    className="mt-3 mt-md-4"
+                  />
+                )}
+                <div className="row mt-1 mt-md-2 gx-0 gx-xxl-4" data-testid="repoList">
                   {repositories.map((repo: Repo) => (
                     <RepositoryCard
                       key={`repo_${repo.name}`}

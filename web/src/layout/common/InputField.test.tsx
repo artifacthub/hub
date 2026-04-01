@@ -1,10 +1,10 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { ErrorKind, ResourceKind } from '../../types';
 import InputField from './InputField';
-jest.mock('../../api');
+vi.mock('../../api');
 
 const onChangeMock = jest.fn();
 const onSetValidationStatusMock = jest.fn();
@@ -124,8 +124,8 @@ describe('InputField', () => {
   });
 
   describe('calls checkAvailability', () => {
-    xit('value is available', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(true);
+    it.skip('value is available', async () => {
+      vi.mocked(API).checkAvailability.mockResolvedValue(true);
 
       render(
         <InputField
@@ -148,7 +148,7 @@ describe('InputField', () => {
       });
 
       await waitFor(() => {
-        expect(API.checkAvailability).toBeCalledTimes(1);
+        expect(API.checkAvailability).toHaveBeenCalledTimes(1);
       });
 
       await waitFor(() => {
@@ -157,7 +157,7 @@ describe('InputField', () => {
     });
 
     it('value is taken', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(true);
+      vi.mocked(API).checkAvailability.mockResolvedValue(true);
 
       render(
         <InputField
@@ -180,7 +180,7 @@ describe('InputField', () => {
       });
 
       await waitFor(() => {
-        expect(API.checkAvailability).toBeCalledTimes(1);
+        expect(API.checkAvailability).toHaveBeenCalledTimes(1);
       });
 
       const invalidText = await screen.findByText(defaultProps.invalidText.customError);
@@ -188,8 +188,8 @@ describe('InputField', () => {
       expect(input).toBeInvalid();
     });
 
-    xit('checkAvailability validation is ignored when error is different to NotFoundResponse', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(true);
+    it.skip('checkAvailability validation is ignored when error is different to NotFoundResponse', async () => {
+      vi.mocked(API).checkAvailability.mockResolvedValue(true);
 
       render(
         <InputField
@@ -220,7 +220,7 @@ describe('InputField', () => {
 
   describe('calls isValidResource', () => {
     it('resource is valid', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(true);
+      vi.mocked(API).checkAvailability.mockResolvedValue(true);
 
       render(
         <InputField
@@ -241,13 +241,13 @@ describe('InputField', () => {
         input.blur();
       });
       await waitFor(() => {
-        expect(API.checkAvailability).toBeCalledTimes(1);
+        expect(API.checkAvailability).toHaveBeenCalledTimes(1);
       });
       expect(await screen.findByTestId(`${defaultProps.name}Input`)).toBeValid();
     });
 
     it('resource is not valid', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(false);
+      vi.mocked(API).checkAvailability.mockResolvedValue(false);
 
       render(
         <InputField
@@ -270,7 +270,7 @@ describe('InputField', () => {
       });
 
       await waitFor(() => {
-        expect(API.checkAvailability).toBeCalledTimes(1);
+        expect(API.checkAvailability).toHaveBeenCalledTimes(1);
       });
 
       const invalidText = await screen.findByText(defaultProps.invalidText.customError);
@@ -279,7 +279,7 @@ describe('InputField', () => {
     });
 
     it('value is part of the excluded list', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(false);
+      vi.mocked(API).checkAvailability.mockResolvedValue(false);
 
       render(
         <InputField {...defaultProps} type="text" value="user1" validateOnBlur excludedValues={['user1']} autoFocus />
@@ -297,7 +297,7 @@ describe('InputField', () => {
 
   describe('calls checkPasswordStrength', () => {
     it('Password is strength', async () => {
-      mocked(API).checkPasswordStrength.mockResolvedValue(true);
+      vi.mocked(API).checkPasswordStrength.mockResolvedValue(true);
 
       render(
         <InputField {...defaultProps} type="password" value="abc123" checkPasswordStrength validateOnBlur autoFocus />
@@ -308,7 +308,7 @@ describe('InputField', () => {
       });
 
       await waitFor(() => {
-        expect(API.checkPasswordStrength).toBeCalledTimes(1);
+        expect(API.checkPasswordStrength).toHaveBeenCalledTimes(1);
         expect(API.checkPasswordStrength).toHaveBeenCalledWith('abc123');
       });
 
@@ -318,7 +318,7 @@ describe('InputField', () => {
     });
 
     it('Password is weak', async () => {
-      mocked(API).checkPasswordStrength.mockRejectedValue({
+      vi.mocked(API).checkPasswordStrength.mockRejectedValue({
         kind: ErrorKind.Other,
         message: 'Insecure password...',
       });
@@ -332,7 +332,7 @@ describe('InputField', () => {
       });
 
       await waitFor(() => {
-        expect(API.checkPasswordStrength).toBeCalledTimes(1);
+        expect(API.checkPasswordStrength).toHaveBeenCalledTimes(1);
         expect(API.checkPasswordStrength).toHaveBeenCalledWith('abc123');
       });
 

@@ -39,7 +39,7 @@ describe('Filters', () => {
       await userEvent.selectOptions(select, '60');
 
       await waitFor(() => {
-        expect(updateLimitMock).toBeCalledTimes(1);
+        expect(updateLimitMock).toHaveBeenCalledTimes(1);
         expect(updateLimitMock).toHaveBeenCalledWith(60);
       });
     });
@@ -55,7 +55,7 @@ describe('Filters', () => {
     it('calls updateLimit with default value when limit is not valid', () => {
       render(<PaginationLimit {...defaultProps} limit={15} />);
 
-      expect(updateLimitMock).toBeCalledTimes(1);
+      expect(updateLimitMock).toHaveBeenCalledTimes(1);
       expect(updateLimitMock).toHaveBeenCalledWith(20);
     });
   });

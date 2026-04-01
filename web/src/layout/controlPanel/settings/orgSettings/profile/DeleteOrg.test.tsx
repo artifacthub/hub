@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
@@ -8,13 +8,19 @@ import { ErrorKind } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import DeleteOrg from './DeleteOrg';
 
-jest.mock('../../../../../api');
-jest.mock('../../../../../utils/alertDispatcher');
+vi.mock('../../../../../api');
+vi.mock('../../../../../utils/alertDispatcher');
 
-jest.mock('../../../../../utils/authorizer', () => ({
-  check: () => {
-    return true;
-  },
+const authorizerMock = vi.hoisted(() => ({
+  check: vi.fn(() => true),
+  init: vi.fn(),
+  updateCtx: vi.fn(),
+  getAllowedActionsList: vi.fn(),
+}));
+
+vi.mock('../../../../../utils/authorizer', () => ({
+  __esModule: true,
+  default: authorizerMock,
 }));
 
 const mockCtx = {
@@ -51,6 +57,7 @@ const defaultProps = {
 describe('DeleteOrg', () => {
   afterEach(() => {
     jest.resetAllMocks();
+    authorizerMock.check.mockClear();
   });
 
   it('creates snapshot', () => {
@@ -99,7 +106,7 @@ describe('DeleteOrg', () => {
 
     describe('calls deleteOrganization', () => {
       it('on success', async () => {
-        mocked(API).deleteOrganization.mockResolvedValue(null);
+        vi.mocked(API).deleteOrganization.mockResolvedValue(null);
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
@@ -140,7 +147,7 @@ describe('DeleteOrg', () => {
 
       describe('on error', () => {
         it('displays generic error', async () => {
-          mocked(API).deleteOrganization.mockRejectedValue({
+          vi.mocked(API).deleteOrganization.mockRejectedValue({
             kind: ErrorKind.Other,
           });
 
@@ -175,7 +182,7 @@ describe('DeleteOrg', () => {
         });
 
         it('displays permissions error', async () => {
-          mocked(API).deleteOrganization.mockRejectedValue({
+          vi.mocked(API).deleteOrganization.mockRejectedValue({
             kind: ErrorKind.Forbidden,
           });
 
@@ -210,7 +217,7 @@ describe('DeleteOrg', () => {
         });
 
         it('calls onAuthError', async () => {
-          mocked(API).deleteOrganization.mockRejectedValue({
+          vi.mocked(API).deleteOrganization.mockRejectedValue({
             kind: ErrorKind.Unauthorized,
           });
 

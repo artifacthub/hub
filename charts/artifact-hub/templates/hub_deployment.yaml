@@ -23,6 +23,9 @@ spec:
       labels:
         app.kubernetes.io/component: hub
         {{- include "chart.selectorLabels" . | nindent 8 }}
+        {{- with .Values.commonLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- with .Values.hub.deploy.extraPodLabels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -41,6 +44,10 @@ spec:
       {{- end }}
       {{- with (default .Values.nodeSelector .Values.hub.deploy.nodeSelector) }}
       nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with (default .Values.tolerations .Values.hub.deploy.tolerations) }}
+      tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- if .Release.IsInstall }}

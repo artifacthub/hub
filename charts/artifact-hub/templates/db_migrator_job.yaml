@@ -39,6 +39,10 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- with (default .Values.tolerations .Values.dbMigrator.job.tolerations) }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       restartPolicy: Never
       initContainers:
         - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 10 }}
@@ -57,12 +61,21 @@ spec:
           env:
             - name: TERN_CONF
               value: {{ .Values.dbMigrator.configDir }}/tern.conf
+            {{- if .Values.dbMigrator.job.extraEnvVars }}
+              {{- include "chart.tplvalues.render" (dict "value" .Values.dbMigrator.job.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
           volumeMounts:
             - name: db-migrator-config
               mountPath: {{ .Values.dbMigrator.configDir }}
               readOnly: true
+            {{- if .Values.dbMigrator.job.extraVolumeMounts }}
+              {{- include "chart.tplvalues.render" (dict "value" .Values.dbMigrator.job.extraVolumeMounts "context" $) | nindent 12 }}
+            {{- end }}
           command: ["./migrate.sh"]
       volumes:
         - name: db-migrator-config
           secret:
             secretName: {{ include "chart.resourceNamePrefix" . }}db-migrator-config
+        {{- if .Values.dbMigrator.job.extraVolumes }}
+          {{- include "chart.tplvalues.render" (dict "value" .Values.dbMigrator.job.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}

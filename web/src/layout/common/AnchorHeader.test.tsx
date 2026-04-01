@@ -82,7 +82,7 @@ describe('AnchorHeader', () => {
       );
       expect(screen.getByText(new RegExp(tests[i].title, 'i'))).toBeInTheDocument();
       const link = screen.getByRole('button');
-      expect(link).toHaveProperty('href', `http://localhost/#${tests[i].id}`);
+      expect(link.getAttribute('href')).toBe(`/#${tests[i].id}`);
       const anchor = screen.getByTestId('anchor');
       expect(anchor).toHaveProperty('id', tests[i].id);
     });

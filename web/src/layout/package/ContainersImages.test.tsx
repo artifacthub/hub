@@ -47,7 +47,9 @@ describe('ContainersImages', () => {
       const btn = screen.getByRole('button', { name: 'See all entries' });
       await userEvent.click(btn);
 
-      expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+      const modal = await screen.findByRole('dialog');
+      expect(modal.className.includes('active')).toBe(true);
+      expect(modal.classList.contains('d-block')).toBe(true);
 
       expect(screen.getAllByTestId('containerImageItem')).toHaveLength(25 * 2 + 5 + 3);
       expect(screen.getAllByText('Containers Images')).toHaveLength(2);
@@ -78,7 +80,9 @@ describe('ContainersImages', () => {
       const btn = screen.getByRole('button', { name: 'See all entries' });
       await userEvent.click(btn);
 
-      expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+      const modal = await screen.findByRole('dialog');
+      expect(modal.className.includes('active')).toBe(true);
+      expect(modal.classList.contains('d-block')).toBe(true);
 
       expect(screen.getAllByText('linux/amd64')).toHaveLength(2);
       expect(screen.getByText('linux/arm64')).toBeInTheDocument();

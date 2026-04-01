@@ -1,14 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RepositoryWarningModal creates snapshot 1`] = `
+exports[`RepositoryWarningModal > creates snapshot 1`] = `
 <DocumentFragment>
   <button
     aria-label="Open repository warning modal"
-    class="d-inline-block ps-0 pe-1 py-0 btn btn-link btn-sm fs-6 text-dark trackingWarningBtn"
+    class="d-inline-block ps-0 pe-1 py-0 btn btn-link btn-sm fs-6 text-dark _trackingWarningBtn_db6402"
   >
     <small>
       <svg
-        class="position-relative icon"
+        class="position-relative _icon_db6402"
         fill="currentColor"
         height="1em"
         stroke="currentColor"

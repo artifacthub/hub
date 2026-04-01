@@ -1,22 +1,22 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SearchTipsModal creates snapshot 1`] = `
+exports[`SearchTipsModal > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="modal-backdrop activeBackdrop"
+      class="modal-backdrop _activeBackdrop_2adcc6"
       data-testid="modalBackdrop"
     />
     <div
       aria-modal="true"
-      class="modal modal active d-block"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
       role="dialog"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content border border-3 mx-auto content"
+          class="modal-content border border-3 mx-auto _content_2adcc6"
         >
           <div
             class="modal-body p-4 h-100 d-flex flex-column"
@@ -28,7 +28,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                 class="d-flex flex-row justify-content-between mb-4"
               >
                 <div
-                  class="h3 d-flex flex-row align-items-baseline title"
+                  class="h3 d-flex flex-row align-items-baseline _title_96238a"
                 >
                   Search tips
                   <svg
@@ -49,13 +49,13 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                 <div>
                   <button
                     aria-label="Close"
-                    class="btn-close p-3 closeModalBtn"
+                    class="btn-close p-3 _closeModalBtn_96238a"
                     type="button"
                   />
                 </div>
               </div>
               <ul
-                class="mb-0 list"
+                class="mb-0 _list_96238a"
               >
                 <li
                   class="my-1"
@@ -76,6 +76,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                   <a
                     aria-label="Filter by kafka operator"
                     class="fw-bold text-dark p-0"
+                    data-discover="true"
                     href="/packages/search?ts_query_web=kafka+operator&sort=relevance&page=1"
                   >
                     <u>
@@ -102,6 +103,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                   <a
                     aria-label="Filter by apache -solr -hadoop"
                     class="fw-bold text-dark p-0"
+                    data-discover="true"
                     href="/packages/search?ts_query_web=apache+-solr+-hadoop&sort=relevance&page=1"
                   >
                     <u>
@@ -126,8 +128,9 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                   </small>
                    
                   <a
-                    aria-label="Filter by \\"monitoring system\\""
+                    aria-label="Filter by "monitoring system""
                     class="fw-bold text-dark p-0"
+                    data-discover="true"
                     href="/packages/search?ts_query_web=%22monitoring+system%22&sort=relevance&page=1"
                   >
                     <u>
@@ -154,6 +157,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
                   <a
                     aria-label="Filter by postgresql or mysql"
                     class="fw-bold text-dark p-0"
+                    data-discover="true"
                     href="/packages/search?ts_query_web=postgresql+or+mysql&sort=relevance&page=1"
                   >
                     <u>
@@ -165,7 +169,7 @@ exports[`SearchTipsModal creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>

@@ -1,12 +1,12 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Organization } from '../../../types';
 import OrganizationForm from './Form';
-jest.mock('../../../api');
+vi.mock('../../../api');
 
 const onSuccessMock = jest.fn();
 const onAuthErrorMock = jest.fn();
@@ -78,9 +78,9 @@ describe('Organization Form - organizations section', () => {
 
     describe('Add organization', () => {
       it('calls add organization', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(false);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addOrganization.mockResolvedValue(null);
+        vi.mocked(API).checkAvailability.mockResolvedValue(false);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).addOrganization.mockResolvedValue(null);
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <OrganizationForm {...defaultProps} />
@@ -106,9 +106,9 @@ describe('Organization Form - organizations section', () => {
       });
 
       it('displays default Api error', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(false);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addOrganization.mockRejectedValue({
+        vi.mocked(API).checkAvailability.mockResolvedValue(false);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).addOrganization.mockRejectedValue({
           kind: ErrorKind.Other,
         });
         render(
@@ -132,9 +132,9 @@ describe('Organization Form - organizations section', () => {
       });
 
       it('displays custom Api error', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(false);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addOrganization.mockRejectedValue({
+        vi.mocked(API).checkAvailability.mockResolvedValue(false);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).addOrganization.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'custom error',
         });
@@ -157,9 +157,9 @@ describe('Organization Form - organizations section', () => {
       });
 
       it('calls onAuthError when error is UnauthorizedError', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(false);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addOrganization.mockRejectedValue({
+        vi.mocked(API).checkAvailability.mockResolvedValue(false);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).addOrganization.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
         render(
@@ -183,9 +183,9 @@ describe('Organization Form - organizations section', () => {
 
     describe('Update organization', () => {
       it('calls update organization', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(true);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).updateOrganization.mockResolvedValue(null);
+        vi.mocked(API).checkAvailability.mockResolvedValue(true);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).updateOrganization.mockResolvedValue(null);
 
         const props = {
           ...defaultProps,
@@ -216,9 +216,9 @@ describe('Organization Form - organizations section', () => {
       });
 
       it('displays default error', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(true);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).updateOrganization.mockRejectedValue({
+        vi.mocked(API).checkAvailability.mockResolvedValue(true);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).updateOrganization.mockRejectedValue({
           kind: ErrorKind.Other,
         });
         render(
@@ -242,9 +242,9 @@ describe('Organization Form - organizations section', () => {
       });
 
       it('displays custom message error', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(true);
-        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).updateOrganization.mockRejectedValue({
+        vi.mocked(API).checkAvailability.mockResolvedValue(true);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).updateOrganization.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'message error',
         });
@@ -269,8 +269,8 @@ describe('Organization Form - organizations section', () => {
       });
 
       it('calls onAuthError when error is UnauthorizedError', async () => {
-        mocked(API).checkAvailability.mockResolvedValue(true);
-        mocked(API).updateOrganization.mockRejectedValue({
+        vi.mocked(API).checkAvailability.mockResolvedValue(true);
+        vi.mocked(API).updateOrganization.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
         render(

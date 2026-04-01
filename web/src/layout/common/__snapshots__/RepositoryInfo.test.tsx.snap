@@ -1,17 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RepositoryInfo creates snapshot 1`] = `
+exports[`RepositoryInfo > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
       class="position-absolute"
     >
       <div
-        class="dropdown-menu dropdown-menu-left text-wrap dropdown"
+        class="dropdown-menu dropdown-menu-left text-wrap _dropdown_e64025"
         role="complementary"
       >
         <div
-          class="content"
+          class="_content_e64025"
         >
           <div
             class="d-flex flex-column"
@@ -26,16 +26,16 @@ exports[`RepositoryInfo creates snapshot 1`] = `
               </small>
               <img
                 alt="Icon"
-                class="me-1 w-auto repoIconMini iconLight"
+                class="me-1 w-auto _repoIconMini_e64025 iconLight"
                 src="/static/media/helm-chart.svg"
               />
               <img
                 alt="Icon"
-                class="me-1 w-auto repoIconMini iconDark"
+                class="me-1 w-auto _repoIconMini_e64025 iconDark"
                 src="/static/media/helm-chart-light.svg"
               />
               <div
-                class="text-reset text-truncate labelContent"
+                class="text-reset text-truncate _labelContent_e64025"
               >
                 Stable
               </div>
@@ -49,13 +49,13 @@ exports[`RepositoryInfo creates snapshot 1`] = `
                 Url: 
               </small>
               <div
-                class="text-reset text-break labelContent"
+                class="text-reset text-break _labelContent_e64025"
                 data-testid="repoUrl"
               >
                 <div
                   class="d-flex flex-row flex-wrap undefined"
                   data-testid="attachedIconToTextWrapper"
-                  style="line-height: 21px;"
+                  style="font-size: inherit; line-height: 21px;"
                 >
                   <div
                     class="d-inline"
@@ -203,7 +203,7 @@ exports[`RepositoryInfo creates snapshot 1`] = `
         class="d-flex flex-row align-items-baseline me-1 text-dark text-uppercase"
       >
         <div
-          class="position-relative icon"
+          class="position-relative _icon_e64025"
         >
           <svg
             fill="none"
@@ -246,7 +246,7 @@ exports[`RepositoryInfo creates snapshot 1`] = `
         aria-expanded="false"
         aria-hidden="true"
         aria-label="Filter by repo Stable"
-        class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative link"
+        class="d-flex flex-row p-0 border-0 text-muted text-truncate bg-transparent position-relative _link_e64025"
         data-testid="repoLink"
         tabindex="-1"
       >

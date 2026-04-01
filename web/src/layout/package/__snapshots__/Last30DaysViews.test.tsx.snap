@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Last30DaysViews creates snapshot 1`] = `
+exports[`Last30DaysViews > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mt-2 mb-1 undefined"
@@ -26,34 +26,34 @@ exports[`Last30DaysViews creates snapshot 1`] = `
     >
       <div>
         <div
-          class="position-relative border bg-white chartWrapper"
+          class="position-relative border bg-white _chartWrapper_84329d"
         >
           <div>
             Chart
           </div>
         </div>
         <div
-          class="d-flex flex-row justify-content-between w-100 legend"
+          class="d-flex flex-row justify-content-between w-100 _legend_84329d"
         >
           <div>
             <small
               class="text-muted"
             >
-              14 Nov
+              06 Sep
             </small>
           </div>
           <div>
             <small
               class="text-muted"
             >
-              29 Nov
+              21 Sep
             </small>
           </div>
           <div>
             <small
               class="text-muted"
             >
-              14 Dec
+              06 Oct
             </small>
           </div>
         </div>
@@ -65,7 +65,7 @@ exports[`Last30DaysViews creates snapshot 1`] = `
           >
             <button
               aria-label="See views chart"
-              class="btn btn-link ps-0 position-relative text-primary btn"
+              class="btn btn-link ps-0 position-relative text-primary _btn_84329d"
             >
               <div
                 class="d-flex flex-row align-items-center text-nowrap"
@@ -94,7 +94,7 @@ exports[`Last30DaysViews creates snapshot 1`] = `
             </button>
           </div>
           <div
-            class="ms-auto text-truncate legend"
+            class="ms-auto text-truncate _legend_84329d"
           >
             <small
               class="text-muted text-truncate"

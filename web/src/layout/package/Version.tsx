@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { format, fromUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -41,7 +41,7 @@ const Version = (props: Props) => {
     }
   }, [props.isActive, isLoading]);
 
-  const formattedDate = moment.unix(props.ts!).format('D MMM, YYYY');
+  const formattedDate = format(fromUnixTime(props.ts!), 'd MMM, yyyy');
 
   const getBadges = () => (
     <>

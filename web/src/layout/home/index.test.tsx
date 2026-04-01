@@ -1,15 +1,24 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { ErrorKind, Stats } from '../../types';
 import HomeView from './index';
-jest.mock('../../api');
-jest.mock('./SearchTip', () => () => <div />);
-jest.mock('../common/SampleQueries', () => () => <div />);
-jest.mock('./RandomPackages', () => () => <div />);
-jest.mock('../../utils/bannerDispatcher', () => ({
+vi.mock('../../api');
+vi.mock('./SearchTip', () => ({
+  __esModule: true,
+  default: () => <div />,
+}));
+vi.mock('../common/SampleQueries', () => ({
+  __esModule: true,
+  default: () => <div />,
+}));
+vi.mock('./RandomPackages', () => ({
+  __esModule: true,
+  default: () => <div />,
+}));
+vi.mock('../../utils/bannerDispatcher', () => ({
   getBanner: () => null,
 }));
 
@@ -18,10 +27,15 @@ const mockOutletContextData: any = {
   isSearching: false,
 };
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useOutletContext: () => mockOutletContextData,
-}));
+vi.mock('react-router-dom', () => {
+  const actual = jest.requireActual('react-router-dom');
+  return {
+    __esModule: true,
+    ...actual,
+    default: actual,
+    useOutletContext: () => mockOutletContextData,
+  };
+});
 
 const getMockStats = (fixtureId: string): Stats => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -35,7 +49,7 @@ describe('Home index', () => {
 
   it('creates snapshot', async () => {
     const mockStats = getMockStats('1');
-    mocked(API).getStats.mockResolvedValue(mockStats);
+    vi.mocked(API).getStats.mockResolvedValue(mockStats);
 
     const { asFragment } = render(
       <Router>
@@ -54,7 +68,7 @@ describe('Home index', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockStats = getMockStats('2');
-      mocked(API).getStats.mockResolvedValue(mockStats);
+      vi.mocked(API).getStats.mockResolvedValue(mockStats);
 
       render(
         <Router>
@@ -71,7 +85,7 @@ describe('Home index', () => {
 
     it('renders dash symbol when results are 0', async () => {
       const mockStats = getMockStats('4');
-      mocked(API).getStats.mockResolvedValue(mockStats);
+      vi.mocked(API).getStats.mockResolvedValue(mockStats);
 
       render(
         <Router>
@@ -84,7 +98,7 @@ describe('Home index', () => {
     });
 
     it('renders dash symbol when getStats call fails', async () => {
-      mocked(API).getStats.mockRejectedValue({ kind: ErrorKind.Other });
+      vi.mocked(API).getStats.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <Router>
@@ -98,7 +112,7 @@ describe('Home index', () => {
 
     it('renders project definition', async () => {
       const mockStats = getMockStats('5');
-      mocked(API).getStats.mockResolvedValue(mockStats);
+      vi.mocked(API).getStats.mockResolvedValue(mockStats);
 
       render(
         <Router>
@@ -116,7 +130,7 @@ describe('Home index', () => {
   describe('External links', () => {
     it('renders proper links', async () => {
       const mockStats = getMockStats('5');
-      mocked(API).getStats.mockResolvedValue(mockStats);
+      vi.mocked(API).getStats.mockResolvedValue(mockStats);
 
       render(
         <Router>
@@ -134,7 +148,7 @@ describe('Home index', () => {
       expect(links[4]).toHaveProperty('href', 'https://twitter.com/cncfartifacthub');
 
       // Docs link
-      expect(links[5]).toHaveProperty('href', 'http://localhost/docs/topics/repositories');
+      expect(new URL(links[5].href).pathname).toBe('/docs/topics/repositories');
 
       // Packages
       expect(links[6]).toHaveProperty('href', 'https://argoproj.github.io/argo-workflows/');

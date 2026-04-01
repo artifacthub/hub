@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DeleteAccount creates snapshot 1`] = `
+exports[`DeleteAccount > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mt-4 mt-md-5"
@@ -42,20 +42,20 @@ exports[`DeleteAccount creates snapshot 1`] = `
   >
     <div
       aria-modal="false"
-      class="modal modal"
+      class="modal _modal_2adcc6"
       role="dialog"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content border border-3 mx-auto content modal"
+          class="modal-content border border-3 mx-auto _content_2adcc6 _modal_86fc20"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 title"
+              class="h3 m-2 flex-grow-1 _title_86fc20"
             >
               Delete account
             </div>
@@ -70,7 +70,7 @@ exports[`DeleteAccount creates snapshot 1`] = `
           >
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>

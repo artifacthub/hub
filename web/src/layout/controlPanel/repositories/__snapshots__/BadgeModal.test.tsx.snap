@@ -1,28 +1,28 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Badge Modal - repositories section creates snapshot 1`] = `
+exports[`Badge Modal - repositories section > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="modal-backdrop activeBackdrop"
+      class="modal-backdrop _activeBackdrop_2adcc6"
       data-testid="modalBackdrop"
     />
     <div
       aria-modal="true"
-      class="modal modal active d-block"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
       role="dialog"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content border border-3 mx-auto content"
+          class="modal-content border border-3 mx-auto _content_2adcc6"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 title"
+              class="h3 m-2 flex-grow-1 _title_f6f26f"
             >
               Get badge
             </div>
@@ -40,14 +40,14 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
             >
               <div>
                 <ul
-                  class="nav nav-tabs tabs"
+                  class="nav nav-tabs _tabs_ec5be4"
                 >
                   <li
                     class="nav-item"
                   >
                     <button
                       aria-label="Open tab markdown"
-                      class="btn nav-item btn active btn-primary active"
+                      class="btn nav-item _btn_ec5be4 active btn-primary _active_ec5be4"
                     >
                       <span
                         class="d-none d-sm-block"
@@ -66,7 +66,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                   >
                     <button
                       aria-label="Open tab ascii"
-                      class="btn nav-item btn"
+                      class="btn nav-item _btn_ec5be4"
                     >
                       <span
                         class="d-none d-sm-block"
@@ -94,7 +94,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                     <div>
                       <img
                         alt="Artifact HUB badge"
-                        src="https://img.shields.io/endpoint?url=http://localhost/badge/repository/repoTest"
+                        src="https://img.shields.io/endpoint?url=http://localhost:3000/badge/repository/repoTest"
                       />
                     </div>
                     <div
@@ -102,7 +102,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                     >
                       <button
                         aria-label="Copy badge markdown link to clipboard"
-                        class="btn btn-sm btn-primary btn"
+                        class="btn btn-sm btn-primary _btn_a0bd31"
                         type="button"
                       >
                         <div
@@ -137,14 +137,14 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                     </div>
                   </div>
                   <pre
-                    style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+                    style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
                   >
                     <code
                       class="language-bash"
                       style="white-space: pre;"
                     >
                       <span>
-                        [![null](https://img.shields.io/endpoint?url=http://localhost/badge/repository/repoTest)](http://localhost/packages/search?repo=repoTest)
+                        [![null](https://img.shields.io/endpoint?url=http://localhost:3000/badge/repository/repoTest)](http://localhost:3000/packages/search?repo=repoTest)
                       </span>
                     </code>
                   </pre>
@@ -153,7 +153,7 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>

@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Counter renders correctly 1`] = `
+exports[`Counter > renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="text-center counterWrapper"
+    class="text-center _counterWrapper_29001f"
   >
     <div
-      class="h3 counter"
+      class="h3 _counter_29001f"
     >
       12
     </div>

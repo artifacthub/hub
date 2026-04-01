@@ -1,16 +1,23 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { Member } from '../../../types';
 import Card from './Card';
-jest.mock('../../../api');
+vi.mock('../../../api');
 
-jest.mock('../../../utils/authorizer', () => ({
-  check: () => {
-    return true;
-  },
+const authorizerMock = vi.hoisted(() => ({
+  check: vi.fn(() => true),
+  init: vi.fn(),
+  updateCtx: vi.fn(),
+  getAllowedActionsList: vi.fn(),
+}));
+
+vi.mock('../../../utils/authorizer', () => ({
+  __esModule: true,
+  default: authorizerMock,
 }));
 
 const memberMock: Member = {
@@ -49,6 +56,7 @@ const defaultProps = {
 describe('Member Card - members section', () => {
   afterEach(() => {
     jest.resetAllMocks();
+    authorizerMock.check.mockClear();
   });
 
   it('creates snapshot', () => {

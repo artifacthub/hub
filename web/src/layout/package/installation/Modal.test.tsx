@@ -1,17 +1,24 @@
 import { render, screen } from '@testing-library/react';
+import type { ReactNode } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { RepositoryKind } from '../../../types';
+import modalStyles from '../../common/Modal.module.css';
 import Modal from './Modal';
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('react-markdown', () => (props: any) => {
-  return <>{props.children}</>;
-});
-jest.mock('remark-gfm', () => () => <div />);
+
+vi.mock('react-markdown', () => ({
+  default: ({ children }: { children?: ReactNode }) => {
+    return <>{children}</>;
+  },
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -101,7 +108,9 @@ describe('HelmInstall', () => {
         </Router>
       );
 
-      expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+      const modal = await screen.findByRole('dialog');
+      expect(modal).toHaveClass(modalStyles.active);
+      expect(modal).toHaveClass('d-block');
 
       rerender(
         <Router>
@@ -109,7 +118,9 @@ describe('HelmInstall', () => {
         </Router>
       );
 
-      expect(await screen.findByRole('dialog')).not.toHaveClass('active d-block');
+      const rerenderedModal = await screen.findByRole('dialog');
+      expect(rerenderedModal).not.toHaveClass(modalStyles.active);
+      expect(rerenderedModal).not.toHaveClass('d-block');
     });
   });
 });

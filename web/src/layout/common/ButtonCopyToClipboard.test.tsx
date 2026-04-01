@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { hasClassContaining } from '../../utils/testUtils';
 import ButtonCopyToClipboard from './ButtonCopyToClipboard';
 
 const copyToClipboardMock = jest.fn();
@@ -48,8 +49,9 @@ describe('ButtonCopyToClipboard', () => {
     expect(clipboardWriteTextMock).toHaveBeenCalledTimes(1);
     expect(clipboardWriteTextMock).toHaveBeenCalledWith('Text to copy');
 
-    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
-    expect(screen.getByRole('tooltip')).toHaveClass('isLight');
+    const tooltip = await screen.findByRole('tooltip');
+    expect(tooltip).toBeInTheDocument();
+    expect(hasClassContaining(tooltip, 'isLight')).toBe(true);
   });
 
   it('renders tooltip after clicking button when navidator.clipboard is undefined', async () => {

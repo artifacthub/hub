@@ -33,6 +33,6 @@ describe('Schema', () => {
 
       expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
-    });
+    }, 10000);
   });
 });

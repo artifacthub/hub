@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`WebhookForm creates snapshot 1`] = `
+exports[`WebhookForm > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
@@ -8,7 +8,7 @@ exports[`WebhookForm creates snapshot 1`] = `
     >
       <button
         aria-label="Back to webhooks list"
-        class="btn btn-link text-dark btn-sm ps-0 d-flex align-items-center link"
+        class="btn btn-link text-dark btn-sm ps-0 d-flex align-items-center _link_227958"
       >
         <svg
           class="me-2"
@@ -46,7 +46,7 @@ exports[`WebhookForm creates snapshot 1`] = `
               class="mb-4 position-relative undefined"
             >
               <label
-                class="form-label fw-bold label"
+                class="form-label fw-bold _label_d02ded"
                 for="name"
               >
                 <span
@@ -71,7 +71,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                 value="Webhook name"
               />
               <div
-                class="invalid-feedback mt-0 inputFeedback"
+                class="invalid-feedback mt-0 _inputFeedback_d02ded"
               >
                 This field is required
               </div>
@@ -88,7 +88,7 @@ exports[`WebhookForm creates snapshot 1`] = `
               class="mb-4 position-relative undefined"
             >
               <label
-                class="form-label fw-bold label"
+                class="form-label fw-bold _label_d02ded"
                 for="description"
               >
                 <span
@@ -107,14 +107,14 @@ exports[`WebhookForm creates snapshot 1`] = `
                 value="this is a test description"
               />
               <div
-                class="invalid-feedback mt-0 inputFeedback"
+                class="invalid-feedback mt-0 _inputFeedback_d02ded"
               />
             </div>
           </div>
         </div>
         <div>
           <label
-            class="form-label fw-bold label"
+            class="form-label fw-bold _label_227958"
             for="url"
           >
             Url
@@ -149,7 +149,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                   value="http://jksdhfkjfds"
                 />
                 <div
-                  class="invalid-feedback mt-0 inputFeedback"
+                  class="invalid-feedback mt-0 _inputFeedback_d02ded"
                 >
                   This field is required
                 </div>
@@ -159,7 +159,7 @@ exports[`WebhookForm creates snapshot 1`] = `
         </div>
         <div>
           <label
-            class="form-label fw-bold label"
+            class="form-label fw-bold _label_227958"
             for="secret"
           >
             Secret
@@ -194,7 +194,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                   value=""
                 />
                 <div
-                  class="invalid-feedback mt-0 inputFeedback"
+                  class="invalid-feedback mt-0 _inputFeedback_d02ded"
                 />
               </div>
             </div>
@@ -207,14 +207,14 @@ exports[`WebhookForm creates snapshot 1`] = `
             class="form-check form-switch ps-0"
           >
             <label
-              class="form-check-label fw-bold label"
+              class="form-check-label fw-bold _label_227958"
               for="active"
             >
               Active
             </label>
             <input
               checked=""
-              class="position-absolute ms-2 form-check-input checkbox"
+              class="position-absolute ms-2 form-check-input _checkbox_227958"
               id="active"
               role="switch"
               type="checkbox"
@@ -236,7 +236,7 @@ exports[`WebhookForm creates snapshot 1`] = `
           class="my-4"
         >
           <label
-            class="form-label fw-bold label"
+            class="form-label fw-bold _label_227958"
             for="kind"
             id="events-group"
           >
@@ -252,7 +252,7 @@ exports[`WebhookForm creates snapshot 1`] = `
               <input
                 aria-checked="true"
                 checked=""
-                class="form-check-input input"
+                class="form-check-input _input_b7404d"
                 id="all-eventKind-0"
                 name="eventKind"
                 tabindex="0"
@@ -260,7 +260,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                 value="0"
               />
               <label
-                class="form-check-label label undefined"
+                class="form-check-label _label_b7404d undefined"
                 data-testid="checkboxLabel"
                 for="all-eventKind-0"
               >
@@ -280,7 +280,7 @@ exports[`WebhookForm creates snapshot 1`] = `
             >
               <input
                 aria-checked="false"
-                class="form-check-input input"
+                class="form-check-input _input_b7404d"
                 id="all-eventKind-1"
                 name="eventKind"
                 tabindex="0"
@@ -288,7 +288,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                 value="1"
               />
               <label
-                class="form-check-label label undefined"
+                class="form-check-label _label_b7404d undefined"
                 data-testid="checkboxLabel"
                 for="all-eventKind-1"
               >
@@ -309,7 +309,7 @@ exports[`WebhookForm creates snapshot 1`] = `
           class="mb-4"
         >
           <label
-            class="form-label fw-bold label"
+            class="form-label fw-bold _label_227958"
             for="packages"
             id="webhook-pkg-list"
           >
@@ -338,10 +338,10 @@ exports[`WebhookForm creates snapshot 1`] = `
                   class="d-flex flex-row"
                 >
                   <div
-                    class="flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative lh-base bg-white searchBar inputWrapper"
+                    class="flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative lh-base bg-white searchBar _inputWrapper_1ce6a7"
                   >
                     <div
-                      class="d-flex align-items-center iconWrapper"
+                      class="d-flex align-items-center _iconWrapper_1ce6a7"
                       data-testid="searchPkgIcon"
                     >
                       <svg
@@ -371,7 +371,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                     <input
                       aria-label="Search packages"
                       autocomplete="new-input"
-                      class="flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent input"
+                      class="flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent _input_1ce6a7"
                       name="searchInput"
                       spellcheck="false"
                       type="text"
@@ -388,18 +388,18 @@ exports[`WebhookForm creates snapshot 1`] = `
               class="col-12 col-xxl-10 col-xxxl-8"
             >
               <table
-                class="table table-hover table-sm border border-1 transparentBorder text-break table"
+                class="table table-hover table-sm border border-1 transparentBorder text-break _table_227958"
               >
                 <thead>
                   <tr
-                    class="tableTitle"
+                    class="_tableTitle_227958"
                   >
                     <th
-                      class="align-middle d-none d-sm-table-cell fitCell"
+                      class="align-middle d-none d-sm-table-cell _fitCell_227958"
                       scope="col"
                     />
                     <th
-                      class="align-middle packageCell"
+                      class="align-middle _packageCell_227958"
                       scope="col"
                     >
                       Package
@@ -411,13 +411,13 @@ exports[`WebhookForm creates snapshot 1`] = `
                       Publisher
                     </th>
                     <th
-                      class="align-middle fitCell"
+                      class="align-middle _fitCell_227958"
                       scope="col"
                     />
                   </tr>
                 </thead>
                 <tbody
-                  class="body"
+                  class="_body_227958"
                 >
                   <tr
                     data-testid="packageTableCell"
@@ -427,12 +427,12 @@ exports[`WebhookForm creates snapshot 1`] = `
                     >
                       <img
                         alt="Icon"
-                        class="icon h-auto mx-2 iconLight"
+                        class="_icon_227958 h-auto mx-2 iconLight"
                         src="/static/media/helm-chart.svg"
                       />
                       <img
                         alt="Icon"
-                        class="icon h-auto mx-2 iconDark"
+                        class="_icon_227958 h-auto mx-2 iconDark"
                         src="/static/media/helm-chart-light.svg"
                       />
                     </td>
@@ -445,19 +445,19 @@ exports[`WebhookForm creates snapshot 1`] = `
                         <img
                           alt="envoy"
                           aria-hidden="true"
-                          class="fs-4 image"
+                          class="fs-4 _image_227958"
                           src="/image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc"
                           srcset="/image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@1x 1x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@2x 2x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@3x 3x, /image/c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc@4x 4x"
                         />
                         <div
-                          class="ms-2 text-dark cellWrapper"
+                          class="ms-2 text-dark _cellWrapper_227958"
                         >
                           <div
                             class="text-truncate"
                           >
                             envoy
                             <span
-                              class="d-inline d-sm-none legend"
+                              class="d-inline d-sm-none _legend_227958"
                             >
                               <span
                                 class="mx-2"
@@ -470,7 +470,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                               >
                                 (
                                 <span
-                                  class="text-uppercase text-muted d-none d-sm-inline legend"
+                                  class="text-uppercase text-muted d-none d-sm-inline _legend_227958"
                                 >
                                   Repo: 
                                 </span>
@@ -490,7 +490,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                       class="align-middle position-relative text-dark d-none d-sm-table-cell"
                     >
                       <div
-                        class="d-table w-100 cellWrapper"
+                        class="d-table w-100 _cellWrapper_227958"
                       >
                         <div
                           class="text-truncate"
@@ -501,7 +501,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                           >
                             (
                             <span
-                              class="text-uppercase text-muted d-none d-sm-inline legend"
+                              class="text-uppercase text-muted d-none d-sm-inline _legend_227958"
                             >
                               Repo: 
                             </span>
@@ -520,7 +520,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                     >
                       <button
                         aria-label="Delete package from webhook"
-                        class="btn btn-link btn-sm mx-2 closeBtn"
+                        class="btn btn-link btn-sm mx-2 _closeBtn_227958"
                         type="button"
                       >
                         <svg
@@ -606,7 +606,7 @@ exports[`WebhookForm creates snapshot 1`] = `
               <div
                 aria-atomic="true"
                 aria-live="off"
-                class="alert alert-light text-nowrap codeWrapper"
+                class="alert alert-light text-nowrap _codeWrapper_227958"
                 role="alert"
               >
                 {
@@ -650,7 +650,7 @@ exports[`WebhookForm creates snapshot 1`] = `
               class="mb-4 position-relative undefined"
             >
               <label
-                class="form-label fw-bold label"
+                class="form-label fw-bold _label_d02ded"
                 for="contentType"
               >
                 <span
@@ -671,7 +671,7 @@ exports[`WebhookForm creates snapshot 1`] = `
                 value="application/json"
               />
               <div
-                class="invalid-feedback mt-0 inputFeedback"
+                class="invalid-feedback mt-0 _inputFeedback_d02ded"
               >
                 This field is required
               </div>
@@ -682,7 +682,7 @@ exports[`WebhookForm creates snapshot 1`] = `
           class=" mb-4"
         >
           <label
-            class="form-label fw-bold label"
+            class="form-label fw-bold _label_227958"
             for="template"
           >
             Template
@@ -693,7 +693,7 @@ exports[`WebhookForm creates snapshot 1`] = `
             Custom payloads are generated using 
             <a
               aria-label="Open Go templates documentation"
-              class="link fw-bold text-dark"
+              class="_link_f0e789 fw-bold text-dark"
               href="https://golang.org/pkg/text/template/"
               rel="noopener noreferrer"
               role="button"
@@ -711,7 +711,7 @@ exports[`WebhookForm creates snapshot 1`] = `
               class="col col-xxl-10 col-xxxl-8"
             >
               <textarea
-                class="form-control textarea"
+                class="form-control _textarea_b5c6e5"
                 id="template"
                 name="template"
                 required=""
@@ -745,7 +745,7 @@ exports[`WebhookForm creates snapshot 1`] = `
           class="mb-3"
         >
           <label
-            class="form-label fw-bold label"
+            class="form-label fw-bold _label_227958"
             for="template"
           >
             Variables reference
@@ -757,10 +757,10 @@ exports[`WebhookForm creates snapshot 1`] = `
               class="col col-xxxl-8 overflow-auto"
             >
               <small
-                class="text-muted tableWrapper"
+                class="text-muted _tableWrapper_227958"
               >
                 <table
-                  class="table table-sm border border-1 variablesTable"
+                  class="table table-sm border border-1 _variablesTable_227958"
                 >
                   <tbody>
                     <tr>
@@ -1080,7 +1080,7 @@ exports[`WebhookForm creates snapshot 1`] = `
           </div>
         </div>
         <div
-          class="mt-4 mt-md-5 btnWrapper"
+          class="mt-4 mt-md-5 _btnWrapper_227958"
         >
           <div
             class="d-flex flex-row justify-content-between"

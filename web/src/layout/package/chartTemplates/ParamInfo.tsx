@@ -1,9 +1,11 @@
 import classnames from 'classnames';
 import isArray from 'lodash/isArray';
 import isUndefined from 'lodash/isUndefined';
-import { ElementType, useEffect, useRef, useState } from 'react';
+import { cloneElement, ElementType, isValidElement, ReactElement, ReactNode, useEffect, useRef, useState } from 'react';
 import { FiExternalLink } from 'react-icons/fi';
 import ReactMarkdown from 'react-markdown';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { github } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import styles from './ParamInfo.module.css';
@@ -17,37 +19,85 @@ interface Props {
 }
 
 interface HeadingProps {
-  level: number;
-  children?: JSX.Element[];
+  children?: ReactNode;
 }
 
 interface LinkProps {
-  href: string;
-  target: string;
+  href?: string;
+  target?: string;
+  className?: string;
+  node?: unknown;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 }
 
-const Heading: ElementType = (data: HeadingProps) => {
-  const Tag = `h${data.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  return <Tag className={`text-dark lh-1 fw-bold ${styles.header}`}>{data.children}</Tag>;
+interface PreProps {
+  children?: ReactNode;
+}
+
+interface CodeProps {
+  className?: string;
+  isInPre?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children: any;
+}
+
+const getHeading = (level: number): ElementType => {
+  return (data: HeadingProps) => {
+    const Tag = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    return <Tag className={`text-dark lh-1 fw-bold ${styles.header}`}>{data.children}</Tag>;
+  };
 };
 
-const Link: ElementType = (data: LinkProps) => {
+const Link: ElementType = ({ className, target, children, ...rest }: LinkProps) => {
   const linkIcon =
-    data.children && isArray(data.children) && data.children[0] === 'iconLink' ? (
+    children && isArray(children) && children[0] === 'iconLink' ? (
       <FiExternalLink className={`position-relative ${styles.linkIcon}`} />
     ) : undefined;
 
   return (
-    <a href={data.href} target={data.target} rel="noopener noreferrer" className="d-inline-block text-dark">
-      {linkIcon || data.children}
+    <a
+      {...rest}
+      target={target || '_blank'}
+      rel="noopener noreferrer"
+      className={`d-inline-block text-dark${className ? ` ${className}` : ''}`}
+    >
+      {linkIcon || children}
     </a>
   );
 };
+const Code: ElementType = ({ className, children, isInPre }: CodeProps) => {
+  if (!isInPre) {
+    return className ? <code className={className}>{children}</code> : <code>{children}</code>;
+  }
+
+  const match = /language-(\w+)/.exec(className || '');
+
+  return (
+    <SyntaxHighlighter language={match ? match[1] : 'bash'} style={github}>
+      {String(children).replace(/\n$/, '')}
+    </SyntaxHighlighter>
+  );
+};
+
+const mapPreChild = (child: PreProps['children']) => {
+  if (isValidElement<CodeProps>(child)) {
+    return cloneElement<CodeProps>(child as ReactElement<CodeProps>, { isInPre: true });
+  }
+
+  return child;
+};
+
+const Pre: ElementType = ({ children }: PreProps) => {
+  if (isArray(children)) {
+    return <>{children.map((child) => mapPreChild(child))}</>;
+  }
+
+  return <>{mapPreChild(children)}</>;
+};
 
 const ParamInfo = (props: Props) => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [openStatus, setOpenStatus] = useState(false);
   const [onParamHover, setOnParamHover] = useState(false);
   const [onDropdownHover, setOnDropdownHover] = useState(false);
@@ -91,21 +141,23 @@ const ParamInfo = (props: Props) => {
         >
           <div className={styles.content}>
             {!isUndefined(props.isMarkdown) && props.isMarkdown ? (
-              <ReactMarkdown
-                className="p-2"
-                children={props.info as string}
-                components={{
-                  h1: Heading,
-                  h2: Heading,
-                  h3: Heading,
-                  h4: Heading,
-                  h5: Heading,
-                  h6: Heading,
-                  a: Link,
-                }}
-                linkTarget="_blank"
-                skipHtml
-              />
+              <div className="p-2">
+                <ReactMarkdown
+                  children={props.info as string}
+                  components={{
+                    pre: Pre,
+                    code: Code,
+                    h1: getHeading(1),
+                    h2: getHeading(2),
+                    h3: getHeading(3),
+                    h4: getHeading(4),
+                    h5: getHeading(5),
+                    h6: getHeading(6),
+                    a: Link,
+                  }}
+                  skipHtml
+                />
+              </div>
             ) : (
               <>{props.info}</>
             )}

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SignKeyInfo creates snapshot 1`] = `
+exports[`SignKeyInfo > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="position-relative undefined"
@@ -11,7 +11,7 @@ exports[`SignKeyInfo creates snapshot 1`] = `
       <button
         aria-disabled="false"
         aria-label="Open sign key modal"
-        class="btn btn-outline-secondary btn-sm ms-2 px-2 py-0 btn"
+        class="btn btn-outline-secondary btn-sm ms-2 px-2 py-0 _btn_93591b"
       >
         <small
           class="d-flex flex-row align-items-center text-uppercase"
@@ -41,20 +41,20 @@ exports[`SignKeyInfo creates snapshot 1`] = `
   <div>
     <div
       aria-modal="false"
-      class="modal modal"
+      class="modal _modal_2adcc6"
       role="dialog"
     >
       <div
-        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable _modalDialog_93591b"
       >
         <div
-          class="modal-content border border-3 mx-auto content"
+          class="modal-content border border-3 mx-auto _content_2adcc6"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 title"
+              class="h3 m-2 flex-grow-1 _title_93591b"
             >
               Sign key information
             </div>
@@ -69,7 +69,7 @@ exports[`SignKeyInfo creates snapshot 1`] = `
           >
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>

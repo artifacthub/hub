@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AutoresizeTextarea creates snapshot 1`] = `
+exports[`AutoresizeTextarea > creates snapshot 1`] = `
 <DocumentFragment>
   <textarea
-    class="form-control textarea"
+    class="form-control _textarea_b5c6e5"
     id="test"
     name="test"
     rows="3"

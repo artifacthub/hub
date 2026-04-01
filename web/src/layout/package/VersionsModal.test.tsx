@@ -48,7 +48,9 @@ describe('VersionsModal', () => {
 
     await userEvent.click(btn);
 
-    expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+    const modal = await screen.findByRole('dialog');
+    expect(modal.className.includes('active')).toBe(true);
+    expect(modal.classList.contains('d-block')).toBe(true);
 
     expect(screen.getByText('title')).toBeInTheDocument();
   });
@@ -66,7 +68,9 @@ describe('VersionsModal', () => {
 
     await userEvent.click(btn);
 
-    expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+    const modal = await screen.findByRole('dialog');
+    expect(modal.className.includes('active')).toBe(true);
+    expect(modal.classList.contains('d-block')).toBe(true);
 
     expect(screen.getAllByTestId('tr-version-row')).toHaveLength(4);
     expect(screen.getAllByTestId('tr-version-row')[0]).toHaveTextContent('0.1.3');
@@ -87,7 +91,9 @@ describe('VersionsModal', () => {
 
     await userEvent.click(btn);
 
-    expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+    const modal = await screen.findByRole('dialog');
+    expect(modal.className.includes('active')).toBe(true);
+    expect(modal.classList.contains('d-block')).toBe(true);
 
     expect(screen.getByText('title')).toBeInTheDocument();
 
@@ -120,7 +126,9 @@ describe('VersionsModal', () => {
 
     await userEvent.click(btn);
 
-    expect(await screen.findByRole('dialog')).toHaveClass('active d-block');
+    const modal = await screen.findByRole('dialog');
+    expect(modal.className.includes('active')).toBe(true);
+    expect(modal.classList.contains('d-block')).toBe(true);
 
     expect(screen.getByText('title')).toBeInTheDocument();
 

@@ -1,18 +1,16 @@
 import isPropValid from '@emotion/is-prop-valid';
-import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
-import { mocked } from 'jest-mock';
+import { render, screen, waitFor } from '@testing-library/react';
 import { StyleSheetManager } from 'styled-components';
+import { vi } from 'vitest';
 
 import API from '../api';
 import { PackageSummary } from '../types';
 import Widget from './Widget';
-jest.mock('../api');
+vi.mock('../api');
 
-jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as object),
-  unix: () => ({
-    fromNow: () => '3 hours ago',
-  }),
+vi.mock('date-fns', () => ({
+  ...(jest.requireActual('date-fns') as object),
+  formatDistanceToNow: () => '3 hours ago',
 }));
 
 // This implements the default behavior from styled-components v5
@@ -42,12 +40,12 @@ const getMockPkg = (fixtureId: string): PackageSummary => {
 
 describe('Widget', () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('creates snapshot', async () => {
     const mockPkg = getMockPkg('1');
-    mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+    vi.mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
     const { asFragment } = render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -58,13 +56,15 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders component', async () => {
     const mockPkg = getMockPkg('2');
-    mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+    vi.mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -80,7 +80,9 @@ describe('Widget', () => {
       );
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
 
     const mainWrapper = screen.getByTestId('mainWrapper');
     expect(mainWrapper).toBeInTheDocument();
@@ -116,7 +118,7 @@ describe('Widget', () => {
 
   it('does not render header', async () => {
     const mockPkg = getMockPkg('3');
-    mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+    vi.mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -128,13 +130,15 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     expect(screen.queryByTitle('logo')).toBeNull();
   });
 
   it('does not render stars', async () => {
     const mockPkg = getMockPkg('12');
-    mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+    vi.mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -146,13 +150,15 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     expect(screen.queryByText('13')).toBeNull();
   });
 
   it('renders responsive card', async () => {
     const mockPkg = getMockPkg('4');
-    mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+    vi.mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -164,7 +170,9 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     const wrapper = screen.getByTestId('cardWrapper');
     expect(wrapper).toBeInTheDocument();
     expect(wrapper).toHaveClass('responsive');
@@ -213,7 +221,7 @@ describe('Widget', () => {
 
   it('renders custom color', async () => {
     const mockPkg = getMockPkg('5');
-    mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+    vi.mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -225,18 +233,24 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
+
     const mainWrapper = screen.getByTestId('mainWrapper');
     expect(mainWrapper).toBeInTheDocument();
-    expect(mainWrapper).toHaveStyle('--color-ah-primary: inherit');
+    expect(mainWrapper).toHaveStyle('--color-ah-primary: #F57C00');
+    const mainStyles = getComputedStyle(mainWrapper);
+    expect(mainStyles.getPropertyValue('--color-ah-primary')).toBe('#F57C00');
 
     const cardWrapper = screen.getByTestId('cardWrapper');
-    expect(cardWrapper).toHaveStyle('border: 3px solid var(--color-ah-primary)');
+    const cardStyles = getComputedStyle(cardWrapper);
+    expect(cardStyles.getPropertyValue('border-top-color')).toBe('rgb(245, 124, 0)');
   });
 
   it('renders dark theme', async () => {
     const mockPkg = getMockPkg('6');
-    mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+    vi.mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -248,7 +262,9 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     const mainWrapper = screen.getByTestId('mainWrapper');
     expect(mainWrapper).toBeInTheDocument();
     expect(mainWrapper).toHaveStyle('--color-ah-primary: #131216');
@@ -256,7 +272,7 @@ describe('Widget', () => {
 
   it('renders a big stars number', async () => {
     const mockPkg = getMockPkg('7');
-    mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+    vi.mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -268,13 +284,15 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     expect(screen.getByText('2.69k')).toBeInTheDocument();
   });
 
   it('renders inGroup card without badges', async () => {
     const mockPkg = getMockPkg('8');
-    mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+    vi.mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -286,7 +304,9 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     const cardBody = screen.getByTestId('cardBody');
     expect(cardBody).toBeInTheDocument();
     expect(cardBody).toHaveClass('groupedItem');
@@ -295,7 +315,7 @@ describe('Widget', () => {
 
   it('renders inGroup card with badges', async () => {
     const mockPkg = getMockPkg('9');
-    mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+    vi.mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -307,7 +327,9 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     const cardBody = screen.getByTestId('cardBody');
     expect(cardBody).toBeInTheDocument();
     expect(cardBody).toHaveClass('groupedItem');
@@ -342,7 +364,7 @@ describe('Widget', () => {
 
   it('renders inGroup card with badges', async () => {
     const mockPkg = getMockPkg('9');
-    mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+    vi.mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -354,7 +376,9 @@ describe('Widget', () => {
       expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     const cardBody = screen.getByTestId('cardBody');
     expect(cardBody).toBeInTheDocument();
     expect(cardBody).toHaveClass('groupedItem');
@@ -373,7 +397,7 @@ describe('Widget', () => {
     });
 
     it('when error to getPackageInfo', async () => {
-      mocked(API).getPackageInfo.mockRejectedValue(null);
+      vi.mocked(API).getPackageInfo.mockRejectedValue(null);
 
       const { container } = render(
         <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -385,7 +409,9 @@ describe('Widget', () => {
         expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
       });
 
-      await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+      await waitFor(() => {
+        expect(screen.queryByRole('status')).toBeNull();
+      });
       await waitFor(() => {
         expect(container).toBeEmptyDOMElement();
       });

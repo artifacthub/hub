@@ -4,12 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"testing"
 	"time"
 
 	trivy "github.com/aquasecurity/trivy/pkg/types"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
+	"github.com/jackc/pgx/v4"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -1364,24 +1366,53 @@ func TestToggleStar(t *testing.T) {
 func TestUpdateSnapshotSecurityReport(t *testing.T) {
 	ctx := context.Background()
 
-	r := &hub.SnapshotSecurityReport{
-		PackageID: "pkgID",
-		Version:   "1.0.0",
-		Summary: &hub.SecurityReportSummary{
-			High:   2,
-			Medium: 1,
-		},
-		ImagesReports: map[string]*trivy.Report{
-			"organization/image:tag": {
-				Results: trivy.Results{
-					{
-						Vulnerabilities: nil,
-					},
-				},
+	newReport := func(t *testing.T, severity string) *hub.SnapshotSecurityReport {
+		t.Helper()
+
+		var imageReport *trivy.Report
+		err := json.Unmarshal([]byte(fmt.Sprintf(`
+		{
+			"Results": [
+				{
+					"Vulnerabilities": [
+						{"VulnerabilityID": "CVE-1", "Severity": "%s"}
+					]
+				}
+			]
+		}
+		`, severity)), &imageReport)
+		require.NoError(t, err)
+
+		report := &hub.SnapshotSecurityReport{
+			PackageID: "pkgID",
+			Version:   "1.0.0",
+			Summary: &hub.SecurityReportSummary{
+				High: 1,
 			},
-		},
+			ImagesReports: map[string]*trivy.Report{
+				"organization/image:tag": imageReport,
+			},
+		}
+		if severity == "CRITICAL" {
+			report.Summary.Critical = 1
+			report.Summary.High = 0
+		}
+
+		return report
 	}
+	newStoredReportJSON := func(t *testing.T, severity string) []byte {
+		t.Helper()
+
+		dataJSON, err := json.Marshal(newReport(t, severity).ImagesReports)
+		require.NoError(t, err)
+
+		return dataJSON
+	}
+
+	r := newReport(t, "HIGH")
+	rCritical := newReport(t, "CRITICAL")
 	rJSON, _ := json.Marshal(r)
+	rCriticalJSON, _ := json.Marshal(rCritical)
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
@@ -1418,10 +1449,46 @@ func TestUpdateSnapshotSecurityReport(t *testing.T) {
 		}
 	})
 
+	t.Run("database lookup error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		tx := &tests.TXMock{}
+		db.On("Begin", ctx).Return(tx, nil)
+		tx.On("QueryRow", ctx, getSnapshotSecurityReportTxDBQ, r.PackageID, r.Version).
+			Return(nil, tests.ErrFakeDB)
+		tx.On("Rollback", ctx).Return(nil)
+		m := NewManager(db)
+
+		err := m.UpdateSnapshotSecurityReport(ctx, r)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("missing previous report is treated as first alert", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		tx := &tests.TXMock{}
+		db.On("Begin", ctx).Return(tx, nil)
+		tx.On("QueryRow", ctx, getSnapshotSecurityReportTxDBQ, r.PackageID, r.Version).
+			Return(nil, pgx.ErrNoRows)
+		tx.On("Exec", ctx, updateSnapshotSecurityReportDBQ, rJSON, true).Return(nil)
+		tx.On("Commit", ctx).Return(nil)
+		m := NewManager(db)
+
+		err := m.UpdateSnapshotSecurityReport(ctx, r)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
 	t.Run("database error", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, updateSnapshotSecurityReportDBQ, rJSON).Return(tests.ErrFakeDB)
+		tx := &tests.TXMock{}
+		db.On("Begin", ctx).Return(tx, nil)
+		tx.On("QueryRow", ctx, getSnapshotSecurityReportTxDBQ, r.PackageID, r.Version).
+			Return(nil, nil)
+		tx.On("Exec", ctx, updateSnapshotSecurityReportDBQ, rJSON, true).Return(tests.ErrFakeDB)
+		tx.On("Rollback", ctx).Return(nil)
 		m := NewManager(db)
 
 		err := m.UpdateSnapshotSecurityReport(ctx, r)
@@ -1432,7 +1499,60 @@ func TestUpdateSnapshotSecurityReport(t *testing.T) {
 	t.Run("database update succeeded", func(t *testing.T) {
 		t.Parallel()
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, updateSnapshotSecurityReportDBQ, rJSON).Return(nil)
+		tx := &tests.TXMock{}
+		db.On("Begin", ctx).Return(tx, nil)
+		tx.On("QueryRow", ctx, getSnapshotSecurityReportTxDBQ, r.PackageID, r.Version).
+			Return(nil, nil)
+		tx.On("Exec", ctx, updateSnapshotSecurityReportDBQ, rJSON, true).Return(nil)
+		tx.On("Commit", ctx).Return(nil)
+		m := NewManager(db)
+
+		err := m.UpdateSnapshotSecurityReport(ctx, r)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database update succeeded without alert", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		tx := &tests.TXMock{}
+		db.On("Begin", ctx).Return(tx, nil)
+		tx.On("QueryRow", ctx, getSnapshotSecurityReportTxDBQ, r.PackageID, r.Version).
+			Return(newStoredReportJSON(t, "HIGH"), nil)
+		tx.On("Exec", ctx, updateSnapshotSecurityReportDBQ, rJSON, false).Return(nil)
+		tx.On("Commit", ctx).Return(nil)
+		m := NewManager(db)
+
+		err := m.UpdateSnapshotSecurityReport(ctx, r)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database update succeeded with severity upgrade", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		tx := &tests.TXMock{}
+		db.On("Begin", ctx).Return(tx, nil)
+		tx.On("QueryRow", ctx, getSnapshotSecurityReportTxDBQ, r.PackageID, r.Version).
+			Return(newStoredReportJSON(t, "HIGH"), nil)
+		tx.On("Exec", ctx, updateSnapshotSecurityReportDBQ, rCriticalJSON, true).Return(nil)
+		tx.On("Commit", ctx).Return(nil)
+		m := NewManager(db)
+
+		err := m.UpdateSnapshotSecurityReport(ctx, rCritical)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("invalid previous report suppresses alert", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		tx := &tests.TXMock{}
+		db.On("Begin", ctx).Return(tx, nil)
+		tx.On("QueryRow", ctx, getSnapshotSecurityReportTxDBQ, r.PackageID, r.Version).
+			Return([]byte(`{"invalid"`), nil)
+		tx.On("Exec", ctx, updateSnapshotSecurityReportDBQ, rJSON, false).Return(nil)
+		tx.On("Commit", ctx).Return(nil)
 		m := NewManager(db)
 
 		err := m.UpdateSnapshotSecurityReport(ctx, r)
@@ -1561,6 +1681,35 @@ func TestParseKey(t *testing.T) {
 			name, version := ParseKey(tc.key)
 			assert.Equal(t, tc.expectedName, name)
 			assert.Equal(t, tc.expectedVersion, version)
+		})
+	}
+}
+
+func TestStripChangeDescription(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		description string
+		expected    string
+	}{
+		{
+			description: "Suppress CONFIG_OPTION_NAME warning and *bold* text",
+			expected:    "Suppress CONFIG_OPTION_NAME warning and bold text",
+		},
+		{
+			description: "No markdown or underscores here",
+			expected:    "No markdown or underscores here",
+		},
+		{
+			description: "Token collision UNDERSCORETOKEN and CONFIG_OPTION_NAME",
+			expected:    "Token collision UNDERSCORETOKEN and CONFIG_OPTION_NAME",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.description, func(t *testing.T) {
+			t.Parallel()
+			assert.Equal(t, tc.expected, stripChangeDescription(tc.description))
 		})
 	}
 }

@@ -1,13 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../../../../api';
 import { ErrorKind, Profile } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import UpdateProfile from './UpdateProfile';
-jest.mock('../../../../../api');
-jest.mock('../../../../../utils/alertDispatcher');
+vi.mock('../../../../../api');
+vi.mock('../../../../../utils/alertDispatcher');
 
 const profile: Profile = {
   alias: 'userAlias',
@@ -49,8 +49,8 @@ describe('Update profile - user settings', () => {
     });
 
     it('calls updateUserProfile', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(false);
-      mocked(API).updateUserProfile.mockResolvedValue(null);
+      vi.mocked(API).checkAvailability.mockResolvedValue(false);
+      vi.mocked(API).updateUserProfile.mockResolvedValue(null);
 
       render(<UpdateProfile {...defaultProps} />);
 
@@ -74,8 +74,8 @@ describe('Update profile - user settings', () => {
 
   describe('when updateUserProfile fails', () => {
     it('with custom error message', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(false);
-      mocked(API).updateUserProfile.mockRejectedValue({
+      vi.mocked(API).checkAvailability.mockResolvedValue(false);
+      vi.mocked(API).updateUserProfile.mockRejectedValue({
         kind: ErrorKind.Other,
         message: 'custom error',
       });
@@ -102,8 +102,8 @@ describe('Update profile - user settings', () => {
     });
 
     it('UnauthorizedError', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(false);
-      mocked(API).updateUserProfile.mockRejectedValue({
+      vi.mocked(API).checkAvailability.mockResolvedValue(false);
+      vi.mocked(API).updateUserProfile.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -125,8 +125,8 @@ describe('Update profile - user settings', () => {
     });
 
     it('without custom error message', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(false);
-      mocked(API).updateUserProfile.mockRejectedValue({
+      vi.mocked(API).checkAvailability.mockResolvedValue(false);
+      vi.mocked(API).updateUserProfile.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 

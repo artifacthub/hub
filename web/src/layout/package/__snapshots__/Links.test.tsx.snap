@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Links creates snapshot 1`] = `
+exports[`Links > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mt-2 mb-1 undefined"
@@ -25,7 +25,7 @@ exports[`Links creates snapshot 1`] = `
     >
       <a
         aria-label="Open Homepage"
-        class="link d-flex align-items-start mb-1 text-capitalize text-primary"
+        class="_link_f0e789 d-flex align-items-start mb-1 text-capitalize text-primary"
         href="http://homelink/"
         rel="noopener noreferrer"
         role="button"
@@ -37,7 +37,7 @@ exports[`Links creates snapshot 1`] = `
         >
           <svg
             baseProfile="tiny"
-            class="text-muted me-2 icon"
+            class="text-muted me-2 _icon_0ccb12"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -52,7 +52,7 @@ exports[`Links creates snapshot 1`] = `
             />
           </svg>
           <div
-            class="flex-grow-1 text-break linkText"
+            class="flex-grow-1 text-break _linkText_0ccb12"
           >
             Homepage
           </div>
@@ -64,7 +64,7 @@ exports[`Links creates snapshot 1`] = `
     >
       <a
         aria-label="Open customLink"
-        class="link d-flex align-items-center mb-1 text-capitalize text-primary"
+        class="_link_f0e789 d-flex align-items-center mb-1 text-capitalize text-primary"
         href="http://customlink.com/"
         rel="noopener noreferrer"
         role="button"
@@ -75,7 +75,7 @@ exports[`Links creates snapshot 1`] = `
           class="d-flex flex-row align-items-start mw-100"
         >
           <svg
-            class="text-muted me-2 icon"
+            class="text-muted me-2 _icon_0ccb12"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -89,7 +89,7 @@ exports[`Links creates snapshot 1`] = `
             />
           </svg>
           <div
-            class="flex-grow-1 linkText"
+            class="flex-grow-1 _linkText_0ccb12"
           >
             customLink
           </div>
@@ -101,7 +101,7 @@ exports[`Links creates snapshot 1`] = `
     >
       <a
         aria-label="Open customLink1"
-        class="link d-flex align-items-center mb-1 text-capitalize text-primary"
+        class="_link_f0e789 d-flex align-items-center mb-1 text-capitalize text-primary"
         href="http://customlink1.com/"
         rel="noopener noreferrer"
         role="button"
@@ -112,7 +112,7 @@ exports[`Links creates snapshot 1`] = `
           class="d-flex flex-row align-items-start mw-100"
         >
           <svg
-            class="text-muted me-2 icon"
+            class="text-muted me-2 _icon_0ccb12"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -126,7 +126,7 @@ exports[`Links creates snapshot 1`] = `
             />
           </svg>
           <div
-            class="flex-grow-1 linkText"
+            class="flex-grow-1 _linkText_0ccb12"
           >
             customLink1
           </div>

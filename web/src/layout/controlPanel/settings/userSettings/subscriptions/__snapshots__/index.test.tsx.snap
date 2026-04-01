@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SubscriptionsSection creates snapshot 1`] = `
+exports[`SubscriptionsSection > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-flex flex-column flex-grow-1"
@@ -13,7 +13,7 @@ exports[`SubscriptionsSection creates snapshot 1`] = `
         class="flex-grow-1"
       >
         <div
-          class="h3 pb-2 mb-2 border-bottom border-1 title"
+          class="h3 pb-2 mb-2 border-bottom border-1 _title_12cac0"
         >
           Your subscriptions
         </div>

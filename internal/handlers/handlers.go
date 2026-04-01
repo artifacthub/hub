@@ -40,6 +40,9 @@ const csrfHeader = "X-CSRF-Token"
 // to handle the webhooks requests.
 const WebhooksHTTPClientTimeout = 60 * time.Second
 
+// uuidRE is the regex pattern for matching UUID path parameters.
+const uuidRE = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+
 // xForwardedFor is the key for the X-Forwarded-For header.
 var xForwardedFor = http.CanonicalHeaderKey("X-Forwarded-For")
 
@@ -266,7 +269,7 @@ func (h *Handlers) setupRouter() {
 			r.Get("/stats", h.Packages.GetStats)
 			r.With(corsMW).Get("/search", h.Packages.Search)
 			r.With(h.Users.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
-			r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler|^coredns|^keptn|^tekton-pipeline|^container|^kubewarden|^gatekeeper|^kyverno|^knative-client-plugin|^backstage|^argo-template|^kubearmor|^kcl|^headlamp|^inspektor-gadget|^tekton-stepaction|^meshery|^opencost|^radius|^bootc|^kagent$}/{repoName}/{packageName}", func(r chi.Router) {
+			r.Route("/{repoKind:^helm$|^falco$|^opa$|^olm$|^tbaction$|^krew$|^helm-plugin$|^tekton-task$|^keda-scaler$|^coredns$|^keptn$|^tekton-pipeline$|^container$|^kubewarden$|^gatekeeper$|^kyverno$|^knative-client-plugin$|^backstage$|^argo-template$|^kubearmor$|^kcl$|^headlamp$|^inspektor-gadget$|^tekton-stepaction$|^meshery$|^opencost$|^radius$|^bootc$|^kagent$}/{repoName}/{packageName}", func(r chi.Router) {
 				r.Get("/feed/rss", h.Packages.RssFeed)
 				r.With(corsMW).Get("/summary", h.Packages.GetSummary)
 				r.Get("/{version}", h.Packages.Get)
@@ -279,17 +282,17 @@ func (h *Handlers) setupRouter() {
 				})
 				r.Get("/", h.Packages.Get)
 			})
-			r.Route("/{packageID}/stars", func(r chi.Router) {
+			r.Route(fmt.Sprintf("/{packageID:%s}/stars", uuidRE), func(r chi.Router) {
 				r.With(h.Users.InjectUserID).Get("/", h.Packages.GetStars)
 				r.With(h.Users.RequireLogin).Put("/", h.Packages.ToggleStar)
 			})
-			r.Get("/{packageID}/{version}/security-report", h.Packages.GetSnapshotSecurityReport)
-			r.Get("/{packageID}/{version}/values", h.Packages.GetChartValues)
-			r.Get("/{packageID}/{version}/values-schema", h.Packages.GetValuesSchema)
-			r.Get("/{packageID}/{version}/templates", h.Packages.GetChartTemplates)
-			r.Post("/{packageID}/{version}/views", h.Packages.TrackView)
-			r.Get("/{packageID}/views", h.Packages.GetViews)
-			r.Get("/{packageID}/changelog", h.Packages.GetChangelog)
+			r.Get(fmt.Sprintf("/{packageID:%s}/{version}/security-report", uuidRE), h.Packages.GetSnapshotSecurityReport)
+			r.Get(fmt.Sprintf("/{packageID:%s}/{version}/values", uuidRE), h.Packages.GetChartValues)
+			r.Get(fmt.Sprintf("/{packageID:%s}/{version}/values-schema", uuidRE), h.Packages.GetValuesSchema)
+			r.Get(fmt.Sprintf("/{packageID:%s}/{version}/templates", uuidRE), h.Packages.GetChartTemplates)
+			r.Post(fmt.Sprintf("/{packageID:%s}/{version}/views", uuidRE), h.Packages.TrackView)
+			r.Get(fmt.Sprintf("/{packageID:%s}/views", uuidRE), h.Packages.GetViews)
+			r.Get(fmt.Sprintf("/{packageID:%s}/changelog", uuidRE), h.Packages.GetChangelog)
 		})
 
 		// Subscriptions
@@ -300,7 +303,7 @@ func (h *Handlers) setupRouter() {
 				r.Post("/", h.Subscriptions.AddOptOut)
 				r.Delete("/{optOutID}", h.Subscriptions.DeleteOptOut)
 			})
-			r.Get("/{packageID}", h.Subscriptions.GetByPackage)
+			r.Get(fmt.Sprintf("/{packageID:%s}", uuidRE), h.Subscriptions.GetByPackage)
 			r.Get("/", h.Subscriptions.GetByUser)
 			r.Post("/", h.Subscriptions.Add)
 			r.Delete("/", h.Subscriptions.Delete)
@@ -431,7 +434,7 @@ func (h *Handlers) setupRouter() {
 
 	// Index special entry points
 	r.Route("/packages", func(r chi.Router) {
-		r.Route("/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew|^helm-plugin|^tekton-task|^keda-scaler|^coredns|^keptn|^tekton-pipeline|^container|^kubewarden|^gatekeeper|^kyverno|^knative-client-plugin|^backstage|^argo-template|^kubearmor|^kcl|^headlamp|^inspektor-gadget|^tekton-stepaction|^meshery|^opencost|^radius|^bootc|^kagent$}/{repoName}/{packageName}", func(r chi.Router) {
+		r.Route("/{repoKind:^helm$|^falco$|^opa$|^olm$|^tbaction$|^krew$|^helm-plugin$|^tekton-task$|^keda-scaler$|^coredns$|^keptn$|^tekton-pipeline$|^container$|^kubewarden$|^gatekeeper$|^kyverno$|^knative-client-plugin$|^backstage$|^argo-template$|^kubearmor$|^kcl$|^headlamp$|^inspektor-gadget$|^tekton-stepaction$|^meshery$|^opencost$|^radius$|^bootc$|^kagent$}/{repoName}/{packageName}", func(r chi.Router) {
 			r.With(h.Packages.InjectIndexMeta).Get("/{version}", h.Static.Index)
 			r.With(h.Packages.InjectIndexMeta).Get("/", h.Static.Index)
 		})

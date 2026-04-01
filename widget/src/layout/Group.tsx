@@ -1,4 +1,6 @@
-import { isNull, isUndefined, some } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import some from 'lodash/some';
 import { Fragment, useEffect, useState } from 'react';
 import styled from 'styled-components';
 

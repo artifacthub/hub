@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
 import { ErrorKind, Organization } from '../../../../../types';
 import ProfileOrgSection from './index';
-jest.mock('../../../../../api');
+vi.mock('../../../../../api');
 
 const getMockOrganization = (fixtureId: string): Organization => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -19,10 +19,16 @@ const defaultProps = {
   onAuthError: onAuthErrorMock,
 };
 
-jest.mock('../../../../../utils/authorizer', () => ({
-  check: () => {
-    return true;
-  },
+const authorizerMock = vi.hoisted(() => ({
+  check: vi.fn(() => true),
+  init: vi.fn(),
+  updateCtx: vi.fn(),
+  getAllowedActionsList: vi.fn(),
+}));
+
+vi.mock('../../../../../utils/authorizer', () => ({
+  __esModule: true,
+  default: authorizerMock,
 }));
 
 const mockCtx = {
@@ -47,11 +53,12 @@ const mockCtx = {
 describe('Organization profile settings index', () => {
   afterEach(() => {
     jest.resetAllMocks();
+    authorizerMock.check.mockClear();
   });
 
   it('creates snapshot', async () => {
     const mockOrganization = getMockOrganization('1');
-    mocked(API).getOrganization.mockResolvedValue(mockOrganization);
+    vi.mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -72,7 +79,7 @@ describe('Organization profile settings index', () => {
   describe('Render', () => {
     it('renders component', async () => {
       const mockOrganization = getMockOrganization('2');
-      mocked(API).getOrganization.mockResolvedValue(mockOrganization);
+      vi.mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -93,7 +100,7 @@ describe('Organization profile settings index', () => {
 
   describe('when getPackage call fails', () => {
     it('not found', async () => {
-      mocked(API).getOrganization.mockResolvedValue(null);
+      vi.mocked(API).getOrganization.mockResolvedValue(null);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -113,7 +120,7 @@ describe('Organization profile settings index', () => {
     });
 
     it('generic error', async () => {
-      mocked(API).getOrganization.mockRejectedValue({ kind: ErrorKind.Other });
+      vi.mocked(API).getOrganization.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -135,7 +142,7 @@ describe('Organization profile settings index', () => {
     });
 
     it('UnauthorizedError', async () => {
-      mocked(API).getOrganization.mockRejectedValue({
+      vi.mocked(API).getOrganization.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 

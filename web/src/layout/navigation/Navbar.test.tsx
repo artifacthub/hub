@@ -1,15 +1,28 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ReactRouter, { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { AppCtx } from '../../context/AppCtx';
 import Navbar from './Navbar';
-jest.mock('./MobileSettings', () => () => <div />);
-
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as object),
-  useSearchParams: () => jest.fn(),
+vi.mock('./MobileSettings', () => ({
+  __esModule: true,
+  default: () => <div />,
 }));
+
+const { useSearchParamsMock } = vi.hoisted(() => ({
+  useSearchParamsMock: vi.fn(),
+}));
+
+vi.mock('react-router-dom', () => {
+  const actual = jest.requireActual('react-router-dom') as typeof ReactRouter;
+  return {
+    __esModule: true,
+    ...actual,
+    default: actual,
+    useSearchParams: useSearchParamsMock,
+  };
+});
 
 const defaultProps = {
   isSearching: false,
@@ -83,7 +96,7 @@ Object.defineProperty(document, 'querySelector', {
 
 describe('Navbar', () => {
   beforeEach(() => {
-    jest.spyOn(ReactRouter, 'useSearchParams').mockReturnValue([
+    useSearchParamsMock.mockReturnValue([
       {
         get: (): null => {
           return null;
@@ -182,12 +195,12 @@ describe('Navbar', () => {
       const link = screen.getByRole('button', { name: 'Open documentation' });
       expect(link).toBeInTheDocument();
       expect(link).toHaveProperty('target', '_self');
-      expect(link).toHaveProperty('href', 'http://localhost/docs');
+      expect(new URL(link.href).pathname).toBe('/docs');
       expect(link).toHaveProperty('rel', 'noopener noreferrer');
     });
 
     it('opens Sign in modal when redirect is defined', async () => {
-      jest.spyOn(ReactRouter, 'useSearchParams').mockReturnValue([
+      useSearchParamsMock.mockReturnValue([
         {
           get: (name: string): string | null => {
             switch (name) {
@@ -213,6 +226,13 @@ describe('Navbar', () => {
     });
 
     it('opens Sign in modal to click Sign in button', async () => {
+      useSearchParamsMock.mockReturnValue([
+        {
+          get: () => null,
+        },
+        jest.fn(),
+      ]);
+
       render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
@@ -228,6 +248,13 @@ describe('Navbar', () => {
     });
 
     it('opens Sign up modal to click Sign up button', async () => {
+      useSearchParamsMock.mockReturnValue([
+        {
+          get: () => null,
+        },
+        jest.fn(),
+      ]);
+
       render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>

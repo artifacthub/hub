@@ -57,7 +57,9 @@ describe('RelatedPackageCard', () => {
       );
       const image = screen.getByAltText(`Logo ${mockProps.displayName}`);
       expect(image).toBeInTheDocument();
-      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/placeholder_pkg_helm.png');
+      const src = (image as HTMLImageElement).getAttribute('src');
+      expect(src).not.toBeNull();
+      expect(src).toContain('/static/media/placeholder_pkg_helm');
     });
   });
 

@@ -47,8 +47,8 @@ const StarButton = (props: Props) => {
     if (
       (!isUndefined(ctx.user) &&
         (isUndefined(packageStars) ||
-          (!isNull(ctx.user) && isUndefined(packageStars!.starredByUser)) ||
-          (isNull(ctx.user) && packageStars!.starredByUser))) ||
+          (!isNull(ctx.user) && isUndefined(packageStars?.starredByUser)) ||
+          (isNull(ctx.user) && packageStars?.starredByUser))) ||
       props.packageId !== pkgId
     ) {
       setPkgId(props.packageId);

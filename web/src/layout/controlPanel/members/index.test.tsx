@@ -1,18 +1,24 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind } from '../../../types';
 import MembersSection from './index';
-jest.mock('../../../api');
+vi.mock('../../../api');
 
-jest.mock('../../../utils/authorizer', () => ({
-  check: () => {
-    return true;
-  },
+const authorizerMock = vi.hoisted(() => ({
+  check: vi.fn(() => true),
+  init: vi.fn(),
+  updateCtx: vi.fn(),
+  getAllowedActionsList: vi.fn(),
+}));
+
+vi.mock('../../../utils/authorizer', () => ({
+  __esModule: true,
+  default: authorizerMock,
 }));
 
 const getMembers = (fixtureId: string) => {
@@ -49,11 +55,12 @@ const mockCtx = {
 describe('Members section index', () => {
   afterEach(() => {
     jest.resetAllMocks();
+    authorizerMock.check.mockClear();
   });
 
   it('creates snapshot', async () => {
     const mockMembers = getMembers('1');
-    mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+    vi.mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -68,13 +75,14 @@ describe('Members section index', () => {
     });
 
     expect(await screen.findByText('Members')).toBeInTheDocument();
+    expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', async () => {
       const mockMembers = getMembers('2');
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -89,11 +97,12 @@ describe('Members section index', () => {
       });
 
       expect(await screen.findByText('Members')).toBeInTheDocument();
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
     });
 
     it('displays no data component when no members', async () => {
       const mockMembers = getMembers('4');
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -112,7 +121,7 @@ describe('Members section index', () => {
 
     it('renders 2 members card', async () => {
       const mockMembers = getMembers('5');
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -122,12 +131,14 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      expect(await screen.findAllByTestId('memberCard')).toHaveLength(2);
+      const cards = await screen.findAllByTestId('memberCard');
+      expect(cards).toHaveLength(2);
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
     });
 
     it('renders organization form when add org button is clicked', async () => {
       const mockMembers = getMembers('6');
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -149,7 +160,7 @@ describe('Members section index', () => {
 
     it('renders organization form when add org button is clicked', async () => {
       const mockMembers = getMembers('7');
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -171,7 +182,7 @@ describe('Members section index', () => {
     it('loads first page when not members in a different one', async () => {
       const mockMembers = getMembers('8');
 
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers).mockResolvedValueOnce({
+      vi.mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers).mockResolvedValueOnce({
         items: [],
         paginationTotalCount: '2',
       });
@@ -194,7 +205,7 @@ describe('Members section index', () => {
 
   describe('on getOrganizationMembers error', () => {
     it('UnauthorizedError error', async () => {
-      mocked(API).getOrganizationMembers.mockRejectedValue({
+      vi.mocked(API).getOrganizationMembers.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -212,7 +223,7 @@ describe('Members section index', () => {
     });
 
     it('rest API errors', async () => {
-      mocked(API).getOrganizationMembers.mockRejectedValue({ kind: ErrorKind.Other });
+      vi.mocked(API).getOrganizationMembers.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>

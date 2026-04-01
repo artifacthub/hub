@@ -1,8 +1,8 @@
 import { ApexOptions } from 'apexcharts';
 import classnames from 'classnames';
+import { addWeeks, format, isSameDay, isSameMonth, subDays, subWeeks } from 'date-fns';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -130,12 +130,12 @@ const StatsView = () => {
             let newMaxDate = parseInt(opt.xaxis.max);
             // Min range 1 week
             if (newMinDate > chartContext.minX) {
-              const maxRange = moment(newMinDate).add(1, 'w').valueOf();
-              if (moment(newMaxDate).isBefore(maxRange) && moment(maxRange).isBefore(maxDate)) {
+              const maxRange = addWeeks(new Date(newMinDate), 1).getTime();
+              if (newMaxDate < maxRange && maxRange < maxDate) {
                 newMaxDate = maxRange;
               } else {
-                const minRange = moment(newMaxDate).subtract(1, 'w').valueOf();
-                if (moment(newMinDate).isAfter(minRange)) {
+                const minRange = subWeeks(new Date(newMaxDate), 1).getTime();
+                if (newMinDate > minRange) {
                   newMinDate = minRange;
                 }
               }
@@ -213,7 +213,9 @@ const StatsView = () => {
     const getBarColors = (): string[] => {
       if (dataLength > 0) {
         const isCurrent = !isUndefined(lastBarDate)
-          ? moment(moment.unix(lastBarDate / 1000)).isSame(moment(), monthlyFormatter ? 'month' : 'day')
+          ? monthlyFormatter
+            ? isSameMonth(new Date(lastBarDate), new Date())
+            : isSameDay(new Date(lastBarDate), new Date())
           : false;
         const colors = Array.from({ length: dataLength - 1 }, () => 'var(--color-1-500)');
         if (isCurrent) {
@@ -270,7 +272,7 @@ const StatsView = () => {
       colors: getBarColors(),
       xaxis: {
         type: 'datetime',
-        min: monthlyFormatter ? undefined : moment().subtract(30, 'days').unix() * 1000,
+        min: monthlyFormatter ? undefined : subDays(new Date(), 30).getTime(),
         labels: {
           style: {
             colors: 'var(--color-font)',
@@ -289,7 +291,7 @@ const StatsView = () => {
       tooltip: {
         x: {
           formatter: (val: number): string => {
-            return monthlyFormatter ? moment(val).format('MM/YY') : moment(val).format('DD MMM YY');
+            return monthlyFormatter ? format(new Date(val), 'MM/yy') : format(new Date(val), 'dd MMM yy');
           },
         },
       },
@@ -320,15 +322,19 @@ const StatsView = () => {
           breakpoint: 1400,
           options: {
             dataLabels: {
-              offsetY: monthlyFormatter ? -15 : -12,
+              offsetY: -12,
               style: {
-                fontSize: monthlyFormatter ? '9px' : '7px',
+                fontSize: '7px',
+              },
+              formatter: (value: number) => {
+                if (value === 0) return '';
+                return prettifyNumber(value, 0);
               },
             },
           },
         },
         {
-          breakpoint: 992,
+          breakpoint: 1170,
           options: {
             dataLabels: {
               enabled: false,
@@ -336,8 +342,19 @@ const StatsView = () => {
           },
         },
         {
+          breakpoint: 998,
+          options: {
+            dataLabels: {
+              enabled: true,
+            },
+          },
+        },
+        {
           breakpoint: 768,
           options: {
+            dataLabels: {
+              enabled: false,
+            },
             plotOptions: {
               bar: {
                 borderRadius: 0,
@@ -419,7 +436,7 @@ const StatsView = () => {
                 <small>
                   <span className="text-muted me-2">Report generated at:</span>
                   {!isUndefined(stats.generatedAt) ? (
-                    moment(stats.generatedAt).format('YYYY/MM/DD HH:mm:ss (Z)')
+                    format(new Date(stats.generatedAt), 'yyyy/MM/dd HH:mm:ss (xxx)')
                   ) : (
                     <div className="d-inline">
                       <Loading noWrapper smallSize />

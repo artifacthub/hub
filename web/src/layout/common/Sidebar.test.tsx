@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { hasClassContaining } from '../../utils/testUtils';
 import Sidebar from './Sidebar';
 
 const defaultProps = {
@@ -28,9 +29,9 @@ describe('Sidebar', () => {
     render(<Sidebar {...defaultProps} />);
     const sidebar = screen.getByRole('complementary', { name: 'Sidebar' });
     expect(sidebar).toBeInTheDocument();
-    expect(sidebar).not.toHaveClass('active');
+    expect(hasClassContaining(sidebar, 'active')).toBe(false);
     const btn = screen.getByRole('button', { name: /Open sidebar/ });
     await userEvent.click(btn);
-    expect(sidebar).toHaveClass('active');
+    expect(hasClassContaining(sidebar, 'active')).toBe(true);
   });
 });

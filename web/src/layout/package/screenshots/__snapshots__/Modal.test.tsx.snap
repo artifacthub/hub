@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ScreenshotsModal creates snapshot 1`] = `
+exports[`ScreenshotsModal > creates snapshot 1`] = `
 <DocumentFragment>
   <button
     aria-label="Open screenshots modal"
@@ -36,15 +36,15 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
     </div>
   </button>
   <div
-    class="position-fixed overflow-hidden p-3 top-0 bottom-0 start-0 end-0 modal"
+    class="position-fixed overflow-hidden p-3 top-0 bottom-0 start-0 end-0 _modal_572511"
     role="dialog"
   >
     <div
-      class="position-absolute closeWrapper"
+      class="position-absolute _closeWrapper_572511"
     >
       <button
         aria-label="Close"
-        class="btn-close btn-close-white opacity-100 fs-5 close"
+        class="btn-close btn-close-white opacity-100 fs-5 _close_572511"
         type="button"
       />
     </div>
@@ -55,7 +55,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
         class="d-flex flex-column h-100 w-100 align-items-center unselectable"
       >
         <div
-          class="d-flex flex-grow-1 w-100 pt-3 minHeight"
+          class="d-flex flex-grow-1 w-100 pt-3 _minHeight_344272"
         >
           <div
             class="d-flex flex-row align-items-center justify-content-between px-3 pt-3 h-100 w-100"
@@ -65,7 +65,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
             >
               <button
                 aria-label="Go to previous screenshot"
-                class="btn btn-link fs-2 arrowBtn disabled disabled"
+                class="btn btn-link fs-2 _arrowBtn_344272 disabled _disabled_344272"
                 disabled=""
               >
                 <svg
@@ -87,13 +87,13 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
               class="h-100 w-100"
             >
               <div
-                class="position-absolute top-0 bottom-0 start-0 end-0 p-5 wrapper bg-transparent"
+                class="position-absolute top-0 bottom-0 start-0 end-0 p-5 _wrapper_b8d820 bg-transparent"
               >
                 <div
                   class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                 >
                   <div
-                    class="wave"
+                    class="_wave_b8d820"
                     role="status"
                   >
                     <span
@@ -111,7 +111,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
                   class="d-flex flex-column h-100 w-100 align-items-center"
                 >
                   <div
-                    class="flex-grow-1 d-flex align-items-center justify-content-center pb-1 position-relative w-100 minHeight"
+                    class="flex-grow-1 d-flex align-items-center justify-content-center pb-1 position-relative w-100 _minHeight_344272"
                   >
                     <div
                       class="h-100 w-100 position-relative"
@@ -119,13 +119,13 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
                       <img
                         alt="Screenshot: Home page"
                         aria-hidden="true"
-                        class="mh-100 mw-100 border border-3 position-relative top-50 start-50 translate-middle image"
+                        class="mh-100 mw-100 border border-3 position-relative top-50 start-50 translate-middle _image_344272"
                         src="https://artifacthub.github.io/hub/screenshots/screenshot1.jpg"
                       />
                     </div>
                   </div>
                   <div
-                    class="text-truncate text-center mt-4 imgTitle"
+                    class="text-truncate text-center mt-4 _imgTitle_344272"
                   >
                     Home page
                   </div>
@@ -137,7 +137,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
             >
               <button
                 aria-label="Go to next screenshot"
-                class="btn btn-link fs-2 arrowBtn"
+                class="btn btn-link fs-2 _arrowBtn_344272"
               >
                 <svg
                   fill="currentColor"
@@ -161,7 +161,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
         >
           <button
             aria-label="Go to screenshot number 1"
-            class="btn btn-link px-1 disabled opacity-100 disabledDotBtn"
+            class="btn btn-link px-1 disabled opacity-100 _disabledDotBtn_344272"
             data-testid="dotBtn"
             disabled=""
           >
@@ -181,7 +181,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
           </button>
           <button
             aria-label="Go to screenshot number 2"
-            class="btn btn-link px-1 dotBtn"
+            class="btn btn-link px-1 _dotBtn_344272"
             data-testid="dotBtn"
           >
             <svg
@@ -200,7 +200,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
           </button>
           <button
             aria-label="Go to screenshot number 3"
-            class="btn btn-link px-1 dotBtn"
+            class="btn btn-link px-1 _dotBtn_344272"
             data-testid="dotBtn"
           >
             <svg
@@ -219,7 +219,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
           </button>
           <button
             aria-label="Go to screenshot number 4"
-            class="btn btn-link px-1 dotBtn"
+            class="btn btn-link px-1 _dotBtn_344272"
             data-testid="dotBtn"
           >
             <svg
@@ -238,7 +238,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
           </button>
           <button
             aria-label="Go to screenshot number 5"
-            class="btn btn-link px-1 dotBtn"
+            class="btn btn-link px-1 _dotBtn_344272"
             data-testid="dotBtn"
           >
             <svg
@@ -257,7 +257,7 @@ exports[`ScreenshotsModal creates snapshot 1`] = `
           </button>
           <button
             aria-label="Go to screenshot number 6"
-            class="btn btn-link px-1 dotBtn"
+            class="btn btn-link px-1 _dotBtn_344272"
             data-testid="dotBtn"
           >
             <svg

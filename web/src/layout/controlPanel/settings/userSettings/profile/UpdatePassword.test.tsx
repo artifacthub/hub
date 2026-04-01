@@ -1,17 +1,17 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../../../../api';
 import { ErrorKind } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import UpdatePassword from './UpdatePassword';
-jest.mock('../../../../../api');
-jest.mock('../../../../../utils/alertDispatcher');
+vi.mock('../../../../../api');
+vi.mock('../../../../../utils/alertDispatcher');
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
@@ -53,7 +53,7 @@ describe('Update password - user settings', () => {
       await userEvent.click(btn);
 
       await waitFor(() => {
-        expect(API.updatePassword).toBeCalledTimes(1);
+        expect(API.updatePassword).toHaveBeenCalledTimes(1);
         expect(API.updatePassword).toHaveBeenCalledWith('oldpass', 'newpass');
         expect(mockUseNavigate).toHaveBeenCalledTimes(1);
         expect(mockUseNavigate).toHaveBeenCalledWith('/?modal=login&redirect=/control-panel/settings');
@@ -76,7 +76,7 @@ describe('Update password - user settings', () => {
       await userEvent.click(btn);
 
       await waitFor(() => {
-        expect(API.updatePassword).toBeCalledTimes(1);
+        expect(API.updatePassword).toHaveBeenCalledTimes(1);
         expect(API.updatePassword).toHaveBeenCalledWith('oldpass', 'newpass$^');
       });
     });
@@ -97,14 +97,14 @@ describe('Update password - user settings', () => {
       await userEvent.click(btn);
 
       await waitFor(() => {
-        expect(API.updatePassword).toBeCalledTimes(0);
+        expect(API.updatePassword).toHaveBeenCalledTimes(0);
       });
     });
   });
 
   describe('when updateUserProfile fails', () => {
     it('with custom error message', async () => {
-      mocked(API).updatePassword.mockRejectedValue({
+      vi.mocked(API).updatePassword.mockRejectedValue({
         kind: ErrorKind.Other,
         message: 'custom error',
       });
@@ -133,7 +133,7 @@ describe('Update password - user settings', () => {
     });
 
     it('UnauthorizedError', async () => {
-      mocked(API).updatePassword.mockRejectedValue({
+      vi.mocked(API).updatePassword.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -162,7 +162,7 @@ describe('Update password - user settings', () => {
     });
 
     it('default error message', async () => {
-      mocked(API).updatePassword.mockRejectedValue({
+      vi.mocked(API).updatePassword.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 

@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SearchTip creates snapshot 1`] = `
+exports[`SearchTip > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-none d-md-inline w-50 mx-auto text-center position-relative"
   >
     <div
-      class="d-flex mt-2 pt-1 flex-row align-items-center justify-content-center textLight tipText"
+      class="d-flex mt-2 pt-1 flex-row align-items-center justify-content-center textLight _tipText_cc2673"
     >
       <svg
         class="me-1"
@@ -37,6 +37,7 @@ exports[`SearchTip creates snapshot 1`] = `
          to refine your search. Example: 
         <a
           class="fw-semibold textLighter p-0"
+          data-discover="true"
           href="/packages/search?ts_query_web=kafka+operator&sort=relevance&page=1"
         >
           kafka operator

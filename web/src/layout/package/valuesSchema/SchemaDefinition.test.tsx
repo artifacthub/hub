@@ -282,5 +282,23 @@ describe('SchemaDefinition', () => {
       expect(screen.getByText('0')).toBeInTheDocument();
       expect(screen.getAllByText('-')).toHaveLength(3);
     });
+
+    it('renders type union (string|integer) with integer default - resolves to integer', () => {
+      const props = getProps('14');
+      render(<SchemaDefinition {...props} {...defaultProps} />);
+
+      const select = screen.getByRole('combobox', { name: 'Type selection' });
+      expect(select).toBeInTheDocument();
+      expect(select).toHaveValue('integer');
+    });
+
+    it('renders type union (string|integer) with string default - resolves to string', () => {
+      const props = getProps('15');
+      render(<SchemaDefinition {...props} {...defaultProps} />);
+
+      const select = screen.getByRole('combobox', { name: 'Type selection' });
+      expect(select).toBeInTheDocument();
+      expect(select).toHaveValue('string');
+    });
   });
 });

@@ -5,7 +5,7 @@ import { useContext, useRef, useState } from 'react';
 import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 import { MdBusiness } from 'react-icons/md';
 import { RiMedalLine } from 'react-icons/ri';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import API from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';

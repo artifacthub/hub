@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import { hasClassContaining } from '../../utils/testUtils';
 import Footer from './Footer';
 
 describe('Footer', () => {
@@ -59,7 +60,7 @@ describe('Footer', () => {
       );
 
       const footer = screen.getByRole('contentinfo');
-      expect(footer).toHaveClass('invisibleFooter');
+      expect(hasClassContaining(footer, 'invisibleFooter')).toBe(true);
     });
   });
 });

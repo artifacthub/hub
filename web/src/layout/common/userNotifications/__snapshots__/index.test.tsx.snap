@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`UserNotificationsController creates snapshot 1`] = `
+exports[`UserNotificationsController > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-none d-md-flex justify-content-center align-items-center w-100"
@@ -8,7 +8,7 @@ exports[`UserNotificationsController creates snapshot 1`] = `
     <div
       aria-atomic="true"
       aria-live="assertive"
-      class="position-fixed toast fade border border-3 bg-white opacity-0 toast notificationCard"
+      class="position-fixed toast fade border border-3 bg-white opacity-0 _toast_e893ef notificationCard"
       role="alert"
     />
   </div>

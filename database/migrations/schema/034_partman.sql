@@ -1,4 +1,4 @@
-create schema partman;
+create schema if not exists partman;
 create extension if not exists pg_partman schema partman;
 
 do language plpgsql $$

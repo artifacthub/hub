@@ -1,8 +1,8 @@
 import classnames from 'classnames';
+import { format, fromUnixTime } from 'date-fns';
 import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
 import { CgFileDocument } from 'react-icons/cg';
 import { FaMarkdown } from 'react-icons/fa';
@@ -306,7 +306,7 @@ const ChangelogModal = (props: Props) => {
                           {item.version}
                           <br />
                           <small className={`text-muted ${styles.legend}`}>
-                            {moment.unix(item.ts).format('D MMM, YYYY')}
+                            {format(fromUnixTime(item.ts), 'd MMM, yyyy')}
                           </small>
                         </button>
                       </div>

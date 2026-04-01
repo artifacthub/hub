@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { hasClassContaining } from '../../utils/testUtils';
 import CapabilityLevelInfoModal from './CapabilityLevelInfoModal';
 
 describe('CapabilityLevelInfoModal', () => {
@@ -22,11 +23,11 @@ describe('CapabilityLevelInfoModal', () => {
     it('opens modal', async () => {
       render(<CapabilityLevelInfoModal />);
 
-      expect(screen.getByRole('dialog')).not.toHaveClass('active');
+      expect(hasClassContaining(screen.getByRole('dialog'), 'active')).toBe(false);
       const btn = screen.getByRole('button', { name: /Open modal/ });
       await userEvent.click(btn);
 
-      expect(screen.getByRole('dialog')).toHaveClass('active');
+      expect(hasClassContaining(screen.getByRole('dialog'), 'active')).toBe(true);
       expect(screen.getByAltText('Capability Level Diagram')).toBeInTheDocument();
     });
   });

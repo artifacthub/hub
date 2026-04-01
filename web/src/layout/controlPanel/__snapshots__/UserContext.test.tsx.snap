@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`UserContext creates snapshot 1`] = `
+exports[`UserContext > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="position-relative ctxWrapper"
+    class="position-relative _ctxWrapper_6a45a8"
   >
     <div
       class="d-flex flex-column"
     >
       <small
-        class="text-uppercase text-muted legendCtx"
+        class="text-uppercase text-muted _legendCtx_6a45a8"
       >
         Control panel context
       </small>
@@ -19,14 +19,14 @@ exports[`UserContext creates snapshot 1`] = `
         <button
           aria-expanded="false"
           aria-label="Open context"
-          class="btn btn-primary btn-sm pe-3 position-relative lh-1 ctxBtn"
+          class="btn btn-primary btn-sm pe-3 position-relative lh-1 _ctxBtn_6a45a8"
           type="button"
         >
           <div
             class="d-flex flex-row align-items-center"
           >
             <div
-              class="badge bg-light text-dark rounded-pill me-2 p-0 badgeIcon"
+              class="badge bg-light text-dark rounded-pill me-2 p-0 _badgeIcon_6a45a8"
             >
               <svg
                 fill="currentColor"
@@ -43,13 +43,13 @@ exports[`UserContext creates snapshot 1`] = `
               </svg>
             </div>
             <div
-              class="flex-grow-1 text-start me-1 text-truncate badgeContent"
+              class="flex-grow-1 text-start me-1 text-truncate _badgeContent_6a45a8"
             >
               userAlias
             </div>
           </div>
           <div
-            class="position-absolute textLight caret"
+            class="position-absolute textLight _caret_6a45a8"
           >
             <svg
               fill="currentColor"
@@ -69,11 +69,11 @@ exports[`UserContext creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="dropdown-menu dropdown-menu-end dropdown"
+      class="dropdown-menu dropdown-menu-end _dropdown_6a45a8"
       role="menu"
     >
       <div
-        class="dropdown-arrow arrow"
+        class="dropdown-arrow _arrow_6a45a8"
       />
       <button
         aria-label="Activate user context"
@@ -83,7 +83,7 @@ exports[`UserContext creates snapshot 1`] = `
           class="d-flex flex-row align-items-center text-truncate"
         >
           <svg
-            class="me-2 icon"
+            class="me-2 _icon_6a45a8"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -102,7 +102,7 @@ exports[`UserContext creates snapshot 1`] = `
             userAlias
           </div>
           <svg
-            class="ms-2 text-success icon"
+            class="ms-2 text-success _icon_6a45a8"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -125,7 +125,7 @@ exports[`UserContext creates snapshot 1`] = `
           class="d-flex flex-row align-items-center text-truncate"
         >
           <svg
-            class="me-2 icon"
+            class="me-2 _icon_6a45a8"
             fill="currentColor"
             height="1em"
             stroke="currentColor"

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Flavors creates snapshot 1`] = `
+exports[`Flavors > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mt-2 mb-1 undefined"
@@ -21,7 +21,7 @@ exports[`Flavors creates snapshot 1`] = `
     class="mb-3"
   >
     <div
-      class="text-truncate mb-1 text"
+      class="text-truncate mb-1 _text_2c4a67"
       data-testid="flavor"
     >
       <div
@@ -38,7 +38,7 @@ exports[`Flavors creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="text-truncate mb-1 text"
+      class="text-truncate mb-1 _text_2c4a67"
       data-testid="flavor"
     >
       <div
@@ -55,7 +55,7 @@ exports[`Flavors creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="text-truncate mb-1 text"
+      class="text-truncate mb-1 _text_2c4a67"
       data-testid="flavor"
     >
       <div

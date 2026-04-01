@@ -3,6 +3,29 @@ import isUndefined from 'lodash/isUndefined';
 import { Prefs } from '../types';
 import lsPreferences, { applyMigrations, OldThemePrefs, PreferencesList } from './localStoragePreferences';
 
+const createLocalStorageMock = () => {
+  let store: Record<string, string> = {};
+  return {
+    getItem: (key: string) => (key in store ? store[key] : null),
+    setItem: (key: string, value: string) => {
+      store[key] = value;
+    },
+    removeItem: (key: string) => {
+      delete store[key];
+    },
+    clear: () => {
+      store = {};
+    },
+  };
+};
+
+beforeEach(() => {
+  Object.defineProperty(window, 'localStorage', {
+    value: createLocalStorageMock(),
+    writable: true,
+  });
+});
+
 const defaultPrefs: Prefs = {
   controlPanel: {},
   search: { limit: 20 },

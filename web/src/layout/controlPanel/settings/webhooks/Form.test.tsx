@@ -1,15 +1,17 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
 import { ErrorKind, SearchResults, Webhook } from '../../../../types';
 import WebhookForm from './Form';
-jest.mock('../../../../api');
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('../../../common/Alert', () => (props: any) => <div>{props.message}</div>);
+vi.mock('../../../../api');
+vi.mock('../../../common/Alert', () => ({
+  __esModule: true,
+  default: (props: { message: string }) => <div>{props.message}</div>,
+}));
 
 const getMockWebhook = (fixtureId: string): Webhook => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -347,7 +349,7 @@ describe('WebhookForm', () => {
     });
 
     it('calls updateWebhook', async () => {
-      mocked(API).updateWebhook.mockResolvedValue(null);
+      vi.mocked(API).updateWebhook.mockResolvedValue(null);
       const mockWebhook = getMockWebhook('3');
 
       render(
@@ -383,7 +385,7 @@ describe('WebhookForm', () => {
     });
 
     it('calls updateWebhook with selected org context', async () => {
-      mocked(API).updateWebhook.mockResolvedValue(null);
+      vi.mocked(API).updateWebhook.mockResolvedValue(null);
       const mockWebhook = getMockWebhook('4');
 
       render(
@@ -419,7 +421,7 @@ describe('WebhookForm', () => {
     });
 
     it('calls updateWebhook with securityAlert event selected', async () => {
-      mocked(API).updateWebhook.mockResolvedValue(null);
+      vi.mocked(API).updateWebhook.mockResolvedValue(null);
       const mockWebhook = getMockWebhook('14');
 
       render(
@@ -457,9 +459,9 @@ describe('WebhookForm', () => {
     });
 
     it('calls addWebhook', async () => {
-      mocked(API).addWebhook.mockResolvedValue(null);
+      vi.mocked(API).addWebhook.mockResolvedValue(null);
       const mockSearch = getMockSearch('1');
-      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
@@ -512,7 +514,7 @@ describe('WebhookForm', () => {
 
     describe('when fails', () => {
       it('UnauthorizedError', async () => {
-        mocked(API).updateWebhook.mockRejectedValue({
+        vi.mocked(API).updateWebhook.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
         const mockWebhook = getMockWebhook('5');
@@ -549,7 +551,7 @@ describe('WebhookForm', () => {
       });
 
       it('with error message', async () => {
-        mocked(API).updateWebhook.mockRejectedValue({
+        vi.mocked(API).updateWebhook.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'message error',
         });
@@ -585,7 +587,7 @@ describe('WebhookForm', () => {
       });
 
       it('without error message', async () => {
-        mocked(API).updateWebhook.mockRejectedValue({ kind: ErrorKind.Other });
+        vi.mocked(API).updateWebhook.mockRejectedValue({ kind: ErrorKind.Other });
         const mockWebhook = getMockWebhook('7');
 
         const component = (
@@ -624,7 +626,7 @@ describe('WebhookForm', () => {
     });
 
     it('removes package from list to update webhook', async () => {
-      mocked(API).updateWebhook.mockResolvedValue(null);
+      vi.mocked(API).updateWebhook.mockResolvedValue(null);
       const mockWebhook = getMockWebhook('8');
       const newPackagesList = [...mockWebhook.packages];
       newPackagesList.shift();
@@ -659,7 +661,7 @@ describe('WebhookForm', () => {
 
   describe('testing webhook', () => {
     it('triggers test on webhook edition', async () => {
-      mocked(API).triggerWebhookTest.mockResolvedValue(null);
+      vi.mocked(API).triggerWebhookTest.mockResolvedValue(null);
       const mockWebhook = getMockWebhook('9');
 
       render(
@@ -687,7 +689,7 @@ describe('WebhookForm', () => {
     });
 
     it('triggers test on webhook addition', async () => {
-      mocked(API).triggerWebhookTest.mockResolvedValue(null);
+      vi.mocked(API).triggerWebhookTest.mockResolvedValue(null);
 
       render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
@@ -742,7 +744,7 @@ describe('WebhookForm', () => {
 
     describe('when fails', () => {
       it('UnauthorizedError', async () => {
-        mocked(API).triggerWebhookTest.mockRejectedValue({
+        vi.mocked(API).triggerWebhookTest.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
         const mockWebhook = getMockWebhook('11');
@@ -772,7 +774,7 @@ describe('WebhookForm', () => {
       });
 
       it('with custom error', async () => {
-        mocked(API).triggerWebhookTest.mockRejectedValue({
+        vi.mocked(API).triggerWebhookTest.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'custom error',
         });
@@ -804,7 +806,7 @@ describe('WebhookForm', () => {
       });
 
       it('default error', async () => {
-        mocked(API).triggerWebhookTest.mockRejectedValue({
+        vi.mocked(API).triggerWebhookTest.mockRejectedValue({
           kind: ErrorKind.Other,
         });
         const mockWebhook = getMockWebhook('13');

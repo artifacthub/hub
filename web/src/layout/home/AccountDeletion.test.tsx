@@ -1,14 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import AccountDeletion from './AccountDeletion';
-jest.mock('../../api');
-jest.mock('../../utils/alertDispatcher');
+vi.mock('../../api');
+vi.mock('../../utils/alertDispatcher');
 
 const mockCtx = {
   user: { alias: 'userAlias', email: 'jsmith@email.com', passwordSet: false },
@@ -33,7 +33,7 @@ describe('AccountDeletion', () => {
   });
 
   it('creates snapshot', async () => {
-    mocked(API).deleteUser.mockResolvedValue(null);
+    vi.mocked(API).deleteUser.mockResolvedValue(null);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -58,7 +58,7 @@ describe('AccountDeletion', () => {
 
   describe('Render', () => {
     it('renders component', async () => {
-      mocked(API).deleteUser.mockResolvedValue(null);
+      vi.mocked(API).deleteUser.mockResolvedValue(null);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -84,7 +84,7 @@ describe('AccountDeletion', () => {
     });
 
     it('when deleteUser fails', async () => {
-      mocked(API).deleteUser.mockRejectedValue({
+      vi.mocked(API).deleteUser.mockRejectedValue({
         kind: ErrorKind.Gone,
       });
 

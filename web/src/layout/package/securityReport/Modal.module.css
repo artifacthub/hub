@@ -10,9 +10,9 @@
 
 @media only screen and (min-width: 576px) {
   .modalDialog {
-    max-width: 80% !important;
-    min-height: calc(100% - 10rem) !important;
-    max-height: calc(100% - 10rem) !important;
+    max-width: 90% !important;
+    min-height: calc(100% - 8rem) !important;
+    max-height: calc(100% - 8rem) !important;
     margin: 5rem auto !important;
   }
 }

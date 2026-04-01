@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
@@ -9,18 +9,28 @@ import { ErrorKind, OrganizationPolicy } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import AuthorizationSection from './index';
 
-jest.mock('../../../../../utils/alertDispatcher');
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('../../../../common/Alert', () => (props: any) => <div>{props.message}</div>);
+vi.mock('../../../../../utils/alertDispatcher');
+vi.mock('../../../../common/Alert', () => ({
+  __esModule: true,
+  default: (props: { message: string }) => <div>{props.message}</div>,
+}));
 
-jest.mock('../../../../common/CodeEditor', () => () => <div />);
-jest.mock('../../../../../api');
+vi.mock('../../../../common/CodeEditor', () => ({
+  __esModule: true,
+  default: () => <div />,
+}));
+vi.mock('../../../../../api');
 
-jest.mock('../../../../../utils/authorizer', () => ({
-  check: () => {
-    return true;
-  },
-  getAllowedActionsList: () => null,
+const authorizerMock = vi.hoisted(() => ({
+  check: vi.fn(() => true),
+  getAllowedActionsList: vi.fn(() => null),
+  init: vi.fn(),
+  updateCtx: vi.fn(),
+}));
+
+vi.mock('../../../../../utils/authorizer', () => ({
+  __esModule: true,
+  default: authorizerMock,
 }));
 
 const getMockAuthz = (fixtureId: string): OrganizationPolicy => {
@@ -100,13 +110,15 @@ const router = createBrowserRouter([
 describe('Authorization settings index', () => {
   afterEach(() => {
     jest.resetAllMocks();
+    authorizerMock.check.mockClear();
+    authorizerMock.getAllowedActionsList.mockClear();
   });
 
   it('creates snapshot', async () => {
     const mockMembers = getAllOrganizationMembers();
-    mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+    vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
     const mockAuthz = getMockAuthz('1');
-    mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
+    vi.mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -126,9 +138,9 @@ describe('Authorization settings index', () => {
   describe('Render', () => {
     it('renders component with disabled authz policy', async () => {
       const mockMembers = getAllOrganizationMembers();
-      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('2');
-      mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
+      vi.mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -163,9 +175,9 @@ describe('Authorization settings index', () => {
 
     it('renders component with selected predefined policy', async () => {
       const mockMembers = getAllOrganizationMembers();
-      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('3');
-      mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
+      vi.mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -201,9 +213,9 @@ describe('Authorization settings index', () => {
 
     it('renders component with selected custom policy', async () => {
       const mockMembers = getAllOrganizationMembers();
-      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('4');
-      mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
+      vi.mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -251,8 +263,8 @@ describe('Authorization settings index', () => {
   describe('on getAuthorizationPolicy error', () => {
     it('Unauthorized', async () => {
       const mockMembers = getAllOrganizationMembers();
-      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
-      mocked(API).getAuthorizationPolicy.mockRejectedValue({
+      vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getAuthorizationPolicy.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -274,8 +286,8 @@ describe('Authorization settings index', () => {
 
     it('Forbidden', async () => {
       const mockMembers = getAllOrganizationMembers();
-      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
-      mocked(API).getAuthorizationPolicy.mockRejectedValue({
+      vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getAuthorizationPolicy.mockRejectedValue({
         kind: ErrorKind.Forbidden,
       });
 
@@ -297,8 +309,8 @@ describe('Authorization settings index', () => {
 
     it('Default', async () => {
       const mockMembers = getAllOrganizationMembers();
-      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
-      mocked(API).getAuthorizationPolicy.mockRejectedValue({
+      vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getAuthorizationPolicy.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 
@@ -326,10 +338,10 @@ describe('Authorization settings index', () => {
   describe('calls updateAuthorizationPolicy', () => {
     it('on success', async () => {
       const mockMembers = getAllOrganizationMembers();
-      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('5');
-      mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
-      mocked(API).updateAuthorizationPolicy.mockResolvedValue(null);
+      vi.mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
+      vi.mocked(API).updateAuthorizationPolicy.mockResolvedValue(null);
 
       const component = (
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -379,10 +391,10 @@ describe('Authorization settings index', () => {
     describe('on error', () => {
       it('Unauthorized', async () => {
         const mockMembers = getAllOrganizationMembers();
-        mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+        vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
         const mockAuthz = getMockAuthz('6');
-        mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
-        mocked(API).updateAuthorizationPolicy.mockRejectedValue({
+        vi.mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
+        vi.mocked(API).updateAuthorizationPolicy.mockRejectedValue({
           kind: ErrorKind.Unauthorized,
         });
 
@@ -426,10 +438,10 @@ describe('Authorization settings index', () => {
 
       it('Forbidden', async () => {
         const mockMembers = getAllOrganizationMembers();
-        mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+        vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
         const mockAuthz = getMockAuthz('7');
-        mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
-        mocked(API).updateAuthorizationPolicy.mockRejectedValue({
+        vi.mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
+        vi.mocked(API).updateAuthorizationPolicy.mockRejectedValue({
           kind: ErrorKind.Forbidden,
         });
 
@@ -473,10 +485,10 @@ describe('Authorization settings index', () => {
 
       it('Custom error', async () => {
         const mockMembers = getAllOrganizationMembers();
-        mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+        vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
         const mockAuthz = getMockAuthz('8');
-        mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
-        mocked(API).updateAuthorizationPolicy.mockRejectedValue({
+        vi.mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
+        vi.mocked(API).updateAuthorizationPolicy.mockRejectedValue({
           kind: ErrorKind.Other,
           message: 'invalid input: editing user will be locked out with this policy',
         });
@@ -523,10 +535,10 @@ describe('Authorization settings index', () => {
 
       it('Default error', async () => {
         const mockMembers = getAllOrganizationMembers();
-        mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+        vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
         const mockAuthz = getMockAuthz('9');
-        mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
-        mocked(API).updateAuthorizationPolicy.mockRejectedValue({
+        vi.mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
+        vi.mocked(API).updateAuthorizationPolicy.mockRejectedValue({
           kind: ErrorKind.Other,
         });
 
@@ -573,10 +585,10 @@ describe('Authorization settings index', () => {
   describe('calls triggerTestInRegoPlayground', () => {
     it('on success', async () => {
       const mockMembers = getAllOrganizationMembers();
-      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('10');
-      mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
-      mocked(API).triggerTestInRegoPlayground.mockResolvedValue({ result: 'http://test.com' });
+      vi.mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
+      vi.mocked(API).triggerTestInRegoPlayground.mockResolvedValue({ result: 'http://test.com' });
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -611,10 +623,10 @@ describe('Authorization settings index', () => {
 
     it('on error', async () => {
       const mockMembers = getAllOrganizationMembers();
-      mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
+      vi.mocked(API).getAllOrganizationMembers.mockResolvedValue(mockMembers);
       const mockAuthz = getMockAuthz('11');
-      mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
-      mocked(API).triggerTestInRegoPlayground.mockRejectedValue({
+      vi.mocked(API).getAuthorizationPolicy.mockResolvedValue(mockAuthz);
+      vi.mocked(API).triggerTestInRegoPlayground.mockRejectedValue({
         kind: ErrorKind.Other,
       });
 

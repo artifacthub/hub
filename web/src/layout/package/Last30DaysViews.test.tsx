@@ -1,21 +1,32 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import { RepositoryKind } from '../../types';
 import Last30DaysViews from './Last30DaysViews';
-jest.mock('react-apexcharts', () => () => <div>Chart</div>);
+vi.mock('react-apexcharts', () => ({
+  __esModule: true,
+  default: () => <div>Chart</div>,
+}));
+
+const fixedDate = new Date('2021-10-06T00:00:00Z');
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as object),
-  useNavigate: () => mockUseNavigate,
-  useLocation: () => ({
-    pathname: 'test',
-    state: null,
-  }),
-}));
+vi.mock('react-router-dom', () => {
+  const actual = jest.requireActual('react-router-dom');
+  return {
+    __esModule: true,
+    ...actual,
+    default: actual,
+    useNavigate: () => mockUseNavigate,
+    useLocation: () => ({
+      pathname: 'test',
+      state: null,
+    }),
+  };
+});
 
 const stats = {
   '19.0.1': {
@@ -98,11 +109,11 @@ const defaultProps = {
 };
 
 describe('Last30DaysViews', () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let dateNowSpy: any;
-
-  beforeEach(() => {
-    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => 1639468828000);
+  beforeAll(() => {
+    vi.useFakeTimers({
+      now: fixedDate,
+      toFake: ['Date'],
+    });
   });
 
   afterEach(() => {
@@ -110,7 +121,7 @@ describe('Last30DaysViews', () => {
   });
 
   afterAll(() => {
-    dateNowSpy.mockRestore();
+    vi.useRealTimers();
   });
 
   it('creates snapshot', () => {

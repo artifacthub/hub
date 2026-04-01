@@ -1,6 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 
 import alertDispatcher from '../../utils/alertDispatcher';
+import { hasClassContaining } from '../../utils/testUtils';
 import AlertController from './AlertController';
 
 describe('AlertController', () => {
@@ -20,12 +21,14 @@ describe('AlertController', () => {
     expect(component).toBeInTheDocument();
     expect(component).not.toHaveClass('show');
     expect(component).toHaveClass('fade');
+    expect(hasClassContaining(component, 'active')).toBe(false);
   });
 
   it('renders warning alert', async () => {
     render(<AlertController />);
 
-    expect(screen.getByTestId('alertController')).not.toHaveClass('show active');
+    expect(screen.getByTestId('alertController')).not.toHaveClass('show');
+    expect(hasClassContaining(screen.getByTestId('alertController'), 'active')).toBe(false);
 
     act(() => {
       alertDispatcher.postAlert({
@@ -34,7 +37,9 @@ describe('AlertController', () => {
       });
     });
 
-    expect(await screen.findByTestId('alertController')).toHaveClass('show active');
+    const controller = await screen.findByTestId('alertController');
+    expect(controller).toHaveClass('show');
+    expect(hasClassContaining(controller, 'active')).toBe(true);
     expect(screen.getByTestId('alertController')).toHaveClass('alert-warning');
     expect(screen.getByText('This is a warning alert'));
   });
@@ -49,8 +54,10 @@ describe('AlertController', () => {
       });
     });
 
-    expect(await screen.findByTestId('alertController')).toHaveClass('show active');
-    expect(screen.getByTestId('alertController')).toHaveClass('alert-success');
+    const controller = await screen.findByTestId('alertController');
+    expect(controller).toHaveClass('show');
+    expect(hasClassContaining(controller, 'active')).toBe(true);
+    expect(controller).toHaveClass('alert-success');
     expect(screen.getByText('This is a success alert'));
   });
 
@@ -64,8 +71,10 @@ describe('AlertController', () => {
       });
     });
 
-    expect(await screen.findByTestId('alertController')).toHaveClass('show active');
-    expect(screen.getByTestId('alertController')).toHaveClass('alert-danger');
+    const controller = await screen.findByTestId('alertController');
+    expect(controller).toHaveClass('show');
+    expect(hasClassContaining(controller, 'active')).toBe(true);
+    expect(controller).toHaveClass('alert-danger');
     expect(screen.getByText('This is a danger alert'));
   });
 });

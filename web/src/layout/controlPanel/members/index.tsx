@@ -10,6 +10,7 @@ import { AuthorizerAction, ErrorKind, Member } from '../../../types';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import Pagination from '../../common/Pagination';
+import PaginationSummary from '../../common/PaginationSummary';
 import ActionBtn from '../ActionBtn';
 import MemberCard from './Card';
 import styles from './MembersSection.module.css';
@@ -180,7 +181,15 @@ const MembersSection = (props: Props) => {
                 </NoData>
               ) : (
                 <>
-                  <div className="row mt-4 mt-md-5 gx-0 gx-xxl-4">
+                  {!isUndefined(total) && total > 0 && (
+                    <PaginationSummary
+                      offset={offset}
+                      itemsInPage={members.length}
+                      total={total}
+                      className="mt-3 mt-md-4"
+                    />
+                  )}
+                  <div className="row mt-1 mt-md-2 gx-0 gx-xxl-4">
                     {members.map((member: Member) => (
                       <MemberCard
                         key={`member_${member.alias}`}

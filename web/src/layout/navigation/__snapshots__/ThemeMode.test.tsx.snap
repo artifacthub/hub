@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ThemeMode creates snapshot 1`] = `
+exports[`ThemeMode > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mt-2 mb-1 undefined"
@@ -29,7 +29,7 @@ exports[`ThemeMode creates snapshot 1`] = `
       >
         <input
           aria-checked="false"
-          class="form-check-input input"
+          class="form-check-input _input_4ef093"
           id="desktop-automatic"
           name="automatic"
           tabindex="0"
@@ -37,11 +37,11 @@ exports[`ThemeMode creates snapshot 1`] = `
           value="automatic"
         />
         <label
-          class="form-check-label fw-bold w-100 label"
+          class="form-check-label fw-bold w-100 _label_4ef093"
           for="desktop-automatic"
         >
           <svg
-            class="mx-1 position-relative icon"
+            class="mx-1 position-relative _icon_4ef093"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -67,7 +67,7 @@ exports[`ThemeMode creates snapshot 1`] = `
         <input
           aria-checked="true"
           checked=""
-          class="form-check-input input"
+          class="form-check-input _input_4ef093"
           id="desktop-light"
           name="light"
           tabindex="-1"
@@ -75,11 +75,11 @@ exports[`ThemeMode creates snapshot 1`] = `
           value="light"
         />
         <label
-          class="form-check-label fw-bold w-100 label"
+          class="form-check-label fw-bold w-100 _label_4ef093"
           for="desktop-light"
         >
           <svg
-            class="mx-1 position-relative icon"
+            class="mx-1 position-relative _icon_4ef093"
             fill="none"
             height="1em"
             stroke="currentColor"
@@ -156,7 +156,7 @@ exports[`ThemeMode creates snapshot 1`] = `
       >
         <input
           aria-checked="false"
-          class="form-check-input input"
+          class="form-check-input _input_4ef093"
           id="desktop-dark"
           name="dark"
           tabindex="-1"
@@ -164,11 +164,11 @@ exports[`ThemeMode creates snapshot 1`] = `
           value="dark"
         />
         <label
-          class="form-check-label fw-bold w-100 label"
+          class="form-check-label fw-bold w-100 _label_4ef093"
           for="desktop-dark"
         >
           <svg
-            class="mx-1 position-relative icon"
+            class="mx-1 position-relative _icon_4ef093"
             fill="none"
             height="1em"
             stroke="currentColor"

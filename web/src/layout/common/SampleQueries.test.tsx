@@ -1,11 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import SampleQueries from './SampleQueries';
 
-jest.mock('../../utils/getSampleQueries', () => () => {
-  return [
+vi.mock('../../utils/getSampleQueries', () => ({
+  __esModule: true,
+  default: () => [
     {
       name: 'OLM operators for databases',
       querystring: 'kind=3&ts_query_web=database',
@@ -74,8 +76,8 @@ jest.mock('../../utils/getSampleQueries', () => () => {
       name: 'Knative client plugings',
       querystring: 'kind=16',
     },
-  ];
-});
+  ],
+}));
 
 const mockQueries = [
   {
@@ -96,7 +98,10 @@ const mockQueries = [
   },
 ];
 
-jest.mock('lodash/sampleSize', () => () => mockQueries);
+vi.mock('lodash/sampleSize', () => ({
+  __esModule: true,
+  default: () => mockQueries,
+}));
 
 describe('SampleQueries', () => {
   afterEach(() => {

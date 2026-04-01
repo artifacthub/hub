@@ -1,28 +1,28 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SubscriptionModal creates snapshot 1`] = `
+exports[`SubscriptionModal > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="modal-backdrop activeBackdrop"
+      class="modal-backdrop _activeBackdrop_2adcc6"
       data-testid="modalBackdrop"
     />
     <div
       aria-modal="true"
-      class="modal modal active d-block"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
       role="dialog"
     >
       <div
-        class="modal-dialog modal-lg modal"
+        class="modal-dialog modal-lg _modal_2eb1f7"
       >
         <div
-          class="modal-content border border-3 mx-auto content"
+          class="modal-content border border-3 mx-auto _content_2adcc6"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 title"
+              class="h3 m-2 flex-grow-1 _title_2eb1f7"
             >
               Add subscription
             </div>
@@ -39,7 +39,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
               class="w-100 position-relative"
             >
               <label
-                class="form-label fw-bold label"
+                class="form-label fw-bold _label_2eb1f7"
                 for="kind"
                 id="events-group"
               >
@@ -59,7 +59,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                     <input
                       aria-checked="true"
                       checked=""
-                      class="form-check-input input"
+                      class="form-check-input _input_b7404d"
                       id="desktop-eventKind-0"
                       name="eventKind"
                       tabindex="0"
@@ -67,7 +67,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                       value="0"
                     />
                     <label
-                      class="form-check-label label undefined"
+                      class="form-check-label _label_b7404d undefined"
                       data-testid="checkboxLabel"
                       for="desktop-eventKind-0"
                     >
@@ -75,7 +75,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                         class="d-flex align-items-baseline mw-100"
                       >
                         <span
-                          class="me-2 position-relative icon"
+                          class="me-2 position-relative _icon_b7404d"
                         >
                           <svg
                             fill="currentColor"
@@ -112,7 +112,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                   >
                     <input
                       aria-checked="false"
-                      class="form-check-input input"
+                      class="form-check-input _input_b7404d"
                       id="desktop-eventKind-1"
                       name="eventKind"
                       tabindex="0"
@@ -120,7 +120,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                       value="1"
                     />
                     <label
-                      class="form-check-label label undefined"
+                      class="form-check-label _label_b7404d undefined"
                       data-testid="checkboxLabel"
                       for="desktop-eventKind-1"
                     >
@@ -128,7 +128,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                         class="d-flex align-items-baseline mw-100"
                       >
                         <span
-                          class="me-2 position-relative icon"
+                          class="me-2 position-relative _icon_b7404d"
                         >
                           <svg
                             fill="currentColor"
@@ -162,7 +162,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                 class="d-flex flex-column mb-3"
               >
                 <label
-                  class="form-label fw-bold label"
+                  class="form-label fw-bold _label_2eb1f7"
                   for="description"
                   id="subscriptions-pkg-list"
                 >
@@ -174,7 +174,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                   Select the package you'd like to subscribe to:
                 </small>
                 <div
-                  class="mt-2 searchWrapper"
+                  class="mt-2 _searchWrapper_2eb1f7"
                 >
                   <div
                     class="position-relative"
@@ -183,10 +183,10 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                       class="d-flex flex-row"
                     >
                       <div
-                        class="flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative lh-base bg-white searchBar inputWrapper"
+                        class="flex-grow-1 d-flex align-items-stretch overflow-hidden position-relative lh-base bg-white searchBar _inputWrapper_1ce6a7"
                       >
                         <div
-                          class="d-flex align-items-center iconWrapper"
+                          class="d-flex align-items-center _iconWrapper_1ce6a7"
                           data-testid="searchPkgIcon"
                         >
                           <svg
@@ -216,7 +216,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
                         <input
                           aria-label="Search packages"
                           autocomplete="new-input"
-                          class="flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent input"
+                          class="flex-grow-1 pe-4 ps-2 ps-md-0 border-0 shadow-none bg-transparent _input_1ce6a7"
                           name="searchInput"
                           spellcheck="false"
                           type="text"
@@ -229,7 +229,7 @@ exports[`SubscriptionModal creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>

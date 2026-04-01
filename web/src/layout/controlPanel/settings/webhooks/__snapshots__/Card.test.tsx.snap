@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`WebhookCard creates snapshot 1`] = `
+exports[`WebhookCard > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="col-12 col-xxl-6 py-sm-3 py-2 px-0 px-xxl-3"
     role="listitem"
   >
     <div
-      class="card cardWithHover w-100 h-100 mw-100 bg-white card"
+      class="card cardWithHover w-100 h-100 mw-100 bg-white _card_4591e1"
     >
       <div
         class="card-body position-relative"
@@ -25,7 +25,7 @@ exports[`WebhookCard creates snapshot 1`] = `
                 Webhook name
               </div>
               <span
-                class="ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase badge"
+                class="ms-3 mt-1 fw-bold badge border border-success border-1 text-success text-uppercase _badge_4591e1"
               >
                 Active
               </span>
@@ -35,10 +35,10 @@ exports[`WebhookCard creates snapshot 1`] = `
             class="ms-auto"
           >
             <div
-              class="dropdown-menu dropdown-menu-end p-0 dropdownMenu"
+              class="dropdown-menu dropdown-menu-end p-0 _dropdownMenu_4591e1"
             >
               <div
-                class="dropdown-arrow arrow"
+                class="dropdown-arrow _arrow_4591e1"
               />
               <button
                 aria-label="Edit webhook"
@@ -48,7 +48,7 @@ exports[`WebhookCard creates snapshot 1`] = `
                   class="d-flex flex-row align-items-center"
                 >
                   <svg
-                    class="me-2 btnIcon"
+                    class="me-2 _btnIcon_4591e1"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -74,7 +74,7 @@ exports[`WebhookCard creates snapshot 1`] = `
                   class="d-flex flex-row align-items-center"
                 >
                   <svg
-                    class="me-2 btnIcon"
+                    class="me-2 _btnIcon_4591e1"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -96,7 +96,7 @@ exports[`WebhookCard creates snapshot 1`] = `
             <button
               aria-expanded="false"
               aria-label="Open menu"
-              class="btn btn-outline-secondary p-0 text-center  btnDropdown"
+              class="btn btn-outline-secondary p-0 text-center  _btnDropdown_4591e1"
             >
               <svg
                 fill="currentColor"

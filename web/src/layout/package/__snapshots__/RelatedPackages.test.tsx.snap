@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RelatedPackages renders correctly 1`] = `
+exports[`RelatedPackages > renders correctly 1`] = `
 <DocumentFragment>
   <div
     aria-describedby="related-list"
@@ -16,7 +16,7 @@ exports[`RelatedPackages renders correctly 1`] = `
       >
         <span
           aria-level="5"
-          class="title"
+          class="_title_ba0000"
           id="related-list"
           role="heading"
         >
@@ -31,33 +31,34 @@ exports[`RelatedPackages renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard card"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset bg-transparent link"
+            class="text-decoration-none text-reset bg-transparent _link_aa0ff3"
+            data-discover="true"
             data-testid="relatedPackageLink"
             href="/packages/helm/stable/test"
           >
             <div
-              class="card-body d-flex flex-column body"
+              class="card-body d-flex flex-column _body_aa0ff3"
             >
               <div
-                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                class="d-flex align-items-center flex-grow-1 _truncateWrapper_aa0ff3"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_aa0ff3"
                 >
                   <img
                     alt="Logo centrifugo"
                     aria-hidden="true"
-                    class="image"
+                    class="_image_aa0ff3"
                     src="/image/cc7ac35f-abd3-4594-a375-aebfccbfe11e"
                     srcset="/image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@1x 1x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@2x 2x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@3x 3x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@4x 4x"
                   />
                 </div>
                 <div
-                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 _truncateWrapper_aa0ff3"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -66,7 +67,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                       class="text-truncate w-100"
                     >
                       <div
-                        class="d-flex flex-row align-items-center justify-content-between legend"
+                        class="d-flex flex-row align-items-center justify-content-between _legend_aa0ff3"
                       >
                         <div
                           class="d-none d-md-inline-block"
@@ -75,14 +76,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                             class="d-flex fs-6"
                           >
                             <span
-                              class="badge fw-bold badge"
+                              class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
                                   aria-hidden="true"
-                                  class="position-relative icon badgeIcon"
+                                  class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                                 >
                                   <img
                                     alt="Icon"
@@ -96,7 +97,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1 text"
+                                  class="ms-1 _text_c0e9ad"
                                 >
                                   Helm chart
                                 </div>
@@ -108,14 +109,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="d-flex d-md-none fs-6"
                         >
                           <span
-                            class="badge fw-bold badge"
+                            class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
                             >
                               <div
                                 aria-hidden="true"
-                                class="position-relative icon badgeIcon"
+                                class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                               >
                                 <img
                                   alt="Icon"
@@ -129,7 +130,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1 text"
+                                class="ms-1 _text_c0e9ad"
                               >
                                 Helm chart
                               </div>
@@ -138,12 +139,12 @@ exports[`RelatedPackages renders correctly 1`] = `
                         </div>
                       </div>
                       <div
-                        class="align-self-end text-truncate card-title mb-2 title"
+                        class="align-self-end text-truncate card-title mb-2 _title_aa0ff3"
                       >
                         centrifugo
                       </div>
                       <div
-                        class="card-subtitle align-items-center text-muted subtitle"
+                        class="card-subtitle align-items-center text-muted _subtitle_aa0ff3"
                       >
                         <div
                           class="w-100"
@@ -167,33 +168,34 @@ exports[`RelatedPackages renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard card"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset bg-transparent link"
+            class="text-decoration-none text-reset bg-transparent _link_aa0ff3"
+            data-discover="true"
             data-testid="relatedPackageLink"
             href="/packages/helm/incubator/test"
           >
             <div
-              class="card-body d-flex flex-column body"
+              class="card-body d-flex flex-column _body_aa0ff3"
             >
               <div
-                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                class="d-flex align-items-center flex-grow-1 _truncateWrapper_aa0ff3"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_aa0ff3"
                 >
                   <img
                     alt="Logo kafka"
                     aria-hidden="true"
-                    class="image"
+                    class="_image_aa0ff3"
                     data-testid="placeholderImg"
                     src="/static/media/placeholder_pkg_helm.png"
                   />
                 </div>
                 <div
-                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 _truncateWrapper_aa0ff3"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -202,7 +204,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                       class="text-truncate w-100"
                     >
                       <div
-                        class="d-flex flex-row align-items-center justify-content-between legend"
+                        class="d-flex flex-row align-items-center justify-content-between _legend_aa0ff3"
                       >
                         <div
                           class="d-none d-md-inline-block"
@@ -211,14 +213,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                             class="d-flex fs-6"
                           >
                             <span
-                              class="badge fw-bold badge"
+                              class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
                                   aria-hidden="true"
-                                  class="position-relative icon badgeIcon"
+                                  class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                                 >
                                   <img
                                     alt="Icon"
@@ -232,7 +234,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1 text"
+                                  class="ms-1 _text_c0e9ad"
                                 >
                                   Helm chart
                                 </div>
@@ -244,14 +246,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="d-flex d-md-none fs-6"
                         >
                           <span
-                            class="badge fw-bold badge"
+                            class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
                             >
                               <div
                                 aria-hidden="true"
-                                class="position-relative icon badgeIcon"
+                                class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                               >
                                 <img
                                   alt="Icon"
@@ -265,7 +267,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1 text"
+                                class="ms-1 _text_c0e9ad"
                               >
                                 Helm chart
                               </div>
@@ -274,12 +276,12 @@ exports[`RelatedPackages renders correctly 1`] = `
                         </div>
                       </div>
                       <div
-                        class="align-self-end text-truncate card-title mb-2 title"
+                        class="align-self-end text-truncate card-title mb-2 _title_aa0ff3"
                       >
                         kafka
                       </div>
                       <div
-                        class="card-subtitle align-items-center text-muted subtitle"
+                        class="card-subtitle align-items-center text-muted _subtitle_aa0ff3"
                       >
                         <div
                           class="w-100"
@@ -303,33 +305,34 @@ exports[`RelatedPackages renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard card"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset bg-transparent link"
+            class="text-decoration-none text-reset bg-transparent _link_aa0ff3"
+            data-discover="true"
             data-testid="relatedPackageLink"
             href="/packages/helm/dhiatn/test"
           >
             <div
-              class="card-body d-flex flex-column body"
+              class="card-body d-flex flex-column _body_aa0ff3"
             >
               <div
-                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                class="d-flex align-items-center flex-grow-1 _truncateWrapper_aa0ff3"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_aa0ff3"
                 >
                   <img
                     alt="Logo kafka-topics-ui"
                     aria-hidden="true"
-                    class="image"
+                    class="_image_aa0ff3"
                     src="/image/c4b74ab7-dfcd-440c-9ffb-7b9187ea13e2"
                     srcset="/image/c4b74ab7-dfcd-440c-9ffb-7b9187ea13e2@1x 1x, /image/c4b74ab7-dfcd-440c-9ffb-7b9187ea13e2@2x 2x, /image/c4b74ab7-dfcd-440c-9ffb-7b9187ea13e2@3x 3x, /image/c4b74ab7-dfcd-440c-9ffb-7b9187ea13e2@4x 4x"
                   />
                 </div>
                 <div
-                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 _truncateWrapper_aa0ff3"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -338,7 +341,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                       class="text-truncate w-100"
                     >
                       <div
-                        class="d-flex flex-row align-items-center justify-content-between legend"
+                        class="d-flex flex-row align-items-center justify-content-between _legend_aa0ff3"
                       >
                         <div
                           class="d-none d-md-inline-block"
@@ -347,14 +350,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                             class="d-flex fs-6"
                           >
                             <span
-                              class="badge fw-bold badge"
+                              class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
                                   aria-hidden="true"
-                                  class="position-relative icon badgeIcon"
+                                  class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                                 >
                                   <img
                                     alt="Icon"
@@ -368,7 +371,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1 text"
+                                  class="ms-1 _text_c0e9ad"
                                 >
                                   Helm chart
                                 </div>
@@ -380,14 +383,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="d-flex d-md-none fs-6"
                         >
                           <span
-                            class="badge fw-bold badge"
+                            class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
                             >
                               <div
                                 aria-hidden="true"
-                                class="position-relative icon badgeIcon"
+                                class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                               >
                                 <img
                                   alt="Icon"
@@ -401,7 +404,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1 text"
+                                class="ms-1 _text_c0e9ad"
                               >
                                 Helm chart
                               </div>
@@ -410,12 +413,12 @@ exports[`RelatedPackages renders correctly 1`] = `
                         </div>
                       </div>
                       <div
-                        class="align-self-end text-truncate card-title mb-2 title"
+                        class="align-self-end text-truncate card-title mb-2 _title_aa0ff3"
                       >
                         kafka-topics-ui
                       </div>
                       <div
-                        class="card-subtitle align-items-center text-muted subtitle"
+                        class="card-subtitle align-items-center text-muted _subtitle_aa0ff3"
                       >
                         <div
                           class="w-100"
@@ -439,33 +442,34 @@ exports[`RelatedPackages renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard card"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset bg-transparent link"
+            class="text-decoration-none text-reset bg-transparent _link_aa0ff3"
+            data-discover="true"
             data-testid="relatedPackageLink"
             href="/packages/helm/stable/test"
           >
             <div
-              class="card-body d-flex flex-column body"
+              class="card-body d-flex flex-column _body_aa0ff3"
             >
               <div
-                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                class="d-flex align-items-center flex-grow-1 _truncateWrapper_aa0ff3"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_aa0ff3"
                 >
                   <img
                     alt="Logo nats"
                     aria-hidden="true"
-                    class="image"
+                    class="_image_aa0ff3"
                     src="/image/9d48cd3f-d6f0-499e-b070-4dd30def1306"
                     srcset="/image/9d48cd3f-d6f0-499e-b070-4dd30def1306@1x 1x, /image/9d48cd3f-d6f0-499e-b070-4dd30def1306@2x 2x, /image/9d48cd3f-d6f0-499e-b070-4dd30def1306@3x 3x, /image/9d48cd3f-d6f0-499e-b070-4dd30def1306@4x 4x"
                   />
                 </div>
                 <div
-                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 _truncateWrapper_aa0ff3"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -474,7 +478,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                       class="text-truncate w-100"
                     >
                       <div
-                        class="d-flex flex-row align-items-center justify-content-between legend"
+                        class="d-flex flex-row align-items-center justify-content-between _legend_aa0ff3"
                       >
                         <div
                           class="d-none d-md-inline-block"
@@ -483,14 +487,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                             class="d-flex fs-6"
                           >
                             <span
-                              class="badge fw-bold badge"
+                              class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
                                   aria-hidden="true"
-                                  class="position-relative icon badgeIcon"
+                                  class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                                 >
                                   <img
                                     alt="Icon"
@@ -504,7 +508,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1 text"
+                                  class="ms-1 _text_c0e9ad"
                                 >
                                   Helm chart
                                 </div>
@@ -516,14 +520,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="d-flex d-md-none fs-6"
                         >
                           <span
-                            class="badge fw-bold badge"
+                            class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
                             >
                               <div
                                 aria-hidden="true"
-                                class="position-relative icon badgeIcon"
+                                class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                               >
                                 <img
                                   alt="Icon"
@@ -537,7 +541,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1 text"
+                                class="ms-1 _text_c0e9ad"
                               >
                                 Helm chart
                               </div>
@@ -546,12 +550,12 @@ exports[`RelatedPackages renders correctly 1`] = `
                         </div>
                       </div>
                       <div
-                        class="align-self-end text-truncate card-title mb-2 title"
+                        class="align-self-end text-truncate card-title mb-2 _title_aa0ff3"
                       >
                         nats
                       </div>
                       <div
-                        class="card-subtitle align-items-center text-muted subtitle"
+                        class="card-subtitle align-items-center text-muted _subtitle_aa0ff3"
                       >
                         <div
                           class="w-100"
@@ -575,33 +579,34 @@ exports[`RelatedPackages renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard card"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset bg-transparent link"
+            class="text-decoration-none text-reset bg-transparent _link_aa0ff3"
+            data-discover="true"
             data-testid="relatedPackageLink"
             href="/packages/helm/stable/test"
           >
             <div
-              class="card-body d-flex flex-column body"
+              class="card-body d-flex flex-column _body_aa0ff3"
             >
               <div
-                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                class="d-flex align-items-center flex-grow-1 _truncateWrapper_aa0ff3"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_aa0ff3"
                 >
                   <img
                     alt="Logo rabbitmq"
                     aria-hidden="true"
-                    class="image"
+                    class="_image_aa0ff3"
                     src="/image/2af77252-fa22-4b56-97c2-2e0da1307601"
                     srcset="/image/2af77252-fa22-4b56-97c2-2e0da1307601@1x 1x, /image/2af77252-fa22-4b56-97c2-2e0da1307601@2x 2x, /image/2af77252-fa22-4b56-97c2-2e0da1307601@3x 3x, /image/2af77252-fa22-4b56-97c2-2e0da1307601@4x 4x"
                   />
                 </div>
                 <div
-                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 _truncateWrapper_aa0ff3"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -610,7 +615,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                       class="text-truncate w-100"
                     >
                       <div
-                        class="d-flex flex-row align-items-center justify-content-between legend"
+                        class="d-flex flex-row align-items-center justify-content-between _legend_aa0ff3"
                       >
                         <div
                           class="d-none d-md-inline-block"
@@ -619,14 +624,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                             class="d-flex fs-6"
                           >
                             <span
-                              class="badge fw-bold badge"
+                              class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
                                   aria-hidden="true"
-                                  class="position-relative icon badgeIcon"
+                                  class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                                 >
                                   <img
                                     alt="Icon"
@@ -640,7 +645,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1 text"
+                                  class="ms-1 _text_c0e9ad"
                                 >
                                   Helm chart
                                 </div>
@@ -652,14 +657,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="d-flex d-md-none fs-6"
                         >
                           <span
-                            class="badge fw-bold badge"
+                            class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
                             >
                               <div
                                 aria-hidden="true"
-                                class="position-relative icon badgeIcon"
+                                class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                               >
                                 <img
                                   alt="Icon"
@@ -673,7 +678,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1 text"
+                                class="ms-1 _text_c0e9ad"
                               >
                                 Helm chart
                               </div>
@@ -682,12 +687,12 @@ exports[`RelatedPackages renders correctly 1`] = `
                         </div>
                       </div>
                       <div
-                        class="align-self-end text-truncate card-title mb-2 title"
+                        class="align-self-end text-truncate card-title mb-2 _title_aa0ff3"
                       >
                         rabbitmq
                       </div>
                       <div
-                        class="card-subtitle align-items-center text-muted subtitle"
+                        class="card-subtitle align-items-center text-muted _subtitle_aa0ff3"
                       >
                         <div
                           class="w-100"
@@ -711,33 +716,34 @@ exports[`RelatedPackages renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard card"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset bg-transparent link"
+            class="text-decoration-none text-reset bg-transparent _link_aa0ff3"
+            data-discover="true"
             data-testid="relatedPackageLink"
             href="/packages/helm/stable/test"
           >
             <div
-              class="card-body d-flex flex-column body"
+              class="card-body d-flex flex-column _body_aa0ff3"
             >
               <div
-                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                class="d-flex align-items-center flex-grow-1 _truncateWrapper_aa0ff3"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_aa0ff3"
                 >
                   <img
                     alt="Logo rabbitmq-ha"
                     aria-hidden="true"
-                    class="image"
+                    class="_image_aa0ff3"
                     src="/image/2af77252-fa22-4b56-97c2-2e0da1307601"
                     srcset="/image/2af77252-fa22-4b56-97c2-2e0da1307601@1x 1x, /image/2af77252-fa22-4b56-97c2-2e0da1307601@2x 2x, /image/2af77252-fa22-4b56-97c2-2e0da1307601@3x 3x, /image/2af77252-fa22-4b56-97c2-2e0da1307601@4x 4x"
                   />
                 </div>
                 <div
-                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 _truncateWrapper_aa0ff3"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -746,7 +752,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                       class="text-truncate w-100"
                     >
                       <div
-                        class="d-flex flex-row align-items-center justify-content-between legend"
+                        class="d-flex flex-row align-items-center justify-content-between _legend_aa0ff3"
                       >
                         <div
                           class="d-none d-md-inline-block"
@@ -755,14 +761,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                             class="d-flex fs-6"
                           >
                             <span
-                              class="badge fw-bold badge"
+                              class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
                                   aria-hidden="true"
-                                  class="position-relative icon badgeIcon"
+                                  class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                                 >
                                   <img
                                     alt="Icon"
@@ -776,7 +782,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1 text"
+                                  class="ms-1 _text_c0e9ad"
                                 >
                                   Helm chart
                                 </div>
@@ -788,14 +794,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="d-flex d-md-none fs-6"
                         >
                           <span
-                            class="badge fw-bold badge"
+                            class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
                             >
                               <div
                                 aria-hidden="true"
-                                class="position-relative icon badgeIcon"
+                                class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                               >
                                 <img
                                   alt="Icon"
@@ -809,7 +815,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1 text"
+                                class="ms-1 _text_c0e9ad"
                               >
                                 Helm chart
                               </div>
@@ -818,12 +824,12 @@ exports[`RelatedPackages renders correctly 1`] = `
                         </div>
                       </div>
                       <div
-                        class="align-self-end text-truncate card-title mb-2 title"
+                        class="align-self-end text-truncate card-title mb-2 _title_aa0ff3"
                       >
                         rabbitmq-ha
                       </div>
                       <div
-                        class="card-subtitle align-items-center text-muted subtitle"
+                        class="card-subtitle align-items-center text-muted _subtitle_aa0ff3"
                       >
                         <div
                           class="w-100"
@@ -847,33 +853,34 @@ exports[`RelatedPackages renders correctly 1`] = `
         class="col-12"
       >
         <div
-          class="card cardWithHover mt-2 w-100 relatedCard card"
+          class="card cardWithHover mt-2 w-100 relatedCard _card_aa0ff3"
           role="listitem"
         >
           <a
-            class="text-decoration-none text-reset bg-transparent link"
+            class="text-decoration-none text-reset bg-transparent _link_aa0ff3"
+            data-discover="true"
             data-testid="relatedPackageLink"
             href="/packages/helm/incubator/test"
           >
             <div
-              class="card-body d-flex flex-column body"
+              class="card-body d-flex flex-column _body_aa0ff3"
             >
               <div
-                class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                class="d-flex align-items-center flex-grow-1 _truncateWrapper_aa0ff3"
               >
                 <div
-                  class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                  class="d-flex align-items-center justify-content-center overflow-hidden _imageWrapper_aa0ff3"
                 >
                   <img
                     alt="Logo schema-registry"
                     aria-hidden="true"
-                    class="image"
+                    class="_image_aa0ff3"
                     data-testid="placeholderImg"
                     src="/static/media/placeholder_pkg_helm.png"
                   />
                 </div>
                 <div
-                  class="ms-2 h-100 flex-grow-1 truncateWrapper"
+                  class="ms-2 h-100 flex-grow-1 _truncateWrapper_aa0ff3"
                 >
                   <div
                     class="d-flex flex-row justify-content-between"
@@ -882,7 +889,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                       class="text-truncate w-100"
                     >
                       <div
-                        class="d-flex flex-row align-items-center justify-content-between legend"
+                        class="d-flex flex-row align-items-center justify-content-between _legend_aa0ff3"
                       >
                         <div
                           class="d-none d-md-inline-block"
@@ -891,14 +898,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                             class="d-flex fs-6"
                           >
                             <span
-                              class="badge fw-bold badge"
+                              class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                             >
                               <div
                                 class="d-flex flex-row align-items-center"
                               >
                                 <div
                                   aria-hidden="true"
-                                  class="position-relative icon badgeIcon"
+                                  class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                                 >
                                   <img
                                     alt="Icon"
@@ -912,7 +919,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                   />
                                 </div>
                                 <div
-                                  class="ms-1 text"
+                                  class="ms-1 _text_c0e9ad"
                                 >
                                   Helm chart
                                 </div>
@@ -924,14 +931,14 @@ exports[`RelatedPackages renders correctly 1`] = `
                           class="d-flex d-md-none fs-6"
                         >
                           <span
-                            class="badge fw-bold badge"
+                            class="_badge_c0e9ad fw-bold _badge_aa0ff3"
                           >
                             <div
                               class="d-flex flex-row align-items-center"
                             >
                               <div
                                 aria-hidden="true"
-                                class="position-relative icon badgeIcon"
+                                class="position-relative _icon_c0e9ad _badgeIcon_aa0ff3"
                               >
                                 <img
                                   alt="Icon"
@@ -945,7 +952,7 @@ exports[`RelatedPackages renders correctly 1`] = `
                                 />
                               </div>
                               <div
-                                class="ms-1 text"
+                                class="ms-1 _text_c0e9ad"
                               >
                                 Helm chart
                               </div>
@@ -954,12 +961,12 @@ exports[`RelatedPackages renders correctly 1`] = `
                         </div>
                       </div>
                       <div
-                        class="align-self-end text-truncate card-title mb-2 title"
+                        class="align-self-end text-truncate card-title mb-2 _title_aa0ff3"
                       >
                         schema-registry
                       </div>
                       <div
-                        class="card-subtitle align-items-center text-muted subtitle"
+                        class="card-subtitle align-items-center text-muted _subtitle_aa0ff3"
                       >
                         <div
                           class="w-100"

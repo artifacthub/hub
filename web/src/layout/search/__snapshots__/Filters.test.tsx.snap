@@ -1,19 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Filters creates snapshot 1`] = `
+exports[`Filters > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="filters"
+    class="_filters_fb9d45"
   >
     <div
       class="d-flex flex-row align-items-baseline"
     >
       <div
-        class="form-check me-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
       >
         <input
           aria-checked="false"
-          class="form-check-input input"
+          class="form-check-input _input_b7404d"
           id="desktop-official-official"
           name="official"
           tabindex="0"
@@ -21,7 +21,7 @@ exports[`Filters creates snapshot 1`] = `
           value="official"
         />
         <label
-          class="form-check-label label mw-100 text-muted"
+          class="form-check-label _label_b7404d mw-100 text-muted"
           data-testid="checkboxLabel"
           for="desktop-official-official"
         >
@@ -40,7 +40,7 @@ exports[`Filters creates snapshot 1`] = `
         class="d-none d-md-block"
       >
         <div
-          class="position-relative position-relative tooltipIcon"
+          class="position-relative position-relative _tooltipIcon_fb9d45"
         >
           <div
             data-testid="elementWithTooltip"
@@ -70,11 +70,11 @@ exports[`Filters creates snapshot 1`] = `
       class="d-flex flex-row align-items-baseline"
     >
       <div
-        class="form-check me-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
       >
         <input
           aria-checked="false"
-          class="form-check-input input"
+          class="form-check-input _input_b7404d"
           id="desktop-verifiedPublisher-verifiedPublisher"
           name="verifiedPublisher"
           tabindex="0"
@@ -82,7 +82,7 @@ exports[`Filters creates snapshot 1`] = `
           value="verifiedPublisher"
         />
         <label
-          class="form-check-label label mw-100 text-muted"
+          class="form-check-label _label_b7404d mw-100 text-muted"
           data-testid="checkboxLabel"
           for="desktop-verifiedPublisher-verifiedPublisher"
         >
@@ -101,7 +101,7 @@ exports[`Filters creates snapshot 1`] = `
         class="d-none d-md-block"
       >
         <div
-          class="position-relative tooltipIcon"
+          class="position-relative _tooltipIcon_fb9d45"
         >
           <div
             data-testid="elementWithTooltip"
@@ -131,11 +131,11 @@ exports[`Filters creates snapshot 1`] = `
       class="d-flex flex-row align-items-baseline"
     >
       <div
-        class="form-check me-sm-2 mb-2 checkbox"
+        class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
       >
         <input
           aria-checked="false"
-          class="form-check-input input"
+          class="form-check-input _input_b7404d"
           id="desktop-cncf-cncf"
           name="cncf"
           tabindex="0"
@@ -143,7 +143,7 @@ exports[`Filters creates snapshot 1`] = `
           value="cncf"
         />
         <label
-          class="form-check-label label mw-100 text-muted"
+          class="form-check-label _label_b7404d mw-100 text-muted"
           data-testid="checkboxLabel"
           for="desktop-cncf-cncf"
         >
@@ -162,7 +162,7 @@ exports[`Filters creates snapshot 1`] = `
         class="d-none d-md-block"
       >
         <div
-          class="position-relative tooltipIcon"
+          class="position-relative _tooltipIcon_fb9d45"
         >
           <div
             data-testid="elementWithTooltip"
@@ -189,7 +189,7 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="mt-1 mt-sm-2 pt-1 facet"
+      class="mt-1 mt-sm-2 pt-1 _facet_fb9d45"
       role="menuitem"
     >
       <div
@@ -215,11 +215,11 @@ exports[`Filters creates snapshot 1`] = `
         role="group"
       >
         <div
-          class="form-check me-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-kind-0"
             name="kind"
             tabindex="0"
@@ -227,7 +227,7 @@ exports[`Filters creates snapshot 1`] = `
             value="0"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-kind-0"
           >
@@ -248,11 +248,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="form-check me-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-kind-3"
             name="kind"
             tabindex="0"
@@ -260,7 +260,7 @@ exports[`Filters creates snapshot 1`] = `
             value="3"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-kind-3"
           >
@@ -281,11 +281,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="form-check me-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-kind-1"
             name="kind"
             tabindex="0"
@@ -293,7 +293,7 @@ exports[`Filters creates snapshot 1`] = `
             value="1"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-kind-1"
           >
@@ -314,11 +314,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="form-check me-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-kind-2"
             name="kind"
             tabindex="0"
@@ -326,7 +326,7 @@ exports[`Filters creates snapshot 1`] = `
             value="2"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-kind-2"
           >
@@ -349,7 +349,7 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="mt-1 mt-sm-2 pt-1 facet"
+      class="mt-1 mt-sm-2 pt-1 _facet_fb9d45"
       role="menuitem"
     >
       <div
@@ -375,11 +375,11 @@ exports[`Filters creates snapshot 1`] = `
         role="group"
       >
         <div
-          class="form-check me-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-category-2"
             name="category"
             tabindex="0"
@@ -387,7 +387,7 @@ exports[`Filters creates snapshot 1`] = `
             value="2"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-category-2"
           >
@@ -408,11 +408,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="form-check me-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-category-3"
             name="category"
             tabindex="0"
@@ -420,7 +420,7 @@ exports[`Filters creates snapshot 1`] = `
             value="3"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-category-3"
           >
@@ -443,7 +443,7 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="mt-2 mt-sm-3 pt-1 facet"
+      class="mt-2 mt-sm-3 pt-1 _facet_fb9d45"
       role="menuitem"
     >
       <div
@@ -469,11 +469,11 @@ exports[`Filters creates snapshot 1`] = `
         role="group"
       >
         <div
-          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-license-Apache-2.0"
             name="license"
             tabindex="0"
@@ -481,7 +481,7 @@ exports[`Filters creates snapshot 1`] = `
             value="Apache-2.0"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-license-Apache-2.0"
           >
@@ -502,11 +502,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-license-MIT"
             name="license"
             tabindex="0"
@@ -514,7 +514,7 @@ exports[`Filters creates snapshot 1`] = `
             value="MIT"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-license-MIT"
           >
@@ -537,7 +537,7 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="mt-2 mt-sm-3 pt-1 facet"
+      class="mt-2 mt-sm-3 pt-1 _facet_fb9d45"
       role="menuitem"
     >
       <div
@@ -563,11 +563,11 @@ exports[`Filters creates snapshot 1`] = `
         role="group"
       >
         <div
-          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-capabilities-basic install"
             name="capabilities"
             tabindex="0"
@@ -575,7 +575,7 @@ exports[`Filters creates snapshot 1`] = `
             value="basic install"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-capabilities-basic install"
           >
@@ -596,11 +596,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-capabilities-seamless upgrades"
             name="capabilities"
             tabindex="0"
@@ -608,7 +608,7 @@ exports[`Filters creates snapshot 1`] = `
             value="seamless upgrades"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-capabilities-seamless upgrades"
           >
@@ -629,11 +629,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-capabilities-full lifecycle"
             name="capabilities"
             tabindex="0"
@@ -641,7 +641,7 @@ exports[`Filters creates snapshot 1`] = `
             value="full lifecycle"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-capabilities-full lifecycle"
           >
@@ -662,11 +662,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-capabilities-deep insights"
             name="capabilities"
             tabindex="0"
@@ -674,7 +674,7 @@ exports[`Filters creates snapshot 1`] = `
             value="deep insights"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-capabilities-deep insights"
           >
@@ -695,11 +695,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="form-check me-sm-2 mb-2 text-capitalize checkbox"
+          class="form-check me-sm-2 mb-2 text-capitalize _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-capabilities-auto pilot"
             name="capabilities"
             tabindex="0"
@@ -707,7 +707,7 @@ exports[`Filters creates snapshot 1`] = `
             value="auto pilot"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-capabilities-auto pilot"
           >
@@ -730,7 +730,7 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="mt-2 mt-sm-3 pt-1 facet"
+      class="mt-2 mt-sm-3 pt-1 _facet_fb9d45"
       role="menuitem"
     >
       <div
@@ -753,11 +753,11 @@ exports[`Filters creates snapshot 1`] = `
         class="mt-3"
       >
         <div
-          class="form-check me-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-operators-operators"
             name="operators"
             tabindex="0"
@@ -765,7 +765,7 @@ exports[`Filters creates snapshot 1`] = `
             value="operators"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-operators-operators"
           >
@@ -781,11 +781,11 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="form-check me-sm-2 mb-2 checkbox"
+          class="form-check me-sm-2 mb-2 _checkbox_fb9d45"
         >
           <input
             aria-checked="false"
-            class="form-check-input input"
+            class="form-check-input _input_b7404d"
             id="desktop-deprecated-deprecated"
             name="deprecated"
             tabindex="0"
@@ -793,7 +793,7 @@ exports[`Filters creates snapshot 1`] = `
             value="deprecated"
           />
           <label
-            class="form-check-label label mw-100 text-muted"
+            class="form-check-label _label_b7404d mw-100 text-muted"
             data-testid="checkboxLabel"
             for="desktop-deprecated-deprecated"
           >

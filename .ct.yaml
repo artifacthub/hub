@@ -1,4 +1,4 @@
 helm-extra-args: --timeout 180s
 chart-repos:
-  - stable=https://charts.helm.sh/stable
+  - bitnami=https://charts.bitnami.com/bitnami
 validate-maintainers: false

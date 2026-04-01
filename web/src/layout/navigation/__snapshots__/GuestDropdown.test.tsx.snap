@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`GuestDropdown creates snapshot 1`] = `
+exports[`GuestDropdown > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="btn-group"
@@ -8,14 +8,14 @@ exports[`GuestDropdown creates snapshot 1`] = `
     <button
       aria-expanded="false"
       aria-label="Guest dropdown button"
-      class="btn p-0 position-relative btn"
+      class="btn p-0 position-relative _btn_afd3cb"
       type="button"
     >
       <div
         class="d-flex flex-row align-items-center justify-content-center"
       >
         <div
-          class="rounded-circle d-flex align-items-center justify-content-center textLight border border-2 overflow-hidden lh-1 fs-5 imageWrapper iconWrapper"
+          class="rounded-circle d-flex align-items-center justify-content-center textLight border border-2 overflow-hidden lh-1 fs-5 _imageWrapper_afd3cb _iconWrapper_afd3cb"
         >
           <svg
             class="rounded-circle"
@@ -53,11 +53,11 @@ exports[`GuestDropdown creates snapshot 1`] = `
       </div>
     </button>
     <div
-      class="dropdown-menu dropdown-menu-end dropdown"
+      class="dropdown-menu dropdown-menu-end _dropdown_afd3cb"
       role="menu"
     >
       <div
-        class="dropdown-arrow arrow"
+        class="dropdown-arrow _arrow_afd3cb"
       />
       <div
         class="my-3"
@@ -90,7 +90,7 @@ exports[`GuestDropdown creates snapshot 1`] = `
               <input
                 aria-checked="true"
                 checked=""
-                class="form-check-input input"
+                class="form-check-input _input_4ef093"
                 id="desktop-automatic"
                 name="automatic"
                 tabindex="0"
@@ -98,11 +98,11 @@ exports[`GuestDropdown creates snapshot 1`] = `
                 value="automatic"
               />
               <label
-                class="form-check-label fw-bold w-100 label"
+                class="form-check-label fw-bold w-100 _label_4ef093"
                 for="desktop-automatic"
               >
                 <svg
-                  class="mx-1 position-relative icon"
+                  class="mx-1 position-relative _icon_4ef093"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -127,7 +127,7 @@ exports[`GuestDropdown creates snapshot 1`] = `
             >
               <input
                 aria-checked="false"
-                class="form-check-input input"
+                class="form-check-input _input_4ef093"
                 id="desktop-light"
                 name="light"
                 tabindex="-1"
@@ -135,11 +135,11 @@ exports[`GuestDropdown creates snapshot 1`] = `
                 value="light"
               />
               <label
-                class="form-check-label fw-bold w-100 label"
+                class="form-check-label fw-bold w-100 _label_4ef093"
                 for="desktop-light"
               >
                 <svg
-                  class="mx-1 position-relative icon"
+                  class="mx-1 position-relative _icon_4ef093"
                   fill="none"
                   height="1em"
                   stroke="currentColor"
@@ -216,7 +216,7 @@ exports[`GuestDropdown creates snapshot 1`] = `
             >
               <input
                 aria-checked="false"
-                class="form-check-input input"
+                class="form-check-input _input_4ef093"
                 id="desktop-dark"
                 name="dark"
                 tabindex="-1"
@@ -224,11 +224,11 @@ exports[`GuestDropdown creates snapshot 1`] = `
                 value="dark"
               />
               <label
-                class="form-check-label fw-bold w-100 label"
+                class="form-check-label fw-bold w-100 _label_4ef093"
                 for="desktop-dark"
               >
                 <svg
-                  class="mx-1 position-relative icon"
+                  class="mx-1 position-relative _icon_4ef093"
                   fill="none"
                   height="1em"
                   stroke="currentColor"

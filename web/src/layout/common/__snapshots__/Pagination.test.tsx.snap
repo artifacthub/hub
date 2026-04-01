@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Pagination creates snapshot 1`] = `
+exports[`Pagination > creates snapshot 1`] = `
 <DocumentFragment>
   <nav
     aria-label="pagination"
     role="navigation"
   >
     <ul
-      class="pagination justify-content-center pagination undefined"
+      class="pagination justify-content-center _pagination_d41f67 undefined"
     >
       <li
         class="page-item disabled"
@@ -43,7 +43,7 @@ exports[`Pagination creates snapshot 1`] = `
         </button>
       </li>
       <li
-        class="page-item active text-light active"
+        class="page-item active text-light _active_d41f67"
       >
         <button
           aria-label="Open page 1"

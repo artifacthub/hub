@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`InputTypeahead creates snapshot 1`] = `
+exports[`InputTypeahead > creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="mb-3 input-group-sm inputWrapper undefined"
+    class="mb-3 input-group-sm _inputWrapper_228486 undefined"
   >
     <input
-      class="flex-grow-1 form-control input px-3"
+      class="flex-grow-1 form-control _input_228486 px-3"
       name="inputTypeahead_test"
       placeholder="Search test"
       spellcheck="false"
@@ -46,18 +46,18 @@ exports[`InputTypeahead creates snapshot 1`] = `
     </button>
   </div>
   <div
-    class="itemsList undefined"
+    class="_itemsList_228486 undefined"
   >
     <button
       aria-label="Unselect option"
-      class="dropdown-item option selected"
+      class="dropdown-item _option_228486 _selected_228486"
       data-testid="typeaheadDropdownBtn"
     >
       <div
         class="d-flex flex-row align-items-center position-relative"
       >
         <div
-          class="position-absolute checkMark"
+          class="position-absolute _checkMark_228486"
         >
           <svg
             fill="currentColor"
@@ -87,7 +87,7 @@ exports[`InputTypeahead creates snapshot 1`] = `
           </small>
         </div>
         <div
-          class="position-absolute close"
+          class="position-absolute _close_228486"
         >
           <svg
             fill="currentColor"
@@ -107,14 +107,14 @@ exports[`InputTypeahead creates snapshot 1`] = `
     </button>
     <button
       aria-label="Unselect option"
-      class="dropdown-item option selected"
+      class="dropdown-item _option_228486 _selected_228486"
       data-testid="typeaheadDropdownBtn"
     >
       <div
         class="d-flex flex-row align-items-center position-relative"
       >
         <div
-          class="position-absolute checkMark"
+          class="position-absolute _checkMark_228486"
         >
           <svg
             fill="currentColor"
@@ -144,7 +144,7 @@ exports[`InputTypeahead creates snapshot 1`] = `
           </small>
         </div>
         <div
-          class="position-absolute close"
+          class="position-absolute _close_228486"
         >
           <svg
             fill="currentColor"
@@ -164,7 +164,7 @@ exports[`InputTypeahead creates snapshot 1`] = `
     </button>
     <button
       aria-label="Select option"
-      class="dropdown-item option"
+      class="dropdown-item _option_228486"
       data-testid="typeaheadDropdownBtn"
     >
       <div
@@ -187,7 +187,7 @@ exports[`InputTypeahead creates snapshot 1`] = `
     </button>
     <button
       aria-label="Select option"
-      class="dropdown-item option"
+      class="dropdown-item _option_228486"
       data-testid="typeaheadDropdownBtn"
     >
       <div

@@ -1,6 +1,6 @@
+import { formatDistanceToNow, fromUnixTime } from 'date-fns';
 import isUndefined from 'lodash/isUndefined';
 import throttle from 'lodash/throttle';
-import moment from 'moment';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
@@ -49,9 +49,9 @@ const PackageCard = (props: Props) => {
 
   const pkgTS = (
     <>
-      {!isFuture(props.package.ts) && (
+      {!isUndefined(props.package.ts) && !isFuture(props.package.ts) && (
         <small className={`text-muted text-nowrap ${styles.date}`}>
-          Updated {moment.unix(props.package.ts).fromNow()}
+          Updated {formatDistanceToNow(fromUnixTime(props.package.ts), { addSuffix: true })}
         </small>
       )}
     </>
@@ -184,7 +184,7 @@ const PackageCard = (props: Props) => {
                       </div>
                     </div>
                     <div ref={infoSection} className="d-flex flex-row mw-100">
-                      <div style={infoStyle[0]}>
+                      <div style={infoStyle[0]} className={styles.truncateWrapper}>
                         {props.package.repository.organizationName && (
                           <OrganizationInfo
                             className={`me-0 d-flex flex-row align-items-baseline text-left`}
@@ -227,7 +227,7 @@ const PackageCard = (props: Props) => {
                           </div>
                         )}
                       </div>
-                      <div style={infoStyle[1]}>
+                      <div className={styles.truncateWrapper} style={infoStyle[1]}>
                         <RepositoryInfo
                           repository={props.package.repository}
                           deprecated={props.package.deprecated}

@@ -1,16 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../../../api';
 import { ErrorKind } from '../../../../../types';
 import APIKeysSection from './index';
-jest.mock('../../../../../api');
-jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as object),
-  format: () => '2020/06/18 16:35:39 (+00:00)',
-}));
+vi.mock('../../../../../api');
 
 const getMockAPIKeys = (fixtureId: string) => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -31,7 +27,7 @@ describe('API keys section index', () => {
 
   it('creates snapshot', async () => {
     const mockAPIKeys = getMockAPIKeys('1');
-    mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
+    vi.mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
 
     const { asFragment } = render(
       <Router>
@@ -44,13 +40,14 @@ describe('API keys section index', () => {
     });
 
     expect(await screen.findAllByTestId('APIKeyCard')).toHaveLength(2);
+    expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', async () => {
       const mockAPIKeys = getMockAPIKeys('2');
-      mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
+      vi.mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
 
       render(
         <Router>
@@ -63,11 +60,12 @@ describe('API keys section index', () => {
       });
 
       expect(await screen.findAllByTestId('APIKeyCard')).toHaveLength(2);
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
     });
 
     it('displays no data component when no API keys', async () => {
       const mockAPIKeys = getMockAPIKeys('3');
-      mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
+      vi.mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
 
       render(
         <Router>
@@ -82,7 +80,7 @@ describe('API keys section index', () => {
 
     it('renders API form form when add first API key button is clicked', async () => {
       const mockAPIKeys = getMockAPIKeys('4');
-      mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
+      vi.mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
 
       render(
         <Router>
@@ -101,7 +99,7 @@ describe('API keys section index', () => {
 
     it('renders API key form when add API key button is clicked', async () => {
       const mockAPIKeys = getMockAPIKeys('5');
-      mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
+      vi.mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
 
       render(
         <Router>
@@ -121,7 +119,7 @@ describe('API keys section index', () => {
 
   it('renders 2 API key cards', async () => {
     const mockAPIKeys = getMockAPIKeys('6');
-    mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
+    vi.mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys);
 
     render(
       <Router>
@@ -130,12 +128,13 @@ describe('API keys section index', () => {
     );
 
     expect(await screen.findAllByTestId('APIKeyCard')).toHaveLength(2);
+    expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 2 of 2 results');
   });
 
   it('loads first page when not api Keys in a different one', async () => {
     const mockAPIKeys = getMockAPIKeys('6');
 
-    mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys).mockResolvedValueOnce({
+    vi.mocked(API).getAPIKeys.mockResolvedValue(mockAPIKeys).mockResolvedValueOnce({
       items: [],
       paginationTotalCount: '2',
     });
@@ -155,7 +154,7 @@ describe('API keys section index', () => {
 
   describe('on getAPIKeys error', () => {
     it('UnauthorizedError', async () => {
-      mocked(API).getAPIKeys.mockRejectedValue({
+      vi.mocked(API).getAPIKeys.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -171,7 +170,7 @@ describe('API keys section index', () => {
     });
 
     it('rest API errors - displays generic error message', async () => {
-      mocked(API).getAPIKeys.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
+      vi.mocked(API).getAPIKeys.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
 
       render(
         <Router>

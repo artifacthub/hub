@@ -56,6 +56,10 @@
   cursor: pointer;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 767.98px) {
   .imageWrapper {
     min-width: 40px;

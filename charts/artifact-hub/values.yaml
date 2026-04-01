@@ -1,10 +1,14 @@
 # Artifact Hub Chart default configuration values
 
+# Common labels to add to all resources
+commonLabels: {}
+
 imagePullSecrets: []
 imageTag: ""
 nameOverride: ""
 pullPolicy: IfNotPresent
 nodeSelector: {}
+tolerations: []
 
 # Enable dynamic resource name prefix
 #
@@ -36,8 +40,8 @@ db:
   host: ""
   port: "5432"
   database: hub
-  user: postgres
-  password: postgres
+  user: hub
+  password: hub
   sslmode: prefer
 
 # Email configuration
@@ -107,6 +111,14 @@ dbMigrator:
     #     memory: 128Mi
     # Optionally specify a node selector for the dbMigrator pod
     nodeSelector: {}
+    # Optionally specify a list of tolerations for the dbMigrator pod
+    tolerations: []
+    # Optionally specify extra list of additional environment variables for the db-migrator container
+    extraEnvVars: []
+    # Optionally specify extra list of additional volume mounts for the dbMigrator job
+    extraVolumeMounts: []
+    # Optionally specify extra list of additional volumes for the dbMigrator job
+    extraVolumes: []
   # Load demo user and sample repositories
   loadSampleData: true
   # Directory path where the configuration files should be mounted
@@ -157,7 +169,7 @@ hub:
     initContainers:
       checkDbMigrator:
         image:
-          repository: bitnami/kubectl
+          repository: bitnamilegacy/kubectl
           # tag: 1.21
         resources: {}
         # If you do want to specify resources, uncomment the following
@@ -190,6 +202,8 @@ hub:
     extraVolumeMounts: []
     # Optionally specify a node selector for the hub deployment
     nodeSelector: {}
+    # Optionally specify a list of tolerations for the hub deployment
+    tolerations: []
     # Optionally specify extra list of additional containers for the hub deployment
     extraContainers: []
     # Optionally specify extra list of additional environment variables for the hub container
@@ -344,6 +358,8 @@ scanner:
     extraEnvVars: []
     # Optionally specify a node selector for the scanner cronjob
     nodeSelector: {}
+    # Optionally specify a list of tolerations for the scanner cronjob
+    tolerations: []
   # Number of snapshots to process concurrently
   concurrency: 3
   # Trivy server url. Defaults to the Trivy service's internal URL
@@ -384,6 +400,8 @@ tracker:
     extraEnvVars: []
     # Optionally specify a node selector for the tracker cronjob
     nodeSelector: {}
+    # Optionally specify a list of tolerations for the tracker cronjob
+    tolerations: []
   # Cache directory path. If set, the cache directory for the Helm client will be explicitly set (otherwise defaults
   # to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir)
   cacheDir: ""
@@ -404,7 +422,7 @@ tracker:
 trivy:
   enabled: true
   deploy:
-    image: aquasec/trivy:0.56.1
+    image: aquasec/trivy:0.69.3
     securityContext: {}
     resources: {}
     # If you do want to specify resources, uncomment the following
@@ -425,6 +443,8 @@ trivy:
     extraVolumeMounts: []
     # Optionally specify a node selector for the trivy deployment
     nodeSelector: {}
+    # Optionally specify a list of tolerations for the trivy deployment
+    tolerations: []
   persistence:
     enabled: false
     size: 10Gi
@@ -432,15 +452,23 @@ trivy:
 # Values for postgresql chart dependency
 postgresql:
   enabled: true
+  auth:
+    username: hub
+    password: hub
+    database: hub
+  global:
+    security:
+      allowInsecureImages: true
   image:
     repository: artifacthub/postgres
     tag: latest
-  persistence:
-    mountPath: /data
-  postgresqlUsername: postgres
-  postgresqlPassword: postgres
-  postgresqlDatabase: hub
-  postgresqlDataDir: /data/pgdata
+  primary:
+    extraVolumes:
+      - name: run
+        emptyDir: {}
+    extraVolumeMounts:
+      - name: run
+        mountPath: /var/run/postgresql
 
 # Extra objects to deploy (value evaluated as a template)
 extraDeploy: []

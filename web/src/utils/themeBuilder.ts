@@ -1,9 +1,7 @@
 import isNull from 'lodash/isNull';
+import tinycolor from 'tinycolor2';
 
 import getMetaTag from './getMetaTag';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const tinycolor = require('tinycolor2');
 
 interface ColorItem {
   name: string;

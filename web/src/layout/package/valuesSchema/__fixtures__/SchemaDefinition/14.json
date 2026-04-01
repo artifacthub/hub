@@ -1,0 +1,16 @@
+{
+  "def": {
+    "active": 0,
+    "combinationType": null,
+    "options": [
+      {
+        "type": ["string", "integer"],
+        "title": "CPU request",
+        "description": "CPU request for the container",
+        "default": 2
+      }
+    ],
+    "error": false
+  },
+  "defaultValue": null
+}

@@ -13,6 +13,7 @@ import { JSONSchema } from '../../../jsonschema';
 import { ActiveJSONSchemaValue } from '../../../types';
 import checkIfPropIsRequiredInSchema from '../../../utils/checkIfPropIsRequiredInSchema';
 import detectLinksInText from '../../../utils/detectLinksInText';
+import resolveSchemaTypeFromDefault from '../../../utils/resolveSchemaTypeFromDefault';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import styles from './SchemaDefinition.module.css';
 
@@ -114,27 +115,25 @@ const SCHEMA_PROPS_PER_TYPE: KeywordPropsByType = {
   ],
 };
 
+const getInitialType = (def: JSONSchema): string | undefined => {
+  let currentType: string | undefined;
+  if (def.type) {
+    if (isArray(def.type)) {
+      currentType = resolveSchemaTypeFromDefault(def.type as string[], def.default);
+    } else {
+      currentType = def.type;
+    }
+  } else if (def.properties) {
+    currentType = 'object';
+  }
+  return currentType;
+};
+
 const SchemaDefinition = (props: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const def = props.def.options[props.def.active];
 
-  const getInitialType = (): string | undefined => {
-    let currentType: string | undefined;
-    if (def.type) {
-      if (isArray(def.type)) {
-        currentType = def.type[0] as string;
-      } else {
-        currentType = def.type;
-      }
-    } else {
-      if (def.properties) {
-        currentType = 'object';
-      }
-    }
-    return currentType;
-  };
-
-  const [activeType, setActiveType] = useState<string | undefined>(getInitialType());
+  const [activeType, setActiveType] = useState<string | undefined>(() => getInitialType(def));
 
   useEffect(() => {
     // Scrolls content into view when a definition is expanded
@@ -144,8 +143,8 @@ const SchemaDefinition = (props: Props) => {
   }, [props.isExpanded, ref]);
 
   useEffect(() => {
-    setActiveType(getInitialType());
-  }, [props.def.active, props.def.combinationType]);
+    setActiveType(getInitialType(def));
+  }, [def.default, def.type, def.properties, props.def.active, props.def.combinationType]);
 
   const typeDef = activeType ? SCHEMA_PROPS_PER_TYPE[activeType] : null;
 

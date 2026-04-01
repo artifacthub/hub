@@ -28,6 +28,6 @@ describe('RSSLinkTitle', () => {
     expect(screen.getByText('RSS')).toBeInTheDocument();
     const link = screen.getByRole('button');
     expect(link).toBeInTheDocument();
-    expect(link).toHaveProperty('href', 'http://localhost/api/v1/packages/helm/stable/test/feed/rss');
+    expect(link.getAttribute('href')).toBe('/api/v1/packages/helm/stable/test/feed/rss');
   });
 });

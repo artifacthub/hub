@@ -574,14 +574,20 @@ const tests: Test[] = [
     input: '\n# ![alt text](https://github.com/n48.png "Logo Title")\n## Opt 1\n## Subtitle 1',
     output: [
       {
-        depth: 2,
-        value: 'Opt 1',
-        children: [],
-      },
-      {
-        depth: 2,
-        value: 'Subtitle 1',
-        children: [],
+        depth: 1,
+        value: 'alt text',
+        children: [
+          {
+            depth: 2,
+            value: 'Opt 1',
+            children: [],
+          },
+          {
+            depth: 2,
+            value: 'Subtitle 1',
+            children: [],
+          },
+        ],
       },
     ],
   },

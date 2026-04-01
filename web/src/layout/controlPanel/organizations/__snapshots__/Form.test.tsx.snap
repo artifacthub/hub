@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Organization Form - organizations section creates snapshot 1`] = `
+exports[`Organization Form - organizations section > creates snapshot 1`] = `
 <DocumentFragment>
   <form
     autocomplete="on"
@@ -15,7 +15,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
         class="d-flex flex-column"
       >
         <label
-          class="form-label label"
+          class="form-label _label_ad3bee"
           for="logo"
         >
           <span
@@ -34,7 +34,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
         >
           <button
             aria-label="Add image"
-            class="btn p-0 overflow-hidden position-relative lh-1 fs-2 btn"
+            class="btn p-0 overflow-hidden position-relative lh-1 fs-2 _btn_ad3bee"
             type="button"
           >
             <svg
@@ -68,7 +68,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       class="mb-4 position-relative undefined"
     >
       <label
-        class="form-label fw-bold label"
+        class="form-label fw-bold _label_d02ded"
         for="name"
       >
         <span
@@ -88,14 +88,14 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
         data-testid="nameInput"
         id="name"
         name="name"
-        pattern="[a-z0-9\\\\-]+"
+        pattern="[a-z0-9\\-]+"
         required=""
         spellcheck="false"
         type="text"
         value=""
       />
       <div
-        class="invalid-feedback mt-0 inputFeedback"
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
       >
         This field is required
       </div>
@@ -104,7 +104,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       class="mb-4 position-relative undefined"
     >
       <label
-        class="form-label fw-bold label"
+        class="form-label fw-bold _label_d02ded"
         for="displayName"
       >
         <span
@@ -123,14 +123,14 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
         value=""
       />
       <div
-        class="invalid-feedback mt-0 inputFeedback"
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
       />
     </div>
     <div
       class="mb-4 position-relative undefined"
     >
       <label
-        class="form-label fw-bold label"
+        class="form-label fw-bold _label_d02ded"
         for="homeUrl"
       >
         <span
@@ -149,7 +149,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
         value=""
       />
       <div
-        class="invalid-feedback mt-0 inputFeedback"
+        class="invalid-feedback mt-0 _inputFeedback_d02ded"
       >
         Please enter a valid url
       </div>
@@ -158,7 +158,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       class=""
     >
       <label
-        class="form-label fw-bold label"
+        class="form-label fw-bold _label_198562"
         for="description"
       >
         Description

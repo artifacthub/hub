@@ -22,6 +22,9 @@ spec:
       labels:
         app.kubernetes.io/component: trivy
         {{- include "chart.selectorLabels" . | nindent 8 }}
+        {{- with .Values.commonLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- with .Values.trivy.deploy.extraPodLabels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -32,6 +35,10 @@ spec:
       {{- end }}
       {{- with (default .Values.nodeSelector .Values.trivy.deploy.nodeSelector) }}
       nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with (default .Values.tolerations .Values.trivy.deploy.tolerations) }}
+      tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:

@@ -1,18 +1,18 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SchemaValuesSearch creates snapshot 1`] = `
+exports[`SchemaValuesSearch > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-flex flex-row"
   >
     <div
-      class="position-relative wrapper undefined"
+      class="position-relative _wrapper_6b0f1f undefined"
     >
       <div
-        class="mb-3 input-group-sm inputWrapper undefined"
+        class="mb-3 input-group-sm _inputWrapper_228486 undefined"
       >
         <input
-          class="flex-grow-1 form-control input ps-3 pe-4"
+          class="flex-grow-1 form-control _input_228486 ps-3 pe-4"
           name="inputTypeahead_path"
           placeholder="Search path"
           spellcheck="false"
@@ -20,7 +20,7 @@ exports[`SchemaValuesSearch creates snapshot 1`] = `
           value=""
         />
         <svg
-          class="text-muted position-absolute searchIcon"
+          class="text-muted position-absolute _searchIcon_228486"
           fill="currentColor"
           height="1em"
           stroke="currentColor"

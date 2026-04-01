@@ -1,19 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Footer creates snapshot 1`] = `
+exports[`Footer > creates snapshot 1`] = `
 <DocumentFragment>
   <footer
-    class="position-relative text-white footer"
+    class="position-relative text-white _footer_f39205"
     role="contentinfo"
   >
     <div
-      class="mainFooter"
+      class="_mainFooter_f39205"
     >
       <div
         class="container-lg px-4"
       >
         <div
-          class="d-flex flex-row flex-wrap align-items-stretch justify-content-between footerContent"
+          class="d-flex flex-row flex-wrap align-items-stretch justify-content-between _footerContent_f39205"
         >
           <div>
             <div
@@ -26,7 +26,7 @@ exports[`Footer creates snapshot 1`] = `
             >
               <a
                 aria-label="Open documentation"
-                class="link mb-1 link"
+                class="_link_f0e789 mb-1 _link_f39205"
                 href="/docs"
                 rel="noopener noreferrer"
                 role="button"
@@ -37,7 +37,7 @@ exports[`Footer creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open blog"
-                class="link mb-1 link"
+                class="_link_f0e789 mb-1 _link_f39205"
                 href="https://blog.artifacthub.io/blog/"
                 rel="noopener noreferrer"
                 role="button"
@@ -47,7 +47,8 @@ exports[`Footer creates snapshot 1`] = `
                 Blog
               </a>
               <a
-                class="mb-1 link"
+                class="mb-1 _link_f39205"
+                data-discover="true"
                 href="/stats"
               >
                 Statistics
@@ -65,7 +66,7 @@ exports[`Footer creates snapshot 1`] = `
             >
               <a
                 aria-label="Open GitHub"
-                class="link mb-1 link"
+                class="_link_f0e789 mb-1 _link_f39205"
                 href="https://github.com/artifacthub/hub"
                 rel="noopener noreferrer"
                 role="button"
@@ -94,7 +95,7 @@ exports[`Footer creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Slack channel"
-                class="link mb-1 link"
+                class="_link_f0e789 mb-1 _link_f39205"
                 href="https://cloud-native.slack.com/channels/artifact-hub"
                 rel="noopener noreferrer"
                 role="button"
@@ -123,7 +124,7 @@ exports[`Footer creates snapshot 1`] = `
               </a>
               <a
                 aria-label="Open Twitter"
-                class="link mb-1 link"
+                class="_link_f0e789 mb-1 _link_f39205"
                 href="https://twitter.com/cncfartifacthub"
                 rel="noopener noreferrer"
                 role="button"
@@ -153,7 +154,7 @@ exports[`Footer creates snapshot 1`] = `
             </div>
           </div>
           <div
-            class="fullMobileSection"
+            class="_fullMobileSection_f39205"
           >
             <div
               class="h6 fw-semibold text-uppercase"
@@ -161,7 +162,7 @@ exports[`Footer creates snapshot 1`] = `
               About
             </div>
             <div
-              class="copyrightContent"
+              class="_copyrightContent_f39205"
             >
               Artifact Hub is an 
               <b
@@ -172,7 +173,7 @@ exports[`Footer creates snapshot 1`] = `
                project licensed under the 
               <a
                 aria-label="Open Apache License 2.0 documentation"
-                class="link d-inline-block mb-1 linkInText"
+                class="_link_f0e789 d-inline-block mb-1 _linkInText_f39205"
                 href="https://www.apache.org/licenses/LICENSE-2.0"
                 rel="noopener noreferrer"
                 role="button"
@@ -184,7 +185,7 @@ exports[`Footer creates snapshot 1`] = `
                 >
                   Apache License 2.0
                   <span
-                    class="smallIcon"
+                    class="_smallIcon_f39205"
                   >
                     <svg
                       class="ms-1"
@@ -217,13 +218,13 @@ exports[`Footer creates snapshot 1`] = `
             </div>
           </div>
           <div
-            class="ms-0 ms-lg-auto mt-3 mt-lg-0 text-center fullMobileSection"
+            class="ms-0 ms-lg-auto mt-3 mt-lg-0 text-center _fullMobileSection_f39205"
           >
             <div
               class="d-flex flex-column align-items-center h-100"
             >
               <div
-                class="hexagon"
+                class="_hexagon_f39205"
               >
                 <svg
                   fill="none"
@@ -259,7 +260,7 @@ exports[`Footer creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="text-center py-2 px-3 px-md-4 trademark trademark"
+      class="text-center py-2 px-3 px-md-4 _trademark_f39205 trademark"
     >
       <small
         class="opacity-75"
@@ -267,7 +268,7 @@ exports[`Footer creates snapshot 1`] = `
         © 2025 
         <a
           aria-label="Open external link"
-          class="link opacity-100 text-white"
+          class="_link_f0e789 opacity-100 text-white"
           href="https://linuxfoundation.org/"
           rel="noopener noreferrer"
           role="button"
@@ -279,7 +280,7 @@ exports[`Footer creates snapshot 1`] = `
         . All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our 
         <a
           aria-label="Open external link"
-          class="link opacity-100 text-white"
+          class="_link_f0e789 opacity-100 text-white"
           href="https://linuxfoundation.org/trademark-usage"
           rel="noopener noreferrer"
           role="button"
@@ -291,7 +292,7 @@ exports[`Footer creates snapshot 1`] = `
          page. 
         <a
           aria-label="Open external link"
-          class="link opacity-100 text-white"
+          class="_link_f0e789 opacity-100 text-white"
           href="https://www.linuxfoundation.org/legal/privacy-policy"
           rel="noopener noreferrer"
           role="button"

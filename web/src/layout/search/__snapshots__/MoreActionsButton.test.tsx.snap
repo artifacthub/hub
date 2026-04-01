@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MoreActionsButton creates snapshot 1`] = `
+exports[`MoreActionsButton > creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-none d-md-block position-relative ms-3"
@@ -8,12 +8,12 @@ exports[`MoreActionsButton creates snapshot 1`] = `
     <button
       aria-expanded="false"
       aria-label="Show menu"
-      class="btn btn-outline-primary p-0 position-relative lh-1 iconWrapper"
+      class="btn btn-outline-primary p-0 position-relative lh-1 _iconWrapper_57447f"
       type="button"
     >
       <svg
         aria-hidden="true"
-        class="position-relative icon"
+        class="position-relative _icon_57447f"
         fill="currentColor"
         height="1em"
         stroke="currentColor"
@@ -28,11 +28,11 @@ exports[`MoreActionsButton creates snapshot 1`] = `
       </svg>
     </button>
     <div
-      class="dropdown-menu dropdown-menu-end p-0 dropdown"
+      class="dropdown-menu dropdown-menu-end p-0 _dropdown_57447f"
       role="menu"
     >
       <div
-        class="dropdown-arrow arrow"
+        class="dropdown-arrow _arrow_57447f"
       />
       <button
         aria-label="Open embed results modal"

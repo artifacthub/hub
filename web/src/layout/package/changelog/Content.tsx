@@ -1,7 +1,7 @@
 import classnames from 'classnames';
+import { formatDistanceToNow, fromUnixTime } from 'date-fns';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
 import { Dispatch, SetStateAction, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { BsDot } from 'react-icons/bs';
 import { FaLink, FaTrash, FaWrench } from 'react-icons/fa';
@@ -89,7 +89,9 @@ const Content = (props: Props) => {
               <div
                 className="d-inline-block d-md-flex flex-row align-items-baseline border-bottom border-1 w-100 mb-3 pb-2"
                 id={`changelog-${index}`}
-                ref={(el) => (versionsRef.current[index] = el)}
+                ref={(el) => {
+                  versionsRef.current[index] = el;
+                }}
               >
                 <div className={`d-flex flex-row align-items-baseline ${styles.versionWrapper}`}>
                   <button
@@ -125,7 +127,9 @@ const Content = (props: Props) => {
 
                 {!isFuture(item.ts) && (
                   <div className="ms-auto ps-0 ps-md-2 text-nowrap">
-                    <small className="text-muted">Released {moment.unix(item.ts).fromNow()}</small>
+                    <small className="text-muted">
+                      Released {formatDistanceToNow(fromUnixTime(item.ts), { addSuffix: true })}
+                    </small>
                   </div>
                 )}
               </div>

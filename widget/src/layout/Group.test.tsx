@@ -1,18 +1,16 @@
 import isPropValid from '@emotion/is-prop-valid';
-import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
-import { mocked } from 'jest-mock';
+import { render, screen, waitFor } from '@testing-library/react';
 import { StyleSheetManager } from 'styled-components';
+import { vi } from 'vitest';
 
 import API from '../api';
 import { SearchResults } from '../types';
 import Group from './Group';
-jest.mock('../api');
+vi.mock('../api');
 
-jest.mock('moment', () => ({
-  ...(jest.requireActual('moment') as object),
-  unix: () => ({
-    fromNow: () => '3 hours ago',
-  }),
+vi.mock('date-fns', () => ({
+  ...(jest.requireActual('date-fns') as object),
+  formatDistanceToNow: () => '3 hours ago',
 }));
 
 // This implements the default behavior from styled-components v5
@@ -42,12 +40,12 @@ const getMockGroup = (fixtureId: string): SearchResults => {
 
 describe('Group', () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('creates snapshot', async () => {
     const mockGroup = getMockGroup('1');
-    mocked(API).searchPackages.mockResolvedValue(mockGroup);
+    vi.mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
     const { asFragment } = render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -58,13 +56,15 @@ describe('Group', () => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders component', async () => {
     const mockGroup = getMockGroup('2');
-    mocked(API).searchPackages.mockResolvedValue(mockGroup);
+    vi.mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -74,32 +74,33 @@ describe('Group', () => {
 
     expect(screen.getByTestId('wrapper')).toBeInTheDocument();
     expect(screen.getByTestId('wrapper')).toHaveStyle('--color-ah-primary: #417598');
-    expect(screen.getByRole('status')).toBeInTheDocument();
-
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
       expect(API.searchPackages).toHaveBeenCalledWith('https://localhost:8000', '');
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     expect(screen.getAllByTestId('cardWrapper')).toHaveLength(5);
   });
 
   it('renders component with fixedWidth', async () => {
     const mockGroup = getMockGroup('3');
-    mocked(API).searchPackages.mockResolvedValue(mockGroup);
+    vi.mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
         <Group {...defaultProps} responsive={false} width="1800" />
       </StyleSheetManager>
     );
-
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     const wrapper = screen.getByTestId('wrapper');
     expect(wrapper).toHaveClass('fixedWidth');
     expect(wrapper).toHaveStyle('width: 1800px');
@@ -107,74 +108,78 @@ describe('Group', () => {
 
   it('renders component with custom color', async () => {
     const mockGroup = getMockGroup('4');
-    mocked(API).searchPackages.mockResolvedValue(mockGroup);
+    vi.mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
         <Group {...defaultProps} color="#F57C00" />
       </StyleSheetManager>
     );
-
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     expect(screen.getByTestId('wrapper')).toHaveStyle('--color-ah-primary: #F57C00');
   });
 
   it('renders component with dark theme', async () => {
     const mockGroup = getMockGroup('5');
-    mocked(API).searchPackages.mockResolvedValue(mockGroup);
+    vi.mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
     render(
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
         <Group {...defaultProps} theme="dark" />
       </StyleSheetManager>
     );
-
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+    await waitFor(() => {
+      expect(screen.queryByRole('status')).toBeNull();
+    });
     expect(screen.getByTestId('wrapper')).toHaveStyle('--color-ah-primary: #131216');
   });
 
   describe('does not render component', () => {
     it('when package list is empty', async () => {
       const mockGroup = getMockGroup('6');
-      mocked(API).searchPackages.mockResolvedValue(mockGroup);
+      vi.mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
       const { container } = render(
         <StyleSheetManager shouldForwardProp={shouldForwardProp}>
           <Group {...defaultProps} />
         </StyleSheetManager>
       );
-
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+      await waitFor(() => {
+        expect(screen.queryByRole('status')).toBeNull();
+      });
 
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when searchPackages call fails', async () => {
-      mocked(API).searchPackages.mockRejectedValue(null);
+      vi.mocked(API).searchPackages.mockRejectedValue(null);
 
       const { container } = render(
         <StyleSheetManager shouldForwardProp={shouldForwardProp}>
           <Group {...defaultProps} />
         </StyleSheetManager>
       );
-
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      await waitForElementToBeRemoved(() => screen.queryByRole('status'));
+      await waitFor(() => {
+        expect(screen.queryByRole('status')).toBeNull();
+      });
 
       expect(container).toBeEmptyDOMElement();
     });

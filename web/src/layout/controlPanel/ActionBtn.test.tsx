@@ -1,17 +1,21 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import { AppCtx } from '../../context/AppCtx';
 import { AuthorizerAction, AuthorizerInput } from '../../types';
 import ActionBtn from './ActionBtn';
 
-jest.mock('../../utils/authorizer', () => ({
-  check: (params: AuthorizerInput) => {
-    if (params.user === 'member') {
-      return false;
-    }
-    return true;
-  },
+const authorizerMock = vi.hoisted(() => ({
+  check: vi.fn((params: AuthorizerInput) => (params.user === 'member' ? false : true)),
+  init: vi.fn(),
+  updateCtx: vi.fn(),
+  getAllowedActionsList: vi.fn(),
+}));
+
+vi.mock('../../utils/authorizer', () => ({
+  __esModule: true,
+  default: authorizerMock,
 }));
 
 const onClickMock = jest.fn();
@@ -42,6 +46,7 @@ const mockCtx = {
 describe('ActionBtn', () => {
   afterEach(() => {
     jest.resetAllMocks();
+    authorizerMock.check.mockClear();
   });
 
   it('creates snapshot', () => {

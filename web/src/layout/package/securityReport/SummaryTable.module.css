@@ -3,8 +3,12 @@
 }
 
 .table {
-  min-width: 874px;
-  font-size: 0.9rem;
+  min-width: 720px;
+  font-size: 0.85rem;
+}
+
+.table > :not(caption) > * > * {
+  padding: 0.5rem;
 }
 
 .imageNameWrapper {
@@ -12,7 +16,7 @@
 }
 
 .tableTitle th {
-  width: 100px;
+  width: 80px;
 }
 
 .legend {
@@ -38,5 +42,13 @@
 
   .table {
     font-size: 1rem;
+  }
+
+  .table > :not(caption) > * > * {
+    padding: 0.75rem;
+  }
+
+  .tableTitle th {
+    width: 100px;
   }
 }

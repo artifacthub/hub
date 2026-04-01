@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import WidgetsGroupModal from './WidgetsGroupModal';
 
-jest.mock('react-color', () => ({
+vi.mock('react-color', () => ({
   SketchPicker: () => <>sketch</>,
 }));
 
@@ -48,8 +49,9 @@ describe('WidgetsGroupModal', () => {
       expect(screen.getByText('Stars')).toBeInTheDocument();
       expect(screen.getByText('Display number of stars given to the package.')).toBeInTheDocument();
       expect(screen.getByText('Code')).toBeInTheDocument();
+      const origin = window.location.origin;
       expect(screen.getByTestId('block-content')).toHaveTextContent(
-        '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="true" data-loading="true"></div><script async src="http://localhost/artifacthub-widget.js"></script>'
+        `<div class="artifacthub-widget-group" data-url="${origin}/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="true" data-loading="true"></div><script async src="${origin}/artifacthub-widget.js"></script>`
       );
     });
 
@@ -82,8 +84,9 @@ describe('WidgetsGroupModal', () => {
     it('updates block content to change different options', async () => {
       render(<WidgetsGroupModal {...defaultProps} />);
 
+      const origin = window.location.origin;
       expect(screen.getByTestId('block-content')).toHaveTextContent(
-        '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="true" data-loading="true"></div><script async src="http://localhost/artifacthub-widget.js"></script>'
+        `<div class="artifacthub-widget-group" data-url="${origin}/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="true" data-loading="true"></div><script async src="${origin}/artifacthub-widget.js"></script>`
       );
 
       await userEvent.click(screen.getByText('fixed'));
@@ -91,7 +94,7 @@ describe('WidgetsGroupModal', () => {
       await userEvent.type(screen.getByTestId('fixedWidthInput'), '0');
 
       expect(await screen.findByTestId('block-content')).toHaveTextContent(
-        '<div class="artifacthub-widget-group" data-url="http://localhost/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="false" data-width="7600" data-loading="false"></div><script async src="http://localhost/artifacthub-widget.js"></script>'
+        `<div class="artifacthub-widget-group" data-url="${origin}/" data-theme="light" data-header="false" data-stars="true" data-color="#417598" data-responsive="false" data-width="7600" data-loading="false"></div><script async src="${origin}/artifacthub-widget.js"></script>`
       );
     });
   });

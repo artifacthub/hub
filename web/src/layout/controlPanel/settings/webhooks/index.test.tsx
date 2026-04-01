@@ -1,13 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import API from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
 import { ErrorKind } from '../../../../types';
 import WebhooksSection from './index';
-jest.mock('../../../../api');
+vi.mock('../../../../api');
 
 const getMockWebhooks = (fixtureId: string) => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -62,7 +62,7 @@ describe('WebhooksSection', () => {
 
   it('creates snapshot', async () => {
     const mockWebhooks = getMockWebhooks('1');
-    mocked(API).getWebhooks.mockResolvedValue(mockWebhooks);
+    vi.mocked(API).getWebhooks.mockResolvedValue(mockWebhooks);
 
     const { asFragment } = render(
       <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
@@ -77,13 +77,14 @@ describe('WebhooksSection', () => {
     });
 
     expect(await screen.findAllByRole('listitem')).toHaveLength(5);
+    expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 5 of 5 results');
     expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', async () => {
       const mockWebhooks = getMockWebhooks('2');
-      mocked(API).getWebhooks.mockResolvedValue(mockWebhooks);
+      vi.mocked(API).getWebhooks.mockResolvedValue(mockWebhooks);
 
       render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
@@ -100,12 +101,13 @@ describe('WebhooksSection', () => {
       expect(await screen.findByText('Webhooks')).toBeInTheDocument();
       expect(screen.getByText('Webhooks notify external services when certain events happen.')).toBeInTheDocument();
       expect(await screen.findAllByRole('listitem')).toHaveLength(5);
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 5 of 5 results');
       expect(screen.getByRole('button', { name: 'Open webhook form' })).toBeInTheDocument();
     });
 
     it('renders properly when webhooks list is empty', async () => {
       const mockWebhooks = getMockWebhooks('3');
-      mocked(API).getWebhooks.mockResolvedValue(mockWebhooks);
+      vi.mocked(API).getWebhooks.mockResolvedValue(mockWebhooks);
 
       render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
@@ -133,7 +135,7 @@ describe('WebhooksSection', () => {
 
     it('renders form to click on Add webhook', async () => {
       const mockWebhooks = getMockWebhooks('4');
-      mocked(API).getWebhooks.mockResolvedValue(mockWebhooks);
+      vi.mocked(API).getWebhooks.mockResolvedValue(mockWebhooks);
 
       render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
@@ -155,7 +157,7 @@ describe('WebhooksSection', () => {
 
     it('calls getWebhooks with selected org', async () => {
       const mockWebhooks = getMockWebhooks('5');
-      mocked(API).getWebhooks.mockResolvedValue(mockWebhooks);
+      vi.mocked(API).getWebhooks.mockResolvedValue(mockWebhooks);
 
       render(
         <AppCtx.Provider value={{ ctx: mockOrgCtx, dispatch: jest.fn() }}>
@@ -171,12 +173,13 @@ describe('WebhooksSection', () => {
       });
 
       expect(await screen.findAllByRole('listitem')).toHaveLength(5);
+      expect(await screen.findByTestId('pagination-summary')).toHaveTextContent('1 - 5 of 5 results');
     });
 
     it('loads first page when not webhooks in a different one', async () => {
       const mockWebhooks = getMockWebhooks('6');
 
-      mocked(API).getWebhooks.mockResolvedValue(mockWebhooks).mockResolvedValueOnce({
+      vi.mocked(API).getWebhooks.mockResolvedValue(mockWebhooks).mockResolvedValueOnce({
         items: [],
         paginationTotalCount: '5',
       });
@@ -199,7 +202,7 @@ describe('WebhooksSection', () => {
 
   describe('when getWebhooks fails', () => {
     it('on UnauthorizedError', async () => {
-      mocked(API).getWebhooks.mockRejectedValue({
+      vi.mocked(API).getWebhooks.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
 
@@ -221,7 +224,7 @@ describe('WebhooksSection', () => {
     });
 
     it('default error', async () => {
-      mocked(API).getWebhooks.mockRejectedValue({ kind: ErrorKind.Other });
+      vi.mocked(API).getWebhooks.mockRejectedValue({ kind: ErrorKind.Other });
 
       render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>

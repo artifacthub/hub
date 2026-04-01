@@ -1,8 +1,15 @@
 import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import SubscriptionsSection from './index';
-jest.mock('./packages', () => () => <div />);
-jest.mock('./repositories', () => () => <div />);
+vi.mock('./packages', () => ({
+  __esModule: true,
+  default: () => <div />,
+}));
+vi.mock('./repositories', () => ({
+  __esModule: true,
+  default: () => <div />,
+}));
 
 const defaultProps = {
   onAuthError: jest.fn(),

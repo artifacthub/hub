@@ -1,28 +1,28 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LogIn creates snapshot 1`] = `
+exports[`LogIn > creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="modal-backdrop activeBackdrop"
+      class="modal-backdrop _activeBackdrop_2adcc6"
       data-testid="modalBackdrop"
     />
     <div
       aria-modal="true"
-      class="modal modal active d-block"
+      class="modal _modal_2adcc6 _active_2adcc6 d-block"
       role="dialog"
     >
       <div
         class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
-          class="modal-content border border-3 mx-auto content modal"
+          class="modal-content border border-3 mx-auto _content_2adcc6 _modal_b4e02d"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header undefined"
+            class="modal-header d-flex flex-row align-items-center _header_2adcc6 undefined"
           >
             <div
-              class="h3 m-2 flex-grow-1 title"
+              class="h3 m-2 flex-grow-1 _title_b4e02d"
             >
               Sign in
             </div>
@@ -48,7 +48,7 @@ exports[`LogIn creates snapshot 1`] = `
                   class="mb-4 position-relative undefined"
                 >
                   <label
-                    class="form-label fw-bold label"
+                    class="form-label fw-bold _label_d02ded"
                     for="email"
                   >
                     <span
@@ -69,7 +69,7 @@ exports[`LogIn creates snapshot 1`] = `
                     value=""
                   />
                   <div
-                    class="invalid-feedback mt-0 inputFeedback"
+                    class="invalid-feedback mt-0 _inputFeedback_d02ded"
                   >
                     This field is required
                   </div>
@@ -78,7 +78,7 @@ exports[`LogIn creates snapshot 1`] = `
                   class="mb-4 position-relative undefined"
                 >
                   <label
-                    class="form-label fw-bold label"
+                    class="form-label fw-bold _label_d02ded"
                     for="password"
                   >
                     <span
@@ -99,7 +99,7 @@ exports[`LogIn creates snapshot 1`] = `
                     value=""
                   />
                   <div
-                    class="invalid-feedback mt-0 inputFeedback"
+                    class="invalid-feedback mt-0 _inputFeedback_d02ded"
                   >
                     This field is required
                   </div>
@@ -144,7 +144,7 @@ exports[`LogIn creates snapshot 1`] = `
             </div>
             <div>
               <div
-                class="overflow-hidden alertWrapper"
+                class="overflow-hidden _alertWrapper_1aa3f6"
                 data-testid="alertWrapper"
               />
             </div>

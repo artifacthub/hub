@@ -1,9 +1,10 @@
+import { differenceInMilliseconds, fromUnixTime } from 'date-fns';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
 
 const calculateDiffInYears = (pastDate: number, currentDate?: number): number => {
-  const initialDate: moment.Moment = !isUndefined(currentDate) ? moment.unix(currentDate) : moment(new Date());
-  return initialDate.diff(moment.unix(pastDate), 'years', true);
+  const referenceDate = !isUndefined(currentDate) ? fromUnixTime(currentDate) : new Date();
+  const elapsedInMs = differenceInMilliseconds(referenceDate, fromUnixTime(pastDate));
+  return elapsedInMs / (1000 * 60 * 60 * 24 * 365.25);
 };
 
 export default calculateDiffInYears;

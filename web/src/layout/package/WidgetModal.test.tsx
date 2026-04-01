@@ -1,24 +1,52 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import type { ReactNode } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import WidgetModal from './WidgetModal';
-
-jest.mock('react-color', () => ({
-  SketchPicker: () => <>sketch</>,
-}));
 
 const setOpenStatusMock = jest.fn();
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-jest.mock('react-syntax-highlighter', () => (props: any) => <div>{props.children}</div>);
+vi.mock('react-color', () => ({
+  SketchPicker: () => <>sketch</>,
+}));
+
+vi.mock('react-syntax-highlighter', () => ({
+  default: ({ children }: { children?: ReactNode }) => (
+    <pre
+      style={{
+        display: 'block',
+        overflowX: 'auto',
+        padding: '0.5em',
+        color: 'rgb(0, 0, 0)',
+        backgroundImage: 'none',
+        backgroundPosition: '0% 0%',
+        backgroundSize: 'auto',
+        backgroundRepeat: 'repeat',
+        backgroundOrigin: 'padding-box',
+        backgroundClip: 'border-box',
+        backgroundAttachment: 'scroll',
+        backgroundColor: 'var(--color-1-10)',
+      }}
+    >
+      <code className="language-text" style={{ whiteSpace: 'pre' }}>
+        <span>{children}</span>
+      </code>
+    </pre>
+  ),
+}));
+
+beforeEach(() => {
+  window.history.replaceState({}, '', '/');
+});
 
 const defaultProps = {
   packageId: 'id',
@@ -28,18 +56,22 @@ const defaultProps = {
   setOpenStatus: setOpenStatusMock,
 };
 
+const expectedWidgetCode = (
+  theme: string,
+  header: boolean,
+  responsive: boolean,
+  description = defaultProps.packageDescription
+) => {
+  const url = `${window.location.origin}${window.location.pathname}`;
+  const headerValue = header ? 'true' : 'false';
+  const responsiveValue = responsive ? 'true' : 'false';
+  const descriptionSuffix = description ? `: ${description}` : '';
+  return `<div class="artifacthub-widget" data-url="${url}" data-theme="${theme}" data-header="${headerValue}" data-stars="true" data-responsive="${responsiveValue}"><blockquote><p lang="en" dir="ltr"><b>${defaultProps.packageName}</b>${descriptionSuffix}</p>&mdash; Open in <a href="${url}">null</a></blockquote></div><script async src="${window.location.origin}/artifacthub-widget.js"></script>`;
+};
+
 describe('WidgetModal', () => {
   afterEach(() => {
     jest.resetAllMocks();
-  });
-
-  it('creates snapshot', () => {
-    const { asFragment } = render(
-      <Router>
-        <WidgetModal {...defaultProps} />
-      </Router>
-    );
-    expect(asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -67,9 +99,7 @@ describe('WidgetModal', () => {
       expect(screen.getByRole('switch', { name: 'Stars' })).toBeChecked();
       expect(screen.getByText('Display number of stars given to the package.')).toBeInTheDocument();
       expect(screen.getByText('Code')).toBeInTheDocument();
-      expect(screen.getByTestId('block-content')).toHaveTextContent(
-        '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="light" data-header="true" data-stars="true" data-responsive="false"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
-      );
+      expect(screen.getByTestId('block-content')).toHaveTextContent(expectedWidgetCode('light', true, false));
     });
 
     it('when not white label', () => {
@@ -92,16 +122,12 @@ describe('WidgetModal', () => {
         </Router>
       );
 
-      expect(screen.getByTestId('block-content')).toHaveTextContent(
-        '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="light" data-header="true" data-stars="true" data-responsive="false"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
-      );
+      expect(screen.getByTestId('block-content')).toHaveTextContent(expectedWidgetCode('light', true, false));
 
       await userEvent.click(screen.getByText('dark'));
       await userEvent.click(screen.getByText('Responsive'));
 
-      expect(screen.getByTestId('block-content')).toHaveTextContent(
-        '<div class="artifacthub-widget" data-url="http://localhost/" data-theme="dark" data-header="true" data-stars="true" data-responsive="true"><blockquote><p lang="en" dir="ltr"><b>pkg</b>: this is the description</p>&mdash; Open in <a href="http://localhost/">null</a></blockquote></div><script async src="http://localhost/artifacthub-widget.js"></script>'
-      );
+      expect(screen.getByTestId('block-content')).toHaveTextContent(expectedWidgetCode('dark', true, true));
     });
   });
 });

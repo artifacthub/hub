@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mocked } from 'jest-mock';
+import { vi } from 'vitest';
 
 import API from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
@@ -8,13 +8,19 @@ import { ErrorKind } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import DeleteAccount from './DeleteAccount';
 
-jest.mock('../../../../../api');
-jest.mock('../../../../../utils/alertDispatcher');
+vi.mock('../../../../../api');
+vi.mock('../../../../../utils/alertDispatcher');
 
-jest.mock('../../../../../utils/authorizer', () => ({
-  check: () => {
-    return true;
-  },
+const authorizerMock = vi.hoisted(() => ({
+  check: vi.fn(() => true),
+  init: vi.fn(),
+  updateCtx: vi.fn(),
+  getAllowedActionsList: vi.fn(),
+}));
+
+vi.mock('../../../../../utils/authorizer', () => ({
+  __esModule: true,
+  default: authorizerMock,
 }));
 
 const mockCtx = {
@@ -44,6 +50,7 @@ const defaultProps = {
 describe('DeleteAccount', () => {
   afterEach(() => {
     jest.resetAllMocks();
+    authorizerMock.check.mockClear();
   });
 
   it('creates snapshot', () => {
@@ -110,7 +117,7 @@ describe('DeleteAccount', () => {
 
     describe('calls registerDeleteUserCode', () => {
       it('on success', async () => {
-        mocked(API).registerDeleteUserCode.mockResolvedValue(null);
+        vi.mocked(API).registerDeleteUserCode.mockResolvedValue(null);
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -157,7 +164,7 @@ describe('DeleteAccount', () => {
       });
 
       it('clean modal after success', async () => {
-        mocked(API).registerDeleteUserCode.mockResolvedValue(null);
+        vi.mocked(API).registerDeleteUserCode.mockResolvedValue(null);
 
         render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -215,7 +222,7 @@ describe('DeleteAccount', () => {
 
       describe('on error', () => {
         it('displays error', async () => {
-          mocked(API).registerDeleteUserCode.mockRejectedValue({
+          vi.mocked(API).registerDeleteUserCode.mockRejectedValue({
             kind: ErrorKind.Other,
           });
 
@@ -252,7 +259,7 @@ describe('DeleteAccount', () => {
         });
 
         it('calls onAuthError', async () => {
-          mocked(API).registerDeleteUserCode.mockRejectedValue({
+          vi.mocked(API).registerDeleteUserCode.mockRejectedValue({
             kind: ErrorKind.Unauthorized,
           });
 

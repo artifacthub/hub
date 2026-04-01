@@ -1,7 +1,7 @@
 import { ApexOptions } from 'apexcharts';
+import { format, subDays } from 'date-fns';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
-import moment from 'moment';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { HiPlusCircle } from 'react-icons/hi';
@@ -82,7 +82,7 @@ const Last30DaysViews = (props: Props) => {
         },
         x: {
           formatter: (val: number): string => {
-            return moment(val).format('DD MMM YY');
+            return format(new Date(val), 'dd MMM yy');
           },
         },
         y: {
@@ -175,13 +175,13 @@ const Last30DaysViews = (props: Props) => {
 
             <div className={`d-flex flex-row justify-content-between w-100 ${styles.legend}`}>
               <div>
-                <small className="text-muted">{moment().subtract(30, 'days').format('DD MMM')}</small>
+                <small className="text-muted">{format(subDays(new Date(), 30), 'dd MMM')}</small>
               </div>
               <div>
-                <small className="text-muted">{moment().subtract(15, 'days').format('DD MMM')}</small>
+                <small className="text-muted">{format(subDays(new Date(), 15), 'dd MMM')}</small>
               </div>
               <div>
-                <small className="text-muted">{moment().format('DD MMM')}</small>
+                <small className="text-muted">{format(new Date(), 'dd MMM')}</small>
               </div>
             </div>
 

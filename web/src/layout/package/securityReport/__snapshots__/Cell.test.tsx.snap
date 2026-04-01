@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SecuritySummary creates snapshot 1`] = `
+exports[`SecuritySummary > creates snapshot 1`] = `
 <DocumentFragment>
   <table>
     <tbody>
       <tr
-        class="clickableCell"
+        class="_clickableCell_f2fb44"
         data-testid="vulnerabilityCell"
       >
         <td
@@ -31,7 +31,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
           CVE-2020-8492
           <a
             aria-label="Link to CVE-2020-8492 vulnerability"
-            class="link ms-2 text-dark position-relative link"
+            class="_link_f0e789 ms-2 text-dark position-relative _link_f2fb44"
             href="http://linux.oracle.com/cve/CVE-2020-8492.html"
             rel="noopener noreferrer"
             role="button"
@@ -62,7 +62,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
             class="d-flex flex-row align-items-center"
           >
             <span
-              class="badge p-2 me-2 badge"
+              class="badge p-2 me-2 _badge_f2fb44"
               data-testid="severityBadge"
               style="background-color: rgb(247, 134, 15);"
             >
@@ -77,7 +77,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
           class="align-middle text-nowrap pe-3 w-25"
         >
           <div
-            class="d-table w-100 wrapperCell"
+            class="d-table w-100 _wrapperCell_f2fb44"
           >
             <div
               class="text-truncate"
@@ -90,7 +90,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
           class="align-middle text-nowrap pe-3 w-25"
         >
           <div
-            class="d-table w-100 wrapperCell"
+            class="d-table w-100 _wrapperCell_f2fb44"
           >
             <div
               class="text-truncate"
@@ -104,7 +104,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
           data-testid="fixedVersionCell"
         >
           <div
-            class="d-table w-100 wrapperCell"
+            class="d-table w-100 _wrapperCell_f2fb44"
           >
             <div
               class="text-truncate"

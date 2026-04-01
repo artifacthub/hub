@@ -1,10 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 
 import TOC from './TOC';
-jest.mock('react-markdown', () => () => <div>Readme</div>);
-jest.mock('remark-gfm', () => () => <div />);
+vi.mock('react-markdown', () => ({
+  default: () => <div>Readme</div>,
+}));
+vi.mock('remark-gfm', () => ({
+  default: () => <div />,
+}));
 
 const defaultProps = {
   title: 'Readme',
