@@ -27,7 +27,7 @@ const ActionBtn = forwardRef((props: Props, ref: Ref<RefActionBtn>) => {
 
   useImperativeHandle(ref, () => ({
     reRender: () => {
-      setUpdateView((updateView: number) => ++updateView);
+      setUpdateView((currentView: number) => currentView + 1);
     },
   }));
 
@@ -57,7 +57,7 @@ const ActionBtn = forwardRef((props: Props, ref: Ref<RefActionBtn>) => {
           action: props.action,
           user: ctx.user!.alias!,
           organizationName: activeOrg,
-          onCompletion: () => setUpdateView((updateView: number) => ++updateView),
+          onCompletion: () => setUpdateView((currentView: number) => currentView + 1),
         })
       );
     }

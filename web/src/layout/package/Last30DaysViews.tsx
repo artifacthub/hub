@@ -25,14 +25,11 @@ interface Series {
 const prepareSeries = (stats: PackageViewsStats, version?: string): Series[] => {
   if (isEmpty(stats)) return [];
 
-  let data: number[][] = [];
-  if (isUndefined(version)) {
-    data = sumViewsPerVersionsWithTimestamp(stats);
-  } else {
-    data = getSeriesDataPerPkgVersionViewsWithTimestamp(stats, version);
-  }
+  const data = isUndefined(version)
+    ? sumViewsPerVersionsWithTimestamp(stats)
+    : getSeriesDataPerPkgVersionViewsWithTimestamp(stats, version);
 
-  return data.length > 0 ? [{ data: data }] : [];
+  return data.length > 0 ? [{ data }] : [];
 };
 
 const Last30DaysViews = (props: Props) => {

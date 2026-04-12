@@ -49,16 +49,15 @@ const prepareChartsSeries = (repoKind: RepositoryKind, stats: PackageViewsStats,
   if (isEmpty(stats)) return [];
 
   const series: Series[] = [];
-  let visibleVersions: string[] = [];
-  if (version) {
-    if (!isUndefined(stats[version])) {
-      visibleVersions = [version];
-    } else {
-      return [];
-    }
-  } else {
-    visibleVersions = repoKind === RepositoryKind.Container ? [] : getMostRecentVersions(stats);
+  if (version && isUndefined(stats[version])) {
+    return [];
   }
+
+  const visibleVersions = version
+    ? [version]
+    : repoKind === RepositoryKind.Container
+      ? []
+      : getMostRecentVersions(stats);
 
   visibleVersions.forEach((version: string) => {
     series.push({
