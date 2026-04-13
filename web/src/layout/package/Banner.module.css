@@ -11,8 +11,30 @@
   max-height: 1500px;
 }
 
+.fadeInOnLoad {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.25s ease-in-out,
+    transform 0.25s ease-in-out;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .bannerWrapper {
     transition: max-height 3s ease-in-out;
+  }
+
+  .fadeInOnLoad {
+    transition: opacity 0.01s linear;
+    transform: none;
+  }
+
+  .visible {
+    transform: none;
   }
 }

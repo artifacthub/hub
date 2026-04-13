@@ -13,59 +13,76 @@ interface Props {
   banner: IBanner;
   removeBanner: () => void;
   maxEqualRatio: boolean;
+  revealMode?: 'height' | 'fade' | 'none';
 }
 
 const Banner = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const { effective } = ctx.prefs.theme;
   const img = useRef<HTMLImageElement>(null);
+  const bannerTimeout = useRef<number | null>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [visibleBanner, setVisibleBanner] = useState<IBanner | null>(props.banner);
-  const [bannerTimeout, setBannerTimeout] = useState<NodeJS.Timeout | null>(null);
+
+  const updateLoadedState = () => {
+    if (props.maxEqualRatio && img.current && img.current.naturalHeight > img.current.naturalWidth) {
+      setIsLoaded(false);
+    } else {
+      setIsLoaded(true);
+    }
+  };
 
   useEffect(() => {
     if (visibleBanner !== props.banner) {
+      if (bannerTimeout.current !== null) {
+        clearTimeout(bannerTimeout.current);
+      }
       setVisibleBanner(null);
       setIsLoaded(false);
-      setBannerTimeout(
-        setTimeout(() => {
-          setVisibleBanner(props.banner);
-        }, 100)
-      );
+      bannerTimeout.current = window.setTimeout(() => {
+        setVisibleBanner(props.banner);
+        bannerTimeout.current = null;
+      }, 100);
     }
   }, [props.banner]);
 
   useEffect(() => {
     return () => {
-      if (bannerTimeout) {
-        clearTimeout(bannerTimeout);
+      if (bannerTimeout.current !== null) {
+        clearTimeout(bannerTimeout.current);
       }
     };
   }, []);
 
   if (isNull(visibleBanner)) return null;
 
+  const imageSource = effective === 'light' ? visibleBanner.images['light-theme'] : visibleBanner.images['dark-theme'];
+  const revealMode = props.revealMode ?? 'height';
+
   const getCardImage = () => (
     <div className={`card flex-row shadow-sm mw-100 overflow-hidden ${styles.card} ${props.className}`}>
       <img
+        key={imageSource}
         ref={img}
-        src={effective === 'light' ? visibleBanner.images['light-theme'] : visibleBanner.images['dark-theme']}
+        src={imageSource}
         alt={visibleBanner.name || 'Banner'}
         className="mw-100 h-auto mx-auto"
         onError={props.removeBanner}
-        onLoad={() => {
-          if (props.maxEqualRatio && img && img.current && img.current.naturalHeight > img.current.naturalWidth) {
-            setIsLoaded(false);
-          } else {
-            setIsLoaded(true);
-          }
-        }}
+        onLoad={updateLoadedState}
       />
     </div>
   );
 
   return (
-    <div className={classNames('overflow-hidden', styles.bannerWrapper, { [styles.loaded]: isLoaded })}>
+    <div
+      className={classNames({
+        'overflow-hidden': revealMode === 'height',
+        [styles.bannerWrapper]: revealMode === 'height',
+        [styles.loaded]: revealMode === 'height' && isLoaded,
+        [styles.fadeInOnLoad]: revealMode === 'fade',
+        [styles.visible]: revealMode !== 'fade' || isLoaded,
+      })}
+    >
       {visibleBanner.link ? (
         <ExternalLink
           href={visibleBanner.link}
