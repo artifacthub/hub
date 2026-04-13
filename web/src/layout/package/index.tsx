@@ -171,12 +171,10 @@ const PackageView = () => {
     }
   }, [currentPkgId]);
 
-  async function trackView(pkgID: string, version: string) {
-    try {
-      API.trackView(pkgID, version);
-    } catch {
+  function trackView(pkgID: string, version: string) {
+    void Promise.resolve(API.trackView(pkgID, version)).catch(() => {
       // Do not do anything
-    }
+    });
   }
 
   async function getViewsStats(pkgID: string) {
@@ -1413,6 +1411,8 @@ const PackageView = () => {
                               banner={banner}
                               removeBanner={() => setBanner(null)}
                               maxEqualRatio={false}
+                              revealOnLoad={false}
+                              fadeInOnLoad={true}
                             />
                           )}
 
