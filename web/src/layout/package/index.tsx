@@ -1411,8 +1411,7 @@ const PackageView = () => {
                               banner={banner}
                               removeBanner={() => setBanner(null)}
                               maxEqualRatio={false}
-                              revealOnLoad={false}
-                              fadeInOnLoad={true}
+                              revealMode="fade"
                             />
                           )}
 
