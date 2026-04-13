@@ -25,6 +25,7 @@ import remarkGfm from 'remark-gfm';
 import useBreakpointDetect from '../../../hooks/useBreakpointDetect';
 import checkCodeLanguage from '../../../utils/checkCodeLanguage';
 import AnchorHeader from '../../common/AnchorHeader';
+import MermaidDiagram from './MermaidDiagram';
 import styles from './Readme.module.css';
 
 interface Props {
@@ -74,10 +75,16 @@ const Readme = (props: Props) => {
     }
 
     const match = /language-(\w+)/.exec(className || '');
+    const language = match ? match[1] : 'bash';
+    const codeContent = String(children).replace(/\n$/, '');
+
+    if (language === 'mermaid') {
+      return <MermaidDiagram code={codeContent} />;
+    }
 
     return (
-      <SyntaxHighlighter language={checkCodeLanguage(match ? match[1] : 'bash')} style={github}>
-        {String(children).replace(/\n$/, '')}
+      <SyntaxHighlighter language={checkCodeLanguage(language)} style={github}>
+        {codeContent}
       </SyntaxHighlighter>
     );
   };

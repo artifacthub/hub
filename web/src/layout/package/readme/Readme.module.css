@@ -127,6 +127,18 @@
   width: 3px;
 }
 
+.mermaidDiagram {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  padding: 16px 0;
+}
+
+.mermaidDiagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
 @media only screen and (max-width: 575.98px) {
   .md code {
     font-size: 0.8rem;
