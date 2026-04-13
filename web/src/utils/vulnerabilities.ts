@@ -88,18 +88,14 @@ const filterFixableVulnerabilities = (currentReport: SecurityReport | null): Sec
   const tmpReport: SecurityReport = {};
   Object.keys(currentReport).forEach((img: string) => {
     currentReport[img].Results.forEach((target: SecurityReportResult) => {
-      let vulnerabilities: null | Vulnerability[] = [];
-      const filteredVulnerabilities = filter(
-        target.Vulnerabilities,
-        (v: Vulnerability) => !isUndefined(v.FixedVersion)
-      );
-      vulnerabilities = isEmpty(target.Vulnerabilities) ? [] : filteredVulnerabilities;
-      if (!isNull(vulnerabilities)) {
-        if (isUndefined(tmpReport[img])) {
-          tmpReport[img] = { Results: [{ ...target, Vulnerabilities: vulnerabilities }] };
-        } else {
-          tmpReport[img].Results.push({ ...target, Vulnerabilities: vulnerabilities });
-        }
+      const vulnerabilities = isEmpty(target.Vulnerabilities)
+        ? []
+        : filter(target.Vulnerabilities, (v: Vulnerability) => !isUndefined(v.FixedVersion));
+
+      if (isUndefined(tmpReport[img])) {
+        tmpReport[img] = { Results: [{ ...target, Vulnerabilities: vulnerabilities }] };
+      } else {
+        tmpReport[img].Results.push({ ...target, Vulnerabilities: vulnerabilities });
       }
     });
   });

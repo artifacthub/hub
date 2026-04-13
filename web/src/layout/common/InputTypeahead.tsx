@@ -62,17 +62,15 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
   }));
 
   const getVisibleItems = useCallback((): Option[] | null => {
-    let filteredItems: Option[] = [];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let elements: any[] | null = null;
-
     if (!isNull(highlightedItem)) {
       setHighlightedItem(null);
     }
 
     if (isUndefined(props.displayItemsInValueLength) || inputValue.length >= props.displayItemsInValueLength) {
-      filteredItems = props.options.filter((opt: Option) => opt.name.toLowerCase().includes(inputValue.toLowerCase()));
-      elements = orderBy(
+      const filteredItems = props.options.filter((opt: Option) =>
+        opt.name.toLowerCase().includes(inputValue.toLowerCase())
+      );
+      const elements = orderBy(
         filteredItems,
         [
           (item: Option) =>
@@ -87,9 +85,11 @@ const InputTypeahead = forwardRef((props: Props, ref: Ref<RefInputTypeaheadField
       if (itemsWrapper && itemsWrapper.current) {
         itemsWrapper.current.scroll(0, 0);
       }
+
+      return elements;
     }
 
-    return elements;
+    return null;
   }, [highlightedItem, props.displayItemsInValueLength, props.options, props.selected, inputValue]);
 
   const getSelectedItems = useCallback((): Option[] => {
