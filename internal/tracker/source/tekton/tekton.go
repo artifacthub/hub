@@ -9,6 +9,7 @@ import (
 	"path"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/Masterminds/semver/v3"
@@ -31,6 +32,9 @@ import (
 
 const (
 	// Keys used in labels and annotations in the Tekton's manifest file.
+
+	// deprecatedTKey defines if the package is deprecated.
+	deprecatedTKey = "tekton.dev/deprecated"
 
 	// displayNameTKey defines the package's display name.
 	displayNameTKey = "tekton.dev/displayName"
@@ -592,6 +596,16 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 			errs = multierror.Append(errs, err)
 		} else {
 			p.Changes = changes
+		}
+	}
+
+	// Deprecated
+	if v, ok := annotations[deprecatedTKey]; ok {
+		deprecated, err := strconv.ParseBool(v)
+		if err != nil {
+			errs = multierror.Append(errs, fmt.Errorf("%w: invalid deprecated value", errInvalidAnnotation))
+		} else {
+			p.Deprecated = deprecated
 		}
 	}
 
