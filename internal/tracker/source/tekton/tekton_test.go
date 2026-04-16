@@ -85,7 +85,7 @@ func TestTrackerSource(t *testing.T) {
 			Version:     "0.1.0",
 			Provider:    "Some organization",
 			ContentURL:  "https://github.com/user/repo/raw/master/path/task1/0.1/task1.yaml",
-			Digest:      "7dfdce0ad1778d5c9b92115e23b92308bad5b27b0c514fa19f7a12f9ea8be4a9",
+			Digest:      "71cb438c009785420747d5409ad016a6792135c6d1555984508ba6da6dec79cf",
 			Repository:  i.Repository,
 			License:     "Apache-2.0",
 			Links: []*hub.Link{
@@ -140,6 +140,7 @@ func TestTrackerSource(t *testing.T) {
 					"sample1.yaml": "sample content\n",
 				},
 			},
+			Deprecated: true,
 			Signatures: []string{tekton},
 			Signed:     true,
 			ContainersImages: []*hub.ContainerImage{
