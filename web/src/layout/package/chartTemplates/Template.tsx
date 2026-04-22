@@ -6,7 +6,7 @@ import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 import { Dispatch, Fragment, memo, SetStateAction, useContext, useEffect, useState } from 'react';
-import regexifyString from 'regexify-string';
+import * as regexifyStringModule from 'regexify-string';
 
 import { AppCtx } from '../../../context/AppCtx';
 import { ChartTemplate, ChartTemplateSpecialType, DefinedTemplate, DefinedTemplatesList } from '../../../types';
@@ -32,6 +32,7 @@ const SPECIAL_CHARACTERS = /[^|({})-]+/;
 const TOKENIZE_RE = /[^\s"']+|"([^"]*)"|'([^']*)/g;
 const INITIAL_HELPER_COMMENT = /{{\/\*|{{- \/\*/;
 const FINAL_HELPER_COMMENT = /\*\/}}|\*\/ -}}$/;
+const regexifyString = regexifyStringModule.default;
 
 const Template = (props: Props) => {
   const { ctx } = useContext(AppCtx);
@@ -66,8 +67,7 @@ const Template = (props: Props) => {
     const rows = tmpl.split('\n');
     // Don't display last line if empty
     const cleanRows = [...rows];
-    // eslint-disable-next-line for-direction
-    for (let i = rows.length - 1; i < rows.length; --i) {
+    for (let i = rows.length - 1; i >= 0; --i) {
       if (rows[i].trim() === '') {
         cleanRows.splice(i, 1);
       } else {
@@ -98,7 +98,7 @@ const Template = (props: Props) => {
             isComment ? (
               <span className={`${styles.tmplComment} ${styles[`${effective}Theme`]}`}>{line}</span>
             ) : (
-              <>{processLine(line, index + 1)}</>
+              <>{renderLine(line, index + 1)}</>
             )}
           </div>
           <div className="ps-2" />
@@ -308,6 +308,14 @@ const Template = (props: Props) => {
       },
       input: line,
     });
+  };
+
+  const renderLine = (line: string, lineNumber: number) => {
+    try {
+      return processLine(line, lineNumber);
+    } catch {
+      return line;
+    }
   };
 
   return <span data-testid="activeTmpl">{processActiveTemplate(activeTemplate.data)}</span>;
