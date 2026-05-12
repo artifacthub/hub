@@ -42,7 +42,7 @@ describe('SearchRepositories', () => {
       const mockSearch = getMockSearch('1');
       vi.mocked(API).searchRepositories.mockResolvedValue(mockSearch);
 
-      render(<SearchRepositories {...defaultProps} />);
+      const { container } = render(<SearchRepositories {...defaultProps} />);
 
       const input = screen.getByRole('textbox', { name: 'Search repositories' });
       expect(input).toBeInTheDocument();
@@ -55,6 +55,9 @@ describe('SearchRepositories', () => {
       });
 
       expect(await screen.findAllByRole('button')).toHaveLength(3);
+      const highlightedMatches = container.querySelectorAll('.highlighted');
+      expect(highlightedMatches).toHaveLength(1);
+      expect(highlightedMatches[0]).toHaveTextContent('sec');
     });
 
     it('selects repo', async () => {

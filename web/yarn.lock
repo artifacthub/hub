@@ -4591,11 +4591,6 @@ refractor@^5.0.0:
     hastscript "^9.0.0"
     parse-entities "^4.0.0"
 
-regexify-string@^1.0.17:
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/regexify-string/-/regexify-string-1.0.19.tgz#74fab49b348b8faffbd948218ea3a09e25303010"
-  integrity sha512-EREOggl31J6v2Hk3ksPuOof0DMq5QhFfVQ7iDaGQ6BeA1QcrV4rhGvwCES5a72ITMmLBDAOb6cOWbn8/Ja82Ig==
-
 rehype-github-alerts@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/rehype-github-alerts/-/rehype-github-alerts-4.2.0.tgz#876f2a5aefcb5f80637077490dc65b14183b1397"

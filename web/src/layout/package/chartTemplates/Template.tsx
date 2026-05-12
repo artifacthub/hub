@@ -6,11 +6,11 @@ import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 import { Dispatch, Fragment, memo, SetStateAction, useContext, useEffect, useState } from 'react';
-import * as regexifyStringModule from 'regexify-string';
 
 import { AppCtx } from '../../../context/AppCtx';
 import { ChartTemplate, ChartTemplateSpecialType, DefinedTemplate, DefinedTemplatesList } from '../../../types';
 import processHelmTemplate from '../../../utils/processHelmTemplate';
+import regexifyString from '../../../utils/regexifyString';
 import AutoresizeTextarea from '../../common/AutoresizeTextarea';
 import builtInDefinitions from './builtIn.json';
 import functionsDefinitions from './functions.json';
@@ -32,7 +32,6 @@ const SPECIAL_CHARACTERS = /[^|({})-]+/;
 const TOKENIZE_RE = /[^\s"']+|"([^"]*)"|'([^']*)/g;
 const INITIAL_HELPER_COMMENT = /{{\/\*|{{- \/\*/;
 const FINAL_HELPER_COMMENT = /\*\/}}|\*\/ -}}$/;
-const regexifyString = regexifyStringModule.default;
 
 const Template = (props: Props) => {
   const { ctx } = useContext(AppCtx);

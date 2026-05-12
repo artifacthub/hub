@@ -6,12 +6,12 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
 import { MdBusiness } from 'react-icons/md';
-import regexifyString from 'regexify-string';
 
 import API from '../../api';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ErrorKind, Repository, SearchQuery } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
+import regexifyString from '../../utils/regexifyString';
 import Loading from './Loading';
 import RepositoryIcon from './RepositoryIcon';
 import styles from './SearchRepositories.module.css';
@@ -162,6 +162,21 @@ const SearchRepositories = (props: Props) => {
     }
   };
 
+  // Highlights the typed search term in repository names.
+  const getHighlightedRepositoryName = (repositoryName: string) => {
+    return regexifyString({
+      pattern: new RegExp(escapeRegExp(searchName), 'gi'),
+      decorator: (match: string, index: number) => {
+        return (
+          <span key={`match_${repositoryName}_${index}`} className="fw-bold highlighted">
+            {match}
+          </span>
+        );
+      },
+      input: repositoryName,
+    });
+  };
+
   const cleanTimeout = () => {
     if (!isNull(dropdownTimeout)) {
       clearTimeout(dropdownTimeout);
@@ -298,23 +313,7 @@ const SearchRepositories = (props: Props) => {
                         <td className="align-middle">
                           <div className={styles.truncateWrapper}>
                             <div className="text-truncate">
-                              {searchName === '' ? (
-                                <>{item.name}</>
-                              ) : (
-                                <>
-                                  {regexifyString({
-                                    pattern: new RegExp(escapeRegExp(searchName), 'gi'),
-                                    decorator: (match: string, index: number) => {
-                                      return (
-                                        <span key={`match_${item.name}_${index}`} className="fw-bold highlighted">
-                                          {match}
-                                        </span>
-                                      );
-                                    },
-                                    input: item.name,
-                                  })}
-                                </>
-                              )}
+                              {searchName === '' ? <>{item.name}</> : <>{getHighlightedRepositoryName(item.name)}</>}
                             </div>
                           </div>
                         </td>
