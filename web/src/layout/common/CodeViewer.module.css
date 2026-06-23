@@ -1,0 +1,44 @@
+.plainCodeWrapper {
+  height: 100%;
+  padding: 1.5rem;
+  overflow: auto;
+  font-size: 80%;
+  line-height: 1.25rem;
+  tab-size: 2;
+  color: #636a6e;
+}
+
+.syntaxWarning {
+  margin-bottom: 0.75rem !important;
+  white-space: normal;
+}
+
+.plainCodeContent {
+  display: flex;
+  min-width: max-content;
+}
+
+.plainCode,
+.plainCodeLines {
+  padding: 0 !important;
+  margin-bottom: 0;
+  background-color: transparent;
+  font-size: inherit;
+  line-height: inherit;
+  overflow: visible !important;
+  white-space: pre !important;
+}
+
+.plainCodeLines {
+  flex: 0 0 auto;
+  padding-right: 1.25rem !important;
+  color: var(--color-black-25);
+  text-align: right;
+  user-select: none;
+}
+
+.plainCode {
+  flex: 1 0 auto;
+  min-width: 0;
+  color: inherit;
+}

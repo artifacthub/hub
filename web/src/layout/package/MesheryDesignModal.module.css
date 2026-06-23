@@ -3,8 +3,13 @@
 }
 
 .syntaxWrapper {
+  min-height: 0;
   border-color: var(--color-black-15) !important;
   background-color: var(--extra-light-gray);
+}
+
+.contentWrapper {
+  min-height: 0;
 }
 
 @media only screen and (max-width: 767.98px) {

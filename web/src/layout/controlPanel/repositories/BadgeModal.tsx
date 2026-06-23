@@ -1,9 +1,7 @@
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-
 import { Repository } from '../../../types';
 import getMetaTag from '../../../utils/getMetaTag';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
+import CodeViewer from '../../common/CodeViewer';
 import Modal from '../../common/Modal';
 import Tabs from '../../common/Tabs';
 import styles from './BadgeModal.module.css';
@@ -46,15 +44,13 @@ const BadgeModal = (props: Props) => {
                     <ButtonCopyToClipboard text={markdownLink} label="Copy badge markdown link to clipboard" />
                   </div>
 
-                  <SyntaxHighlighter
+                  <CodeViewer
+                    content={markdownLink}
                     language="bash"
-                    style={docco}
                     customStyle={{
                       backgroundColor: 'var(--color-1-10)',
                     }}
-                  >
-                    {markdownLink}
-                  </SyntaxHighlighter>
+                  />
                 </>
               ),
             },
@@ -70,15 +66,13 @@ const BadgeModal = (props: Props) => {
                     <ButtonCopyToClipboard text={asciiLink} label="Copy badge Ascii link to clipboard" />
                   </div>
 
-                  <SyntaxHighlighter
+                  <CodeViewer
+                    content={asciiLink}
                     language="bash"
-                    style={docco}
                     customStyle={{
                       backgroundColor: 'var(--color-1-10)',
                     }}
-                  >
-                    {asciiLink}
-                  </SyntaxHighlighter>
+                  />
                 </>
               ),
             },

@@ -4,13 +4,12 @@ import { AiOutlineColumnWidth } from 'react-icons/ai';
 import { BsArrowsFullscreen } from 'react-icons/bs';
 import { FiMoon, FiSun } from 'react-icons/fi';
 import { IoIosClose } from 'react-icons/io';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { RefInputField } from '../../types';
 import getMetaTag from '../../utils/getMetaTag';
 import isWhiteLabel from '../../utils/isWhiteLabel';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
+import CodeViewer from '../common/CodeViewer';
 import InputField from '../common/InputField';
 import Modal from '../common/Modal';
 import styles from './WidgetsGroupModal.module.css';
@@ -310,15 +309,13 @@ const WidgetsGroupModal = (props: Props) => {
               <label className={`form-label fw-bold ${styles.label}`}>Code</label>
 
               <div data-testid="block-content" className={`flex-grow-1 me-3 user-select-none ${styles.blockWrapper}`}>
-                <SyntaxHighlighter
+                <CodeViewer
+                  content={widgetCode}
                   language="text"
-                  style={docco}
                   customStyle={{
                     backgroundColor: 'var(--color-1-10)',
                   }}
-                >
-                  {widgetCode}
-                </SyntaxHighlighter>
+                />
               </div>
 
               <ButtonCopyToClipboard

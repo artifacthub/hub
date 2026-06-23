@@ -17,7 +17,6 @@ import { HiExclamation } from 'react-icons/hi';
 import { MdLabel } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
-import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { AppCtx } from '../../../context/AppCtx';
@@ -30,6 +29,7 @@ import RepositoryDisabled from '../../common/badges/RepositoryDisabled';
 import SecurityScannerDisabled from '../../common/badges/SecurityScannerDisabled';
 import VerifiedPublisher from '../../common/badges/VerifiedPublisher';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
+import CodeViewer from '../../common/CodeViewer';
 import Modal from '../../common/Modal';
 import RepositoryIconLabel from '../../common/RepositoryIconLabel';
 import ActionBtn from '../ActionBtn';
@@ -155,13 +155,12 @@ const RepositoryCard = (props: Props) => {
                   className={`position-relative flex-grow-1 mw-100 mh-100 overflow-hidden ${styles.modalSyntaxTrackerWrapper}`}
                 >
                   {props.repository.lastTrackingErrors && (
-                    <SyntaxHighlighter
+                    <CodeViewer
+                      content={props.repository.lastTrackingErrors}
                       language="bash"
                       style={tomorrowNight}
                       customStyle={{ fontSize: '90%', height: '100%' }}
-                    >
-                      {props.repository.lastTrackingErrors}
-                    </SyntaxHighlighter>
+                    />
                   )}
                 </div>
               </div>
@@ -264,13 +263,12 @@ const RepositoryCard = (props: Props) => {
             <div className="d-flex h-100 mw-100 overflow-hidden">
               <div className={`d-flex overflow-scroll ${styles.modalSyntaxWrapper}`}>
                 {props.repository.lastScanningErrors && (
-                  <SyntaxHighlighter
+                  <CodeViewer
+                    content={props.repository.lastScanningErrors}
                     language="bash"
                     style={tomorrowNight}
                     customStyle={{ fontSize: '90%', height: '100%', marginBottom: '0' }}
-                  >
-                    {props.repository.lastScanningErrors}
-                  </SyntaxHighlighter>
+                  />
                 )}
               </div>
             </div>

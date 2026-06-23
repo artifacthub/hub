@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
+import CodeViewer from '../../common/CodeViewer';
 import styles from './ContentInstall.module.css';
 
 interface Props {
@@ -47,15 +46,13 @@ const CommandBlock = (props: Props) => {
 
       <div className="d-flex align-items-start">
         <div className={`flex-grow-1 ${styles.blockWrapper}`}>
-          <SyntaxHighlighter
+          <CodeViewer
+            content={visibleCommand}
             language={props.language || 'bash'}
-            style={docco}
             customStyle={{
               backgroundColor: 'var(--color-1-10)',
             }}
-          >
-            {visibleCommand}
-          </SyntaxHighlighter>
+          />
         </div>
 
         {!props.withoutCopyBtn && (

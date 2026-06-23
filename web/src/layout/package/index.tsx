@@ -10,8 +10,6 @@ import { FiPackage } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import { Link, useLocation, useNavigate, useOutletContext, useParams, useSearchParams } from 'react-router-dom';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import API from '../../api';
 import useBreakpointDetect from '../../hooks/useBreakpointDetect';
@@ -48,6 +46,7 @@ import Signed from '../common/badges/Signed';
 import ValuesSchemaBagde from '../common/badges/ValuesSchema';
 import VerifiedPublisher from '../common/badges/VerifiedPublisher';
 import BlockCodeButtons from '../common/BlockCodeButtons';
+import CodeViewer from '../common/CodeViewer';
 import ContentDefaultModal from '../common/ContentDefaultModal';
 import ExternalLink from '../common/ExternalLink';
 import Image from '../common/Image';
@@ -609,9 +608,9 @@ const PackageView = () => {
                         className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border border-1 ${styles.manifestWrapper}`}
                       >
                         <BlockCodeButtons content={file} filename={`${detail.normalizedName}-rules.yaml`} />
-                        <SyntaxHighlighter
+                        <CodeViewer
+                          content={file}
                           language="yaml"
-                          style={docco}
                           customStyle={{
                             backgroundColor: 'transparent',
                             padding: '1.5rem',
@@ -627,9 +626,7 @@ const PackageView = () => {
                             fontSize: '0.8rem',
                           }}
                           showLineNumbers
-                        >
-                          {file}
-                        </SyntaxHighlighter>
+                        />
                       </div>
                     </div>
                   )}
@@ -651,9 +648,9 @@ const PackageView = () => {
                         className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border border-1 ${styles.manifestWrapper}`}
                       >
                         <BlockCodeButtons content={file} filename={`${detail.normalizedName}-template.yaml`} />
-                        <SyntaxHighlighter
+                        <CodeViewer
+                          content={file}
                           language="yaml"
-                          style={docco}
                           customStyle={{
                             backgroundColor: 'transparent',
                             padding: '1.5rem',
@@ -669,9 +666,7 @@ const PackageView = () => {
                             fontSize: '0.8rem',
                           }}
                           showLineNumbers
-                        >
-                          {file}
-                        </SyntaxHighlighter>
+                        />
                       </div>
                     </div>
                   )}
@@ -693,9 +688,9 @@ const PackageView = () => {
                         className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border border-1 ${styles.manifestWrapper}`}
                       >
                         <BlockCodeButtons content={file} filename={`${detail.normalizedName}-policy.yaml`} />
-                        <SyntaxHighlighter
+                        <CodeViewer
+                          content={file}
                           language="yaml"
-                          style={docco}
                           customStyle={{
                             backgroundColor: 'transparent',
                             padding: '1.5rem',
@@ -711,9 +706,7 @@ const PackageView = () => {
                             fontSize: '0.8rem',
                           }}
                           showLineNumbers
-                        >
-                          {file}
-                        </SyntaxHighlighter>
+                        />
                       </div>
                     </div>
                   )}
@@ -735,9 +728,9 @@ const PackageView = () => {
                         className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border border-1 ${styles.manifestWrapper}`}
                       >
                         <BlockCodeButtons content={file} filename={`${detail.normalizedName}-template.yaml`} />
-                        <SyntaxHighlighter
+                        <CodeViewer
+                          content={file}
                           language="yaml"
-                          style={docco}
                           customStyle={{
                             backgroundColor: 'transparent',
                             padding: '1.5rem',
@@ -753,9 +746,7 @@ const PackageView = () => {
                             fontSize: '0.8rem',
                           }}
                           showLineNumbers
-                        >
-                          {file}
-                        </SyntaxHighlighter>
+                        />
                       </div>
                     </div>
                   )}
@@ -782,9 +773,9 @@ const PackageView = () => {
                               className={`d-flex d-xxxl-inline-block mw-100 position-relative overflow-hidden border border-1 ${styles.manifestWrapper}`}
                             >
                               <BlockCodeButtons content={content} filename={fileName} />
-                              <SyntaxHighlighter
-                                language={extension}
-                                style={docco}
+                              <CodeViewer
+                                content={content}
+                                language={extension || 'yaml'}
                                 customStyle={{
                                   backgroundColor: 'transparent',
                                   padding: '1.5rem',
@@ -800,9 +791,7 @@ const PackageView = () => {
                                   fontSize: '0.8rem',
                                 }}
                                 showLineNumbers
-                              >
-                                {content}
-                              </SyntaxHighlighter>
+                              />
                             </div>
                           </div>
                         );

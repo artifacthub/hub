@@ -4,12 +4,11 @@ import isUndefined from 'lodash/isUndefined';
 import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { MdAddCircle } from 'react-icons/md';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import API from '../../../../../api';
 import { APIKey, APIKeyCode, ErrorKind, RefInputField } from '../../../../../types';
 import ButtonCopyToClipboard from '../../../../common/ButtonCopyToClipboard';
+import CodeViewer from '../../../../common/CodeViewer';
 import ExternalLink from '../../../../common/ExternalLink';
 import InputField from '../../../../common/InputField';
 import Modal from '../../../../common/Modal';
@@ -190,15 +189,13 @@ const APIKeyModal = (props: Props) => {
               </div>
             </div>
 
-            <SyntaxHighlighter
+            <CodeViewer
+              content={apiKeyCode.apiKeyId}
               language="bash"
-              style={docco}
               customStyle={{
                 backgroundColor: 'var(--color-1-10)',
               }}
-            >
-              {apiKeyCode.apiKeyId}
-            </SyntaxHighlighter>
+            />
 
             <div className="d-flex justify-content-between mb-2">
               <SmallTitle text="API-KEY-SECRET" />
@@ -207,15 +204,13 @@ const APIKeyModal = (props: Props) => {
               </div>
             </div>
 
-            <SyntaxHighlighter
+            <CodeViewer
+              content={apiKeyCode.secret}
               language="bash"
-              style={docco}
               customStyle={{
                 backgroundColor: 'var(--color-1-10)',
               }}
-            >
-              {apiKeyCode.secret}
-            </SyntaxHighlighter>
+            />
 
             <small className="text-muted">
               These are the credentials you will need to provide when making requests to the API. Please, copy and store

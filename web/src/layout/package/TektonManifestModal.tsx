@@ -2,10 +2,9 @@ import isUndefined from 'lodash/isUndefined';
 import { useEffect, useState } from 'react';
 import { GoFileCode } from 'react-icons/go';
 import { useLocation, useNavigate } from 'react-router-dom';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import BlockCodeButtons from '../common/BlockCodeButtons';
+import CodeViewer from '../common/CodeViewer';
 import Modal from '../common/Modal';
 import styles from './TektonManifestModal.module.css';
 
@@ -72,9 +71,9 @@ const TektonManifestModal = (props: Props) => {
             <div className={`position-relative h-100 mh-100 border border-1 ${styles.syntaxWrapper}`}>
               <BlockCodeButtons filename={`${props.normalizedName}.yaml`} content={props.manifestRaw} />
 
-              <SyntaxHighlighter
+              <CodeViewer
+                content={props.manifestRaw}
                 language="yaml"
-                style={docco}
                 customStyle={{
                   backgroundColor: 'transparent',
                   padding: '1.5rem',
@@ -90,9 +89,7 @@ const TektonManifestModal = (props: Props) => {
                   fontSize: '0.8rem',
                 }}
                 showLineNumbers
-              >
-                {props.manifestRaw}
-              </SyntaxHighlighter>
+              />
             </div>
           </div>
         </Modal>

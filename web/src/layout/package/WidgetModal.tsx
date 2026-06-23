@@ -1,12 +1,11 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FiMoon, FiSun } from 'react-icons/fi';
 import { useLocation, useNavigate } from 'react-router-dom';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import getMetaTag from '../../utils/getMetaTag';
 import isWhiteLabel from '../../utils/isWhiteLabel';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
+import CodeViewer from '../common/CodeViewer';
 import Modal from '../common/Modal';
 import styles from './WidgetModal.module.css';
 
@@ -192,15 +191,13 @@ const WidgetModal = (props: Props) => {
               <label className={`form-label fw-bold ${styles.label}`}>Code</label>
 
               <div data-testid="block-content" className={`flex-grow-1 me-3 user-select-none ${styles.blockWrapper}`}>
-                <SyntaxHighlighter
+                <CodeViewer
+                  content={widgetCode}
                   language="text"
-                  style={docco}
                   customStyle={{
                     backgroundColor: 'var(--color-1-10)',
                   }}
-                >
-                  {widgetCode}
-                </SyntaxHighlighter>
+                />
               </div>
 
               <ButtonCopyToClipboard

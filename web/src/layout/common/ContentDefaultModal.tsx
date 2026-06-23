@@ -4,13 +4,12 @@ import isUndefined from 'lodash/isUndefined';
 import { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { stringify } from 'yaml';
 
 import { ContentDefaultModalKind, CustomResourcesDefinition } from '../../types';
 import isVisibleItemInContainer from '../../utils/isVisibleItemInContainer';
 import BlockCodeButtons from './BlockCodeButtons';
+import CodeViewer from './CodeViewer';
 import styles from './ContentDefaultModal.module.css';
 import Loading from './Loading';
 import Modal from './Modal';
@@ -408,9 +407,9 @@ const ContentDefaultModal = (props: Props) => {
                               <div className={`position-relative overflow-auto h-100 ${styles.fileWrapper}`}>
                                 <div className={`position-absolute ${styles.anchor}`} ref={anchor} />
 
-                                <SyntaxHighlighter
+                                <CodeViewer
+                                  content={code}
                                   language={props.language}
-                                  style={docco}
                                   customStyle={{
                                     backgroundColor: 'transparent',
                                     padding: '1.5rem',
@@ -428,9 +427,7 @@ const ContentDefaultModal = (props: Props) => {
                                     minWidth: '3rem',
                                   }}
                                   showLineNumbers
-                                >
-                                  {code}
-                                </SyntaxHighlighter>
+                                />
                               </div>
                             </>
                           ) : (

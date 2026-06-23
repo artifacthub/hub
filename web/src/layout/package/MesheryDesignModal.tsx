@@ -1,19 +1,60 @@
 import isUndefined from 'lodash/isUndefined';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FiCode } from 'react-icons/fi';
 import { useLocation, useNavigate } from 'react-router-dom';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import BlockCodeButtons from '../common/BlockCodeButtons';
+import CodeViewer, { CodeViewerSyntaxWarning, isCodeViewerPlainContent } from '../common/CodeViewer';
 import Modal from '../common/Modal';
+import prodAllRelationshipsDesign from './__fixtures__/MesheryDesignModal.prod.json';
 import styles from './MesheryDesignModal.module.css';
+
+const LOCAL_DESIGN_OVERRIDE_KEY = 'artifactHub.mesheryDesignModalOverride';
+const LOCAL_ORIGINS = ['http://localhost:8000', 'http://localhost:5173'];
 
 interface Props {
   normalizedName: string;
   visibleDesign: boolean;
   design?: string;
 }
+
+interface DesignOverride {
+  design?: string;
+}
+
+const getDesignContent = (design: string, normalizedName: string): string => {
+  if (!LOCAL_ORIGINS.includes(window.location.origin) && import.meta.env.MODE !== 'test') {
+    return design;
+  }
+
+  try {
+    const localDesignOverride = window.localStorage.getItem(LOCAL_DESIGN_OVERRIDE_KEY);
+    if (!isUndefined(localDesignOverride) && localDesignOverride !== null) {
+      return localDesignOverride;
+    }
+  } catch {
+    return design;
+  }
+
+  if (normalizedName === 'all-relationships') {
+    return (prodAllRelationshipsDesign as DesignOverride).design || design;
+  }
+
+  return design;
+};
+
+const getFormattedDesignContent = (design: string): string => {
+  const trimmedDesign = design.trim();
+  if (trimmedDesign.includes('\n') || (!trimmedDesign.startsWith('{') && !trimmedDesign.startsWith('['))) {
+    return design;
+  }
+
+  try {
+    return JSON.stringify(JSON.parse(trimmedDesign), null, 2);
+  } catch {
+    return design;
+  }
+};
 
 const MesheryDesignModal = (props: Props) => {
   const navigate = useNavigate();
@@ -46,6 +87,16 @@ const MesheryDesignModal = (props: Props) => {
 
   if (isUndefined(props.design)) return null;
 
+  const design = useMemo(
+    () => getDesignContent(props.design!, props.normalizedName),
+    [props.design, props.normalizedName]
+  );
+  const formattedDesign = useMemo(
+    () => (openStatus ? getFormattedDesignContent(design) : design),
+    [design, openStatus]
+  );
+  const usePlainCode = useMemo(() => isCodeViewerPlainContent(formattedDesign), [formattedDesign]);
+
   return (
     <div className="mb-2">
       <button
@@ -68,16 +119,17 @@ const MesheryDesignModal = (props: Props) => {
           open={openStatus}
           footerClassName={styles.modalFooter}
         >
-          <div className="h-100 mw-100">
-            <div className={`position-relative h-100 mh-100 border border-1 ${styles.syntaxWrapper}`}>
-              <BlockCodeButtons filename={`${props.normalizedName}.yaml`} content={props.design} />
+          <div className={`h-100 mw-100 d-flex flex-column ${styles.contentWrapper}`}>
+            <div className={`position-relative flex-grow-1 mh-100 border border-1 ${styles.syntaxWrapper}`}>
+              <BlockCodeButtons filename={`${props.normalizedName}.yaml`} content={formattedDesign} />
 
-              <SyntaxHighlighter
+              <CodeViewer
+                content={formattedDesign}
                 language="yaml"
-                style={docco}
                 customStyle={{
                   backgroundColor: 'transparent',
                   padding: '1.5rem',
+                  paddingRight: '5rem',
                   lineHeight: '1.25rem',
                   marginBottom: '0',
                   height: '100%',
@@ -89,11 +141,14 @@ const MesheryDesignModal = (props: Props) => {
                   marginRight: '5px',
                   fontSize: '0.8rem',
                 }}
+                plainCodeTestId="plain-design"
+                plainCodeLinesTestId="plain-design-lines"
+                hideSyntaxWarning
                 showLineNumbers
-              >
-                {props.design}
-              </SyntaxHighlighter>
+              />
             </div>
+
+            {usePlainCode && <CodeViewerSyntaxWarning className="mt-3 mb-0" />}
           </div>
         </Modal>
       )}
