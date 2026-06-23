@@ -27,6 +27,14 @@ const getLineCount = (content: string): number => content.split('\n').length;
 const getLineNumbers = (lineCount: number): string =>
   Array.from({ length: lineCount }, (_, index) => (index + 1).toString()).join('\n');
 
+// Large files use plain rendering to avoid expensive syntax highlighting work.
+const isPlainCodeContent = (
+  contentLength: number,
+  lineCount: number,
+  plainCodeMinChars: number,
+  plainCodeMinLines: number
+): boolean => lineCount >= plainCodeMinLines || contentLength >= plainCodeMinChars;
+
 const getPlainCodeWrapperStyle = (customStyle?: CSSProperties): CSSProperties | undefined => {
   if (!customStyle) return undefined;
 
@@ -39,7 +47,7 @@ export const isCodeViewerPlainContent = (
   content: string,
   plainCodeMinChars: number = DEFAULT_PLAIN_CODE_MIN_CHARS,
   plainCodeMinLines: number = DEFAULT_PLAIN_CODE_MIN_LINES
-): boolean => getLineCount(content) >= plainCodeMinLines || content.length >= plainCodeMinChars;
+): boolean => isPlainCodeContent(content.length, getLineCount(content), plainCodeMinChars, plainCodeMinLines);
 
 export const CodeViewerSyntaxWarning = (props: { className?: string }) => (
   <div className={`alert alert-warning px-3 py-3 ${styles.syntaxWarning} ${props.className || ''}`} role="alert">
@@ -52,7 +60,11 @@ const CodeViewer = (props: Props) => {
   const lineNumbers = useMemo(() => getLineNumbers(lineCount), [lineCount]);
   const plainCodeMinChars = props.plainCodeMinChars || DEFAULT_PLAIN_CODE_MIN_CHARS;
   const plainCodeMinLines = props.plainCodeMinLines || DEFAULT_PLAIN_CODE_MIN_LINES;
-  const usePlainCode = isCodeViewerPlainContent(props.content, plainCodeMinChars, plainCodeMinLines);
+  // Reuse lineCount so parent rerenders do not split large content again.
+  const usePlainCode = useMemo(
+    () => isPlainCodeContent(props.content.length, lineCount, plainCodeMinChars, plainCodeMinLines),
+    [props.content.length, lineCount, plainCodeMinChars, plainCodeMinLines]
+  );
 
   if (usePlainCode) {
     return (
