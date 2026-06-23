@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import BlockCodeButtons from '../common/BlockCodeButtons';
 import CodeViewer, { CodeViewerSyntaxWarning, isCodeViewerPlainContent } from '../common/CodeViewer';
 import Modal from '../common/Modal';
-import prodAllRelationshipsDesign from './__fixtures__/MesheryDesignModal.prod.json';
 import styles from './MesheryDesignModal.module.css';
 
 const LOCAL_DESIGN_OVERRIDE_KEY = 'artifactHub.mesheryDesignModalOverride';
@@ -18,11 +17,7 @@ interface Props {
   design?: string;
 }
 
-interface DesignOverride {
-  design?: string;
-}
-
-const getDesignContent = (design: string, normalizedName: string): string => {
+const getDesignContent = (design: string): string => {
   if (!LOCAL_ORIGINS.includes(window.location.origin) && import.meta.env.MODE !== 'test') {
     return design;
   }
@@ -34,10 +29,6 @@ const getDesignContent = (design: string, normalizedName: string): string => {
     }
   } catch {
     return design;
-  }
-
-  if (normalizedName === 'all-relationships') {
-    return (prodAllRelationshipsDesign as DesignOverride).design || design;
   }
 
   return design;
@@ -85,17 +76,14 @@ const MesheryDesignModal = (props: Props) => {
     }
   }, []);
 
-  if (isUndefined(props.design)) return null;
-
-  const design = useMemo(
-    () => getDesignContent(props.design!, props.normalizedName),
-    [props.design, props.normalizedName]
-  );
+  const design = useMemo(() => (isUndefined(props.design) ? '' : getDesignContent(props.design)), [props.design]);
   const formattedDesign = useMemo(
     () => (openStatus ? getFormattedDesignContent(design) : design),
     [design, openStatus]
   );
   const usePlainCode = useMemo(() => isCodeViewerPlainContent(formattedDesign), [formattedDesign]);
+
+  if (isUndefined(props.design)) return null;
 
   return (
     <div className="mb-2">
