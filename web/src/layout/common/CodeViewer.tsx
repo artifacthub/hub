@@ -43,6 +43,28 @@ const getPlainCodeWrapperStyle = (customStyle?: CSSProperties): CSSProperties | 
   return plainCodeWrapperStyle;
 };
 
+const hasCustomStyleProperty = (customStyle: CSSProperties | undefined, property: keyof CSSProperties): boolean =>
+  customStyle?.[property] !== undefined;
+
+const getPlainCodeWrapperClassName = (customStyle?: CSSProperties): string => {
+  const classNames = ['overflow-auto', styles.plainCodeWrapper];
+
+  if (
+    !hasCustomStyleProperty(customStyle, 'padding') &&
+    !hasCustomStyleProperty(customStyle, 'paddingTop') &&
+    !hasCustomStyleProperty(customStyle, 'paddingRight') &&
+    !hasCustomStyleProperty(customStyle, 'paddingBottom') &&
+    !hasCustomStyleProperty(customStyle, 'paddingLeft')
+  ) {
+    classNames.push('p-4');
+  }
+  if (!hasCustomStyleProperty(customStyle, 'fontSize')) classNames.push('small');
+  if (!hasCustomStyleProperty(customStyle, 'lineHeight')) classNames.push('lh-sm');
+  if (!hasCustomStyleProperty(customStyle, 'color')) classNames.push('text-muted');
+
+  return classNames.join(' ');
+};
+
 export const isCodeViewerPlainContent = (
   content: string,
   plainCodeMinChars: number = DEFAULT_PLAIN_CODE_MIN_CHARS,
@@ -68,12 +90,15 @@ const CodeViewer = (props: Props) => {
 
   if (usePlainCode) {
     return (
-      <div className={styles.plainCodeWrapper} style={getPlainCodeWrapperStyle(props.customStyle)}>
+      <div
+        className={getPlainCodeWrapperClassName(props.customStyle)}
+        style={getPlainCodeWrapperStyle(props.customStyle)}
+      >
         {!props.hideSyntaxWarning && <CodeViewerSyntaxWarning />}
-        <div className={styles.plainCodeContent}>
+        <div className={`d-flex ${styles.plainCodeContent}`}>
           {props.showLineNumbers && (
             <pre
-              className={styles.plainCodeLines}
+              className={`mb-0 bg-transparent text-end user-select-none pe-4 ${styles.plainCodeLines}`}
               style={props.lineNumberStyle}
               aria-hidden="true"
               data-testid={props.plainCodeLinesTestId}
@@ -81,7 +106,7 @@ const CodeViewer = (props: Props) => {
               {lineNumbers}
             </pre>
           )}
-          <pre className={styles.plainCode} data-testid={props.plainCodeTestId}>
+          <pre className={`mb-0 bg-transparent ${styles.plainCode}`} data-testid={props.plainCodeTestId}>
             {props.content}
           </pre>
         </div>
