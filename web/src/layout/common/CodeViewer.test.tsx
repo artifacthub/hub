@@ -68,6 +68,33 @@ describe('CodeViewer', () => {
     expect(screen.queryByTestId('highlighted-code')).toBeNull();
   });
 
+  it('keeps syntax theme colors for large content', () => {
+    const content = Array.from({ length: 1001 }, (_, index) => `name: line-${index}`).join('\n');
+
+    render(
+      <CodeViewer
+        content={content}
+        language="bash"
+        style={{ hljs: { backgroundColor: '#1d1f21', color: '#c5c8c6' } }}
+        plainCodeTestId="plain-code"
+      />
+    );
+
+    const codeWrapper = screen.getByTestId('plain-code').parentElement?.parentElement;
+    expect(codeWrapper).toHaveStyle({ backgroundColor: '#1d1f21', color: '#c5c8c6' });
+    expect(codeWrapper).not.toHaveClass('text-muted');
+  });
+
+  it('keeps default syntax theme colors for large content', () => {
+    const content = Array.from({ length: 1001 }, (_, index) => `name: line-${index}`).join('\n');
+
+    render(<CodeViewer content={content} language="yaml" plainCodeTestId="plain-code" />);
+
+    const codeWrapper = screen.getByTestId('plain-code').parentElement?.parentElement;
+    expect(codeWrapper).toHaveStyle({ background: '#f8f8ff', color: '#000' });
+    expect(codeWrapper).not.toHaveClass('text-muted');
+  });
+
   it('uses plain code for long single-line content', () => {
     const content = `name: ${'a'.repeat(150001)}`;
 

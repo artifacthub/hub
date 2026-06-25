@@ -28,12 +28,16 @@ const getLineNumbers = (lineCount: number): string =>
 const isCodeViewerPlainContent = (contentLength: number, lineCount: number): boolean =>
   contentLength > PLAIN_CODE_MIN_CHARS || lineCount > PLAIN_CODE_MIN_LINES;
 
-const getPlainCodeWrapperStyle = (customStyle?: CSSProperties): CSSProperties | undefined => {
-  if (!customStyle) return undefined;
+const getPlainCodeWrapperStyle = (
+  customStyle?: CSSProperties,
+  style?: { [key: string]: CSSProperties }
+): CSSProperties | undefined => {
+  if (!customStyle && !style?.hljs) return undefined;
 
-  const plainCodeWrapperStyle = { ...customStyle };
+  const plainCodeWrapperStyle = { ...style?.hljs, ...customStyle };
   delete plainCodeWrapperStyle.height;
   delete plainCodeWrapperStyle.overflow;
+  delete plainCodeWrapperStyle.overflowX;
   return plainCodeWrapperStyle;
 };
 
@@ -46,7 +50,10 @@ const getPlainCodeContainerStyle = (customStyle?: CSSProperties): CSSProperties 
 const hasCustomStyleProperty = (customStyle: CSSProperties | undefined, property: keyof CSSProperties): boolean =>
   customStyle?.[property] !== undefined;
 
-const getPlainCodeWrapperClassName = (customStyle?: CSSProperties): string => {
+const getPlainCodeWrapperClassName = (
+  customStyle?: CSSProperties,
+  style?: { [key: string]: CSSProperties }
+): string => {
   const classNames = ['flex-grow-1', 'overflow-auto', styles.plainCodeWrapper];
 
   if (
@@ -60,7 +67,9 @@ const getPlainCodeWrapperClassName = (customStyle?: CSSProperties): string => {
   }
   if (!hasCustomStyleProperty(customStyle, 'fontSize')) classNames.push('small');
   if (!hasCustomStyleProperty(customStyle, 'lineHeight')) classNames.push('lh-sm');
-  if (!hasCustomStyleProperty(customStyle, 'color')) classNames.push('text-muted');
+  if (!hasCustomStyleProperty(customStyle, 'color') && !hasCustomStyleProperty(style?.hljs, 'color')) {
+    classNames.push('text-muted');
+  }
 
   return classNames.join(' ');
 };
@@ -75,6 +84,7 @@ const CodeViewerSyntaxWarning = (props: { className?: string }) => (
 );
 
 const CodeViewer = (props: Props) => {
+  const syntaxStyle = props.style || docco;
   const lineCount = useMemo(() => getCodeViewerLineCount(props.content), [props.content]);
   const lineNumbers = useMemo(() => getLineNumbers(lineCount), [lineCount]);
   // Reuse lineCount so parent rerenders do not split large content again.
@@ -90,8 +100,8 @@ const CodeViewer = (props: Props) => {
         style={getPlainCodeContainerStyle(props.customStyle)}
       >
         <div
-          className={getPlainCodeWrapperClassName(props.customStyle)}
-          style={getPlainCodeWrapperStyle(props.customStyle)}
+          className={getPlainCodeWrapperClassName(props.customStyle, syntaxStyle)}
+          style={getPlainCodeWrapperStyle(props.customStyle, syntaxStyle)}
         >
           <div className={`d-flex ${styles.plainCodeContent}`}>
             {props.showLineNumbers && (
@@ -117,7 +127,7 @@ const CodeViewer = (props: Props) => {
   return (
     <SyntaxHighlighter
       language={props.language}
-      style={props.style || docco}
+      style={syntaxStyle}
       customStyle={props.customStyle}
       lineNumberStyle={props.lineNumberStyle}
       showLineNumbers={props.showLineNumbers}

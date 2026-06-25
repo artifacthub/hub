@@ -6,19 +6,6 @@ import { vi } from 'vitest';
 import MesheryDesignModal from './MesheryDesignModal';
 
 const mockUseNavigate = jest.fn();
-let localStorageItems: { [key: string]: string } = {};
-const localStorageMock = {
-  clear: vi.fn(() => {
-    localStorageItems = {};
-  }),
-  getItem: vi.fn((key: string) => localStorageItems[key] || null),
-  removeItem: vi.fn((key: string) => {
-    delete localStorageItems[key];
-  }),
-  setItem: vi.fn((key: string, value: string) => {
-    localStorageItems[key] = value;
-  }),
-};
 
 vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
@@ -29,6 +16,14 @@ vi.mock('react-syntax-highlighter', () => ({
   default: ({ children }: { children: string }) => <div data-testid="highlighted-design">{children}</div>,
 }));
 
+vi.mock('../common/ButtonCopyToClipboard', () => ({
+  default: ({ text }: { text: string }) => (
+    <button aria-label="Copy to clipboard" data-copy-content={text}>
+      Copy
+    </button>
+  ),
+}));
+
 const defaultProps = {
   design:
     'name: kubernetes_basic\nservices:\n  AnchorNode:\n    name: AnchorNode\n    type: AnchorNode\n    apiVersion: core.meshery.io/v1alpha1\n    namespace: helloah\n    version: 0.7.1\n    model: meshery-core\n',
@@ -37,17 +32,9 @@ const defaultProps = {
 };
 
 describe('MesheryDesignModal', () => {
-  beforeEach(() => {
-    Object.defineProperty(window, 'localStorage', {
-      value: localStorageMock,
-      configurable: true,
-    });
-  });
-
   afterEach(() => {
     cleanup();
     mockUseNavigate.mockReset();
-    window.localStorage.clear();
   });
 
   it('creates snapshot', () => {
@@ -102,23 +89,6 @@ describe('MesheryDesignModal', () => {
       expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
     });
 
-    it('uses local design override', async () => {
-      const override = '{\n  "name": "Override design"\n}';
-      window.localStorage.setItem('artifactHub.mesheryDesignModalOverride', override);
-
-      render(
-        <Router>
-          <MesheryDesignModal {...defaultProps} />
-        </Router>
-      );
-
-      const btn = screen.getByRole('button', { name: 'Open Design' });
-      await userEvent.click(btn);
-
-      expect(await screen.findByRole('dialog')).toBeInTheDocument();
-      expect(screen.getByTestId('highlighted-design')).toHaveTextContent(override, { normalizeWhitespace: false });
-    });
-
     it('uses plain code for large designs', async () => {
       const largeDesign = Array.from({ length: 1001 }, (_, index) => `name: line-${index}`).join('\n');
 
@@ -153,6 +123,10 @@ describe('MesheryDesignModal', () => {
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(screen.getByTestId('plain-design')).toHaveTextContent(formattedLongDesign, { normalizeWhitespace: false });
+      expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toHaveAttribute(
+        'data-copy-content',
+        longDesign
+      );
       expect(screen.getByTestId('plain-design-lines')).toHaveTextContent('1\n2\n3', { normalizeWhitespace: false });
       expect(screen.getByRole('alert')).toHaveTextContent('Syntax highlighting is disabled for large files.');
       expect(screen.queryByTestId('highlighted-design')).toBeNull();

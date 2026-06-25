@@ -8,31 +8,11 @@ import CodeViewer from '../common/CodeViewer';
 import Modal from '../common/Modal';
 import styles from './MesheryDesignModal.module.css';
 
-const LOCAL_DESIGN_OVERRIDE_KEY = 'artifactHub.mesheryDesignModalOverride';
-const LOCAL_ORIGINS = ['http://localhost:8000', 'http://localhost:5173'];
-
 interface Props {
   normalizedName: string;
   visibleDesign: boolean;
   design?: string;
 }
-
-const getDesignContent = (design: string): string => {
-  if (!LOCAL_ORIGINS.includes(window.location.origin) && import.meta.env.MODE !== 'test') {
-    return design;
-  }
-
-  try {
-    const localDesignOverride = window.localStorage.getItem(LOCAL_DESIGN_OVERRIDE_KEY);
-    if (!isUndefined(localDesignOverride) && localDesignOverride !== null) {
-      return localDesignOverride;
-    }
-  } catch {
-    return design;
-  }
-
-  return design;
-};
 
 const getFormattedDesignContent = (design: string): string => {
   const trimmedDesign = design.trim();
@@ -76,7 +56,7 @@ const MesheryDesignModal = (props: Props) => {
     }
   }, []);
 
-  const design = useMemo(() => (isUndefined(props.design) ? '' : getDesignContent(props.design)), [props.design]);
+  const design = isUndefined(props.design) ? '' : props.design;
   const formattedDesign = useMemo(
     () => (openStatus ? getFormattedDesignContent(design) : design),
     [design, openStatus]
@@ -108,7 +88,7 @@ const MesheryDesignModal = (props: Props) => {
         >
           <div className={`h-100 mw-100 d-flex flex-column ${styles.contentWrapper}`}>
             <div className={`position-relative flex-grow-1 mh-100 border border-1 ${styles.syntaxWrapper}`}>
-              <BlockCodeButtons filename={`${props.normalizedName}.yaml`} content={formattedDesign} />
+              <BlockCodeButtons filename={`${props.normalizedName}.yaml`} content={design} />
 
               <CodeViewer
                 content={formattedDesign}
