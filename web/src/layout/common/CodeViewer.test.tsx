@@ -23,8 +23,27 @@ describe('CodeViewer', () => {
     expect(screen.queryByRole('alert')).toBeNull();
   });
 
-  it('uses plain code for large content', () => {
+  it('uses syntax highlighting for content with 1000 lines', () => {
     const content = Array.from({ length: 1000 }, (_, index) => `name: line-${index}`).join('\n');
+
+    render(
+      <CodeViewer
+        content={content}
+        language="yaml"
+        style={{}}
+        plainCodeTestId="plain-code"
+        plainCodeLinesTestId="plain-code-lines"
+        showLineNumbers
+      />
+    );
+
+    expect(screen.getByTestId('highlighted-code')).toHaveTextContent(content, { normalizeWhitespace: false });
+    expect(screen.queryByTestId('plain-code')).toBeNull();
+    expect(screen.queryByRole('alert')).toBeNull();
+  });
+
+  it('uses plain code for large content', () => {
+    const content = Array.from({ length: 1001 }, (_, index) => `name: line-${index}`).join('\n');
 
     render(
       <CodeViewer
@@ -39,6 +58,32 @@ describe('CodeViewer', () => {
 
     expect(screen.getByTestId('plain-code')).toHaveTextContent(content, { normalizeWhitespace: false });
     expect(screen.getByTestId('plain-code-lines')).toHaveTextContent('1\n2\n3', { normalizeWhitespace: false });
+    expect(screen.getByRole('alert')).toHaveTextContent('Syntax highlighting is disabled for large files.');
+    expect(screen.getByRole('alert')).toHaveClass('alert-secondary');
+    expect(screen.getByRole('alert')).toHaveClass('border-0');
+    expect(screen.getByRole('alert')).toHaveClass('rounded-0');
+    const codeWrapper = screen.getByTestId('plain-code').parentElement?.parentElement;
+    expect(codeWrapper).not.toContainElement(screen.getByRole('alert'));
+    expect(codeWrapper?.compareDocumentPosition(screen.getByRole('alert'))).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+    expect(screen.queryByTestId('highlighted-code')).toBeNull();
+  });
+
+  it('uses plain code for long single-line content', () => {
+    const content = `name: ${'a'.repeat(150001)}`;
+
+    render(
+      <CodeViewer
+        content={content}
+        language="yaml"
+        style={{}}
+        plainCodeTestId="plain-code"
+        plainCodeLinesTestId="plain-code-lines"
+        showLineNumbers
+      />
+    );
+
+    expect(screen.getByTestId('plain-code')).toHaveTextContent(content, { normalizeWhitespace: false });
+    expect(screen.getByTestId('plain-code-lines')).toHaveTextContent('1', { normalizeWhitespace: false });
     expect(screen.getByRole('alert')).toHaveTextContent('Syntax highlighting is disabled for large files.');
     expect(screen.queryByTestId('highlighted-code')).toBeNull();
   });

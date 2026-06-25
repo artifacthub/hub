@@ -1,9 +1,15 @@
-.plainCodeWrapper {
+.plainCodeContainer {
   height: 100%;
+  min-height: 0;
+}
+
+.plainCodeWrapper {
+  min-height: 0;
   tab-size: 2;
 }
 
 .syntaxWarning {
+  border-top: 1px solid var(--bs-alert-border-color) !important;
   white-space: normal;
 }
 

@@ -4,7 +4,7 @@ import { FiCode } from 'react-icons/fi';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import BlockCodeButtons from '../common/BlockCodeButtons';
-import CodeViewer, { CodeViewerSyntaxWarning, isCodeViewerPlainContent } from '../common/CodeViewer';
+import CodeViewer from '../common/CodeViewer';
 import Modal from '../common/Modal';
 import styles from './MesheryDesignModal.module.css';
 
@@ -81,7 +81,6 @@ const MesheryDesignModal = (props: Props) => {
     () => (openStatus ? getFormattedDesignContent(design) : design),
     [design, openStatus]
   );
-  const usePlainCode = useMemo(() => isCodeViewerPlainContent(formattedDesign), [formattedDesign]);
 
   if (isUndefined(props.design)) return null;
 
@@ -131,12 +130,9 @@ const MesheryDesignModal = (props: Props) => {
                 }}
                 plainCodeTestId="plain-design"
                 plainCodeLinesTestId="plain-design-lines"
-                hideSyntaxWarning
                 showLineNumbers
               />
             </div>
-
-            {usePlainCode && <CodeViewerSyntaxWarning className="mt-3 mb-0" />}
           </div>
         </Modal>
       )}

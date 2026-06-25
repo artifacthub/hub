@@ -97,6 +97,7 @@ describe('MesheryDesignModal', () => {
       expect(screen.getByTestId('highlighted-design')).toHaveTextContent(defaultProps.design, {
         normalizeWhitespace: false,
       });
+      expect(screen.queryByRole('alert')).toBeNull();
       expect(screen.getByRole('button', { name: 'Copy to clipboard' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument();
     });
@@ -119,7 +120,7 @@ describe('MesheryDesignModal', () => {
     });
 
     it('uses plain code for large designs', async () => {
-      const largeDesign = Array.from({ length: 1000 }, (_, index) => `name: line-${index}`).join('\n');
+      const largeDesign = Array.from({ length: 1001 }, (_, index) => `name: line-${index}`).join('\n');
 
       render(
         <Router>
@@ -133,6 +134,7 @@ describe('MesheryDesignModal', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(screen.getByTestId('plain-design')).toHaveTextContent(largeDesign, { normalizeWhitespace: false });
       expect(screen.getByTestId('plain-design-lines')).toHaveTextContent('1\n2\n3', { normalizeWhitespace: false });
+      expect(screen.getByRole('alert')).toHaveTextContent('Syntax highlighting is disabled for large files.');
       expect(screen.queryByTestId('highlighted-design')).toBeNull();
     });
 
@@ -152,6 +154,7 @@ describe('MesheryDesignModal', () => {
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
       expect(screen.getByTestId('plain-design')).toHaveTextContent(formattedLongDesign, { normalizeWhitespace: false });
       expect(screen.getByTestId('plain-design-lines')).toHaveTextContent('1\n2\n3', { normalizeWhitespace: false });
+      expect(screen.getByRole('alert')).toHaveTextContent('Syntax highlighting is disabled for large files.');
       expect(screen.queryByTestId('highlighted-design')).toBeNull();
     });
 
