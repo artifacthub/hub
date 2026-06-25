@@ -72,6 +72,8 @@ jobs:
 
   tests-database:
     runs-on: ubuntu-24.04
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
     container:
       image: artifacthub/db-tests
     services:
