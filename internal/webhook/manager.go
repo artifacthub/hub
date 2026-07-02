@@ -66,7 +66,7 @@ func (m *Manager) Add(ctx context.Context, orgName string, wh *hub.Webhook) erro
 	}
 
 	// Add webhook to the database
-	whJSON, _ := json.Marshal(wh)
+	whJSON, _ := json.Marshal(wh) // #nosec G117 -- webhook creation intentionally stores the configured secret
 	_, err = m.db.Exec(ctx, addWebhookDBQ, userID, orgName, whJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
@@ -195,7 +195,7 @@ func (m *Manager) Update(ctx context.Context, wh *hub.Webhook) error {
 	}
 
 	// Update webhook in database
-	whJSON, _ := json.Marshal(wh)
+	whJSON, _ := json.Marshal(wh) // #nosec G117 -- webhook update intentionally stores the configured secret
 	_, err = m.db.Exec(ctx, updateWebhookDBQ, userID, whJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege

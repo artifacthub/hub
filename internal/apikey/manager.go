@@ -57,7 +57,7 @@ func (m *Manager) Add(ctx context.Context, ak *hub.APIKey) (*hub.APIKey, error) 
 	// Add api key to the database
 	var apiKeyID string
 	ak.Secret = apiKeySecretHashed
-	akJSON, _ := json.Marshal(ak)
+	akJSON, _ := json.Marshal(ak) // #nosec G117 -- the DB payload stores only the hashed API key secret
 	if err := m.db.QueryRow(ctx, addAPIKeyDBQ, akJSON).Scan(&apiKeyID); err != nil {
 		return nil, err
 	}
@@ -145,7 +145,11 @@ func (m *Manager) Update(ctx context.Context, ak *hub.APIKey) error {
 	}
 
 	// Update api key in database
-	akJSON, _ := json.Marshal(ak)
+	akJSON, _ := json.Marshal(map[string]string{
+		"api_key_id": ak.APIKeyID,
+		"name":       ak.Name,
+		"user_id":    ak.UserID,
+	})
 	_, err := m.db.Exec(ctx, updateAPIKeyDBQ, akJSON)
 	return err
 }

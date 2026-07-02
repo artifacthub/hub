@@ -835,7 +835,7 @@ func (out *output) print(label string, value interface{}) {
 		} else {
 			fmt.Fprintf(out, "%c %s: %s\n", warning, label, notProvided)
 		}
-	case reflect.Ptr:
+	case reflect.Pointer:
 		if !reflect.ValueOf(value).IsNil() {
 			fmt.Fprintf(out, "%c %s: %s\n", success, label, provided)
 		} else {

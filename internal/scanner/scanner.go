@@ -118,7 +118,7 @@ func generateSummary(imagesReports map[string]*trivy.Report) *hub.SecurityReport
 	for _, imageReport := range imagesReports {
 		for _, result := range imageReport.Results {
 			for _, vulnerability := range result.Vulnerabilities {
-				switch vulnerability.Severity {
+				switch vulnerability.Severity { // nolint:staticcheck // SA1019: using legacy severity until Trivy DB v3 migration
 				case "CRITICAL":
 					summary.Critical++
 				case "HIGH":

@@ -113,7 +113,7 @@ func TestAdd(t *testing.T) {
 		assert.Equal(t, http.StatusCreated, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
-		outputAKJSON, _ := json.Marshal(akOUT)
+		outputAKJSON, _ := json.Marshal(akOUT) // #nosec G117 -- API key creation intentionally returns the generated secret once
 		assert.Equal(t, outputAKJSON, data)
 		hw.am.AssertExpectations(t)
 	})
@@ -342,7 +342,7 @@ func TestUpdate(t *testing.T) {
 			APIKeyID: apiKeyID,
 			Name:     "apikey1",
 		}
-		akJSON, _ := json.Marshal(ak)
+		akJSON, _ := json.Marshal(ak) // #nosec G117 -- this test request does not include an API key secret
 
 		testCases := []struct {
 			description        string

@@ -253,7 +253,7 @@ func (h *Handlers) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Request browser to delete session cookie
-	cookie := &http.Cookie{
+	cookie := &http.Cookie{ // #nosec G124 -- deletion only requires matching name and path with an expired value
 		Name:    sessionCookieName,
 		Path:    "/",
 		Expires: time.Now().Add(-24 * time.Hour),
@@ -420,7 +420,7 @@ func (h *Handlers) Logout(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Request browser to delete session cookie
-	cookie = &http.Cookie{
+	cookie = &http.Cookie{ // #nosec G124 -- deletion only requires matching name and path with an expired value
 		Name:    sessionCookieName,
 		Path:    "/",
 		Expires: time.Now().Add(-24 * time.Hour),
@@ -458,7 +458,7 @@ func (h *Handlers) OauthCallback(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, oauthFailedURL, http.StatusSeeOther)
 		return
 	}
-	stateCookie = &http.Cookie{
+	stateCookie = &http.Cookie{ // #nosec G124 -- deletion only requires matching name and path with an expired value
 		Name:    oauthStateCookieName,
 		Path:    "/",
 		Expires: time.Now().Add(-24 * time.Hour),
@@ -525,6 +525,7 @@ func (h *Handlers) OauthRedirect(w http.ResponseWriter, r *http.Request) {
 		Value:    random,
 		Path:     "/",
 		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
 	}
 	if h.cfg.GetBool("server.cookie.secure") {
 		cookie.Secure = true

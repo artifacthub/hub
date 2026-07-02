@@ -42,7 +42,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	akOUTJSON, _ := json.Marshal(akOUT)
+	akOUTJSON, _ := json.Marshal(akOUT) // #nosec G117 -- API key creation intentionally returns the generated secret once
 	helpers.RenderJSON(w, akOUTJSON, 0, http.StatusCreated)
 }
 

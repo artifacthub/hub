@@ -496,7 +496,7 @@ func TestTriggerTest(t *testing.T) {
 		defer ts.Close()
 
 		wh := &hub.Webhook{URL: ts.URL}
-		webhookJSON, _ := json.Marshal(wh)
+		webhookJSON, _ := json.Marshal(wh) // #nosec G117 -- this test request does not include a webhook secret
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", bytes.NewReader(webhookJSON))
@@ -579,7 +579,7 @@ func TestTriggerTest(t *testing.T) {
 					Secret:      tc.secret,
 					URL:         ts.URL,
 				}
-				webhookJSON, _ := json.Marshal(wh)
+				webhookJSON, _ := json.Marshal(wh) // #nosec G117 -- this test verifies webhook secret forwarding
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", bytes.NewReader(webhookJSON))

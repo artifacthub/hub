@@ -650,7 +650,7 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User) error {
 	}
 
 	// Register user in database
-	userJSON, _ := json.Marshal(user)
+	userJSON, _ := json.Marshal(user) // #nosec G117 -- the DB payload stores only the hashed password
 	var code *string
 	err := m.db.QueryRow(ctx, registerUserDBQ, userJSON).Scan(&code)
 	if err != nil {
@@ -778,7 +778,7 @@ func (m *Manager) SetupTFA(ctx context.Context) ([]byte, error) {
 		RecoveryCodes: recoveryCodes,
 		Secret:        key.Secret(),
 	}
-	return json.Marshal(output)
+	return json.Marshal(output) // #nosec G117 -- TFA setup intentionally returns the generated TOTP secret once
 }
 
 // UpdatePassword updates the user password in the database.
@@ -833,7 +833,12 @@ func (m *Manager) UpdateProfile(ctx context.Context, user *hub.User) error {
 	}
 
 	// Update user profile in database
-	userJSON, _ := json.Marshal(user)
+	userJSON, _ := json.Marshal(map[string]string{
+		"alias":            user.Alias,
+		"first_name":       user.FirstName,
+		"last_name":        user.LastName,
+		"profile_image_id": user.ProfileImageID,
+	})
 	_, err := m.db.Exec(ctx, updateUserProfileDBQ, userID, userJSON)
 	return err
 }

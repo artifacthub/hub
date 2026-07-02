@@ -104,12 +104,12 @@ func normalizeAlertVulnerabilities(
 				if vulnerability.VulnerabilityID == "" {
 					continue
 				}
-				switch vulnerability.Severity {
+				switch vulnerability.Severity { // nolint:staticcheck // SA1019: using legacy severity until Trivy DB v3 migration
 				case alertSeverityCritical:
-					alerts[vulnerability.VulnerabilityID] = vulnerability.Severity
+					alerts[vulnerability.VulnerabilityID] = vulnerability.Severity // nolint:staticcheck // SA1019: using legacy severity until Trivy DB v3 migration
 				case alertSeverityHigh:
 					if _, ok := alerts[vulnerability.VulnerabilityID]; !ok {
-						alerts[vulnerability.VulnerabilityID] = vulnerability.Severity
+						alerts[vulnerability.VulnerabilityID] = vulnerability.Severity // nolint:staticcheck // SA1019: using legacy severity until Trivy DB v3 migration
 					}
 				}
 			}

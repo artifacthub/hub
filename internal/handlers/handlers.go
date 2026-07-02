@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"net/url"
 	"path"
 	"strings"
 	"time"
@@ -405,18 +406,18 @@ func (h *Handlers) setupRouter() {
 	r.Route("/charts/{repoName}/{packageName}", func(r chi.Router) {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 			pkgPath := fmt.Sprintf("/packages/helm/%s/%s",
-				chi.URLParam(r, "repoName"),
-				chi.URLParam(r, "packageName"),
+				url.PathEscape(chi.URLParam(r, "repoName")),
+				url.PathEscape(chi.URLParam(r, "packageName")),
 			)
-			http.Redirect(w, r, pkgPath, http.StatusMovedPermanently)
+			http.Redirect(w, r, pkgPath, http.StatusMovedPermanently) // #nosec G710 -- fixed relative path with escaped route params
 		})
 		r.Get("/{version}", func(w http.ResponseWriter, r *http.Request) {
 			pkgPath := fmt.Sprintf("/packages/helm/%s/%s/%s",
-				chi.URLParam(r, "repoName"),
-				chi.URLParam(r, "packageName"),
-				chi.URLParam(r, "version"),
+				url.PathEscape(chi.URLParam(r, "repoName")),
+				url.PathEscape(chi.URLParam(r, "packageName")),
+				url.PathEscape(chi.URLParam(r, "version")),
 			)
-			http.Redirect(w, r, pkgPath, http.StatusMovedPermanently)
+			http.Redirect(w, r, pkgPath, http.StatusMovedPermanently) // #nosec G710 -- fixed relative path with escaped route params
 		})
 	})
 

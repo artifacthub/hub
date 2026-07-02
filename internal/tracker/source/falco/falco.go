@@ -2,6 +2,7 @@ package falco
 
 import (
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -32,7 +33,12 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 	packagesAvailable := make(map[string]*hub.Package)
 
 	// Walk the path provided looking for available packages
-	err := filepath.Walk(s.i.BasePath, func(pkgPath string, info os.FileInfo, err error) error {
+	root, err := os.OpenRoot(s.i.BasePath)
+	if err != nil {
+		return nil, err
+	}
+	defer root.Close()
+	err = fs.WalkDir(root.FS(), ".", func(pkgPath string, e fs.DirEntry, err error) error {
 		// Return ASAP if context is cancelled
 		select {
 		case <-s.i.Svc.Ctx.Done():
@@ -42,17 +48,18 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 
 		// If an error is raised while visiting a path or the path is not a
 		// directory, we skip it
-		if err != nil || info.IsDir() {
+		if err != nil || e.IsDir() {
 			return nil
 		}
 
 		// Only process rules files
-		if !info.Mode().IsRegular() || filepath.Ext(info.Name()) != ".yaml" {
+		info, err := e.Info()
+		if err != nil || !info.Mode().IsRegular() || filepath.Ext(e.Name()) != ".yaml" {
 			return nil
 		}
 
 		// Read and parse rules metadata file
-		data, err := os.ReadFile(pkgPath)
+		data, err := root.ReadFile(pkgPath)
 		if err != nil {
 			s.warn(fmt.Errorf("error reading rules metadata file: %w", err))
 			return nil
@@ -69,7 +76,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		}
 
 		// Prepare and store package version
-		p, err := s.preparePackage(s.i.Repository, md, strings.TrimPrefix(pkgPath, s.i.BasePath))
+		p, err := s.preparePackage(s.i.Repository, md, "/"+pkgPath)
 		if err != nil {
 			s.warn(fmt.Errorf("error preparing package: %w", err))
 			return nil

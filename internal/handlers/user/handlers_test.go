@@ -83,10 +83,7 @@ func TestApproveSession(t *testing.T) {
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"passcode": "123456"}`)
 		r, _ := http.NewRequest("PUT", "/", body)
-		r.AddCookie(&http.Cookie{
-			Name:  sessionCookieName,
-			Value: "invalidValue",
-		})
+		r.AddCookie(newTestCookie(sessionCookieName, "invalidValue"))
 
 		hw := newHandlersWrapper()
 		hw.h.ApproveSession(w, r)
@@ -105,10 +102,7 @@ func TestApproveSession(t *testing.T) {
 		hw := newHandlersWrapper()
 		hw.um.On("ApproveSession", r.Context(), sessionID, "123456").Return(tests.ErrFake)
 		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
-		r.AddCookie(&http.Cookie{
-			Name:  sessionCookieName,
-			Value: encodedSessionID,
-		})
+		r.AddCookie(newTestCookie(sessionCookieName, encodedSessionID))
 		hw.h.ApproveSession(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -125,10 +119,7 @@ func TestApproveSession(t *testing.T) {
 		hw := newHandlersWrapper()
 		hw.um.On("ApproveSession", r.Context(), sessionID, "123456").Return(nil)
 		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
-		r.AddCookie(&http.Cookie{
-			Name:  sessionCookieName,
-			Value: encodedSessionID,
-		})
+		r.AddCookie(newTestCookie(sessionCookieName, encodedSessionID))
 		hw.h.ApproveSession(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -591,10 +582,7 @@ func TestInjectUserID(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		r.AddCookie(&http.Cookie{
-			Name:  sessionCookieName,
-			Value: "invalidValue",
-		})
+		r.AddCookie(newTestCookie(sessionCookieName, "invalidValue"))
 
 		hw := newHandlersWrapper()
 		hw.h.InjectUserID(checkUserID(nil)).ServeHTTP(w, r)
@@ -611,10 +599,7 @@ func TestInjectUserID(t *testing.T) {
 
 		hw := newHandlersWrapper()
 		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
-		r.AddCookie(&http.Cookie{
-			Name:  sessionCookieName,
-			Value: encodedSessionID,
-		})
+		r.AddCookie(newTestCookie(sessionCookieName, encodedSessionID))
 		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
 			Return(nil, tests.ErrFakeDB)
 		hw.h.InjectUserID(checkUserID(nil)).ServeHTTP(w, r)
@@ -635,10 +620,7 @@ func TestInjectUserID(t *testing.T) {
 			Return(&hub.CheckSessionOutput{UserID: "", Valid: false}, nil)
 
 		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
-		r.AddCookie(&http.Cookie{
-			Name:  sessionCookieName,
-			Value: encodedSessionID,
-		})
+		r.AddCookie(newTestCookie(sessionCookieName, encodedSessionID))
 		hw.h.InjectUserID(checkUserID(nil)).ServeHTTP(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -656,10 +638,7 @@ func TestInjectUserID(t *testing.T) {
 		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
 			Return(&hub.CheckSessionOutput{UserID: "userID", Valid: true}, nil)
 		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
-		r.AddCookie(&http.Cookie{
-			Name:  sessionCookieName,
-			Value: encodedSessionID,
-		})
+		r.AddCookie(newTestCookie(sessionCookieName, encodedSessionID))
 		hw.h.InjectUserID(checkUserID("userID")).ServeHTTP(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -834,10 +813,7 @@ func TestLogout(t *testing.T) {
 			},
 			{
 				"no session cookie provided",
-				&http.Cookie{
-					Name:  sessionCookieName,
-					Value: "invalidValue",
-				},
+				newTestCookie(sessionCookieName, "invalidValue"),
 			},
 		}
 		for _, tc := range testCases {
@@ -886,10 +862,7 @@ func TestLogout(t *testing.T) {
 				hw := newHandlersWrapper()
 				hw.um.On("DeleteSession", r.Context(), "sessionID").Return(tc.err)
 				encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, "sessionID")
-				r.AddCookie(&http.Cookie{
-					Name:  sessionCookieName,
-					Value: encodedSessionID,
-				})
+				r.AddCookie(newTestCookie(sessionCookieName, encodedSessionID))
 				hw.h.Logout(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -936,10 +909,7 @@ func TestOauthCallback(t *testing.T) {
 			{
 				"invalid state cookie",
 				"/?code=1234&state=" + state.String(),
-				&http.Cookie{
-					Name:  oauthStateCookieName,
-					Value: "something not expected",
-				},
+				newTestCookie(oauthStateCookieName, "something not expected"),
 			},
 		}
 		for _, tc := range testCases {
@@ -1344,10 +1314,7 @@ func TestRequireLogin(t *testing.T) {
 			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
-			r.AddCookie(&http.Cookie{
-				Name:  sessionCookieName,
-				Value: "invalidValue",
-			})
+			r.AddCookie(newTestCookie(sessionCookieName, "invalidValue"))
 
 			hw := newHandlersWrapper()
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
@@ -1370,10 +1337,7 @@ func TestRequireLogin(t *testing.T) {
 			hw.um.On("CheckSession", r.Context(), sessionID, sessionDuration).
 				Return(nil, tests.ErrFakeDB)
 			encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
-			r.AddCookie(&http.Cookie{
-				Name:  sessionCookieName,
-				Value: encodedSessionID,
-			})
+			r.AddCookie(newTestCookie(sessionCookieName, encodedSessionID))
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -1395,10 +1359,7 @@ func TestRequireLogin(t *testing.T) {
 			hw.um.On("CheckSession", r.Context(), sessionID, sessionDuration).
 				Return(&hub.CheckSessionOutput{UserID: "", Valid: false}, nil)
 			encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
-			r.AddCookie(&http.Cookie{
-				Name:  sessionCookieName,
-				Value: encodedSessionID,
-			})
+			r.AddCookie(newTestCookie(sessionCookieName, encodedSessionID))
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -1420,10 +1381,7 @@ func TestRequireLogin(t *testing.T) {
 			hw.um.On("CheckSession", r.Context(), sessionID, sessionDuration).
 				Return(&hub.CheckSessionOutput{UserID: "userID", Valid: true}, nil)
 			encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
-			r.AddCookie(&http.Cookie{
-				Name:  sessionCookieName,
-				Value: encodedSessionID,
-			})
+			r.AddCookie(newTestCookie(sessionCookieName, encodedSessionID))
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -1857,4 +1815,15 @@ func buildError(msg string) []byte {
 	}
 	dataJSON, _ := json.Marshal(data)
 	return append(dataJSON, '\n')
+}
+
+func newTestCookie(name, value string) *http.Cookie {
+	return &http.Cookie{
+		Name:     name,
+		Value:    value,
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   true,
+		SameSite: http.SameSiteLaxMode,
+	}
 }

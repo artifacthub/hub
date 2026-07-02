@@ -352,7 +352,11 @@ func TestUpdate(t *testing.T) {
 			Name:     "apikey1-updated",
 			UserID:   "userID",
 		}
-		akJSON, _ := json.Marshal(ak)
+		akJSON, _ := json.Marshal(map[string]string{
+			"api_key_id": ak.APIKeyID,
+			"name":       ak.Name,
+			"user_id":    ak.UserID,
+		})
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, updateAPIKeyDBQ, akJSON).Return(tests.ErrFakeDB)
 		m := NewManager(db)
@@ -369,7 +373,11 @@ func TestUpdate(t *testing.T) {
 			Name:     "apikey1-updated",
 			UserID:   "userID",
 		}
-		akJSON, _ := json.Marshal(ak)
+		akJSON, _ := json.Marshal(map[string]string{
+			"api_key_id": ak.APIKeyID,
+			"name":       ak.Name,
+			"user_id":    ak.UserID,
+		})
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, updateAPIKeyDBQ, akJSON).Return(nil)
 		m := NewManager(db)
