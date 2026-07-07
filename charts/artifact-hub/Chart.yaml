@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.
 type: application
-version: 1.22.1-4
-appVersion: 1.22.0
+version: 1.23.0
+appVersion: 1.23.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -50,46 +50,59 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Support for kagent.dev agents
-      links:
-        - name: GitHub Issue
-          url: https://github.com/artifacthub/hub/issues/4374
+      description: Code viewer for large code blocks
     - kind: added
-      description: Display app version in versions modal
+      description: Support for mermaid charts in README files
     - kind: added
-      description: Allow setting extra env vars from chart
+      description: Support for markdown in MOTD banner
     - kind: added
-      description: FAQ section to the documentation
+      description: Deprecated annotation in Tekton packages
+    - kind: added
+      description: Allow overriding db password in migrate script
+    - kind: added
+      description: Option to set tolerations (chart)
+    - kind: added
+      description: Option to set common labels (chart)
+    - kind: added
+      description: Option to set extra volumes and env vars in db-migrator (chart)
     - kind: changed
-      description: Improve versions table in modal
+      description: Some improvements to OCI package (including signature detection)
     - kind: changed
-      description: Set user agent header in outgoing requests
+      description: Improve security alerts notifications
     - kind: changed
-      description: Upgrade chart postgresql dependency
+      description: Improve union type default handling in values schema viewer
     - kind: changed
-      description: Bump Alpine to 3.22.2
+      description: Update FAQ
     - kind: changed
-      description: Bump Go to 1.25.3
+      description: Bump Alpine to 3.24.1
     - kind: changed
-      description: Bump Trivy to 0.67.2
+      description: Bump Go to 1.26.4
     - kind: changed
-      description: Bump OPM to 1.60.0
+      description: Bump Trivy to 0.69.3
     - kind: changed
       description: Upgrade backend and frontend dependencies
     - kind: fixed
-      description: Ignore parameterized images in Tekton packages
+      description: Do not strip underscores from changes descriptions
     - kind: fixed
-      description: Issue with data labels on bar charts
+      description: Some issues in router
+    - kind: fixed
+      description: Some issues caused by lazy loaded routes
+    - kind: fixed
+      description: Issue rendering banner on Safari 26.4
+    - kind: fixed
+      description: Chart template rendering in the web UI
+    - kind: fixed
+      description: Repository opt-out search highlighting error
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.22.0
+      image: artifacthub/db-migrator:v1.23.0
     - name: hub
-      image: artifacthub/hub:v1.22.0
+      image: artifacthub/hub:v1.23.0
     - name: tracker
-      image: artifacthub/tracker:v1.22.0
+      image: artifacthub/tracker:v1.23.0
     - name: scanner
-      image: artifacthub/scanner:v1.22.0
+      image: artifacthub/scanner:v1.23.0
     - name: trivy
       image: aquasec/trivy:0.69.3
   artifacthub.io/links: |
