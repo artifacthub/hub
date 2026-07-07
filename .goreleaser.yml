@@ -51,6 +51,11 @@ dockers_v2:
     tags:
       - "{{ .Tag }}"
       - latest
+    platforms:
+      - linux/amd64
+    sbom: false
+    flags:
+      - "--provenance=false"
     build_args:
       VERSION: "{{ .Version }}"
       GIT_COMMIT: "{{ .FullCommit }}"
@@ -80,6 +85,11 @@ dockers_v2:
     tags:
       - "{{ .Tag }}"
       - latest
+    platforms:
+      - linux/amd64
+    sbom: false
+    flags:
+      - "--provenance=false"
     extra_files:
       - database/migrations
   - id: hub
@@ -90,6 +100,11 @@ dockers_v2:
     tags:
       - "{{ .Tag }}"
       - latest
+    platforms:
+      - linux/amd64
+    sbom: false
+    flags:
+      - "--provenance=false"
     extra_files:
       - go.mod
       - go.sum
@@ -107,6 +122,11 @@ dockers_v2:
     tags:
       - "{{ .Tag }}"
       - latest
+    platforms:
+      - linux/amd64
+    sbom: false
+    flags:
+      - "--provenance=false"
     extra_files:
       - go.mod
       - go.sum
@@ -120,6 +140,11 @@ dockers_v2:
     tags:
       - "{{ .Tag }}"
       - latest
+    platforms:
+      - linux/amd64
+    sbom: false
+    flags:
+      - "--provenance=false"
     extra_files:
       - go.mod
       - go.sum
