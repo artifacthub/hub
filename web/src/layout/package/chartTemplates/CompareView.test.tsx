@@ -156,6 +156,27 @@ describe('CompareView', () => {
   });
 
   describe('Render', () => {
+    it.each([
+      { currentVersion: '1.23.0', comparedVersion: '1.15.0' },
+      { currentVersion: '1.23.0-rc.1+build.42', comparedVersion: '1.15.0-beta.2' },
+    ])('renders complete version badges for $comparedVersion and $currentVersion', async (versions) => {
+      vi.mocked(API).getChartTemplates.mockResolvedValue(APIData);
+      render(<CompareView {...defaultProps} {...versions} />);
+
+      expect(await screen.findByText(versions.comparedVersion, { exact: true })).toBeInTheDocument();
+      expect(screen.getByText(versions.currentVersion, { exact: true })).toBeInTheDocument();
+
+      await userEvent.click(screen.getByRole('button', { name: 'Expand code' }));
+
+      expect(screen.getByText(versions.comparedVersion, { exact: true })).toBeInTheDocument();
+      expect(screen.getByText(versions.currentVersion, { exact: true })).toBeInTheDocument();
+
+      await userEvent.click(screen.getByRole('button', { name: 'Collapse code' }));
+
+      expect(screen.getByText(versions.comparedVersion, { exact: true })).toBeInTheDocument();
+      expect(screen.getByText(versions.currentVersion, { exact: true })).toBeInTheDocument();
+    });
+
     it('renders component', async () => {
       vi.mocked(API).getChartTemplates.mockResolvedValue(APIData);
       render(<CompareView {...defaultProps} />);

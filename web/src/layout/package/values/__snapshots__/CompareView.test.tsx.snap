@@ -53,7 +53,7 @@ exports[`CompareView > creates snapshot 1`] = `
             <span
               class="badge bg-dark px-2 py-1 badge-md"
             >
-              0.2	0.0.2
+              0.0.2
             </span>
             <span
               class="px-2 _versionTitle_8e2ac5"
@@ -63,7 +63,7 @@ exports[`CompareView > creates snapshot 1`] = `
             <span
               class="badge bg-dark px-2 py-1 badge-md"
             >
-              0.1	0.0.1
+              0.0.1
             </span>
           </div>
         </header>

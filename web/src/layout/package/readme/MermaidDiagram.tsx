@@ -1,7 +1,8 @@
-import { memo, useEffect, useId, useRef, useState } from 'react';
+import { memo, useContext, useEffect, useId, useRef, useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { github } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
+import { AppCtx } from '../../../context/AppCtx';
 import styles from './Readme.module.css';
 
 interface Props {
@@ -9,6 +10,8 @@ interface Props {
 }
 
 const MermaidDiagram = ({ code }: Props) => {
+  const { ctx } = useContext(AppCtx);
+  const { effective } = ctx.prefs.theme;
   const id = useId().replace(/:/g, '_');
   const containerRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<boolean>(false);
@@ -22,7 +25,8 @@ const MermaidDiagram = ({ code }: Props) => {
         mermaid.initialize({
           startOnLoad: false,
           securityLevel: 'strict',
-          theme: 'default',
+          suppressErrorRendering: true,
+          theme: effective === 'dark' ? 'dark' : 'default',
         });
 
         const { svg } = await mermaid.render(`mermaid${id}`, code);
@@ -42,7 +46,7 @@ const MermaidDiagram = ({ code }: Props) => {
     return () => {
       cancelled = true;
     };
-  }, [code, id]);
+  }, [code, id, effective]);
 
   if (error) {
     return (

@@ -78,12 +78,12 @@ const DiffTemplate = (props: Props) => {
       const sourceLabel = props.diffVersion ?? 'previous';
       const targetLabel = props.currentVersion ?? 'current';
       const newDiff = createTwoFilesPatch(
-        sourceLabel,
-        targetLabel,
+        `a/${sourceLabel}`,
+        `b/${targetLabel}`,
         props.compareData,
         props.data,
-        props.diffVersion,
-        props.currentVersion,
+        undefined,
+        undefined,
         { context: props.expanded ? Number.MAX_SAFE_INTEGER : 2 }
       );
       const diffText = `diff --git a/${sourceLabel} b/${targetLabel}\n${newDiff}`;
