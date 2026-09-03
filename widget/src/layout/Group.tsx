@@ -21,18 +21,18 @@ interface Props {
 }
 
 interface WrapperProps {
-  mainColor?: string;
-  width?: string;
+  $mainColor?: string;
+  $width?: string;
   className: string;
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  --color-ah-primary: ${(props) => props.mainColor};
+  --color-ah-primary: ${(props) => props.$mainColor};
   position: relative;
   max-width: 100%;
 
   &.fixedWidth {
-    width: ${(p: WrapperProps) => p.width};
+    width: ${(p: WrapperProps) => p.$width};
   }
 
   & *,
@@ -123,9 +123,9 @@ const Group = (props: Props) => {
   return (
     <Wrapper
       data-testid="wrapper"
-      mainColor={mainColor}
+      $mainColor={mainColor}
       className={fixedWidthValue ? 'fixedWidth' : ''}
-      width={fixedWidthValue}
+      $width={fixedWidthValue}
     >
       {visibleLoading && (isUndefined(packagesList) || isLoading) ? (
         <Loading size="lg" />

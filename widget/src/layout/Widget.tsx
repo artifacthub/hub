@@ -118,7 +118,7 @@ const buildPackageURL = (normalizedName: string, repository: Repository): string
 };
 
 interface CardBodyProps {
-  withBadges?: boolean;
+  $withBadges?: boolean;
   className: string;
 }
 
@@ -246,7 +246,7 @@ const CardBody = styled.div<CardBodyProps>`
   flex-direction: column;
 
   &.groupedItem {
-    height: ${(p: CardBodyProps) => (p.withBadges ? '255px' : '225px')};
+    height: ${(p: CardBodyProps) => (p.$withBadges ? '255px' : '225px')};
   }
 `;
 
@@ -445,7 +445,11 @@ export default function Widget(props: Props) {
             </CardHeader>
           )}
 
-          <CardBody data-testid="cardBody" className={props.inGroup ? 'groupedItem' : ''} withBadges={props.withBadges}>
+          <CardBody
+            data-testid="cardBody"
+            className={props.inGroup ? 'groupedItem' : ''}
+            $withBadges={props.withBadges}
+          >
             {isLoading || isUndefined(packageSummary) ? (
               <Loading />
             ) : (

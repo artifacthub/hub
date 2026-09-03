@@ -89,11 +89,7 @@ describe('Group', () => {
     const mockGroup = getMockGroup('3');
     vi.mocked(API).searchPackages.mockResolvedValue(mockGroup);
 
-    render(
-      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
-        <Group {...defaultProps} responsive={false} width="1800" />
-      </StyleSheetManager>
-    );
+    render(<Group {...defaultProps} responsive={false} width="1800" />);
     await waitFor(() => {
       expect(API.searchPackages).toHaveBeenCalledTimes(1);
     });
@@ -104,25 +100,34 @@ describe('Group', () => {
     const wrapper = screen.getByTestId('wrapper');
     expect(wrapper).toHaveClass('fixedWidth');
     expect(wrapper).toHaveStyle('width: 1800px');
+    expect(wrapper).not.toHaveAttribute('width');
   });
 
-  it('renders component with custom color', async () => {
+  it('renders component with custom color without prop warnings', async () => {
     const mockGroup = getMockGroup('4');
     vi.mocked(API).searchPackages.mockResolvedValue(mockGroup);
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleWarn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-    render(
-      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
-        <Group {...defaultProps} color="#F57C00" />
-      </StyleSheetManager>
-    );
-    await waitFor(() => {
-      expect(API.searchPackages).toHaveBeenCalledTimes(1);
-    });
+    try {
+      render(<Group {...defaultProps} color="#F57C00" />);
 
-    await waitFor(() => {
-      expect(screen.queryByRole('status')).toBeNull();
-    });
-    expect(screen.getByTestId('wrapper')).toHaveStyle('--color-ah-primary: #F57C00');
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
+      await waitFor(() => {
+        expect(screen.queryByRole('status')).toBeNull();
+      });
+      const wrapper = screen.getByTestId('wrapper');
+      expect(wrapper).toHaveStyle('--color-ah-primary: #F57C00');
+      expect(wrapper).not.toHaveAttribute('mainColor');
+      expect(consoleError).not.toHaveBeenCalled();
+      expect(consoleWarn).not.toHaveBeenCalled();
+    } finally {
+      consoleError.mockRestore();
+      consoleWarn.mockRestore();
+    }
   });
 
   it('renders component with dark theme', async () => {

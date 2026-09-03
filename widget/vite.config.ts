@@ -9,6 +9,10 @@ export default defineConfig({
     alias: {
       '~': fileURLToPath(new URL('./node_modules/', import.meta.url)),
       'prop-types': fileURLToPath(new URL('./src/shims/prop-types.js', import.meta.url)),
+      // Use ESM for the react-shadow subpath to avoid Vite 8 CJS interop issues.
+      'react-shadow/styled-components': fileURLToPath(
+        new URL('./node_modules/react-shadow/styled-components.esm.js', import.meta.url)
+      ),
     },
   },
   server: {

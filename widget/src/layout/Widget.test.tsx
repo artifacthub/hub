@@ -362,27 +362,22 @@ describe('Widget', () => {
     });
   });
 
-  it('renders inGroup card with badges', async () => {
-    const mockPkg = getMockPkg('9');
-    vi.mocked(API).getPackageInfo.mockResolvedValue(mockPkg);
+  it.each([false, true])('renders grouped cards without prop warnings when withBadges is %s', (withBadges) => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleWarn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-    render(
-      <StyleSheetManager shouldForwardProp={shouldForwardProp}>
-        <Widget {...defaultProps} withBadges={true} inGroup={true} />
-      </StyleSheetManager>
-    );
+    try {
+      render(<Widget {...defaultProps} packageSummary={getMockPkg('9')} withBadges={withBadges} inGroup={true} />);
 
-    await waitFor(() => {
-      expect(API.getPackageInfo).toHaveBeenCalledTimes(1);
-    });
-
-    await waitFor(() => {
-      expect(screen.queryByRole('status')).toBeNull();
-    });
-    const cardBody = screen.getByTestId('cardBody');
-    expect(cardBody).toBeInTheDocument();
-    expect(cardBody).toHaveClass('groupedItem');
-    expect(cardBody).toHaveStyle('height: 255px');
+      const cardBody = screen.getByTestId('cardBody');
+      expect(cardBody).toHaveClass('groupedItem');
+      expect(cardBody).toHaveStyle(`height: ${withBadges ? '255px' : '225px'}`);
+      expect(consoleError).not.toHaveBeenCalled();
+      expect(consoleWarn).not.toHaveBeenCalled();
+    } finally {
+      consoleError.mockRestore();
+      consoleWarn.mockRestore();
+    }
   });
 
   describe('does not render component', () => {
