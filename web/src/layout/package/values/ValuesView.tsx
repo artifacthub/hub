@@ -1,6 +1,13 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import {
+  KeyboardEvent as ReactKeyboardEvent,
+  MouseEvent as ReactMouseEvent,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
@@ -14,6 +21,7 @@ import styles from './Values.module.css';
 interface Props {
   values: string;
   lines?: Lines;
+  sections?: Sections;
   normalizedName: string;
   updateUrl: (q: ValuesQuery) => void;
   visibleValuesPath?: string | null;
@@ -23,6 +31,10 @@ interface Lines {
   [key: number]: string;
 }
 
+interface Sections {
+  [keyLine: number]: number;
+}
+
 const ValuesView = (props: Props) => {
   const code = useRef<HTMLDivElement | null>(null);
   const [topPositionMenu, setTopPositionMenu] = useState<number | undefined>();
@@ -30,7 +42,28 @@ const ValuesView = (props: Props) => {
   const [clickedLine, setClickedLine] = useState<number | undefined>();
   const [fullWidth, setFullWidth] = useState<number | undefined>();
   const [activeLine, setActiveLine] = useState<string | undefined>();
+  const [collapsedSections, setCollapsedSections] = useState<number[]>([]);
   const isEmptyValues = props.values === ' ';
+
+  const isSectionHeader = (lineNumber: number): boolean =>
+    !isUndefined(props.sections) && !isUndefined(props.sections[lineNumber]);
+
+  const isLineHidden = (lineNumber: number): boolean =>
+    !isUndefined(props.sections) &&
+    collapsedSections.some((keyLine: number) => lineNumber > keyLine && lineNumber <= (props.sections || {})[keyLine]);
+
+  const toggleSection = (lineNumber: number) => {
+    setCollapsedSections((prev: number[]) =>
+      prev.includes(lineNumber) ? prev.filter((l: number) => l !== lineNumber) : [...prev, lineNumber]
+    );
+  };
+
+  const expandSectionsContaining = (lineNumber: number) => {
+    if (isUndefined(props.sections) || collapsedSections.length === 0) return;
+    setCollapsedSections((prev: number[]) =>
+      prev.filter((keyLine: number) => !(lineNumber > keyLine && lineNumber <= props.sections![keyLine]))
+    );
+  };
 
   const cleanClickedLine = () => {
     setClickedLine(undefined);
@@ -60,7 +93,10 @@ const ValuesView = (props: Props) => {
     };
 
     if (!isUndefined(activeLine)) {
-      scrollIntoView(activeLine);
+      expandSectionsContaining(parseInt(activeLine));
+      // Wait for collapsed sections to expand before scrolling
+      const timeout = setTimeout(() => scrollIntoView(activeLine), 50);
+      return () => clearTimeout(timeout);
     }
   }, [activeLine]);
 
@@ -175,21 +211,41 @@ const ValuesView = (props: Props) => {
               showLineNumbers
               wrapLines
               lineProps={(lineNumber) => {
+                const isHeader = isSectionHeader(lineNumber);
+                const onLineClick = (e: ReactMouseEvent<HTMLElement>) => {
+                  // Clicks on the line wrapper itself (not its content) toggle the section
+                  if (isHeader && e.target === e.currentTarget) {
+                    toggleSection(lineNumber);
+                    return;
+                  }
+                  const isClicked = clickedLine === lineNumber;
+                  if (props.lines && !isUndefined(props.lines[lineNumber]) && !isClicked) {
+                    setClickedLine(lineNumber);
+                  } else {
+                    cleanClickedLine();
+                  }
+                };
+                const onLineKeyDown = (e: ReactKeyboardEvent<HTMLElement>) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleSection(lineNumber);
+                  }
+                };
                 return {
                   id: `line_${lineNumber}`,
                   className: 'line',
+                  hidden: isLineHidden(lineNumber),
                   style: { position: 'relative', width: fullWidth ? `${fullWidth}px` : 'auto' },
                   'data-line-number': lineNumber,
                   'data-clickable-line': props.lines && props.lines[lineNumber] ? 'true' : 'false',
                   'data-active-line': lineNumber === clickedLine,
-                  onClick() {
-                    const isClicked = clickedLine === lineNumber;
-                    if (props.lines && !isUndefined(props.lines[lineNumber]) && !isClicked) {
-                      setClickedLine(lineNumber);
-                    } else {
-                      cleanClickedLine();
-                    }
-                  },
+                  onClick: onLineClick,
+                  ...(isHeader && {
+                    'data-section-header': 'true',
+                    'aria-expanded': !collapsedSections.includes(lineNumber),
+                    tabIndex: 0,
+                    onKeyDown: onLineKeyDown,
+                  }),
                 };
               }}
             >

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import ValuesView from './ValuesView';
@@ -203,6 +203,82 @@ describe('ValuesView', () => {
 
       expect(updateUrlMock).toHaveBeenCalledTimes(1);
       expect(updateUrlMock).toHaveBeenCalledWith({});
+
+      jest.useRealTimers();
+    });
+  });
+
+  describe('Collapsible sections', () => {
+    const sectionProps = {
+      ...defaultProps,
+      values: 'global:\n  a: 1\n  b:\n    c: 2\n\ndeployment:\n  replicas: 1\n',
+      lines: {
+        1: 'global',
+        2: 'global.a',
+        3: 'global.b',
+        4: 'global.b.c',
+        6: 'deployment',
+        7: 'deployment.replicas',
+      },
+      sections: { 1: 4, 6: 7 },
+    };
+
+    it('renders section headers with aria-expanded', () => {
+      render(<ValuesView {...sectionProps} />);
+
+      expect(document.getElementById('line_1')).toHaveAttribute('data-section-header', 'true');
+      expect(document.getElementById('line_1')).toHaveAttribute('aria-expanded', 'true');
+      expect(document.getElementById('line_2')).not.toHaveAttribute('data-section-header');
+    });
+
+    it('collapses and expands section on gutter click', () => {
+      render(<ValuesView {...sectionProps} />);
+
+      const header = document.getElementById('line_1')!;
+      fireEvent.click(header);
+      expect(header).toHaveAttribute('aria-expanded', 'false');
+      expect(document.getElementById('line_2')).toHaveAttribute('hidden');
+      expect(document.getElementById('line_4')).toHaveAttribute('hidden');
+      expect(document.getElementById('line_6')).not.toHaveAttribute('hidden');
+
+      fireEvent.click(header);
+      expect(header).toHaveAttribute('aria-expanded', 'true');
+      expect(document.getElementById('line_2')).not.toHaveAttribute('hidden');
+    });
+
+    it('still opens copy path dropdown when clicking line content', () => {
+      render(<ValuesView {...sectionProps} />);
+
+      fireEvent.click(screen.getByText(/replicas/));
+      expect(screen.getByRole('button', { name: 'Copy entry path to clipboard' })).toBeInTheDocument();
+    });
+
+    it('toggles section with keyboard', () => {
+      render(<ValuesView {...sectionProps} />);
+
+      const header = document.getElementById('line_1')!;
+      fireEvent.keyDown(header, { key: 'Enter' });
+      expect(header).toHaveAttribute('aria-expanded', 'false');
+
+      fireEvent.keyDown(header, { key: ' ' });
+      expect(header).toHaveAttribute('aria-expanded', 'true');
+    });
+
+    it('expands collapsed section containing a deep linked path', () => {
+      jest.useFakeTimers();
+      window.HTMLElement.prototype.scrollTo = jest.fn();
+
+      render(<ValuesView {...sectionProps} visibleValuesPath="global.b.c" />);
+
+      fireEvent.click(document.getElementById('line_1')!);
+      expect(document.getElementById('line_4')).toHaveAttribute('hidden');
+
+      act(() => {
+        jest.advanceTimersByTime(200);
+      });
+
+      expect(document.getElementById('line_4')).not.toHaveAttribute('hidden');
+      expect(document.getElementById('line_1')).toHaveAttribute('aria-expanded', 'true');
 
       jest.useRealTimers();
     });
