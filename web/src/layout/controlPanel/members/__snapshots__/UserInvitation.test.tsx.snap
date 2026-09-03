@@ -53,7 +53,7 @@ exports[`UserInvitation > creates snapshot 1`] = `
                   fill="none"
                 />
                 <path
-                  d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"
+                  d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"
                 />
               </svg>
               You have accepted the invitation to join the organization.

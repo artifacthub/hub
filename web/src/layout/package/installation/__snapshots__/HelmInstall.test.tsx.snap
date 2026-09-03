@@ -18,7 +18,7 @@ exports[`HelmInstall > creates snapshot 1`] = `
       class="flex-grow-1 _blockWrapper_c0c294"
     >
       <pre
-        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
+        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-position-x: 0%; background-position-y: 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
       >
         <code
           class="language-bash"
@@ -89,7 +89,7 @@ exports[`HelmInstall > creates snapshot 1`] = `
       class="flex-grow-1 _blockWrapper_c0c294"
     >
       <pre
-        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
+        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background-image: none; background-position: 0% 0%; background-position-x: 0%; background-position-y: 0%; background-size: auto; background-repeat: repeat; background-origin: padding-box; background-clip: border-box; background-attachment: scroll; background-color: var(--color-1-10);"
       >
         <code
           class="language-bash"

@@ -1,9 +1,12 @@
-// eslint.config.js
+import { createRequire } from 'node:module';
 
-const { createRequire } = require('module');
-const js = require('@eslint/js');
-const simpleImportSort = require('eslint-plugin-simple-import-sort');
-const tseslint = require('typescript-eslint');
+import js from '@eslint/js';
+import reactHooks from 'eslint-plugin-react-hooks';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+
+const require = createRequire(import.meta.url);
 const requireFromTsEslint = createRequire(require.resolve('typescript-eslint/package.json'));
 const tsestreeForTypescriptEslint = requireFromTsEslint('@typescript-eslint/typescript-estree');
 
@@ -12,10 +15,8 @@ if (typeof tsestreeForTypescriptEslint.addCandidateTSConfigRootDir !== 'function
   tsestreeForTypescriptEslint.addCandidateTSConfigRootDir =
     modernTsestree.addCandidateTSConfigRootDir || (() => {});
 }
-const reactHooks = require('eslint-plugin-react-hooks');
-const globals = require('globals');
 
-module.exports = [
+export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

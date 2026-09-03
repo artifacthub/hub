@@ -13,7 +13,7 @@ RUN apk --no-cache add jq
 WORKDIR /web
 COPY web .
 ENV NODE_OPTIONS=--max_old_space_size=4096
-RUN yarn install
+RUN yarn install --frozen-lockfile
 RUN yarn build
 
 # Build widget
@@ -21,7 +21,7 @@ FROM node:24-alpine3.23 AS widget-builder
 WORKDIR /widget
 COPY widget .
 ENV NODE_OPTIONS=--max_old_space_size=4096
-RUN yarn install
+RUN yarn install --frozen-lockfile
 RUN yarn build
 
 # Build docs

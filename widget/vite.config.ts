@@ -19,7 +19,7 @@ export default defineConfig({
     assetsDir: 'static',
     emptyOutDir: true,
     sourcemap: true,
-    rollupOptions: {
+    rolldownOptions: {
       input: fileURLToPath(new URL('./index.html', import.meta.url)),
       output: {
         entryFileNames: 'static/js/artifacthub-widget.js',
@@ -30,7 +30,7 @@ export default defineConfig({
           }
           return 'static/media/[name][extname]';
         },
-        inlineDynamicImports: true,
+        codeSplitting: false,
       },
     },
   },

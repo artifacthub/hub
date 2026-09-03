@@ -53,7 +53,7 @@ export default defineConfig({
     assetsDir: 'static',
     emptyOutDir: true,
     sourcemap: true,
-    rollupOptions: {
+    rolldownOptions: {
       output: {
         entryFileNames: (chunkInfo) =>
           chunkInfo.name === 'index'

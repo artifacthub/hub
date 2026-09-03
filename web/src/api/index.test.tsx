@@ -41,6 +41,17 @@ const getData = (fixtureId: string): any => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as any;
 };
 
+const mockNoContentResponse = () => {
+  fetchMock.mockResponse(
+    new Response(null, {
+      headers: {
+        'content-type': 'text/plain; charset=utf-8',
+      },
+      status: 204,
+    })
+  );
+};
+
 const getCSRFTokenMock = jest.fn();
 
 describe('API', () => {
@@ -158,12 +169,7 @@ describe('API', () => {
 
     describe('toggleStar', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.toggleStar('pkgID');
 
@@ -314,12 +320,7 @@ describe('API', () => {
 
     describe('verifyEmail', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.verifyEmail('123abc');
 
@@ -334,12 +335,7 @@ describe('API', () => {
     describe('login', () => {
       it('success', async () => {
         const user: UserLogin = getData('9') as UserLogin;
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.login(user);
 
@@ -353,12 +349,7 @@ describe('API', () => {
 
     describe('logout', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.logout();
 
@@ -388,12 +379,7 @@ describe('API', () => {
 
     describe('checkPasswordStrength', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.checkPasswordStrength('testTest.12');
 
@@ -476,12 +462,7 @@ describe('API', () => {
 
     describe('deleteRepository', () => {
       it('success from user', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.deleteRepository('repo1');
 
@@ -492,12 +473,7 @@ describe('API', () => {
       });
 
       it('success from org', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.deleteRepository('repo1', 'org1');
 
@@ -511,12 +487,7 @@ describe('API', () => {
     describe('updateRepository', () => {
       it('success from user', async () => {
         const repo: Repository = getData('13') as Repository;
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.updateRepository(repo);
 
@@ -531,12 +502,7 @@ describe('API', () => {
 
       it('success from org', async () => {
         const repo: Repository = getData('13') as Repository;
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.updateRepository(repo, 'org1');
 
@@ -552,12 +518,7 @@ describe('API', () => {
 
     describe('transferRepository', () => {
       it('from org to user', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.transferRepository({
           repositoryName: 'repo1',
@@ -571,12 +532,7 @@ describe('API', () => {
       });
 
       it('from org to org', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.transferRepository({
           repositoryName: 'repo1',
@@ -591,12 +547,7 @@ describe('API', () => {
       });
 
       it('from user to org', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.transferRepository({
           repositoryName: 'repo1',
@@ -632,12 +583,7 @@ describe('API', () => {
 
         it('is available', async () => {
           const resource: CheckAvailabilityProps = getData('14a') as CheckAvailabilityProps;
-          fetchMock.mockResponse('', {
-            headers: {
-              'content-type': 'text/plain; charset=utf-8',
-            },
-            status: 204,
-          });
+          mockNoContentResponse();
 
           const response = await API.checkAvailability(resource);
 
@@ -688,12 +634,7 @@ describe('API', () => {
 
         it('is available', async () => {
           const resource: CheckAvailabilityProps = getData('14b') as CheckAvailabilityProps;
-          fetchMock.mockResponse('', {
-            headers: {
-              'content-type': 'text/plain; charset=utf-8',
-            },
-            status: 204,
-          });
+          mockNoContentResponse();
 
           const response = await API.checkAvailability(resource);
 
@@ -744,12 +685,7 @@ describe('API', () => {
 
         it('is available', async () => {
           const resource: CheckAvailabilityProps = getData('14c') as CheckAvailabilityProps;
-          fetchMock.mockResponse('', {
-            headers: {
-              'content-type': 'text/plain; charset=utf-8',
-            },
-            status: 204,
-          });
+          mockNoContentResponse();
 
           const response = await API.checkAvailability(resource);
 
@@ -800,12 +736,7 @@ describe('API', () => {
 
         it('is available', async () => {
           const resource: CheckAvailabilityProps = getData('14d') as CheckAvailabilityProps;
-          fetchMock.mockResponse('', {
-            headers: {
-              'content-type': 'text/plain; charset=utf-8',
-            },
-            status: 204,
-          });
+          mockNoContentResponse();
 
           const response = await API.checkAvailability(resource);
 
@@ -900,12 +831,7 @@ describe('API', () => {
     describe('updateOrganization', () => {
       it('success', async () => {
         const org: Organization = getData('18') as Organization;
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.updateOrganization(org, 'artifacthub');
 
@@ -923,12 +849,7 @@ describe('API', () => {
 
     describe('deleteOrganization', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.deleteOrganization('org1');
 
@@ -978,12 +899,7 @@ describe('API', () => {
 
     describe('deleteOrganizationMember', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.deleteOrganizationMember('artifacthub', 'user1');
 
@@ -996,12 +912,7 @@ describe('API', () => {
 
     describe('confirmOrganizationMembership', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.confirmOrganizationMembership('org1');
 
@@ -1033,12 +944,7 @@ describe('API', () => {
     describe('updateUserProfile', () => {
       it('success', async () => {
         const profile: UserFullName = getData('21') as UserFullName;
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.updateUserProfile(profile);
 
@@ -1060,12 +966,7 @@ describe('API', () => {
 
     describe('updatePassword', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.updatePassword('old', 'new');
 
@@ -1123,12 +1024,7 @@ describe('API', () => {
 
     describe('addSubscription', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.addSubscription('pkgId', 0);
 
@@ -1142,12 +1038,7 @@ describe('API', () => {
 
     describe('deleteSubscription', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.deleteSubscription('pkgId', 0);
 
@@ -1313,12 +1204,7 @@ describe('API', () => {
 
     describe('deleteWebhook', () => {
       it('success from user', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.deleteWebhook('webhook1');
 
@@ -1329,12 +1215,7 @@ describe('API', () => {
       });
 
       it('success from org', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.deleteWebhook('webhook1', 'org1');
 
@@ -1348,12 +1229,7 @@ describe('API', () => {
     describe('updateWebhook', () => {
       it('success from user', async () => {
         const webhook: Webhook = getData('27') as Webhook;
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.updateWebhook(webhook);
 
@@ -1379,12 +1255,7 @@ describe('API', () => {
 
       it('success from org', async () => {
         const webhook: Webhook = getData('27') as Webhook;
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.updateWebhook(webhook, 'org1');
 
@@ -1412,12 +1283,7 @@ describe('API', () => {
     describe('triggerWebhookTest', () => {
       it('success', async () => {
         const webhook: TestWebhook = getData('28') as TestWebhook;
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.triggerWebhookTest(webhook);
 
@@ -1475,7 +1341,7 @@ describe('API', () => {
           headers: {
             'content-type': 'application/json',
           },
-          status: 204,
+          status: 201,
         });
 
         const response = await API.addAPIKey('test');
@@ -1489,12 +1355,7 @@ describe('API', () => {
 
     describe('updateAPIKey', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.updateAPIKey('apiKeyId', 'newName');
 
@@ -1512,12 +1373,7 @@ describe('API', () => {
 
     describe('deleteAPIKey', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.deleteAPIKey('apiKeyId');
 
@@ -1549,12 +1405,7 @@ describe('API', () => {
 
     describe('addOptOut', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.addOptOut('repoId', 2);
 
@@ -1568,12 +1419,7 @@ describe('API', () => {
 
     describe('deleteOptOut', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.deleteOptOut('optOutId');
 
@@ -1586,12 +1432,7 @@ describe('API', () => {
 
     describe('transferRepository', () => {
       it('from org to user', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const mockRepo = {
           name: 'repo1',
@@ -1610,12 +1451,7 @@ describe('API', () => {
       });
 
       it('from org to org', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const mockRepo = {
           name: 'repo1',
@@ -1634,12 +1470,7 @@ describe('API', () => {
       });
 
       it('from user to org', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const mockRepo = {
           name: 'repo1',
@@ -1658,12 +1489,7 @@ describe('API', () => {
       });
 
       it('from user to user', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const mockRepo = {
           name: 'repo1',
@@ -1702,12 +1528,7 @@ describe('API', () => {
 
     describe('updateAuthorizationPolicy', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const policy = {
           authorizationEnabled: true,
@@ -1859,12 +1680,7 @@ describe('API', () => {
 
     describe('trackView', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.trackView('pkgID', '1.0.0');
 
@@ -2016,12 +1832,7 @@ describe('API', () => {
 
     describe('resetPassword', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.resetPassword('code', 'pass');
 
@@ -2073,12 +1884,7 @@ describe('API', () => {
 
     describe('enableTFA', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.enableTFA('pass');
 
@@ -2091,12 +1897,7 @@ describe('API', () => {
 
     describe('disableTFA', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.disableTFA('pass');
 
@@ -2109,12 +1910,7 @@ describe('API', () => {
 
     describe('approveSession', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.approveSession('pass');
 
@@ -2127,12 +1923,7 @@ describe('API', () => {
 
     describe('registerDeleteUserCode', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.registerDeleteUserCode();
 
@@ -2144,12 +1935,7 @@ describe('API', () => {
 
     describe('deleteUser', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.deleteUser('code');
 
@@ -2259,12 +2045,7 @@ describe('API', () => {
 
     describe('addProductionUsage', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.addProductionUsage(
           {
@@ -2284,12 +2065,7 @@ describe('API', () => {
 
     describe('deleteProductionUsage', () => {
       it('success', async () => {
-        fetchMock.mockResponse('', {
-          headers: {
-            'content-type': 'text/plain; charset=utf-8',
-          },
-          status: 204,
-        });
+        mockNoContentResponse();
 
         const response = await API.deleteProductionUsage(
           {
