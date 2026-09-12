@@ -58,10 +58,13 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Kubernetes version
 Built-in object .Capabilities.KubeVersion.Minor can provide non-number output
 For example on GKE it returns "15+" instead of "15"
+This will always evaluate to vMajor.Minor.0 as rancher/kubectl does not publish
+Major.Minor versions.
 */}}
+
 {{- define "chart.KubernetesVersion" -}}
 {{- $minorVersion := .Capabilities.KubeVersion.Minor | regexFind "[0-9]+" -}}
-{{- printf "%s.%s" .Capabilities.KubeVersion.Major $minorVersion -}}
+{{- printf "%s.%s.0" .Capabilities.KubeVersion.Major $minorVersion -}}
 {{- end -}}
 
 {{/*
