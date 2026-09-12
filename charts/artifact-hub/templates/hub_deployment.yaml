@@ -57,7 +57,7 @@ spec:
         - {{- include "chart.checkDbIsReadyInitContainer" . | nindent 10 }}
         {{- if .Release.IsInstall }}
         - name: check-db-migrator-run
-          image: "{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.repository }}:{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.tag | default (include "chart.KubernetesVersion" . ) }}"
+          image: "{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.repository }}:{{ .Values.hub.deploy.initContainers.checkDbMigrator.image.tag | default (printf "v%s" (include "chart.KubernetesVersion" . )) }}"
           imagePullPolicy: {{ .Values.pullPolicy }}
           {{- with .Values.hub.deploy.initContainers.checkDbMigrator.resources }}
           resources:
