@@ -34,6 +34,8 @@ By default, Artifact Hub will try to extract the containers images used by Helm 
 
 Containers images will be scanned for security vulnerabilities. The security report generated will be available in the package detail view. It is possible to whitelist images so that they are not scanned by setting the `whitelisted` flag to true.
 
+When the standard [helm.sh/images](#standard-annotations) annotation is also present, the images listed in it are processed first and the ones provided in this annotation are added to that list. Entries using an image reference already listed in the `helm.sh/images` annotation override the existing one, which allows extending them with Artifact Hub specific fields like `whitelisted` or `platforms`.
+
 - **artifacthub.io/crds** *(yaml string, see example below)*
 
 This annotation can be used to list the operator's CRDs. They will be visible in the package's detail view as cards.
@@ -82,12 +84,27 @@ This annotation can be used to provide some screenshots that will be featured in
 
 This annotation can be used to provide some information about the key used to sign a given chart version. This information will be displayed on the Artifact Hub UI, making it easier for users to get the information they need to verify the integrity and origin of your chart. The `url` field indicates where users can find the public key and it is mandatory when a sign key entry is provided.
 
+## Standard annotations
+
+In addition to the Artifact Hub specific annotations listed above, some standard annotations defined by the Helm community are supported as well.
+
+- **helm.sh/images** *(yaml string, see example below)*
+
+This annotation, defined in [HIP-0015](https://github.com/helm/community/blob/main/hips/hip-0015.md), allows chart maintainers to list the containers images used by the chart. Each entry must provide at least a `name` and an `image` field. Additional fields, like the Artifact Hub specific `whitelisted` and `platforms` ones, may be provided as well.
+
+The images listed in this annotation are processed **before** the ones in the `artifacthub.io/images` annotation, and both lists are combined. Please see the [artifacthub.io/images](#supported-annotations) annotation for more details about how they are merged. Containers images provided this way replace the ones Artifact Hub extracts automatically from the manifests generated from a dry-run install using the default values.
+
 ## Example
 
 Artifact Hub annotations in `Chart.yaml`:
 
 ```yaml
 annotations:
+  helm.sh/images: |
+    - name: img1
+      image: repo/img1:1.0.0
+    - name: img2
+      image: repo/img2:2.0.0
   artifacthub.io/category: security
   artifacthub.io/changes: |
     - Added cool feature
