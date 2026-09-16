@@ -725,6 +725,88 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			&hub.Package{},
 			"invalid image reference: could not parse reference",
 		},
+		{
+			&hub.Package{},
+			map[string]string{
+				helmImagesAnnotation: `
+- name: img1
+  image: repo/img1:1.0.0
+- name: img2
+  image: repo/img2:2.0.0
+`,
+			},
+			&hub.Package{
+				ContainersImages: []*hub.ContainerImage{
+					{
+						Name:  "img1",
+						Image: "repo/img1:1.0.0",
+					},
+					{
+						Name:  "img2",
+						Image: "repo/img2:2.0.0",
+					},
+				},
+			},
+			"",
+		},
+		{
+			&hub.Package{},
+			map[string]string{
+				helmImagesAnnotation: `
+- name: img1
+  image: repo/img1:1.0.0
+- name: img2
+  image: repo/img2:2.0.0
+`,
+				imagesAnnotation: `
+- name: img2
+  image: repo/img2:2.0.0
+  whitelisted: true
+- name: img3
+  image: repo/img3:3.0.0
+  platforms:
+    - linux/amd64
+`,
+			},
+			&hub.Package{
+				ContainersImages: []*hub.ContainerImage{
+					{
+						Name:  "img1",
+						Image: "repo/img1:1.0.0",
+					},
+					{
+						Name:        "img2",
+						Image:       "repo/img2:2.0.0",
+						Whitelisted: true,
+					},
+					{
+						Name:      "img3",
+						Image:     "repo/img3:3.0.0",
+						Platforms: []string{"linux/amd64"},
+					},
+				},
+			},
+			"",
+		},
+		{
+			&hub.Package{},
+			map[string]string{
+				helmImagesAnnotation: `
+- name: img1
+  image: ":"
+`,
+			},
+			&hub.Package{},
+			"invalid image reference: could not parse reference",
+		},
+		{
+			&hub.Package{},
+			map[string]string{
+				helmImagesAnnotation: "-",
+			},
+			&hub.Package{},
+			"invalid annotation: invalid helm images value",
+		},
 		// License
 		{
 			&hub.Package{},

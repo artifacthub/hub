@@ -54,6 +54,8 @@ const (
 	securityUpdatesAnnotation      = "artifacthub.io/containsSecurityUpdates"
 	signKeyAnnotation              = "artifacthub.io/signKey"
 
+	helmImagesAnnotation = "helm.sh/images"
+
 	legacyChartContentLayerMediaType = "application/tar+gzip"
 	ChartContentLayerMediaType       = "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
 	ChartProvenanceLayerMediaType    = "application/vnd.cncf.helm.chart.provenance.v1.prov"
@@ -659,11 +661,34 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	}
 
 	// Images
-	if v, ok := annotations[imagesAnnotation]; ok {
+	// The images provided in the helm.sh/images annotation are processed
+	// first. The ones provided in the artifacthub.io/images annotation are
+	// added to that list, overriding the entries that use the same image
+	// reference.
+	helmImagesValue, helmImagesProvided := annotations[helmImagesAnnotation]
+	hubImagesValue, hubImagesProvided := annotations[imagesAnnotation]
+	if helmImagesProvided || hubImagesProvided {
 		var images []*hub.ContainerImage
-		if err := yaml.Unmarshal([]byte(v), &images); err != nil {
-			errs = multierror.Append(errs, fmt.Errorf("%w: invalid images value", errInvalidAnnotation))
-		} else {
+		imagesParsed := true
+		if helmImagesProvided {
+			helmImages, err := parseContainersImages(helmImagesValue)
+			if err != nil {
+				errs = multierror.Append(errs, fmt.Errorf("%w: invalid helm images value", errInvalidAnnotation))
+				imagesParsed = false
+			} else {
+				images = helmImages
+			}
+		}
+		if hubImagesProvided {
+			hubImages, err := parseContainersImages(hubImagesValue)
+			if err != nil {
+				errs = multierror.Append(errs, fmt.Errorf("%w: invalid images value", errInvalidAnnotation))
+				imagesParsed = false
+			} else {
+				images = mergeContainersImages(images, hubImages)
+			}
+		}
+		if imagesParsed {
 			if err := pkg.ValidateContainersImages(hub.Helm, images); err != nil {
 				errs = multierror.Append(errs, fmt.Errorf("%w: %w", errInvalidAnnotation, err))
 			} else {
@@ -820,4 +845,40 @@ func contains(l []string, e string) bool {
 		}
 	}
 	return false
+}
+
+// parseContainersImages parses the containers images provided in an
+// annotation's value.
+func parseContainersImages(v string) ([]*hub.ContainerImage, error) {
+	var images []*hub.ContainerImage
+	if err := yaml.Unmarshal([]byte(v), &images); err != nil {
+		return nil, err
+	}
+	for _, image := range images {
+		if image == nil {
+			return nil, errors.New("invalid containers images entry")
+		}
+	}
+	return images, nil
+}
+
+// mergeContainersImages adds the extra containers images provided to the base
+// list. Entries using an image reference already present in the base list
+// override the existing one.
+func mergeContainersImages(base, extra []*hub.ContainerImage) []*hub.ContainerImage {
+	images := base
+	for _, extraImage := range extra {
+		var found bool
+		for i, image := range images {
+			if image.Image == extraImage.Image {
+				images[i] = extraImage
+				found = true
+				break
+			}
+		}
+		if !found {
+			images = append(images, extraImage)
+		}
+	}
+	return images
 }
