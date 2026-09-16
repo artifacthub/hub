@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ComponentProps } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
 
@@ -23,6 +24,20 @@ vi.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockUseNavigate,
 }));
+
+const mocks = vi.hoisted(() => ({ throwInSecurityTable: false }));
+
+vi.mock('./Table', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('./Table')>();
+  return {
+    default: (props: ComponentProps<typeof actual.default>) => {
+      if (mocks.throwInSecurityTable) {
+        throw new Error('render error');
+      }
+      return <actual.default {...props} />;
+    },
+  };
+});
 
 const defaultProps = {
   repoKind: 0,
@@ -278,6 +293,39 @@ describe('SecurityModal', () => {
       });
 
       expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    });
+  });
+
+  describe('Error boundary', () => {
+    it('renders fallback inside modal when report rendering fails', async () => {
+      const spy = jest.spyOn(console, 'error');
+      spy.mockImplementation(() => {});
+      mocks.throwInSecurityTable = true;
+
+      const mockReport = getMockSecurityReport('1');
+      vi.mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+
+      render(
+        <Router>
+          <SecurityModal {...defaultProps} visibleSecurityReport />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
+      });
+
+      expect(await screen.findByRole('dialog')).toBeInTheDocument();
+      expect(
+        await screen.findByText('Something went wrong rendering the security report of this package.')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(/indicating the URL of the package you are experiencing problems with/i)
+      ).toBeInTheDocument();
+      expect(screen.queryByText('Vulnerabilities details')).toBeNull();
+
+      mocks.throwInSecurityTable = false;
+      spy.mockRestore();
     });
   });
 });

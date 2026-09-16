@@ -127,6 +127,30 @@ describe('CVSSVector', () => {
       expect(screen.getByText('8.1')).toBeInTheDocument();
     });
 
+    it('falls back to a source with a supported vector when provided source has none', () => {
+      render(
+        <CVSSVector
+          {...defaultProps}
+          source="ghsa"
+          CVSS={{
+            ghsa: {
+              V40Score: 8.7,
+              V40Vector: 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N',
+            },
+            nvd: {
+              V3Score: 7.5,
+              V3Vector: 'CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N',
+            },
+          }}
+        />
+      );
+
+      expect(screen.getByText('CVSS v3 Vector')).toBeInTheDocument();
+      expect(screen.getByText(/nvd/)).toBeInTheDocument();
+      expect(screen.getByText('7.5')).toBeInTheDocument();
+      expect(screen.getByTestId('metric_I_H')).toHaveClass('opacity-100');
+    });
+
     for (let i = 0; i < activeMetrics.length; i++) {
       it('returns proper activemetrics', () => {
         const props = {
@@ -153,6 +177,24 @@ describe('CVSSVector', () => {
       const props = {
         ...defaultProps,
         CVSS: {},
+      };
+      const { container } = render(<CVSSVector {...props} />);
+      expect(container).toBeEmptyDOMElement();
+    });
+
+    it('when no source has a supported vector', () => {
+      const props = {
+        ...defaultProps,
+        source: 'ghsa',
+        CVSS: {
+          ghsa: {
+            V40Score: 8.7,
+            V40Vector: 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N',
+          },
+          nvd: {
+            V3Score: 7.5,
+          },
+        },
       };
       const { container } = render(<CVSSVector {...props} />);
       expect(container).toBeEmptyDOMElement();

@@ -16,8 +16,14 @@ interface Props {
   severity: VulnerabilitySeverity;
 }
 
+const hasSupportedVector = (CVSS: Props['CVSS'], source: string): boolean => {
+  const vectorSource = CVSS[source];
+  return !isUndefined(vectorSource) && (!isUndefined(vectorSource.V3Vector) || !isUndefined(vectorSource.V2Vector));
+};
+
 const CVSSVector = (props: Props) => {
-  const sources = Object.keys(props.CVSS);
+  // Only v2 and v3 vectors are supported, so skip sources exposing other versions only (e.g. v4)
+  const sources = Object.keys(props.CVSS).filter((source: string) => hasSupportedVector(props.CVSS, source));
   if (sources.length === 0) return null;
   const activeSource = !isUndefined(props.source) && sources.includes(props.source) ? props.source : sources[0];
   const vectorSource = props.CVSS[activeSource];

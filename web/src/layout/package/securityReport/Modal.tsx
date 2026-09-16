@@ -16,6 +16,7 @@ import {
   prepareFixableSummary,
   prepareUniqueVulnerabilitiesSummary,
 } from '../../../utils/vulnerabilities';
+import ErrorBoundary from '../../common/ErrorBoundary';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
 import OldVulnerabilitiesWarning from './OldVulnerabilitiesWarning';
@@ -211,100 +212,102 @@ const SecurityModal = (props: Props) => {
           breakPoint="md"
           footerClassName={styles.modalFooter}
         >
-          <div ref={contentWrapper} className="m-3 h-100">
-            <SectionBtn
-              title="Summary"
-              name="summary"
-              className="mt-0 pb-2"
-              visibleSection={props.visibleSection}
-              onClick={() => onClickSection('summary')}
-            />
-
-            {/* Warning */}
-            <OldVulnerabilitiesWarning fixableReport={fixableReport} />
-
-            {props.totalVulnerabilities > 0 && !isUndefined(fixableReportSummary) && (
-              <>
-                <SummaryTable
-                  report={report}
-                  fixableVulnerabilities={fixableReportSummary}
-                  hasWhitelistedContainers={props.hasWhitelistedContainers}
-                  allVulnerabilitiesAreFixable={allVulnerabilitiesAreFixable}
-                />
-              </>
-            )}
-
-            {!isUndefined(fixableReportSummary) && (
-              <SecuritySummary
-                repoKind={props.repoKind}
-                summary={props.summary}
-                totalVulnerabilities={props.totalVulnerabilities}
-                fixableSummary={fixableReportSummary.summary}
-                totalFixableVulnerabilities={fixableReportSummary.total}
-                allVulnerabilitiesAreFixable={allVulnerabilitiesAreFixable}
-                uniqueSummary={uniqueSummary}
-                totalUniqueVulnerabilities={totalUniqueVulnerabilities}
+          <ErrorBoundary message="Something went wrong rendering the security report of this package.">
+            <div ref={contentWrapper} className="m-3 h-100">
+              <SectionBtn
+                title="Summary"
+                name="summary"
+                className="mt-0 pb-2"
+                visibleSection={props.visibleSection}
+                onClick={() => onClickSection('summary')}
               />
-            )}
 
-            {/* We wait until contentHeight is defined to be sure the scroll goes to the correct position */}
-            {!isEmpty(report) && !isUndefined(contentHeight) && (
-              <>
-                <SectionBtn
-                  title="Vulnerabilities details"
-                  name="vulnerabilities"
-                  className="mt-3"
-                  visibleSection={props.visibleSection}
-                  onClick={() => onClickSection('vulnerabilities')}
-                  rightElement={
-                    !allVulnerabilitiesAreFixable ? (
-                      <div className={`form-check form-switch ${styles.clickable}`}>
-                        <input
-                          id="fixable-vulnerabilities"
-                          type="checkbox"
-                          role="switch"
-                          className={`form-check-input ${styles.checkbox}`}
-                          onChange={() => {
-                            setShowOnlyFixableVulnerabilities(!showOnlyFixableVulnerabilities);
-                          }}
-                          checked={showOnlyFixableVulnerabilities}
-                        />
-                        <label className="form-check-label" htmlFor="fixable-vulnerabilities">
-                          Only display fixable vulnerabilities
-                        </label>
-                      </div>
-                    ) : undefined
-                  }
+              {/* Warning */}
+              <OldVulnerabilitiesWarning fixableReport={fixableReport} />
+
+              {props.totalVulnerabilities > 0 && !isUndefined(fixableReportSummary) && (
+                <>
+                  <SummaryTable
+                    report={report}
+                    fixableVulnerabilities={fixableReportSummary}
+                    hasWhitelistedContainers={props.hasWhitelistedContainers}
+                    allVulnerabilitiesAreFixable={allVulnerabilitiesAreFixable}
+                  />
+                </>
+              )}
+
+              {!isUndefined(fixableReportSummary) && (
+                <SecuritySummary
+                  repoKind={props.repoKind}
+                  summary={props.summary}
+                  totalVulnerabilities={props.totalVulnerabilities}
+                  fixableSummary={fixableReportSummary.summary}
+                  totalFixableVulnerabilities={fixableReportSummary.total}
+                  allVulnerabilitiesAreFixable={allVulnerabilitiesAreFixable}
+                  uniqueSummary={uniqueSummary}
+                  totalUniqueVulnerabilities={totalUniqueVulnerabilities}
                 />
+              )}
 
-                {report && (
-                  <div className="py-3">
-                    {Object.keys(report).map((image: string, index: number) => {
-                      return (
-                        <div key={`image_${image}`} className={classnames({ 'mt-2': index !== 0 })}>
-                          <SecurityTable
-                            image={image}
-                            reports={report[image].Results}
-                            fixableReports={fixableReport ? fixableReport[image].Results : []}
-                            visibleImage={visibleImage}
-                            setVisibleImage={setVisibleImage}
-                            visibleTarget={visibleTarget}
-                            setVisibleTarget={setVisibleTarget}
-                            expandedTarget={expandedTarget}
-                            setExpandedTarget={setExpandedTarget}
-                            hasOnlyOneTarget={hasOnlyOneTarget}
-                            lastReport={index === Object.keys(report).length - 1}
-                            contentHeight={contentHeight}
-                            showOnlyFixableVulnerabilities={showOnlyFixableVulnerabilities}
+              {/* We wait until contentHeight is defined to be sure the scroll goes to the correct position */}
+              {!isEmpty(report) && !isUndefined(contentHeight) && (
+                <>
+                  <SectionBtn
+                    title="Vulnerabilities details"
+                    name="vulnerabilities"
+                    className="mt-3"
+                    visibleSection={props.visibleSection}
+                    onClick={() => onClickSection('vulnerabilities')}
+                    rightElement={
+                      !allVulnerabilitiesAreFixable ? (
+                        <div className={`form-check form-switch ${styles.clickable}`}>
+                          <input
+                            id="fixable-vulnerabilities"
+                            type="checkbox"
+                            role="switch"
+                            className={`form-check-input ${styles.checkbox}`}
+                            onChange={() => {
+                              setShowOnlyFixableVulnerabilities(!showOnlyFixableVulnerabilities);
+                            }}
+                            checked={showOnlyFixableVulnerabilities}
                           />
+                          <label className="form-check-label" htmlFor="fixable-vulnerabilities">
+                            Only display fixable vulnerabilities
+                          </label>
                         </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </>
-            )}
-          </div>
+                      ) : undefined
+                    }
+                  />
+
+                  {report && (
+                    <div className="py-3">
+                      {Object.keys(report).map((image: string, index: number) => {
+                        return (
+                          <div key={`image_${image}`} className={classnames({ 'mt-2': index !== 0 })}>
+                            <SecurityTable
+                              image={image}
+                              reports={report[image].Results}
+                              fixableReports={fixableReport ? fixableReport[image].Results : []}
+                              visibleImage={visibleImage}
+                              setVisibleImage={setVisibleImage}
+                              visibleTarget={visibleTarget}
+                              setVisibleTarget={setVisibleTarget}
+                              expandedTarget={expandedTarget}
+                              setExpandedTarget={setExpandedTarget}
+                              hasOnlyOneTarget={hasOnlyOneTarget}
+                              lastReport={index === Object.keys(report).length - 1}
+                              contentHeight={contentHeight}
+                              showOnlyFixableVulnerabilities={showOnlyFixableVulnerabilities}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          </ErrorBoundary>
         </Modal>
       )}
     </>
