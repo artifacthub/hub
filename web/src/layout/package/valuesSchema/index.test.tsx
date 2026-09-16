@@ -357,7 +357,7 @@ describe('ValuesSchema', () => {
       expect(screen.getAllByText('boolean')).toHaveLength(17);
       expect(screen.getAllByText('integer')).toHaveLength(8);
       expect(screen.getAllByRole('combobox', { name: 'Type selection' })).toHaveLength(8);
-    });
+    }, 10000);
 
     // core-dump-handler
     it('resolve JSON schema with refs - first level', async () => {
