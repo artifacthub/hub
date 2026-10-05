@@ -259,4 +259,97 @@ func TestTrackerSource(t *testing.T) {
 		assert.NoError(t, err)
 		sw.AssertExpectations(t)
 	})
+
+	t.Run("ignored package not returned, logo not processed (package manifest format)", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{},
+			RepositoryMetadata: &hub.RepositoryMetadata{
+				Ignore: []*hub.RepositoryIgnoreEntry{{Name: "test-operator", Version: `^0\.1\.0$`}},
+			},
+			BasePath: "testdata/path4",
+			Svc:      sw.Svc,
+		}
+
+		// Run test and check expectations
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
+
+	t.Run("package returned when ignore entry version does not match (package manifest format)", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{},
+			RepositoryMetadata: &hub.RepositoryMetadata{
+				Ignore: []*hub.RepositoryIgnoreEntry{{Name: "test-operator", Version: `^0\.2\.0$`}},
+			},
+			BasePath: "testdata/path4",
+			Svc:      sw.Svc,
+		}
+		sw.Is.On("SaveImage", sw.Svc.Ctx, imageData).Return("logoImageID", nil)
+
+		// Run test and check expectations
+		p := source.ClonePackage(basePkg)
+		p.Repository = i.Repository
+		p.LogoImageID = "logoImageID"
+		p.Digest = "8593896476590401712"
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{
+			pkg.BuildKey(p): p,
+		}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
+
+	t.Run("ignored version not used to set channels (bundle format)", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{},
+			RepositoryMetadata: &hub.RepositoryMetadata{
+				Ignore: []*hub.RepositoryIgnoreEntry{{Name: "test-operator", Version: `^0\.2\.0$`}},
+			},
+			BasePath: "testdata/path5",
+			Svc:      sw.Svc,
+		}
+		sw.Is.On("SaveImage", sw.Svc.Ctx, imageData).Return("logoImageID", nil).Once()
+
+		// Run test and check expectations
+		p := source.ClonePackage(basePkg)
+		p.Repository = i.Repository
+		p.Category = hub.Security
+		p.LogoImageID = "logoImageID"
+		p.Channels = []*hub.Channel{
+			{
+				Name:    "alpha",
+				Version: "0.1.0",
+			},
+			{
+				Name:    "stable",
+				Version: "0.1.0",
+			},
+		}
+		p.DefaultChannel = "stable"
+		p.Data = map[string]interface{}{
+			formatKey:           "bundle",
+			isGlobalOperatorKey: true,
+		}
+		p.Digest = "17802529201523149988"
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{
+			pkg.BuildKey(p): p,
+		}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
 }

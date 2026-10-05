@@ -70,6 +70,7 @@ func (t *Tracker) Run() error {
 	i := &hub.TrackerSourceInput{
 		Repository:         t.r,
 		RepositoryDigest:   remoteDigest,
+		RepositoryMetadata: md,
 		PackagesRegistered: packagesRegistered,
 		BasePath:           basePath,
 		Svc: &hub.TrackerSourceServices{
@@ -104,8 +105,9 @@ func (t *Tracker) Run() error {
 			continue
 		}
 
-		// Check if this package should be ignored
-		if shouldIgnorePackage(md, p.Name, p.Version) {
+		// Check if this package should be ignored (safety net, sources are
+		// expected to have filtered ignored packages already)
+		if md.IgnoresPackage(p.Name, p.Version) {
 			continue
 		}
 
@@ -124,8 +126,11 @@ func (t *Tracker) Run() error {
 		}
 	}
 
-	// Unregister packages not available anymore
-	if len(packagesAvailable) > 0 && !t.r.PackagesDeletionProtection {
+	// Unregister packages not available anymore or ignored. An empty list of
+	// packages available is not trusted to unregister packages (it may be the
+	// result of a transient issue), but ignored packages are always unregistered
+	// as this is an explicit request from the repository owner.
+	if !t.r.PackagesDeletionProtection {
 		for key := range packagesRegistered {
 			// Return ASAP if context is cancelled
 			select {
@@ -136,8 +141,9 @@ func (t *Tracker) Run() error {
 
 			// Unregister pkg if it's not available anymore or if it's ignored
 			name, version := pkg.ParseKey(key)
-			_, ok := packagesAvailable[key]
-			if !ok || shouldIgnorePackage(md, name, version) {
+			_, available := packagesAvailable[key]
+			ignored := md.IgnoresPackage(name, version)
+			if (len(packagesAvailable) > 0 && !available) || ignored {
 				t.logger.Debug().Str("name", name).Str("v", version).Msg("unregistering package")
 				p := &hub.Package{
 					Name:       name,

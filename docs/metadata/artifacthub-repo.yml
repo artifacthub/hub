@@ -8,14 +8,40 @@
 # changed if the `index.yaml` file changes. For git based repositories, it does
 # when the hash of the last commit in the branch you set up changes. This does
 # NOT apply to ownership claim operations, which are processed immediately.
-#
-repositoryID: The ID of the Artifact Hub repository where the packages will be published to (optional, but it enables verified publisher)
+
+# ID of the Artifact Hub repository where the packages will be published to.
+# It is displayed on the repository's card (ID) in the repositories tab of the
+# Artifact Hub control panel. The next time the repository is processed, the
+# repository will be marked as a verified publisher if the ID matches.
+repositoryID: 7a5ac6a4-1a1c-4d2e-9b8f-3f5e2c1d0b9a # (optional, but it enables verified publisher)
+
+# Repository owners, who can claim the ownership of the repository from the
+# Artifact Hub control panel. The user requesting the ownership claim must be
+# listed here, and the email must match the one used to sign in to Artifact
+# Hub. The repositoryID field can be omitted when claiming the ownership, as
+# it isn't known yet.
 owners: # (optional, used to claim repository ownership)
   - name: user1
     email: user1@email.com
   - name: user2
     email: user2@email.com
+
+# Ignored packages are not indexed and Artifact Hub skips as much of their
+# processing as possible, so most errors related to them won't be reported.
+# Some errors may still be reported for them, such as those found while
+# reading their metadata files or preparing their content. Ignored packages
+# already indexed will be removed.
+#
+# The version is a regular expression matched against the package version as
+# displayed in Artifact Hub (e.g. Helm chart versions are normalized, so `v1.0`
+# becomes `1.0.0`). It is not anchored, so `1.0.0` also matches `11.0.0` or
+# `1.0.0-rc.1`: use `^` and `$` to ignore specific versions only. A package
+# can be listed multiple times. For Helm charts and container images, errors
+# found while preparing ignored versions are not reported, so this can be used
+# to stop errors in old versions that can't be fixed from being reported.
 ignore: # (optional, packages that should not be indexed by Artifact Hub)
   - name: package1
   - name: package2 # Exact match
     version: beta # Regular expression (when omitted, all versions are ignored)
+  - name: package3
+    version: ^(1\.0\.0|1\.0\.1)$ # Only versions 1.0.0 and 1.0.1 are ignored

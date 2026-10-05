@@ -114,6 +114,12 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			Name:    path.Base(s.i.Repository.URL),
 			Version: tag.Name,
 		}
+
+		// Skip package versions ignored in the repository metadata
+		if s.i.RepositoryMetadata.IgnoresPackage(p.Name, p.Version) {
+			continue
+		}
+
 		key := pkg.BuildKey(p)
 		if _, ok := s.i.PackagesRegistered[key]; !ok || tag.Mutable {
 			tagsToProcess = append(tagsToProcess, tag.Name)
@@ -153,8 +159,9 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 				s.warn(fmt.Errorf("error preparing package (tag: %s): %w", tag, err))
 				return
 			}
+			key := pkg.BuildKey(p)
 			mu.Lock()
-			packagesAvailable[pkg.BuildKey(p)] = p
+			packagesAvailable[key] = p
 			mu.Unlock()
 		}(tag)
 	}

@@ -103,6 +103,12 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			))
 			continue
 		}
+
+		// Skip package versions ignored in the repository metadata
+		if s.i.RepositoryMetadata.IgnoresPackage(p.Name, p.Version) {
+			continue
+		}
+
 		packagesAvailable[pkg.BuildKey(p)] = p
 	}
 

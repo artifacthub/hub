@@ -337,4 +337,59 @@ func TestTrackerSource(t *testing.T) {
 		assert.NoError(t, err)
 		sw.AssertExpectations(t)
 	})
+
+	t.Run("ignored package not returned, logo not processed", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{
+				Kind: hub.TBAction,
+			},
+			RepositoryMetadata: &hub.RepositoryMetadata{
+				Ignore: []*hub.RepositoryIgnoreEntry{{Name: "pkg1", Version: `^1\.0\.0$`}},
+			},
+			BasePath: "testdata/path4",
+			Svc:      sw.Svc,
+		}
+
+		// Run test and check expectations
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
+
+	t.Run("package returned when ignore entry version does not match", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{
+				Kind: hub.OPA,
+			},
+			RepositoryMetadata: &hub.RepositoryMetadata{
+				Ignore: []*hub.RepositoryIgnoreEntry{{Name: "pkg1", Version: `^2\.0\.0$`}},
+			},
+			BasePath: "testdata/path6",
+			Svc:      sw.Svc,
+		}
+		sw.Is.On("SaveImage", sw.Svc.Ctx, imageData).Return("logoImageID", nil)
+
+		// Run test and check expectations
+		p := source.ClonePackage(basePkg)
+		p.Repository = i.Repository
+		p.LogoImageID = "logoImageID"
+		p.Data[OPAPoliciesKey] = map[string]string{
+			"policy1.rego": "policy content\n",
+		}
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{
+			pkg.BuildKey(p): p,
+		}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
 }

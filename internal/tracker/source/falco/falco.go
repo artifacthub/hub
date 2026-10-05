@@ -81,6 +81,9 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			s.warn(fmt.Errorf("error preparing package: %w", err))
 			return nil
 		}
+		if p == nil {
+			return nil
+		}
 		packagesAvailable[pkg.BuildKey(p)] = p
 
 		return nil
@@ -93,6 +96,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 }
 
 // preparePackage prepares a package version using the rules metadata provided.
+// It returns nil when the package version must be ignored.
 func (s *TrackerSource) preparePackage(r *hub.Repository, md *RulesMetadata, pkgPath string) (*hub.Package, error) {
 	// Parse and validate version
 	sv, err := semver.NewVersion(md.Version)
@@ -100,6 +104,11 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *RulesMetadata, pkg
 		return nil, fmt.Errorf("invalid package (%s) version (%s): %w", md.Name, md.Version, err)
 	}
 	version := sv.String()
+
+	// Skip package versions ignored in the repository metadata
+	if s.i.RepositoryMetadata.IgnoresPackage(md.Name, version) {
+		return nil, nil
+	}
 
 	// Prepare package from metadata
 	p := &hub.Package{

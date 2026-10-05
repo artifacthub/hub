@@ -1,15 +1,21 @@
 package tekton
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/tracker/source"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestTrackerSource(t *testing.T) {
@@ -365,4 +371,150 @@ func TestTrackerSource(t *testing.T) {
 		assert.NoError(t, err)
 		sw.AssertExpectations(t)
 	})
+
+	t.Run("version entries that are not directories are skipped (dir based)", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup catalog with a version entry that is a regular file
+		basePath := t.TempDir()
+		require.NoError(t, os.Mkdir(filepath.Join(basePath, "task1"), 0o755))
+		require.NoError(t, os.WriteFile(filepath.Join(basePath, "task1", "0.2.0"), []byte("not a dir"), 0o600))
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{
+				Kind: hub.TektonTask,
+				Data: json.RawMessage(fmt.Sprintf(`{"versioning": "%s"}`, hub.TektonDirBasedVersioning)),
+			},
+			BasePath: basePath,
+			Svc:      sw.Svc,
+		}
+
+		// Run test and check expectations
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.Equal(t, map[string]*hub.Package{}, packages)
+		assert.NoError(t, err)
+		sw.AssertExpectations(t)
+	})
+
+	t.Run("ignored package not returned (git based)", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup git based catalog with two versions of a task
+		repoPath := t.TempDir()
+		basePath := filepath.Join(repoPath, "catalog")
+		gr, err := git.PlainInit(repoPath, false)
+		require.NoError(t, err)
+		wt, err := gr.Worktree()
+		require.NoError(t, err)
+		manifest, err := os.ReadFile("testdata/path3/task1/0.1/task1.yaml")
+		require.NoError(t, err)
+		require.NoError(t, os.MkdirAll(filepath.Join(basePath, "task1"), 0o755))
+		manifestPath := filepath.Join(basePath, "task1", "task1.yaml")
+		for _, version := range []string{"0.1.0", "0.2.0"} {
+			versionManifest := bytes.Replace(
+				manifest,
+				[]byte(`app.kubernetes.io/version: "0.1.0"`),
+				[]byte(`app.kubernetes.io/version: "`+version+`"`),
+				1,
+			)
+			require.Contains(t, string(versionManifest), `app.kubernetes.io/version: "`+version+`"`)
+			err := os.WriteFile(manifestPath, versionManifest, 0o600) // #nosec G703 -- test path is under t.TempDir()
+			require.NoError(t, err)
+			_, err = wt.Add("catalog/task1/task1.yaml")
+			require.NoError(t, err)
+			hash, err := wt.Commit("version "+version, &git.CommitOptions{
+				Author: &object.Signature{Name: "test", Email: "test@email.com", When: time.Now()},
+			})
+			require.NoError(t, err)
+			_, err = gr.CreateTag("v"+version, hash, nil)
+			require.NoError(t, err)
+		}
+
+		// Setup services and expectations
+		sw := source.NewTestsServicesWrapper()
+		i := &hub.TrackerSourceInput{
+			Repository: &hub.Repository{
+				Kind: hub.TektonTask,
+				URL:  "https://github.com/user/repo/path",
+				Data: json.RawMessage(fmt.Sprintf(`{"versioning": "%s"}`, hub.TektonGitBasedVersioning)),
+			},
+			RepositoryMetadata: &hub.RepositoryMetadata{
+				Ignore: []*hub.RepositoryIgnoreEntry{{Name: "task1", Version: `^0\.1\.0$`}},
+			},
+			BasePath: basePath,
+			Svc:      sw.Svc,
+		}
+
+		// Run test and check expectations
+		packages, err := NewTrackerSource(i).GetPackagesAvailable()
+		assert.NoError(t, err)
+		require.Len(t, packages, 1)
+		require.Contains(t, packages, "task1@0.2.0")
+		assert.Equal(t, "task1", packages["task1@0.2.0"].Name)
+		assert.Equal(t, "0.2.0", packages["task1@0.2.0"].Version)
+		sw.AssertExpectations(t)
+	})
+}
+
+func TestTrackerSourceIgnoredPackages(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		desc             string
+		ignoredVersion   string
+		expectedReturned bool
+	}{
+		{
+			"ignored package not returned",
+			`^0\.1\.0$`,
+			false,
+		},
+		{
+			"package returned when ignore entry version does not match",
+			`^0\.2\.0$`,
+			true,
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.desc, func(t *testing.T) {
+			t.Parallel()
+
+			// Setup services and expectations
+			sw := source.NewTestsServicesWrapper()
+			r := &hub.Repository{
+				Kind: hub.TektonTask,
+				URL:  "https://github.com/user/repo/path",
+				Data: json.RawMessage(fmt.Sprintf(`{"versioning": "%s"}`, hub.TektonDirBasedVersioning)),
+			}
+			i := &hub.TrackerSourceInput{
+				Repository: r,
+				RepositoryMetadata: &hub.RepositoryMetadata{
+					Ignore: []*hub.RepositoryIgnoreEntry{{Name: "task1", Version: tc.ignoredVersion}},
+				},
+				BasePath: "testdata/path3",
+				Svc:      sw.Svc,
+			}
+
+			// Run test and check expectations (when returned, the package must
+			// be the same as the one returned without an ignore list)
+			expectedPackages := map[string]*hub.Package{}
+			if tc.expectedReturned {
+				var err error
+				expectedPackages, err = NewTrackerSource(&hub.TrackerSourceInput{
+					Repository: r,
+					BasePath:   "testdata/path3",
+					Svc:        sw.Svc,
+				}).GetPackagesAvailable()
+				require.NoError(t, err)
+				require.Len(t, expectedPackages, 1)
+				require.Contains(t, expectedPackages, "task1@0.1.0")
+			}
+			packages, err := NewTrackerSource(i).GetPackagesAvailable()
+			assert.Equal(t, expectedPackages, packages)
+			assert.NoError(t, err)
+			sw.AssertExpectations(t)
+		})
+	}
 }

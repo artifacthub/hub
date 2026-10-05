@@ -1,6 +1,7 @@
 package helm
 
 import (
+	"bytes"
 	"errors"
 	"io"
 	"net/http"
@@ -17,6 +18,7 @@ import (
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/artifacthub/hub/internal/tracker/source"
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
+	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -539,6 +541,134 @@ func TestTrackerSource(t *testing.T) {
 		tg.AssertExpectations(t)
 		sw.AssertExpectations(t)
 	})
+
+}
+
+func TestTrackerSourceIgnoredPackages(t *testing.T) {
+	t.Parallel()
+
+	chartVersion := func(version, digest string) *helmrepo.ChartVersion {
+		return &helmrepo.ChartVersion{
+			Metadata: &chart.Metadata{
+				APIVersion: "v2",
+				Name:       "pkg1",
+				Version:    version,
+				Icon:       "http://icon.url",
+			},
+			URLs:   []string{"https://repo.url/pkg1-" + version + ".tgz"},
+			Digest: digest,
+		}
+	}
+
+	testCases := []struct {
+		desc               string
+		repositoryURL      string
+		ignore             []*hub.RepositoryIgnoreEntry
+		packagesRegistered map[string]string
+		chartVersions      []*helmrepo.ChartVersion // Used in http repositories
+		tags               []string                 // Used in oci repositories
+		expectedPackages   []*hub.Package
+	}{
+		{
+			desc:          "ignored package not prepared (http)",
+			repositoryURL: "https://repo.url",
+			ignore:        []*hub.RepositoryIgnoreEntry{{Name: "pkg1"}},
+			chartVersions: []*helmrepo.ChartVersion{chartVersion("1.0.0", "")},
+		},
+		{
+			desc:               "only versions not ignored returned (http)",
+			repositoryURL:      "https://repo.url",
+			ignore:             []*hub.RepositoryIgnoreEntry{{Name: "pkg1", Version: `^1\.0\.0$`}},
+			packagesRegistered: map[string]string{"pkg1@1.1.0": "digest2"},
+			chartVersions: []*helmrepo.ChartVersion{
+				chartVersion("v1.0.0", "digest1"),
+				chartVersion("1.1.0", "digest2"),
+			},
+			expectedPackages: []*hub.Package{
+				{
+					Name:       "pkg1",
+					Version:    "1.1.0",
+					Digest:     "digest2",
+					ContentURL: "https://repo.url/pkg1-1.1.0.tgz",
+				},
+			},
+		},
+		{
+			desc:               "ignored package registered with the same digest not returned (http)",
+			repositoryURL:      "https://repo.url",
+			ignore:             []*hub.RepositoryIgnoreEntry{{Name: "pkg1", Version: `^1\.0\.0$`}},
+			packagesRegistered: map[string]string{"pkg1@1.0.0": "digest1"},
+			chartVersions:      []*helmrepo.ChartVersion{chartVersion("1.0.0", "digest1")},
+		},
+		{
+			desc:               "only versions not ignored returned (oci)",
+			repositoryURL:      "oci://registry/namespace/pkg1",
+			ignore:             []*hub.RepositoryIgnoreEntry{{Name: "pkg1", Version: `^1\.0\.0$`}},
+			packagesRegistered: map[string]string{"pkg1@1.1.0": ""},
+			tags:               []string{"1.0.0", "1.1.0"},
+			expectedPackages: []*hub.Package{
+				{
+					Name:       "pkg1",
+					Version:    "1.1.0",
+					ContentURL: "oci://registry/namespace/pkg1:1.1.0",
+				},
+			},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.desc, func(t *testing.T) {
+			t.Parallel()
+
+			// Setup services and expectations. Unexpected calls to the mocks
+			// must fail the test, as a panic inside a worker would be
+			// recovered and the package silently dropped.
+			sw := source.NewTestsServicesWrapper()
+			sw.Ec.Test(t)
+			sw.Hc.Test(t)
+			sw.Op.Test(t)
+			sw.Is.Test(t)
+			sw.Sc.Test(t)
+			var logs bytes.Buffer
+			sw.Svc.Logger = zerolog.New(zerolog.SyncWriter(&logs))
+			i := &hub.TrackerSourceInput{
+				Repository: &hub.Repository{
+					URL: tc.repositoryURL,
+				},
+				RepositoryMetadata: &hub.RepositoryMetadata{
+					Ignore: tc.ignore,
+				},
+				PackagesRegistered: tc.packagesRegistered,
+				Svc:                sw.Svc,
+			}
+			il := &repo.HelmIndexLoaderMock{}
+			il.Test(t)
+			tg := &oci.TagsGetterMock{}
+			tg.Test(t)
+			if tc.tags != nil {
+				tg.On("Tags", i.Svc.Ctx, i.Repository, true).Return(tc.tags, nil)
+			} else {
+				il.On("LoadIndex", i.Repository).Return(&helmrepo.IndexFile{
+					Entries: map[string]helmrepo.ChartVersions{
+						"pkg1": tc.chartVersions,
+					},
+				}, "", nil)
+			}
+
+			// Run test and check expectations
+			expectedPackages := make(map[string]*hub.Package)
+			for _, p := range tc.expectedPackages {
+				p.Repository = i.Repository
+				expectedPackages[pkg.BuildKey(p)] = p
+			}
+			packages, err := NewTrackerSource(i, withIndexLoader(il), withOCITagsGetter(tg)).GetPackagesAvailable()
+			assert.Equal(t, expectedPackages, packages)
+			assert.NoError(t, err)
+			assert.NotContains(t, logs.String(), "recover")
+			il.AssertExpectations(t)
+			tg.AssertExpectations(t)
+			sw.AssertExpectations(t)
+		})
+	}
 }
 
 func TestExtractContainersImages(t *testing.T) {
