@@ -42,3 +42,14 @@ go install
 ## Usage
 
 Please run `ah help` for more information about the different subcommands and the options available.
+
+### Linting Tekton catalogs using git-based versioning
+
+When linting Tekton catalogs that use the git-based versioning option (`--tekton-versioning git`), `ah` checks out each semver tag available in the git repository to process the corresponding version of the packages, restoring the original `HEAD` once it's done. Please note that:
+
+- The git working tree must not contain uncommitted changes (untracked files are ignored).
+- The repository's tags must be available locally. Shallow clones may not include them, so please fetch them first (e.g. `git fetch --tags --unshallow`). When using the GitHub `actions/checkout` action, you can set `fetch-depth: 0` to fetch all history and tags.
+
+```sh
+ah lint --kind tekton-task --path task --tekton-versioning git
+```
