@@ -56,6 +56,14 @@ var (
 	// errNoPackagesFound indicates that no packages were found in the provided
 	// path.
 	errNoPackagesFound = errors.New("no packages found")
+
+	// errNoSemverTagsFound indicates that no semver tags were found in the git
+	// repository of a Tekton catalog that uses the git versioning option.
+	errNoSemverTagsFound = errors.New(`no semver tags found in the git repository (if this is a shallow clone, fetch the tags using "git fetch --tags --unshallow", or set "fetch-depth: 0" when using actions/checkout)`)
+
+	// errWorktreeNotClean indicates that the git working tree of a Tekton
+	// catalog that uses the git versioning option has uncommitted changes.
+	errWorktreeNotClean = errors.New("git working tree has uncommitted changes, please commit or stash them before linting (each version tag is checked out during the process)")
 )
 
 // lintOptions represents the options that can be passed to the lint command.
@@ -485,8 +493,8 @@ func lintTektonDirBasedCatalog(basePath string, kind hub.RepositoryKind) (*lintR
 
 // lintTektonGitBasedCatalog checks Tekton repositories that use the git
 // versioning options.
-func lintTektonGitBasedCatalog(basePath string, kind hub.RepositoryKind) (*lintReport, error) {
-	report := &lintReport{}
+func lintTektonGitBasedCatalog(basePath string, kind hub.RepositoryKind) (report *lintReport, err error) {
+	report = &lintReport{}
 	repository := &hub.Repository{
 		Kind: kind,
 		URL:  "https://github.com/user/repo/path",
@@ -494,24 +502,42 @@ func lintTektonGitBasedCatalog(basePath string, kind hub.RepositoryKind) (*lintR
 	}
 
 	// Open git repository and fetch all tags available
-	wt, tags, err := tekton.OpenGitRepository(basePath)
+	gr, wt, tags, err := tekton.OpenGitRepository(basePath)
 	if err != nil {
 		return nil, err
 	}
 
+	// Each version tag will be checked out, so the working tree must be clean
+	if err := checkWorktreeIsClean(wt); err != nil {
+		return nil, err
+	}
+
+	// Restore the original HEAD once all versions have been processed
+	head, err := gr.Head()
+	if err != nil {
+		return nil, fmt.Errorf("error getting git HEAD reference: %w", err)
+	}
+	defer func() {
+		if restoreErr := restoreHead(wt, head); restoreErr != nil && err == nil {
+			report, err = nil, restoreErr
+		}
+	}()
+
 	// Read packages available in the catalog for each tag/version
-	_ = tags.ForEach(func(tag *plumbing.Reference) error {
+	var semverTagsFound int
+	err = tags.ForEach(func(tag *plumbing.Reference) error {
 		// Skip tags that cannot be parsed as ~valid semver
 		sv, err := semver.NewVersion(tag.Name().Short())
 		if err != nil {
 			return nil
 		}
+		semverTagsFound++
 
 		// Checkout version tag
 		if err := wt.Checkout(&git.CheckoutOptions{
 			Hash: tag.Hash(),
 		}); err != nil {
-			return nil
+			return fmt.Errorf("error checking out tag %s: %w", tag.Name().Short(), err)
 		}
 
 		// Process version packages
@@ -559,8 +585,49 @@ func lintTektonGitBasedCatalog(basePath string, kind hub.RepositoryKind) (*lintR
 
 		return nil
 	})
+	if err != nil {
+		return nil, err
+	}
+	if semverTagsFound == 0 {
+		return nil, errNoSemverTagsFound
+	}
 
 	return report, nil
+}
+
+// checkWorktreeIsClean checks that the git working tree provided does not
+// have any staged or unstaged changes. Untracked files are ignored.
+func checkWorktreeIsClean(wt *git.Worktree) error {
+	status, err := wt.Status()
+	if err != nil {
+		return fmt.Errorf("error getting git working tree status: %w", err)
+	}
+	for _, fs := range status {
+		if fs.Worktree == git.Untracked {
+			continue
+		}
+		if fs.Staging != git.Unmodified || fs.Worktree != git.Unmodified {
+			return errWorktreeNotClean
+		}
+	}
+	return nil
+}
+
+// restoreHead checks out the git HEAD reference provided, which can point to
+// a branch or to a specific commit (detached HEAD).
+func restoreHead(wt *git.Worktree, head *plumbing.Reference) error {
+	opts := &git.CheckoutOptions{}
+	target := head.Hash().String()
+	if head.Name().IsBranch() {
+		opts.Branch = head.Name()
+		target = head.Name().Short()
+	} else {
+		opts.Hash = head.Hash()
+	}
+	if err := wt.Checkout(opts); err != nil {
+		return fmt.Errorf("error restoring git HEAD to %s: %w", target, err)
+	}
+	return nil
 }
 
 // output represents a wrapper around an io.Writer used to print lint reports.

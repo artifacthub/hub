@@ -203,7 +203,7 @@ func (s *TrackerSource) processDirBasedCatalog() (map[string]*hub.Package, error
 // the git based versioning.
 func (s *TrackerSource) processGitBasedCatalog() (map[string]*hub.Package, error) {
 	// Open git repository and fetch all tags available
-	wt, tags, err := OpenGitRepository(s.i.BasePath)
+	_, wt, tags, err := OpenGitRepository(s.i.BasePath)
 	if err != nil {
 		return nil, err
 	}
@@ -278,23 +278,23 @@ func (s *TrackerSource) warn(err error) {
 }
 
 // OpenGitRepository opens the git repository at the provided base path and
-// returns the worktree and tags references.
-func OpenGitRepository(basePath string) (*git.Worktree, storer.ReferenceIter, error) {
+// returns the repository, its worktree and tags references.
+func OpenGitRepository(basePath string) (*git.Repository, *git.Worktree, storer.ReferenceIter, error) {
 	gr, err := git.PlainOpenWithOptions(basePath, &git.PlainOpenOptions{
 		DetectDotGit: true,
 	})
 	if err != nil {
-		return nil, nil, fmt.Errorf("error opening git repository: %w", err)
+		return nil, nil, nil, fmt.Errorf("error opening git repository: %w", err)
 	}
 	wt, err := gr.Worktree()
 	if err != nil {
-		return nil, nil, fmt.Errorf("error getting worktree: %w", err)
+		return nil, nil, nil, fmt.Errorf("error getting worktree: %w", err)
 	}
 	tags, err := gr.Tags()
 	if err != nil {
-		return nil, nil, fmt.Errorf("error reading tags references: %w", err)
+		return nil, nil, nil, fmt.Errorf("error reading tags references: %w", err)
 	}
-	return wt, tags, nil
+	return gr, wt, tags, nil
 }
 
 // GetManifest reads, parses and validates the package manifest, which can be a
