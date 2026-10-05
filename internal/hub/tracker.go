@@ -45,10 +45,13 @@ type TrackerSource interface {
 }
 
 // TrackerSourceInput represents the input provided to a TrackerSource to get
-// the packages available in a repository when tracking it.
+// the packages available in a repository when tracking it. Sources should skip
+// the package versions ignored by the repository metadata provided, and must
+// treat that metadata as read-only.
 type TrackerSourceInput struct {
 	Repository         *Repository
 	RepositoryDigest   string
+	RepositoryMetadata *RepositoryMetadata
 	PackagesRegistered map[string]string
 	BasePath           string
 	Svc                *TrackerSourceServices

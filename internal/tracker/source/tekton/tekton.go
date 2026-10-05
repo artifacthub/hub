@@ -161,7 +161,7 @@ func (s *TrackerSource) processDirBasedCatalog() (map[string]*hub.Package, error
 		}
 		for _, v := range versions {
 			// If the path is not a directory or a ~valid semver version, we skip it
-			if !p.IsDir() {
+			if !v.IsDir() {
 				continue
 			}
 			sv, err := semver.NewVersion(v.Name())
@@ -192,6 +192,12 @@ func (s *TrackerSource) processDirBasedCatalog() (map[string]*hub.Package, error
 				s.warn(fmt.Errorf("error preparing package %s version %s: %w", pkgName, v.Name(), err))
 				continue
 			}
+
+			// Skip package versions ignored in the repository metadata
+			if s.i.RepositoryMetadata.IgnoresPackage(p.Name, p.Version) {
+				continue
+			}
+
 			packagesAvailable[pkg.BuildKey(p)] = p
 		}
 	}
@@ -261,6 +267,12 @@ func (s *TrackerSource) processGitBasedCatalog() (map[string]*hub.Package, error
 				s.warn(fmt.Errorf("error preparing package %s version %s: %w", pkgName, sv.String(), err))
 				continue
 			}
+
+			// Skip package versions ignored in the repository metadata
+			if s.i.RepositoryMetadata.IgnoresPackage(p.Name, p.Version) {
+				continue
+			}
+
 			packagesAvailable[pkg.BuildKey(p)] = p
 		}
 

@@ -11,8 +11,10 @@ import (
 )
 
 const (
-	// maxErrorsPerRepository represents the maximum number of errors we want
-	// to collect for a given repository.
+	// maxErrorsPerRepository represents the maximum number of errors stored
+	// for a given repository. It is applied after sorting the errors, so the
+	// stored text only depends on the errors produced, not on the order they
+	// were collected in.
 	maxErrorsPerRepository = 100
 )
 
@@ -52,9 +54,7 @@ func (c *ErrorsCollector) Append(repositoryID string, err string) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
-	if len(c.errors[repositoryID]) < maxErrorsPerRepository {
-		c.errors[repositoryID] = append(c.errors[repositoryID], err)
-	}
+	c.errors[repositoryID] = append(c.errors[repositoryID], err)
 }
 
 // Flush aggregates all errors collected per repository as a single text and
@@ -68,8 +68,12 @@ func (c *ErrorsCollector) Flush() {
 		// a repository concurrently, and the order the errors are produced is
 		// not guaranteed. In order to be able to notify users when something
 		// goes wrong during repositories tracking or scanning, we need to be
-		// able to compare the errors produced among executions.
+		// able to compare the errors produced among executions. For the same
+		// reason, errors are truncated only after sorting them.
 		sort.Strings(errors)
+		if len(errors) > maxErrorsPerRepository {
+			errors = errors[:maxErrorsPerRepository]
+		}
 
 		var allErrors strings.Builder
 		for i, err := range errors {

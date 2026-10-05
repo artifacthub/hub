@@ -8,6 +8,7 @@ import (
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/tracker/source"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestTrackerSource(t *testing.T) {
@@ -145,4 +146,61 @@ func TestTrackerSource(t *testing.T) {
 		assert.NoError(t, err)
 		sw.AssertExpectations(t)
 	})
+}
+
+func TestTrackerSourceIgnoredPackages(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		desc             string
+		ignoredVersion   string
+		expectedReturned bool
+	}{
+		{
+			"ignored package not returned",
+			`^0\.1\.0$`,
+			false,
+		},
+		{
+			"package returned when ignore entry version does not match",
+			`^0\.2\.0$`,
+			true,
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.desc, func(t *testing.T) {
+			t.Parallel()
+
+			// Setup services and expectations
+			sw := source.NewTestsServicesWrapper()
+			r := &hub.Repository{}
+			i := &hub.TrackerSourceInput{
+				Repository: r,
+				RepositoryMetadata: &hub.RepositoryMetadata{
+					Ignore: []*hub.RepositoryIgnoreEntry{{Name: "test-plugin", Version: tc.ignoredVersion}},
+				},
+				BasePath: "testdata/path4",
+				Svc:      sw.Svc,
+			}
+
+			// Run test and check expectations (when returned, the package must
+			// be the same as the one returned without an ignore list)
+			expectedPackages := map[string]*hub.Package{}
+			if tc.expectedReturned {
+				var err error
+				expectedPackages, err = NewTrackerSource(&hub.TrackerSourceInput{
+					Repository: r,
+					BasePath:   "testdata/path4",
+					Svc:        sw.Svc,
+				}).GetPackagesAvailable()
+				require.NoError(t, err)
+				require.Len(t, expectedPackages, 1)
+				require.Contains(t, expectedPackages, "test-plugin@0.1.0")
+			}
+			packages, err := NewTrackerSource(i).GetPackagesAvailable()
+			assert.Equal(t, expectedPackages, packages)
+			assert.NoError(t, err)
+			sw.AssertExpectations(t)
+		})
+	}
 }

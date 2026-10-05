@@ -3,7 +3,6 @@ package tracker
 import (
 	"context"
 	"fmt"
-	"regexp"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tracker/source/container"
@@ -160,36 +159,4 @@ func setVerifiedPublisherFlag(
 		}
 	}
 	return nil
-}
-
-// shouldIgnorePackage checks if the package provided should be ignored.
-func shouldIgnorePackage(md *hub.RepositoryMetadata, name, version string) bool {
-	if md == nil {
-		return false
-	}
-	for _, ignoreEntry := range md.Ignore {
-		if matchesEntry(ignoreEntry, name, version) {
-			return true
-		}
-	}
-	return false
-}
-
-// matchesEntry checks if the package name and version provide match a given
-// ignore entry.
-func matchesEntry(ignoreEntry *hub.RepositoryIgnoreEntry, name, version string) bool {
-	if ignoreEntry.Name != name {
-		return false
-	}
-	if version == "" {
-		return true
-	}
-	versionMatch, err := regexp.Match(ignoreEntry.Version, []byte(version))
-	if err != nil {
-		return false
-	}
-	if versionMatch {
-		return true
-	}
-	return false
 }

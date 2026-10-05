@@ -69,6 +69,12 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			s.warn(fmt.Errorf("error preparing package %s version %s: %w", md.Name, md.Version, err))
 			return nil
 		}
+
+		// Skip package versions ignored in the repository metadata
+		if s.i.RepositoryMetadata.IgnoresPackage(p.Name, p.Version) {
+			return nil
+		}
+
 		packagesAvailable[pkg.BuildKey(p)] = p
 
 		return nil

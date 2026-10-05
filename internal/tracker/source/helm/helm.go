@@ -157,8 +157,12 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 					s.warn(chartVersion.Metadata, fmt.Errorf("error preparing package: %w", err))
 					return
 				}
+				if p == nil {
+					return
+				}
+				key := pkg.BuildKey(p)
 				mu.Lock()
-				packagesAvailable[pkg.BuildKey(p)] = p
+				packagesAvailable[key] = p
 				mu.Unlock()
 			}(chartVersion)
 		}
@@ -220,6 +224,7 @@ func (s *TrackerSource) getCharts() (map[string][]*helmrepo.ChartVersion, error)
 }
 
 // preparePackage prepares a package version using the chart version provided.
+// It returns nil when the package version must be ignored.
 func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hub.Package, error) {
 	// Parse package version
 	md := chartVersion.Metadata
@@ -228,6 +233,11 @@ func (s *TrackerSource) preparePackage(chartVersion *helmrepo.ChartVersion) (*hu
 		return nil, fmt.Errorf("invalid package version: %w", err)
 	}
 	version := sv.String()
+
+	// Skip package versions ignored in the repository metadata
+	if s.i.RepositoryMetadata.IgnoresPackage(chartVersion.Name, version) {
+		return nil, nil
+	}
 
 	// Prepare chart archive url
 	if len(chartVersion.URLs) == 0 {

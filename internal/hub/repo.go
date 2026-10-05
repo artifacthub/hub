@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"regexp"
 
 	helmrepo "helm.sh/helm/v3/pkg/repo"
 )
@@ -353,6 +354,28 @@ type RepositoryMetadata struct {
 	RepositoryID string                   `yaml:"repositoryID"`
 	Owners       []*Owner                 `yaml:"owners,omitempty"`
 	Ignore       []*RepositoryIgnoreEntry `yaml:"ignore,omitempty"`
+}
+
+// IgnoresPackage checks if the package version provided must be ignored
+// according to the ignore list in the repository metadata. It is safe to
+// call it on a nil RepositoryMetadata.
+func (md *RepositoryMetadata) IgnoresPackage(name, version string) bool {
+	if md == nil {
+		return false
+	}
+	for _, e := range md.Ignore {
+		if e == nil || e.Name != name {
+			continue
+		}
+		if version == "" {
+			return true
+		}
+		matched, err := regexp.MatchString(e.Version, version)
+		if err == nil && matched {
+			return true
+		}
+	}
+	return false
 }
 
 // RepositoryIgnoreEntry represents an entry in the ignore list. This list is

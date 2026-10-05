@@ -94,7 +94,7 @@ type TrackerSource struct {
 }
 
 // NewTrackerSource creates a new TrackerSource instance.
-func NewTrackerSource(i *hub.TrackerSourceInput, opts ...func(s *TrackerSource)) *TrackerSource {
+func NewTrackerSource(i *hub.TrackerSourceInput) *TrackerSource {
 	return &TrackerSource{i: i}
 }
 
@@ -135,6 +135,12 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 			s.warn(err)
 			return nil
 		}
+
+		// Skip package versions ignored in the repository metadata
+		if s.i.RepositoryMetadata.IgnoresPackage(p.Name, p.Version) {
+			return nil
+		}
+
 		p.RelativePath = strings.TrimPrefix(pkgPath, s.i.BasePath)
 		packagesAvailable[pkg.BuildKey(p)] = p
 

@@ -452,6 +452,93 @@ func TestTracker(t *testing.T) {
 		sw.assertExpectations(t)
 	})
 
+	t.Run("only ignored packages unregistered when no packages are available", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1, "").Return(&hub.RepositoryMetadata{
+			Ignore: []*hub.RepositoryIgnoreEntry{
+				{
+					Name:    p1v1.Name,
+					Version: `^1\.0\.0$`,
+				},
+			},
+		}, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(map[string]string{
+			pkg.BuildKey(p1v1): "",
+			pkg.BuildKey(p1v2): "",
+		}, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{}, nil)
+		sw.pm.On("Unregister", sw.svc.Ctx, p1v1).Return(nil)
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("ignored package not unregistered when deletion protection is enabled", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		r := &hub.Repository{
+			RepositoryID:               r1.RepositoryID,
+			Kind:                       r1.Kind,
+			URL:                        r1.URL,
+			PackagesDeletionProtection: true,
+		}
+		sw := newServicesWrapper()
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r).Return("", nil)
+		sw.ec.On("Init", r.RepositoryID)
+		sw.rm.On("GetMetadata", r, "").Return(&hub.RepositoryMetadata{
+			Ignore: []*hub.RepositoryIgnoreEntry{
+				{
+					Name: p1v1.Name,
+				},
+			},
+		}, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r.RepositoryID).Return(map[string]string{
+			pkg.BuildKey(p1v1): "",
+		}, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{}, nil)
+
+		// Run test and check expectations
+		err := New(sw.svc, r, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("repository metadata provided to tracker source", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup services and expectations
+		md := &hub.RepositoryMetadata{
+			Ignore: []*hub.RepositoryIgnoreEntry{
+				{
+					Name: p1v1.Name,
+				},
+			},
+		}
+		sw := newServicesWrapper()
+		sw.svc.SetupTrackerSource = func(i *hub.TrackerSourceInput) hub.TrackerSource {
+			assert.Same(t, md, i.RepositoryMetadata)
+			return sw.src
+		}
+		sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+		sw.ec.On("Init", r1.RepositoryID)
+		sw.rm.On("GetMetadata", r1, "").Return(md, nil)
+		sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+		sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{}, nil)
+
+		// Run test and check expectations
+		err := New(sw.svc, r1, zerolog.Nop()).Run()
+		assert.Nil(t, err)
+		sw.assertExpectations(t)
+	})
+
 	t.Run("error setting verified publisher flag", func(t *testing.T) {
 		t.Parallel()
 
