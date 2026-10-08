@@ -357,8 +357,10 @@ type RepositoryMetadata struct {
 }
 
 // IgnoresPackage checks if the package version provided must be ignored
-// according to the ignore list in the repository metadata. It is safe to
-// call it on a nil RepositoryMetadata.
+// according to the ignore list in the repository metadata. Entries without a
+// version match all versions of the package. When the version provided is
+// empty (unknown), only those entries can match it. It is safe to call it on
+// a nil RepositoryMetadata.
 func (md *RepositoryMetadata) IgnoresPackage(name, version string) bool {
 	if md == nil {
 		return false
@@ -367,8 +369,11 @@ func (md *RepositoryMetadata) IgnoresPackage(name, version string) bool {
 		if e == nil || e.Name != name {
 			continue
 		}
-		if version == "" {
+		if e.Version == "" {
 			return true
+		}
+		if version == "" {
+			continue
 		}
 		matched, err := regexp.MatchString(e.Version, version)
 		if err == nil && matched {

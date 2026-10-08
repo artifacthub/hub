@@ -93,7 +93,9 @@ func (s *TrackerSource) warn(err error) {
 	s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
 }
 
-// GetManifest reads and parses the plugin metadata file.
+// GetMetadata reads, parses and validates the plugin metadata file. When the
+// metadata file is parsed successfully but it is not valid, the parsed metadata
+// is returned along with the validation error.
 func GetMetadata(pkgPath string) (*plugin.Metadata, error) {
 	data, err := os.ReadFile(pkgPath)
 	if err != nil {
@@ -104,7 +106,7 @@ func GetMetadata(pkgPath string) (*plugin.Metadata, error) {
 		return nil, fmt.Errorf("error unmarshaling plugin metadata file: %w", err)
 	}
 	if err := validateMetadata(md); err != nil {
-		return nil, fmt.Errorf("error validating plugin metadata: %w", err)
+		return md, fmt.Errorf("error validating plugin metadata: %w", err)
 	}
 	return md, nil
 }

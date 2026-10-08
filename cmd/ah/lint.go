@@ -9,6 +9,7 @@ import (
 	"path"
 	"path/filepath"
 	"reflect"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -35,6 +36,7 @@ const (
 	success     = '✓'
 	failure     = '✗'
 	warning     = '!'
+	skipped     = '-'
 	provided    = "PROVIDED"
 	notProvided = "*** NOT PROVIDED ***"
 )
@@ -77,6 +79,10 @@ type lintOptions struct {
 	// tektonVersioning represents the versioning option to use when processing
 	// Tekton repositories. Options are: directory or git.
 	tektonVersioning string
+
+	// ignore represents the package versions to ignore, using the format
+	// name[@version], where version is a regular expression.
+	ignore []string
 }
 
 // lintReport represents the results of checking all the packages found in the
@@ -87,11 +93,32 @@ type lintReport struct {
 }
 
 // lintReportEntry represents an entry of the lint report. A lint report
-// entry contains a package and the errors found on it during the check.
+// entry contains a package and the errors found on it during the check. The
+// name and version are collected when available, even if the package could
+// not be prepared, so that the entry can be ignored.
 type lintReportEntry struct {
-	pkg    *hub.Package
-	path   string
-	result *multierror.Error
+	pkg     *hub.Package
+	name    string
+	version string
+	path    string
+	result  *multierror.Error
+	ignored bool
+}
+
+// failed returns true if errors were found in the entry and it was not ignored.
+func (e *lintReportEntry) failed() bool {
+	return !e.ignored && e.result.ErrorOrNil() != nil
+}
+
+// identify sets the entry name and version from the package prepared, when
+// available, normalizing the version as semver when possible.
+func (e *lintReportEntry) identify() {
+	if e.pkg != nil {
+		e.name, e.version = e.pkg.Name, e.pkg.Version
+	}
+	if sv, err := semver.NewVersion(e.version); err == nil {
+		e.version = sv.String()
+	}
 }
 
 // newLintCmd creates a new lint command.
@@ -108,7 +135,26 @@ func newLintCmd() *cobra.Command {
 	lintCmd.Flags().StringVarP(&opts.kind, "kind", "k", "helm", "repository kind: argo-template, backstage, bootc, coredns, falco, gatekeeper, headlamp, helm, helm-plugin, inspektor-gadget, kagent, kcl, keda-scaler, keptn, knative-client-plugin, krew, kubearmor, kubewarden, kyverno, meshery, olm, opa, opencost, radius, tbaction, tekton-pipeline, tekton-stepaction, tekton-task")
 	lintCmd.Flags().StringVarP(&opts.path, "path", "p", ".", "repository's packages path")
 	lintCmd.Flags().StringVarP(&opts.tektonVersioning, "tekton-versioning", "", hub.TektonDirBasedVersioning, "tekton versioning option: directory, git")
+	lintCmd.Flags().StringArrayVarP(&opts.ignore, "ignore", "", nil, "package versions to ignore, using the format name[@version] (version is a regular expression, all versions are ignored when omitted). Can be used multiple times")
 	return lintCmd
+}
+
+// parseIgnoreEntries parses and validates the ignore entries provided, using
+// the format name[@version], where version is a regular expression.
+func parseIgnoreEntries(entries []string) (*hub.RepositoryMetadata, error) {
+	ignore := &hub.RepositoryMetadata{Ignore: make([]*hub.RepositoryIgnoreEntry, 0, len(entries))}
+	for _, entry := range entries {
+		name, version, _ := strings.Cut(entry, "@")
+		name = strings.TrimSpace(name)
+		if name == "" {
+			return nil, fmt.Errorf("invalid ignore entry %q: name not provided", entry)
+		}
+		if _, err := regexp.Compile(version); err != nil {
+			return nil, fmt.Errorf("invalid ignore entry %q: invalid version regular expression: %w", entry, err)
+		}
+		ignore.Ignore = append(ignore.Ignore, &hub.RepositoryIgnoreEntry{Name: name, Version: version})
+	}
+	return ignore, nil
 }
 
 // lint checks that the packages found in the path provided are ready to be
@@ -119,6 +165,10 @@ func lint(opts *lintOptions, out *output) error {
 	// use a specific linter. The linter will return a lint report that will be
 	// printed once the check has finished.
 	kind, err := hub.GetKindFromName(opts.kind)
+	if err != nil {
+		return err
+	}
+	ignore, err := parseIgnoreEntries(opts.ignore)
 	if err != nil {
 		return err
 	}
@@ -172,9 +222,13 @@ func lint(opts *lintOptions, out *output) error {
 	if len(report.entries) == 0 {
 		return errNoPackagesFound
 	}
+	for _, entry := range report.entries {
+		entry.identify()
+		entry.ignored = ignore.IgnoresPackage(entry.name, entry.version)
+	}
 	out.printReport(report)
 	for _, entry := range report.entries {
-		if entry.result.ErrorOrNil() != nil {
+		if entry.failed() {
 			return errLintFailed
 		}
 	}
@@ -203,6 +257,9 @@ func lintGeneric(basePath string, kind hub.RepositoryKind) *lintReport {
 		// Get package version metadata and prepare entry package
 		mdFilePath := filepath.Join(pkgPath, hub.PackageMetadataFile)
 		md, err := pkg.GetPackageMetadata(kind, mdFilePath)
+		if md != nil {
+			e.name, e.version = md.Name, md.Version
+		}
 		if err != nil {
 			if errors.Is(err, os.ErrNotExist) {
 				return nil
@@ -296,6 +353,9 @@ func lintHelmPlugin(basePath string) *lintReport {
 		// Get Helm plugin metadata and prepare package
 		mdFilePath := filepath.Join(pkgPath, plugin.PluginFileName)
 		md, err := helmplugin.GetMetadata(mdFilePath)
+		if md != nil {
+			e.name, e.version = md.Name, md.Version
+		}
 		if err != nil {
 			if errors.Is(err, os.ErrNotExist) {
 				return nil
@@ -345,6 +405,9 @@ func lintKrew(basePath string) (*lintReport, error) {
 
 		// Get Krew plugin manifest and prepare package
 		manifest, manifestRaw, err := krew.GetManifest(filepath.Join(pluginsPath, file.Name()))
+		if manifest != nil {
+			e.name, e.version = manifest.Name, manifest.Spec.Version
+		}
 		if err != nil {
 			e.result = multierror.Append(e.result, err)
 		} else {
@@ -381,6 +444,9 @@ func lintOLM(basePath string) *lintReport {
 
 		// Get metadata and prepare package
 		md, err := olm.GetMetadata(pkgPath)
+		if md != nil {
+			e.name, e.version = md.Name, md.Version
+		}
 		switch {
 		case err != nil:
 			e.result = multierror.Append(e.result, err)
@@ -460,7 +526,9 @@ func lintTektonDirBasedCatalog(basePath string, kind hub.RepositoryKind) (*lintR
 			// errors found while processing it will be added to the report.
 			pkgPath := path.Join(pkgBasePath, v.Name())
 			e := &lintReportEntry{
-				path: pkgPath,
+				name:    pkgName,
+				version: sv.String(),
+				path:    pkgPath,
 			}
 
 			// Get package manifest
@@ -556,7 +624,9 @@ func lintTektonGitBasedCatalog(basePath string, kind hub.RepositoryKind) (report
 			pkgName := p.Name()
 			pkgPath := path.Join(basePath, pkgName)
 			e := &lintReportEntry{
-				path: pkgPath,
+				name:    pkgName,
+				version: sv.String(),
+				path:    pkgPath,
 			}
 
 			// Get package manifest
@@ -637,51 +707,64 @@ type output struct {
 
 // printReport prints the provided lint report to the receiver output.
 func (out *output) printReport(report *lintReport) {
-	// Sort report entries leaving the ones with errors at the end
-	sort.Slice(report.entries, func(i, j int) bool {
-		if report.entries[i].result.ErrorOrNil() != nil && report.entries[j].result.ErrorOrNil() == nil {
-			return false
+	// Sort report entries leaving the ignored ones and the ones with errors at
+	// the end
+	rank := func(e *lintReportEntry) int {
+		switch {
+		case e.ignored:
+			return 1
+		case e.result.ErrorOrNil() != nil:
+			return 2
+		default:
+			return 0
 		}
-		if report.entries[i].result.ErrorOrNil() == nil && report.entries[j].result.ErrorOrNil() != nil {
-			return true
+	}
+	sort.SliceStable(report.entries, func(i, j int) bool {
+		ei, ej := report.entries[i], report.entries[j]
+		if ri, rj := rank(ei), rank(ej); ri != rj {
+			return ri < rj
 		}
-
-		if report.entries[i].pkg != nil && report.entries[j].pkg != nil {
-			if report.entries[i].pkg.Name == report.entries[j].pkg.Name {
-				return report.entries[i].pkg.Version < report.entries[j].pkg.Version
-			}
-			return report.entries[i].pkg.Name < report.entries[j].pkg.Name
+		if ei.name == ej.name {
+			return ei.version < ej.version
 		}
-
-		return false
+		return ei.name < ej.name
 	})
 
 	// Print packages checks results
 	for _, e := range report.entries {
-		// Setup minimal skeleton package if not provided
-		if e.pkg == nil {
-			e.pkg = &hub.Package{
-				Name:    "name: ?",
-				Version: "version: ?",
-			}
-		}
-
 		// Header
+		name, version := e.name, e.version
+		if name == "" {
+			name = "name: ?"
+		}
+		if version == "" {
+			version = "version: ?"
+		}
 		var mark rune
-		if e.result.ErrorOrNil() != nil {
+		switch {
+		case e.ignored:
+			mark = skipped
+		case e.result.ErrorOrNil() != nil:
 			mark = failure
-		} else {
+		default:
 			mark = success
 		}
 		fmt.Fprintf(out, "\n%s\n", strings.Repeat("-", sepLen))
-		fmt.Fprintf(out, "%c %s %s (%s)\n", mark, e.pkg.Name, e.pkg.Version, e.path)
+		fmt.Fprintf(out, "%c %s %s (%s)\n", mark, name, version, e.path)
 		fmt.Fprintf(out, "%s\n\n", strings.Repeat("-", sepLen))
 
 		// Details
-		if e.result.ErrorOrNil() == nil {
+		switch {
+		case e.ignored:
+			if e.result.ErrorOrNil() != nil {
+				fmt.Fprintf(out, "Package lint IGNORED. %d error(s) occurred and were discarded.\n", len(e.result.Errors))
+			} else {
+				fmt.Fprintf(out, "Package lint IGNORED. No errors occurred, the ignore entry may no longer be needed.\n")
+			}
+		case e.result.ErrorOrNil() == nil:
 			fmt.Fprintf(out, "Package lint SUCCEEDED!\n\n")
 			out.printPkgDetails(e.pkg)
-		} else {
+		default:
 			fmt.Fprintf(out, "Package lint FAILED. %d error(s) occurred:\n\n", len(e.result.Errors))
 			for _, err := range e.result.Errors {
 				fmt.Fprintf(out, "  * %s\n", strings.TrimSpace(err.Error()))
@@ -690,14 +773,20 @@ func (out *output) printReport(report *lintReport) {
 	}
 
 	// Print footer summary
-	var pkgsWithErrors int
+	var pkgsWithErrors, pkgsIgnored int
 	for _, e := range report.entries {
-		if e.result.ErrorOrNil() != nil {
+		if e.ignored {
+			pkgsIgnored++
+		} else if e.result.ErrorOrNil() != nil {
 			pkgsWithErrors++
 		}
 	}
 	fmt.Fprintf(out, "\n%s\n", strings.Repeat("-", sepLen))
-	fmt.Fprintf(out, "\n%d package(s) found, %d package(s) with errors\n\n", len(report.entries), pkgsWithErrors)
+	fmt.Fprintf(out, "\n%d package(s) found, %d package(s) with errors", len(report.entries), pkgsWithErrors)
+	if pkgsIgnored > 0 {
+		fmt.Fprintf(out, ", %d package(s) ignored", pkgsIgnored)
+	}
+	fmt.Fprintf(out, "\n\n")
 }
 
 // printPkgDetails prints the details of the package provided to the receiver

@@ -1,15 +1,11 @@
 
 ------------------------------------------------------------------------------------------------------------------------
-✗ test-plugin version: ? (testdata/lint/test11/pkgs/plugins/manifest.yaml)
+- test 0.0.1 (testdata/lint/test3/pkgs)
 ------------------------------------------------------------------------------------------------------------------------
 
-Package lint FAILED. 1 error(s) occurred:
-
-  * error validating plugin manifest: 2 errors occurred:
-	* version not provided
-	* description not provided
+Package lint IGNORED. 1 error(s) occurred and were discarded.
 
 ------------------------------------------------------------------------------------------------------------------------
 
-1 package(s) found, 1 package(s) with errors
+1 package(s) found, 0 package(s) with errors, 1 package(s) ignored
 

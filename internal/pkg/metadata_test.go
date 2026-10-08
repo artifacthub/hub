@@ -28,9 +28,10 @@ func TestGetPackageMetadata(t *testing.T) {
 
 	t.Run("error validating package metadata file", func(t *testing.T) {
 		t.Parallel()
-		_, err := GetPackageMetadata(hub.Keptn, "testdata/no-version")
+		md, err := GetPackageMetadata(hub.Keptn, "testdata/no-version")
 		assert.Error(t, err)
 		assert.Equal(t, "error validating package metadata file: 5 errors occurred:\n\t* invalid metadata: version not provided\n\t* invalid metadata: name not provided\n\t* invalid metadata: display name not provided\n\t* invalid metadata: createdAt not provided\n\t* invalid metadata: description not provided\n\n", err.Error())
+		assert.NotNil(t, md)
 	})
 
 	t.Run("success with .yml", func(t *testing.T) {

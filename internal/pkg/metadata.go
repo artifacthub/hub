@@ -63,7 +63,9 @@ var (
 	}
 )
 
-// GetPackageMetadata reads, parses and validates the package metadata file provided.
+// GetPackageMetadata reads, parses and validates the package metadata file
+// provided. When the metadata file is parsed successfully but it is not valid,
+// the parsed metadata is returned along with the validation error.
 func GetPackageMetadata(kind hub.RepositoryKind, mdFile string) (*hub.PackageMetadata, error) {
 	var data []byte
 	var err error
@@ -82,7 +84,7 @@ func GetPackageMetadata(kind hub.RepositoryKind, mdFile string) (*hub.PackageMet
 		return nil, fmt.Errorf("error unmarshaling package metadata file: %w", err)
 	}
 	if err := ValidatePackageMetadata(kind, md); err != nil {
-		return nil, fmt.Errorf("error validating package metadata file: %w", err)
+		return md, fmt.Errorf("error validating package metadata file: %w", err)
 	}
 
 	return md, nil
