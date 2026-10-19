@@ -176,7 +176,8 @@ func (md *Metadata) validate() error {
 }
 
 // GetMetadata returns the metadata for the package version located in the path
-// provided.
+// provided. When the metadata is collected successfully but it is not valid,
+// it is returned along with the validation error.
 func GetMetadata(path string) (*Metadata, error) {
 	var md *Metadata
 
@@ -243,7 +244,7 @@ func GetMetadata(path string) (*Metadata, error) {
 
 	if md != nil {
 		if err := md.validate(); err != nil {
-			return nil, fmt.Errorf("error validating metadata: %w", err)
+			return md, fmt.Errorf("error validating metadata: %w", err)
 		}
 	}
 

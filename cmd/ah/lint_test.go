@@ -165,6 +165,188 @@ func TestLintCmd(t *testing.T) {
 	}
 }
 
+func TestLintCmdIgnore(t *testing.T) {
+	testCases := []struct {
+		kind          string
+		path          string
+		ignore        []string
+		golden        string
+		desc          string
+		expectedError error
+	}{
+		{
+			"helm",
+			"test1",
+			[]string{`test@^0\.0\.1$`},
+			"output-ignore.golden",
+			"package without errors ignored",
+			nil,
+		},
+		{
+			"helm",
+			"test3",
+			[]string{`test@^0\.0\.1$`},
+			"output-ignore.golden",
+			"package with errors ignored",
+			nil,
+		},
+		{
+			"opa",
+			"test7",
+			[]string{"pkg1"},
+			"output-ignore.golden",
+			"package with invalid metadata ignored (all versions)",
+			nil,
+		},
+		{
+			"helm-plugin",
+			"test9",
+			[]string{`test-plugin@^0\.1\.0$`},
+			"output-ignore.golden",
+			"package with invalid metadata ignored",
+			nil,
+		},
+		{
+			"krew",
+			"test11",
+			[]string{"test-plugin"},
+			"output-ignore.golden",
+			"package with unknown version ignored (all versions)",
+			nil,
+		},
+		{
+			"krew",
+			"test11",
+			[]string{"test-plugin@.*"},
+			"output-ignore-version.golden",
+			"package with unknown version not ignored by version",
+			errLintFailed,
+		},
+		{
+			"tekton-task",
+			"test13",
+			[]string{`task1@^0\.1\.0$`},
+			"output-ignore.golden",
+			"package with invalid manifest ignored",
+			nil,
+		},
+		{
+			"tekton-task",
+			"test13",
+			[]string{`task1@^0\.2\.0$`},
+			"output-ignore-version.golden",
+			"package with invalid manifest not ignored (version mismatch)",
+			errLintFailed,
+		},
+		{
+			"olm",
+			"test16",
+			[]string{"test-operator"},
+			"output-ignore.golden",
+			"package with errors ignored",
+			nil,
+		},
+		{
+			"kyverno",
+			"test18",
+			[]string{`pkg1@^2\.0\.0$`},
+			"output-ignore-partial.golden",
+			"one of two packages with errors ignored",
+			errLintFailed,
+		},
+		{
+			"kyverno",
+			"test18",
+			[]string{`pkg1@^2\.0\.0$`, `pkg2@^1\.0\.0$`},
+			"output-ignore.golden",
+			"all packages with errors ignored",
+			nil,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(fmt.Sprintf("%s: %s", tc.kind, tc.desc), func(t *testing.T) {
+			t.Parallel()
+
+			// Prepare command and execute it
+			var b bytes.Buffer
+			cmd := newLintCmd()
+			cmd.SilenceUsage = true
+			cmd.SilenceErrors = true
+			cmd.SetOut(&b)
+			args := []string{"--kind", tc.kind, "--path", filepath.Join("testdata", "lint", tc.path, "pkgs")}
+			for _, entry := range tc.ignore {
+				args = append(args, "--ignore", entry)
+			}
+			cmd.SetArgs(args)
+			cmdErr := cmd.Execute()
+
+			// Read command output and check it matches what we expect
+			cmdOutput, err := io.ReadAll(&b)
+			require.NoError(t, err)
+			goldenPath := filepath.Join("testdata", "lint", tc.path, tc.golden)
+			if *update {
+				// Update tests golden files
+				golden, err := os.Create(goldenPath)
+				require.NoError(t, err)
+				_, err = golden.Write(cmdOutput)
+				require.NoError(t, err)
+			}
+			expectedOutput, err := os.ReadFile(goldenPath)
+			require.NoError(t, err)
+			assert.Equal(t, expectedOutput, cmdOutput)
+			assert.Equal(t, tc.expectedError, cmdErr)
+		})
+	}
+
+	t.Run("invalid ignore entry", func(t *testing.T) {
+		t.Parallel()
+
+		cmd := newLintCmd()
+		cmd.SilenceUsage = true
+		cmd.SilenceErrors = true
+		cmd.SetOut(io.Discard)
+		cmd.SetArgs([]string{"--path", filepath.Join("testdata", "lint", "test1", "pkgs"), "--ignore", "@1.0.0"})
+		err := cmd.Execute()
+		assert.EqualError(t, err, `invalid ignore entry "@1.0.0": name not provided`)
+	})
+}
+
+func TestParseIgnoreEntries(t *testing.T) {
+	t.Parallel()
+
+	t.Run("valid entries", func(t *testing.T) {
+		t.Parallel()
+		ignore, err := parseIgnoreEntries([]string{"pkg1", `pkg2@^1\.0\.0$`, "pkg3@", " pkg4 @1.*"})
+		require.NoError(t, err)
+		assert.Equal(t, []*hub.RepositoryIgnoreEntry{
+			{Name: "pkg1", Version: ""},
+			{Name: "pkg2", Version: `^1\.0\.0$`},
+			{Name: "pkg3", Version: ""},
+			{Name: "pkg4", Version: "1.*"},
+		}, ignore.Ignore)
+	})
+
+	t.Run("no entries", func(t *testing.T) {
+		t.Parallel()
+		ignore, err := parseIgnoreEntries(nil)
+		require.NoError(t, err)
+		assert.Empty(t, ignore.Ignore)
+	})
+
+	t.Run("name not provided", func(t *testing.T) {
+		t.Parallel()
+		_, err := parseIgnoreEntries([]string{" @1.0.0"})
+		assert.EqualError(t, err, `invalid ignore entry " @1.0.0": name not provided`)
+	})
+
+	t.Run("invalid version regular expression", func(t *testing.T) {
+		t.Parallel()
+		_, err := parseIgnoreEntries([]string{"pkg1@["})
+		assert.ErrorContains(t, err, `invalid ignore entry "pkg1@[": invalid version regular expression`)
+	})
+}
+
 func TestLintTektonGitBasedCatalog(t *testing.T) {
 	t.Parallel()
 
@@ -223,6 +405,29 @@ func TestLintTektonGitBasedCatalog(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, headBefore, headAfter)
 		assert.FileExists(t, untrackedPath)
+	})
+
+	t.Run("version mismatch, package version ignored", func(t *testing.T) {
+		t.Parallel()
+		repoPath, _ := setupTektonGitRepo(t, "v0.2.0")
+		opts := &lintOptions{
+			kind:             "tekton-task",
+			path:             filepath.Join(repoPath, "task"),
+			tektonVersioning: hub.TektonGitBasedVersioning,
+		}
+
+		var b bytes.Buffer
+		err := lint(opts, &output{&b})
+		assert.Equal(t, errLintFailed, err)
+		assert.Contains(t, b.String(), "version mismatch (0.1.0 != 0.2.0)")
+
+		b.Reset()
+		opts.ignore = []string{`task1@^0\.2\.0$`}
+		err = lint(opts, &output{&b})
+		require.NoError(t, err)
+		assert.Contains(t, b.String(), "- task1 0.2.0")
+		assert.Contains(t, b.String(), "Package lint IGNORED. 1 error(s) occurred and were discarded.")
+		assert.Contains(t, b.String(), "1 package(s) found, 0 package(s) with errors, 1 package(s) ignored")
 	})
 }
 

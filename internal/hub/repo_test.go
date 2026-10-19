@@ -31,6 +31,23 @@ func TestRepositoryMetadataIgnoresPackage(t *testing.T) {
 			true,
 		},
 		{
+			"version entry, empty version",
+			&RepositoryMetadata{Ignore: []*RepositoryIgnoreEntry{{Name: "pkg1", Version: ".*"}}},
+			"pkg1",
+			"",
+			false,
+		},
+		{
+			"version and name only entries, empty version",
+			&RepositoryMetadata{Ignore: []*RepositoryIgnoreEntry{
+				{Name: "pkg1", Version: ".*"},
+				{Name: "pkg1"},
+			}},
+			"pkg1",
+			"",
+			true,
+		},
+		{
 			"different name",
 			&RepositoryMetadata{Ignore: []*RepositoryIgnoreEntry{{Name: "pkg2"}}},
 			"pkg1",

@@ -122,7 +122,9 @@ func (s *TrackerSource) warn(err error) {
 	s.i.Svc.Ec.Append(s.i.Repository.RepositoryID, err.Error())
 }
 
-// GetManifest reads and parses the plugin manifest.
+// GetManifest reads, parses and validates the plugin manifest. When the
+// manifest is parsed successfully but it is not valid, the parsed manifest is
+// returned along with the validation error.
 func GetManifest(pluginManifestPath string) (*index.Plugin, []byte, error) {
 	manifestRaw, err := os.ReadFile(pluginManifestPath)
 	if err != nil {
@@ -133,7 +135,7 @@ func GetManifest(pluginManifestPath string) (*index.Plugin, []byte, error) {
 		return nil, nil, fmt.Errorf("error unmarshaling plugin manifest file: %w", err)
 	}
 	if err := validateManifest(manifest); err != nil {
-		return nil, nil, fmt.Errorf("error validating plugin manifest: %w", err)
+		return manifest, manifestRaw, fmt.Errorf("error validating plugin manifest: %w", err)
 	}
 	return manifest, manifestRaw, nil
 }
