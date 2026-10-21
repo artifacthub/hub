@@ -83,6 +83,26 @@
 
 [data-line-number] {
   display: block;
+  padding-left: 2rem; /* Room for the section caret */
+}
+
+[data-section-header] {
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: 0.45rem center;
+  background-size: 0.65rem;
+}
+
+[data-section-header][aria-expanded='true'] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%238a9296'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+}
+
+[data-section-header][aria-expanded='false'] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%238a9296'%3E%3Cpath d='m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z'/%3E%3C/svg%3E");
+}
+
+[data-section-header]:focus {
+  outline: 1px dashed var(--color-black-35);
 }
 
 [data-active-line='true']::before {
