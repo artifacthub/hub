@@ -36,9 +36,8 @@ func SetupHTTPClient(restricted bool, timeout time.Duration) hub.HTTPClient {
 // requests to a set of restricted addresses.
 func setupRestrictedHTTPClient(timeout time.Duration) hub.HTTPClient {
 	dialer := &net.Dialer{
-		Timeout:   timeout,
-		DualStack: true,
-		Control:   checkRestrictions,
+		Timeout: timeout,
+		Control: checkRestrictions,
 	}
 	transport := &http.Transport{
 		DialContext: dialer.DialContext,
