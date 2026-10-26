@@ -1010,6 +1010,7 @@ paths:
                         logo_image_id: 55f2ed75-015d-4edd-9990-11fb2ffcae9e
                         stars: 0
                         category: 4
+                        category_display_name: Monitoring and logging
                         description: A Helm chart for sentry-kubernetes
                         version: 0.2.3
                         app_version: latest
@@ -1032,6 +1033,7 @@ paths:
                         logo_image_id: 5gt2ed75-015d-40dd-9990-11fb2tgcae9e
                         stars: 0
                         category: 2
+                        category_display_name: Database
                         description: CoreOS etcd-operator Helm chart for Kubernetes
                         version: 0.10.3
                         app_version: 0.9.4
@@ -4879,6 +4881,10 @@ components:
               example: "http://logo"
             category:
               $ref: "#/components/schemas/PackageCategoryId"
+            category_display_name:
+              type: string
+              nullable: false
+              example: Database
             keywords:
               type: array
               nullable: false
@@ -5135,6 +5141,9 @@ components:
         - 6
         - 7
         - 8
+        - 9
+        - 10
+        - 11
       nullable: false
       description: |
         Package category:
@@ -5146,6 +5155,9 @@ components:
           * `6` - Security
           * `7` - Storage
           * `8` - Streaming and messaging
+          * `9` - Analytics
+          * `10` - Data processing
+          * `11` - Web applications
     PackageSummary:
       allOf:
         - $ref: "#/components/schemas/PackageBase"
@@ -5153,6 +5165,10 @@ components:
           properties:
             category:
               $ref: "#/components/schemas/PackageCategoryId"
+            category_display_name:
+              type: string
+              nullable: false
+              example: Database
             stars:
               type: integer
               nullable: false
@@ -5807,6 +5823,9 @@ components:
             - 6
             - 7
             - 8
+            - 9
+            - 10
+            - 11
       required: false
       description: |
         Package category:
@@ -5818,6 +5837,9 @@ components:
           * `6` - Security
           * `7` - Storage
           * `8` - Streaming and messaging
+          * `9` - Analytics
+          * `10` - Data processing
+          * `11` - Web applications
     PackageIDParam:
       in: path
       name: packageID

@@ -14,4 +14,3 @@ tracker:
   repositoriesNames: []
   repositoriesKinds: []
   bypassDigestCheck: false
-  categoryModelPath: ../../ml/category/model

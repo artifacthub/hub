@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(14);
+select plan(16);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
@@ -117,6 +117,7 @@ select register_package('
     },
     "relative_path": "path1/path2",
     "category": 1,
+    "category_source": "publisher",
     "repository": {
         "repository_id": "00000000-0000-0000-0000-000000000001"
     }
@@ -132,6 +133,7 @@ select results_eq(
             channels,
             default_channel,
             package_category_id,
+            package_category_source,
             repository_id
         from package
         where name='package1'
@@ -154,6 +156,7 @@ select results_eq(
             ]'::jsonb,
             'stable',
             1,
+            'publisher',
             '00000000-0000-0000-0000-000000000001'::uuid
         )
     $$,
@@ -310,6 +313,7 @@ select register_package('
         }
     ],
     "category": 2,
+    "category_source": "predicted",
     "repository": {
         "repository_id": "00000000-0000-0000-0000-000000000001"
     }
@@ -319,17 +323,19 @@ select results_eq(
     $$
         select
             is_operator,
-            package_category_id
+            package_category_id,
+            package_category_source
         from package
         where name = 'package1'
     $$,
     $$
         values (
             false,
-            2
+            2,
+            'predicted'
         )
     $$,
-    'is_operator flag and category should have been updated'
+    'is_operator flag, category and category source should have been updated'
 );
 select results_eq(
     $$
@@ -464,6 +470,8 @@ select register_package('
             "email": "email2"
         }
     ],
+    "category": 3,
+    "category_source": "skip",
     "repository": {
         "repository_id": "00000000-0000-0000-0000-000000000001"
     }
@@ -471,12 +479,21 @@ select register_package('
 ');
 select results_eq(
     $$
-        select is_operator from package where name = 'package1'
+        select
+            is_operator,
+            package_category_id,
+            package_category_source
+        from package
+        where name = 'package1'
     $$,
     $$
-        values (false)
+        values (
+            false,
+            2,
+            'predicted'
+        )
     $$,
-    'is_operator flag should not have been updated'
+    'is_operator flag, category and category source should not have been updated'
 );
 select results_eq(
     $$
@@ -555,6 +572,56 @@ select is_empty(
         and e.package_version = '0.0.9'
     $$,
     'No new release event should exist for package1 version 0.0.9'
+);
+
+-- Register a package without category source
+select register_package('
+{
+    "name": "package3",
+    "display_name": "Package 3",
+    "version": "1.0.0",
+    "category": 0,
+    "category_source": "",
+    "repository": {
+        "repository_id": "00000000-0000-0000-0000-000000000001"
+    }
+}
+');
+select results_eq(
+    $$
+        select
+            package_category_id,
+            package_category_source
+        from package
+        where name = 'package3'
+    $$,
+    $$
+        values (
+            null::integer,
+            null::text
+        )
+    $$,
+    'Category and category source should be null'
+);
+
+-- Check that trying to register a package with an invalid category source raises an error
+select throws_ok(
+    $$
+        select register_package('
+        {
+            "name": "package4",
+            "display_name": "Package 4",
+            "version": "1.0.0",
+            "category_source": "invalid",
+            "repository": {
+                "repository_id": "00000000-0000-0000-0000-000000000001"
+            }
+        }
+        ')
+    $$,
+    '23514',
+    'new row for relation "package" violates check constraint "package_package_category_source_check"',
+    'It should not be possible to register packages with an invalid category source'
 );
 
 -- Disable repository and check that trying to register a package raises an error

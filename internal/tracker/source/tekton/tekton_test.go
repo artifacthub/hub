@@ -85,7 +85,7 @@ func TestTrackerSource(t *testing.T) {
 			Name:        "task1",
 			DisplayName: "Task 1",
 			Description: "Test task",
-			Category:    hub.Security,
+			Category:    hub.PackageCategory(6),
 			Keywords:    []string{"tekton", "task", "tag1", "tag2"},
 			Readme:      "This is just a test task\n",
 			Version:     "0.1.0",

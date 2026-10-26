@@ -121,12 +121,13 @@ func TestGet(t *testing.T) {
 	t.Run("database query succeeded", func(t *testing.T) {
 		t.Parallel()
 		expectedPackage := &hub.Package{
-			PackageID:      "00000000-0000-0000-0000-000000000001",
-			Name:           "Package 1",
-			NormalizedName: "package-1",
-			Category:       hub.AIMachineLearning,
-			LogoImageID:    "00000000-0000-0000-0000-000000000001",
-			IsOperator:     true,
+			PackageID:           "00000000-0000-0000-0000-000000000001",
+			Name:                "Package 1",
+			NormalizedName:      "package-1",
+			Category:            hub.PackageCategory(1),
+			CategoryDisplayName: "AI / Machine learning",
+			LogoImageID:         "00000000-0000-0000-0000-000000000001",
+			IsOperator:          true,
 			Channels: []*hub.Channel{
 				{
 					Name:    "stable",
@@ -239,6 +240,7 @@ func TestGet(t *testing.T) {
 			"name": "Package 1",
 			"normalized_name": "package-1",
 			"category": 1,
+			"category_display_name": "AI / Machine learning",
 			"logo_image_id": "00000000-0000-0000-0000-000000000001",
 			"is_operator": true,
 			"channels": [

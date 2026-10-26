@@ -126,7 +126,7 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 				IsOperator:  false,
 				DisplayName: "Package 1",
 				Description: "Package description",
-				Category:    hub.Security,
+				Category:    hub.PackageCategory(6),
 				Keywords: []string{
 					"kw1",
 					"kw2",

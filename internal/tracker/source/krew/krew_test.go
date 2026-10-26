@@ -87,7 +87,7 @@ func TestTrackerSource(t *testing.T) {
 			Name:        "test-plugin",
 			DisplayName: "My test plugin",
 			Description: "Test plugin",
-			Category:    hub.Security,
+			Category:    hub.PackageCategory(6),
 			HomeURL:     "https://test/plugin",
 			Keywords:    []string{"kubernetes", "kubectl", "plugin", "networking", "security"},
 			Readme:      "This is just a test plugin",

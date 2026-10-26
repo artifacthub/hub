@@ -114,3 +114,46 @@ func TestTrackerSourceIgnoredPackages(t *testing.T) {
 		})
 	}
 }
+
+func TestTrackerSourceBypassDigestCheck(t *testing.T) {
+	t.Parallel()
+
+	// Setup fake registry
+	var requests atomic.Int64
+	registry := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		requests.Add(1)
+		w.WriteHeader(http.StatusNotFound)
+	}))
+	defer registry.Close()
+	host := strings.TrimPrefix(registry.URL, "http://")
+
+	// Setup services and expectations
+	sw := source.NewTestsServicesWrapper()
+	sw.Ec.Test(t)
+	sw.Svc.Cfg.Set("tracker.bypassDigestCheck", true)
+	data, err := json.Marshal(hub.ContainerImageData{Tags: []hub.ContainerImageTag{
+		{Name: "1.0.0", Mutable: false},
+	}})
+	require.NoError(t, err)
+	i := &hub.TrackerSourceInput{
+		Repository: &hub.Repository{
+			RepositoryID: "repo1",
+			URL:          hub.RepositoryOCIPrefix + host + "/ns/img",
+			Data:         data,
+		},
+		RepositoryMetadata: &hub.RepositoryMetadata{},
+		PackagesRegistered: map[string]string{
+			"img@1.0.0": "digest1",
+		},
+		Svc: sw.Svc,
+	}
+	sw.Ec.On("Append", "repo1", mock.Anything).Return().Once()
+
+	// Run test and check expectations: the registered immutable tag is
+	// processed again instead of being returned as not changed
+	packages, err := NewTrackerSource(i).GetPackagesAvailable()
+	require.NoError(t, err)
+	assert.Empty(t, packages)
+	assert.Positive(t, requests.Load())
+	sw.AssertExpectations(t)
+}

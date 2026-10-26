@@ -229,7 +229,7 @@ func TestTrackerSource(t *testing.T) {
 		// Run test and check expectations
 		p1 := source.ClonePackage(basePkg)
 		p1.Repository = i.Repository
-		p1.Category = hub.Security
+		p1.Category = hub.PackageCategory(6)
 		p1.LogoImageID = "logoImageID"
 		p1.Channels = []*hub.Channel{
 			{
@@ -327,7 +327,7 @@ func TestTrackerSource(t *testing.T) {
 		// Run test and check expectations
 		p := source.ClonePackage(basePkg)
 		p.Repository = i.Repository
-		p.Category = hub.Security
+		p.Category = hub.PackageCategory(6)
 		p.LogoImageID = "logoImageID"
 		p.Channels = []*hub.Channel{
 			{

@@ -1500,7 +1500,7 @@ func TestSearch(t *testing.T) {
 			Orgs:              []string{"o1", "o2"},
 			Repositories:      []string{"r1", "r2"},
 			RepositoryKinds:   []hub.RepositoryKind{hub.Helm, hub.OLM},
-			Categories:        []hub.PackageCategory{hub.AIMachineLearning, hub.Database},
+			Categories:        []hub.PackageCategory{1, 2},
 			VerifiedPublisher: true,
 			Official:          true,
 			Operators:         true,

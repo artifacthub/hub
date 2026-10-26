@@ -30,6 +30,7 @@ begin
         'name', p.name,
         'normalized_name', p.normalized_name,
         'category', p.package_category_id,
+        'category_display_name', pc.display_name,
         'is_operator', p.is_operator,
         'official', p.official,
         'cncf', p.cncf,
@@ -109,6 +110,7 @@ begin
     from package p
     join snapshot s using (package_id)
     join repository r using (repository_id)
+    left join package_category pc using (package_category_id)
     where p.package_id = v_package_id
     and
         case when p_input->>'version' <> '' then

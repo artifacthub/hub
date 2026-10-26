@@ -32,17 +32,6 @@ export enum RepositoryKind {
   Kagent,
 }
 
-export enum PackageCategory {
-  'AI / Machine learning' = 1,
-  Database,
-  'Integration and delivery',
-  'Monitoring and logging',
-  Networking,
-  Security,
-  Storage,
-  'Streaming and messaging',
-}
-
 export enum KeptnData {
   Version = 'keptnVersion',
   Kind = 'keptnKind',
@@ -183,7 +172,8 @@ export interface Package {
   screenshots?: Screenshot[];
   productionOrganizationsCount?: number;
   relativePath?: string;
-  category?: PackageCategory;
+  category?: number;
+  categoryDisplayName?: string;
 }
 
 export interface Screenshot {

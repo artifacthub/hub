@@ -269,7 +269,10 @@ const PackageCard = (props: Props) => {
             {(isUndefined(props.noBadges) || !props.noBadges) && (
               <div className="d-flex flex-row justify-content-between align-items-end pt-0 pt-sm-2 mt-0 mt-md-auto">
                 <div>
-                  <PackageCategoryLabel category={props.package.category} />
+                  <PackageCategoryLabel
+                    category={props.package.category}
+                    categoryDisplayName={props.package.categoryDisplayName}
+                  />
                 </div>
                 <div className="d-flex flex-row ms-auto">
                   {props.package.deprecated && <Deprecated className="d-inline mt-3 ms-2" />}
