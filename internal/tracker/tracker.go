@@ -111,12 +111,17 @@ func (t *Tracker) Run() error {
 			continue
 		}
 
-		// Set package category from ML model prediction if needed
-		switch p.Category {
-		case hub.UnknownCategory:
-			p.Category = t.svc.Pcc.Predict(p)
-		case hub.SkipCategoryPrediction:
-			p.Category = hub.UnknownCategory
+		// Set package category source, predicting the category if needed.
+		// Packages whose prediction is below the confidence threshold (unknown
+		// category) are still marked as predicted, so that they remain eligible
+		// for future predictions.
+		switch {
+		case p.Category > 0:
+			p.CategorySource = hub.PackageCategorySourcePublisher
+		case p.Category == hub.SkipCategoryPrediction:
+			p.Category, p.CategorySource = hub.UnknownCategory, hub.PackageCategorySourceSkip
+		default:
+			p.Category, p.CategorySource = t.svc.Pcc.Predict(p), hub.PackageCategorySourcePredicted
 		}
 
 		// Register package

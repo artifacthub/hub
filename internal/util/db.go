@@ -16,8 +16,8 @@ import (
 	"github.com/spf13/viper"
 )
 
-// the packages views counters in the database.
 // DBLockKeyUpdatePackagesViews represents the lock key used when updating
+// the packages views counters in the database.
 const DBLockKeyUpdatePackagesViews = 1
 
 // ErrDBInsufficientPrivilege indicates that the user does not have the

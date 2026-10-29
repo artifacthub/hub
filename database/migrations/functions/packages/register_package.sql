@@ -67,6 +67,7 @@ begin
         channels,
         default_channel,
         package_category_id,
+        package_category_source,
         repository_id
     ) values (
         v_name,
@@ -77,6 +78,7 @@ begin
         nullif(p_pkg->'channels', 'null'),
         nullif(p_pkg->>'default_channel', ''),
         nullif((p_pkg->>'category')::int, 0),
+        nullif(p_pkg->>'category_source', ''),
         v_repository_id
     )
     on conflict (repository_id, name) do update
@@ -88,7 +90,8 @@ begin
         is_operator = excluded.is_operator,
         channels = excluded.channels,
         default_channel = excluded.default_channel,
-        package_category_id = excluded.package_category_id
+        package_category_id = excluded.package_category_id,
+        package_category_source = excluded.package_category_source
     where is_latest(
         v_repository_kind_id,
         v_version,

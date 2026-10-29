@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(190);
+select plan(195);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -142,6 +142,7 @@ select columns_are('package', array[
     'default_channel',
     'created_at',
     'package_category_id',
+    'package_category_source',
     'repository_id'
 ]);
 select columns_are('package_category', array[
@@ -452,16 +453,19 @@ select has_function('are_all_containers_images_whitelisted');
 select has_function('delete_production_usage');
 select has_function('enrich_package_data');
 select has_function('generate_package_tsdoc');
+select has_function('get_category_training_data');
 select has_function('get_harbor_replication_dump');
 select has_function('get_helm_exporter_dump');
 select has_function('get_nova_dump');
 select has_function('get_package');
 select has_function('get_package_changelog');
 select has_function('get_package_summary');
+select has_function('get_packages_for_category_labelling');
 select has_function('get_packages_starred_by_user');
 select has_function('get_package_stars');
 select has_function('get_package_views');
 select has_function('get_packages_stats');
+select has_function('get_packages_with_predicted_category');
 select has_function('get_production_usage');
 select has_function('get_random_packages');
 select has_function('get_snapshots_to_scan');
@@ -474,6 +478,8 @@ select has_function('semver_gte');
 select has_function('toggle_star');
 select has_function('update_snapshot_security_report');
 select has_function('unregister_package');
+select has_function('update_packages_predicted_category');
+select has_function('update_packages_views');
 -- Repositories
 select has_function('add_repository');
 select has_function('delete_repository');
@@ -534,9 +540,12 @@ select results_eq(
         (5, 'networking', 'Networking'),
         (6, 'security', 'Security'),
         (7, 'storage', 'Storage'),
-        (8, 'streaming-messaging', 'Streaming and messaging')
+        (8, 'streaming-messaging', 'Streaming and messaging'),
+        (9, 'analytics', 'Analytics'),
+        (10, 'data-processing', 'Data processing'),
+        (11, 'web-applications', 'Web applications')
     $$,
-    'Event kinds should exist'
+    'Package categories should exist'
 );
 
 -- Check repository kinds exist

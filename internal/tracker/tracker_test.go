@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/artifacthub/hub/internal/category"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/artifacthub/hub/internal/pkg"
@@ -16,6 +17,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
 func TestTracker(t *testing.T) {
@@ -353,6 +355,83 @@ func TestTracker(t *testing.T) {
 		sw.assertExpectations(t)
 	})
 
+	t.Run("package category and category source set before registering", func(t *testing.T) {
+		t.Parallel()
+
+		testCases := []struct {
+			desc              string
+			category          hub.PackageCategory
+			predictCalled     bool
+			predictedCategory hub.PackageCategory
+			expectedCategory  hub.PackageCategory
+			expectedSource    hub.PackageCategorySource
+		}{
+			{
+				"category provided by publisher",
+				hub.PackageCategory(6),
+				false,
+				hub.UnknownCategory,
+				hub.PackageCategory(6),
+				hub.PackageCategorySourcePublisher,
+			},
+			{
+				"category predicted",
+				hub.UnknownCategory,
+				true,
+				hub.PackageCategory(2),
+				hub.PackageCategory(2),
+				hub.PackageCategorySourcePredicted,
+			},
+			{
+				"category predicted below threshold",
+				hub.UnknownCategory,
+				true,
+				hub.UnknownCategory,
+				hub.UnknownCategory,
+				hub.PackageCategorySourcePredicted,
+			},
+			{
+				"category prediction skipped",
+				hub.SkipCategoryPrediction,
+				false,
+				hub.UnknownCategory,
+				hub.UnknownCategory,
+				hub.PackageCategorySourceSkip,
+			},
+		}
+		for _, tc := range testCases {
+			t.Run(tc.desc, func(t *testing.T) {
+				t.Parallel()
+
+				// Setup services and expectations
+				sw := newServicesWrapper()
+				sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r1).Return("", nil)
+				sw.ec.On("Init", r1.RepositoryID)
+				sw.rm.On("GetMetadata", r1, "").Return(nil, nil)
+				sw.rm.On("GetPackagesDigest", sw.svc.Ctx, r1.RepositoryID).Return(nil, nil)
+				p := source.ClonePackage(p1v1)
+				p.Category = tc.category
+				sw.src.On("GetPackagesAvailable").Return(map[string]*hub.Package{
+					pkg.BuildKey(p): p,
+				}, nil)
+				if tc.predictCalled {
+					sw.pcc.On("Predict", p).Return(tc.predictedCategory)
+				}
+				var registered hub.Package
+				sw.pm.On("Register", sw.svc.Ctx, p).Run(func(args mock.Arguments) {
+					registered = *(args.Get(1).(*hub.Package))
+				}).Return(nil)
+
+				// Run test and check expectations
+				err := New(sw.svc, r1, zerolog.Nop()).Run()
+				assert.Nil(t, err)
+				assert.Equal(t, tc.expectedCategory, registered.Category)
+				assert.Equal(t, tc.expectedSource, registered.CategorySource)
+				sw.assertExpectations(t)
+			})
+		}
+	})
+
 	t.Run("error unregistering package", func(t *testing.T) {
 		t.Parallel()
 
@@ -588,7 +667,7 @@ type servicesWrapper struct {
 	ec  *repo.ErrorsCollectorMock
 	hc  *tests.HTTPClientMock
 	is  *img.StoreMock
-	pcc *PackageCategoryClassifierMock
+	pcc *category.ClassifierMock
 	src *source.Mock
 	svc *hub.TrackerServices
 }
@@ -602,7 +681,7 @@ func newServicesWrapper() *servicesWrapper {
 	ec := &repo.ErrorsCollectorMock{}
 	hc := &tests.HTTPClientMock{}
 	is := &img.StoreMock{}
-	pcc := &PackageCategoryClassifierMock{}
+	pcc := &category.ClassifierMock{}
 	src := &source.Mock{}
 
 	// Setup tracker services using mocks

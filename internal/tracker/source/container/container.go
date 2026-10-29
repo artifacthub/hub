@@ -99,7 +99,8 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 	var mu sync.Mutex
 	packagesAvailable := make(map[string]*hub.Package)
 
-	// Prepare tags to process based on already processed ones and mutability config
+	// Prepare tags to process based on already processed ones and mutability
+	// config (all tags are processed when the digest check is bypassed)
 	if s.i.Repository.Data == nil {
 		// No tags have been set up yet, nothing to do
 		return packagesAvailable, nil
@@ -108,6 +109,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 	if err := json.Unmarshal(s.i.Repository.Data, &data); err != nil {
 		return nil, fmt.Errorf("invalid container image data: %w", err)
 	}
+	bypassDigestCheck := s.i.Svc.Cfg.GetBool("tracker.bypassDigestCheck")
 	var tagsToProcess []string
 	for _, tag := range data.Tags {
 		p := &hub.Package{
@@ -121,7 +123,7 @@ func (s *TrackerSource) GetPackagesAvailable() (map[string]*hub.Package, error) 
 		}
 
 		key := pkg.BuildKey(p)
-		if _, ok := s.i.PackagesRegistered[key]; !ok || tag.Mutable {
+		if _, ok := s.i.PackagesRegistered[key]; !ok || tag.Mutable || bypassDigestCheck {
 			tagsToProcess = append(tagsToProcess, tag.Name)
 		} else {
 			p.Digest = hub.HasNotChanged

@@ -1,0 +1,46 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PackageCategoryLabel > creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-none d-md-inline-block"
+  >
+    <button
+      aria-hidden="true"
+      aria-label="Filter by Analytics"
+      class="btn btn-link m-0 p-0 border-0 _btn_4316bc undefined"
+      tabindex="-1"
+    >
+      <span
+        class="badge bg-light top-0 text-dark border border-1 _bg_4316bc _badge_4316bc"
+      >
+        <div
+          class="d-flex flex-row align-items-center"
+        >
+          <svg
+            class="me-1"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 2-5.5 9h11zm0 3.84L13.93 9h-3.87zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5m0 7a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5M3 21.5h8v-8H3zm2-6h4v4H5z"
+            />
+          </svg>
+          <div>
+            Analytics
+          </div>
+        </div>
+      </span>
+    </button>
+  </div>
+</DocumentFragment>
+`;

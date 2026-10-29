@@ -815,6 +815,8 @@ const PackageView = () => {
 
   const additionalInfo = getAdditionalPkgContent();
 
+  const hasCategory = !isUndefined(detail?.category) && !isUndefined(detail?.categoryDisplayName);
+
   return (
     <>
       {location.state && location.state.searchUrlReferer && (
@@ -909,14 +911,15 @@ const PackageView = () => {
                                 className={classNames(
                                   'd-none d-md-inline-block position-relative mt-1',
                                   styles.kindIcon,
-                                  { 'me-3': isUndefined(detail.category) },
-                                  { 'me-2': !isUndefined(detail.category) }
+                                  { 'me-3': !hasCategory },
+                                  { 'me-2': hasCategory }
                                 )}
                                 deprecated={detail.deprecated}
                                 clickable
                               />
                               <PackageCategoryLabel
                                 category={detail.category}
+                                categoryDisplayName={detail.categoryDisplayName}
                                 deprecated={detail.deprecated}
                                 className="d-none d-md-inline me-3 position-relative mt-1"
                               />

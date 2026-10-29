@@ -8,8 +8,6 @@ require (
 	github.com/coreos/go-oidc v2.5.0+incompatible
 	github.com/disintegration/imaging v1.6.2
 	github.com/domodwyer/mailyak v3.1.1+incompatible
-	github.com/galeone/tensorflow/tensorflow/go v0.0.0-20240119075110-6ad3cf65adfe
-	github.com/galeone/tfgo v0.0.0-20230715013254-16113111dc99
 	github.com/go-chi/chi/v5 v5.5.0
 	github.com/go-enry/go-license-detector/v4 v4.3.1
 	github.com/go-git/go-git/v5 v5.19.3

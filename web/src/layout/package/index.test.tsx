@@ -297,6 +297,37 @@ describe('Package index', () => {
     });
   });
 
+  describe('Category label', () => {
+    it('renders category label', async () => {
+      const mockPackage = { ...getMockPackage('9'), category: 9, categoryDisplayName: 'Analytics' };
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      render(
+        <Router>
+          <PackageView />
+        </Router>
+      );
+
+      expect(await screen.findByText('Analytics')).toBeInTheDocument();
+      expect(screen.getByLabelText('Filter by Analytics')).toBeInTheDocument();
+      expect(screen.getByTestId('repoIconLabelLink').firstChild).toHaveClass('me-2');
+    });
+
+    it('renders kind label with wider spacing when package has no category', async () => {
+      const mockPackage = { ...getMockPackage('9'), category: undefined, categoryDisplayName: undefined };
+      vi.mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      render(
+        <Router>
+          <PackageView />
+        </Router>
+      );
+
+      expect(await screen.findAllByText('Pretty name')).toHaveLength(2);
+      expect(screen.getByTestId('repoIconLabelLink').firstChild).toHaveClass('me-3');
+    });
+  });
+
   describe('Helm package', () => {
     it('renders CRDs button when are defined', async () => {
       const mockPackage = getMockPackage('10');

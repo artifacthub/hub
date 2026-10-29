@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/artifacthub/hub/internal/authz"
+	"github.com/artifacthub/hub/internal/category"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/pkg"
@@ -72,7 +73,10 @@ func main() {
 	}
 	ec := repo.NewErrorsCollector(rm, repo.Tracker)
 	op := oci.NewPuller(cfg)
-	pcc := tracker.NewPackageCategoryClassifierML(cfg.GetString("tracker.categoryModelPath"))
+	pcc, err := category.NewEmbeddedClassifier()
+	if err != nil {
+		log.Fatal().Err(err).Msg("package category classifier setup failed")
+	}
 	svc := &hub.TrackerServices{
 		Ctx:                ctx,
 		Cfg:                cfg,
@@ -87,6 +91,15 @@ func main() {
 		Sc:                 oci.NewSignatureChecker(cfg),
 		Pcc:                pcc,
 		SetupTrackerSource: tracker.SetupSource,
+	}
+
+	// Predict again the category of the packages whose category was predicted
+	// on full runs, so that a new embedded model is applied to all of them
+	if len(cfg.GetStringSlice("tracker.repositoriesNames")) == 0 &&
+		len(cfg.GetStringSlice("tracker.repositoriesKinds")) == 0 {
+		if err := category.Repredict(ctx, category.NewManager(db), pcc); err != nil {
+			log.Error().Err(err).Msg("error predicting packages categories again")
+		}
 	}
 
 	// Track registered repositories
@@ -143,7 +156,6 @@ L:
 
 // setCfgDefaults sets the default values for some configuration options.
 func setCfgDefaults(cfg *viper.Viper) {
-	cfg.SetDefault("tracker.categoryModelPath", "../../ml/category/model")
 	cfg.SetDefault("tracker.concurrency", 1)
 	cfg.SetDefault("tracker.repositoryTimeout", 15*time.Minute)
 }

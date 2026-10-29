@@ -18,12 +18,6 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
-      - name: Install TensorFlow C library
-        run: |
-          FILENAME=libtensorflow-cpu-linux-x86_64-2.11.0.tar.gz
-          wget -q --no-check-certificate https://storage.googleapis.com/tensorflow/libtensorflow/${FILENAME}
-          sudo tar -C /usr/local -xzf ${FILENAME}
-          sudo ldconfig /usr/local/lib
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v9
         with:
@@ -114,12 +108,6 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      - name: Install TensorFlow C library
-        run: |
-          FILENAME=libtensorflow-cpu-linux-x86_64-2.11.0.tar.gz
-          wget -q --no-check-certificate https://storage.googleapis.com/tensorflow/libtensorflow/${FILENAME}
-          sudo tar -C /usr/local -xzf ${FILENAME}
-          sudo ldconfig /usr/local/lib
       - name: Run backend tests
         run: go test -cover -race -v -mod=readonly ./...
 
@@ -201,12 +189,6 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      - name: Install TensorFlow C library
-        run: |
-          FILENAME=libtensorflow-cpu-linux-x86_64-2.11.0.tar.gz
-          wget -q --no-check-certificate https://storage.googleapis.com/tensorflow/libtensorflow/${FILENAME}
-          sudo tar -C /usr/local -xzf ${FILENAME}
-          sudo ldconfig /usr/local/lib
       - name: Build hub
         working-directory: ./cmd/hub
         run: go build -v
@@ -215,6 +197,9 @@ jobs:
         run: go build -v
       - name: Build tracker
         working-directory: ./cmd/tracker
+        run: go build -v
+      - name: Build category
+        working-directory: ./cmd/category
         run: go build -v
 
   build-frontend:

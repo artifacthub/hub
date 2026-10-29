@@ -1,0 +1,51 @@
+# Package categories supported by Artifact Hub.
+#
+# This file is the single source of truth for the categories' IDs, names,
+# display names and descriptions. IDs are never reused or renumbered, and
+# names are part of the public annotations contract. Please see the "Adding a
+# category" checklist in docs/dev.md before making any changes.
+
+- id: 1
+  name: ai-machine-learning
+  display_name: AI / Machine learning
+  description: Tools to build, train, serve and operate machine learning and AI models.
+- id: 2
+  name: database
+  display_name: Database
+  description: Databases, data stores and caches, and tools to operate or migrate them.
+- id: 3
+  name: integration-delivery
+  display_name: Integration and delivery
+  description: Tools to build, test, package and deploy software (CI/CD, GitOps, release and deployment automation).
+- id: 4
+  name: monitoring-logging
+  display_name: Monitoring and logging
+  description: Tools to collect, store, query and alert on metrics, logs, traces and other observability data.
+- id: 5
+  name: networking
+  display_name: Networking
+  description: Ingress controllers, proxies, load balancers, service meshes, DNS and other network infrastructure.
+- id: 6
+  name: security
+  display_name: Security
+  description: Tools to protect workloads and infrastructure (authentication, authorization, secrets, certificates, policy, scanning).
+- id: 7
+  name: storage
+  display_name: Storage
+  description: Block, file and object storage systems, volume provisioners, and backup and replication tools.
+- id: 8
+  name: streaming-messaging
+  display_name: Streaming and messaging
+  description: Message brokers, event streaming platforms, queues and event routing tools.
+- id: 9
+  name: analytics
+  display_name: Analytics
+  description: Tools for exploring, reporting and visualizing business or product data.
+- id: 10
+  name: data-processing
+  display_name: Data processing
+  description: Engines and pipelines that move or transform data (batch, stream, ETL/ELT, data orchestration, query engines).
+- id: 11
+  name: web-applications
+  display_name: Web applications
+  description: End-user applications (CMS, wikis, collaboration, chat, media, productivity, home automation...).

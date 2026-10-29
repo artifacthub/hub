@@ -174,6 +174,31 @@ describe('PackageCard', () => {
     });
   });
 
+  describe('Category label', () => {
+    it('renders category label and filters by category on click', async () => {
+      const mockPackage = { ...getMockPackage('1'), category: 9, categoryDisplayName: 'Analytics' };
+
+      render(
+        <Router>
+          <PackageCard package={mockPackage} />
+        </Router>
+      );
+      expect(screen.getByText('Analytics')).toBeInTheDocument();
+      await userEvent.click(screen.getByLabelText('Filter by Analytics'));
+
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+      expect(mockUseNavigate).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQueryString({
+          pageNumber: 1,
+          filters: {
+            category: ['9'],
+          },
+        }),
+      });
+    });
+  });
+
   describe('when repository has a verified publisher', () => {
     it('renders correct label', () => {
       const mockPackage = getMockPackage('10');

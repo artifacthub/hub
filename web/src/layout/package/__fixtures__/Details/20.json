@@ -3,6 +3,7 @@
   "name": "argocd-sync-and-wait",
   "normalizedName": "argocd-sync-and-wait",
   "category": 3,
+  "categoryDisplayName": "Integration and delivery",
   "isOperator": false,
   "displayName": "Argo CD sync and wait",
   "description": "This task syncs (deploys) an Argo CD application and waits for it to be healthy",
