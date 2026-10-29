@@ -815,6 +815,8 @@ const PackageView = () => {
 
   const additionalInfo = getAdditionalPkgContent();
 
+  const hasCategory = !isUndefined(detail?.category) && !isUndefined(detail?.categoryDisplayName);
+
   return (
     <>
       {location.state && location.state.searchUrlReferer && (
@@ -909,8 +911,8 @@ const PackageView = () => {
                                 className={classNames(
                                   'd-none d-md-inline-block position-relative mt-1',
                                   styles.kindIcon,
-                                  { 'me-3': isUndefined(detail.categoryDisplayName) },
-                                  { 'me-2': !isUndefined(detail.categoryDisplayName) }
+                                  { 'me-3': !hasCategory },
+                                  { 'me-2': hasCategory }
                                 )}
                                 deprecated={detail.deprecated}
                                 clickable
