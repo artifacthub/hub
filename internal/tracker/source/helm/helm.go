@@ -12,6 +12,7 @@ import (
 	"path"
 	"regexp"
 	"runtime/debug"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -715,7 +716,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	// Links
 	if v, ok := annotations[linksAnnotation]; ok {
 		var links []*hub.Link
-		if err := yaml.Unmarshal([]byte(v), &links); err != nil {
+		if err := yaml.Unmarshal([]byte(v), &links); err != nil || slices.Contains(links, nil) {
 			errs = multierror.Append(errs, fmt.Errorf("%w: invalid links value", errInvalidAnnotation))
 		} else {
 		LL:
@@ -734,7 +735,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	// Maintainers
 	if v, ok := annotations[maintainersAnnotation]; ok {
 		var maintainers []*hub.Maintainer
-		if err := yaml.Unmarshal([]byte(v), &maintainers); err != nil {
+		if err := yaml.Unmarshal([]byte(v), &maintainers); err != nil || slices.Contains(maintainers, nil) {
 			errs = multierror.Append(errs, fmt.Errorf("%w: invalid maintainers value", errInvalidAnnotation))
 		} else {
 		ML:
@@ -813,7 +814,7 @@ func EnrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 	// Sign key
 	if v, ok := annotations[signKeyAnnotation]; ok {
 		var signKey *hub.SignKey
-		if err := yaml.Unmarshal([]byte(v), &signKey); err != nil {
+		if err := yaml.Unmarshal([]byte(v), &signKey); err != nil || signKey == nil {
 			errs = multierror.Append(errs, fmt.Errorf("%w: invalid sign key value", errInvalidAnnotation))
 		} else {
 			if signKey.URL == "" {

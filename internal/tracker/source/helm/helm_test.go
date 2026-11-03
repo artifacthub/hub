@@ -1004,6 +1004,32 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			"invalid links value",
 		},
 		{
+			&hub.Package{
+				Links: []*hub.Link{
+					{
+						Name: "",
+						URL:  "https://link1.url",
+					},
+				},
+			},
+			map[string]string{
+				linksAnnotation: `
+- name: link2
+  url: https://link2.url
+-
+`,
+			},
+			&hub.Package{
+				Links: []*hub.Link{
+					{
+						Name: "",
+						URL:  "https://link1.url",
+					},
+				},
+			},
+			"invalid links value",
+		},
+		{
 			&hub.Package{},
 			map[string]string{
 				linksAnnotation: `
@@ -1072,6 +1098,32 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			},
 			map[string]string{
 				maintainersAnnotation: `"{\"`,
+			},
+			&hub.Package{
+				Maintainers: []*hub.Maintainer{
+					{
+						Name:  "user1",
+						Email: "user1@email.com",
+					},
+				},
+			},
+			"invalid maintainers value",
+		},
+		{
+			&hub.Package{
+				Maintainers: []*hub.Maintainer{
+					{
+						Name:  "user1",
+						Email: "user1@email.com",
+					},
+				},
+			},
+			map[string]string{
+				maintainersAnnotation: `
+- name: user2
+  email: user2@email.com
+-
+`,
 			},
 			&hub.Package{
 				Maintainers: []*hub.Maintainer{
@@ -1308,6 +1360,22 @@ url: https://key.url
 				},
 			},
 			"",
+		},
+		{
+			&hub.Package{},
+			map[string]string{
+				signKeyAnnotation: "",
+			},
+			&hub.Package{},
+			"invalid sign key value",
+		},
+		{
+			&hub.Package{},
+			map[string]string{
+				signKeyAnnotation: "null",
+			},
+			&hub.Package{},
+			"invalid sign key value",
 		},
 		// Multiple errors
 		{
