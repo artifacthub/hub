@@ -33,11 +33,16 @@ interface Lines {
   [key: number]: string;
 }
 
+export interface Sections {
+  [keyLine: number]: number;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getPathsPerLine = (values: any): Lines => {
+export const getValuesData = (values: any): { lines: Lines; sections: Sections } => {
   const lineCounter = new LineCounter();
   const doc = parseDocument(values, { lineCounter });
   const lines: Lines = {};
+  const sections: Sections = {};
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const extractKeys = (elem: any, path?: string) => {
@@ -50,6 +55,10 @@ const getPathsPerLine = (values: any): Lines => {
           const currentPath = getJMESPathForValuesSchema(item.key.value, path);
           const line = lineCounter.linePos(item.key.range[0]).line;
           lines[line] = currentPath;
+          if ((isMap(item.value) || isSeq(item.value)) && item.value.items.length > 0 && item.value.range) {
+            const endLine = lineCounter.linePos(item.value.range[2] - 1).line;
+            if (endLine > line) sections[line] = endLine;
+          }
           extractKeys(item.value, currentPath);
         });
       } else if (isSeq(elem)) {
@@ -62,7 +71,7 @@ const getPathsPerLine = (values: any): Lines => {
   };
 
   extractKeys(doc);
-  return lines;
+  return { lines, sections };
 };
 
 const Values = (props: Props) => {
@@ -73,6 +82,7 @@ const Values = (props: Props) => {
   const [currentPkgId, setCurrentPkgId] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [lines, setLines] = useState<Lines | undefined>();
+  const [sections, setSections] = useState<Sections | undefined>();
   const [enabledDiff, setEnabledDiff] = useState<boolean>(
     !isUndefined(props.compareVersionTo) && !isNull(props.compareVersionTo)
   );
@@ -112,7 +122,9 @@ const Values = (props: Props) => {
       setIsLoading(true);
       const data = await API.getChartValues(props.packageId, props.version);
       setValues(data || ' ');
-      setLines(getPathsPerLine(data));
+      const { lines: valuesLines, sections: valuesSections } = getValuesData(data);
+      setLines(valuesLines);
+      setSections(valuesSections);
       setCurrentPkgId(props.packageId);
       setIsLoading(false);
       setOpenStatus(true);
@@ -313,6 +325,7 @@ const Values = (props: Props) => {
                   <ValuesView
                     values={values}
                     lines={lines}
+                    sections={sections}
                     normalizedName={props.normalizedName}
                     updateUrl={updateUrl}
                     visibleValuesPath={props.visibleValuesPath}
