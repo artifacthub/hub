@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(195);
+select plan(196);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -222,6 +222,7 @@ select columns_are('snapshot', array[
     'security_report_alert_digest',
     'security_report_created_at',
     'security_report_summary',
+    'security_scan_attempted_at',
     'capabilities',
     'data',
     'deprecated',
@@ -471,6 +472,7 @@ select has_function('get_random_packages');
 select has_function('get_snapshots_to_scan');
 select has_function('is_latest');
 select has_function('register_package');
+select has_function('register_snapshot_security_scan_failure');
 select has_function('search_packages');
 select has_function('search_packages_monocular');
 select has_function('semver_gt');

@@ -12,4 +12,5 @@ creds:
   dockerPassword: ""
 scanner:
   concurrency: 10
+  maxImageSize: 4294967296
   trivyURL: http://trivy:8081

@@ -44,6 +44,11 @@ func main() {
 		log.Fatal().Err(err).Msg("logger setup failed")
 	}
 
+	// Apply the address restrictions to the default transports, if enabled
+	if err := util.SetupDefaultTransports(cfg.GetBool("restrictedHTTPClient")); err != nil {
+		log.Fatal().Err(err).Msg("default transports setup failed")
+	}
+
 	// Setup services
 	db, err := util.SetupDB(cfg)
 	if err != nil {

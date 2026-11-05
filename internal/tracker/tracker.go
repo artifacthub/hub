@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
@@ -32,6 +31,12 @@ func New(svc *hub.TrackerServices, r *hub.Repository, logger zerolog.Logger) *Tr
 
 // Run initializes the tracking of the repository provided.
 func (t *Tracker) Run() error {
+	// OLM repositories using an oci url may still be stored in the database.
+	// They cannot be processed, but their packages are not unregistered.
+	if repo.IsOLMOCI(t.r) {
+		return repo.ErrOLMOCINotSupported
+	}
+
 	// Check if repository has been updated since last time it was processed
 	remoteDigest, err := t.svc.Rm.GetRemoteDigest(t.svc.Ctx, t.r)
 	if err != nil {
@@ -189,12 +194,6 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 		hub.Helm,
 		hub.Kagent:
 		// These repositories are not cloned
-	case hub.OLM:
-		if strings.HasPrefix(t.r.URL, hub.RepositoryOCIPrefix) {
-			tmpDir, err = t.svc.Oe.ExportRepository(t.svc.Ctx, t.r)
-		} else {
-			tmpDir, packagesPath, err = t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
-		}
 	case
 		hub.ArgoTemplate,
 		hub.Backstage,
@@ -214,6 +213,7 @@ func (t *Tracker) cloneRepository() (string, string, error) {
 		hub.Kubewarden,
 		hub.Kyverno,
 		hub.Meshery,
+		hub.OLM,
 		hub.OPA,
 		hub.OpenCost,
 		hub.Radius,

@@ -48,13 +48,15 @@ insert into snapshot (
     version,
     security_report,
     security_report_created_at,
-    security_report_summary
+    security_report_summary,
+    security_scan_attempted_at
 ) values (
     :'package2ID',
     '1.0.0',
     '{"k": "v"}',
     '2020-06-16 11:20:38+02',
-    '{"k": "v"}'
+    '{"k": "v"}',
+    '2020-06-17 11:20:38+02'
 );
 
 -- Try to update repository owned by a user by other user
@@ -253,12 +255,12 @@ select isnt_empty(
 );
 select results_eq(
     $$
-        select security_report, security_report_created_at, security_report_summary
+        select security_report, security_report_created_at, security_report_summary, security_scan_attempted_at
         from snapshot
         where package_id = '00000000-0000-0000-0000-000000000002'
     $$,
     $$
-        values (null::jsonb, null::timestamptz, null::jsonb)
+        values (null::jsonb, null::timestamptz, null::jsonb, null::timestamptz)
     $$,
     'Security reports in packages belonging to repo2 should have been deleted'
 );

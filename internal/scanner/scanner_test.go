@@ -4,16 +4,59 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"strings"
 	"testing"
 
 	trivy "github.com/aquasecurity/trivy/pkg/types"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/oci"
 	"github.com/artifacthub/hub/internal/repo"
+	"github.com/artifacthub/hub/internal/tests"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
+
+func TestClose(t *testing.T) {
+	t.Parallel()
+	cfg := viper.New()
+	cfg.Set("scanner.trivyURL", "http://localhost:8081")
+	isMock := &ImageScannerMock{}
+	isMock.On("Close").Return(nil)
+	s := New(context.Background(), cfg, &repo.ErrorsCollectorMock{}, WithImageScanner(isMock))
+
+	require.NoError(t, s.Close())
+	isMock.AssertExpectations(t)
+}
+
+func TestPrepare(t *testing.T) {
+	t.Parallel()
+	cfg := viper.New()
+	cfg.Set("scanner.trivyURL", "http://localhost:8081")
+
+	testCases := []struct {
+		name         string
+		prepareError error
+	}{
+		{"image scanner prepared successfully", nil},
+		{"error preparing image scanner", tests.ErrFake},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			isMock := &ImageScannerMock{}
+			isMock.On("Prepare").Return(tc.prepareError)
+			s := New(context.Background(), cfg, &repo.ErrorsCollectorMock{}, WithImageScanner(isMock))
+
+			err := s.Prepare()
+
+			assert.Equal(t, tc.prepareError, err)
+			isMock.AssertExpectations(t)
+		})
+	}
+}
 
 func TestScan(t *testing.T) {
 	ctx := context.Background()
@@ -70,6 +113,79 @@ func TestScan(t *testing.T) {
 				ecMock.AssertExpectations(t)
 			})
 		}
+	})
+
+	t.Run("rate limited errors are not visible to users", func(t *testing.T) {
+		t.Parallel()
+		ecMock := &repo.ErrorsCollectorMock{}
+		isMock := &ImageScannerMock{}
+		isMock.On("ScanImage", image).Return(nil, ErrRateLimited)
+		s := New(ctx, cfg, ecMock, WithImageScanner(isMock))
+
+		_, err := s.Scan(snapshot)
+		assert.ErrorIs(t, err, ErrRateLimited)
+		isMock.AssertExpectations(t)
+		ecMock.AssertNotCalled(t, "Init", repositoryID)
+		ecMock.AssertNotCalled(t, "Append", repositoryID, mock.Anything)
+	})
+
+	t.Run("scan canceled", func(t *testing.T) {
+		t.Parallel()
+		ecMock := &repo.ErrorsCollectorMock{}
+		isMock := &ImageScannerMock{}
+		isMock.On("ScanImage", image).Return(nil, ErrScanCanceled)
+		s := New(ctx, cfg, ecMock, WithImageScanner(isMock))
+
+		_, err := s.Scan(snapshot)
+		assert.ErrorIs(t, err, ErrScanCanceled)
+		assert.True(t, IsPending(err))
+		isMock.AssertExpectations(t)
+		ecMock.AssertNotCalled(t, "Init", repositoryID)
+		ecMock.AssertNotCalled(t, "Append", repositoryID, mock.Anything)
+	})
+
+	t.Run("images too large are skipped", func(t *testing.T) {
+		t.Parallel()
+		ecMock := &repo.ErrorsCollectorMock{}
+		ecMock.On("Init", repositoryID)
+		isMock := &ImageScannerMock{}
+		isMock.On("ScanImage", image).Return(nil, fmt.Errorf("error: %w", oci.ErrImageTooLarge))
+		s := New(ctx, cfg, ecMock, WithImageScanner(isMock))
+
+		report, err := s.Scan(snapshot)
+		require.NoError(t, err)
+		assert.Equal(t, &hub.SnapshotSecurityReport{
+			PackageID: packageID,
+			Version:   version,
+		}, report)
+		isMock.AssertExpectations(t)
+		ecMock.AssertExpectations(t)
+		ecMock.AssertNotCalled(t, "Append", repositoryID, mock.Anything)
+	})
+
+	t.Run("other images are scanned when one is too large", func(t *testing.T) {
+		t.Parallel()
+		largeImage := "repo/large-image:tag"
+		ecMock := &repo.ErrorsCollectorMock{}
+		ecMock.On("Init", repositoryID)
+		isMock := &ImageScannerMock{}
+		isMock.On("ScanImage", largeImage).Return(nil, oci.ErrImageTooLarge)
+		isMock.On("ScanImage", image).Return(sampleReport2Data, nil)
+		s := New(ctx, cfg, ecMock, WithImageScanner(isMock))
+
+		report, err := s.Scan(&hub.SnapshotToScan{
+			RepositoryID:     repositoryID,
+			PackageID:        packageID,
+			PackageName:      packageName,
+			Version:          version,
+			ContainersImages: []*hub.ContainerImage{{Image: largeImage}, {Image: image}},
+		})
+		require.NoError(t, err)
+		assert.Contains(t, report.ImagesReports, image)
+		assert.NotContains(t, report.ImagesReports, largeImage)
+		isMock.AssertExpectations(t)
+		ecMock.AssertExpectations(t)
+		ecMock.AssertNotCalled(t, "Append", repositoryID, mock.Anything)
 	})
 
 	t.Run("error unmarshalling image report", func(t *testing.T) {

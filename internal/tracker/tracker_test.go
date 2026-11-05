@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"strings"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/category"
@@ -57,6 +56,33 @@ func TestTracker(t *testing.T) {
 		sw.assertExpectations(t)
 	})
 
+	t.Run("stored olm repository using an oci url", func(t *testing.T) {
+		t.Parallel()
+
+		for _, url := range []string{"oci://registry.io/org1/index:latest", "OCI://registry.io/org1/index:latest"} {
+			t.Run(url, func(t *testing.T) {
+				t.Parallel()
+
+				// Setup services and expectations (no calls are expected, so
+				// no remote digest, clone, or unregistering is attempted)
+				r := &hub.Repository{
+					RepositoryID: "repo1",
+					Kind:         hub.OLM,
+					URL:          url,
+				}
+				sw := newServicesWrapper()
+
+				// Run test and check expectations
+				err := New(sw.svc, r, zerolog.Nop()).Run()
+				assert.True(t, errors.Is(err, repo.ErrOLMOCINotSupported))
+				sw.assertExpectations(t)
+				sw.rm.AssertNotCalled(t, "GetRemoteDigest", mock.Anything, mock.Anything)
+				sw.rc.AssertNotCalled(t, "CloneRepository", mock.Anything, mock.Anything)
+				sw.pm.AssertNotCalled(t, "Unregister", mock.Anything, mock.Anything)
+			})
+		}
+	})
+
 	t.Run("repository has not been updated, same digest", func(t *testing.T) {
 		t.Parallel()
 
@@ -103,11 +129,6 @@ func TestTracker(t *testing.T) {
 			},
 			{
 				RepositoryID: "test2",
-				Kind:         hub.OLM,
-				URL:          "oci://github.com/org1/repo1",
-			},
-			{
-				RepositoryID: "test3",
 				Kind:         hub.OPA,
 			},
 		}
@@ -119,16 +140,7 @@ func TestTracker(t *testing.T) {
 				sw := newServicesWrapper()
 				sw.rm.On("GetRemoteDigest", sw.svc.Ctx, r).Return("", nil)
 				sw.ec.On("Init", r.RepositoryID)
-				switch r.Kind {
-				case hub.OLM:
-					if strings.HasPrefix(r.URL, hub.RepositoryOCIPrefix) {
-						sw.oe.On("ExportRepository", sw.svc.Ctx, r).Return("", tests.ErrFake)
-					} else {
-						sw.rc.On("CloneRepository", sw.svc.Ctx, r).Return("", "", tests.ErrFake)
-					}
-				case hub.OPA:
-					sw.rc.On("CloneRepository", sw.svc.Ctx, r).Return("", "", tests.ErrFake)
-				}
+				sw.rc.On("CloneRepository", sw.svc.Ctx, r).Return("", "", tests.ErrFake)
 
 				// Run test and check expectations
 				err := New(sw.svc, r, zerolog.Nop()).Run()
@@ -663,7 +675,6 @@ type servicesWrapper struct {
 	rm  *repo.ManagerMock
 	pm  *pkg.ManagerMock
 	rc  *repo.ClonerMock
-	oe  *repo.OLMOCIExporterMock
 	ec  *repo.ErrorsCollectorMock
 	hc  *tests.HTTPClientMock
 	is  *img.StoreMock
@@ -677,7 +688,6 @@ func newServicesWrapper() *servicesWrapper {
 	rm := &repo.ManagerMock{}
 	pm := &pkg.ManagerMock{}
 	rc := &repo.ClonerMock{}
-	oe := &repo.OLMOCIExporterMock{}
 	ec := &repo.ErrorsCollectorMock{}
 	hc := &tests.HTTPClientMock{}
 	is := &img.StoreMock{}
@@ -691,7 +701,6 @@ func newServicesWrapper() *servicesWrapper {
 		Rm:  rm,
 		Pm:  pm,
 		Rc:  rc,
-		Oe:  oe,
 		Ec:  ec,
 		Hc:  hc,
 		Is:  is,
@@ -706,7 +715,6 @@ func newServicesWrapper() *servicesWrapper {
 		rm:  rm,
 		pm:  pm,
 		rc:  rc,
-		oe:  oe,
 		ec:  ec,
 		hc:  hc,
 		is:  is,
@@ -720,7 +728,6 @@ func (sw *servicesWrapper) assertExpectations(t *testing.T) {
 	sw.rm.AssertExpectations(t)
 	sw.pm.AssertExpectations(t)
 	sw.rc.AssertExpectations(t)
-	sw.oe.AssertExpectations(t)
 	sw.ec.AssertExpectations(t)
 	sw.hc.AssertExpectations(t)
 	sw.is.AssertExpectations(t)

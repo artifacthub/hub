@@ -170,6 +170,24 @@ describe('Repository Modal - repositories section', () => {
         await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
       });
 
+      it('does not allow adding an OLM repository with an oci url', async () => {
+        vi.mocked(API).checkAvailability.mockResolvedValue(true);
+        render(<Modal {...defaultProps} />);
+
+        await userEvent.selectOptions(
+          screen.getByRole('combobox', { name: 'kind-select' }),
+          RepositoryKind.OLM.toString()
+        );
+        await userEvent.type(screen.getByRole('textbox', { name: /Name/ }), 'name');
+        await userEvent.type(screen.getByRole('textbox', { name: /Url/ }), 'oci://registry.io/namespace/index');
+        await userEvent.click(screen.getByRole('button', { name: 'Add repository' }));
+
+        expect(
+          await screen.findByText('Please enter a valid repository url for this repository kind')
+        ).toBeInTheDocument();
+        expect(API.addRepository).not.toHaveBeenCalled();
+      });
+
       it('calls add repo for org', async () => {
         Object.defineProperty(document, 'querySelector', {
           value: () => false,
@@ -311,6 +329,43 @@ describe('Repository Modal - repositories section', () => {
         });
 
         await waitFor(() => expect(onSuccessMock).toHaveBeenCalledTimes(1));
+      });
+
+      it('calls update repository when OLM repository is already using an oci url', async () => {
+        vi.mocked(API).checkAvailability.mockResolvedValue(true);
+        vi.mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        vi.mocked(API).updateRepository.mockResolvedValue(null);
+        const olmRepoMock = { ...repoMock, kind: RepositoryKind.OLM, url: 'oci://registry.io/namespace/index' };
+        render(<Modal {...defaultProps} repository={olmRepoMock} />);
+
+        const displayNameInput = screen.getByRole('textbox', { name: 'Display name' });
+        await userEvent.clear(displayNameInput);
+        await userEvent.type(displayNameInput, 'Pretty name');
+        await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+
+        await waitFor(() => {
+          expect(API.updateRepository).toHaveBeenCalledTimes(1);
+          expect(API.updateRepository).toHaveBeenCalledWith(
+            expect.objectContaining({ url: olmRepoMock.url, displayName: 'Pretty name' }),
+            undefined
+          );
+        });
+      });
+
+      it('does not allow setting an oci url on OLM repository', async () => {
+        vi.mocked(API).checkAvailability.mockResolvedValue(true);
+        const olmRepoMock = { ...repoMock, kind: RepositoryKind.OLM, url: 'https://github.com/org/repo' };
+        render(<Modal {...defaultProps} repository={olmRepoMock} />);
+
+        const urlInput = screen.getByRole('textbox', { name: /Url/ });
+        await userEvent.clear(urlInput);
+        await userEvent.type(urlInput, 'oci://registry.io/namespace/index');
+        await userEvent.click(screen.getByRole('button', { name: 'Update repository' }));
+
+        expect(
+          await screen.findByText('Please enter a valid repository url for this repository kind')
+        ).toBeInTheDocument();
+        expect(API.updateRepository).not.toHaveBeenCalled();
       });
 
       it('calls update repository for org', async () => {

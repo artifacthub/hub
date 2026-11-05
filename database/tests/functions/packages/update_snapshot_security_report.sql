@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(14);
+select plan(16);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -67,6 +67,8 @@ select is(security_report_created_at, null, 'Security report created at should b
 from snapshot where package_id = :'package1ID' and version = '1.0.0';
 select is(security_report_summary, null, 'Security report summary should be null')
 from snapshot where package_id = :'package1ID' and version = '1.0.0';
+select is(security_scan_attempted_at, null, 'Security scan attempted at should be null')
+from snapshot where package_id = :'package1ID' and version = '1.0.0';
 select update_snapshot_security_report('{
     "package_id": "00000000-0000-0000-0000-000000000001",
     "version": "1.0.0",
@@ -91,6 +93,8 @@ from snapshot where package_id = :'package1ID' and version = '1.0.0';
 select is(security_report_alert_digest, 'digest', 'Security report alert digest should exist')
 from snapshot where package_id = :'package1ID' and version = '1.0.0';
 select isnt(security_report_created_at, null, 'Security report created at should exist')
+from snapshot where package_id = :'package1ID' and version = '1.0.0';
+select is(security_scan_attempted_at, current_timestamp, 'Security scan attempted at should be set')
 from snapshot where package_id = :'package1ID' and version = '1.0.0';
 select is(security_report_summary, '{
     "critical": 2,

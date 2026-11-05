@@ -78,7 +78,8 @@ begin
         update snapshot set
             security_report = null,
             security_report_created_at = null,
-            security_report_summary = null
+            security_report_summary = null,
+            security_scan_attempted_at = null
         where package_id in (
             select package_id from package where repository_id = v_repository_id
         );

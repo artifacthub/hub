@@ -186,6 +186,7 @@ type PackageManager interface {
 	GetValuesSchemaJSON(ctx context.Context, pkgID, version string) ([]byte, error)
 	GetViewsJSON(ctx context.Context, packageID string) ([]byte, error)
 	Register(ctx context.Context, pkg *Package) error
+	RegisterSnapshotSecurityScanFailure(ctx context.Context, pkgID, version string) error
 	SearchJSON(ctx context.Context, input *SearchPackageInput) (*JSONQueryResult, error)
 	SearchMonocularJSON(ctx context.Context, baseURL, tsQueryWeb string) ([]byte, error)
 	ToggleStar(ctx context.Context, packageID string) error

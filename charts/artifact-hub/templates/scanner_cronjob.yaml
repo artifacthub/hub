@@ -19,6 +19,7 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
+      backoffLimit: 0
       template:
         metadata:
           labels:
@@ -59,8 +60,9 @@ spec:
               resources:
                 {{- toYaml . | nindent 16 }}
               {{- end }}
-              {{- if or .Values.scanner.cacheDir .Values.scanner.cronjob.extraEnvVars }}
               env:
+                - name: TMPDIR
+                  value: {{ .Values.scanner.tmpDir | quote }}
                 {{- if .Values.scanner.cacheDir }}
                 - name: TRIVY_CACHE_DIR
                   value: {{ .Values.scanner.cacheDir | quote }}
@@ -68,11 +70,12 @@ spec:
                 {{- if .Values.scanner.cronjob.extraEnvVars }}
                   {{- include "chart.tplvalues.render" (dict "value" .Values.scanner.cronjob.extraEnvVars "context" $) | nindent 16 }}
                 {{- end }}
-              {{- end }}
               volumeMounts:
                 - name: scanner-config
                   mountPath: {{ .Values.scanner.configDir | quote }}
                   readOnly: true
+                - name: tmp-dir
+                  mountPath: {{ .Values.scanner.tmpDir | quote }}
                 {{- if .Values.scanner.cacheDir }}
                 - name: cache-dir
                   mountPath: {{ .Values.scanner.cacheDir | quote }}
@@ -84,6 +87,9 @@ spec:
             - name: scanner-config
               secret:
                 secretName: {{ include "chart.resourceNamePrefix" . }}scanner-config
+            - name: tmp-dir
+              emptyDir:
+                sizeLimit: {{ .Values.scanner.tmpDirSizeLimit | default (add (mul .Values.scanner.concurrency (add .Values.scanner.maxImageSize 3221225472)) 1073741824) }}
             {{- if .Values.scanner.cacheDir }}
             - name: cache-dir
               emptyDir: {}

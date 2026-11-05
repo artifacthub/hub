@@ -24,7 +24,9 @@ fullnameOverride: ""
 #
 # Artifact Hub makes external HTTP requests for several purposes, like getting repositories metadata, dispatching
 # webhooks, etc. When this option is enabled, requests to the private network space as well as to some other special
-# addresses won't be allowed.
+# addresses won't be allowed. Proxies configured using environment variables won't be used, as the restrictions could
+# not be enforced on the final destination. Requests made to log in using GitHub, Google or OIDC, whose endpoints are not
+# user-controlled, are not restricted and can use those proxies.
 restrictedHTTPClient: false
 
 # Logging configuration
@@ -362,10 +364,20 @@ scanner:
     tolerations: []
   # Number of snapshots to process concurrently
   concurrency: 3
+  # Maximum size allowed for the images to scan, in bytes. It applies to the sum of the sizes of their compressed layers
+  maxImageSize: 4294967296
+  # Temporary directory path, used to store the images being scanned. It'll be mounted as ephemeral volume (emptyDir)
+  tmpDir: "/tmp/scanner"
+  # Size limit of the temporary directory volume. Defaults to concurrency x (maxImageSize + 3GiB), plus 1GiB. Each scan
+  # can use up to maxImageSize + 2GiB for its image and the temporary files created by Trivy, with 1GiB more for what can
+  # be written before the limit is enforced, and the reports kept during a run can take 1GiB. The download of the Trivy
+  # Java DB, done before scanning in each run with snapshots to scan, can use up to 2GiB too
+  tmpDirSizeLimit: ""
   # Trivy server url. Defaults to the Trivy service's internal URL
   trivyURL: ""
   # Cache directory path. If set, the cache directory for the Trivy client will be explicitly set (otherwise defaults
-  # to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir)
+  # to $HOME/.cache), and the directory will be mounted as ephemeral volume (emptyDir). The Trivy Java DB (close to 1GiB)
+  # is stored in the cache directory, so it is downloaded again in each run with snapshots to scan
   cacheDir: ""
   # Directory path where the configuration files should be mounted
   configDir: "/home/scanner/.cfg"

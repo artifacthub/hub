@@ -41,6 +41,7 @@ const (
 	getRandomPkgsDBQ                = `select get_random_packages()`
 	getValuesSchemaDBQ              = `select values_schema from snapshot where package_id = $1 and version = $2`
 	registerPkgDBQ                  = `select register_package($1::jsonb)`
+	registerSecurityScanFailureDBQ  = `select register_snapshot_security_scan_failure($1::uuid, $2::text)`
 	searchPkgsDBQ                   = `select * from search_packages($1::jsonb)`
 	searchPkgsMonocularDBQ          = `select search_packages_monocular($1::text, $2::text)`
 	togglePkgStarDBQ                = `select toggle_star($1::uuid, $2::uuid)`
@@ -315,6 +316,25 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 		return err
 	}
 	_, err = m.db.Exec(ctx, registerPkgDBQ, pkgJSON)
+	return err
+}
+
+// RegisterSnapshotSecurityScanFailure registers that the security scan of the
+// snapshot provided failed. The snapshot's current security report is kept, as
+// a stale report is better than none and replacing it would make the next
+// successful scan alert again about known vulnerabilities. The snapshot will be
+// scanned again following the usual schedule.
+func (m *Manager) RegisterSnapshotSecurityScanFailure(ctx context.Context, pkgID, version string) error {
+	// Validate input
+	if _, err := uuid.FromString(pkgID); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
+	}
+	if version == "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "version not provided")
+	}
+
+	// Register security scan failure in database
+	_, err := m.db.Exec(ctx, registerSecurityScanFailureDBQ, pkgID, version)
 	return err
 }
 

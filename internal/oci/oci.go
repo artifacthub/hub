@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net/http"
 	"regexp"
 	"sort"
 	"strings"
@@ -36,6 +37,14 @@ const (
 	// cosignSigArtifactType is the OCI 1.1 artifact type that cosign uses
 	// when attaching signatures via the referrers API.
 	cosignSigArtifactType = "application/vnd.dev.cosign.artifact.sig.v1+json"
+
+	// contentDigestHeader is the header registries use to return the digest of
+	// a manifest.
+	contentDigestHeader = "Docker-Content-Digest"
+
+	// maxRedirects is the maximum number of redirects allowed per request. The
+	// registry client replaces the limit set by default in the http client.
+	maxRedirects = 10
 )
 
 var (
@@ -279,7 +288,8 @@ func (tg *TagsGetter) Tags(
 }
 
 // PrepareRemoteOptions prepares some options used to interact with a remote
-// registry.
+// registry. Callers must not override the transport, as that would remove the
+// protections in registryTransport.
 func PrepareRemoteOptions(
 	ctx context.Context,
 	cfg *viper.Viper,
@@ -288,7 +298,10 @@ func PrepareRemoteOptions(
 	password string,
 ) []ggcrremote.Option {
 	// Setup remote options
-	options := []ggcrremote.Option{ggcrremote.WithUserAgent(httpw.UserAgent)}
+	options := []ggcrremote.Option{
+		ggcrremote.WithTransport(&registryTransport{next: ggcrremote.DefaultTransport}),
+		ggcrremote.WithUserAgent(httpw.UserAgent),
+	}
 	if ctx != nil {
 		options = append(options, ggcrremote.WithContext(ctx))
 	}
@@ -303,6 +316,42 @@ func PrepareRemoteOptions(
 	}
 
 	return options
+}
+
+// registryTransport is the round tripper used by the go-containerregistry
+// clients, which limits the redirects of a request and makes sure digests come
+// from the content received.
+type registryTransport struct {
+	next       http.RoundTripper
+	rateLimits *RateLimitTracker
+}
+
+// RoundTrip implements the http.RoundTripper interface.
+func (t *registryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	redirects := 0
+	for r := req.Response; r != nil && r.Request != nil; r = r.Request.Response {
+		redirects++
+		if redirects > maxRedirects {
+			return nil, errors.New("too many redirects")
+		}
+	}
+	resp, err := t.next.RoundTrip(req)
+	if err != nil {
+		return nil, err
+	}
+
+	// go-containerregistry takes the digest of signed schema 1 manifests from
+	// this header, even when requesting them by digest, which would allow a
+	// registry to pass any content as the manifest requested
+	if req.Method == http.MethodGet &&
+		resp.Header.Get("Content-Type") == string(ggcrtypes.DockerManifestSchema1Signed) {
+		resp.Header.Del(contentDigestHeader)
+	}
+
+	if t.rateLimits != nil {
+		t.rateLimits.observe(req, resp)
+	}
+	return resp, nil
 }
 
 // fetchDescriptorData fetches and reads the content addressed by the provided

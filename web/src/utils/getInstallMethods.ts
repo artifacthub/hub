@@ -50,7 +50,6 @@ export enum InstallMethodKind {
   Helm,
   HelmOCI,
   OLM,
-  OLMOCI,
   Falco,
   Krew,
   HelmPlugin,
@@ -197,34 +196,20 @@ const getInstallMethods = (props: PackageInfo): InstallMethodOutput => {
         }
         break;
       case RepositoryKind.OLM:
-        if (pkg.repository.url.startsWith(OCI_PREFIX)) {
+        if (pkg.repository.name === SPECIAL_OLM) {
           output.methods.push({
             label: 'cli',
-            title: 'OLM OCI',
-            kind: InstallMethodKind.OLMOCI,
+            title: 'Operator Lifecycle Manager',
+            shortTitle: 'OLM CLI',
+            kind: InstallMethodKind.OLM,
             props: {
               name: pkg.name,
-              repository: pkg.repository,
+              isGlobalOperator: pkg.data!.isGlobalOperator,
               defaultChannel: pkg.defaultChannel,
               channels: pkg.channels,
+              isPrivate: pkg.repository.private,
             },
           });
-        } else {
-          if (pkg.repository.name === SPECIAL_OLM) {
-            output.methods.push({
-              label: 'cli',
-              title: 'Operator Lifecycle Manager',
-              shortTitle: 'OLM CLI',
-              kind: InstallMethodKind.OLM,
-              props: {
-                name: pkg.name,
-                isGlobalOperator: pkg.data!.isGlobalOperator,
-                defaultChannel: pkg.defaultChannel,
-                channels: pkg.channels,
-                isPrivate: pkg.repository.private,
-              },
-            });
-          }
         }
         break;
       case RepositoryKind.Falco:

@@ -275,12 +275,6 @@ type HelmIndexLoader interface {
 	LoadIndex(r *Repository) (*helmrepo.IndexFile, string, error)
 }
 
-// OLMOCIExporter describes the methods an OLMOCIExporter implementation must
-// provide.
-type OLMOCIExporter interface {
-	ExportRepository(ctx context.Context, r *Repository) (tmpDir string, err error)
-}
-
 // Owner represents some details about a repository's owner.
 type Owner struct {
 	Name  string `yaml:"name"`

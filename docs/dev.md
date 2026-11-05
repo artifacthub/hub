@@ -146,7 +146,7 @@ The `hub_server` alias runs the `hub` cmd, one of the two processes of the Artif
 
 ### Tracker
 
-The `tracker` is another backend cmd in charge of indexing registered repositories metadata. On production deployments, it is usually run periodically using a `cronjob` on Kubernetes. Locally while developing, you can just run it as often as you need as any other CLI tool. The tracker requires the [OPM cli tool](https://github.com/operator-framework/operator-registry/releases) to be installed and available in your PATH, so please make sure it's available before proceeding.
+The `tracker` is another backend cmd in charge of indexing registered repositories metadata. On production deployments, it is usually run periodically using a `cronjob` on Kubernetes. Locally while developing, you can just run it as often as you need as any other CLI tool.
 
 If you opened the url suggested before, you probably noticed there were no packages listed yet. This happened because no repositories had been indexed yet. If you used the configuration file suggested for Tern, some sample repositories should have been registered in the database owned by the `demo` user. To index them, we need to run the `tracker`.
 
@@ -195,6 +195,12 @@ The `scanner` is setup and run in the same way as the `tracker`. There is also a
 hub_scanner
 ```
 
+`Trivy` never connects to the images' registries: the `scanner` pulls the images itself and passes `Trivy` a local [OCI layout](https://github.com/opencontainers/image-spec/blob/main/image-layout.md). Layers are only pulled when the `Trivy` server needs them. They are stored in the system's temporary directory (`TMPDIR`), so make sure it has space for the images being scanned. Images larger than `scanner.maxImageSize` (4GiB by default, computed from the compressed size of their layers) are skipped, like those whose scans use more than `scanner.maxImageSize` plus 2GiB of disk space or create more than a million files, and they are not reported as scanning errors.
+
+When there are snapshots to scan, the `scanner` downloads (or updates) the `Trivy` Java DB (close to 1GiB) once per run, before scanning, into the `Trivy` cache directory (`TRIVY_CACHE_DIR`, or `~/.cache/trivy` when not set), and scans do not update it. The download also uses up to twice that space in `TMPDIR` while it is in progress. If it fails, the run is aborted without scanning anything, and the snapshots are scanned in the next run.
+
+Only the Docker Hub credentials set in `creds.dockerUsername` and `creds.dockerPassword` are used to pull images. Ambient credentials, like the ones in `~/.docker/config.json` or those provided by cloud services, are not used.
+
 ### Backend tests
 
 You can use the command below to run all backend tests:
@@ -202,6 +208,8 @@ You can use the command below to run all backend tests:
 ```sh
 hub_backend_tests
 ```
+
+Some `scanner` tests run the real `Trivy`, so they need the version set in `cmd/scanner/Dockerfile` (`TRIVY_VERSION`) to be available in your `PATH`. They are skipped when it is not found, except in CI, where they fail.
 
 ## Frontend
 

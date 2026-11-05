@@ -31,7 +31,8 @@ begin
         security_report = p_report->'images_reports',
         security_report_alert_digest = v_alert_digest,
         security_report_summary = p_report->'summary',
-        security_report_created_at = current_timestamp
+        security_report_created_at = current_timestamp,
+        security_scan_attempted_at = current_timestamp
     where package_id = v_package_id
     and version = v_version;
 end

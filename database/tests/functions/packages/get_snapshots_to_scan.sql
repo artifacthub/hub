@@ -17,6 +17,9 @@ select plan(2);
 \set package5ID '00000000-0000-0000-0000-000000000005'
 \set package6ID '00000000-0000-0000-0000-000000000006'
 \set package7ID '00000000-0000-0000-0000-000000000007'
+\set package8ID '00000000-0000-0000-0000-000000000008'
+\set package9ID '00000000-0000-0000-0000-000000000009'
+\set package10ID '00000000-0000-0000-0000-000000000010'
 
 -- No snapshots at this point
 select is(
@@ -248,6 +251,183 @@ insert into snapshot (
     '2010-06-16 11:20:30+02'
 );
 
+-- Snapshots whose scan has been attempted (package3 snapshots have a report but
+-- no scan attempt recorded, so their report creation time is used instead).
+-- Expected to be scanned: package8 1.0.0 (latest version, first scan failed
+-- 2 days ago) and 0.0.7 (last attempt 2 weeks ago). Not expected: package8
+-- 0.0.9 (first scan failed 2 days ago), 0.0.8 (old report, recent failed
+-- attempt), package9 1.0.0 (latest version, first scan failed recently) and
+-- 0.0.9 (recent report). package9 0.0.8 (no report and no scan attempt
+-- recorded, but a report creation time) is expected to be scanned as well.
+-- package10 1.0.0 (latest version, old report, recent failed attempt) is not
+-- expected, while package10 0.0.9 (first scan failed 2 weeks ago) is
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    repository_id
+) values (
+    :'package8ID',
+    'package8',
+    '1.0.0',
+    :'repo1ID'
+);
+insert into snapshot (
+    package_id,
+    version,
+    containers_images,
+    security_scan_attempted_at,
+    created_at
+) values (
+    :'package8ID',
+    '1.0.0',
+    '[{"image": "quay.io/org/pkg8:1.0.0"}]',
+    current_timestamp - '2 days'::interval,
+    '2020-06-16 11:20:29+02'
+);
+insert into snapshot (
+    package_id,
+    version,
+    containers_images,
+    security_scan_attempted_at,
+    created_at
+) values (
+    :'package8ID',
+    '0.0.9',
+    '[{"image": "quay.io/org/pkg8:0.0.9"}]',
+    current_timestamp - '2 days'::interval,
+    '2020-06-16 11:20:28+02'
+);
+insert into snapshot (
+    package_id,
+    version,
+    containers_images,
+    security_report,
+    security_report_created_at,
+    security_scan_attempted_at,
+    created_at
+) values (
+    :'package8ID',
+    '0.0.8',
+    '[{"image": "quay.io/org/pkg8:0.0.8"}]',
+    '{"k": "v"}',
+    current_timestamp - '2 weeks'::interval,
+    current_timestamp - '2 hours'::interval,
+    '2020-06-16 11:20:27+02'
+);
+insert into snapshot (
+    package_id,
+    version,
+    containers_images,
+    security_report,
+    security_report_created_at,
+    security_scan_attempted_at,
+    created_at
+) values (
+    :'package8ID',
+    '0.0.7',
+    '[{"image": "quay.io/org/pkg8:0.0.7"}]',
+    '{"k": "v"}',
+    current_timestamp - '3 weeks'::interval,
+    current_timestamp - '2 weeks'::interval,
+    '2020-06-16 11:20:26+02'
+);
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    repository_id
+) values (
+    :'package9ID',
+    'package9',
+    '1.0.0',
+    :'repo1ID'
+);
+insert into snapshot (
+    package_id,
+    version,
+    containers_images,
+    security_scan_attempted_at,
+    created_at
+) values (
+    :'package9ID',
+    '1.0.0',
+    '[{"image": "quay.io/org/pkg9:1.0.0"}]',
+    current_timestamp - '2 hours'::interval,
+    '2020-06-16 11:20:25+02'
+);
+insert into snapshot (
+    package_id,
+    version,
+    containers_images,
+    security_report,
+    security_report_created_at,
+    security_scan_attempted_at,
+    created_at
+) values (
+    :'package9ID',
+    '0.0.9',
+    '[{"image": "quay.io/org/pkg9:0.0.9"}]',
+    '{"k": "v"}',
+    current_timestamp - '2 hours'::interval,
+    current_timestamp - '2 hours'::interval,
+    '2020-06-16 11:20:24+02'
+);
+insert into snapshot (
+    package_id,
+    version,
+    containers_images,
+    security_report_created_at,
+    created_at
+) values (
+    :'package9ID',
+    '0.0.8',
+    '[{"image": "quay.io/org/pkg9:0.0.8"}]',
+    current_timestamp - '2 hours'::interval,
+    '2020-06-16 11:20:23+02'
+);
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    repository_id
+) values (
+    :'package10ID',
+    'package10',
+    '1.0.0',
+    :'repo1ID'
+);
+insert into snapshot (
+    package_id,
+    version,
+    containers_images,
+    security_report,
+    security_report_created_at,
+    security_scan_attempted_at,
+    created_at
+) values (
+    :'package10ID',
+    '1.0.0',
+    '[{"image": "quay.io/org/pkg10:1.0.0"}]',
+    '{"k": "v"}',
+    current_timestamp - '2 days'::interval,
+    current_timestamp - '2 hours'::interval,
+    '2020-06-16 11:20:22+02'
+);
+insert into snapshot (
+    package_id,
+    version,
+    containers_images,
+    security_scan_attempted_at,
+    created_at
+) values (
+    :'package10ID',
+    '0.0.9',
+    '[{"image": "quay.io/org/pkg10:0.0.9"}]',
+    current_timestamp - '2 weeks'::interval,
+    '2020-06-16 11:20:21+02'
+);
+
 -- Run some tests
 select is(
     get_snapshots_to_scan()::jsonb,
@@ -305,6 +485,50 @@ select is(
             "containers_images": [
                 {
                     "image": "quay.io/org/pkg3:0.0.8"
+                }
+            ]
+        },
+        {
+            "repository_id": "00000000-0000-0000-0000-000000000001",
+            "package_id": "00000000-0000-0000-0000-000000000008",
+            "package_name": "package8",
+            "version": "1.0.0",
+            "containers_images": [
+                {
+                    "image": "quay.io/org/pkg8:1.0.0"
+                }
+            ]
+        },
+        {
+            "repository_id": "00000000-0000-0000-0000-000000000001",
+            "package_id": "00000000-0000-0000-0000-000000000008",
+            "package_name": "package8",
+            "version": "0.0.7",
+            "containers_images": [
+                {
+                    "image": "quay.io/org/pkg8:0.0.7"
+                }
+            ]
+        },
+        {
+            "repository_id": "00000000-0000-0000-0000-000000000001",
+            "package_id": "00000000-0000-0000-0000-000000000009",
+            "package_name": "package9",
+            "version": "0.0.8",
+            "containers_images": [
+                {
+                    "image": "quay.io/org/pkg9:0.0.8"
+                }
+            ]
+        },
+        {
+            "repository_id": "00000000-0000-0000-0000-000000000001",
+            "package_id": "00000000-0000-0000-0000-000000000010",
+            "package_name": "package10",
+            "version": "0.0.9",
+            "containers_images": [
+                {
+                    "image": "quay.io/org/pkg10:0.0.9"
                 }
             ]
         }

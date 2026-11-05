@@ -25,7 +25,6 @@ import KubectlGatekeeperInstall from './KubectlGatekeeperInstall';
 import KubewardenInstall from './KubewardenInstall';
 import KustomizeGatekeeperInstall from './KustomizeGatekeeperInstall';
 import OLMInstall from './OLMInstall';
-import OLMOCIInstall from './OLMOCIInstall';
 import PublisherInstructionsInstall from './PublisherInstructionsInstall';
 import TektonInstall from './TektonInstall';
 
@@ -173,15 +172,6 @@ const InstallationModal = (props: Props) => {
                                   channels={method.props.channels}
                                   isGlobalOperator={method.props.isGlobalOperator}
                                   isPrivate={method.props.isPrivate}
-                                />
-                              );
-                            case InstallMethodKind.OLMOCI:
-                              return (
-                                <OLMOCIInstall
-                                  name={method.props.name!}
-                                  repository={method.props.repository!}
-                                  defaultChannel={method.props.defaultChannel}
-                                  channels={method.props.channels}
                                 />
                               );
                             case InstallMethodKind.Falco:
