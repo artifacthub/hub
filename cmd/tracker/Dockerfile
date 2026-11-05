@@ -1,4 +1,4 @@
-ARG OPM_VERSION=1.60.0
+ARG OPM_VERSION=1.74.0
 
 # Build tracker
 FROM golang:1.27.3-alpine3.24 AS builder
