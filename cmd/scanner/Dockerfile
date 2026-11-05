@@ -1,4 +1,4 @@
-ARG TRIVY_VERSION=0.69.3
+ARG TRIVY_VERSION=0.76.2
 
 # Build scanner
 FROM golang:1.27.3-alpine3.24 AS scanner-builder
