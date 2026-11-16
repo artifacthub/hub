@@ -267,7 +267,7 @@ The `Verified Publisher` status is automated and shows that the publisher has ve
 
 ### Do I need to create an organization to get official status?
 
-Yes, if the repository or package belongs to an organization or company.
+Yes, if the package belongs to an organization or company. In that case, the repository must be published under that organization in Artifact Hub, not under a user account. You can create an organization and transfer the repository to it from the control panel. Packages maintained by an individual can be published from a user account.
 
 ## Security Reports
 
