@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Cloud Native packages.
 type: application
-version: 1.23.1-2
-appVersion: 1.23.0
+version: 1.24.0
+appVersion: 1.24.0
 kubeVersion: ">= 1.19.0-0"
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/helm-charts/logo.png
@@ -50,59 +50,57 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Code viewer for large code blocks
+      description: Support for the helm.sh/images annotation in Helm charts
     - kind: added
-      description: Support for mermaid charts in README files
+      description: Analytics, data processing and web applications categories
     - kind: added
-      description: Support for markdown in MOTD banner
+      description: Flag to ignore package versions in ah lint
     - kind: added
-      description: Deprecated annotation in Tekton packages
-    - kind: added
-      description: Allow overriding db password in migrate script
-    - kind: added
-      description: Option to set tolerations (chart)
-    - kind: added
-      description: Option to set common labels (chart)
-    - kind: added
-      description: Option to set extra volumes and env vars in db-migrator (chart)
+      description: Options to set scanner max image size and temporary directory (chart)
     - kind: changed
-      description: Some improvements to OCI package (including signature detection)
+      description: Replace packages category classifier
     - kind: changed
-      description: Improve security alerts notifications
+      description: Scanner now pulls images itself and passes them to Trivy
     - kind: changed
-      description: Improve union type default handling in values schema viewer
+      description: Skip images over the max size allowed in scanner
     - kind: changed
-      description: Update FAQ
+      description: Keep previous security report when scanning a snapshot fails
     - kind: changed
-      description: Bump Alpine to 3.24.1
+      description: Skip ignored packages in tracker sources
     - kind: changed
-      description: Bump Go to 1.26.4
+      description: Improve ah lint errors for Tekton git versioning
     - kind: changed
-      description: Bump Trivy to 0.69.3
+      description: Clarify official status definition and docs
+    - kind: changed
+      description: Do not retry scanner and tracker jobs when they fail (chart)
+    - kind: changed
+      description: Replace bitnamilegacy/kubectl with rancher/kubectl (chart)
+    - kind: changed
+      description: Tracker image is now based on Alpine
+    - kind: changed
+      description: Bump Alpine to 3.24.3
+    - kind: changed
+      description: Bump Go to 1.27.3
+    - kind: changed
+      description: Bump Trivy to 0.76.2
     - kind: changed
       description: Upgrade backend and frontend dependencies
+    - kind: removed
+      description: Support for OLM repositories stored in OCI registries
     - kind: fixed
-      description: Do not strip underscores from changes descriptions
-    - kind: fixed
-      description: Some issues in router
-    - kind: fixed
-      description: Some issues caused by lazy loaded routes
-    - kind: fixed
-      description: Issue rendering banner on Safari 26.4
-    - kind: fixed
-      description: Chart template rendering in the web UI
-    - kind: fixed
-      description: Repository opt-out search highlighting error
+      description: Security report crash on CVSS v4.0-only data
+    - kind: security
+      description: Enforce restricted HTTP client on all requests
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v1.23.0
+      image: artifacthub/db-migrator:v1.24.0
     - name: hub
-      image: artifacthub/hub:v1.23.0
+      image: artifacthub/hub:v1.24.0
     - name: tracker
-      image: artifacthub/tracker:v1.23.0
+      image: artifacthub/tracker:v1.24.0
     - name: scanner
-      image: artifacthub/scanner:v1.23.0
+      image: artifacthub/scanner:v1.24.0
     - name: trivy
       image: aquasec/trivy:0.76.2
   artifacthub.io/links: |
