@@ -67,7 +67,7 @@ artifacthub/ah:latest
 
 There is an Artifact Hub repository metadata file named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified publisher](https://github.com/artifacthub/hub/blob/master/docs/repositories.md#verified-publisher) or [Ownership claim](https://github.com/artifacthub/hub/blob/master/docs/repositories.md#ownership-claim).
 
-Once your repository metadata file is ready, you can push it to the OCI registry using [oras](https://oras.land/cli/):
+Once your repository metadata file is ready, you can push it to the OCI registry using [oras](https://oras.land/docs/):
 
 ```bash
 oras push \
@@ -108,4 +108,4 @@ regctl artifact put \
   docker.io/repository:artifacthub.io
 ```
 
-*Please note that publishing an Artifact Hub repository metadata file requires that the registry supports [OCI artifacts](https://oras.land/implementors/).*
+*Please note that publishing an Artifact Hub repository metadata file requires that the registry supports [OCI artifacts](https://oras.land/docs/compatible_oci_registries/).*
