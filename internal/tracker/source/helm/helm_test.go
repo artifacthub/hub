@@ -5,9 +5,11 @@ import (
 	"errors"
 	"io"
 	"net/http"
+	"net/http/httptest"
 	"os"
 	"strconv"
 	"strings"
+	"sync/atomic"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/httpw"
@@ -672,6 +674,17 @@ func TestTrackerSourceIgnoredPackages(t *testing.T) {
 }
 
 func TestExtractContainersImages(t *testing.T) {
+	const podManifest = `
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pkg1
+spec:
+  containers:
+    - name: pkg1
+      image: registry.io/repo/pkg1:1.0.0
+`
+
 	t.Run("valid chart", func(t *testing.T) {
 		t.Parallel()
 
@@ -695,6 +708,41 @@ func TestExtractContainersImages(t *testing.T) {
 			"artifacthub/scanner:v0.19.0",
 			"artifacthub/tracker:v0.19.0",
 		}, containersImages)
+	})
+
+	t.Run("values schema references are not fetched", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup server the values schema refers to
+		var requests atomic.Int32
+		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			requests.Add(1)
+			_, _ = w.Write([]byte(`{"type": "object"}`))
+		}))
+		t.Cleanup(ts.Close)
+
+		// Prepare chart with a values schema that refers to the server
+		chrt := &chart.Chart{
+			Metadata: &chart.Metadata{
+				APIVersion: chart.APIVersionV2,
+				Name:       "pkg1",
+				Version:    "1.0.0",
+			},
+			Schema: []byte(`{"$ref": "` + ts.URL + `/schema.json"}`),
+			Templates: []*chart.File{
+				{
+					Name: "templates/pod.yaml",
+					Data: []byte(podManifest),
+				},
+			},
+			Values: map[string]interface{}{},
+		}
+
+		// Extract containers images and check expectations
+		containersImages, err := extractContainersImages(chrt)
+		require.NoError(t, err)
+		assert.Equal(t, []string{"registry.io/repo/pkg1:1.0.0"}, containersImages)
+		assert.Zero(t, requests.Load())
 	})
 
 	t.Run("panic running helm dry-run install", func(t *testing.T) {

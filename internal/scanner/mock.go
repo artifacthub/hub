@@ -7,6 +7,18 @@ type ImageScannerMock struct {
 	mock.Mock
 }
 
+// Close implements the ImageScanner interface.
+func (m *ImageScannerMock) Close() error {
+	args := m.Called()
+	return args.Error(0)
+}
+
+// Prepare implements the ImageScanner interface.
+func (m *ImageScannerMock) Prepare() error {
+	args := m.Called()
+	return args.Error(0)
+}
+
 // ScanImage implements the ImageScanner interface.
 func (m *ImageScannerMock) ScanImage(image string) ([]byte, error) {
 	args := m.Called(image)

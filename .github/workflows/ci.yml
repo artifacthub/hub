@@ -108,6 +108,16 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
+      - name: Install Trivy
+        shell: bash
+        run: |
+          TRIVY_VERSION=$(sed -n 's/^ARG TRIVY_VERSION=//p' cmd/scanner/Dockerfile)
+          test -n "$TRIVY_VERSION"
+          mkdir -p "$HOME/.local/bin"
+          curl -sfL "https://raw.githubusercontent.com/aquasecurity/trivy/v${TRIVY_VERSION}/contrib/install.sh" \
+            | sh -s -- -b "$HOME/.local/bin" "v${TRIVY_VERSION}"
+          "$HOME/.local/bin/trivy" --version
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - name: Run backend tests
         run: go test -cover -race -v -mod=readonly ./...
 
@@ -201,6 +211,9 @@ jobs:
       - name: Build category
         working-directory: ./cmd/category
         run: go build -v
+      - name: Build ah for Windows
+        working-directory: ./cmd/ah
+        run: GOOS=windows GOARCH=amd64 go build -v
 
   build-frontend:
     runs-on: ubuntu-24.04

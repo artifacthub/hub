@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -29,6 +30,11 @@ func main() {
 	fields := map[string]interface{}{"cmd": "scanner"}
 	if err := util.SetupLogger(cfg, fields); err != nil {
 		log.Fatal().Err(err).Msg("logger setup failed")
+	}
+
+	// Apply the address restrictions to the default transports, if enabled
+	if err := util.SetupDefaultTransports(cfg.GetBool("restrictedHTTPClient")); err != nil {
+		log.Fatal().Err(err).Msg("default transports setup failed")
 	}
 
 	// Shutdown gracefully when SIGINT or SIGTERM signal is received
@@ -67,6 +73,13 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("error getting snapshots to scan")
 	}
+	if len(snapshots) > 0 {
+		// Nothing is scanned if the scanner cannot be prepared, the snapshots
+		// remain due for next run
+		if err := s.Prepare(); err != nil && !errors.Is(err, scanner.ErrScanCanceled) {
+			log.Fatal().Err(err).Msg("error preparing scanner")
+		}
+	}
 	limiter := make(chan struct{}, cfg.GetInt("scanner.concurrency"))
 	var wg sync.WaitGroup
 L:
@@ -81,6 +94,7 @@ L:
 		wg.Add(1)
 		go func(snapshot *hub.SnapshotToScan) {
 			defer wg.Done()
+			defer func() { <-limiter }()
 
 			logger := log.With().Str("pkg", snapshot.PackageID).Str("version", snapshot.Version).Logger()
 			logger.Info().Msg("scanning snapshot")
@@ -92,23 +106,38 @@ L:
 			}()
 
 			report, err := s.Scan(snapshot)
+			if scanner.IsPending(err) {
+				// Keep the existing report, the snapshot remains due for next run
+				logger.Warn().Err(err).Send()
+				return
+			}
 			if err != nil {
+				// Keep the existing report, as a stale report is better than
+				// none and replacing it would make the next successful scan
+				// alert again about known vulnerabilities. The snapshot is
+				// scanned again following the usual schedule.
 				logger.Error().Err(err).Send()
+				if err := pm.RegisterSnapshotSecurityScanFailure(ctx, snapshot.PackageID, snapshot.Version); err != nil {
+					logger.Error().Err(err).Msg("error registering snapshot security scan failure")
+				}
+				return
 			}
 			if err := pm.UpdateSnapshotSecurityReport(ctx, report); err != nil {
 				logger.Error().Err(err).Msg("error updating snapshot security report")
 			}
-
-			<-limiter
 		}(sn)
 	}
 	wg.Wait()
 	ec.Flush()
+	if err := s.Close(); err != nil {
+		log.Error().Err(err).Msg("error closing scanner")
+	}
 	log.Info().Msg("scanner finished")
 }
 
 // setCfgDefaults sets the default values for some configuration options.
 func setCfgDefaults(cfg *viper.Viper) {
 	cfg.SetDefault("scanner.concurrency", 1)
+	cfg.SetDefault("scanner.maxImageSize", int64(4<<30))
 	cfg.SetDefault("scanner.trivyURL", "http://localhost:8081")
 }

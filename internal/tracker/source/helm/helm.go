@@ -599,6 +599,9 @@ func extractContainersImages(chrt *chart.Chart) (images []string, err error) {
 	install.ClientOnly = true
 	install.IncludeCRDs = true
 	install.DependencyUpdate = false
+	// Validating the values would fetch the references found in the values
+	// schema, which are user-controlled, and only the manifest is needed here
+	install.SkipSchemaValidation = true
 	release, err := install.Run(chrt, chartutil.Values{})
 	if err != nil {
 		return nil, err

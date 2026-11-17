@@ -681,7 +681,8 @@ const RepositoryModal = (props: Props) => {
       case RepositoryKind.Kagent:
         return undefined;
       case RepositoryKind.OLM:
-        return `^((https?://)|${OCI_PREFIX}).*`;
+        // OLM repositories already using an oci url can keep it
+        return props.repository?.url.startsWith(OCI_PREFIX) ? `^((https?://)|${OCI_PREFIX}).*` : `^https?://.*`;
       case RepositoryKind.Container:
         return `^${OCI_PREFIX}.*`;
       default:

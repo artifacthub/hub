@@ -181,14 +181,3 @@ func (m *ManagerMock) UpdateDigest(ctx context.Context, repositoryID, digest str
 	args := m.Called(ctx, repositoryID, digest)
 	return args.Error(0)
 }
-
-// OLMOCIExporterMock is a mock implementation of the OLMOCIExporter interface.
-type OLMOCIExporterMock struct {
-	mock.Mock
-}
-
-// ExportRepository implements the OLMOCIExporter interface.
-func (m *OLMOCIExporterMock) ExportRepository(ctx context.Context, r *hub.Repository) (string, error) {
-	args := m.Called(ctx, r)
-	return args.String(0), args.Error(1)
-}

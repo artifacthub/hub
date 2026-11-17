@@ -22,7 +22,6 @@ type TrackerServices struct {
 	Rm                 RepositoryManager
 	Pm                 PackageManager
 	Rc                 RepositoryCloner
-	Oe                 OLMOCIExporter
 	Ec                 ErrorsCollector
 	Hc                 HTTPClient
 	Op                 OCIPuller

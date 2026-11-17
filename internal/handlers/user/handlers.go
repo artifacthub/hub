@@ -19,6 +19,7 @@ import (
 	"github.com/artifacthub/hub/internal/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/user"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/coreos/go-oidc"
 	"github.com/go-chi/chi/v5"
 	"github.com/google/go-github/github"
@@ -66,13 +67,14 @@ var (
 // Handlers represents a group of http handlers in charge of handling
 // users operations.
 type Handlers struct {
-	userManager   hub.UserManager
-	apiKeyManager hub.APIKeyManager
-	cfg           *viper.Viper
-	sc            *securecookie.SecureCookie
-	oauthConfig   map[string]*oauth2.Config
-	oidcProvider  *oidc.Provider
-	logger        zerolog.Logger
+	userManager     hub.UserManager
+	apiKeyManager   hub.APIKeyManager
+	cfg             *viper.Viper
+	sc              *securecookie.SecureCookie
+	oauthConfig     map[string]*oauth2.Config
+	oauthHTTPClient *http.Client
+	oidcProvider    *oidc.Provider
+	logger          zerolog.Logger
 }
 
 // NewHandlers creates a new Handlers instance.
@@ -87,7 +89,12 @@ func NewHandlers(
 	sc.MaxAge(int(sessionDuration.Seconds()))
 
 	// Setup oauth providers configuration
+	// The oauth providers endpoints are not user-controlled: the GitHub and
+	// Google ones are fixed, and the OIDC issuer is set by the operator and may
+	// be on a private network. So their requests are not subject to the default
+	// transports restrictions, and can use proxies configured in the environment
 	oauthConfig := make(map[string]*oauth2.Config)
+	oauthHTTPClient := util.NewUnrestrictedHTTPClient()
 	var oidcProvider *oidc.Provider
 	for provider := range cfg.GetStringMap("server.oauth") {
 		baseCfgKey := fmt.Sprintf("server.oauth.%s.", provider)
@@ -100,7 +107,7 @@ func NewHandlers(
 		case "oidc":
 			issuerURL := cfg.GetString(baseCfgKey + "issuerURL")
 			var err error
-			oidcProvider, err = oidc.NewProvider(ctx, issuerURL)
+			oidcProvider, err = oidc.NewProvider(oidc.ClientContext(ctx, oauthHTTPClient), issuerURL)
 			if err != nil {
 				return nil, fmt.Errorf("error setting up oidc provider: %w", err)
 			}
@@ -118,13 +125,14 @@ func NewHandlers(
 	}
 
 	return &Handlers{
-		userManager:   userManager,
-		apiKeyManager: apiKeyManager,
-		cfg:           cfg,
-		sc:            sc,
-		oauthConfig:   oauthConfig,
-		oidcProvider:  oidcProvider,
-		logger:        log.With().Str("handlers", "user").Logger(),
+		userManager:     userManager,
+		apiKeyManager:   apiKeyManager,
+		cfg:             cfg,
+		sc:              sc,
+		oauthConfig:     oauthConfig,
+		oauthHTTPClient: oauthHTTPClient,
+		oidcProvider:    oidcProvider,
+		logger:          log.With().Str("handlers", "user").Logger(),
 	}, nil
 }
 
@@ -468,13 +476,14 @@ func (h *Handlers) OauthCallback(w http.ResponseWriter, r *http.Request) {
 	// Register user if needed, or return his id if already registered
 	provider := chi.URLParam(r, "provider")
 	providerConfig := h.oauthConfig[provider]
-	oauthToken, err := providerConfig.Exchange(r.Context(), code)
+	oauthCtx := context.WithValue(r.Context(), oauth2.HTTPClient, h.oauthHTTPClient)
+	oauthToken, err := providerConfig.Exchange(oauthCtx, code)
 	if err != nil {
 		logger.Error().Err(err).Msg("oauth code exchange failed")
 		http.Redirect(w, r, oauthFailedURL, http.StatusSeeOther)
 		return
 	}
-	userID, err := h.registerUserWithOauth(r.Context(), provider, providerConfig, oauthToken)
+	userID, err := h.registerUserWithOauth(oauthCtx, provider, providerConfig, oauthToken)
 	if err != nil {
 		logger.Error().Err(err).Msg("oauth code exchange failed")
 		http.Redirect(w, r, oauthFailedURL, http.StatusSeeOther)
@@ -607,7 +616,8 @@ func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 // registerUserWithOauth is a helper function that registers a user using the
 // details from his oauth provider if he's not already registered, returning
-// the user id.
+// the user id. Requests to the oauth provider are made using the http client
+// provided in the context (oauth2.HTTPClient).
 func (h *Handlers) registerUserWithOauth(
 	ctx context.Context,
 	provider string,
@@ -710,8 +720,10 @@ func (h *Handlers) newUserFromGoogleProfile(
 	oauthToken *oauth2.Token,
 ) (*hub.User, error) {
 	// Get user profile
-	opt := option.WithTokenSource(providerConfig.TokenSource(ctx, oauthToken))
-	peopleService, err := people.NewService(ctx, opt)
+	// The http client is built here because the People API client would use
+	// the default transport otherwise, ignoring the one provided in the context
+	httpClient := oauth2.NewClient(ctx, providerConfig.TokenSource(ctx, oauthToken))
+	peopleService, err := people.NewService(ctx, option.WithHTTPClient(httpClient))
 	if err != nil {
 		return nil, err
 	}

@@ -24,8 +24,6 @@ import (
 	"github.com/go-git/go-git/v5/config"
 	githttp "github.com/go-git/go-git/v5/plumbing/transport/http"
 	"github.com/go-git/go-git/v5/storage/memory"
-	"github.com/google/go-containerregistry/pkg/name"
-	"github.com/google/go-containerregistry/pkg/v1/remote"
 	"github.com/rs/zerolog/log"
 	"github.com/satori/uuid"
 	"github.com/spf13/viper"
@@ -69,6 +67,10 @@ var (
 
 	// ErrMetadataNotFound indicates that the repository metadata was not found.
 	ErrMetadataNotFound = errors.New("metadata not found")
+
+	// ErrOLMOCINotSupported indicates that the repository is an OLM one using
+	// an oci url, which is not supported anymore.
+	ErrOLMOCINotSupported = errors.New("OLM repositories stored in OCI registries are not supported anymore, please use a git repository url")
 
 	// ErrSchemeNotSupported error indicates that the scheme used in the
 	// repository url is not supported.
@@ -195,6 +197,9 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 	if err := m.validateURL(r); err != nil {
 		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 	}
+	if IsOLMOCI(r) {
+		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, ErrOLMOCINotSupported)
+	}
 	if err := m.validateCredentials(r); err != nil {
 		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 	}
@@ -279,8 +284,7 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 	}
 
 	// Some extra validation
-	u, _ := url.Parse(r.URL)
-	if r.Kind == hub.OLM && SchemeIsOCI(u) {
+	if IsOLMOCI(r) {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "ownership claim not available for this repo kind")
 	}
 
@@ -585,19 +589,6 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 			digest = fmt.Sprintf("%x", sha256.Sum256([]byte(strings.Join(versions, ","))))
 		}
 
-	case r.Kind == hub.OLM && SchemeIsOCI(u):
-		// Digest is obtained from the index image digest
-		refName := strings.TrimPrefix(r.URL, hub.RepositoryOCIPrefix)
-		ref, err := name.ParseReference(refName)
-		if err != nil {
-			return digest, err
-		}
-		desc, err := remote.Head(ref)
-		if err != nil {
-			return digest, err
-		}
-		digest = desc.Digest.String()
-
 	case GitRepoURLRE.MatchString(r.URL):
 		// Do not track repo's digest for Tekton repos using git based versioning
 		if (r.Kind == hub.TektonTask || r.Kind == hub.TektonPipeline || r.Kind == hub.TektonStepAction) && r.Data != nil {
@@ -803,6 +794,13 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 		}
 	}
 
+	// OLM repositories already using an oci url can keep it, so that other
+	// fields can still be edited, but no new oci url can be set on them. The
+	// stored kind is used as the kind cannot be updated.
+	if r.URL != rBefore.URL && IsOLMOCI(&hub.Repository{Kind: rBefore.Kind, URL: r.URL}) {
+		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, ErrOLMOCINotSupported)
+	}
+
 	// Update repository in database
 	rJSON, _ := json.Marshal(r)
 	_, err = m.db.Exec(ctx, updateRepoDBQ, userID, rJSON)
@@ -921,6 +919,14 @@ func validateSearchInput(input *hub.SearchRepositoryInput) error {
 		}
 	}
 	return nil
+}
+
+// IsOLMOCI is a helper that checks if the repository provided is an OLM one
+// using an oci url. These repositories are not supported anymore, but some may
+// still be stored in the database.
+func IsOLMOCI(r *hub.Repository) bool {
+	u, err := url.Parse(r.URL)
+	return err == nil && r.Kind == hub.OLM && SchemeIsOCI(u)
 }
 
 // SchemeIsHTTP is a helper that checks if the scheme of the url provided is

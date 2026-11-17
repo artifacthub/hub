@@ -24,6 +24,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 )
 
 func TestMain(m *testing.M) {
@@ -933,6 +935,82 @@ func TestOauthCallback(t *testing.T) {
 			})
 		}
 	})
+
+	t.Run("oauth provider requests use the oauth http client", func(t *testing.T) {
+		state := &OauthState{
+			Random:      "abcd",
+			RedirectURL: "/",
+		}
+		tokenResponse := `{"access_token": "token", "token_type": "bearer"}`
+
+		testCases := []struct {
+			provider     string
+			responses    map[string]string
+			expectedUser *hub.User
+		}{
+			{
+				"github",
+				map[string]string{
+					"POST https://github.com/login/oauth/access_token": tokenResponse,
+					"GET https://api.github.com/user":                  `{"login": "alias", "name": "first"}`,
+					"GET https://api.github.com/user/emails":           `[{"email": "alias@email.com", "primary": true, "verified": true}]`,
+				},
+				&hub.User{Alias: "alias", Email: "alias@email.com", FirstName: "first"},
+			},
+			{
+				"google",
+				map[string]string{
+					"POST https://oauth2.googleapis.com/token": tokenResponse,
+					"GET https://people.googleapis.com/v1/people/me": `{
+						"names": [{"givenName": "first", "familyName": "last"}],
+						"emailAddresses": [{"value": "alias@email.com", "metadata": {"primary": true, "verified": true}}]
+					}`,
+				},
+				&hub.User{Alias: "alias", Email: "alias@email.com", FirstName: "first", LastName: "last"},
+			},
+		}
+		for _, tc := range testCases {
+			t.Run(tc.provider, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/?code=1234&state="+state.String(), nil)
+				r.AddCookie(newTestCookie(oauthStateCookieName, state.Random))
+				rctx := &chi.Context{
+					URLParams: chi.RouteParams{
+						Keys:   []string{"provider"},
+						Values: []string{tc.provider},
+					},
+				}
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.h.oauthConfig["google"] = &oauth2.Config{Endpoint: google.Endpoint}
+				require.NotNil(t, hw.h.oauthHTTPClient.Transport)
+				assert.NotSame(t, http.DefaultTransport, hw.h.oauthHTTPClient.Transport)
+				rt := &oauthProviderRoundTripper{responses: tc.responses}
+				hw.h.oauthHTTPClient = &http.Client{Transport: rt}
+				hw.um.On("CheckAvailability", mock.Anything, "userAlias", tc.expectedUser.Alias).Return(true, nil)
+				hw.um.On("GetUserID", mock.Anything).Return("userID", nil)
+				hw.um.On("RegisterSession", mock.Anything, mock.MatchedBy(func(s *hub.Session) bool {
+					return s.UserID == "userID"
+				})).Return(&hub.Session{SessionID: "sessionID"}, nil)
+				hw.h.OauthCallback(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusSeeOther, resp.StatusCode)
+				redirectURL, err := resp.Location()
+				require.NoError(t, err)
+				assert.Equal(t, state.RedirectURL, redirectURL.String())
+				expectedRequests := make([]string, 0, len(tc.responses))
+				for request := range tc.responses {
+					expectedRequests = append(expectedRequests, request)
+				}
+				assert.ElementsMatch(t, expectedRequests, rt.requests)
+				hw.um.AssertExpectations(t)
+			})
+		}
+	})
 }
 
 func TestOauthRedirect(t *testing.T) {
@@ -1782,6 +1860,38 @@ func TestVerifyPasswordResetCode(t *testing.T) {
 }
 
 func testsOK(w http.ResponseWriter, r *http.Request) {}
+
+// oauthProviderRoundTripper is an http.RoundTripper that replies to the
+// requests sent to the oauth providers with the responses provided, keyed by
+// the request method and url (without query). It records the requests made, and
+// checks that the requests sent to the providers APIs include the access token.
+type oauthProviderRoundTripper struct {
+	responses map[string]string
+	requests  []string
+}
+
+// RoundTrip implements the http.RoundTripper interface.
+func (rt *oauthProviderRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+	if req.Body != nil {
+		defer req.Body.Close()
+	}
+	request := fmt.Sprintf("%s %s://%s%s", req.Method, req.URL.Scheme, req.URL.Host, req.URL.Path)
+	rt.requests = append(rt.requests, request)
+	statusCode := http.StatusOK
+	body, ok := rt.responses[request]
+	switch {
+	case !ok:
+		statusCode = http.StatusNotFound
+	case req.Method == "GET" && req.Header.Get("Authorization") != "Bearer token":
+		statusCode = http.StatusUnauthorized
+	}
+	return &http.Response{
+		StatusCode: statusCode,
+		Header:     http.Header{"Content-Type": []string{"application/json"}},
+		Body:       io.NopCloser(strings.NewReader(body)),
+		Request:    req,
+	}, nil
+}
 
 type handlersWrapper struct {
 	cfg *viper.Viper

@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"os"
-	"os/exec"
 	"os/signal"
 	"runtime/debug"
 	"sync"
@@ -39,6 +38,11 @@ func main() {
 		log.Fatal().Err(err).Msg("logger setup failed")
 	}
 
+	// Apply the address restrictions to the default transports, if enabled
+	if err := util.SetupDefaultTransports(cfg.GetBool("restrictedHTTPClient")); err != nil {
+		log.Fatal().Err(err).Msg("default transports setup failed")
+	}
+
 	// Shutdown gracefully when SIGINT or SIGTERM signal is received
 	log.Info().Int("pid", os.Getpid()).Msg("tracker started")
 	ctx, cancel := context.WithCancel(context.Background())
@@ -49,11 +53,6 @@ func main() {
 		cancel()
 		log.Info().Msg("tracker shutting down..")
 	}()
-
-	// Check required external tools are available
-	if _, err := exec.LookPath("opm"); err != nil {
-		log.Fatal().Err(err).Msg("opm not found")
-	}
 
 	// Setup services
 	db, err := util.SetupDB(cfg)
@@ -83,7 +82,6 @@ func main() {
 		Rm:                 rm,
 		Pm:                 pm,
 		Rc:                 &repo.Cloner{},
-		Oe:                 &repo.OLMOCIExporter{},
 		Ec:                 ec,
 		Hc:                 hc,
 		Op:                 op,

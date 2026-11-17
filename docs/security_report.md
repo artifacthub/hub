@@ -4,6 +4,10 @@ Artifact Hub scans containers' images used by packages for security vulnerabilit
 
 Security reports are generated *periodically*. The scanner runs *twice an hour* and scans packages' versions **that haven't been scanned yet**. Packages' versions already scanned are revisited and **scanned again**, just in case new vulnerabilities have been discovered since the previous scan. The latest package version available is scanned **daily**, whereas previous versions are scanned **weekly**. This happens even if nothing has changed in the package version. Versions released more than **one year** ago or with more than **15 container images** won't be scanned.
 
+Images larger than **4GiB** (compressed), or requiring too much disk space to be analyzed, won't be scanned either. These images are skipped: they won't be reported as scanning errors, and the security report of the package version will only include the rest of its images.
+
+If the scan of a package version fails, for example because one of its images can't be pulled, the error will be reported in the repository's scanning errors. The previous security report of the package version, if any, will be kept (along with the date of the scan that produced it) until a scan succeeds, and the version will be scanned again following the usual schedule.
+
 The security report may contain multiple images sections, one for each of the images your package is listing. Within each image section, multiple targets can be listed as well. A common one is the OS used by the image, including the packages installed. But more targets can be scanned and displayed if files describing your [application dependencies](#application-dependencies) are found in the image.
 
 ## Packages containers images

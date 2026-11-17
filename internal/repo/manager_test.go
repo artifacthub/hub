@@ -167,6 +167,26 @@ func TestAdd(t *testing.T) {
 				nil,
 			},
 			{
+				ErrOLMOCINotSupported.Error(),
+				"org1",
+				&hub.Repository{
+					Kind: hub.OLM,
+					Name: "repo1",
+					URL:  "oci://registry.io/namespace/index:latest",
+				},
+				nil,
+			},
+			{
+				ErrOLMOCINotSupported.Error(),
+				"org1",
+				&hub.Repository{
+					Kind: hub.OLM,
+					Name: "repo1",
+					URL:  "OCI://registry.io/namespace/index:latest",
+				},
+				nil,
+			},
+			{
 				"the url provided does not point to a valid Helm repository",
 				"org1",
 				&hub.Repository{
@@ -1233,6 +1253,19 @@ func TestGetRemoteDigest(t *testing.T) {
 		l.AssertExpectations(t)
 	})
 
+	t.Run("olm-oci: no remote digest available", func(t *testing.T) {
+		t.Parallel()
+		m := NewManager(cfg, nil, nil, nil)
+
+		digest, err := m.GetRemoteDigest(ctx, &hub.Repository{
+			Kind: hub.OLM,
+			Name: "repo1",
+			URL:  "oci://registry.io/namespace/index:latest",
+		})
+		assert.Empty(t, digest)
+		assert.Nil(t, err)
+	})
+
 	t.Run("helm-oci: error getting tags", func(t *testing.T) {
 		t.Parallel()
 		tg := &oci.TagsGetterMock{}
@@ -1891,6 +1924,56 @@ func TestUpdate(t *testing.T) {
 				db.AssertExpectations(t)
 				az.AssertExpectations(t)
 				l.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("olm repository url", func(t *testing.T) {
+		gitURL := "https://github.com/org1/repo1/path"
+		ociURL := "oci://registry.io/namespace/index:latest"
+		testCases := []struct {
+			name          string
+			storedKind    hub.RepositoryKind
+			storedURL     string
+			kind          hub.RepositoryKind
+			url           string
+			expectedError bool
+		}{
+			{"oci url set on git repository", hub.OLM, gitURL, hub.OLM, ociURL, true},
+			{"oci url set using another kind", hub.OLM, gitURL, hub.Helm, ociURL, true},
+			{"oci url replaced by another one", hub.OLM, ociURL, hub.OLM, ociURL + "2", true},
+			{"stored oci url unchanged", hub.OLM, ociURL, hub.OLM, ociURL, false},
+			{"stored oci url replaced by git one", hub.OLM, ociURL, hub.OLM, gitURL, false},
+			{"oci url in repository of another kind", hub.Helm, ociURL, hub.OLM, ociURL + "2", false},
+		}
+		for _, tc := range testCases {
+			t.Run(tc.name, func(t *testing.T) {
+				t.Parallel()
+				storedJSON, _ := json.Marshal(&hub.Repository{
+					Name: "repo1",
+					Kind: tc.storedKind,
+					URL:  tc.storedURL,
+				})
+				db := &tests.DBMock{}
+				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(storedJSON, nil)
+				if !tc.expectedError {
+					db.On("Exec", ctx, updateRepoDBQ, "userID", mock.Anything).Return(nil)
+				}
+				m := NewManager(cfg, db, nil, nil)
+
+				err := m.Update(ctx, &hub.Repository{
+					Name:        "repo1",
+					DisplayName: "Repository 1",
+					Kind:        tc.kind,
+					URL:         tc.url,
+				})
+				if tc.expectedError {
+					assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+					assert.True(t, errors.Is(err, ErrOLMOCINotSupported))
+				} else {
+					assert.NoError(t, err)
+				}
+				db.AssertExpectations(t)
 			})
 		}
 	})

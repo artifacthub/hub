@@ -3,7 +3,9 @@ package repo
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"io"
+	"net/http"
 	"net/url"
 	"path"
 	"time"
@@ -25,6 +27,10 @@ type HelmIndexLoader struct{}
 
 // LoadIndex downloads and parses the index file of the provided repository.
 func (l *HelmIndexLoader) LoadIndex(r *hub.Repository) (*helmrepo.IndexFile, string, error) {
+	transport, err := newHelmTransport()
+	if err != nil {
+		return nil, "", err
+	}
 	repoConfig := &helmrepo.Entry{
 		Name:     r.Name,
 		URL:      r.URL,
@@ -37,6 +43,7 @@ func (l *HelmIndexLoader) LoadIndex(r *hub.Repository) (*helmrepo.IndexFile, str
 			New: func(options ...getter.Option) (getter.Getter, error) {
 				return getter.NewHTTPGetter(
 					getter.WithTimeout(10*time.Second),
+					getter.WithTransport(transport),
 					getter.WithUserAgent(httpw.UserAgent),
 				)
 			},
@@ -55,6 +62,19 @@ func (l *HelmIndexLoader) LoadIndex(r *hub.Repository) (*helmrepo.IndexFile, str
 		return nil, "", err
 	}
 	return indexFile, getDigest(indexBytes), nil
+}
+
+// newHelmTransport returns the transport used to download index files. It is
+// based on the default transport so that any restrictions applied to it are
+// also enforced here, as the Helm getter uses its own transport otherwise.
+func newHelmTransport() (*http.Transport, error) {
+	defaultTransport, ok := http.DefaultTransport.(*http.Transport)
+	if !ok {
+		return nil, fmt.Errorf("unsupported default transport type: %T", http.DefaultTransport)
+	}
+	transport := defaultTransport.Clone()
+	transport.DisableCompression = true
+	return transport, nil
 }
 
 // downloadIndexFile downloads a Helm repository's index file.

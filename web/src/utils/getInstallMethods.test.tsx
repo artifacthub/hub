@@ -346,7 +346,7 @@ const tests: Tests[] = [
     },
     output: {
       methods: [
-        { label: 'cli', title: 'Helm CLI', kind: 5, props: { normalizedName: 'admin-activities', isPrivate: false } },
+        { label: 'cli', title: 'Helm CLI', kind: 4, props: { normalizedName: 'admin-activities', isPrivate: false } },
       ],
     },
   },
@@ -459,7 +459,7 @@ const tests: Tests[] = [
     },
   },
   {
-    title: 'OLM OCI operator',
+    title: 'OLM operator from stored OCI repository',
     input: {
       pkg: {
         packageId: '622fc210-47fa-4697-b263-5e55a2d19a5d',
@@ -516,32 +516,11 @@ const tests: Tests[] = [
       },
     },
     output: {
-      methods: [
-        {
-          label: 'cli',
-          title: 'OLM OCI',
-          kind: 4,
-          props: {
-            name: 'aimanager-operator',
-            repository: {
-              repositoryId: '917e936b-ee46-4137-a0e8-033e60dc402c',
-              name: 'ibm',
-              url: 'oci://docker.io/ibmcom/ibm-operator-catalog:latest',
-              private: false,
-              kind: 3,
-              verifiedPublisher: false,
-              official: false,
-              userAlias: 'user',
-            },
-            channels: [{ name: 'v1.0', version: '1.0.0' }],
-            defaultChannel: 'v1.0',
-          },
-        },
-      ],
+      methods: [],
     },
   },
   {
-    title: 'OLM OCI operator with custom install',
+    title: 'OLM operator from stored OCI repository with custom install',
     input: {
       pkg: {
         packageId: '622fc210-47fa-4697-b263-5e55a2d19a5d',
@@ -606,26 +585,6 @@ const tests: Tests[] = [
           kind: 0,
           props: {
             install: '###Custom install',
-          },
-        },
-        {
-          label: 'cli',
-          title: 'OLM OCI',
-          kind: 4,
-          props: {
-            name: 'aimanager-operator',
-            repository: {
-              repositoryId: '917e936b-ee46-4137-a0e8-033e60dc402c',
-              name: 'ibm',
-              url: 'oci://docker.io/ibmcom/ibm-operator-catalog:latest',
-              private: false,
-              kind: 3,
-              verifiedPublisher: false,
-              official: false,
-              userAlias: 'user',
-            },
-            channels: [{ name: 'v1.0', version: '1.0.0' }],
-            defaultChannel: 'v1.0',
           },
         },
       ],
@@ -1512,7 +1471,7 @@ const tests: Tests[] = [
         {
           label: 'kubewarden',
           title: 'Kubewarden CLI',
-          kind: 9,
+          kind: 8,
           props: {
             images: [
               {
@@ -1615,7 +1574,7 @@ const tests: Tests[] = [
         {
           label: 'kubewarden',
           title: 'Kubewarden CLI',
-          kind: 9,
+          kind: 8,
           props: {
             images: [
               {
@@ -1834,7 +1793,7 @@ const tests: Tests[] = [
     output: {
       methods: [
         {
-          kind: 10,
+          kind: 9,
           label: 'kustomize',
           props: {
             relativePath: '/general/storageclass',
@@ -1853,7 +1812,7 @@ const tests: Tests[] = [
           title: 'Kustomize',
         },
         {
-          kind: 11,
+          kind: 10,
           label: 'kubectl',
           props: {
             relativePath: '/general/storageclass',

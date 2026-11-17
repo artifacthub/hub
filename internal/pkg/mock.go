@@ -142,6 +142,12 @@ func (m *ManagerMock) Register(ctx context.Context, pkg *hub.Package) error {
 	return args.Error(0)
 }
 
+// RegisterSnapshotSecurityScanFailure implements the PackageManager interface.
+func (m *ManagerMock) RegisterSnapshotSecurityScanFailure(ctx context.Context, pkgID, version string) error {
+	args := m.Called(ctx, pkgID, version)
+	return args.Error(0)
+}
+
 // SearchJSON implements the PackageManager interface.
 func (m *ManagerMock) SearchJSON(ctx context.Context, input *hub.SearchPackageInput) (*hub.JSONQueryResult, error) {
 	args := m.Called(ctx, input)

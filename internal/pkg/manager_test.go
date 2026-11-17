@@ -1176,6 +1176,66 @@ func TestRegister(t *testing.T) {
 	})
 }
 
+func TestRegisterSnapshotSecurityScanFailure(t *testing.T) {
+	ctx := context.Background()
+	pkgID := "00000000-0000-0000-0000-000000000001"
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg  string
+			pkgID   string
+			version string
+		}{
+			{
+				"invalid package id",
+				"",
+				"1.0.0",
+			},
+			{
+				"invalid package id",
+				"pkgID",
+				"1.0.0",
+			},
+			{
+				"version not provided",
+				pkgID,
+				"",
+			},
+		}
+		for _, tc := range testCases {
+			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
+				m := NewManager(nil)
+				err := m.RegisterSnapshotSecurityScanFailure(ctx, tc.pkgID, tc.version)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, registerSecurityScanFailureDBQ, pkgID, "1.0.0").Return(tests.ErrFakeDB)
+		m := NewManager(db)
+
+		err := m.RegisterSnapshotSecurityScanFailure(ctx, pkgID, "1.0.0")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("successful security scan failure registration", func(t *testing.T) {
+		t.Parallel()
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, registerSecurityScanFailureDBQ, pkgID, "1.0.0").Return(nil)
+		m := NewManager(db)
+
+		err := m.RegisterSnapshotSecurityScanFailure(ctx, pkgID, "1.0.0")
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestSearchJSON(t *testing.T) {
 	ctx := context.Background()
 	input := &hub.SearchPackageInput{

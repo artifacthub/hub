@@ -1,19 +1,14 @@
 package scanner
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"os"
-	"os/exec"
-	"strings"
 
 	trivy "github.com/aquasecurity/trivy/pkg/types"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/oci"
-	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 )
@@ -26,15 +21,32 @@ var (
 	// ErrSchemaV1NotSupported indicates that the image provided is using a v1
 	// schema which is not supported.
 	ErrSchemaV1NotSupported = errors.New("schema v1 manifest not supported by trivy")
+
+	// ErrRateLimited indicates that the registry of the image provided is
+	// limiting the requests received, so the image could not be scanned. The
+	// snapshot should remain pending as this says nothing about the image.
+	ErrRateLimited = errors.New("rate limited by registry")
+
+	// ErrScanCanceled indicates that the scan was interrupted because the scanner
+	// is shutting down. The snapshot should remain pending as this says nothing
+	// about the image.
+	ErrScanCanceled = errors.New("scan canceled")
 )
 
 // ImageScanner describes the methods an ImageScanner implementation must
 // provide. An image scanner is responsible of scanning a container image for
 // security vulnerabilities.
 type ImageScanner interface {
+	// Prepare gets the image scanner ready to scan images, downloading what it
+	// needs. It must be called once, before scanning any image.
+	Prepare() error
+
 	// ScanImage scans the provided image for security vulnerabilities,
 	// returning a report in json format.
 	ScanImage(image string) ([]byte, error)
+
+	// Close releases the resources used by the image scanner.
+	Close() error
 }
 
 // Scanner is in charge of scanning packages' snapshots for security
@@ -56,10 +68,7 @@ func New(
 		log.Fatal().Msg("trivy url not set")
 	}
 	s := &Scanner{
-		is: &TrivyScanner{
-			ctx: ctx,
-			cfg: cfg,
-		},
+		is: newTrivyScanner(ctx, cfg),
 		ec: ec,
 	}
 	for _, o := range opts {
@@ -76,10 +85,37 @@ func WithImageScanner(is ImageScanner) func(s *Scanner) {
 	}
 }
 
+// Close releases the resources used by the scanner. It must be called once all
+// scans have finished.
+func (s *Scanner) Close() error {
+	return s.is.Close()
+}
+
+// Prepare gets the scanner ready to scan snapshots. It must be called once,
+// before the first scan. The image scanner may download large databases, like
+// the Java DB of Trivy, so it is better not to call it when there is nothing to
+// scan. Scans should not be run if it fails. ErrScanCanceled is returned if the
+// scanner is shutting down.
+func (s *Scanner) Prepare() error {
+	return s.is.Prepare()
+}
+
+// IsPending checks if the error provided means that a snapshot could not be
+// scanned for reasons unrelated to its images. The report returned by Scan must
+// be discarded in that case, so that the snapshot remains pending.
+func IsPending(err error) bool {
+	return errors.Is(err, ErrRateLimited) || errors.Is(err, ErrScanCanceled)
+}
+
 // Scan scans the provided package's snapshot for security vulnerabilities
-// returning a report with the results.
-func (s *Scanner) Scan(sn *hub.SnapshotToScan) (*hub.SnapshotSecurityReport, error) {
-	s.ec.Init(sn.RepositoryID)
+// returning a report with the results. The repository errors remain untouched
+// when the error returned is one for which IsPending returns true.
+func (s *Scanner) Scan(sn *hub.SnapshotToScan) (_ *hub.SnapshotSecurityReport, scanErr error) {
+	defer func() {
+		if !IsPending(scanErr) {
+			s.ec.Init(sn.RepositoryID)
+		}
+	}()
 
 	report := &hub.SnapshotSecurityReport{
 		PackageID: sn.PackageID,
@@ -89,9 +125,16 @@ func (s *Scanner) Scan(sn *hub.SnapshotToScan) (*hub.SnapshotSecurityReport, err
 	imagesReports := make(map[string]*trivy.Report)
 	for _, image := range sn.ContainersImages {
 		imageReportJSON, err := s.is.ScanImage(image.Image)
+		if errors.Is(err, oci.ErrImageTooLarge) {
+			// Images too large are not scanned, this is not an error
+			log.Info().Str("image", image.Image).Msg("image too large: skipped")
+			continue
+		}
 		if err != nil {
 			err := fmt.Errorf("error scanning image %s: %w (package %s:%s)", image.Image, err, sn.PackageName, sn.Version)
-			s.ec.Append(sn.RepositoryID, err.Error())
+			if !IsPending(err) {
+				s.ec.Append(sn.RepositoryID, err.Error())
+			}
 			return report, err
 		}
 		var imageReport *trivy.Report
@@ -134,62 +177,4 @@ func generateSummary(imagesReports map[string]*trivy.Report) *hub.SecurityReport
 		}
 	}
 	return summary
-}
-
-// TrivyScanner is an ImageScanner implementation that uses Trivy to scan
-// containers images for security vulnerabilities.
-type TrivyScanner struct {
-	ctx context.Context
-	cfg *viper.Viper
-}
-
-// ScanImage implements the ImageScanner interface.
-func (s *TrivyScanner) ScanImage(image string) ([]byte, error) {
-	// Setup trivy command
-	trivyURL := s.cfg.GetString("scanner.trivyURL")
-	cmd := exec.CommandContext(s.ctx, "trivy", "--quiet", "image", "--list-all-pkgs", "--security-checks", "vuln", "--server", trivyURL, "--timeout", "15m", "-f", "json", image) // #nosec
-	var stdout, stderr bytes.Buffer
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-	cmd.Env = []string{
-		"PATH=" + os.Getenv("PATH"),
-		"USER=" + os.Getenv("USER"),
-		"HOME=" + os.Getenv("HOME"),
-		"TRIVY_CACHE_DIR=" + os.Getenv("TRIVY_CACHE_DIR"),
-		"TRIVY_NEW_JSON_SCHEMA=true", // Not needed in Trivy >= 0.20.0
-	}
-
-	// If the registry is the Docker Hub, include credentials to avoid rate
-	// limiting issues. Empty registry names will also match this check as the
-	// registry name will be set to index.docker.io when parsing the reference.
-	ref, err := name.ParseReference(image)
-	if err != nil {
-		return nil, fmt.Errorf("error parsing image %s ref: %w", image, err)
-	}
-	if oci.RegistryIsDockerHub(ref) {
-		cmd.Env = append(cmd.Env,
-			"TRIVY_USERNAME="+s.cfg.GetString("creds.dockerUsername"),
-			"TRIVY_PASSWORD="+s.cfg.GetString("creds.dockerPassword"),
-		)
-	}
-
-	// Run trivy command
-	if err := cmd.Run(); err != nil {
-		if strings.Contains(stderr.String(), "MANIFEST_UNKNOWN") {
-			return nil, ErrImageNotFound
-		}
-		if strings.Contains(stderr.String(), "UNAUTHORIZED") {
-			return nil, ErrImageNotFound
-		}
-		if strings.Contains(stderr.String(), `unsupported MediaType: "application/vnd.docker.distribution.manifest.v1+prettyjws"`) {
-			return nil, ErrSchemaV1NotSupported
-		}
-		trivyError := stderr.String()
-		parts := strings.Split(stderr.String(), "podman/podman.sock: no such file or directory")
-		if len(parts) > 1 {
-			trivyError = strings.TrimSpace(parts[1])
-		}
-		return nil, fmt.Errorf("error running trivy on image %s: %s", image, trivyError)
-	}
-	return stdout.Bytes(), nil
 }
