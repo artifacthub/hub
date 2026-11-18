@@ -82,6 +82,12 @@
                             "type": "object",
                             "default": {}
                         },
+                        "extraJobAnnotations": {
+                            "title": "Additional annotations for the DB migrator job",
+                            "description": "Optionally specify extra list of additional annotations for the dbMigrator job",
+                            "type": "object",
+                            "default": {}
+                        },
                         "extraPodLabels": {
                             "title": "Additional labels for the DB migrator pod",
                             "description": "Optionally specify extra list of additional labels for the dbMigrator pod",
