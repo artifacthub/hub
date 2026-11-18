@@ -94,6 +94,8 @@ dbMigrator:
       repository: artifacthub/db-migrator
     # Optionally specify extra list of additional labels for the dbMigrator job
     extraJobLabels: {}
+    # Optionally specify extra list of additional annotations for the dbMigrator job
+    extraJobAnnotations: {}
     # Optionally specify extra list of additional labels for the dbMigrator pod
     extraPodLabels: {}
     # Limits the lifetime of the job after it has finished execution
