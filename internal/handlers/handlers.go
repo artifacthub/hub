@@ -199,6 +199,7 @@ func (h *Handlers) setupRouter() {
 				r.Delete("/", h.Users.DeleteUser)
 				r.Post("/delete-user-code", h.Users.RegisterDeleteUserCode)
 				r.Route("/tfa", func(r chi.Router) {
+					r.Use(h.Users.RejectAPIKey)
 					r.Put("/disable", h.Users.DisableTFA)
 					r.Put("/enable", h.Users.EnableTFA)
 					r.Post("/", h.Users.SetupTFA)
@@ -338,7 +339,7 @@ func (h *Handlers) setupRouter() {
 		r.Route("/api-keys", func(r chi.Router) {
 			r.Use(h.Users.RequireLogin)
 			r.Get("/", h.APIKeys.GetOwnedByUser)
-			r.Post("/", h.APIKeys.Add)
+			r.With(h.Users.RejectAPIKey).Post("/", h.APIKeys.Add)
 			r.Route("/{apiKeyID}", func(r chi.Router) {
 				r.Get("/", h.APIKeys.Get)
 				r.Put("/", h.APIKeys.Update)

@@ -9,6 +9,7 @@ import { AppCtx, signOut } from '../../../../../context/AppCtx';
 import { ErrorKind, RefInputField } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import compoundErrorMessage from '../../../../../utils/compoundErrorMessage';
+import getRetryAfterText from '../../../../../utils/getRetryAfterText';
 import InputField from '../../../../common/InputField';
 
 interface Password {
@@ -57,7 +58,17 @@ const UpdatePassword = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsSending(false);
-      if (err.kind !== ErrorKind.Unauthorized) {
+      if (err.kind === ErrorKind.TooManyAttempts) {
+        alertDispatcher.postAlert({
+          type: 'danger',
+          message: `Too many attempts to change your password. Please try again in ${getRetryAfterText(err.retryAfter)}.`,
+        });
+      } else if (err.kind === ErrorKind.TooManyRequests) {
+        alertDispatcher.postAlert({
+          type: 'danger',
+          message: `Too many requests. Please try again in ${getRetryAfterText(err.retryAfter)}.`,
+        });
+      } else if (err.kind !== ErrorKind.Unauthorized) {
         const error = compoundErrorMessage(err, 'An error occurred updating your password');
         alertDispatcher.postAlert({
           type: 'danger',

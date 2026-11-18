@@ -12,11 +12,17 @@ import { AppCtx, refreshUserProfile, signOut } from '../../context/AppCtx';
 import { ErrorKind, RefInputField, UserLogin } from '../../types';
 import cleanLoginUrlParams from '../../utils/cleanLoginUrlParams';
 import compoundErrorMessage from '../../utils/compoundErrorMessage';
+import getRetryAfterText from '../../utils/getRetryAfterText';
 import InputField from '../common/InputField';
 import Modal from '../common/Modal';
+import ApproveSessionForm from './ApproveSessionForm';
 import styles from './LogIn.module.css';
 import OAuth from './OAuth';
 import ResetPassword from './ResetPassword';
+
+// Shown after the text for too many incorrect codes in the passcode step
+const TOO_MANY_CODES_HINT =
+  'If you didn\'t make these attempts, someone may know your password: go back and use "Forgot password?" to reset it to a new password. That signs out every other session and stops them; then finish signing in with a recovery code, or with a code from your app once the wait is over.';
 
 interface FormValidation {
   isValid: boolean;
@@ -48,12 +54,6 @@ const LogIn = (props: Props) => {
   const [apiError, setApiError] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [visibleResetPassword, setVisibleResetPassword] = useState(false);
-  const [passcode, setPasscode] = useState<string>('');
-  const [isApprovingSession, setIsApprovingSession] = useState<boolean>(false);
-
-  const onPasscodeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPasscode(e.target.value);
-  };
 
   // Clean API error when form is focused after validation
   const cleanApiError = () => {
@@ -87,15 +87,19 @@ const LogIn = (props: Props) => {
     let error = compoundErrorMessage(err, 'An error occurred signing in');
     if (err.kind === ErrorKind.Unauthorized) {
       error = 'Authentication failed. Please check your credentials.';
+    } else if (err.kind === ErrorKind.TooManyAttempts) {
+      error = `Too many sign-in attempts for this account. Please try again in ${getRetryAfterText(
+        err.retryAfter
+      )}, or use "Forgot password?" to reset your password and sign in.`;
+    } else if (err.kind === ErrorKind.TooManyRequests) {
+      error = `Too many requests. Please try again in ${getRetryAfterText(err.retryAfter)}.`;
     }
     setApiError(error);
     setIsLoading({ status: false });
-    setIsApprovingSession(false);
     dispatch(signOut());
   };
 
   const onLoginSuccess = () => {
-    setIsApprovingSession(false);
     setIsLoading({ status: false });
     dispatch(refreshUserProfile(dispatch, props.redirect));
     props.setOpenLogIn(false);
@@ -108,6 +112,7 @@ const LogIn = (props: Props) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.kind === ErrorKind.NotApprovedSession) {
+        setIsLoading({ status: false });
         setVisible2FACode(true);
       } else {
         onLoginError(err);
@@ -115,18 +120,10 @@ const LogIn = (props: Props) => {
     }
   }
 
-  async function approveSession() {
-    try {
-      setIsApprovingSession(true);
-      await API.approveSession(passcode);
-      onLoginSuccess();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      onLoginError(err);
-    }
-  }
-
   const submitForm = () => {
+    // Each request uses one of the sign-in attempts allowed for the account,
+    // so only one is sent at a time
+    if (isLoading.status) return;
     cleanApiError();
     setIsLoading({ type: 'log', status: true });
     if (loginForm.current) {
@@ -165,7 +162,7 @@ const LogIn = (props: Props) => {
   };
 
   const handleOnReturnKeyDown = (event: KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key === 'Enter' && !isNull(loginForm)) {
+    if (event.key === 'Enter' && !event.repeat && !isNull(loginForm)) {
       submitForm();
     }
   };
@@ -217,39 +214,12 @@ const LogIn = (props: Props) => {
                 </button>
               </div>
 
-              <div className="flex-grow-1 w-100 d-flex align-items-center">
-                <div className="w-100">
-                  <InputField
-                    type="text"
-                    label="Authentication code"
-                    name="passcode"
-                    autoComplete="off"
-                    value={passcode}
-                    onChange={onPasscodeChange}
-                    invalidText={{
-                      default: 'This field is required',
-                    }}
-                    validateOnBlur
-                    required
-                  />
-
-                  <button
-                    onClick={approveSession}
-                    className="btn btn-success btn-sm text-uppercase mt-3"
-                    disabled={passcode === '' || isApprovingSession}
-                    aria-label="Verify passcode"
-                  >
-                    {isApprovingSession ? (
-                      <>
-                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                        <span className="ms-2">Verifying...</span>
-                      </>
-                    ) : (
-                      <>Verify</>
-                    )}
-                  </button>
-                </div>
-              </div>
+              <ApproveSessionForm
+                onSuccess={onLoginSuccess}
+                onError={setApiError}
+                expiredHint="Go back and sign in again."
+                tooManyHint={TOO_MANY_CODES_HINT}
+              />
             </div>
           ) : (
             <div className="my-auto">

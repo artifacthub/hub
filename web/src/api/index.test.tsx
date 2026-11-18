@@ -142,6 +142,103 @@ describe('API', () => {
         });
         expect(fetchMock).toHaveBeenCalledTimes(1);
       });
+
+      it('TooManyAttempts with retry after seconds', async () => {
+        fetchMock.mockResponse(JSON.stringify({ message: 'too many attempts, please try again later' }), {
+          headers: {
+            'content-type': 'application/json',
+            'retry-after': '120',
+          },
+          status: 429,
+        });
+
+        await expect(API.getOrganization('org1')).rejects.toStrictEqual({
+          kind: ErrorKind.TooManyAttempts,
+          message: 'too many attempts, please try again later',
+          retryAfter: 120,
+        });
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+      });
+
+      it('TooManyAttempts with retry after date', async () => {
+        fetchMock.mockResponse(JSON.stringify({ message: 'too many attempts, please try again later' }), {
+          headers: {
+            'content-type': 'application/json',
+            'retry-after': 'Wed, 21 Oct 2015 07:28:00 GMT',
+          },
+          status: 429,
+        });
+
+        await expect(API.getOrganization('org1')).rejects.toStrictEqual({
+          kind: ErrorKind.TooManyAttempts,
+          message: 'too many attempts, please try again later',
+          retryAfter: undefined,
+        });
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+      });
+
+      it('TooManyAttempts without retry after', async () => {
+        fetchMock.mockResponse(JSON.stringify({ message: 'too many attempts, please try again later' }), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 429,
+        });
+
+        await expect(API.getOrganization('org1')).rejects.toStrictEqual({
+          kind: ErrorKind.TooManyAttempts,
+          message: 'too many attempts, please try again later',
+          retryAfter: undefined,
+        });
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+      });
+
+      it('TooManyRequests with another message (not sent by the hub)', async () => {
+        fetchMock.mockResponse(JSON.stringify({ message: 'Rate exceeded' }), {
+          headers: {
+            'content-type': 'application/json',
+            'retry-after': '30',
+          },
+          status: 429,
+        });
+
+        await expect(API.getOrganization('org1')).rejects.toStrictEqual({
+          kind: ErrorKind.TooManyRequests,
+          message: 'Rate exceeded',
+          retryAfter: 30,
+        });
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+      });
+
+      it('TooManyRequests with a non-JSON body', async () => {
+        fetchMock.mockResponse('<html><body>Too Many Requests</body></html>', {
+          headers: {
+            'content-type': 'text/html',
+          },
+          status: 429,
+        });
+
+        await expect(API.getOrganization('org1')).rejects.toStrictEqual({
+          kind: ErrorKind.TooManyRequests,
+          retryAfter: undefined,
+        });
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+      });
+
+      it('TooManyRequests with empty body', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'retry-after': '30',
+          },
+          status: 429,
+        });
+
+        await expect(API.getOrganization('org1')).rejects.toStrictEqual({
+          kind: ErrorKind.TooManyRequests,
+          retryAfter: 30,
+        });
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+      });
     });
 
     describe('getPackage', () => {
@@ -1815,6 +1912,23 @@ describe('API', () => {
 
     describe('verifyPasswordResetCode', () => {
       it('success', async () => {
+        fetchMock.mockResponse(JSON.stringify({ email: 'test@email.com' }), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await API.verifyPasswordResetCode('code');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/verify-password-reset-code');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
+        expect(fetchMock.mock.calls[0][1]!.body).toBe(JSON.stringify({ code: 'code' }));
+        expect(response).toBe('test@email.com');
+      });
+
+      it('success without email', async () => {
         fetchMock.mockResponse('', {
           headers: {
             'content-type': 'text/plain; charset=utf-8',
@@ -1826,19 +1940,50 @@ describe('API', () => {
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/verify-password-reset-code');
-        expect(response).toEqual('');
+        expect(response).toBeUndefined();
       });
     });
 
     describe('resetPassword', () => {
-      it('success', async () => {
-        mockNoContentResponse();
+      const mockResetPasswordResponse = (sessionApproved?: string) => {
+        fetchMock.mockResponse(
+          new Response(null, {
+            headers: sessionApproved ? { 'X-Session-Approved': sessionApproved } : {},
+            status: 204,
+          })
+        );
+      };
+
+      it('success when signed in', async () => {
+        mockResetPasswordResponse('true');
 
         const response = await API.resetPassword('code', 'pass');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/reset-password');
-        expect(response).toEqual('');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
+        expect(fetchMock.mock.calls[0][1]!.body).toBe(JSON.stringify({ code: 'code', password: 'pass' }));
+        expect(response).toBe(true);
+      });
+
+      it('rejects when the session is not approved', async () => {
+        mockResetPasswordResponse('false');
+
+        await expect(API.resetPassword('code', 'pass')).rejects.toEqual({
+          kind: ErrorKind.NotApprovedSession,
+        });
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/reset-password');
+      });
+
+      it('success when not signed in', async () => {
+        mockResetPasswordResponse();
+
+        const response = await API.resetPassword('code', 'pass');
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/users/reset-password');
+        expect(response).toBe(false);
       });
     });
 

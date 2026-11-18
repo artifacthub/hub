@@ -117,9 +117,13 @@ func (m *ManagerMock) RegisterUser(ctx context.Context, user *hub.User) error {
 }
 
 // ResetPassword implements the UserManager interface.
-func (m *ManagerMock) ResetPassword(ctx context.Context, code, newPassword string) error {
+func (m *ManagerMock) ResetPassword(
+	ctx context.Context,
+	code, newPassword string,
+) (*hub.ResetPasswordOutput, error) {
 	args := m.Called(ctx, code, newPassword)
-	return args.Error(0)
+	data, _ := args.Get(0).(*hub.ResetPasswordOutput)
+	return data, args.Error(1)
 }
 
 // SetupTFA implements the UserManager interface.
@@ -148,7 +152,7 @@ func (m *ManagerMock) VerifyEmail(ctx context.Context, code string) (bool, error
 }
 
 // VerifyPasswordResetCode implements the UserManager interface.
-func (m *ManagerMock) VerifyPasswordResetCode(ctx context.Context, code string) error {
+func (m *ManagerMock) VerifyPasswordResetCode(ctx context.Context, code string) (string, error) {
 	args := m.Called(ctx, code)
-	return args.Error(0)
+	return args.String(0), args.Error(1)
 }

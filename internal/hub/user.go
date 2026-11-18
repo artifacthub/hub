@@ -8,8 +8,9 @@ import (
 // CheckCredentialsOutput represents the output returned by the
 // CheckCredentials method.
 type CheckCredentialsOutput struct {
-	Valid  bool   `json:"valid"`
-	UserID string `json:"user_id"`
+	Valid        bool   `json:"valid"`
+	UserID       string `json:"user_id"`
+	PasswordHash string `json:"-"`
 }
 
 // CheckSessionOutput represents the output returned by the CheckSession method.
@@ -18,13 +19,20 @@ type CheckSessionOutput struct {
 	UserID string `json:"user_id"`
 }
 
+// ResetPasswordOutput represents the output returned by the ResetPassword method.
+type ResetPasswordOutput struct {
+	UserID       string `json:"user_id"` // Empty if it could not be looked up after the reset
+	PasswordHash string `json:"-"`
+}
+
 // Session represents some information about a user session.
 type Session struct {
-	SessionID string `json:"session_id"`
-	UserID    string `json:"user_id"`
-	IP        string `json:"ip"`
-	UserAgent string `json:"user_agent"`
-	Approved  bool   `json:"approved"`
+	SessionID    string `json:"session_id"`
+	UserID       string `json:"user_id"`
+	IP           string `json:"ip"`
+	UserAgent    string `json:"user_agent"`
+	Approved     bool   `json:"approved"`
+	PasswordHash string `json:"-"`
 }
 
 // SetupTFAOutput represents the output returned by the SetupTFA method.
@@ -77,10 +85,10 @@ type UserManager interface {
 	RegisterPasswordResetCode(ctx context.Context, userEmail string) error
 	RegisterSession(ctx context.Context, session *Session) (*Session, error)
 	RegisterUser(ctx context.Context, user *User) error
-	ResetPassword(ctx context.Context, code, newPassword string) error
+	ResetPassword(ctx context.Context, code, newPassword string) (*ResetPasswordOutput, error)
 	SetupTFA(ctx context.Context) ([]byte, error)
 	UpdatePassword(ctx context.Context, old, new string) error
 	UpdateProfile(ctx context.Context, user *User) error
 	VerifyEmail(ctx context.Context, code string) (bool, error)
-	VerifyPasswordResetCode(ctx context.Context, code string) error
+	VerifyPasswordResetCode(ctx context.Context, code string) (string, error)
 }

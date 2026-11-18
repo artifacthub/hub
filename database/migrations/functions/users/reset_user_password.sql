@@ -1,5 +1,6 @@
 -- reset_user_password resets the password of the user associated to the code
--- provided if it is still valid, returning the email of the user.
+-- provided if it is still valid, returning the email of the user. The code is
+-- consumed, so it can be used only once, even by concurrent requests.
 create or replace function reset_user_password(p_code text, p_new_password text)
 returns text as $$
 declare
@@ -21,8 +22,13 @@ begin
         email_verified = true
     where user_id = v_user_id;
 
-    -- Delete password reset code
-    delete from password_reset_code where user_id = v_user_id;
+    -- Consume the password reset code. The user row is locked above, so a
+    -- concurrent reset with the same code, or one whose code has just been
+    -- replaced, finds no code here and fails, undoing its password update
+    delete from password_reset_code where password_reset_code_id = p_code;
+    if not found then
+        raise 'invalid password reset code';
+    end if;
 
     -- Invalidate current user sessions
     delete from session where user_id = v_user_id;

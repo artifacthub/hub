@@ -77,7 +77,9 @@ const ResetPassword = (props: Props) => {
           <div className="display-4 text-success mb-4">
             <MdDone />
           </div>
-          We have sent a password reset link to your email, please check your inbox (and the spam folder if needed).
+          Check your inbox (and the spam folder if needed) for an email with a password reset link. The link works for 4
+          hours. If a reset link was sent for this account in the last 3 hours, even one you didn't ask for, we won't
+          send another: use the most recent one.
         </div>
       ) : (
         <form

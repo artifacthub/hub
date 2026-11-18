@@ -2,17 +2,19 @@ import classnames from 'classnames';
 import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import { CgLastpass } from 'react-icons/cg';
 import { MdClose, MdDone } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 
 import API from '../../api';
+import { AppCtx, refreshUserProfile, signOut } from '../../context/AppCtx';
 import { ErrorKind, RefInputField } from '../../types';
 import compoundErrorMessage from '../../utils/compoundErrorMessage';
 import InputField from '../common/InputField';
 import Loading from '../common/Loading';
 import Modal from '../common/Modal';
+import ApproveSessionForm from '../navigation/ApproveSessionForm';
 import ResetPassword from '../navigation/ResetPassword';
 import styles from './ResetPasswordModal.module.css';
 
@@ -30,7 +32,10 @@ interface Props {
   code?: string | null;
 }
 
+type Outcome = 'form' | 'signedIn' | 'passcode' | 'notSignedIn';
+
 const ResetPasswordModal = (props: Props) => {
+  const { dispatch } = useContext(AppCtx);
   const [code, setCode] = useState(props.code);
   const [verifying, setVerifying] = useState<boolean | null>(null);
   const [validCode, setValidCode] = useState<boolean | null>(null);
@@ -44,7 +49,8 @@ const ResetPasswordModal = (props: Props) => {
   const [isValidated, setIsValidated] = useState<boolean>(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const [apiPwdError, setApiPwdError] = useState<string | null>(null);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [outcome, setOutcome] = useState<Outcome>('form');
+  const [email, setEmail] = useState<string | undefined>();
 
   const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword({ value: e.target.value, isValid: e.currentTarget.checkValidity() });
@@ -59,13 +65,24 @@ const ResetPasswordModal = (props: Props) => {
 
   async function resetPassword(password: string) {
     try {
-      await API.resetPassword(code!, password);
-      setIsSuccess(true);
+      const signedIn = await API.resetPassword(code!, password);
+      if (signedIn) {
+        refreshUserProfile(dispatch);
+        setOutcome('signedIn');
+      } else {
+        setOutcome('notSignedIn');
+      }
       setIsSending(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      const error = compoundErrorMessage(err, 'An error occurred resetting the password');
-      setApiError(error);
+      if (err.kind === ErrorKind.NotApprovedSession) {
+        // A session of the same account in this browser was just deleted
+        dispatch(signOut());
+        setOutcome('passcode');
+      } else {
+        const error = compoundErrorMessage(err, 'An error occurred resetting the password');
+        setApiError(error);
+      }
       setIsSending(false);
     }
   }
@@ -110,12 +127,14 @@ const ResetPasswordModal = (props: Props) => {
     async function verifyPasswordResetCode() {
       setVerifying(true);
       try {
-        await API.verifyPasswordResetCode(code!);
+        setEmail(await API.verifyPasswordResetCode(code!));
         setValidCode(true);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         if (err.kind === ErrorKind.Gone) {
-          setApiError('This password reset link is no longer valid, please get a new one.');
+          setApiError(
+            'This password reset link is no longer valid. Links work for 4 hours and only once. If you requested more than one, use the most recent email; otherwise request a new link below.'
+          );
           setDisplayResetPwd(true);
         } else {
           let error = 'An error occurred with your password reset code.';
@@ -178,12 +197,12 @@ const ResetPasswordModal = (props: Props) => {
       disabledClose={verifying}
       modalClassName={styles.modal}
       open
-      closeButton={validCode && !isSuccess ? closeButton : undefined}
+      closeButton={validCode && outcome === 'form' ? closeButton : undefined}
       error={apiError}
       cleanError={cleanApiError}
     >
       <div
-        className={`d-flex flex-column h-100 w-100 align-items-center justify-content-center text-center position-relative ${styles.content}`}
+        className={`d-flex flex-column flex-grow-1 flex-shrink-0 w-100 align-items-center justify-content-center text-center position-relative ${styles.content}`}
       >
         {verifying ? (
           <>
@@ -194,13 +213,33 @@ const ResetPasswordModal = (props: Props) => {
           <div className="text-start w-100">
             {validCode ? (
               <>
-                {isSuccess ? (
-                  <div className="d-flex flex-column text-center h5">
-                    <div className="display-4 text-success mb-4">
-                      <MdDone />
+                {outcome !== 'form' ? (
+                  <>
+                    <div className="d-flex flex-column text-center h5">
+                      <div className="display-4 text-success mb-4">
+                        <MdDone />
+                      </div>
+                      {outcome === 'signedIn' && <>Your password has been reset and you're now signed in.</>}
+                      {outcome === 'passcode' && (
+                        <>
+                          Your password has been reset. To finish signing in, enter the code from your authenticator app
+                          or one of your recovery codes.
+                        </>
+                      )}
+                      {outcome === 'notSignedIn' && <>Your password has been reset. You can now sign in.</>}
                     </div>
-                    Your password has been reset successfully. You can now log in using the new credentials.
-                  </div>
+                    {outcome === 'passcode' && (
+                      <ApproveSessionForm
+                        onSuccess={() => {
+                          setApiError(null);
+                          refreshUserProfile(dispatch);
+                          setOutcome('signedIn');
+                        }}
+                        onError={setApiError}
+                        expiredHint="Close this window and sign in again."
+                      />
+                    )}
+                  </>
                 ) : (
                   <form
                     ref={form}
@@ -214,6 +253,17 @@ const ResetPasswordModal = (props: Props) => {
                     autoComplete="off"
                     noValidate
                   >
+                    {email && (
+                      <InputField
+                        type="email"
+                        label="Email"
+                        name="email"
+                        value={email}
+                        autoComplete="username"
+                        readOnly
+                      />
+                    )}
+
                     <InputField
                       ref={passwordInput}
                       type="password"

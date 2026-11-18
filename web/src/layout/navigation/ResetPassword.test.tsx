@@ -12,7 +12,7 @@ describe('ResetPassword visibleTitle', () => {
   });
 
   it('creates snapshot', () => {
-    vi.mocked(API).verifyPasswordResetCode.mockResolvedValue(null);
+    vi.mocked(API).verifyPasswordResetCode.mockResolvedValue(undefined);
 
     const { asFragment } = render(<ResetPassword visibleTitle />);
     expect(asFragment()).toMatchSnapshot();
@@ -50,7 +50,7 @@ describe('ResetPassword visibleTitle', () => {
 
       expect(
         await screen.findByText(
-          'We have sent a password reset link to your email, please check your inbox (and the spam folder if needed).'
+          "Check your inbox (and the spam folder if needed) for an email with a password reset link. The link works for 4 hours. If a reset link was sent for this account in the last 3 hours, even one you didn't ask for, we won't send another: use the most recent one."
         )
       ).toBeInTheDocument();
     });

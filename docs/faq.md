@@ -27,6 +27,7 @@
   - [Can I add my entire OCI registry to Artifact Hub?](#can-i-add-my-entire-oci-registry-to-artifact-hub)
   - [How do I add the repository metadata file for OCI repositories?](#how-do-i-add-the-repository-metadata-file-for-oci-repositories)
 - [Authentication](#authentication)
+  - [Why am I asked to wait before trying to sign in again?](#why-am-i-asked-to-wait-before-trying-to-sign-in-again)
   - [How do I reset my 2FA?](#how-do-i-reset-my-2fa)
   - [Can I change my email address?](#can-i-change-my-email-address)
 - [Self-hosted Deployments](#self-hosted-deployments)
@@ -160,9 +161,23 @@ The metadata file needs to be pushed to the OCI registry as well, using a specia
 
 ## Authentication
 
+### Why am I asked to wait before trying to sign in again?
+
+To protect accounts from password and code guessing, the number of attempts is limited per account. You can try to sign in 10 times, and after that once per hour. Similarly, you can enter 10 authentication codes from your 2FA device/app, and after that one every 3 hours. Changing your password and turning off 2FA from the control panel have their own limits. Correct attempts do not count towards any of these limits, and recovery codes are never limited. When a limit is reached, the UI tells you how long you need to wait.
+
+If you don't want to wait, you can reset your password using the `Forgot password?` link. Resetting your password signs you in on that browser (if you have 2FA enabled, you'll still need to enter a code) and signs out every other session. While someone keeps triggering the limit, you can only be signed in on one browser at a time. Reset links work for 4 hours and only once, and a new one is only sent when the last one is more than 3 hours old. The reset form shows the email of the account the link belongs to: please check that it is yours before setting a new password.
+
+If you are repeatedly told that there were too many incorrect codes and you didn't make those attempts, someone may know your password. Reset it to a new password, which signs out every other session and stops them. Then finish signing in with a recovery code, or with a code from your app once the wait is over. API keys cannot be used to create API keys or to manage 2FA, so after a reset you can remove every API key from the control panel.
+
+In self-hosted instances without email configured, password reset links cannot be sent. In that case, an operator can clear the limits of an account by running the following statement in the database:
+
+```sql
+delete from auth_attempt_limit where user_id = (select user_id from "user" where email = '<email>');
+```
+
 ### How do I reset my 2FA?
 
-Do you have the recovery codes provided during the 2FA setup process? If yes, when you are prompted for a code from your 2FA device/app, you can use one of those recovery codes to log in. Please note that those recovery codes can only be used once each.
+Do you have the recovery codes provided during the 2FA setup process? If yes, when you are prompted for a code from your 2FA device/app, you can use one of those recovery codes to log in, even when the number of code attempts has been limited. Please note that those recovery codes can only be used once each.
 
 ### Can I change my email address?
 
