@@ -50,7 +50,7 @@ Artifact Hub is structured in multiple layers, each of them providing a set of s
 
 ## Database
 
-The `database` layer is defined by the database [schema](https://github.com/artifacthub/hub/tree/master/database/migrations/schema) and a set of [functions](https://github.com/artifacthub/hub/tree/master/database/migrations/functions), which are handled using migrations. Migrations use [Tern](https://github.com/jackc/tern), and are automatically applied during the installation and upgrades by a Kubernetes [job](https://github.com/artifacthub/hub/blob/master/charts/artifact-hub/templates/db_migrator_job.yaml) named `db-migrator`. There are [unit tests](https://github.com/artifacthub/hub/tree/master/database/tests) available for both the schema and the functions.
+The `database` layer is defined by the database [schema](https://github.com/artifacthub/hub/tree/master/database/migrations/schema) and a set of [functions](https://github.com/artifacthub/hub/tree/master/database/migrations/functions), which are handled using migrations. Migrations use [Tern](https://github.com/jackc/tern), and are automatically applied during the installation and upgrades by the `db-migrator-install` and `db-migrator-upgrade` Kubernetes [jobs](https://github.com/artifacthub/hub/blob/master/charts/artifact-hub/templates/db_migrator_job.yaml). There are [unit tests](https://github.com/artifacthub/hub/tree/master/database/tests) available for both the schema and the functions.
 
 ```sh
 database
