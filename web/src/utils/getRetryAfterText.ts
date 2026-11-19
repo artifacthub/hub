@@ -6,7 +6,10 @@ const getRetryAfterText = (seconds?: number): string => {
   if (isUndefined(seconds)) return 'a little while';
   if (seconds <= 5) return 'a moment';
   if (seconds <= 60) return 'a minute';
-  if (seconds < 5400) return `${Math.ceil(seconds / 60)} minutes`;
+  if (seconds < 5400) {
+    const minutes = Math.ceil(seconds / 60);
+    return minutes === 60 ? 'an hour' : `${minutes} minutes`;
+  }
   return `${Math.ceil(seconds / 3600)} hours`;
 };
 

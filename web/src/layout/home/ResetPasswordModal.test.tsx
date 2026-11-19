@@ -5,7 +5,7 @@ import { vi } from 'vitest';
 
 import API from '../../api';
 import { AppCtx } from '../../context/AppCtx';
-import { ErrorKind } from '../../types';
+import { ErrorKind, Profile } from '../../types';
 import ResetPasswordModal from './ResetPasswordModal';
 vi.mock('../../api');
 
@@ -31,9 +31,9 @@ const mockCtx = {
 
 const mockDispatch = jest.fn();
 
-const renderResetPasswordModal = () =>
+const renderResetPasswordModal = (user: Profile | null = null) =>
   render(
-    <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
+    <AppCtx.Provider value={{ ctx: { ...mockCtx, user }, dispatch: mockDispatch }}>
       <Router>
         <ResetPasswordModal code="123" />
       </Router>
@@ -236,6 +236,32 @@ describe('ResetPasswordModal', () => {
       expect(await screen.findByText('Your password has been reset. You can now sign in.')).toBeInTheDocument();
       expect(API.getUserProfile).not.toHaveBeenCalled();
       expect(screen.queryByRole('button', { name: 'Reset password' })).not.toBeInTheDocument();
+    });
+
+    it('resets password without signing in when the browser is signed in to another account', async () => {
+      vi.mocked(API).verifyPasswordResetCode.mockResolvedValue('jsmith@email.com');
+      vi.mocked(API).resetPassword.mockResolvedValue(false);
+
+      renderResetPasswordModal({ alias: 'other', email: 'other@email.com', passwordSet: true });
+      await submitResetForm();
+
+      expect(
+        await screen.findByText(
+          'Your password has been reset. This browser is still signed in to another account (other).'
+        )
+      ).toBeInTheDocument();
+      expect(screen.queryByText('Your password has been reset. You can now sign in.')).toBeNull();
+      expect(API.getUserProfile).not.toHaveBeenCalled();
+    });
+
+    it('resets password without signing in when the account is the one the browser was signed in to', async () => {
+      vi.mocked(API).verifyPasswordResetCode.mockResolvedValue('jsmith@email.com');
+      vi.mocked(API).resetPassword.mockResolvedValue(false);
+
+      renderResetPasswordModal({ alias: 'jsmith', email: 'jsmith@email.com', passwordSet: true });
+      await submitResetForm();
+
+      expect(await screen.findByText('Your password has been reset. You can now sign in.')).toBeInTheDocument();
     });
 
     describe('when the passcode is required', () => {

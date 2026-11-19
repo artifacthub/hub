@@ -50,7 +50,7 @@ describe('ResetPassword visibleTitle', () => {
 
       expect(
         await screen.findByText(
-          "Check your inbox (and the spam folder if needed) for an email with a password reset link. The link works for 4 hours. If a reset link was sent for this account in the last 3 hours, even one you didn't ask for, we won't send another: use the most recent one."
+          "Check your inbox (and the spam folder if needed) for an email with a password reset link. The link works for 4 hours. If an unused reset link was sent for this account in the last 3 hours, even one you didn't ask for, we won't send another: use the most recent one."
         )
       ).toBeInTheDocument();
     });

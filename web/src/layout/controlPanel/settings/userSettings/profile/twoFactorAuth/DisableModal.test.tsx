@@ -117,6 +117,30 @@ describe('DisableModal', () => {
         ).toBeInTheDocument();
       });
 
+      it('incorrect code', async () => {
+        vi.mocked(API).disableTFA.mockRejectedValue({
+          kind: ErrorKind.Other,
+          message: 'invalid input: invalid passcode',
+        });
+
+        render(<DisableTwoFactorAuthenticationModal {...defaultProps} />);
+
+        const btn = screen.getByRole('button', { name: 'Open disable two-factor authentication modal' });
+        await userEvent.click(btn);
+
+        const passcodeInput = screen.getByRole('textbox');
+        await userEvent.type(passcodeInput, '123456');
+        await userEvent.click(screen.getByRole('button', { name: 'Disable two-factor authentication' }));
+
+        await waitFor(() => {
+          expect(API.disableTFA).toHaveBeenCalledTimes(1);
+        });
+
+        expect(await screen.findByText('Incorrect code. Please check it and try again.')).toBeInTheDocument();
+        expect(onAuthErrorMock).not.toHaveBeenCalled();
+        expect(onChangeMock).not.toHaveBeenCalled();
+      });
+
       it('too many attempts', async () => {
         vi.mocked(API).disableTFA.mockRejectedValue({ kind: ErrorKind.TooManyAttempts, retryAfter: 86400 });
 

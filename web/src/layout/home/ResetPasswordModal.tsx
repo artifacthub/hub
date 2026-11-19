@@ -35,7 +35,7 @@ interface Props {
 type Outcome = 'form' | 'signedIn' | 'passcode' | 'notSignedIn';
 
 const ResetPasswordModal = (props: Props) => {
-  const { dispatch } = useContext(AppCtx);
+  const { ctx, dispatch } = useContext(AppCtx);
   const [code, setCode] = useState(props.code);
   const [verifying, setVerifying] = useState<boolean | null>(null);
   const [validCode, setValidCode] = useState<boolean | null>(null);
@@ -51,6 +51,13 @@ const ResetPasswordModal = (props: Props) => {
   const [apiPwdError, setApiPwdError] = useState<string | null>(null);
   const [outcome, setOutcome] = useState<Outcome>('form');
   const [email, setEmail] = useState<string | undefined>();
+
+  // Alias of the account this browser is signed in to, when it is not the one
+  // the password reset link belongs to (the reset does not sign it in then)
+  const otherAccountAlias =
+    !isNull(ctx.user) && !isUndefined(ctx.user) && !isUndefined(email) && ctx.user.email !== email
+      ? ctx.user.alias
+      : undefined;
 
   const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword({ value: e.target.value, isValid: e.currentTarget.checkValidity() });
@@ -226,7 +233,13 @@ const ResetPasswordModal = (props: Props) => {
                           or one of your recovery codes.
                         </>
                       )}
-                      {outcome === 'notSignedIn' && <>Your password has been reset. You can now sign in.</>}
+                      {outcome === 'notSignedIn' && (
+                        <>
+                          {isUndefined(otherAccountAlias)
+                            ? 'Your password has been reset. You can now sign in.'
+                            : `Your password has been reset. This browser is still signed in to another account (${otherAccountAlias}).`}
+                        </>
+                      )}
                     </div>
                     {outcome === 'passcode' && (
                       <ApproveSessionForm

@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useRef, useState } from 'react';
+import { ChangeEvent, Dispatch, FocusEvent, KeyboardEvent, SetStateAction, useContext, useRef, useState } from 'react';
 import { FaSignInAlt } from 'react-icons/fa';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -20,7 +20,7 @@ import styles from './LogIn.module.css';
 import OAuth from './OAuth';
 import ResetPassword from './ResetPassword';
 
-// Shown after the text for too many incorrect codes in the passcode step
+// Shown in the passcode step once too many incorrect codes have been entered
 const TOO_MANY_CODES_HINT =
   'If you didn\'t make these attempts, someone may know your password: go back and use "Forgot password?" to reset it to a new password. That signs out every other session and stops them; then finish signing in with a recovery code, or with a code from your app once the wait is over.';
 
@@ -55,11 +55,24 @@ const LogIn = (props: Props) => {
   const [email, setEmail] = useState('');
   const [visibleResetPassword, setVisibleResetPassword] = useState(false);
 
-  // Clean API error when form is focused after validation
   const cleanApiError = () => {
     if (!isNull(apiError)) {
       setApiError(null);
     }
+  };
+
+  // Clean API error when one of the form's fields is focused. Focusing a
+  // button must not clean it: removing the alert moves the form, and the click
+  // that focused the button could be lost
+  const onFormFocus = (e: FocusEvent<HTMLFormElement>) => {
+    if (e.target instanceof HTMLInputElement) {
+      cleanApiError();
+    }
+  };
+
+  const openResetPassword = () => {
+    cleanApiError();
+    setVisibleResetPassword(true);
   };
 
   const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -227,7 +240,7 @@ const LogIn = (props: Props) => {
                 ref={loginForm}
                 data-testid="loginForm"
                 className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
-                onFocus={cleanApiError}
+                onFocus={onFormFocus}
                 autoComplete="on"
                 noValidate
               >
@@ -267,7 +280,7 @@ const LogIn = (props: Props) => {
                   <button
                     className="btn btn-sm btn-link ps-0 text-no-decoration"
                     type="button"
-                    onClick={() => setVisibleResetPassword(true)}
+                    onClick={openResetPassword}
                     aria-label="Open reset password"
                   >
                     Forgot password?

@@ -6,6 +6,7 @@ import { IoMdCloseCircle } from 'react-icons/io';
 import API from '../../../../../../api';
 import { ErrorKind } from '../../../../../../types';
 import getRetryAfterText from '../../../../../../utils/getRetryAfterText';
+import isInvalidPasscodeError from '../../../../../../utils/isInvalidPasscodeError';
 import InputField from '../../../../../common/InputField';
 import Modal from '../../../../../common/Modal';
 import styles from './DisableModal.module.css';
@@ -44,6 +45,8 @@ const DisableTwoFactorAuthenticationModal = (props: Props) => {
         );
       } else if (err.kind === ErrorKind.TooManyRequests) {
         setApiError(`Too many requests. Please try again in ${getRetryAfterText(err.retryAfter)}.`);
+      } else if (isInvalidPasscodeError(err)) {
+        setApiError('Incorrect code. Please check it and try again.');
       } else if (err.kind !== ErrorKind.Unauthorized) {
         setApiError('An error occurred turning off two-factor authentication, please try again later.');
       } else {

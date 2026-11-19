@@ -247,6 +247,61 @@ describe('LogIn', () => {
         expect(screen.getByRole('button', { name: 'Sign in' })).toBeEnabled();
       });
 
+      describe('once the error is displayed', () => {
+        const tooManyRegex = /Too many sign-in attempts for this account/;
+
+        const displayError = async () => {
+          vi.mocked(API).login.mockRejectedValue({
+            kind: ErrorKind.TooManyAttempts,
+            message: 'too many attempts, please try again later',
+            retryAfter: 3600,
+          });
+
+          render(
+            <Router>
+              <LogIn {...defaultProps} />
+            </Router>
+          );
+
+          await userEvent.type(screen.getByLabelText('Password'), 'pass123');
+          await userEvent.type(screen.getByRole('textbox', { name: 'Email' }), 'jsmith@email.com');
+          await userEvent.click(screen.getByRole('button', { name: 'Sign in' }));
+
+          expect(await screen.findByText(tooManyRegex)).toBeInTheDocument();
+        };
+
+        it('keeps it when a button of the form is focused', async () => {
+          await displayError();
+
+          fireEvent.focusIn(screen.getByRole('button', { name: 'Open reset password' }));
+          fireEvent.focusIn(screen.getByRole('button', { name: 'Sign in' }));
+
+          expect(screen.getByText(tooManyRegex)).toBeInTheDocument();
+        });
+
+        it('removes it when a field of the form is focused', async () => {
+          await displayError();
+
+          fireEvent.focusIn(screen.getByLabelText('Password'));
+
+          await waitFor(() => {
+            expect(screen.queryByText(tooManyRegex)).toBeNull();
+          });
+        });
+
+        // Some browsers do not focus buttons when they are clicked
+        it('removes it when Forgot password is clicked, even if the button is not focused', async () => {
+          await displayError();
+
+          fireEvent.click(screen.getByRole('button', { name: 'Open reset password' }));
+
+          expect(await screen.findByText('Forgot Password?')).toBeInTheDocument();
+          await waitFor(() => {
+            expect(screen.queryByText(tooManyRegex)).toBeNull();
+          });
+        });
+      });
+
       it('displays a neutral error when requests are limited upstream', async () => {
         vi.mocked(API).login.mockRejectedValue({
           kind: ErrorKind.TooManyRequests,
@@ -421,9 +476,7 @@ describe('LogIn', () => {
         await goToPasscodeStep();
         await submitPasscode('123456');
 
-        expect(
-          await screen.findByText('An error occurred signing in: invalid input: invalid passcode')
-        ).toBeInTheDocument();
+        expect(await screen.findByText('Incorrect code. Please check it and try again.')).toBeInTheDocument();
         expect(screen.getByRole('textbox', { name: 'Authentication code' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Verify passcode' })).toBeEnabled();
         expect(screen.queryByTestId('loginForm')).toBeNull();
@@ -455,7 +508,7 @@ describe('LogIn', () => {
         expect(screen.queryByText('Signing in...')).toBeNull();
       });
 
-      it('displays too many codes error with Forgot password hint', async () => {
+      it('displays too many codes error, with the Forgot password hint below the form', async () => {
         vi.mocked(API).approveSession.mockRejectedValue({
           kind: ErrorKind.TooManyAttempts,
           message: 'too many attempts, please try again later',
@@ -473,7 +526,12 @@ describe('LogIn', () => {
 
         expect(
           await screen.findByText(
-            'Too many incorrect codes for this account. Please try again in 2 hours, or enter one of your recovery codes. If you didn\'t make these attempts, someone may know your password: go back and use "Forgot password?" to reset it to a new password. That signs out every other session and stops them; then finish signing in with a recovery code, or with a code from your app once the wait is over.'
+            'Too many incorrect codes for this account. Please try again in 2 hours, or enter one of your recovery codes.'
+          )
+        ).toBeInTheDocument();
+        expect(
+          screen.getByText(
+            'If you didn\'t make these attempts, someone may know your password: go back and use "Forgot password?" to reset it to a new password. That signs out every other session and stops them; then finish signing in with a recovery code, or with a code from your app once the wait is over.'
           )
         ).toBeInTheDocument();
         expect(screen.getByRole('textbox', { name: 'Authentication code' })).toBeInTheDocument();
