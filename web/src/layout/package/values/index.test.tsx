@@ -6,7 +6,7 @@ import { vi } from 'vitest';
 import API from '../../../api';
 import { ErrorKind } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
-import Values from './';
+import Values, { getValuesData } from './';
 vi.mock('../../../api');
 vi.mock('../../../utils/alertDispatcher');
 
@@ -570,5 +570,34 @@ describe('Values', () => {
         });
       });
     });
+  });
+});
+
+describe('getValuesData', () => {
+  it('computes sections only for keys with nested content', () => {
+    const values = [
+      'global:', // 1
+      '  a: 1', // 2
+      '  b:', // 3
+      '    c: 2', // 4
+      '', // 5
+      'deployment:', // 6
+      '  replicas: 1', // 7
+      '  # comment for empty', // 8
+      '  empty: []', // 9
+      'scalar: true', // 10
+      '# leading comment for list', // 11
+      'list:', // 12
+      '  - x: 1', // 13
+      '  - y: 2', // 14
+    ].join('\n');
+
+    const { lines, sections } = getValuesData(values);
+
+    expect(lines[1]).toBe('global');
+    expect(lines[3]).toBe('global.b');
+    expect(lines[9]).toBe('deployment.empty');
+    expect(lines[12]).toBe('list');
+    expect(sections).toEqual({ 1: 4, 3: 4, 6: 9, 12: 14 });
   });
 });
