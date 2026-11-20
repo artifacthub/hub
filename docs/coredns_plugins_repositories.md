@@ -1,10 +1,13 @@
 ## CoreDNS plugins repositories
 
-CoreDNS plugins repositories are expected to be hosted in GitHub, GitLab or Bitbucket repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+When adding a CoreDNS plugins repository to Artifact Hub, use the Git repository's HTTPS URL with an optional path to your packages.
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
 - `https://bitbucket.org/user/repo[/path/to/packages]`
+- `https://codeberg.org/user/repo[/path/to/packages]`
+
+For a Codeberg project, use the `codeberg.org` Git repository URL. The project's `codeberg.page` URL points to its published website.
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 
