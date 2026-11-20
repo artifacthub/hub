@@ -57,6 +57,10 @@ const (
 )
 
 var (
+	// errAPIKeyNotAllowed error indicates that API keys cannot be used for the
+	// operation requested.
+	errAPIKeyNotAllowed = errors.New("api keys cannot be used for this operation")
+
 	// errInvalidAPIKey error indicates that the API key provided is not valid.
 	errInvalidAPIKey = errors.New("invalid api key")
 
@@ -168,7 +172,11 @@ func (h *Handlers) ApproveSession(w http.ResponseWriter, r *http.Request) {
 	// Approve session using the passcode provided
 	if err := h.userManager.ApproveSession(r.Context(), sessionID, passcode); err != nil {
 		h.logger.Error().Err(err).Str("method", "ApproveSession").Send()
-		helpers.RenderErrorJSON(w, err)
+		if errors.Is(err, user.ErrSessionNotPending) {
+			helpers.RenderErrorWithCodeJSON(w, errInvalidSession, http.StatusUnauthorized)
+		} else {
+			helpers.RenderErrorJSON(w, err)
+		}
 		return
 	}
 
@@ -376,38 +384,18 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Register user session
-	ip, _, _ := net.SplitHostPort(r.RemoteAddr)
-	session, err := h.userManager.RegisterSession(r.Context(), &hub.Session{
-		UserID:    checkCredentialsOutput.UserID,
-		IP:        ip,
-		UserAgent: r.UserAgent(),
-	})
+	// Register user session and set session cookie. If the password has been
+	// changed since it was checked, the credentials are no longer valid
+	session, err := h.newSession(w, r, checkCredentialsOutput.UserID, checkCredentialsOutput.PasswordHash)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Login").Msg("registerSession failed")
-		helpers.RenderErrorJSON(w, err)
+		if errors.Is(err, user.ErrPasswordChanged) {
+			helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
+		} else {
+			helpers.RenderErrorJSON(w, err)
+		}
 		return
 	}
-
-	// Generate and set session cookie
-	encodedSessionID, err := h.sc.Encode(sessionCookieName, session.SessionID)
-	if err != nil {
-		h.logger.Error().Err(err).Str("method", "Login").Msg("sessionID encoding failed")
-		helpers.RenderErrorJSON(w, err)
-		return
-	}
-	cookie := &http.Cookie{
-		Name:     sessionCookieName,
-		Value:    encodedSessionID,
-		Path:     "/",
-		Expires:  time.Now().Add(sessionDuration),
-		HttpOnly: true,
-		SameSite: http.SameSiteLaxMode,
-	}
-	if h.cfg.GetBool("server.cookie.secure") {
-		cookie.Secure = true
-	}
-	http.SetCookie(w, cookie)
 	w.Header().Set(SessionApprovedHeader, strconv.FormatBool(session.Approved))
 	w.WriteHeader(http.StatusNoContent)
 }
@@ -579,7 +567,9 @@ func (h *Handlers) RegisterPasswordResetCode(w http.ResponseWriter, r *http.Requ
 		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
-	_ = h.userManager.RegisterPasswordResetCode(r.Context(), input["email"])
+	if err := h.userManager.RegisterPasswordResetCode(r.Context(), input["email"]); err != nil {
+		h.logger.Error().Err(err).Str("method", "RegisterPasswordResetCode").Send()
+	}
 	w.WriteHeader(http.StatusCreated)
 }
 
@@ -803,6 +793,60 @@ func (h *Handlers) newUserFromOIDProfile(
 	}, nil
 }
 
+// newSession registers a new session for the user provided and sets the
+// session cookie in the response. When a password hash is provided, the
+// session is only registered if it is still the user's current one.
+func (h *Handlers) newSession(
+	w http.ResponseWriter,
+	r *http.Request,
+	userID string,
+	passwordHash string,
+) (*hub.Session, error) {
+	// Register user session
+	ip, _, _ := net.SplitHostPort(r.RemoteAddr)
+	session, err := h.userManager.RegisterSession(r.Context(), &hub.Session{
+		UserID:       userID,
+		IP:           ip,
+		UserAgent:    r.UserAgent(),
+		PasswordHash: passwordHash,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	// Generate and set session cookie
+	encodedSessionID, err := h.sc.Encode(sessionCookieName, session.SessionID)
+	if err != nil {
+		return nil, fmt.Errorf("sessionID encoding failed: %w", err)
+	}
+	cookie := &http.Cookie{
+		Name:     sessionCookieName,
+		Value:    encodedSessionID,
+		Path:     "/",
+		Expires:  time.Now().Add(sessionDuration),
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+	}
+	if h.cfg.GetBool("server.cookie.secure") {
+		cookie.Secure = true
+	}
+	http.SetCookie(w, cookie)
+
+	return session, nil
+}
+
+// RejectAPIKey is a middleware that refuses requests authenticated with an
+// API key, for operations that require an interactive session.
+func (h *Handlers) RejectAPIKey(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get(APIKeyIDHeader) != "" && r.Header.Get(APIKeySecretHeader) != "" {
+			helpers.RenderErrorWithCodeJSON(w, errAPIKeyNotAllowed, http.StatusForbidden)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
 // RequireLogin is a middleware that verifies if a user is logged in.
 func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -867,17 +911,25 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 	})
 }
 
-// ResetPassword is an http handler used to reset the user's password.
+// ResetPassword is an http handler used to reset the user's password. Once the
+// password has been reset, the browser is signed in to the account, unless it
+// is signed in to another one.
 func (h *Handlers) ResetPassword(w http.ResponseWriter, r *http.Request) {
+	logger := h.logger.With().Str("method", "ResetPassword").Logger()
 	var input map[string]string
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
-		h.logger.Error().Err(err).Str("method", "ResetPassword").Msg(hub.ErrInvalidInput.Error())
+		logger.Error().Err(err).Msg(hub.ErrInvalidInput.Error())
 		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
-	err := h.userManager.ResetPassword(r.Context(), input["code"], input["password"])
+
+	// Note which account, if any, this browser is signed in to (before the
+	// reset, which deletes a session of the same account)
+	signedInUserID, sessionErr := h.approvedSessionUserID(r)
+
+	out, err := h.userManager.ResetPassword(r.Context(), input["code"], input["password"])
 	if err != nil {
-		h.logger.Error().Err(err).Str("method", "ResetPassword").Send()
+		logger.Error().Err(err).Send()
 		if errors.Is(err, user.ErrInvalidPasswordResetCode) {
 			helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
 		} else {
@@ -885,7 +937,52 @@ func (h *Handlers) ResetPassword(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+
+	// Sign this browser in, unless it is signed in to another account
+	switch {
+	case sessionErr != nil:
+		logger.Error().Err(sessionErr).Str("user_id", out.UserID).Msg("password reset without sign-in: session check failed")
+	case out.UserID == "":
+		// Already logged by the manager
+	case signedInUserID != "" && signedInUserID != out.UserID:
+		logger.Info().Str("user_id", out.UserID).Msg("password reset without sign-in: browser signed in to another account")
+	default:
+		session, err := h.newSession(w, r, out.UserID, out.PasswordHash)
+		switch {
+		case errors.Is(err, user.ErrPasswordChanged):
+			logger.Info().Str("user_id", out.UserID).Msg("password reset without sign-in: password changed again")
+		case err != nil:
+			logger.Error().Err(err).Str("user_id", out.UserID).Msg("password reset without sign-in: registering session failed")
+		default:
+			w.Header().Set(SessionApprovedHeader, strconv.FormatBool(session.Approved))
+		}
+	}
 	w.WriteHeader(http.StatusNoContent)
+}
+
+// approvedSessionUserID returns the id of the user whose approved session the
+// request's session cookie identifies. An empty string is returned when the
+// request has no usable session cookie or the session is not valid.
+func (h *Handlers) approvedSessionUserID(r *http.Request) (string, error) {
+	// Extract session id from cookie
+	cookie, err := r.Cookie(sessionCookieName)
+	if err != nil {
+		return "", nil
+	}
+	var sessionID string
+	if err := h.sc.Decode(sessionCookieName, cookie.Value, &sessionID); err != nil {
+		return "", nil
+	}
+
+	// Check the session is approved and has not expired
+	checkSessionOutput, err := h.userManager.CheckSession(r.Context(), sessionID, sessionDuration)
+	if err != nil {
+		return "", err
+	}
+	if !checkSessionOutput.Valid {
+		return "", nil
+	}
+	return checkSessionOutput.UserID, nil
 }
 
 // SetupTFA is an http handler used to setup two-factor authentication.
@@ -969,7 +1066,7 @@ func (h *Handlers) VerifyPasswordResetCode(w http.ResponseWriter, r *http.Reques
 		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
-	err := h.userManager.VerifyPasswordResetCode(r.Context(), input["code"])
+	userEmail, err := h.userManager.VerifyPasswordResetCode(r.Context(), input["code"])
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "VerifyPasswordResetCode").Send()
 		if errors.Is(err, user.ErrInvalidPasswordResetCode) {
@@ -979,7 +1076,8 @@ func (h *Handlers) VerifyPasswordResetCode(w http.ResponseWriter, r *http.Reques
 		}
 		return
 	}
-	w.WriteHeader(http.StatusOK)
+	dataJSON, _ := json.Marshal(map[string]string{"email": userEmail})
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // OauthState represents the state of an oauth authorization session, used to

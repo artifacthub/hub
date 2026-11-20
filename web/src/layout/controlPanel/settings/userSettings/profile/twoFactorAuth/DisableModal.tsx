@@ -5,6 +5,8 @@ import { IoMdCloseCircle } from 'react-icons/io';
 
 import API from '../../../../../../api';
 import { ErrorKind } from '../../../../../../types';
+import getRetryAfterText from '../../../../../../utils/getRetryAfterText';
+import isInvalidPasscodeError from '../../../../../../utils/isInvalidPasscodeError';
 import InputField from '../../../../../common/InputField';
 import Modal from '../../../../../common/Modal';
 import styles from './DisableModal.module.css';
@@ -37,7 +39,15 @@ const DisableTwoFactorAuthenticationModal = (props: Props) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsProcessing(false);
-      if (err.kind !== ErrorKind.Unauthorized) {
+      if (err.kind === ErrorKind.TooManyAttempts) {
+        setApiError(
+          `Too many incorrect codes. Please try again in ${getRetryAfterText(err.retryAfter)}, or use one of your recovery codes.`
+        );
+      } else if (err.kind === ErrorKind.TooManyRequests) {
+        setApiError(`Too many requests. Please try again in ${getRetryAfterText(err.retryAfter)}.`);
+      } else if (isInvalidPasscodeError(err)) {
+        setApiError('Incorrect code. Please check it and try again.');
+      } else if (err.kind !== ErrorKind.Unauthorized) {
         setApiError('An error occurred turning off two-factor authentication, please try again later.');
       } else {
         props.onAuthError();

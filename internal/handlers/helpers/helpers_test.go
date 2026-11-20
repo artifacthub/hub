@@ -173,30 +173,42 @@ func TestRenderErrorJSON(t *testing.T) {
 		err                error
 		expectedStatusCode int
 		expectedErrorMsg   string
+		expectedRetryAfter string
 	}{
 		{
 			hub.ErrInvalidInput,
 			http.StatusBadRequest,
 			"invalid input",
+			"",
 		},
 		{
 			fmt.Errorf("%w: test error", hub.ErrInvalidInput),
 			http.StatusBadRequest,
 			"invalid input: test error",
+			"",
 		},
 		{
 			hub.ErrInsufficientPrivilege,
 			http.StatusForbidden,
+			"",
 			"",
 		},
 		{
 			hub.ErrNotFound,
 			http.StatusNotFound,
 			"",
+			"",
+		},
+		{
+			&hub.TooManyAttemptsError{RetryAfter: 30},
+			http.StatusTooManyRequests,
+			"too many attempts, please try again later",
+			"30",
 		},
 		{
 			tests.ErrFakeDB,
 			http.StatusInternalServerError,
+			"",
 			"",
 		},
 	}
@@ -212,6 +224,7 @@ func TestRenderErrorJSON(t *testing.T) {
 
 			assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
 			assert.Equal(t, "application/json", h.Get("Content-Type"))
+			assert.Equal(t, tc.expectedRetryAfter, h.Get("Retry-After"))
 			var expectedBody bytes.Buffer
 			writeErrorJSON(&expectedBody, tc.expectedErrorMsg)
 			assert.Equal(t, expectedBody.Bytes(), data)

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { hasClassContaining } from '../../utils/testUtils';
@@ -59,5 +59,64 @@ describe('Alert', () => {
     await userEvent.click(closeBtn);
 
     expect(onCloseMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('displays again the same message when it is set right after closing the alert', async () => {
+    const { rerender } = render(<Alert {...defaultProps} message="errorMessage" />);
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+
+    rerender(<Alert {...defaultProps} message={null} />);
+    expect(screen.queryByRole('alert')).toBeNull();
+
+    rerender(<Alert {...defaultProps} message="errorMessage" />);
+
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText('errorMessage')).toBeInTheDocument();
+    expect(hasClassContaining(screen.getByTestId('alertWrapper'), 'isAlertActive')).toBe(true);
+  });
+
+  describe('when the size of the alert can be observed', () => {
+    let onResize: () => void;
+    const observeMock = jest.fn();
+    const disconnectMock = jest.fn();
+
+    beforeEach(() => {
+      window.ResizeObserver = class {
+        constructor(callback: () => void) {
+          onResize = callback;
+        }
+        observe = observeMock;
+        unobserve = jest.fn();
+        disconnect = disconnectMock;
+      } as unknown as typeof ResizeObserver;
+    });
+
+    afterEach(() => {
+      delete (window as { ResizeObserver?: typeof ResizeObserver }).ResizeObserver;
+    });
+
+    it('keeps the alert in view while it opens', async () => {
+      render(<Alert {...defaultProps} message="errorMessage" />);
+
+      const alertWrapper = screen.getByTestId('alertWrapper');
+      expect(await screen.findByRole('alert')).toBeInTheDocument();
+      expect(observeMock).toHaveBeenCalledWith(alertWrapper);
+      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+
+      onResize();
+
+      expect(scrollIntoViewMock).toHaveBeenCalledTimes(2);
+      expect(scrollIntoViewMock).toHaveBeenLastCalledWith({ block: 'nearest', inline: 'nearest' });
+
+      fireEvent.transitionEnd(alertWrapper);
+
+      expect(disconnectMock).toHaveBeenCalled();
+    });
+
+    it('does not observe the alert when there is no message', () => {
+      render(<Alert {...defaultProps} />);
+
+      expect(observeMock).not.toHaveBeenCalled();
+    });
   });
 });

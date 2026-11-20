@@ -112,6 +112,51 @@ func TestApproveSession(t *testing.T) {
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
 	})
 
+	t.Run("session not pending", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"passcode": "123456"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("ApproveSession", r.Context(), sessionID, "123456").Return(user.ErrSessionNotPending)
+		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
+		r.AddCookie(newTestCookie(sessionCookieName, encodedSessionID))
+		hw.h.ApproveSession(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := io.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildError(errInvalidSession.Error()), data)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("too many attempts", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"passcode": "123456"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("ApproveSession", r.Context(), sessionID, "123456").
+			Return(&hub.TooManyAttemptsError{RetryAfter: 30})
+		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
+		r.AddCookie(newTestCookie(sessionCookieName, encodedSessionID))
+		hw.h.ApproveSession(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := io.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusTooManyRequests, resp.StatusCode)
+		assert.Equal(t, "30", h.Get("Retry-After"))
+		assert.Equal(t, buildError(hub.ErrTooManyAttempts.Error()), data)
+		hw.um.AssertExpectations(t)
+	})
+
 	t.Run("session approval succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
@@ -434,6 +479,26 @@ func TestDisableTFA(t *testing.T) {
 		hw.um.AssertExpectations(t)
 	})
 
+	t.Run("too many attempts", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"passcode": "123456"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("DisableTFA", r.Context(), "123456").Return(&hub.TooManyAttemptsError{RetryAfter: 30})
+		hw.h.DisableTFA(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := io.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusTooManyRequests, resp.StatusCode)
+		assert.Equal(t, "30", h.Get("Retry-After"))
+		assert.Equal(t, buildError(hub.ErrTooManyAttempts.Error()), data)
+		hw.um.AssertExpectations(t)
+	})
+
 	t.Run("disable 2fa succeeded", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
@@ -698,6 +763,28 @@ func TestLogin(t *testing.T) {
 		hw.um.AssertExpectations(t)
 	})
 
+	t.Run("too many attempts", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"email": "email", "password": "pass"}`)
+		r, _ := http.NewRequest("POST", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
+			Return(nil, &hub.TooManyAttemptsError{RetryAfter: 120})
+		hw.h.Login(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := io.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusTooManyRequests, resp.StatusCode)
+		assert.Equal(t, "120", h.Get("Retry-After"))
+		assert.Equal(t, buildError(hub.ErrTooManyAttempts.Error()), data)
+		assert.Empty(t, resp.Cookies())
+		hw.um.AssertExpectations(t)
+	})
+
 	t.Run("invalid credentials provided", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
@@ -723,14 +810,40 @@ func TestLogin(t *testing.T) {
 
 		hw := newHandlersWrapper()
 		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
-			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
-		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID"}).
+			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID", PasswordHash: "hash"}, nil)
+		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID", PasswordHash: "hash"}).
 			Return(nil, tests.ErrFakeDB)
 		hw.h.Login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		assert.Empty(t, resp.Cookies())
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("password changed since it was checked", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"email": "email", "password": "pass"}`)
+		r, _ := http.NewRequest("POST", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
+			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID", PasswordHash: "hash"}, nil)
+		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID", PasswordHash: "hash"}).
+			Return(nil, user.ErrPasswordChanged)
+		hw.h.Login(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := io.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildError(""), data)
+		assert.Empty(t, resp.Cookies())
+		assert.Empty(t, h.Get(SessionApprovedHeader))
 		hw.um.AssertExpectations(t)
 	})
 
@@ -742,8 +855,8 @@ func TestLogin(t *testing.T) {
 
 		hw := newHandlersWrapper()
 		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
-			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
-		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID"}).
+			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID", PasswordHash: "hash"}, nil)
+		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID", PasswordHash: "hash"}).
 			Return(&hub.Session{
 				SessionID: sessionID,
 				Approved:  true,
@@ -776,8 +889,8 @@ func TestLogin(t *testing.T) {
 
 		hw := newHandlersWrapper()
 		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
-			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
-		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID"}).
+			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID", PasswordHash: "hash"}, nil)
+		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID", PasswordHash: "hash"}).
 			Return(&hub.Session{
 				SessionID: sessionID,
 				Approved:  false,
@@ -1282,6 +1395,71 @@ func TestRegisterUser(t *testing.T) {
 	})
 }
 
+func TestRejectAPIKey(t *testing.T) {
+	testCases := []struct {
+		desc               string
+		apiKeyID           string
+		apiKeySecret       string
+		expectedNextCalled bool
+	}{
+		{
+			"api key id and secret provided",
+			"keyID",
+			"secret",
+			false,
+		},
+		{
+			"only api key id provided",
+			"keyID",
+			"",
+			true,
+		},
+		{
+			"only api key secret provided",
+			"",
+			"secret",
+			true,
+		},
+		{
+			"no api key provided",
+			"",
+			"",
+			true,
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.desc, func(t *testing.T) {
+			t.Parallel()
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("POST", "/", nil)
+			r.Header.Add(APIKeyIDHeader, tc.apiKeyID)
+			r.Header.Add(APIKeySecretHeader, tc.apiKeySecret)
+
+			hw := newHandlersWrapper()
+			var nextCalled bool
+			next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				nextCalled = true
+			})
+			hw.h.RejectAPIKey(next).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+			h := resp.Header
+			data, _ := io.ReadAll(resp.Body)
+
+			assert.Equal(t, tc.expectedNextCalled, nextCalled)
+			if tc.expectedNextCalled {
+				assert.Equal(t, http.StatusOK, resp.StatusCode)
+			} else {
+				assert.Equal(t, http.StatusForbidden, resp.StatusCode)
+				assert.Equal(t, "application/json", h.Get("Content-Type"))
+				assert.Equal(t, buildError(errAPIKeyNotAllowed.Error()), data)
+			}
+			hw.um.AssertExpectations(t)
+			hw.am.AssertExpectations(t)
+		})
+	}
+}
+
 func TestRequireLogin(t *testing.T) {
 	sessionID := "sessionID"
 
@@ -1488,6 +1666,8 @@ func TestRequireLogin(t *testing.T) {
 }
 
 func TestResetPassword(t *testing.T) {
+	sessionID := "sessionID"
+
 	t.Run("invalid input", func(t *testing.T) {
 		t.Parallel()
 		w := httptest.NewRecorder()
@@ -1500,57 +1680,189 @@ func TestResetPassword(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		assert.Empty(t, resp.Cookies())
+		assert.Empty(t, resp.Header.Get(SessionApprovedHeader))
 		hw.um.AssertExpectations(t)
 	})
 
-	t.Run("password reset failed (invalid code)", func(t *testing.T) {
-		t.Parallel()
-		w := httptest.NewRecorder()
-		body := strings.NewReader(`{"code": "code", "password": "password"}`)
-		r, _ := http.NewRequest("PUT", "/", body)
+	t.Run("password reset failed", func(t *testing.T) {
+		testCases := []struct {
+			description        string
+			err                error
+			expectedStatusCode int
+		}{
+			{
+				"invalid code",
+				user.ErrInvalidPasswordResetCode,
+				http.StatusBadRequest,
+			},
+			{
+				"database error",
+				tests.ErrFakeDB,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				body := strings.NewReader(`{"code": "code", "password": "password"}`)
+				r, _ := http.NewRequest("PUT", "/", body)
 
-		hw := newHandlersWrapper()
-		hw.um.On("ResetPassword", r.Context(), "code", "password").
-			Return(user.ErrInvalidPasswordResetCode)
-		hw.h.ResetPassword(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
+				hw := newHandlersWrapper()
+				hw.um.On("ResetPassword", r.Context(), "code", "password").Return(nil, tc.err)
+				hw.h.ResetPassword(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-		hw.um.AssertExpectations(t)
-	})
-
-	t.Run("password reset failed (db error)", func(t *testing.T) {
-		t.Parallel()
-		w := httptest.NewRecorder()
-		body := strings.NewReader(`{"code": "code", "password": "password"}`)
-		r, _ := http.NewRequest("PUT", "/", body)
-
-		hw := newHandlersWrapper()
-		hw.um.On("ResetPassword", r.Context(), "code", "password").Return(tests.ErrFakeDB)
-		hw.h.ResetPassword(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.um.AssertExpectations(t)
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				assert.Empty(t, resp.Cookies())
+				assert.Empty(t, resp.Header.Get(SessionApprovedHeader))
+				hw.um.AssertNotCalled(t, "RegisterSession", mock.Anything, mock.Anything)
+				hw.um.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("password reset succeeded", func(t *testing.T) {
-		t.Parallel()
-		w := httptest.NewRecorder()
-		body := strings.NewReader(`{"code": "code", "password": "password"}`)
-		r, _ := http.NewRequest("PUT", "/", body)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		testCases := []struct {
+			description            string
+			sessionCookie          string // "", "valid" or "undecodable"
+			checkSessionOutput     *hub.CheckSessionOutput
+			checkSessionErr        error
+			resetPasswordOutput    *hub.ResetPasswordOutput
+			registerSession        bool
+			registeredSession      *hub.Session
+			registerSessionErr     error
+			expectedSignIn         bool
+			expectedApprovedHeader string
+		}{
+			{
+				description:            "no session cookie, session approved",
+				resetPasswordOutput:    &hub.ResetPasswordOutput{UserID: "userID", PasswordHash: "hash"},
+				registerSession:        true,
+				registeredSession:      &hub.Session{SessionID: sessionID, Approved: true},
+				expectedSignIn:         true,
+				expectedApprovedHeader: "true",
+			},
+			{
+				description:            "no session cookie, session pending approval",
+				resetPasswordOutput:    &hub.ResetPasswordOutput{UserID: "userID", PasswordHash: "hash"},
+				registerSession:        true,
+				registeredSession:      &hub.Session{SessionID: sessionID, Approved: false},
+				expectedSignIn:         true,
+				expectedApprovedHeader: "false",
+			},
+			{
+				description:            "approved session of the same user",
+				sessionCookie:          "valid",
+				checkSessionOutput:     &hub.CheckSessionOutput{Valid: true, UserID: "userID"},
+				resetPasswordOutput:    &hub.ResetPasswordOutput{UserID: "userID", PasswordHash: "hash"},
+				registerSession:        true,
+				registeredSession:      &hub.Session{SessionID: sessionID, Approved: true},
+				expectedSignIn:         true,
+				expectedApprovedHeader: "true",
+			},
+			{
+				description:         "approved session of another user",
+				sessionCookie:       "valid",
+				checkSessionOutput:  &hub.CheckSessionOutput{Valid: true, UserID: "otherUserID"},
+				resetPasswordOutput: &hub.ResetPasswordOutput{UserID: "userID", PasswordHash: "hash"},
+			},
+			{
+				description:            "session not valid",
+				sessionCookie:          "valid",
+				checkSessionOutput:     &hub.CheckSessionOutput{Valid: false},
+				resetPasswordOutput:    &hub.ResetPasswordOutput{UserID: "userID", PasswordHash: "hash"},
+				registerSession:        true,
+				registeredSession:      &hub.Session{SessionID: sessionID, Approved: true},
+				expectedSignIn:         true,
+				expectedApprovedHeader: "true",
+			},
+			{
+				description:            "undecodable session cookie",
+				sessionCookie:          "undecodable",
+				resetPasswordOutput:    &hub.ResetPasswordOutput{UserID: "userID", PasswordHash: "hash"},
+				registerSession:        true,
+				registeredSession:      &hub.Session{SessionID: sessionID, Approved: true},
+				expectedSignIn:         true,
+				expectedApprovedHeader: "true",
+			},
+			{
+				description:         "error checking session",
+				sessionCookie:       "valid",
+				checkSessionErr:     tests.ErrFakeDB,
+				resetPasswordOutput: &hub.ResetPasswordOutput{UserID: "userID", PasswordHash: "hash"},
+			},
+			{
+				description:         "password changed again",
+				resetPasswordOutput: &hub.ResetPasswordOutput{UserID: "userID", PasswordHash: "hash"},
+				registerSession:     true,
+				registerSessionErr:  user.ErrPasswordChanged,
+			},
+			{
+				description:         "error registering session",
+				resetPasswordOutput: &hub.ResetPasswordOutput{UserID: "userID", PasswordHash: "hash"},
+				registerSession:     true,
+				registerSessionErr:  tests.ErrFakeDB,
+			},
+			{
+				description:         "user id not available",
+				resetPasswordOutput: &hub.ResetPasswordOutput{UserID: "", PasswordHash: "hash"},
+			},
+		}
+		for _, tc := range testCases {
+			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
+				w := httptest.NewRecorder()
+				body := strings.NewReader(`{"code": "code", "password": "password"}`)
+				r, _ := http.NewRequest("PUT", "/", body)
 
-		hw := newHandlersWrapper()
-		hw.um.On("ResetPassword", r.Context(), "code", "password").Return(nil)
-		hw.h.ResetPassword(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
+				hw := newHandlersWrapper()
+				switch tc.sessionCookie {
+				case "valid":
+					encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, "currentSessionID")
+					r.AddCookie(newTestCookie(sessionCookieName, encodedSessionID))
+					hw.um.On("CheckSession", r.Context(), "currentSessionID", sessionDuration).
+						Return(tc.checkSessionOutput, tc.checkSessionErr)
+				case "undecodable":
+					r.AddCookie(newTestCookie(sessionCookieName, "invalidValue"))
+				}
+				hw.um.On("ResetPassword", r.Context(), "code", "password").Return(tc.resetPasswordOutput, nil)
+				if tc.registerSession {
+					hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID", PasswordHash: "hash"}).
+						Return(tc.registeredSession, tc.registerSessionErr)
+				}
+				hw.h.ResetPassword(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+				h := resp.Header
 
-		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
-		hw.um.AssertExpectations(t)
+				assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+				assert.Equal(t, tc.expectedApprovedHeader, h.Get(SessionApprovedHeader))
+				if tc.expectedSignIn {
+					require.Len(t, resp.Cookies(), 1)
+					cookie := resp.Cookies()[0]
+					assert.Equal(t, sessionCookieName, cookie.Name)
+					assert.Equal(t, "/", cookie.Path)
+					assert.True(t, cookie.HttpOnly)
+					assert.False(t, cookie.Secure)
+					var cookieSessionID string
+					err := hw.h.sc.Decode(sessionCookieName, cookie.Value, &cookieSessionID)
+					require.NoError(t, err)
+					assert.Equal(t, sessionID, cookieSessionID)
+				} else {
+					assert.Empty(t, resp.Cookies())
+				}
+				if !tc.registerSession {
+					hw.um.AssertNotCalled(t, "RegisterSession", mock.Anything, mock.Anything)
+				}
+				if tc.sessionCookie != "valid" {
+					hw.um.AssertNotCalled(t, "CheckSession", mock.Anything, mock.Anything, mock.Anything)
+				}
+				hw.um.AssertExpectations(t)
+			})
+		}
 	})
 }
 
@@ -1656,6 +1968,28 @@ func TestUpdatePassword(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("too many attempts", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"old": "old", "new": "new"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.um.On("UpdatePassword", r.Context(), "old", "new").
+			Return(&hub.TooManyAttemptsError{RetryAfter: 30})
+		hw.h.UpdatePassword(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := io.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusTooManyRequests, resp.StatusCode)
+		assert.Equal(t, "30", h.Get("Retry-After"))
+		assert.Equal(t, buildError(hub.ErrTooManyAttempts.Error()), data)
 		hw.um.AssertExpectations(t)
 	})
 
@@ -1821,21 +2155,25 @@ func TestVerifyPasswordResetCode(t *testing.T) {
 	t.Run("valid input", func(t *testing.T) {
 		testCases := []struct {
 			description        string
+			email              string
 			err                error
 			expectedStatusCode int
 		}{
 			{
 				"valid code",
+				"user@email.com",
 				nil,
 				http.StatusOK,
 			},
 			{
 				"invalid code",
+				"",
 				user.ErrInvalidPasswordResetCode,
 				http.StatusGone,
 			},
 			{
 				"database error",
+				"",
 				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
@@ -1847,12 +2185,18 @@ func TestVerifyPasswordResetCode(t *testing.T) {
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(`{"code": "code"}`))
 
 				hw := newHandlersWrapper()
-				hw.um.On("VerifyPasswordResetCode", r.Context(), "code").Return(tc.err)
+				hw.um.On("VerifyPasswordResetCode", r.Context(), "code").Return(tc.email, tc.err)
 				hw.h.VerifyPasswordResetCode(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
+				h := resp.Header
+				data, _ := io.ReadAll(resp.Body)
 
 				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				if tc.err == nil {
+					assert.Equal(t, "application/json", h.Get("Content-Type"))
+					assert.Equal(t, []byte(`{"email":"user@email.com"}`), data)
+				}
 				hw.um.AssertExpectations(t)
 			})
 		}

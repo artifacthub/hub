@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(6);
+select plan(8);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -16,7 +16,7 @@ values (:'user2ID', 'user2', 'user2@email.com');
 insert into password_reset_code (password_reset_code_id, user_id, created_at)
 values (:'code1ID', :'user1ID', current_timestamp);
 insert into password_reset_code (password_reset_code_id, user_id, created_at)
-values (:'code2ID', :'user2ID', current_timestamp - '30 minute'::interval);
+values (:'code2ID', :'user2ID', current_timestamp - '4 hours'::interval);
 insert into session (session_id, user_id) values (gen_random_bytes(32), :'user1ID');
 
 -- Password reset should fail in the following cases
@@ -58,6 +58,20 @@ select is(
     :'email1'::text,
     'user1@email.com'::text,
     'User1 email should be returned'
+);
+
+-- Password reset code should not be usable again
+select throws_ok(
+    $$ select reset_user_password('00000000-0000-0000-0000-000000000001', 'pass2') $$,
+    'P0001',
+    'invalid password reset code',
+    'Password reset failed because code had already been used'
+);
+
+-- A new password reset code can be registered right after the reset
+select lives_ok(
+    $$ select register_password_reset_code('user1@email.com', 'code3') $$,
+    'New password reset code should be registered after the previous one was used'
 );
 
 -- Finish tests and rollback transaction

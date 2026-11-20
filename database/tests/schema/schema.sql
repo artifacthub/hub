@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(196);
+select plan(202);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -17,6 +17,7 @@ select has_extension('pg_partman');
 
 -- Check expected tables exist
 select has_table('api_key');
+select has_table('auth_attempt_limit');
 select has_table('delete_user_code');
 select has_table('email_verification_code');
 select has_table('event');
@@ -54,6 +55,11 @@ select columns_are('api_key', array[
     'secret',
     'user_id',
     'created_at'
+]);
+select columns_are('auth_attempt_limit', array[
+    'user_id',
+    'kind',
+    'tat'
 ]);
 select columns_are('delete_user_code', array[
     'delete_user_code_id',
@@ -305,6 +311,9 @@ select columns_are('webhook__package', array[
 select indexes_are('api_key', array[
     'api_key_pkey'
 ]);
+select indexes_are('auth_attempt_limit', array[
+    'auth_attempt_limit_pkey'
+]);
 select indexes_are('delete_user_code', array[
     'delete_user_code_pkey',
     'delete_user_code_user_id_key'
@@ -512,9 +521,12 @@ select has_function('approve_session');
 select has_function('delete_user');
 select has_function('get_user_profile');
 select has_function('get_user_tfa_config');
+select has_function('refund_auth_attempt');
+select has_function('register_auth_attempt');
 select has_function('register_delete_user_code');
 select has_function('register_password_reset_code');
 select has_function('register_session');
+select has_function('register_session_with_password');
 select has_function('register_user');
 select has_function('reset_user_password');
 select has_function('update_user_password');

@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"html/template"
 	"image/png"
+	"strings"
 	"time"
 
 	_ "embed" // Used by templates
@@ -21,6 +22,7 @@ import (
 	"github.com/jackc/pgx/v4"
 	"github.com/pquerna/otp"
 	"github.com/pquerna/otp/totp"
+	"github.com/rs/zerolog/log"
 	"github.com/satori/uuid"
 	"github.com/spf13/viper"
 	pwvalidator "github.com/wagslane/go-password-validator"
@@ -29,30 +31,35 @@ import (
 
 const (
 	// Database queries
-	approveSessionDBQ            = `select approve_session($1::text, $2::text)`
-	checkUserAliasAvailDBQ       = `select user_id from "user" where alias = $1::text`
-	checkUserCredsDBQ            = `select user_id, password from "user" where email = $1 and password is not null and email_verified = true` //#nosec
-	deleteSessionDBQ             = `delete from session where session_id = $1`
-	deleteUserDBQ                = `select delete_user($1::uuid, $2::text)`
-	disableTFADBQ                = `update "user" set tfa_enabled = false, tfa_url = null, tfa_recovery_codes = null where user_id = $1 and tfa_enabled = true`
-	enableTFADBQ                 = `update "user" set tfa_enabled = true where user_id = $1`
-	getSessionDBQ                = `select user_id, floor(extract(epoch from created_at)), approved from session where session_id = $1`
-	getTFAConfigDBQ              = `select get_user_tfa_config($1::uuid)`
-	getUserEmailDBQ              = `select email from "user" where user_id = $1`
-	getUserIDFromEmailDBQ        = `select user_id from "user" where email = $1`
-	getUserIDFromSessionIDDBQ    = `select user_id from session where session_id = $1`
-	getUserPasswordDBQ           = `select password from "user" where user_id = $1 and password is not null`
-	getUserProfileDBQ            = `select get_user_profile($1::uuid)`
-	registerPasswordResetCodeDBQ = `select register_password_reset_code($1::text, $2::text)`
-	registerSessionDBQ           = `select register_session($1::jsonb)`
-	registerUserDBQ              = `select register_user($1::jsonb)`
-	registerDeleteUserCodeDBQ    = `select register_delete_user_code($1::uuid, $2::text)`
-	resetUserPasswordDBQ         = `select reset_user_password($1::text, $2::text)`
-	updateTFAInfoDBQ             = `update "user" set tfa_url = $2, tfa_recovery_codes = $3 where user_id = $1`
-	updateUserPasswordDBQ        = `select update_user_password($1::uuid, $2::text, $3::text)`
-	updateUserProfileDBQ         = `select update_user_profile($1::uuid, $2::jsonb)`
-	verifyEmailDBQ               = `select verify_email($1::uuid)`
-	verifyPasswordResetCodeDBQ   = `select verify_password_reset_code($1::text)`
+	approveSessionDBQ              = `select approve_session($1::text, $2::text)`
+	checkUserAliasAvailDBQ         = `select user_id from "user" where alias = $1::text`
+	checkUserCredsDBQ              = `select user_id, password from "user" where email = $1 and password is not null and email_verified = true` //#nosec
+	deletePasswordResetCodeDBQ     = `delete from password_reset_code where password_reset_code_id = $1`
+	deleteSessionDBQ               = `delete from session where session_id = $1`
+	deleteUserDBQ                  = `select delete_user($1::uuid, $2::text)`
+	disableTFADBQ                  = `update "user" set tfa_enabled = false, tfa_url = null, tfa_recovery_codes = null where user_id = $1 and tfa_enabled = true`
+	enableTFADBQ                   = `update "user" set tfa_enabled = true where user_id = $1 and tfa_url = $2 and tfa_enabled is not true returning user_id`
+	getPasswordResetCodeEmailDBQ   = `select u.email from "user" u join password_reset_code prc using (user_id) where prc.password_reset_code_id = $1` // #nosec G101 -- query, not a credential
+	getSessionDBQ                  = `select user_id, floor(extract(epoch from created_at)), approved from session where session_id = $1`
+	getTFAConfigDBQ                = `select get_user_tfa_config($1::uuid)`
+	getUserEmailDBQ                = `select email from "user" where user_id = $1`
+	getUserIDFromEmailDBQ          = `select user_id from "user" where email = $1`
+	getUserIDFromSessionIDDBQ      = `select user_id from session where session_id = $1 and approved = false`
+	getUserPasswordDBQ             = `select password from "user" where user_id = $1 and password is not null`
+	getUserProfileDBQ              = `select get_user_profile($1::uuid)`
+	refundAuthAttemptDBQ           = `select refund_auth_attempt($1::uuid, $2::text, $3::int)`
+	registerAuthAttemptDBQ         = `select register_auth_attempt($1::uuid, $2::text, $3::int, $4::int)`
+	registerPasswordResetCodeDBQ   = `select register_password_reset_code($1::text, $2::text)`
+	registerSessionDBQ             = `select register_session($1::jsonb)`
+	registerSessionWithPasswordDBQ = `select register_session_with_password($1::jsonb, $2::text)`
+	registerUserDBQ                = `select register_user($1::jsonb)`
+	registerDeleteUserCodeDBQ      = `select register_delete_user_code($1::uuid, $2::text)`
+	resetUserPasswordDBQ           = `select reset_user_password($1::text, $2::text)`
+	updateTFAInfoDBQ               = `update "user" set tfa_url = $2, tfa_recovery_codes = $3 where user_id = $1 and tfa_enabled is not true returning user_id`
+	updateUserPasswordDBQ          = `select update_user_password($1::uuid, $2::text, $3::text)`
+	updateUserProfileDBQ           = `select update_user_profile($1::uuid, $2::jsonb)`
+	verifyEmailDBQ                 = `select verify_email($1::uuid)`
+	verifyPasswordResetCodeDBQ     = `select verify_password_reset_code($1::text)`
 
 	numRecoveryCodes = 10
 )
@@ -61,6 +68,21 @@ const (
 	// PasswordMinEntropyBits represents the minimum amount of entropy bits
 	// required for a password.
 	PasswordMinEntropyBits = 50
+)
+
+// attemptLimit represents the allowance of attempts of a given kind each user
+// has (see register_auth_attempt).
+type attemptLimit struct {
+	kind     string
+	burst    int
+	interval int // Seconds
+}
+
+var (
+	loginPasswordLimit  = attemptLimit{"login_password", 10, 3600}
+	loginTFALimit       = attemptLimit{"login_tfa", 10, 3 * 3600}
+	passwordUpdateLimit = attemptLimit{"password_update", 10, 3600}
+	tfaDisableLimit     = attemptLimit{"tfa_disable", 5, 24 * 3600}
 )
 
 type templateID int
@@ -118,12 +140,54 @@ var (
 	// database when the password reset code is not valid.
 	errInvalidPasswordResetCodeDB = errors.New("ERROR: invalid password reset code (SQLSTATE P0001)")
 
+	// errPasswordChangedDB represents the error returned from the database
+	// when the password hash provided is no longer the user's current one.
+	errPasswordChangedDB = errors.New("ERROR: password changed (SQLSTATE P0001)")
+
+	// errInvalidEmailDB represents the error returned from the database when
+	// the email provided does not belong to any user.
+	errInvalidEmailDB = errors.New("ERROR: invalid email (SQLSTATE P0001)")
+
+	// errPasswordResetCodeAlreadyRegisteredDB represents the error returned
+	// from the database when the user already has a password reset code not
+	// older than 3 hours.
+	errPasswordResetCodeAlreadyRegisteredDB = errors.New("ERROR: password reset code already registered (SQLSTATE P0001)")
+
+	// errInvalidRecoveryCodeDB represents the error returned from the database
+	// when the recovery code provided is not one of the user's codes anymore.
+	errInvalidRecoveryCodeDB = errors.New("ERROR: invalid recovery code (SQLSTATE P0001)")
+
+	// errSessionNotPendingDB represents the error returned from the database
+	// when the session to approve does not exist or has already been approved.
+	errSessionNotPendingDB = errors.New("ERROR: session not pending (SQLSTATE P0001)")
+
 	// errInvalidTFAPasscode indicates that the TFA passcode provided is not
 	// valid.
 	errInvalidTFAPasscode = fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid passcode")
 
+	// errTFAAlreadyEnabled indicates that two-factor authentication is
+	// already enabled for the user.
+	errTFAAlreadyEnabled = fmt.Errorf("%w: %s", hub.ErrInvalidInput, "two-factor authentication already enabled")
+
+	// errTFASetupChanged indicates that two-factor authentication has not
+	// been set up, or that the setup has changed since the passcode was
+	// validated.
+	errTFASetupChanged = fmt.Errorf(
+		"%w: %s",
+		hub.ErrInvalidInput,
+		"two-factor authentication has not been set up or has changed, please start again",
+	)
+
 	// ErrNotFound indicates that the user does not exist.
 	ErrNotFound = errors.New("user not found")
+
+	// ErrPasswordChanged indicates that the user's password is no longer the
+	// one the operation was based on.
+	ErrPasswordChanged = errors.New("password changed")
+
+	// ErrSessionNotPending indicates that the session provided does not exist
+	// or has already been approved.
+	ErrSessionNotPending = errors.New("session not found or already approved")
 )
 
 // Manager provides an API to manage users.
@@ -158,14 +222,18 @@ func (m *Manager) ApproveSession(ctx context.Context, sessionID, passcode string
 	if len(sessionID) == 0 {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "sessionID not provided")
 	}
+	passcode = strings.TrimSpace(passcode)
 	if passcode == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "passcode not provided")
 	}
 
-	// Get id of the user the session belongs to
+	// Get id of the user the session belongs to (only pending sessions)
 	var userID string
 	err := m.db.QueryRow(ctx, getUserIDFromSessionIDDBQ, hash(sessionID)).Scan(&userID)
 	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return ErrSessionNotPending
+		}
 		return err
 	}
 
@@ -175,23 +243,41 @@ func (m *Manager) ApproveSession(ctx context.Context, sessionID, passcode string
 		return err
 	}
 
-	// Validate passcode provided by user
-	key, err := otp.NewKeyFromURL(c.URL)
-	if err != nil {
-		return err
-	}
-	validRecoveryCodeProvided := isValidRecoveryCode(c.RecoveryCodes, passcode)
-	if !totp.Validate(passcode, key.Secret()) && !validRecoveryCodeProvided {
-		return errInvalidTFAPasscode
-	}
-
-	// Approve session
+	// Validate passcode provided by user. TOTP codes are subject to an
+	// attempts limit, recovery codes are not.
 	var recoveryCode string
-	if validRecoveryCodeProvided {
+	if isTOTPCode(passcode) {
+		if err := m.reserveAttempt(ctx, userID, loginTFALimit); err != nil {
+			return err
+		}
+		key, err := otp.NewKeyFromURL(c.URL)
+		if err != nil {
+			return err
+		}
+		if !totp.Validate(passcode, key.Secret()) {
+			return errInvalidTFAPasscode
+		}
+		m.refundAttempt(ctx, userID, loginTFALimit)
+	} else {
+		if !isValidRecoveryCode(c.RecoveryCodes, passcode) {
+			return errInvalidTFAPasscode
+		}
 		recoveryCode = passcode
 	}
-	_, err = m.db.Exec(ctx, approveSessionDBQ, hash(sessionID), recoveryCode)
-	return err
+
+	// Approve session. The database checks again that the session is still
+	// pending and the recovery code still available, as a concurrent request
+	// may have changed that since they were read above
+	if _, err := m.db.Exec(ctx, approveSessionDBQ, hash(sessionID), recoveryCode); err != nil {
+		switch err.Error() {
+		case errInvalidRecoveryCodeDB.Error():
+			return errInvalidTFAPasscode
+		case errSessionNotPendingDB.Error():
+			return ErrSessionNotPending
+		}
+		return err
+	}
+	return nil
 }
 
 // CheckAvailability checks the availability of a given value for the provided
@@ -253,16 +339,23 @@ func (m *Manager) CheckCredentials(
 		return nil, err
 	}
 
+	// Reserve an attempt before checking the password
+	if err := m.reserveAttempt(ctx, userID, loginPasswordLimit); err != nil {
+		return nil, err
+	}
+
 	// Check if the password provided is valid
 	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	if err != nil {
 		return &hub.CheckCredentialsOutput{Valid: false}, nil
 	}
+	m.refundAttempt(ctx, userID, loginPasswordLimit)
 
 	return &hub.CheckCredentialsOutput{
-		Valid:  true,
-		UserID: userID,
-	}, err
+		Valid:        true,
+		UserID:       userID,
+		PasswordHash: hashedPassword,
+	}, nil
 }
 
 // CheckSession checks if the user session provided is valid.
@@ -358,6 +451,7 @@ func (m *Manager) DisableTFA(ctx context.Context, passcode string) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
 	// Validate input
+	passcode = strings.TrimSpace(passcode)
 	if passcode == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "passcode not provided")
 	}
@@ -368,12 +462,21 @@ func (m *Manager) DisableTFA(ctx context.Context, passcode string) error {
 		return err
 	}
 
-	// Validate passcode provided by user
-	key, err := otp.NewKeyFromURL(c.URL)
-	if err != nil {
-		return err
-	}
-	if !totp.Validate(passcode, key.Secret()) && !isValidRecoveryCode(c.RecoveryCodes, passcode) {
+	// Validate passcode provided by user. TOTP codes are subject to an
+	// attempts limit, recovery codes are not.
+	if isTOTPCode(passcode) {
+		if err := m.reserveAttempt(ctx, userID, tfaDisableLimit); err != nil {
+			return err
+		}
+		key, err := otp.NewKeyFromURL(c.URL)
+		if err != nil {
+			return err
+		}
+		if !totp.Validate(passcode, key.Secret()) {
+			return errInvalidTFAPasscode
+		}
+		m.refundAttempt(ctx, userID, tfaDisableLimit)
+	} else if !isValidRecoveryCode(c.RecoveryCodes, passcode) {
 		return errInvalidTFAPasscode
 	}
 
@@ -421,6 +524,10 @@ func (m *Manager) EnableTFA(ctx context.Context, passcode string) error {
 		return err
 	}
 
+	if c.Enabled {
+		return errTFAAlreadyEnabled
+	}
+
 	// Validate passcode provided by user
 	key, err := otp.NewKeyFromURL(c.URL)
 	if err != nil {
@@ -430,8 +537,13 @@ func (m *Manager) EnableTFA(ctx context.Context, passcode string) error {
 		return errInvalidTFAPasscode
 	}
 
-	// Set TFA as enabled in the database
-	if _, err := m.db.Exec(ctx, enableTFADBQ, userID); err != nil {
+	// Set TFA as enabled in the database, provided the setup validated above
+	// is still the current one
+	var id string
+	if err := m.db.QueryRow(ctx, enableTFADBQ, userID, c.URL).Scan(&id); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return errTFASetupChanged
+		}
 		return err
 	}
 
@@ -542,13 +654,19 @@ func (m *Manager) RegisterDeleteUserCode(ctx context.Context) error {
 }
 
 // RegisterPasswordResetCode registers a code that allows the user identified
-// by the email provided to reset the password. A link containing the code will
-// be emailed to the user to initiate the password reset process.
+// by the email provided to reset the password, and emails the user a link
+// containing it. Nothing is registered or sent when the email is unknown or
+// when the user already has a code not older than 3 hours (the link sent with
+// it is still valid); both cases return nil.
 func (m *Manager) RegisterPasswordResetCode(ctx context.Context, userEmail string) error {
 	// Validate input
 	if userEmail == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "email not provided")
 	}
+
+	// Run to completion even if the client goes away, so that a stored code
+	// is either emailed or removed
+	ctx = context.WithoutCancel(ctx)
 
 	// Register password reset code in database
 	randomBytes := make([]byte, 32)
@@ -556,29 +674,26 @@ func (m *Manager) RegisterPasswordResetCode(ctx context.Context, userEmail strin
 		return err
 	}
 	code := base64.URLEncoding.EncodeToString(randomBytes)
-	_, err := m.db.Exec(ctx, registerPasswordResetCodeDBQ, userEmail, hash(code))
-	if err != nil {
+	codeHashed := hash(code)
+	if _, err := m.db.Exec(ctx, registerPasswordResetCodeDBQ, userEmail, codeHashed); err != nil {
+		switch err.Error() {
+		case errInvalidEmailDB.Error(), errPasswordResetCodeAlreadyRegisteredDB.Error():
+			return nil
+		}
 		return err
 	}
-
-	// Send password reset email
-	if m.es != nil {
-		templateData := baseTemplateData(m.cfg)
-		templateData["Link"] = fmt.Sprintf("%s/reset-password?code=%s", templateData["BaseURL"], code)
-		var emailBody bytes.Buffer
-		if err := m.tmpl[passwordResetEmail].Execute(&emailBody, templateData); err != nil {
-			return err
-		}
-		emailData := &email.Data{
-			To:      userEmail,
-			Subject: "Password reset",
-			Body:    emailBody.Bytes(),
-		}
-		if err := m.es.SendEmail(emailData); err != nil {
-			return err
-		}
+	if m.es == nil {
+		return nil
 	}
 
+	// Send password reset email. If it cannot be sent, remove the code so
+	// that the next request can send a new link
+	if err := m.sendPasswordResetEmail(userEmail, code); err != nil {
+		if _, errDel := m.db.Exec(ctx, deletePasswordResetCodeDBQ, codeHashed); errDel != nil {
+			return errors.Join(err, errDel)
+		}
+		return err
+	}
 	return nil
 }
 
@@ -604,7 +719,15 @@ func (m *Manager) RegisterSession(ctx context.Context, session *hub.Session) (*h
 	session.SessionID = sessionIDHashed
 	sessionJSON, _ := json.Marshal(session)
 	var approved bool
-	err := m.db.QueryRow(ctx, registerSessionDBQ, sessionJSON).Scan(&approved)
+	var err error
+	if session.PasswordHash != "" {
+		err = m.db.QueryRow(ctx, registerSessionWithPasswordDBQ, sessionJSON, session.PasswordHash).Scan(&approved)
+		if err != nil && err.Error() == errPasswordChangedDB.Error() {
+			return nil, ErrPasswordChanged
+		}
+	} else {
+		err = m.db.QueryRow(ctx, registerSessionDBQ, sessionJSON).Scan(&approved) // OAuth
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -679,22 +802,22 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User) error {
 }
 
 // ResetPassword resets the user password in the database.
-func (m *Manager) ResetPassword(ctx context.Context, code, newPassword string) error {
+func (m *Manager) ResetPassword(ctx context.Context, code, newPassword string) (*hub.ResetPasswordOutput, error) {
 	// Validate input
 	if code == "" {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "code not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "code not provided")
 	}
 	if newPassword == "" {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "new password not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "new password not provided")
 	}
 	if err := pwvalidator.Validate(newPassword, PasswordMinEntropyBits); err != nil {
-		return fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
+		return nil, fmt.Errorf("%w: %w", hub.ErrInvalidInput, err)
 	}
 
 	// Hash new password
 	newHashed, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// Reset user password in database
@@ -702,29 +825,41 @@ func (m *Manager) ResetPassword(ctx context.Context, code, newPassword string) e
 	err = m.db.QueryRow(ctx, resetUserPasswordDBQ, hash(code), string(newHashed)).Scan(&userEmail)
 	if err != nil {
 		if err.Error() == errInvalidPasswordResetCodeDB.Error() {
-			return ErrInvalidPasswordResetCode
+			return nil, ErrInvalidPasswordResetCode
 		}
-		return err
+		return nil, err
+	}
+
+	// The password has been reset: from here on errors are logged, not
+	// returned, so that the caller still reports the reset as done
+	out := &hub.ResetPasswordOutput{PasswordHash: string(newHashed)}
+	if err := m.db.QueryRow(ctx, getUserIDFromEmailDBQ, userEmail).Scan(&out.UserID); err != nil {
+		log.Error().Err(err).Str("method", "ResetPassword").Msg("error getting user id after password reset")
 	}
 
 	// Send password reset success email
 	if m.es != nil {
 		templateData := baseTemplateData(m.cfg)
 		var emailBody bytes.Buffer
-		if err := m.tmpl[passwordResetSuccessEmail].Execute(&emailBody, templateData); err != nil {
-			return err
+		err := m.tmpl[passwordResetSuccessEmail].Execute(&emailBody, templateData)
+		if err == nil {
+			emailData := &email.Data{
+				To:      userEmail,
+				Subject: "Your password has been reset",
+				Body:    emailBody.Bytes(),
+			}
+			err = m.es.SendEmail(emailData)
 		}
-		emailData := &email.Data{
-			To:      userEmail,
-			Subject: "Your password has been reset",
-			Body:    emailBody.Bytes(),
-		}
-		if err := m.es.SendEmail(emailData); err != nil {
-			return err
+		if err != nil {
+			log.Error().
+				Err(err).
+				Str("method", "ResetPassword").
+				Str("user_id", out.UserID).
+				Msg("error sending password reset success email")
 		}
 	}
 
-	return nil
+	return out, nil
 }
 
 // SetupTFA sets up two-factor authentication for the requesting user. This
@@ -757,9 +892,13 @@ func (m *Manager) SetupTFA(ctx context.Context) ([]byte, error) {
 		recoveryCodes = append(recoveryCodes, code)
 	}
 
-	// Store TOTP key and recovery codes in database
-	_, err = m.db.Exec(ctx, updateTFAInfoDBQ, userID, key.URL(), recoveryCodes)
-	if err != nil {
+	// Store TOTP key and recovery codes in database, unless TFA is already
+	// enabled
+	var id string
+	if err := m.db.QueryRow(ctx, updateTFAInfoDBQ, userID, key.URL(), recoveryCodes).Scan(&id); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, errTFAAlreadyEnabled
+		}
 		return nil, err
 	}
 
@@ -802,10 +941,14 @@ func (m *Manager) UpdatePassword(ctx context.Context, old, new string) error {
 	if err != nil {
 		return err
 	}
+	if err := m.reserveAttempt(ctx, userID, passwordUpdateLimit); err != nil {
+		return err
+	}
 	err = bcrypt.CompareHashAndPassword([]byte(oldHashed), []byte(old))
 	if err != nil {
 		return ErrInvalidPassword
 	}
+	m.refundAttempt(ctx, userID, passwordUpdateLimit)
 
 	// Hash new password
 	newHashed, err := bcrypt.GenerateFromPassword([]byte(new), bcrypt.DefaultCost)
@@ -858,24 +1001,89 @@ func (m *Manager) VerifyEmail(ctx context.Context, code string) (bool, error) {
 	return verified, err
 }
 
-// VerifyPasswordResetCode verifies if the provided code is valid.
-func (m *Manager) VerifyPasswordResetCode(ctx context.Context, code string) error {
+// VerifyPasswordResetCode verifies if the provided code is valid, returning
+// the email of the user it belongs to.
+func (m *Manager) VerifyPasswordResetCode(ctx context.Context, code string) (string, error) {
 	// Validate input
 	if code == "" {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "code not provided")
+		return "", fmt.Errorf("%w: %s", hub.ErrInvalidInput, "code not provided")
 	}
 
 	// Verify password reset code in database
-	_, err := m.db.Exec(ctx, verifyPasswordResetCodeDBQ, hash(code))
-	if err != nil && err.Error() == errInvalidPasswordResetCodeDB.Error() {
-		return ErrInvalidPasswordResetCode
+	codeHashed := hash(code)
+	if _, err := m.db.Exec(ctx, verifyPasswordResetCodeDBQ, codeHashed); err != nil {
+		if err.Error() == errInvalidPasswordResetCodeDB.Error() {
+			return "", ErrInvalidPasswordResetCode
+		}
+		return "", err
 	}
-	return err
+
+	// Get the email of the user the code belongs to
+	var userEmail string
+	if err := m.db.QueryRow(ctx, getPasswordResetCodeEmailDBQ, codeHashed).Scan(&userEmail); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return "", ErrInvalidPasswordResetCode
+		}
+		return "", err
+	}
+	return userEmail, nil
+}
+
+// reserveAttempt reserves an attempt of the kind provided for the user. It
+// returns a *hub.TooManyAttemptsError when the allowance is used up.
+func (m *Manager) reserveAttempt(ctx context.Context, userID string, l attemptLimit) error {
+	var wait int
+	if err := m.db.QueryRow(ctx, registerAuthAttemptDBQ, userID, l.kind, l.burst, l.interval).Scan(&wait); err != nil {
+		return err
+	}
+	if wait > 0 {
+		return &hub.TooManyAttemptsError{RetryAfter: wait}
+	}
+	return nil
+}
+
+// refundAttempt gives back the attempt reserved for a check that succeeded.
+// Errors are logged, not returned, so that a correct credential always works.
+func (m *Manager) refundAttempt(ctx context.Context, userID string, l attemptLimit) {
+	if _, err := m.db.Exec(context.WithoutCancel(ctx), refundAuthAttemptDBQ, userID, l.kind, l.interval); err != nil {
+		log.Warn().Err(err).Str("user_id", userID).Str("kind", l.kind).Msg("error refunding auth attempt")
+	}
+}
+
+// sendPasswordResetEmail sends the user an email with a link containing the
+// password reset code provided.
+func (m *Manager) sendPasswordResetEmail(userEmail, code string) error {
+	templateData := baseTemplateData(m.cfg)
+	templateData["Link"] = fmt.Sprintf("%s/reset-password?code=%s", templateData["BaseURL"], code)
+	var emailBody bytes.Buffer
+	if err := m.tmpl[passwordResetEmail].Execute(&emailBody, templateData); err != nil {
+		return err
+	}
+	emailData := &email.Data{
+		To:      userEmail,
+		Subject: "Password reset",
+		Body:    emailBody.Bytes(),
+	}
+	return m.es.SendEmail(emailData)
 }
 
 // hash is a helper function that creates a sha512 hash of the text provided.
 func hash(text string) string {
 	return fmt.Sprintf("%x", sha512.Sum512([]byte(text)))
+}
+
+// isTOTPCode checks if the passcode provided looks like a TOTP code: exactly
+// 6 ASCII digits. Only such input can ever validate as a TOTP code.
+func isTOTPCode(passcode string) bool {
+	if len(passcode) != 6 {
+		return false
+	}
+	for i := 0; i < len(passcode); i++ {
+		if passcode[i] < '0' || passcode[i] > '9' {
+			return false
+		}
+	}
+	return true
 }
 
 // isValidRecoveryCode checks if the code provided is a valid recovery code.

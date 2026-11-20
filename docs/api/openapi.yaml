@@ -198,7 +198,11 @@ paths:
       tags:
         - Users
       summary: Register a code to reset the password
-      description: Register a code to reset the password
+      description: >-
+        Register a code to reset the password and email a link to the user. If
+        the user already has a code issued in the last 3 hours, no new code is
+        registered and no email is sent. The response is 201 whether or not a
+        code was registered.
       operationId: resetPasswordCode
       requestBody:
         content:
@@ -240,6 +244,16 @@ paths:
       responses:
         "200":
           description: "The request has succeeded"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - email
+                properties:
+                  email:
+                    type: string
+                    description: Email of the user the code belongs to
         "400":
           $ref: "#/components/responses/BadRequest"
         "410":
@@ -271,7 +285,25 @@ paths:
                   type: string
       responses:
         "204":
-          $ref: "#/components/responses/NoContent"
+          description: "The request has succeeded, no content returned"
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+              description: >-
+                Session cookie, set only when a session has been created for
+                this browser
+            X-SESSION-APPROVED:
+              schema:
+                type: string
+                enum:
+                  - "true"
+                  - "false"
+              description: >-
+                Set only when a session has been created for this browser:
+                `true` when it is signed in, `false` when the two-factor
+                authentication passcode is still needed. When absent, the
+                browser has not been signed in
         "400":
           $ref: "#/components/responses/BadRequest"
         "429":
@@ -3927,6 +3959,9 @@ components:
       type: apiKey
       in: header
       name: X-API-KEY-ID
+      description: >-
+        API keys cannot be used to create API keys or to manage two-factor
+        authentication.
     ApiKeySecret:
       type: apiKey
       in: header
@@ -6040,6 +6075,11 @@ components:
             $ref: "#/components/schemas/Error"
     TooManyRequests:
       description: The user has sent too many requests in a given amount of time
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Number of seconds to wait before trying again
     UnauthorizedError:
       description: Valid authentication credentials not provided
       content:

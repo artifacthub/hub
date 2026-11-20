@@ -85,7 +85,12 @@ func RenderJSON(w http.ResponseWriter, dataJSON []byte, cacheMaxAge time.Duratio
 func RenderErrorJSON(w http.ResponseWriter, err error) {
 	w.Header().Set("Content-Type", "application/json")
 	var errMsg string
+	var tooManyErr *hub.TooManyAttemptsError
 	switch {
+	case errors.As(err, &tooManyErr):
+		w.Header().Set("Retry-After", strconv.Itoa(tooManyErr.RetryAfter))
+		w.WriteHeader(http.StatusTooManyRequests)
+		errMsg = hub.ErrTooManyAttempts.Error()
 	case errors.Is(err, hub.ErrInvalidInput):
 		w.WriteHeader(http.StatusBadRequest)
 		if err != nil {

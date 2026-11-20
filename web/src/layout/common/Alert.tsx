@@ -28,7 +28,8 @@ const Alert: ElementType = (props: Props) => {
         }, 1000);
       }
     } else {
-      if (props.message !== errorMessage) {
+      // The alert may have just been closed while still holding this message
+      if (props.message !== errorMessage || !isVisible) {
         setErrorMessage(props.message);
         setIsVisible(true);
         errorWrapper.current!.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
@@ -41,6 +42,29 @@ const Alert: ElementType = (props: Props) => {
       }
     };
   }, [props.message]);
+
+  // When the message is set the alert has no height yet, so the call above
+  // cannot bring all of it into view: follow it while it opens
+  useEffect(() => {
+    const wrapper = errorWrapper.current;
+    if (!isVisible || isNull(wrapper) || typeof ResizeObserver === 'undefined') return;
+
+    const observer = new ResizeObserver(() => {
+      wrapper.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    });
+    observer.observe(wrapper);
+    const stopObserving = (e: TransitionEvent) => {
+      if (e.target === wrapper) {
+        observer.disconnect();
+      }
+    };
+    wrapper.addEventListener('transitionend', stopObserving);
+
+    return () => {
+      wrapper.removeEventListener('transitionend', stopObserving);
+      observer.disconnect();
+    };
+  }, [isVisible, errorMessage]);
 
   return (
     <div

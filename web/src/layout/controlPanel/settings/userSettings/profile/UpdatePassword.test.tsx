@@ -161,6 +161,91 @@ describe('Update password - user settings', () => {
       });
     });
 
+    it('TooManyAttemptsError', async () => {
+      vi.mocked(API).updatePassword.mockRejectedValue({
+        kind: ErrorKind.TooManyAttempts,
+        retryAfter: 1800,
+      });
+
+      render(<UpdatePassword />);
+
+      await userEvent.type(screen.getByTestId('oldPasswordInput'), 'oldpass');
+      await userEvent.type(screen.getByTestId('passwordInput'), 'newpass');
+      await userEvent.type(screen.getByTestId('confirmPasswordInput'), 'newpass');
+
+      const btn = screen.getByRole('button', { name: 'Update password' });
+      expect(btn).toBeInTheDocument();
+      await userEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.updatePassword).toHaveBeenCalledTimes(1);
+      });
+
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'Too many attempts to change your password. Please try again in 30 minutes.',
+        });
+      });
+    });
+
+    it('TooManyAttemptsError without retry after', async () => {
+      vi.mocked(API).updatePassword.mockRejectedValue({
+        kind: ErrorKind.TooManyAttempts,
+      });
+
+      render(<UpdatePassword />);
+
+      await userEvent.type(screen.getByTestId('oldPasswordInput'), 'oldpass');
+      await userEvent.type(screen.getByTestId('passwordInput'), 'newpass');
+      await userEvent.type(screen.getByTestId('confirmPasswordInput'), 'newpass');
+
+      const btn = screen.getByRole('button', { name: 'Update password' });
+      expect(btn).toBeInTheDocument();
+      await userEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.updatePassword).toHaveBeenCalledTimes(1);
+      });
+
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'Too many attempts to change your password. Please try again in a little while.',
+        });
+      });
+      expect(mockUseNavigate).not.toHaveBeenCalled();
+    });
+
+    it('TooManyRequestsError (not the attempts limit)', async () => {
+      vi.mocked(API).updatePassword.mockRejectedValue({
+        kind: ErrorKind.TooManyRequests,
+        retryAfter: 30,
+      });
+
+      render(<UpdatePassword />);
+
+      await userEvent.type(screen.getByTestId('oldPasswordInput'), 'oldpass');
+      await userEvent.type(screen.getByTestId('passwordInput'), 'newpass');
+      await userEvent.type(screen.getByTestId('confirmPasswordInput'), 'newpass');
+      await userEvent.click(screen.getByRole('button', { name: 'Update password' }));
+
+      await waitFor(() => {
+        expect(API.updatePassword).toHaveBeenCalledTimes(1);
+      });
+
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'Too many requests. Please try again in a minute.',
+        });
+      });
+      expect(mockUseNavigate).not.toHaveBeenCalled();
+    });
+
     it('default error message', async () => {
       vi.mocked(API).updatePassword.mockRejectedValue({
         kind: ErrorKind.Other,

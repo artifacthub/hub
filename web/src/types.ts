@@ -559,6 +559,7 @@ export interface APIKeyCode {
 export interface Error {
   kind: ErrorKind;
   message?: string;
+  retryAfter?: number;
 }
 
 export enum ErrorKind {
@@ -569,6 +570,8 @@ export enum ErrorKind {
   Gone,
   InvalidCSRF,
   NotApprovedSession,
+  TooManyRequests,
+  TooManyAttempts,
 }
 
 export interface OptOutItem {

@@ -2,6 +2,7 @@ import camelCase from 'lodash/camelCase';
 import isArray from 'lodash/isArray';
 import isNull from 'lodash/isNull';
 import isObject from 'lodash/isObject';
+import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 
 import { JSONSchema } from '../jsonschema';
@@ -79,6 +80,10 @@ interface APIFetchProps {
   checkApprovedSession?: boolean;
   headers?: string[];
 }
+
+// Message the hub sends with a 429 when the attempts allowed for an account
+// have been used up (hub.ErrTooManyAttempts)
+const TOO_MANY_ATTEMPTS_MESSAGE = 'too many attempts, please try again later';
 
 type SecurityReportRaw = {
   [key: string]: { Results: SecurityReportResult[] } | SecurityReportResult[];
@@ -169,6 +174,28 @@ class API_CLASS {
             kind: ErrorKind.Gone,
           };
           break;
+        case 429: {
+          // Retry-After is only used when it is a number of seconds (it may
+          // also be a date, for example when set by a CDN)
+          const retryAfter = res.headers.get('Retry-After');
+          error = {
+            kind: ErrorKind.TooManyRequests,
+            retryAfter: !isNull(retryAfter) && /^\d+$/.test(retryAfter) ? parseInt(retryAfter, 10) : undefined,
+          };
+          try {
+            tmpError = await res.json();
+            error.message = tmpError.message !== '' ? tmpError.message : undefined;
+          } catch {
+            // Empty or non-JSON body
+          }
+          // Only the hub's own response means that the attempts allowed for
+          // the account have been used up. Any other 429 (a CDN or a proxy
+          // limiting requests) says nothing about the account
+          if (error.message === TOO_MANY_ATTEMPTS_MESSAGE) {
+            error.kind = ErrorKind.TooManyAttempts;
+          }
+          break;
+        }
         default:
           try {
             tmpError = await res.json();
@@ -984,8 +1011,8 @@ class API_CLASS {
     });
   }
 
-  public verifyPasswordResetCode(code: string): Promise<string | null> {
-    return this.apiFetch({
+  public async verifyPasswordResetCode(code: string): Promise<string | undefined> {
+    const res = await this.apiFetch({
       url: `${this.API_BASE_URL}/users/verify-password-reset-code`,
       opts: {
         method: 'POST',
@@ -997,10 +1024,14 @@ class API_CLASS {
         }),
       },
     });
+    // A server that does not return the email returns no JSON body
+    return isString(res?.email) ? res.email : undefined;
   }
 
-  public resetPassword(code: string, password: string): Promise<null> {
-    return this.apiFetch({
+  // Returns true when the browser has been signed in, false when it has not,
+  // and throws a NotApprovedSession error when the session needs a passcode
+  public async resetPassword(code: string, password: string): Promise<boolean> {
+    const res = await this.apiFetch({
       url: `${this.API_BASE_URL}/users/reset-password`,
       opts: {
         method: 'PUT',
@@ -1012,7 +1043,9 @@ class API_CLASS {
           password: password,
         }),
       },
+      checkApprovedSession: true,
     });
+    return res?.headers?.get(this.HEADERS.sessionApproved) === 'true';
   }
 
   public getAHStats(): Promise<AHStats | null> {
