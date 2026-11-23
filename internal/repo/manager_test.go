@@ -2049,6 +2049,39 @@ func TestUpdateDigest(t *testing.T) {
 	})
 }
 
+func TestValidateURL(t *testing.T) {
+	t.Parallel()
+
+	m := NewManager(cfg, nil, nil, nil)
+	testCases := []struct {
+		name        string
+		url         string
+		expectError bool
+	}{
+		{"codeberg repo", "https://codeberg.org/k8s-gateway/k8s_gateway", false},
+		{"sourcehut repo", "https://git.sr.ht/~user/repo/packages", false},
+		{"gitlab subgroup with .git", "https://gitlab.com/testing-farm/integrations/tekton.git", false},
+		{"gitlab subgroup with .git and path", "https://gitlab.com/MaxIV/kubernetes/mortalgpu.git/assets/kyverno", false},
+		{"self-hosted with explicit port", "https://git.example.com:8443/team/project.git/packages", false},
+		{"codeberg pages url rejected", "https://k8s-gateway.codeberg.page/k8s_gateway/", true},
+		{"empty name before .git rejected", "https://gitlab.com/group/subgroup/.git", true},
+		{"query string rejected", "https://github.com/user/repo?ref=main", true},
+		{"path traversal rejected", "https://gitlab.com/group/subgroup/repo.git/../secret", true},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			err := m.validateURL(&hub.Repository{Kind: hub.CoreDNS, URL: tc.url})
+			if tc.expectError {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
+			}
+		})
+	}
+}
+
 func withRepositoryCloner(rc hub.RepositoryCloner) func(m *Manager) {
 	return func(m *Manager) {
 		m.rc = rc

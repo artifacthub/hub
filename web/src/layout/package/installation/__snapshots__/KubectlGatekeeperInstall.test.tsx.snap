@@ -50,7 +50,7 @@ exports[`KubectlGatekeeperInstall > creates snapshot 1`] = `
               clone
             </span>
             <span>
-               https://github.comtegioz/gatekeeper-library
+               https://github.com/tegioz/gatekeeper-library
 
             </span>
             <span />
@@ -60,7 +60,7 @@ exports[`KubectlGatekeeperInstall > creates snapshot 1`] = `
               cd
             </span>
             <span>
-               library/general/storageclass
+               gatekeeper-library/library/general/storageclass
 
             </span>
             kubectl apply -f template.yaml 

@@ -1,10 +1,17 @@
 ## KubeArmor policies repositories
 
-KubeArmor policies repositories are expected to be hosted in GitHub, GitLab or Bitbucket repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+KubeArmor policies repositories can be hosted in any Git repository accessible over HTTPS (such as GitHub, GitLab, Bitbucket, Codeberg, Gitea, Gitee, SourceHut, or self-hosted instances). When adding your repository to Artifact Hub, the url used **must** follow one of the following formats:
+
+- `https://host/user/repo[/path/to/packages]`
+- `https://host/group/subgroup/repo.git[/path/to/packages]` *(for repositories under subgroups or custom paths, use `.git` to delimit the repository url)*
+
+For example:
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
+- `https://gitlab.com/group/subgroup/repo.git[/path/to/packages]`
 - `https://bitbucket.org/user/repo[/path/to/packages]`
+- `https://codeberg.org/user/repo[/path/to/packages]`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 

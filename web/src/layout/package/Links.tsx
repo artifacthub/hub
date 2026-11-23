@@ -3,7 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 import { IconType } from 'react-icons';
 import { BsFlagFill } from 'react-icons/bs';
 import { FaCode, FaGithub, FaLink } from 'react-icons/fa';
-import { SiBitbucket, SiGitea, SiGitlab } from 'react-icons/si';
+import { SiBitbucket, SiCodeberg, SiGitea, SiGitee, SiGitlab, SiSourcehut } from 'react-icons/si';
 import { TiHome } from 'react-icons/ti';
 
 import { PackageLink } from '../../types';
@@ -26,7 +26,10 @@ const ICONS: IconTypeList = {
   source_github: FaGithub,
   source_gitlab: SiGitlab,
   source_gitea: SiGitea,
+  source_gitee: SiGitee,
   source_bitbucket: SiBitbucket,
+  source_codeberg: SiCodeberg,
+  source_sourcehut: SiSourcehut,
   support: BsFlagFill,
   default: FaLink,
 };
@@ -36,19 +39,32 @@ const Links = (props: Props) => {
     let Icon = ICONS.default;
     let linkName = name ? name.toLowerCase() : name;
     if (!isUndefined(url) && linkName === 'source') {
-      switch (true) {
-        case /github\.com/.test(url):
-          linkName = `${linkName}_github`;
-          break;
-        case /gitlab\.com/.test(url):
-          linkName = `${linkName}_gitlab`;
-          break;
-        case /bitbucket\.org/.test(url):
-          linkName = `${linkName}_bitbucket`;
-          break;
-        case /gitea\.com/.test(url):
-          linkName = `${linkName}_gitea`;
-          break;
+      try {
+        switch (new URL(url).hostname.toLowerCase()) {
+          case 'github.com':
+            linkName = `${linkName}_github`;
+            break;
+          case 'gitlab.com':
+            linkName = `${linkName}_gitlab`;
+            break;
+          case 'bitbucket.org':
+            linkName = `${linkName}_bitbucket`;
+            break;
+          case 'codeberg.org':
+            linkName = `${linkName}_codeberg`;
+            break;
+          case 'gitea.com':
+            linkName = `${linkName}_gitea`;
+            break;
+          case 'gitee.com':
+            linkName = `${linkName}_gitee`;
+            break;
+          case 'git.sr.ht':
+            linkName = `${linkName}_sourcehut`;
+            break;
+        }
+      } catch {
+        // Ignore malformed URLs and fall back to the generic source icon
       }
     }
     if (!isUndefined(linkName) && linkName in ICONS) {

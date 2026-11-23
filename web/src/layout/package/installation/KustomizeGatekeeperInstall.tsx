@@ -1,4 +1,5 @@
 import { Repository } from '../../../types';
+import parseGitURL from '../../../utils/parseGitURL';
 import removeProtocol from '../../../utils/removeUrlProtocol';
 import trimPrefix from '../../../utils/trimPrefix';
 import ExternalLink from '../../common/ExternalLink';
@@ -8,11 +9,21 @@ import PrivateRepoWarning from './PrivateRepoWarning';
 
 interface Props {
   repository: Repository;
-  relativePath: string;
+  relativePath?: string;
 }
 
 const KustomizeGatekeeperInstall = (props: Props) => {
-  const url = removeProtocol(props.repository.url);
+  const parsed = parseGitURL(props.repository.url);
+  const cleanRelativePath = props.relativePath ? trimPrefix('/', props.relativePath) : '';
+  let resourceURL: string;
+  if (parsed && (parsed.repoBaseURL.endsWith('.git') || parsed.host !== 'github.com')) {
+    const subPath = [parsed.packagesPath, cleanRelativePath].filter(Boolean).join('/');
+    resourceURL = subPath ? `${parsed.repoBaseURL}//${subPath}` : parsed.repoBaseURL;
+  } else {
+    const url = removeProtocol(props.repository.url);
+    const suffix = props.relativePath || '';
+    resourceURL = `${url}${url.endsWith('/') ? cleanRelativePath : suffix}`;
+  }
 
   return (
     <div className={`mt-3 ${styles.gatekeeperInstallContent}`}>
@@ -24,7 +35,7 @@ const KustomizeGatekeeperInstall = (props: Props) => {
         command={`apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ${url}${url.endsWith('/') ? trimPrefix('/', props.relativePath) : props.relativePath}
+  - ${resourceURL}
   - constraints.yaml`}
         language="yaml"
       />

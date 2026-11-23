@@ -614,7 +614,9 @@ const RepositoryModal = (props: Props) => {
                     >
                       Please DO NOT include the git hosting platform specific parts, like{' '}
                       <span className="fw-bold">tree/branch</span>, just the path to your packages like it would show in
-                      the filesystem.
+                      the filesystem. For repositories under subgroups or custom paths, use{' '}
+                      <span className="fw-bold">.git</span> to delimit the repository url (e.g.{' '}
+                      <code className={styles.code}>https://gitlab.com/group/subgroup/repo.git/path</code>).
                     </p>
                     <p className="mb-0">
                       For more information about the url format and the repository structure, please see the {link}{' '}

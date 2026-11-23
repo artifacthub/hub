@@ -204,4 +204,65 @@ func TestTrackerSource(t *testing.T) {
 		assert.NoError(t, err)
 		sw.AssertExpectations(t)
 	})
+
+	t.Run("source links generated for supported git hosting providers", func(t *testing.T) {
+		t.Parallel()
+
+		testCases := []struct {
+			name              string
+			url               string
+			branch            string
+			expectedSourceURL string
+		}{
+			{
+				name:              "codeberg",
+				url:               "https://codeberg.org/org1/repo1/path/to/packages",
+				branch:            "main",
+				expectedSourceURL: "https://codeberg.org/org1/repo1/src/branch/main/path/to/packages/test.yaml",
+			},
+			{
+				name:              "gitlab subgroup with .git delimiter",
+				url:               "https://gitlab.com/org1/sub/repo1.git/path/to/packages",
+				branch:            "main",
+				expectedSourceURL: "https://gitlab.com/org1/sub/repo1/-/blob/main/path/to/packages/test.yaml",
+			},
+			{
+				name:              "sourcehut",
+				url:               "https://git.sr.ht/~org1/repo1/path/to/packages",
+				branch:            "main",
+				expectedSourceURL: "https://git.sr.ht/~org1/repo1/tree/main/item/path/to/packages/test.yaml",
+			},
+			{
+				name:              "bitbucket",
+				url:               "https://bitbucket.org/org1/repo1/path/to/packages",
+				branch:            "main",
+				expectedSourceURL: "https://bitbucket.org/org1/repo1/src/main/path/to/packages/test.yaml",
+			},
+		}
+
+		for _, tc := range testCases {
+			t.Run(tc.name, func(t *testing.T) {
+				t.Parallel()
+
+				sw := source.NewTestsServicesWrapper()
+				i := &hub.TrackerSourceInput{
+					Repository: &hub.Repository{
+						URL:    tc.url,
+						Branch: tc.branch,
+					},
+					BasePath: "testdata/path4",
+					Svc:      sw.Svc,
+				}
+				sw.Is.On("DownloadAndSaveImage", sw.Svc.Ctx, logoImageURL).Return("logoImageID", nil)
+
+				packages, err := NewTrackerSource(i).GetPackagesAvailable()
+				assert.NoError(t, err)
+				assert.Len(t, packages, 1)
+				for _, p := range packages {
+					assert.Equal(t, []*hub.Link{{Name: "source", URL: tc.expectedSourceURL}}, p.Links)
+				}
+				sw.AssertExpectations(t)
+			})
+		}
+	})
 }

@@ -518,3 +518,136 @@ func TestTrackerSourceIgnoredPackages(t *testing.T) {
 		})
 	}
 }
+
+func TestPrepareContentAndSourceLinks(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		name               string
+		input              *PreparePackageInput
+		expectedContentURL string
+		expectedSourceURL  string
+	}{
+		{
+			name: "github with packages path",
+			input: &PreparePackageInput{
+				R:        &hub.Repository{URL: "https://github.com/user/repo/path", Branch: "main"},
+				BasePath: "/tmp/repo/path",
+				PkgName:  "task1",
+				PkgPath:  "/tmp/repo/path/task1/0.1",
+			},
+			expectedContentURL: "https://github.com/user/repo/raw/main/path/task1/0.1/task1.yaml",
+			expectedSourceURL:  "https://github.com/user/repo/blob/main/path/task1/0.1/task1.yaml",
+		},
+		{
+			name: "gitlab subgroup with .git delimiter at repo root",
+			input: &PreparePackageInput{
+				R:        &hub.Repository{URL: "https://gitlab.com/testing-farm/integrations/tekton.git", Branch: "main"},
+				BasePath: "/tmp/repo",
+				PkgName:  "pipeline1",
+				PkgPath:  "/tmp/repo/pipeline1/0.1",
+			},
+			expectedContentURL: "https://gitlab.com/testing-farm/integrations/tekton/-/raw/main/pipeline1/0.1/pipeline1.yaml",
+			expectedSourceURL:  "https://gitlab.com/testing-farm/integrations/tekton/-/blob/main/pipeline1/0.1/pipeline1.yaml",
+		},
+		{
+			name: "bitbucket",
+			input: &PreparePackageInput{
+				R:        &hub.Repository{URL: "https://bitbucket.org/user/repo/tasks"},
+				BasePath: "/tmp/repo/tasks",
+				PkgName:  "task1",
+				PkgPath:  "/tmp/repo/tasks/task1/0.1",
+			},
+			expectedContentURL: "https://bitbucket.org/user/repo/raw/master/tasks/task1/0.1/task1.yaml",
+			expectedSourceURL:  "https://bitbucket.org/user/repo/src/master/tasks/task1/0.1/task1.yaml",
+		},
+		{
+			name: "codeberg branch based",
+			input: &PreparePackageInput{
+				R:        &hub.Repository{URL: "https://codeberg.org/user/repo/tasks", Branch: "main"},
+				BasePath: "/tmp/repo/tasks",
+				PkgName:  "task1",
+				PkgPath:  "/tmp/repo/tasks/task1/0.1",
+			},
+			expectedContentURL: "https://codeberg.org/user/repo/raw/branch/main/tasks/task1/0.1/task1.yaml",
+			expectedSourceURL:  "https://codeberg.org/user/repo/src/branch/main/tasks/task1/0.1/task1.yaml",
+		},
+		{
+			name: "codeberg tag based",
+			input: &PreparePackageInput{
+				R:        &hub.Repository{URL: "https://codeberg.org/user/repo"},
+				Tag:      "v0.1.0",
+				BasePath: "/tmp/repo",
+				PkgName:  "task1",
+				PkgPath:  "/tmp/repo/task1",
+			},
+			expectedContentURL: "https://codeberg.org/user/repo/raw/tag/v0.1.0/task1/task1.yaml",
+			expectedSourceURL:  "https://codeberg.org/user/repo/src/tag/v0.1.0/task1/task1.yaml",
+		},
+		{
+			name: "gitea branch based",
+			input: &PreparePackageInput{
+				R:        &hub.Repository{URL: "https://gitea.com/user/repo.git/tasks", Branch: "main"},
+				BasePath: "/tmp/repo/tasks",
+				PkgName:  "task1",
+				PkgPath:  "/tmp/repo/tasks/task1/0.1",
+			},
+			expectedContentURL: "https://gitea.com/user/repo/raw/branch/main/tasks/task1/0.1/task1.yaml",
+			expectedSourceURL:  "https://gitea.com/user/repo/src/branch/main/tasks/task1/0.1/task1.yaml",
+		},
+		{
+			name: "gitee",
+			input: &PreparePackageInput{
+				R:        &hub.Repository{URL: "https://gitee.com/user/repo/tasks"},
+				BasePath: "/tmp/repo/tasks",
+				PkgName:  "task1",
+				PkgPath:  "/tmp/repo/tasks/task1/0.1",
+			},
+			expectedContentURL: "https://gitee.com/user/repo/raw/master/tasks/task1/0.1/task1.yaml",
+			expectedSourceURL:  "https://gitee.com/user/repo/blob/master/tasks/task1/0.1/task1.yaml",
+		},
+		{
+			name: "sourcehut",
+			input: &PreparePackageInput{
+				R:        &hub.Repository{URL: "https://git.sr.ht/~user/repo/tasks", Branch: "main"},
+				BasePath: "/tmp/repo/tasks",
+				PkgName:  "task1",
+				PkgPath:  "/tmp/repo/tasks/task1/0.1",
+			},
+			expectedContentURL: "https://git.sr.ht/~user/repo/blob/main/tasks/task1/0.1/task1.yaml",
+			expectedSourceURL:  "https://git.sr.ht/~user/repo/tree/main/item/tasks/task1/0.1/task1.yaml",
+		},
+		{
+			name: "codeberg with reserved char in branch name",
+			input: &PreparePackageInput{
+				R:        &hub.Repository{URL: "https://CODEBERG.ORG/user/repo/tasks", Branch: "release#1"},
+				BasePath: "/tmp/repo/tasks",
+				PkgName:  "task1",
+				PkgPath:  "/tmp/repo/tasks/task1/0.1",
+			},
+			expectedContentURL: "https://CODEBERG.ORG/user/repo/raw/branch/release%231/tasks/task1/0.1/task1.yaml",
+			expectedSourceURL:  "https://CODEBERG.ORG/user/repo/src/branch/release%231/tasks/task1/0.1/task1.yaml",
+		},
+		{
+			name: "self-hosted unknown provider returns empty links",
+			input: &PreparePackageInput{
+				R:        &hub.Repository{URL: "https://git.example.com/org/team/repo.git/tasks"},
+				BasePath: "/tmp/repo/tasks",
+				PkgName:  "task1",
+				PkgPath:  "/tmp/repo/tasks/task1/0.1",
+			},
+			expectedContentURL: "",
+			expectedSourceURL:  "",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+
+			contentURL, sourceURL := prepareContentAndSourceLinks(tc.input)
+			assert.Equal(t, tc.expectedContentURL, contentURL)
+			assert.Equal(t, tc.expectedSourceURL, sourceURL)
+		})
+	}
+}

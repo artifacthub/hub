@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -125,27 +126,28 @@ func (s *TrackerSource) preparePackage(r *hub.Repository, md *RulesMetadata, pkg
 	}
 
 	// Prepare source link url whenever possible
-	var repoBaseURL, host, pkgsPath string
-	matches := repo.GitRepoURLRE.FindStringSubmatch(r.URL)
-	if len(matches) >= 3 {
-		repoBaseURL = matches[1]
-		host = matches[2]
-	}
-	if len(matches) == 4 {
-		pkgsPath = strings.TrimSuffix(matches[3], "/")
-	}
-	var sourceURL string
-	switch host {
-	case "github.com":
-		sourceURL = fmt.Sprintf("%s/blob/%s/%s%s", repoBaseURL, repo.GetBranch(r), pkgsPath, pkgPath)
-	case "gitlab.com":
-		sourceURL = fmt.Sprintf("%s/-/blob/%s/%s%s", repoBaseURL, repo.GetBranch(r), pkgsPath, pkgPath)
-	}
-	if sourceURL != "" {
-		p.Links = append(p.Links, &hub.Link{
-			Name: "source",
-			URL:  sourceURL,
-		})
+	if gitURL, err := repo.ParseGitURL(r.URL); err == nil {
+		var sourceURL string
+		branch := repo.EscapeURLPath(repo.GetBranch(r))
+		filePath := repo.EscapeURLPath(strings.TrimPrefix(path.Join(gitURL.PackagesPath, pkgPath), "/"))
+		switch gitURL.Host {
+		case "bitbucket.org":
+			sourceURL = fmt.Sprintf("%s/src/%s/%s", gitURL.WebBaseURL, branch, filePath)
+		case "codeberg.org", "gitea.com":
+			sourceURL = fmt.Sprintf("%s/src/branch/%s/%s", gitURL.WebBaseURL, branch, filePath)
+		case "git.sr.ht":
+			sourceURL = fmt.Sprintf("%s/tree/%s/item/%s", gitURL.WebBaseURL, branch, filePath)
+		case "github.com", "gitee.com":
+			sourceURL = fmt.Sprintf("%s/blob/%s/%s", gitURL.WebBaseURL, branch, filePath)
+		case "gitlab.com":
+			sourceURL = fmt.Sprintf("%s/-/blob/%s/%s", gitURL.WebBaseURL, branch, filePath)
+		}
+		if sourceURL != "" {
+			p.Links = append(p.Links, &hub.Link{
+				Name: "source",
+				URL:  sourceURL,
+			})
+		}
 	}
 
 	// Register logo image if available

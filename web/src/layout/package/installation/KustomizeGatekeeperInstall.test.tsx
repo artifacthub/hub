@@ -40,6 +40,53 @@ describe('KustomizeGatekeeperInstall', () => {
       expect(link).toHaveProperty('href', 'https://kubectl.docs.kubernetes.io/installation/kustomize/');
     });
 
+    it('renders subgroup repository with .git delimiter', async () => {
+      render(
+        <KustomizeGatekeeperInstall
+          relativePath={defaultProps.relativePath}
+          repository={{
+            ...defaultProps.repository,
+            url: 'https://gitlab.com/group/subgroup/gatekeeper-library.git/library',
+          }}
+        />
+      );
+
+      expect(
+        await screen.findByText(
+          'https://gitlab.com/group/subgroup/gatekeeper-library.git//library/general/storageclass'
+        )
+      ).toBeInTheDocument();
+    });
+
+    it('renders non-github repository keeping https scheme', async () => {
+      render(
+        <KustomizeGatekeeperInstall
+          relativePath={defaultProps.relativePath}
+          repository={{
+            ...defaultProps.repository,
+            url: 'https://codeberg.org/user/gatekeeper-library/library',
+          }}
+        />
+      );
+
+      expect(
+        await screen.findByText('https://codeberg.org/user/gatekeeper-library//library/general/storageclass')
+      ).toBeInTheDocument();
+    });
+
+    it('renders root-level package in .git subgroup repository without relativePath', async () => {
+      render(
+        <KustomizeGatekeeperInstall
+          repository={{
+            ...defaultProps.repository,
+            url: 'https://gitlab.com/group/subgroup/gatekeeper-library.git',
+          }}
+        />
+      );
+
+      expect(await screen.findByText('https://gitlab.com/group/subgroup/gatekeeper-library.git')).toBeInTheDocument();
+    });
+
     it('renders private repo', () => {
       render(
         <KustomizeGatekeeperInstall
