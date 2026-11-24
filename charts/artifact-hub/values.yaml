@@ -462,6 +462,11 @@ trivy:
   persistence:
     enabled: false
     size: 10Gi
+    # Maximum size allowed for Trivy's scan cache (fanal.db) in bytes. When persistence is enabled,
+    # an init container clears fanal.db on pod startup if the Trivy version changed or if fanal.db
+    # exceeds this limit. This check only runs on pod startup and does not enforce the limit while
+    # Trivy is running. Set to 0 to disable the size check.
+    maxCacheSize: 0
 
 # Values for postgresql chart dependency
 postgresql:

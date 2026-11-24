@@ -41,6 +41,60 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.trivy.persistence.enabled }}
+      initContainers:
+        - name: cache-guard
+          image: {{ .Values.trivy.deploy.image }}
+          command:
+            - sh
+            - -eu
+            - -c
+            - |
+              cache_dir="/trivy/fanal"
+              cache_file="$cache_dir/fanal.db"
+              version_file="$cache_dir/.version"
+              trivy_version_out="$(trivy --version)"
+              current_version="$(printf '%s\n' "$trivy_version_out" | head -n 1)"
+              if [ -z "$current_version" ]; then
+                echo "Failed to determine Trivy version" >&2
+                exit 1
+              fi
+              stored_version=""
+              if [ -f "$version_file" ]; then
+                stored_version="$(cat "$version_file")"
+              fi
+              clear_cache=0
+              if [ -f "$cache_file" ]; then
+                if [ "$stored_version" != "$current_version" ]; then
+                  echo "Trivy version changed ($stored_version -> $current_version): clearing scan cache"
+                  clear_cache=1
+                elif [ "${MAX_CACHE_SIZE:-0}" -gt 0 ]; then
+                  cache_size="$(stat -c %s "$cache_file")"
+                  if [ "$cache_size" -gt "$MAX_CACHE_SIZE" ]; then
+                    echo "Trivy scan cache size ($cache_size bytes) exceeds limit ($MAX_CACHE_SIZE bytes): clearing scan cache"
+                    clear_cache=1
+                  fi
+                fi
+              fi
+              if [ "$clear_cache" -eq 1 ]; then
+                rm -f "$cache_file"
+              fi
+              mkdir -p "$cache_dir"
+              printf '%s\n' "$current_version" > "$version_file"
+          env:
+            - name: MAX_CACHE_SIZE
+              value: {{ printf "%d" (int64 (.Values.trivy.persistence.maxCacheSize | default 0)) | quote }}
+          {{- with .Values.trivy.deploy.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: trivy
+              mountPath: "/trivy"
+            {{- if .Values.trivy.deploy.extraVolumeMounts }}
+              {{- include "chart.tplvalues.render" (dict "value" .Values.trivy.deploy.extraVolumeMounts "context" $) | nindent 12 }}
+            {{- end }}
+      {{- end }}
       containers:
         - name: trivy
           image: {{ .Values.trivy.deploy.image }}
@@ -58,6 +112,14 @@ spec:
           {{- with .Values.trivy.deploy.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.trivy.deploy.livenessProbe }}
+          livenessProbe:
+            {{- toYaml .Values.trivy.deploy.livenessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.trivy.deploy.readinessProbe }}
+          readinessProbe:
+            {{- toYaml .Values.trivy.deploy.readinessProbe | nindent 12 }}
           {{- end }}
       volumes:
         - name: trivy

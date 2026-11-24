@@ -149,6 +149,7 @@ trivy:
   persistence:
     enabled: true
     size: 100Gi
+    maxCacheSize: 75161927680
     storageClassName: gp2
 
 postgresql:

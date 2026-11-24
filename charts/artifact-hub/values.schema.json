@@ -1364,10 +1364,20 @@
                             "type": "string",
                             "default": "aquasec/trivy:0.76.2"
                         },
+                        "livenessProbe": {
+                            "title": "Trivy pod liveness probe",
+                            "type": "object",
+                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.Probe"
+                        },
                         "nodeSelector": {
                             "title": "Trivy pod node selector",
                             "type": "object",
                             "default": {}
+                        },
+                        "readinessProbe": {
+                            "title": "Trivy pod readiness probe",
+                            "type": "object",
+                            "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.19.0/_definitions.json#/definitions/io.k8s.api.core.v1.Probe"
                         },
                         "resources": {
                             "title": "Trivy pod resource requirements",
@@ -1393,6 +1403,13 @@
                             "title": "Use persistent volume to store data",
                             "type": "boolean",
                             "default": false
+                        },
+                        "maxCacheSize": {
+                            "title": "Maximum Trivy scan cache size",
+                            "description": "Maximum size allowed for Trivy's scan cache (fanal.db) in bytes. When persistence is enabled, an init container clears fanal.db on pod startup if the Trivy version changed or if fanal.db exceeds this limit. This check only runs on pod startup and does not enforce the limit while Trivy is running. Set to 0 to disable the size check.",
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
                         },
                         "size": {
                             "title": "Size of persistent volume claim",

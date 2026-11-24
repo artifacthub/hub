@@ -58,6 +58,24 @@ func TestPrepare(t *testing.T) {
 	}
 }
 
+func TestServerUnavailable(t *testing.T) {
+	t.Parallel()
+	cfg := viper.New()
+	cfg.Set("scanner.trivyURL", "http://localhost:8081")
+
+	for _, unavailable := range []bool{false, true} {
+		t.Run(fmt.Sprintf("unavailable=%t", unavailable), func(t *testing.T) {
+			t.Parallel()
+			isMock := &ImageScannerMock{}
+			isMock.On("ServerUnavailable").Return(unavailable)
+			s := New(context.Background(), cfg, &repo.ErrorsCollectorMock{}, WithImageScanner(isMock))
+
+			assert.Equal(t, unavailable, s.ServerUnavailable())
+			isMock.AssertExpectations(t)
+		})
+	}
+}
+
 func TestScan(t *testing.T) {
 	ctx := context.Background()
 	cfg := viper.New()
@@ -138,6 +156,21 @@ func TestScan(t *testing.T) {
 
 		_, err := s.Scan(snapshot)
 		assert.ErrorIs(t, err, ErrScanCanceled)
+		assert.True(t, IsPending(err))
+		isMock.AssertExpectations(t)
+		ecMock.AssertNotCalled(t, "Init", repositoryID)
+		ecMock.AssertNotCalled(t, "Append", repositoryID, mock.Anything)
+	})
+
+	t.Run("trivy server unavailable", func(t *testing.T) {
+		t.Parallel()
+		ecMock := &repo.ErrorsCollectorMock{}
+		isMock := &ImageScannerMock{}
+		isMock.On("ScanImage", image).Return(nil, ErrTrivyServerUnavailable)
+		s := New(ctx, cfg, ecMock, WithImageScanner(isMock))
+
+		_, err := s.Scan(snapshot)
+		assert.ErrorIs(t, err, ErrTrivyServerUnavailable)
 		assert.True(t, IsPending(err))
 		isMock.AssertExpectations(t)
 		ecMock.AssertNotCalled(t, "Init", repositoryID)

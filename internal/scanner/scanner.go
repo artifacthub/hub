@@ -31,6 +31,12 @@ var (
 	// is shutting down. The snapshot should remain pending as this says nothing
 	// about the image.
 	ErrScanCanceled = errors.New("scan canceled")
+
+	// ErrTrivyServerUnavailable indicates that the Trivy server is unavailable
+	// or unable to scan images (for example, its vulnerability database is not
+	// open or its storage is full). The snapshot should remain pending as this
+	// says nothing about the image.
+	ErrTrivyServerUnavailable = errors.New("trivy server unavailable")
 )
 
 // ImageScanner describes the methods an ImageScanner implementation must
@@ -44,6 +50,10 @@ type ImageScanner interface {
 	// ScanImage scans the provided image for security vulnerabilities,
 	// returning a report in json format.
 	ScanImage(image string) ([]byte, error)
+
+	// ServerUnavailable reports whether the image scanner has detected that the
+	// backend scanning server is unavailable and stopped further scans.
+	ServerUnavailable() bool
 
 	// Close releases the resources used by the image scanner.
 	Close() error
@@ -92,19 +102,27 @@ func (s *Scanner) Close() error {
 }
 
 // Prepare gets the scanner ready to scan snapshots. It must be called once,
-// before the first scan. The image scanner may download large databases, like
-// the Java DB of Trivy, so it is better not to call it when there is nothing to
-// scan. Scans should not be run if it fails. ErrScanCanceled is returned if the
-// scanner is shutting down.
+// before the first scan. The image scanner may check its backend server and
+// download large databases, like the Java DB of Trivy, so it is better not to
+// call it when there is nothing to scan. Scans should not be run if it fails.
+// ErrScanCanceled is returned if the scanner is shutting down.
 func (s *Scanner) Prepare() error {
 	return s.is.Prepare()
+}
+
+// ServerUnavailable reports whether the scanner has detected that the backend
+// scanning server is unavailable and stopped further scans.
+func (s *Scanner) ServerUnavailable() bool {
+	return s.is.ServerUnavailable()
 }
 
 // IsPending checks if the error provided means that a snapshot could not be
 // scanned for reasons unrelated to its images. The report returned by Scan must
 // be discarded in that case, so that the snapshot remains pending.
 func IsPending(err error) bool {
-	return errors.Is(err, ErrRateLimited) || errors.Is(err, ErrScanCanceled)
+	return errors.Is(err, ErrRateLimited) ||
+		errors.Is(err, ErrScanCanceled) ||
+		errors.Is(err, ErrTrivyServerUnavailable)
 }
 
 // Scan scans the provided package's snapshot for security vulnerabilities

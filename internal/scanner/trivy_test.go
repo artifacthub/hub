@@ -1,11 +1,13 @@
 package scanner
 
 import (
+	"archive/tar"
 	"bytes"
 	"context"
 	"crypto/sha512"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -27,6 +29,7 @@ import (
 	"github.com/google/go-containerregistry/pkg/registry"
 	v1 "github.com/google/go-containerregistry/pkg/v1"
 	"github.com/google/go-containerregistry/pkg/v1/empty"
+	"github.com/google/go-containerregistry/pkg/v1/layout"
 	"github.com/google/go-containerregistry/pkg/v1/mutate"
 	"github.com/google/go-containerregistry/pkg/v1/random"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
@@ -44,7 +47,7 @@ const (
 		"ArtifactType": "container_image",
 		"Metadata": {"ImageID": "sha256:1234"},
 		"Results": [
-			{"Target": "image (alpine 3.20.0)", "Class": "os-pkgs", "Type": "alpine"},
+			{"Target": "image (alpine 3.20.0)", "Class": "os-pkgs", "Type": "alpine", "Packages": [{"Name": "busybox", "Version": "1.36.1-r0"}]},
 			{"Target": "app/go.mod", "Class": "lang-pkgs", "Type": "gomod"}
 		]
 	}`
@@ -1739,7 +1742,7 @@ func TestTrivyScannerCommand(t *testing.T) {
 }
 
 func TestTrivyScannerPrepare(t *testing.T) {
-	t.Run("java db is downloaded using the temporary directory of the process", func(t *testing.T) {
+	t.Run("checks trivy server and downloads java db using the temporary directory of the process", func(t *testing.T) {
 		ft := setupTrivy(t)
 		tmpDir := t.TempDir()
 		t.Setenv("TMPDIR", tmpDir)
@@ -1749,8 +1752,13 @@ func TestTrivyScannerPrepare(t *testing.T) {
 
 		require.NoError(t, s.Prepare())
 
+		assert.Equal(t, 1, ft.runs(t))
 		assert.Equal(t, 1, ft.javaDBRuns(t))
-		assert.Zero(t, ft.runs(t))
+		checkArgs := ft.read(t, "runs")
+		assert.Contains(t, checkArgs, "--server http://trivy.example.com:8081")
+		assert.Contains(t, checkArgs, "--skip-java-db-update")
+		assert.Contains(t, checkArgs, "--input image")
+		assert.Equal(t, 3, strings.Count(ft.read(t, "blobs"), "\n"))
 		assert.Equal(t,
 			"--quiet image --download-java-db-only --skip-version-check --disable-telemetry\n",
 			ft.read(t, "javadb-runs"),
@@ -1759,6 +1767,80 @@ func TestTrivyScannerPrepare(t *testing.T) {
 		assert.Contains(t, env, "TMPDIR="+tmpDir)
 		assert.Contains(t, env, "TRIVY_CACHE_DIR=/cache")
 		assertTrivyEnv(t, env)
+
+		// The temporary check directory is removed
+		entries, err := os.ReadDir(tmpDir)
+		require.NoError(t, err)
+		assert.Empty(t, entries)
+	})
+
+	t.Run("trivy server check retries once on transient failure", func(t *testing.T) {
+		ft := setupTrivy(t)
+		ft.write(t, "before", `if [ "$(wc -l < "$dir/runs")" -eq 1 ]; then echo 'twirp error internal: failed to do request: connection refused' >&2; exit 1; fi`+"\n")
+		s := newScanner(t, false)
+
+		require.NoError(t, s.Prepare())
+
+		assert.Equal(t, 2, ft.runs(t))
+		assert.Equal(t, 1, ft.javaDBRuns(t))
+	})
+
+	t.Run("trivy server check failure aborts before downloading java db", func(t *testing.T) {
+		ft := setupTrivy(t)
+		ft.write(t, "before", "echo 'twirp error internal: database not open' >&2; exit 1\n")
+		s := newScanner(t, false)
+
+		err := s.Prepare()
+
+		require.ErrorContains(t, err, "error checking trivy server")
+		require.ErrorContains(t, err, "database not open")
+		assert.NotErrorIs(t, err, ErrScanCanceled)
+		assert.Equal(t, 2, ft.runs(t))
+		assert.Zero(t, ft.javaDBRuns(t))
+	})
+
+	t.Run("trivy server check fails on invalid report", func(t *testing.T) {
+		ft := setupTrivy(t)
+		ft.write(t, "report", "not json")
+		s := newScanner(t, false)
+
+		err := s.Prepare()
+
+		require.ErrorContains(t, err, "error checking trivy server: invalid report")
+		assert.Equal(t, 1, ft.runs(t))
+		assert.Zero(t, ft.javaDBRuns(t))
+	})
+
+	t.Run("trivy server check fails when report is missing check package", func(t *testing.T) {
+		ft := setupTrivy(t)
+		ft.write(t, "report", `{"ArtifactName":"image","Results":[]}`)
+		s := newScanner(t, false)
+
+		err := s.Prepare()
+
+		require.ErrorContains(t, err, "error checking trivy server: report missing expected alpine check package")
+		assert.Equal(t, 1, ft.runs(t))
+		assert.Zero(t, ft.javaDBRuns(t))
+	})
+
+	t.Run("trivy server check interrupted when the scanner is shutting down", func(t *testing.T) {
+		ft := setupTrivy(t)
+		ft.write(t, "before", `trap 'kill $!; touch "$dir/terminated"; exit 1' TERM; touch "$dir/started"; sleep 10 & wait`+"\n")
+		s := newScanner(t, false)
+		ctx, cancel := context.WithCancel(context.Background())
+		s.ctx = ctx
+		go func() {
+			for !ft.exists("started") {
+				time.Sleep(time.Millisecond)
+			}
+			cancel()
+		}()
+
+		err := s.Prepare()
+
+		require.ErrorIs(t, err, ErrScanCanceled)
+		assert.True(t, ft.exists("terminated"))
+		assert.Zero(t, ft.javaDBRuns(t))
 	})
 
 	t.Run("download failure", func(t *testing.T) {
@@ -1771,6 +1853,7 @@ func TestTrivyScannerPrepare(t *testing.T) {
 		require.ErrorContains(t, err, "error downloading trivy java db")
 		require.ErrorContains(t, err, "download failed")
 		assert.NotErrorIs(t, err, ErrScanCanceled)
+		assert.Equal(t, 1, ft.runs(t))
 		assert.Equal(t, 1, ft.javaDBRuns(t))
 	})
 
@@ -1791,6 +1874,383 @@ func TestTrivyScannerPrepare(t *testing.T) {
 
 		require.ErrorIs(t, err, ErrScanCanceled)
 		assert.True(t, ft.exists("terminated"))
+	})
+}
+
+func TestWriteServerCheckLayout(t *testing.T) {
+	t.Parallel()
+
+	dir1 := filepath.Join(t.TempDir(), imageLayout)
+	dir2 := filepath.Join(t.TempDir(), imageLayout)
+	require.NoError(t, writeServerCheckLayout(dir1))
+	require.NoError(t, writeServerCheckLayout(dir2))
+
+	lp1, err := layout.FromPath(dir1)
+	require.NoError(t, err)
+	idx1, err := lp1.ImageIndex()
+	require.NoError(t, err)
+	im1, err := idx1.IndexManifest()
+	require.NoError(t, err)
+	require.Len(t, im1.Manifests, 1)
+
+	lp2, err := layout.FromPath(dir2)
+	require.NoError(t, err)
+	idx2, err := lp2.ImageIndex()
+	require.NoError(t, err)
+	im2, err := idx2.IndexManifest()
+	require.NoError(t, err)
+	require.Len(t, im2.Manifests, 1)
+
+	// Layout has a per-check nonce so every check exercises cache writes
+	assert.NotEqual(t, im1.Manifests[0].Digest, im2.Manifests[0].Digest)
+
+	img, err := idx1.Image(im1.Manifests[0].Digest)
+	require.NoError(t, err)
+	cfg, err := img.ConfigFile()
+	require.NoError(t, err)
+	assert.Equal(t, "linux", cfg.OS)
+	assert.Equal(t, "amd64", cfg.Architecture)
+
+	layers, err := img.Layers()
+	require.NoError(t, err)
+	require.Len(t, layers, 1)
+	rc, err := layers[0].Uncompressed()
+	require.NoError(t, err)
+	defer rc.Close()
+
+	files := make(map[string]string)
+	tr := tar.NewReader(rc)
+	for {
+		hdr, err := tr.Next()
+		if errors.Is(err, io.EOF) {
+			break
+		}
+		require.NoError(t, err)
+		content, err := io.ReadAll(tr)
+		require.NoError(t, err)
+		files[hdr.Name] = string(content)
+	}
+	assert.Equal(t, serverCheckOSVersion+"\n", files["etc/alpine-release"])
+	assert.Contains(t, files["lib/apk/db/installed"], "P:"+serverCheckPkgName+"\n")
+	assert.Contains(t, files["lib/apk/db/installed"], "V:"+serverCheckPkgVersion+"\n")
+	assert.Len(t, strings.TrimSpace(files["etc/artifact-hub-check"]), 32)
+}
+
+func TestTrivyScannerServerUnavailable(t *testing.T) {
+	t.Run("confirmed server errors return ErrTrivyServerUnavailable and are not cached", func(t *testing.T) {
+		testCases := []struct {
+			name   string
+			stderr string
+		}{
+			{
+				"database not open",
+				"failed to detect vulnerabilities via RPC: backoff: permanent error (last error: twirp error internal: failed scan, image: advisory foreach error: database not open)",
+			},
+			{
+				"truncated scan response",
+				"failed to detect vulnerabilities via RPC: twirp error internal: failed to read response body: unexpected EOF",
+			},
+			{
+				"missing blobs rpc failure",
+				"unable to fetch missing layers: twirp error internal: failed to do request: connection refused",
+			},
+			{
+				"cache write failure",
+				"unable to store cache on the server: twirp error internal: no space left on device",
+			},
+			{
+				"server unavailable twirp error",
+				"failed to detect vulnerabilities via RPC: twirp error unavailable: service unavailable",
+			},
+		}
+		for _, tc := range testCases {
+			t.Run(tc.name, func(t *testing.T) {
+				logs := captureLogs(t)
+				ft := setupTrivy(t)
+				fr := newFakeRegistry(t)
+				image := fr.push(t, "repo:1.0.0", newImage(t, 1))
+				ft.write(t, "before", "echo '"+tc.stderr+"' >&2; exit 1\n")
+				s := newScanner(t, true)
+				s.maxServerErrors = 3
+
+				_, err := s.ScanImage(image)
+
+				require.ErrorIs(t, err, ErrTrivyServerUnavailable)
+				assert.False(t, s.ServerUnavailable())
+				assert.Contains(t, errorLogs(t, logs), "trivy server error")
+
+				// Recovering allows the same reference to be scanned successfully
+				ft.write(t, "before", "")
+				data, err := s.ScanImage(image)
+				require.NoError(t, err)
+				assert.Equal(t, image, parseReport(t, data).ArtifactName)
+			})
+		}
+	})
+
+	t.Run("spoofed or image-specific rpc errors do not trigger ErrTrivyServerUnavailable when probe succeeds", func(t *testing.T) {
+		testCases := []struct {
+			name         string
+			stderr       string
+			expectProbe  bool
+			expectedRuns int
+		}{
+			{
+				"spoofed twirp error in image path",
+				"failed to analyze twirp error unavailable:/x: unexpected EOF",
+				true,
+				3, // 2 scan attempts + 1 passing probe
+			},
+			{
+				"image-specific cache rejection",
+				"unable to store cache on the server: twirp error internal: unable to store layer info in cache: invalid diffID",
+				true,
+				3, // 2 scan attempts + 1 passing probe
+			},
+			{
+				"client-side protobuf marshal error skips probe",
+				"unable to store cache on the server: twirp error internal: failed to marshal proto request: string field contains invalid UTF-8",
+				false,
+				2, // 2 scan attempts, no probe
+			},
+		}
+		for _, tc := range testCases {
+			t.Run(tc.name, func(t *testing.T) {
+				ft := setupTrivy(t)
+				fr := newFakeRegistry(t)
+				image := fr.push(t, "repo:1.0.0", newImage(t, 1))
+				// Fail only when scanning the image layout, not the probe layout
+				ft.write(t, "before", `case "$PWD" in *artifact-hub-trivy-check*) ;; *) echo '`+tc.stderr+`' >&2; exit 1 ;; esac`+"\n")
+				s := newScanner(t, false)
+				s.maxServerErrors = 1
+
+				_, err := s.ScanImage(image)
+
+				require.ErrorContains(t, err, "error running trivy on image "+image)
+				assert.NotErrorIs(t, err, ErrTrivyServerUnavailable)
+				assert.False(t, s.ServerUnavailable())
+				assert.Equal(t, tc.expectedRuns, ft.runs(t))
+			})
+		}
+	})
+
+	t.Run("circuit breaker trips after consecutive confirmed server errors and stops further scans", func(t *testing.T) {
+		ft := setupTrivy(t)
+		fr := newFakeRegistry(t)
+		image1 := fr.push(t, "repo:1.0.0", newImage(t, 1))
+		image2 := fr.push(t, "repo:2.0.0", newImage(t, 1))
+		image3 := fr.push(t, "repo:3.0.0", newImage(t, 1))
+		ft.write(t, "before", "echo 'failed to detect vulnerabilities via RPC: twirp error internal: database not open' >&2; exit 1\n")
+		s := newScanner(t, true)
+		s.maxServerErrors = 2
+
+		_, err := s.ScanImage(image1)
+		require.ErrorIs(t, err, ErrTrivyServerUnavailable)
+		assert.False(t, s.ServerUnavailable())
+
+		_, err = s.ScanImage(image2)
+		require.ErrorIs(t, err, ErrTrivyServerUnavailable)
+		assert.True(t, s.ServerUnavailable())
+
+		fr.reset()
+		runsBefore := ft.runs(t)
+		_, err = s.ScanImage(image3)
+		require.ErrorIs(t, err, ErrTrivyServerUnavailable)
+		assert.Zero(t, fr.count("/"))
+		assert.Equal(t, runsBefore, ft.runs(t))
+	})
+
+	t.Run("successful scan resets the consecutive server error counter", func(t *testing.T) {
+		ft := setupTrivy(t)
+		fr := newFakeRegistry(t)
+		image1 := fr.push(t, "repo:1.0.0", newImage(t, 1))
+		image2 := fr.push(t, "repo:2.0.0", newImage(t, 1))
+		image3 := fr.push(t, "repo:3.0.0", newImage(t, 1))
+		serverErr := "echo 'failed to detect vulnerabilities via RPC: twirp error internal: database not open' >&2; exit 1\n"
+		s := newScanner(t, true)
+		s.maxServerErrors = 2
+
+		ft.write(t, "before", serverErr)
+		_, err := s.ScanImage(image1)
+		require.ErrorIs(t, err, ErrTrivyServerUnavailable)
+		assert.False(t, s.ServerUnavailable())
+
+		// Recovery resets the counter
+		ft.write(t, "before", "")
+		_, err = s.ScanImage(image2)
+		require.NoError(t, err)
+
+		// Another isolated failure does not trip the breaker
+		ft.write(t, "before", serverErr)
+		_, err = s.ScanImage(image3)
+		require.ErrorIs(t, err, ErrTrivyServerUnavailable)
+		assert.False(t, s.ServerUnavailable())
+	})
+
+	t.Run("non-rpc trivy errors do not probe or trip the circuit breaker", func(t *testing.T) {
+		ft := setupTrivy(t)
+		fr := newFakeRegistry(t)
+		image1 := fr.push(t, "repo:1.0.0", newImage(t, 1))
+		image2 := fr.push(t, "repo:2.0.0", newImage(t, 1))
+		ft.write(t, "before", "echo 'invalid tar header' >&2; exit 1\n")
+		s := newScanner(t, false)
+		s.maxServerErrors = 1
+
+		_, err := s.ScanImage(image1)
+		require.ErrorContains(t, err, "invalid tar header")
+		assert.NotErrorIs(t, err, ErrTrivyServerUnavailable)
+		assert.False(t, s.ServerUnavailable())
+		assert.Equal(t, 2, ft.runs(t))
+
+		_, err = s.ScanImage(image2)
+		require.ErrorContains(t, err, "invalid tar header")
+		assert.False(t, s.ServerUnavailable())
+		assert.Equal(t, 4, ft.runs(t))
+	})
+
+	t.Run("concurrent requests sharing a digest get ErrTrivyServerUnavailable without retrying immediately", func(t *testing.T) {
+		ft := setupTrivy(t)
+		fr := newFakeRegistry(t)
+		img := newImage(t, 1)
+		image1 := fr.push(t, "repo:1.0.0", img)
+		image2 := fr.push(t, "repo:2.0.0", img)
+		ft.write(t, "before", `touch "$dir/started"; sleep 0.2; echo 'twirp error internal: database not open' >&2; exit 1`+"\n")
+		s := newScanner(t, true)
+		s.maxServerErrors = 5
+
+		err1Ch := make(chan error, 1)
+		go func() {
+			_, err := s.ScanImage(image1)
+			err1Ch <- err
+		}()
+		for !ft.exists("started") {
+			time.Sleep(time.Millisecond)
+		}
+		_, err2 := s.ScanImage(image2)
+		err1 := <-err1Ch
+
+		require.ErrorIs(t, err1, ErrTrivyServerUnavailable)
+		require.ErrorIs(t, err2, ErrTrivyServerUnavailable)
+		assert.Equal(t, 3, ft.runs(t)) // 2 scan attempts + 1 probe
+	})
+
+	t.Run("concurrent rpc failures coalesce onto a single server probe and count once", func(t *testing.T) {
+		ft := setupTrivy(t)
+		fr := newFakeRegistry(t)
+		image1 := fr.push(t, "repo:1.0.0", newImage(t, 1))
+		image2 := fr.push(t, "repo:2.0.0", newImage(t, 1))
+		image3 := fr.push(t, "repo:3.0.0", newImage(t, 1))
+		ft.write(t, "before", `case "$PWD" in
+  *artifact-hub-trivy-check*) echo probe >> "$dir/probes"; sleep 0.3; echo 'twirp error internal: database not open' >&2; exit 1 ;;
+  *) echo 'twirp error internal: database not open' >&2; exit 1 ;;
+esac
+`)
+		s := newScanner(t, true)
+		s.maxServerErrors = 2
+
+		var wg sync.WaitGroup
+		errs := make([]error, 2)
+		for i, img := range []string{image1, image2} {
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				_, errs[i] = s.ScanImage(img)
+			}()
+		}
+		wg.Wait()
+
+		require.ErrorIs(t, errs[0], ErrTrivyServerUnavailable)
+		require.ErrorIs(t, errs[1], ErrTrivyServerUnavailable)
+		assert.Equal(t, 1, ft.lines(t, "probes"))
+		assert.False(t, s.ServerUnavailable())
+
+		// A second independent probe failure trips the breaker
+		_, err := s.ScanImage(image3)
+		require.ErrorIs(t, err, ErrTrivyServerUnavailable)
+		assert.Equal(t, 2, ft.lines(t, "probes"))
+		assert.True(t, s.ServerUnavailable())
+	})
+
+	t.Run("breaker tripping during a failing scan skips retry and returns ErrTrivyServerUnavailable", func(t *testing.T) {
+		ft := setupTrivy(t)
+		fr := newFakeRegistry(t)
+		image := fr.push(t, "repo:1.0.0", newImage(t, 1))
+		ft.write(t, "before", `touch "$dir/started"; while [ ! -f "$dir/release" ]; do sleep 0.01; done; echo 'transient crash' >&2; exit 1`+"\n")
+		s := newScanner(t, false)
+
+		errCh := make(chan error, 1)
+		go func() {
+			_, err := s.ScanImage(image)
+			errCh <- err
+		}()
+		for !ft.exists("started") {
+			time.Sleep(time.Millisecond)
+		}
+		s.mu.Lock()
+		s.serverUnavailable = true
+		s.mu.Unlock()
+		ft.write(t, "release", "")
+
+		require.ErrorIs(t, <-errCh, ErrTrivyServerUnavailable)
+		assert.Equal(t, 1, ft.runs(t))
+	})
+
+	t.Run("failed server probes back off exponentially and cancel cleanly on shutdown", func(t *testing.T) {
+		s := newScanner(t, true)
+		s.retryDelay = 5 * time.Second
+		s.maxProbeBackoff = 30 * time.Second
+		assert.Equal(t, 5*time.Second, s.probeBackoff(1))
+		assert.Equal(t, 10*time.Second, s.probeBackoff(2))
+		assert.Equal(t, 20*time.Second, s.probeBackoff(3))
+		assert.Equal(t, 30*time.Second, s.probeBackoff(4))
+		assert.Equal(t, 30*time.Second, s.probeBackoff(10))
+
+		// Verify backoff waits between non-terminal failed probes
+		ft := setupTrivy(t)
+		fr := newFakeRegistry(t)
+		image1 := fr.push(t, "repo:1.0.0", newImage(t, 1))
+		image2 := fr.push(t, "repo:2.0.0", newImage(t, 1))
+		ft.write(t, "before", "echo 'twirp error internal: database not open' >&2; exit 1\n")
+		s = newScanner(t, true)
+		s.retryDelay = 100 * time.Millisecond
+		s.maxProbeBackoff = 500 * time.Millisecond
+		s.maxServerErrors = 3
+
+		startedAt := time.Now()
+		_, err := s.ScanImage(image1)
+		require.ErrorIs(t, err, ErrTrivyServerUnavailable)
+		// scanLayout retryDelay (100ms) + first probe backoff (100ms)
+		assert.GreaterOrEqual(t, time.Since(startedAt), 200*time.Millisecond)
+		assert.False(t, s.ServerUnavailable())
+
+		// Shutting down during probe backoff cancels immediately
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
+		s.ctx = ctx
+		ft.write(t, "before", `case "$PWD" in
+  *artifact-hub-trivy-check*) touch "$dir/probing"; echo 'twirp error internal: database not open' >&2; exit 1 ;;
+  *) echo 'twirp error internal: database not open' >&2; exit 1 ;;
+esac
+`)
+		s.retryDelay = 20 * time.Millisecond
+		s.maxProbeBackoff = time.Hour
+		s.serverErrors = 10 // probeBackoff(11) = 20ms * 2^10 > 20s
+		s.maxServerErrors = 20
+
+		errCh := make(chan error, 1)
+		go func() {
+			_, err := s.ScanImage(image2)
+			errCh <- err
+		}()
+		for !ft.exists("probing") {
+			time.Sleep(time.Millisecond)
+		}
+		time.Sleep(50 * time.Millisecond)
+		cancelAt := time.Now()
+		cancel()
+
+		require.ErrorIs(t, <-errCh, ErrScanCanceled)
+		assert.Less(t, time.Since(cancelAt), 2*time.Second)
 	})
 }
 

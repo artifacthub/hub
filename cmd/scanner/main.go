@@ -89,8 +89,15 @@ L:
 			break L
 		default:
 		}
+		if s.ServerUnavailable() {
+			break L
+		}
 
 		limiter <- struct{}{}
+		if s.ServerUnavailable() {
+			<-limiter
+			break L
+		}
 		wg.Add(1)
 		go func(snapshot *hub.SnapshotToScan) {
 			defer wg.Done()
@@ -131,6 +138,9 @@ L:
 	ec.Flush()
 	if err := s.Close(); err != nil {
 		log.Error().Err(err).Msg("error closing scanner")
+	}
+	if s.ServerUnavailable() {
+		log.Fatal().Msg("scanner aborted: trivy server unavailable")
 	}
 	log.Info().Msg("scanner finished")
 }

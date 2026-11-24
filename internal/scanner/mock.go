@@ -25,3 +25,9 @@ func (m *ImageScannerMock) ScanImage(image string) ([]byte, error) {
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
 }
+
+// ServerUnavailable implements the ImageScanner interface.
+func (m *ImageScannerMock) ServerUnavailable() bool {
+	args := m.Called()
+	return args.Bool(0)
+}
