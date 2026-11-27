@@ -575,8 +575,8 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 	var digest string
 	u, _ := url.Parse(r.URL)
 
-	switch {
-	case r.Kind == hub.Helm || r.Kind == hub.Kagent:
+	switch r.Kind {
+	case hub.Helm, hub.Kagent:
 		switch {
 		case SchemeIsHTTP(u):
 			// Digest is obtained by hashing the repository index.yaml file
