@@ -549,33 +549,38 @@ func PreparePackage(i *PreparePackageInput) (*hub.Package, error) {
 // git provider identified from the host part in the repository url.
 func prepareContentAndSourceLinks(i *PreparePackageInput) (string, string) {
 	// Parse repository url
-	var repoBaseURL, host, pkgsPath string
-	matches := repo.GitRepoURLRE.FindStringSubmatch(i.R.URL)
-	if len(matches) >= 3 {
-		repoBaseURL = matches[1]
-		host = matches[2]
-	}
-	if len(matches) == 4 {
-		pkgsPath = strings.TrimSuffix(matches[3], "/")
+	gitURL, err := repo.ParseGitURL(i.R.URL)
+	if err != nil {
+		return "", ""
 	}
 
 	// Generate content and source url for the corresponding git provider
 	var contentURL, sourceURL string
-	branch := i.Tag
-	if branch == "" {
-		branch = repo.GetBranch(i.R)
+	ref := i.Tag
+	refType := "tag"
+	if ref == "" {
+		ref = repo.GetBranch(i.R)
+		refType = "branch"
 	}
+	escapedRef := repo.EscapeURLPath(ref)
 	pkgRelativePath := strings.TrimPrefix(i.PkgPath, i.BasePath)
-	switch host {
+	manifestPath := repo.EscapeURLPath(strings.TrimPrefix(path.Join(gitURL.PackagesPath, pkgRelativePath, i.PkgName+".yaml"), "/"))
+	switch gitURL.Host {
 	case "bitbucket.org":
-		contentURL = fmt.Sprintf("%s/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, i.PkgName)
-		sourceURL = fmt.Sprintf("%s/src/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, i.PkgName)
-	case "github.com":
-		contentURL = fmt.Sprintf("%s/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, i.PkgName)
-		sourceURL = fmt.Sprintf("%s/blob/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, i.PkgName)
+		contentURL = fmt.Sprintf("%s/raw/%s/%s", gitURL.WebBaseURL, escapedRef, manifestPath)
+		sourceURL = fmt.Sprintf("%s/src/%s/%s", gitURL.WebBaseURL, escapedRef, manifestPath)
+	case "codeberg.org", "gitea.com":
+		contentURL = fmt.Sprintf("%s/raw/%s/%s/%s", gitURL.WebBaseURL, refType, escapedRef, manifestPath)
+		sourceURL = fmt.Sprintf("%s/src/%s/%s/%s", gitURL.WebBaseURL, refType, escapedRef, manifestPath)
+	case "git.sr.ht":
+		contentURL = fmt.Sprintf("%s/blob/%s/%s", gitURL.WebBaseURL, escapedRef, manifestPath)
+		sourceURL = fmt.Sprintf("%s/tree/%s/item/%s", gitURL.WebBaseURL, escapedRef, manifestPath)
+	case "github.com", "gitee.com":
+		contentURL = fmt.Sprintf("%s/raw/%s/%s", gitURL.WebBaseURL, escapedRef, manifestPath)
+		sourceURL = fmt.Sprintf("%s/blob/%s/%s", gitURL.WebBaseURL, escapedRef, manifestPath)
 	case "gitlab.com":
-		contentURL = fmt.Sprintf("%s/-/raw/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, i.PkgName)
-		sourceURL = fmt.Sprintf("%s/-/blob/%s/%s%s/%s.yaml", repoBaseURL, branch, pkgsPath, pkgRelativePath, i.PkgName)
+		contentURL = fmt.Sprintf("%s/-/raw/%s/%s", gitURL.WebBaseURL, escapedRef, manifestPath)
+		sourceURL = fmt.Sprintf("%s/-/blob/%s/%s", gitURL.WebBaseURL, escapedRef, manifestPath)
 	}
 
 	return contentURL, sourceURL

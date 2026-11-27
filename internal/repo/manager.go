@@ -76,9 +76,14 @@ var (
 	// repository url is not supported.
 	ErrSchemeNotSupported = errors.New("scheme not supported")
 
-	// GitRepoURLRE is a regexp used to validate and parse an http based git
+	// gitRepoWithDotGitURLRE is a regexp used to validate and parse an https
+	// git repository URL that uses ".git" to delimit the repository base URL
+	// from an optional packages path (e.g. GitLab subgroups or custom paths).
+	gitRepoWithDotGitURLRE = regexp.MustCompile(`^(https:\/\/([A-Za-z0-9_.-]+)(?::[0-9]+)?(?:\/[A-Za-z0-9_.~-]+)+?\.git)(?:\/([^?#]*))?$`)
+
+	// GitRepoURLRE is a regexp used to validate and parse an https git
 	// repository URL.
-	GitRepoURLRE = regexp.MustCompile(`^(https:\/\/([A-Za-z0-9_.-]+)\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+)\/?(.*)$`)
+	GitRepoURLRE = regexp.MustCompile(`^(https:\/\/([A-Za-z0-9_.-]+)(?::[0-9]+)?\/[A-Za-z0-9_.~-]+\/[A-Za-z0-9_.~-]+)(?:\/([^?#]*))?$`)
 
 	// validRepositoryKinds contains the repository kinds supported.
 	validRepositoryKinds = []hub.RepositoryKind{
@@ -570,8 +575,8 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 	var digest string
 	u, _ := url.Parse(r.URL)
 
-	switch {
-	case r.Kind == hub.Helm || r.Kind == hub.Kagent:
+	switch r.Kind {
+	case hub.Helm, hub.Kagent:
 		switch {
 		case SchemeIsHTTP(u):
 			// Digest is obtained by hashing the repository index.yaml file
@@ -589,7 +594,12 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 			digest = fmt.Sprintf("%x", sha256.Sum256([]byte(strings.Join(versions, ","))))
 		}
 
-	case GitRepoURLRE.MatchString(r.URL):
+	default:
+		gitURL, err := ParseGitURL(r.URL)
+		if err != nil {
+			break
+		}
+
 		// Do not track repo's digest for Tekton repos using git based versioning
 		if (r.Kind == hub.TektonTask || r.Kind == hub.TektonPipeline || r.Kind == hub.TektonStepAction) && r.Data != nil {
 			var data *hub.TektonData
@@ -602,10 +612,8 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 		}
 
 		// Digest is obtained from the last commit in the repository
-		matches := GitRepoURLRE.FindStringSubmatch(r.URL)
-		repoBaseURL := matches[1]
 		remote := git.NewRemote(memory.NewStorage(), &config.RemoteConfig{
-			URLs: []string{repoBaseURL},
+			URLs: []string{gitURL.RepoBaseURL},
 		})
 		listOptions := &git.ListOptions{}
 		if r.AuthPass != "" {
@@ -870,8 +878,10 @@ func (m *Manager) validateURL(r *hub.Repository) error {
 		hub.TektonPipeline,
 		hub.TektonTask,
 		hub.TektonStepAction:
-		if SchemeIsHTTP(u) && !GitRepoURLRE.MatchString(r.URL) {
-			return errors.New("invalid url format")
+		if SchemeIsHTTP(u) {
+			if _, err := ParseGitURL(r.URL); err != nil {
+				return errors.New("invalid url format")
+			}
 		}
 	}
 	return nil

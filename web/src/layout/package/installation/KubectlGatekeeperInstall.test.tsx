@@ -72,7 +72,7 @@ describe('KubectlGatekeeperInstall', () => {
 
   it('creates snapshot', async () => {
     const { asFragment } = render(<KubectlGatekeeperInstall {...defaultProps} />);
-    expect(await screen.findByText('library/general/storageclass')).toBeInTheDocument();
+    expect(await screen.findByText('gatekeeper-library/library/general/storageclass')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -81,10 +81,27 @@ describe('KubectlGatekeeperInstall', () => {
       render(<KubectlGatekeeperInstall {...defaultProps} />);
 
       expect(screen.getByText(/and the sample constraints provided in each/)).toBeInTheDocument();
-      expect(await screen.findByText('library/general/storageclass')).toBeInTheDocument();
+      expect(await screen.findByText('gatekeeper-library/library/general/storageclass')).toBeInTheDocument();
       expect(
         screen.getByText(/kubectl apply -f samples\/container-must-meet-ratio\/constraint\.yaml/)
       ).toBeInTheDocument();
+    });
+
+    it('renders subgroup repository with .git delimiter', async () => {
+      render(
+        <KubectlGatekeeperInstall
+          relativePath={defaultProps.relativePath}
+          repository={{
+            ...defaultProps.repository,
+            url: 'https://gitlab.com/group/subgroup/gatekeeper-library.git/library',
+          }}
+        />
+      );
+
+      expect(
+        await screen.findByText(/https:\/\/gitlab\.com\/group\/subgroup\/gatekeeper-library\.git/)
+      ).toBeInTheDocument();
+      expect(screen.getByText('gatekeeper-library/library/general/storageclass')).toBeInTheDocument();
     });
 
     it('renders private repo', () => {

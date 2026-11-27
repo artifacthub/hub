@@ -1,10 +1,17 @@
 ## Tekton tasks repositories
 
-Artifact Hub is able to process Tekton tasks listed in Tekton catalog repositories. It supports catalogs using the [directory-based versioning structure](https://github.com/tektoncd/catalog#catalog-structure) as well as catalogs using the newer and recommended [git-based versioning structure](https://github.com/tektoncd/community/blob/main/teps/0115-tekton-catalog-git-based-versioning.md#git-based-versioning). Repositories are expected to be hosted in GitHub, GitLab or Bitbucket. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+Artifact Hub is able to process Tekton tasks listed in Tekton catalog repositories. It supports catalogs using the [directory-based versioning structure](https://github.com/tektoncd/catalog#catalog-structure) as well as catalogs using the newer and recommended [git-based versioning structure](https://github.com/tektoncd/community/blob/main/teps/0115-tekton-catalog-git-based-versioning.md#git-based-versioning). Repositories can be hosted in any Git repository accessible over HTTPS (such as GitHub, GitLab, Bitbucket, Codeberg, Gitea, Gitee, SourceHut, or self-hosted instances). When adding your repository to Artifact Hub, the url used **must** follow one of the following formats:
+
+- `https://host/user/repo[/path/to/packages]`
+- `https://host/group/subgroup/repo.git[/path/to/packages]` *(for repositories under subgroups or custom paths, use `.git` to delimit the repository url)*
+
+For example:
 
 - `https://github.com/user/repo[/path/to/packages]`
 - `https://gitlab.com/user/repo[/path/to/packages]`
+- `https://gitlab.com/group/subgroup/repo.git[/path/to/packages]`
 - `https://bitbucket.org/user/repo[/path/to/packages]`
+- `https://codeberg.org/user/repo[/path/to/packages]`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI. It's important that `/path/to/packages` points to the directory that contains all the tasks.
 

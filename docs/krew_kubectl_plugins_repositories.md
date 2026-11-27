@@ -1,10 +1,17 @@
 ## Krew kubectl plugins repositories
 
-Artifact Hub is able to process kubectl plugins listed in [Krew index repositories](https://krew.sigs.k8s.io/docs/developer-guide/custom-indexes/). Repositories are expected to be hosted in GitHub, GitLab or Bitbucket. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+Artifact Hub is able to process kubectl plugins listed in [Krew index repositories](https://krew.sigs.k8s.io/docs/developer-guide/custom-indexes/). Repositories can be hosted in any Git repository accessible over HTTPS (such as GitHub, GitLab, Bitbucket, Codeberg, Gitea, Gitee, SourceHut, or self-hosted instances). When adding your repository to Artifact Hub, the url used **must** follow one of the following formats:
+
+- `https://host/user/repo`
+- `https://host/group/subgroup/repo.git` *(for repositories under subgroups or custom paths, use `.git` to delimit the repository url)*
+
+For example:
 
 - `https://github.com/user/repo`
 - `https://gitlab.com/user/repo`
+- `https://gitlab.com/group/subgroup/repo.git`
 - `https://bitbucket.org/user/repo`
+- `https://codeberg.org/user/repo`
 
 By default the `master` branch is used, but it's possible to specify a different one from the UI.
 

@@ -1,22 +1,37 @@
-import compact from 'lodash/compact';
+import parseGitURL from './parseGitURL';
+
+const DEFAULT_BRANCH = 'master';
+
+const escapeURLPath = (p: string): string =>
+  p
+    .split('/')
+    .map((segment) => encodeURIComponent(segment))
+    .join('/');
 
 const getGitHostingProvider = (url: string, branch?: string | null): string | null => {
-  let contentURL: string | null = null;
-  const repoUrl = new URL(url);
-  const splittedPath: string[] = compact(repoUrl.pathname.split('/'));
-  const repoBase = `${repoUrl.origin}/${splittedPath.slice(0, 2).join('/')}`;
-
-  switch (repoUrl.host) {
-    case 'bitbucket.org':
-    case 'github.com':
-      contentURL = `${repoBase}/raw/${branch || ''}${splittedPath.length > 2 ? `/${splittedPath[2]}` : ''}`;
-      break;
-    case 'gitlab.com':
-      contentURL = `${repoBase}/-/raw/${branch || ''}${splittedPath.length > 2 ? `/${splittedPath[2]}` : ''}`;
-      break;
+  const parsed = parseGitURL(url);
+  if (!parsed) {
+    return null;
   }
 
-  return contentURL;
+  const ref = escapeURLPath(branch || DEFAULT_BRANCH);
+  const subPath = parsed.packagesPath ? `/${escapeURLPath(parsed.packagesPath)}` : '';
+
+  switch (parsed.host) {
+    case 'bitbucket.org':
+    case 'github.com':
+    case 'gitee.com':
+      return `${parsed.webBaseURL}/raw/${ref}${subPath}`;
+    case 'codeberg.org':
+    case 'gitea.com':
+      return `${parsed.webBaseURL}/raw/branch/${ref}${subPath}`;
+    case 'git.sr.ht':
+      return `${parsed.webBaseURL}/blob/${ref}${subPath}`;
+    case 'gitlab.com':
+      return `${parsed.webBaseURL}/-/raw/${ref}${subPath}`;
+    default:
+      return null;
+  }
 };
 
 export default getGitHostingProvider;

@@ -5,6 +5,7 @@ import { ChangeEvent, useState } from 'react';
 
 import { Policies, Repository } from '../../../types';
 import getGitHostingProvider from '../../../utils/getGitHostingProvider';
+import parseGitURL from '../../../utils/parseGitURL';
 import CommandBlock from './CommandBlock';
 import styles from './ContentInstall.module.css';
 
@@ -19,6 +20,8 @@ const KubeArmorInstall = (props: Props) => {
     !isUndefined(props.policies) && !isEmpty(props.policies) ? Object.keys(props.policies)[0] : undefined
   );
   const url: string | null = getGitHostingProvider(props.repository.url, props.repository.branch);
+  const parsedGitURL = parseGitURL(props.repository.url);
+  const cloneURL = parsedGitURL ? parsedGitURL.repoBaseURL : props.repository.url;
 
   if (isUndefined(props.policies) || isUndefined(selectedPolicy)) return null;
 
@@ -30,7 +33,7 @@ const KubeArmorInstall = (props: Props) => {
 
       {isNull(url) ? (
         <>
-          <CommandBlock command={`git clone ${url}`} title={'Clone repository:'} />
+          <CommandBlock command={`git clone ${cloneURL}`} title={'Clone repository:'} />
           <CommandBlock command={`kubectl apply -f POLICY_FILE.yaml`} title={'Install policy using kubectl:'} />
         </>
       ) : (
@@ -50,7 +53,7 @@ const KubeArmorInstall = (props: Props) => {
             </select>
           </div>
           <CommandBlock
-            command={`kubectl apply -f ${url}${props.relativePath}/${selectedPolicy}`}
+            command={`kubectl apply -f ${url}${props.relativePath || ''}/${selectedPolicy}`}
             title={'Install policy using kubectl:'}
           />
         </>

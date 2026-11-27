@@ -55,5 +55,32 @@ describe('Links', () => {
       );
       expect(container).toBeEmptyDOMElement();
     });
+
+    it('renders distinct provider icons based on hostname rather than path', () => {
+      const renderIconHtml = (url: string): string => {
+        const { container, unmount } = render(
+          <Router>
+            <Links links={[{ name: 'source', url }]} />
+          </Router>
+        );
+        const svg = container.querySelector('svg');
+        const html = svg ? svg.outerHTML : '';
+        unmount();
+        return html;
+      };
+
+      const genericIcon = renderIconHtml('https://git.example.com/user/repo');
+      const githubIcon = renderIconHtml('https://github.com/user/repo');
+      const codebergIcon = renderIconHtml('https://CODEBERG.ORG/user/repo');
+      const giteeIcon = renderIconHtml('https://gitee.com/user/repo');
+      const sourcehutIcon = renderIconHtml('https://git.sr.ht/~user/repo');
+      const codebergWithGithubInPath = renderIconHtml('https://codeberg.org/acme/github.com-mirror');
+
+      expect(codebergIcon).not.toBe(genericIcon);
+      expect(giteeIcon).not.toBe(genericIcon);
+      expect(sourcehutIcon).not.toBe(genericIcon);
+      expect(codebergWithGithubInPath).toBe(codebergIcon);
+      expect(codebergWithGithubInPath).not.toBe(githubIcon);
+    });
   });
 });
